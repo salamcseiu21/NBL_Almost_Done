@@ -109,7 +109,14 @@
                         </select>
                     </div>
                 </div>
-
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "E-mail Address", id = "Email" })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        <span id="EmailError"></span>
+                    </div>
+                </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.EmployeeImage, new {@class = "control-label col-md-2"})
                     <div class="col-md-10">
@@ -162,33 +169,5 @@
 
         } );
     </script>
-    
-    @* Cascading dropdons implementations *@
-    <script>
 
-        $("#DepartmentId").change(function () {
-            var deptId = $("#DepartmentId").val();
-            $("#DesignationId").empty();
-
-            $("#DesignationId").append('<option value="">--Select--</option>');
-
-            var json = { departmentId: deptId };
-
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("GetAllDesignationByDepartmentId", "Common", new { area = "" })',
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(json),
-                success: function (data) {
-                    $.each(data, function (key, value) {
-                        //alert(key);
-                        $("#DesignationId").append('<option value=' + value.DesignationId + '>' + value.DesignationName + '</option>');
-
-                    });
-                }
-            });
-
-        });
-
-    </script>
 }

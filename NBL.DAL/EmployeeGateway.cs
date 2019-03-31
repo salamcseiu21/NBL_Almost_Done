@@ -389,6 +389,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@Gender", anEmployee.Gender);
                 CommandObj.Parameters.AddWithValue("@PresentAddress", anEmployee.PresentAddress);
                 CommandObj.Parameters.AddWithValue("@Phone", anEmployee.Phone);
+                CommandObj.Parameters.AddWithValue("@Email", anEmployee.Email);
                 CommandObj.Parameters.AddWithValue("@AlternatePhone", anEmployee.AlternatePhone?? anEmployee.AlternatePhone ?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@EmployeeImage", anEmployee.EmployeeImage ?? anEmployee.EmployeeImage ?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@EmployeeSignature", anEmployee.EmployeeSignature ?? anEmployee.EmployeeSignature ?? (object)DBNull.Value);

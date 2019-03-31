@@ -92,6 +92,9 @@
     <Compile Include="Calculator.cs" />
     <Compile Include="ChartModel.cs" />
     <Compile Include="ChequeDetails.cs" />
+    <Compile Include="EntityModels\ChartOfAccounts\AccountType.cs" />
+    <Compile Include="EntityModels\ChartOfAccounts\SubAccount.cs" />
+    <Compile Include="EntityModels\ChartOfAccounts\SubSubAccount.cs" />
     <Compile Include="EntityModels\Clients\Client.cs" />
     <Compile Include="EntityModels\Clients\ClientAttachment.cs" />
     <Compile Include="Contracts\IAudit.cs" />

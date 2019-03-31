@@ -36,7 +36,7 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         @Html.LabelFor(model => model.ClientTypeId, new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
@@ -102,37 +102,42 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.DistrictId, new { @class = "control-label col-md-3" })
+                        @Html.LabelFor(model => model.BranchId, new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.DropDownListFor(model=>model.DistrictId,null,"--Select--",new {@class="form-control"})
-                           
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.UpazillaId,  new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.DropDownListFor(model=>model.UpazillaId, null,"--Select--",new {@class="form-control"})
-                           
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PostOfficeId, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.DropDownListFor(model=>model.PostOfficeId, null,"--Select--",new {@class="form-control"})
-                          
+                            @Html.DropDownListFor(model => model.BranchId, null, "--Select--", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.BranchId, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     
+                    
 
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DistrictId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.DistrictId, null, "--Select--", new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UpazillaId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.UpazillaId, null, "--Select--", new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PostOfficeId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.PostOfficeId, null, "--Select--", new { @class = "form-control" })
+
+                        </div>
+                    </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.NationalIdNo, new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
                             @Html.EditorFor(model => model.NationalIdNo, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter client NID" } })
-
                         </div>
                     </div>
                     <div class="form-group">
@@ -142,6 +147,7 @@
                             @Html.ValidationMessageFor(model => model.TinNo, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         @Html.LabelFor(model => model.Phone, new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
@@ -158,6 +164,10 @@
                             @Html.ValidationMessageFor(model=>model.AlternatePhone,"",new {@class="text-danger"}) 
                         </div>
                     </div>
+                </div>
+                <div class="col-md-4">
+                    
+                   
                     <div class="form-group">
                         @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
@@ -203,7 +213,15 @@
                         </div>
 
                     </div>
-                   
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AssignedEmployeeName, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.AssignedEmployeeName, new { htmlAttributes = new { @class = "form-control", placeholder = "Type assigned employee name here.."} })
+                            @Html.ValidationMessageFor(model=>model.AssignedEmployeeName, "",new {@class="text-danger"}) 
+                            <input type="hidden" id="AssignedEmpId" name="AssignedEmpId"/>
+
+                        </div>
+                    </div>
                     
                     @*<div class="form-group">
                         @Html.LabelFor(model => model.CreditLimit, new { @class = "control-label col-md-3" })
@@ -431,7 +449,7 @@
             var imageData = document.getElementById('ClientImage');
             var fileUploadPath = imageData.value;
             var size = imageData.files[0].size;
-           // alert(size);
+            // alert(size);
 //To check if user upload any file
             if (fileUploadPath === '') {
                 alert("Please upload an image");
@@ -504,5 +522,37 @@
                 }
             }
         }
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#AssignedEmployeeName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url :'@Url.Action("EmployeeAutoComplete","Common",new {area=""})',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function(item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#AssignedEmpId").val(i.item.val);
+                },
+                minLength: 1
+            });
+        });
     </script>
 }

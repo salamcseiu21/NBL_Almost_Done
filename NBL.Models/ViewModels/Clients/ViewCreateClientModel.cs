@@ -67,9 +67,13 @@ namespace NBL.Models.ViewModels.Clients
         [Required]
         public int? TerritoryId { get; set; }
         public bool EmailInUse { get; set; }
-      
-
-       
+        
+        public int? AssignedEmpId { get; set; }
+        [Display(Name = "Assigned Employee")]
+        public string AssignedEmployeeName { get; set; }
+        [Display(Name = "Branch")]
+        [Required]
+        public int BranchId { get; set; }   
 
     }
 }

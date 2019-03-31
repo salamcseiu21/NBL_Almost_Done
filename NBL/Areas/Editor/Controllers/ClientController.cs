@@ -26,8 +26,9 @@ namespace NBL.Areas.Editor.Controllers
         private readonly IPostOfficeGateway _iPostOfficeGateway;
         private readonly IRegionManager _iRegionManager;
         private readonly ITerritoryManager _iTerritoryManager;
+        private readonly IBranchManager _iBranchManager;
 
-        public ClientController(IClientManager iClientManager,ICommonManager iCommonManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IDistrictManager iDistrictManager,IUpazillaGateway iUpazillaGateway,IPostOfficeGateway iPostOfficeGateway)
+        public ClientController(IClientManager iClientManager,ICommonManager iCommonManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IDistrictManager iDistrictManager,IUpazillaGateway iUpazillaGateway,IPostOfficeGateway iPostOfficeGateway,IBranchManager iBranchManager)
         {
             _iClientManager = iClientManager;
             _iCommonManager = iCommonManager;
@@ -36,6 +37,7 @@ namespace NBL.Areas.Editor.Controllers
             _iDistrictManager = iDistrictManager;
             _iUpazillaGateway = iUpazillaGateway;
             _iPostOfficeGateway = iPostOfficeGateway;
+            _iBranchManager = iBranchManager;
         }
 
         public ActionResult Details(int id)
@@ -64,6 +66,7 @@ namespace NBL.Areas.Editor.Controllers
         // GET: Sales/Client/AddNewClient
         public ActionResult AddNewClient()
         {
+            ViewBag.BranchId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName");
             ViewBag.RegionId= new SelectList(_iRegionManager.GetAll(), "RegionId", "RegionName");
             ViewBag.ClientTypeId=new SelectList(_iCommonManager.GetAllClientType(), "ClientTypeId", "ClientTypeName");
             ViewBag.DistrictId = new SelectList(_iDistrictManager.GetAll().ToList(), "DistrictId", "DistrictName");
@@ -78,13 +81,12 @@ namespace NBL.Areas.Editor.Controllers
         [HttpPost]
         public ActionResult AddNewClient(ViewCreateClientModel model, HttpPostedFileBase ClientImage, HttpPostedFileBase clientSignature)
         {
-            var branch = _iRegionManager.GetBranchInformationByRegionId(Convert.ToInt32(model.RegionId));
+           
             try
             {
                 var user = (ViewUser)Session["user"];
                 var client = Mapper.Map<ViewCreateClientModel, Client>(model);
                 client.UserId = user.UserId;
-                client.BranchId = branch.BranchId;
                 if (ClientImage != null)
                 {
 
@@ -122,10 +124,11 @@ namespace NBL.Areas.Editor.Controllers
                 {
                     ViewBag.Message = "Saved Successfully!";
                 }
-                
+
+                ViewBag.BranchId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName");
                 ViewBag.RegionId = new SelectList(_iRegionManager.GetAll(), "RegionId", "RegionName");
                 ViewBag.ClientTypeId = new SelectList(_iCommonManager.GetAllClientType(), "ClientTypeId", "ClientTypeName");
-                ViewBag.DistrictId = new SelectList(_iDistrictManager.GetAll(), "DistrictId", "DistrictName");
+                ViewBag.DistrictId = new SelectList(_iDistrictManager.GetAll().ToList(), "DistrictId", "DistrictName");
                 ViewBag.UpazillaId = new SelectList(new List<Upazilla>(), "UpazillaId", "UpzillaName");
                 ViewBag.PostOfficeId = new SelectList(new List<PostOffice>(), "PostOfficeId", "PostOfficeName");
                 ViewBag.TerritoryId = new SelectList(new List<Territory>(), "TerritoryId", "TerritoryName");
@@ -190,8 +193,9 @@ namespace NBL.Areas.Editor.Controllers
             {
 
                 Client client = _iClientManager.GetById(id);
+                ViewBag.BranchId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName");
                 ViewBag.TerritoryId = new SelectList(_iTerritoryManager.GetAll().ToList().FindAll(n => n.RegionId == client.RegionId), "TerritoryId", "TerritoryName");
-                ViewBag.DistrictId = new SelectList(_iDistrictManager.GetAllDistrictByDivistionId(client.DivisionId?? default(int)),"DistrictId","DistrictName");
+                ViewBag.DistrictId = new SelectList(_iDistrictManager.GetAll(),"DistrictId","DistrictName");
                 ViewBag.UpazillaId = new SelectList(_iUpazillaGateway.GetAllUpazillaByDistrictId(client.DistrictId?? default(int)), "UpazillaId", "UpazillaName");
                 ViewBag.PostOfficeId = new SelectList(_iPostOfficeGateway.GetAllPostOfficeByUpazillaId(client.UpazillaId??default(int)), "PostOfficeId", "PostOfficeName");
                 ViewBag.RegionId=new SelectList(_iRegionManager.GetAll(),"RegionId","RegionName");
@@ -209,29 +213,30 @@ namespace NBL.Areas.Editor.Controllers
 
         // POST: Sales/Client/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection, HttpPostedFileBase file, HttpPostedFileBase ClientSignature)
+        public ActionResult Edit(int id, Client aClient, HttpPostedFileBase file, HttpPostedFileBase ClientSignature)
         {
             try
             {
                 var user = (ViewUser)Session["user"];
                 Client client = _iClientManager.GetById(id);
-                client.ClientName = collection["ClientName"];
-                client.CommercialName= collection["CommercialName"];
-                client.Address = collection["Address"];
-                client.PostOfficeId = Convert.ToInt32(collection["PostOfficeId"]);
-                client.ClientTypeId = Convert.ToInt32(collection["ClientTypeId"]);
-                client.Phone = collection["phone"];
-                client.AlternatePhone = collection["AlternatePhone"];
-                client.Gender = collection["Gender"];
-                client.Email = collection["Email"];
-                client.CreditLimit = Convert.ToDecimal(collection["CreditLimit"]);
+                client.ClientName = aClient.ClientName;
+                client.CommercialName= aClient.CommercialName;
+                client.Address = aClient.Address;
+                client.PostOfficeId = aClient.PostOfficeId;
+                client.ClientTypeId = aClient.ClientTypeId;
+                client.Phone = aClient.Phone;
+                client.AlternatePhone = aClient.AlternatePhone;
+                client.Gender = aClient.Gender;
+                client.Email = aClient.Email;
+                client.CreditLimit = aClient.CreditLimit;
                 client.UserId = user.UserId;
-                client.NationalIdNo = collection["NationalIdNo"];
-                client.TinNo = collection["TinNo"];
-                client.TerritoryId = Convert.ToInt32(collection["TerritoryId"]);
-                client.RegionId = Convert.ToInt32(collection["RegionId"]);
-                Branch aBranch= _iRegionManager.GetBranchInformationByRegionId(Convert.ToInt32(collection["RegionId"]));
-                client.Branch = aBranch;
+                client.NationalIdNo = aClient.NationalIdNo;
+                client.TinNo = aClient.TinNo;
+                client.TerritoryId = aClient.TerritoryId;
+                client.RegionId = aClient.RegionId;
+                client.BranchId = aClient.BranchId;
+                //Branch aBranch= _iRegionManager.GetBranchInformationByRegionId(Convert.ToInt32(collection["RegionId"]));
+                //client.Branch = aBranch;
 
 
                 if (file != null)
@@ -261,8 +266,9 @@ namespace NBL.Areas.Editor.Controllers
             catch(Exception exception)
             {
                 Client client = _iClientManager.GetById(id);
+                ViewBag.BranchId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName");
                 ViewBag.TerritoryId = new SelectList(_iTerritoryManager.GetAll().ToList().FindAll(n => n.RegionId == client.RegionId), "TerritoryId", "TerritoryName");
-                ViewBag.DistrictId = new SelectList(_iDistrictManager.GetAllDistrictByDivistionId(client.DivisionId??default(int)), "DistrictId", "DistrictName");
+                ViewBag.DistrictId = new SelectList(_iDistrictManager.GetAll(), "DistrictId", "DistrictName");
                 ViewBag.UpazillaId = new SelectList(_iUpazillaGateway.GetAllUpazillaByDistrictId(client.DistrictId??default(int)), "UpazillaId", "UpazillaName");
                 ViewBag.PostOfficeId = new SelectList(_iPostOfficeGateway.GetAllPostOfficeByUpazillaId(client.UpazillaId??default(int)), "PostOfficeId", "PostOfficeName");
                 ViewBag.RegionId = new SelectList(_iRegionManager.GetAll(), "RegionId", "RegionName");

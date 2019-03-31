@@ -132,6 +132,7 @@ namespace NBL.Areas.Editor.Controllers
                 anEmployee.PresentAddress = emp.PresentAddress;
                 anEmployee.Phone = emp.Phone;
                 anEmployee.AlternatePhone = emp.AlternatePhone;
+                anEmployee.Email = emp.Email;
                 anEmployee.Gender = emp.Gender;
                 anEmployee.Email = emp.Email;
                 anEmployee.NationalIdNo = emp.NationalIdNo;

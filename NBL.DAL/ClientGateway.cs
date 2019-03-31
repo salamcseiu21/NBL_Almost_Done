@@ -52,7 +52,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@RegionId", client.RegionId);
                 CommandObj.Parameters.AddWithValue("@ContactPersonName", client.ContactPerson ?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@ContactPersonPhone", client.ContactPersonPhone ?? (object)DBNull.Value);
-
+                CommandObj.Parameters.AddWithValue("@AssignedEmpId", client.AssignedEmpId ?? (object)DBNull.Value);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
@@ -294,8 +294,12 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@RegionId", client.RegionId);
                 CommandObj.Parameters.AddWithValue("@Active", client.Active);
                 CommandObj.Parameters.AddWithValue("@BranchId", client.BranchId);
+                CommandObj.Parameters.AddWithValue("@ContactPersonName", client.ContactPerson ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@ContactPersonPhone", client.ContactPersonPhone ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@AssignedEmpId", client.AssignedEmpId ?? (object)DBNull.Value);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+
                 CommandObj.ExecuteNonQuery();
                 int rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
                 return rowAffected;
@@ -497,29 +501,29 @@ namespace NBL.DAL
                         ClientName = reader["Name"].ToString(),
                         Address = reader["Address"].ToString(),
                         Phone = reader["Phone"].ToString(),
-                        AlternatePhone = reader["AltPhone"].ToString(),
-                        Email = reader["Email"].ToString(),
+                        AlternatePhone = DBNull.Value.Equals(reader["AltPhone"]) ? null : reader["AltPhone"].ToString(),
+                        Email = DBNull.Value.Equals(reader["Email"]) ? null : reader["Email"].ToString(),
                         Gender = reader["Gender"].ToString(),
-                        Fax = reader["Fax"].ToString(),
-                        Website = reader["Website"].ToString(),
-                        PostOfficeId = Convert.ToInt32(reader["PostOfficeId"]),
+                        Fax = DBNull.Value.Equals(reader["Fax"]) ? null : reader["Fax"].ToString(),
+                        Website = DBNull.Value.Equals(reader["Website"]) ? null : reader["Website"].ToString(),
+                        PostOfficeId = DBNull.Value.Equals(reader["Website"]) ? default(int) : Convert.ToInt32(reader["PostOfficeId"]),
                         ClientTypeId = Convert.ToInt32(reader["ClientTypeId"]),
-                        UpazillaId = Convert.ToInt32(reader["UpazillaId"]),
+                        UpazillaId = DBNull.Value.Equals(reader["UpazillaId"])?default(int): Convert.ToInt32(reader["UpazillaId"]),
                         UserId = Convert.ToInt32(reader["UserId"]),
-                        DistrictId = Convert.ToInt32(reader["DistrictId"]),
-                        DivisionId = Convert.ToInt32(reader["DivisionId"]),
+                        DistrictId = DBNull.Value.Equals(reader["DistrictId"]) ? default(int) : Convert.ToInt32(reader["DistrictId"]),
+                        DivisionId = DBNull.Value.Equals(reader["DivisionId"]) ? default(int) : Convert.ToInt32(reader["DivisionId"]),
                         ClientTypeName = reader["ClientTypeName"].ToString(),
                         Discount = Convert.ToDecimal(reader["Discount"]),
-                        PostCode = reader["PostCode"].ToString(),
-                        PostOfficeName = reader["PostOfficeName"].ToString(),
-                        UpazillaName = reader["UpazillaName"].ToString(),
-                        DistrictName = reader["DistrictName"].ToString(),
-                        DivisionName = reader["DivisionName"].ToString(),
+                        PostCode = DBNull.Value.Equals(reader["PostCode"])?null: reader["PostCode"].ToString(),
+                        PostOfficeName = DBNull.Value.Equals(reader["PostOfficeName"]) ? null : reader["PostOfficeName"].ToString(),
+                        UpazillaName = DBNull.Value.Equals(reader["UpazillaName"]) ? null : reader["UpazillaName"].ToString(),
+                        DistrictName = DBNull.Value.Equals(reader["DistrictName"]) ? null : reader["DistrictName"].ToString(),
+                        DivisionName = DBNull.Value.Equals(reader["DivisionName"]) ? null : reader["DivisionName"].ToString(),
                         SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
                         EntryDate = Convert.ToDateTime(reader["EntryDate"]),
-                        ClientImage = reader["ClientImage"].ToString(),
-                        ClientSignature = reader["ClientSignature"].ToString(),
-                        NationalIdNo = reader["NationalIdNo"].ToString(),
+                        ClientImage = DBNull.Value.Equals(reader["ClientImage"]) ? null : reader["ClientImage"].ToString(),
+                        ClientSignature = DBNull.Value.Equals(reader["ClientSignature"]) ? null : reader["ClientSignature"].ToString(),
+                        NationalIdNo = DBNull.Value.Equals(reader["NationalIdNo"]) ? null : reader["NationalIdNo"].ToString(),
                         Active = reader["Active"].ToString(),
                         BranchId = Convert.ToInt32(reader["BranchId"]),
                         CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
@@ -598,35 +602,36 @@ namespace NBL.DAL
 
                         ClientId = Convert.ToInt32(reader["ClientId"]),
                         ClientName = reader["Name"].ToString(),
+                        CommercialName = DBNull.Value.Equals(reader["CommercialName"])?null: reader["CommercialName"].ToString(),
                         Address = reader["Address"].ToString(),
                         Phone = reader["Phone"].ToString(),
-                        AlternatePhone = reader["AltPhone"].ToString(),
-                        Email = reader["Email"].ToString(),
+                        AlternatePhone = DBNull.Value.Equals(reader["AltPhone"]) ? null : reader["AltPhone"].ToString(),
+                        Email = DBNull.Value.Equals(reader["Email"]) ? null :reader["Email"].ToString(),
                         Gender = reader["Gender"].ToString(),
-                        Fax = reader["Fax"].ToString(),
-                        Website = reader["Website"].ToString(),
-                        PostOfficeId = Convert.ToInt32(reader["PostOfficeId"]),
+                        Fax = DBNull.Value.Equals(reader["Fax"]) ? null : reader["Fax"].ToString(),
+                        Website = DBNull.Value.Equals(reader["Website"]) ? null : reader["Website"].ToString(),
+                        PostOfficeId = DBNull.Value.Equals(reader["PostOfficeId"]) ? default(int) : Convert.ToInt32(reader["PostOfficeId"]),
                         ClientTypeId = Convert.ToInt32(reader["ClientTypeId"]),
-                        UpazillaId = Convert.ToInt32(reader["UpazillaId"]),
+                        UpazillaId = DBNull.Value.Equals(reader["UpazillaId"]) ? default(int) : Convert.ToInt32(reader["UpazillaId"]),
                         UserId = Convert.ToInt32(reader["UserId"]),
-                        DistrictId = Convert.ToInt32(reader["DistrictId"]),
-                        DivisionId = Convert.ToInt32(reader["DivisionId"]),
+                        DistrictId = DBNull.Value.Equals(reader["DistrictId"]) ? default(int) : Convert.ToInt32(reader["DistrictId"]),
+                        DivisionId = DBNull.Value.Equals(reader["DivisionId"]) ? default(int) : Convert.ToInt32(reader["DivisionId"]),
                         ClientTypeName = reader["ClientTypeName"].ToString(),
                         Discount = Convert.ToDecimal(reader["Discount"]),
-                        PostCode = reader["PostCode"].ToString(),
-                        PostOfficeName = reader["PostOfficeName"].ToString(),
-                        UpazillaName = reader["UpazillaName"].ToString(),
-                        DistrictName = reader["DistrictName"].ToString(),
-                        DivisionName = reader["DivisionName"].ToString(),
+                        PostCode = DBNull.Value.Equals(reader["PostCode"]) ? null: reader["PostCode"].ToString(),
+                        PostOfficeName = DBNull.Value.Equals(reader["PostOfficeName"]) ? null : reader["PostOfficeName"].ToString(),
+                        UpazillaName = DBNull.Value.Equals(reader["UpazillaName"]) ? null : reader["UpazillaName"].ToString(),
+                        DistrictName = DBNull.Value.Equals(reader["DistrictName"]) ? null : reader["DistrictName"].ToString(),
+                        DivisionName = DBNull.Value.Equals(reader["DivisionName"]) ? null : reader["DivisionName"].ToString(),
                         SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
                         EntryDate = Convert.ToDateTime(reader["EntryDate"]),
-                        ClientImage = reader["ClientImage"].ToString(),
-                        ClientSignature = reader["ClientSignature"].ToString(),
-                        NationalIdNo = reader["NationalIdNo"].ToString(),
+                        ClientImage = DBNull.Value.Equals(reader["ClientImage"]) ? null : reader["ClientImage"].ToString(),
+                        ClientSignature = DBNull.Value.Equals(reader["ClientSignature"]) ? null : reader["ClientSignature"].ToString(),
+                        NationalIdNo = DBNull.Value.Equals(reader["NationalIdNo"]) ? null: reader["NationalIdNo"].ToString(),
                         Active = reader["Active"].ToString(),
                         BranchId = Convert.ToInt32(reader["BranchId"]),
                         CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
-                        MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"]),
+                        MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"])
 
                     });
 

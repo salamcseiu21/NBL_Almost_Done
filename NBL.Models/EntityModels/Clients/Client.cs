@@ -37,10 +37,10 @@ namespace NBL.Models.EntityModels.Clients
         public string AlternatePhone { get; set; }
 
         [Display(Name = "Contact Person")]
-        [Required]
+      
         public string ContactPerson { get; set; }
         [Display(Name = "Contact Person Phone ")]
-        [Required]
+       
         public string ContactPersonPhone { get; set; }  
 
         [DataType(DataType.EmailAddress)]
@@ -88,6 +88,8 @@ namespace NBL.Models.EntityModels.Clients
     
         [Display(Name = "Post Office")]
         public int? PostOfficeId { get; set; }
+
+        public int? AssignedEmpId { get; set; }     
         public int UserId { get; set; }
         public int BranchId { get; set; }
         public int CompanyId { get; set; }
@@ -141,7 +143,7 @@ namespace NBL.Models.EntityModels.Clients
         }
         public string GetContactInformation()
         {
-            return $"Address : {Address} <br/>Phone: {Phone} <br/>E-mail: {Email}";
+            return $"Address : {Address} <br/>Phone: {Phone} <br/>E-mail: {Email?? "N/A"}";
         }
         public string GetMailingAddress()
         {

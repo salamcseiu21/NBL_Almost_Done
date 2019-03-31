@@ -37,10 +37,10 @@ namespace NBL.Models.EntityModels.Employees
         [Required]
         public DateTime JoiningDate { get; set; }
         [Display(Name = "Image")]
-        [Required]
+    
         public string EmployeeImage { set; get; }
         [Display(Name = "Signature")]
-        [Required]
+       
         public string EmployeeSignature { get; set; } 
         public string Notes { get; set; }
         [Display(Name = "NID")]

@@ -30,7 +30,7 @@
                 <td>@item.CommercialName</td>
                 <td>@item.Address</td>
                 <td>@item.Phone</td>
-                <td>@item.Email</td>
+                <td>@(item.Email?? "N/A")</td>
                 <td class="text-center">
                     @Html.ActionLink(" Edit", "Edit","Client", new { id = item.ClientId },new {@class="fa fa-edit"}) |
                     @Html.ActionLink(" Details", "Details", "Client", new {id = item.ClientId}, new {@class = "fa fa-eye"})

@@ -36,8 +36,9 @@ namespace NBL.Controllers
         private readonly IDepartmentManager _idepartmentManager;
         private readonly IOrderManager _iOrderManager;
         private readonly IBranchManager _iBranchManager;
+        private readonly IEmployeeManager _iEmployeeManager;
 
-        public CommonController(IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IDepartmentManager iDepartmentManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager,IDiscountManager iDiscountManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IProductManager iProductManager,IInvoiceManager iInvoiceManager,IUpazillaGateway iUpazillaGateway,IDistrictManager iDistrictManager)
+        public CommonController(IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IDepartmentManager iDepartmentManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager,IDiscountManager iDiscountManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IProductManager iProductManager,IInvoiceManager iInvoiceManager,IUpazillaGateway iUpazillaGateway,IDistrictManager iDistrictManager,IEmployeeManager iEmployeeManager)
         {
             _iBranchManager = iBranchManager;
             _iClientManager = iClientManager;
@@ -52,6 +53,7 @@ namespace NBL.Controllers
             _iUpazillaGateway = iUpazillaGateway;
             _iInvoiceManager = iInvoiceManager;
             _iDistrictManager = iDistrictManager;
+            _iEmployeeManager = iEmployeeManager;
         }
         //------------Bank Name autocomplete-----------
         [HttpPost]
@@ -584,6 +586,20 @@ namespace NBL.Controllers
         {
             var product= _iInventoryManager.GetProductLifeCycleByBarcode(ProductBarCode);
             return Json(product, JsonRequestBehavior.AllowGet);
+        }
+        //----------------Employee name Autocomplete---------------
+        public JsonResult EmployeeAutoComplete(string prefix)
+        {
+
+            var employeeNameList = (from e in _iEmployeeManager.GetAll().ToList()
+                where e.EmployeeName.ToLower().Contains(prefix.ToLower())
+                select new
+                {
+                    label = e.EmployeeName,
+                    val = e.EmployeeId
+                }).ToList();
+
+            return Json(employeeNameList);
         }
     }
 
