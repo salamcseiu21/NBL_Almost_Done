@@ -118,24 +118,24 @@ namespace NBL.Areas.Editor.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection, HttpPostedFileBase EmployeeImage,HttpPostedFileBase EmployeeSignature)
+        public ActionResult Edit(int id, Employee emp, HttpPostedFileBase EmployeeImage,HttpPostedFileBase EmployeeSignature)
         {
             try
             {
                 var user = (ViewUser)Session["user"];
                 var anEmployee = _iEmployeeManager.GetById(id);
-                anEmployee.EmployeeTypeId = Convert.ToInt32(collection["EmployeeTypeId"]);
-                anEmployee.DesignationId = Convert.ToInt32(collection["DesignationId"]);
-                anEmployee.DepartmentId = Convert.ToInt32(collection["DepartmentId"]);
-                anEmployee.BranchId = Convert.ToInt32(collection["BranchId"]);
-                anEmployee.EmployeeName = collection["EmployeeName"];
-                anEmployee.PresentAddress = collection["PresentAddress"];
-                anEmployee.Phone = collection["Phone"];
-                anEmployee.AlternatePhone = collection["AlternatePhone"];
-                anEmployee.Gender = collection["Gender"];
-                anEmployee.Email = collection["Email"];
-                anEmployee.NationalIdNo = collection["NationalIdNo"];
-                anEmployee.JoiningDate = Convert.ToDateTime(collection["JoiningDate"]);
+                anEmployee.EmployeeTypeId = emp.EmployeeTypeId;
+                anEmployee.DesignationId = emp.DesignationId;
+                anEmployee.DepartmentId = emp.DepartmentId;
+                anEmployee.BranchId = emp.BranchId;
+                anEmployee.EmployeeName = emp.EmployeeName;
+                anEmployee.PresentAddress = emp.PresentAddress;
+                anEmployee.Phone = emp.Phone;
+                anEmployee.AlternatePhone = emp.AlternatePhone;
+                anEmployee.Gender = emp.Gender;
+                anEmployee.Email = emp.Email;
+                anEmployee.NationalIdNo = emp.NationalIdNo;
+                anEmployee.JoiningDate = Convert.ToDateTime(emp.JoiningDate);
                 anEmployee.UserId = user.UserId;
 
                 if (EmployeeImage != null)

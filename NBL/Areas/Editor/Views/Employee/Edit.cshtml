@@ -152,7 +152,13 @@
     <script>
         $(function () {
 
-            $("#JoiningDate").datepicker({ dateFormat: 'dd-MM-yy' });
+            $("#JoiningDate").datepicker(
+                {
+                dateFormat: 'dd-MM-yy', changeMonth: true,
+                changeYear: true,
+                yearRange: "-20:+0"
+                }
+                );
 
         } );
     </script>

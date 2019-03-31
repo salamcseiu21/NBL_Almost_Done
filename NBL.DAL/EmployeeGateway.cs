@@ -389,10 +389,10 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@Gender", anEmployee.Gender);
                 CommandObj.Parameters.AddWithValue("@PresentAddress", anEmployee.PresentAddress);
                 CommandObj.Parameters.AddWithValue("@Phone", anEmployee.Phone);
-                CommandObj.Parameters.AddWithValue("@AlternatePhone", anEmployee.AlternatePhone);
-                CommandObj.Parameters.AddWithValue("@EmployeeImage", anEmployee.EmployeeImage);
-                CommandObj.Parameters.AddWithValue("@EmployeeSignature", anEmployee.EmployeeSignature);
-                CommandObj.Parameters.AddWithValue("@EmployeeNationalIdNo", anEmployee.NationalIdNo);
+                CommandObj.Parameters.AddWithValue("@AlternatePhone", anEmployee.AlternatePhone?? anEmployee.AlternatePhone ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@EmployeeImage", anEmployee.EmployeeImage ?? anEmployee.EmployeeImage ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@EmployeeSignature", anEmployee.EmployeeSignature ?? anEmployee.EmployeeSignature ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@EmployeeNationalIdNo", anEmployee.NationalIdNo ?? anEmployee.NationalIdNo ?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@JoiningDate", anEmployee.JoiningDate);
                 CommandObj.Parameters.AddWithValue("@EmployeeId", anEmployee.EmployeeId);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
