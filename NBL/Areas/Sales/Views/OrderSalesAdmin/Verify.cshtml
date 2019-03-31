@@ -1,0 +1,133 @@
+﻿
+@model NBL.Models.ViewModels.Orders.ViewOrder
+@{
+    ViewBag.Title = "Verify";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Verify</h3>
+    <br />
+    <div style="border: 1px dotted; padding: 10px; font-size: 18px">
+
+        @Html.Partial("_OrderDetailsHeaderPartialPage", Model)
+
+        <div class="row" style="padding:0 10px">
+            <p style="font-weight: bolder;font-size: 20px" class="text-center text-green">Product List</p>
+            <table id="table_product_list" class="table table-bordered" style="border:1px solid black;font-size:14px">
+
+                <thead>
+
+                    <tr>
+                        <th class="text-center">Product Name</th>
+                        <th class="text-center">Category Name</th>
+                        <th class="text-center" style="width: 10%">Unit Price (&#2547;)</th>
+                        <th class="text-center" style="width: 10%">Vat (&#2547;)</th>
+                        <th class="text-center" style="width: 10%">Discount (&#2547;)</th>
+                        <th class="text-center" style="width: 10%">Sale Price(&#2547;)</th>
+                        <th style="width: 5%" class="text-center">Quantity</th>
+                        <th class="text-center" style="width: 10%">Sub Total (&#2547;)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderItems)
+                    {
+                        <tr>
+                            <td>@item.ProductName</td>
+                            <td>@item.ProductCategoryName</td>
+                            <td class="text-right">@item.UnitPrice</td>
+                            <td class="text-right">@item.Vat</td>
+                            <td class="text-right">@item.DiscountAmount</td>
+                            <td class="text-right">@item.SalePrice</td>
+                            <td class="text-right">@item.Quantity</td>
+                            <td class="text-right">@item.SubTotal</td>
+                        </tr>
+                    }
+
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="5" rowspan="6"></th>
+                        <th colspan="2" class="text-right">Qty</th>
+                        <th class="text-right"> @Model.OrderItems.Sum(n => n.Quantity)</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="text-right">Amounts</th>
+                        <th class="text-right">@(Model.Amounts - Model.Vat)</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="text-right">Vat</th>
+                        <th class="text-right"> @Model.Vat</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="text-right">Discount</th>
+                        <th class="text-right">@Model.Discount</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="text-right">Special Discount</th>
+                        <th class="text-right"> @Model.SpecialDiscount</th>
+                    </tr>
+
+                    <tr>
+                        <th colspan="2" class="text-right">Net Amounts</th>
+                        <th class="text-right"> @Model.NetAmounts</th>
+                    </tr>
+                </tfoot>
+
+            </table>
+
+        </div>
+        <br />
+        @using (Html.BeginForm("Verify", "OrderSalesAdmin", FormMethod.Post, new { id = "VerifyOrderForm" }))
+        {
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Note</label>
+                    <div class="col-md-10">
+                        <input id="OrderId" name="OrderId" value="@Model.OrderId" type="hidden" />
+                        <textarea id="VerificationNote" name="VerificationNote" class="form-control" style="resize:none;" rows="2" placeholder="Please! write verificatio note.." autofocus></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2"></label>
+                    <div class="col-md-10 text-right">
+                        @Html.ActionLink("Back", "PendingOrder", "OrderSalesAdmin", new { area = "Sales" }, new { @class = "btn btn-danger" })
+                        <input type="button" value="Verify" onclick="Verify(this)" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</section>
+@section Scripts
+{
+    <script>
+        function Verify(id) {
+            if ($("#VerificationNote").val() === "") {
+                alert("Please! write verificatio note..");
+            }
+            else {
+                if (confirm("Are you sure?")) {
+                    // alert(id.id);
+                    $("#VerifyOrderForm").submit();
+                } else {
+                    return false;// if it's a link to prevent post
+                }
+
+                return false;// if it's a link to prevent post
+            }
+        }
+    </script>
+
+
+    <script>
+
+        $('#table_product_list').DataTable({
+            bFilter: false,
+            bInfo: false,
+            "bPaginate": false
+        });
+    </script>
+}

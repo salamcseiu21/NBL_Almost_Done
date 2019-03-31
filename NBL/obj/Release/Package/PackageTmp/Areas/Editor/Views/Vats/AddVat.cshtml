@@ -1,0 +1,106 @@
+﻿@model NBL.Models.EntityModels.VatDiscounts.Vat
+
+@{
+    ViewBag.Title = "Add Vat";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var tdate = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+}
+
+
+<section class="content">
+    <div class="col-md-6 col-md-offset-3">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h3 class="headingStyle text-center text-success">Add Vat</h3>
+                <div class="alert-success text-center">
+                    @if (ViewData["Message"] != null)
+                    {
+                        <p style="padding: 10px;">@ViewData["Message"]</p>
+                    }
+                </div>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProductId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="text" id="ProductName" class="form-control" placeholder="Type product name here....!" />
+                        @Html.HiddenFor(model => model.ProductId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.VatAmount, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.VatAmount, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter vat amount...!" } })
+                        @Html.ValidationMessageFor(model => model.VatAmount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UpdateDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.UpdateDate, new { htmlAttributes = new { Value = tdate, @class = "form-control", placeholder = "Enter update date...!" } })
+                        @Html.ValidationMessageFor(model => model.UpdateDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="btn-toolbar">
+                            <a  href="~/editor"  class="btn btn-danger">Cancel</a>
+                            <input type="submit" value="Save" class="btn btn-info" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#ProductName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Common/ProductNameAutoComplete/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function(item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#ProductId").val(i.item.val);
+                },
+                minLength: 1
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+
+            $("#UpdateDate").datepicker({ dateFormat: 'dd-MM-yy' });
+        
+        });
+        setTimeout(function () {
+            $('.alert-success').slideUp("slow");
+        }, 5000);
+
+    </script>
+}

@@ -1,0 +1,47 @@
+﻿
+@model IEnumerable<NBL.Models.EntityModels.VatDiscounts.Vat>
+    @{
+        ViewBag.Title = "Vats";
+        Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    }
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Product wish Vats</h3>
+    <hr />
+    <table id="table_vats" class="display table table-bordered" style="border:1px solid black">
+        <thead>
+            <tr>
+                <th>Product info</th>
+                <th class="text-center" style="width: 10%">Vat Amount (&#2547;)</th>
+                <th class="text-center">Update Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.Raw(item.Product.GetFullInformation())</td>
+                    <td class="text-right">@item.VatAmount</td>
+                    <td class="text-center">@item.UpdateDate.ToString("dd-MMMM-yyyy")</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Product info</th>
+                <th class="text-center">Vat Amount (&#2547;)</th>
+                <th class="text-center">Update Date</th>
+            </tr>
+        </tfoot>
+    </table>
+</section>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+<script>
+
+    $('#table_vats').DataTable({
+        "lengthMenu": [[10, 30, 50, -1], [10, 30, 50, "All"]],
+        "oLanguage": {
+            "sEmptyTable": "<h4 style='color:green;font-weight:bolder;'>There is no pendings vats  to approve/active right now !</h4>"
+        }
+    });
+
+</script>

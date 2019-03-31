@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "UnAssign Upazilla";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle" style="padding: 10px">Un Assign Upazilla</h3>
+
+    @using (Html.BeginForm("UnAssignUpazilla", "Assign"))
+    {
+        <div class="form-horizontal">
+            <div class="col-md-6 col-md-offset-3">
+                <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
+                </div>
+                <hr />
+                <div class="form-group">
+                    <label for="UpazillaName" class="control-label col-md-3">Upazilla Name</label>
+                    <div class="col-md-9">
+                        <input type="text" id="UpazillaName" name="UpazillaName" class="form-control" placeholder="Start typing Upazilla Name..." autofocus required />
+                        <input type="hidden" id="TerritoryDetailsId" name="TerritoryDetailsId" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="TerritoryName" class="control-label col-md-3">Assigned To</label>
+                    <div class="col-md-9">
+                        <input type="text" id="TerritoryName" name="TerritoryName" class="form-control" placeholder="Assigned Territory name...." readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Reason" class="control-label col-md-3">Reason</label>
+                    <div class="col-md-9">
+                        <textarea class="form-control" id="Reason" placeholder="Please! write the reason of Un Assign" name="Reason" rows="3" style="resize: none" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-3">
+                        <input type="button" value="UnAssign" class="btn btn-info" onclick="UnAssignUpazilla(this)" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</section>
+
+@section Scripts
+{
+    <script type="text/javascript">
+    $(function () {
+        $("#UpazillaName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url:'@Url.Action("GetAssignedUpazillaNameAutoComplete", "Common",new {area=""})',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data,
+                            function(item) {
+                                return item;
+                            }));
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#TerritoryDetailsId").val(i.item.val);
+                var territoryDetailsId = i.item.val;
+                var json = { tdId: territoryDetailsId };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetTerritoryDetailsById", "Common", new { area = "" })',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+
+                        var territoryName = data.TerritoryName;
+                        $("#TerritoryName").val(territoryName);
+
+                    }
+                });
+            },
+            minLength: 1
+        });
+    });
+</script>
+<script>
+
+
+    function UnAssignUpazilla(id) {
+
+        if ($("#UpazillaName").val() === "") {
+            alert("Please! enter Upazilla name....");
+        }
+        else if ($("#Reason").val() === "") {
+            alert("Please! Enter the reason of Un Assign....");
+        }
+        else {
+            if (confirm("Are you sure to UnAssign this Upazilla ?")) {
+
+                var $form = $(id).parents('form');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("UnAssignUpazilla")',
+                    data: $form.serialize(),
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    },
+                    success: function (response) {
+                        var result = response.Message;
+                        $('#message').html(response).fadeIn('slow');
+                        $('#message').html(result).fadeIn('slow'); //also show a success message
+                        $('#message').delay(5000).fadeOut('slow');
+                        setTimeout(function () { ReloadPage(); }, 6000);
+                    }
+
+                });
+
+                return false; // if it's a link to prevent post
+
+            } else {
+                return false;// if it's a link to prevent post
+            }
+        }
+
+
+
+        return false;// if it's a link to prevent post
+
+
+    }
+    function ReloadPage() {
+        location.reload();
+    }
+</script>
+
+
+}

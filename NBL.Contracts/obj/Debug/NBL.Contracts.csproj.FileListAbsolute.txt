@@ -1,0 +1,8 @@
+E:\Abdus Salam\NBL\NBL.Contracts\bin\Debug\NBL.Contracts.dll
+E:\Abdus Salam\NBL\NBL.Contracts\bin\Debug\NBL.Contracts.pdb
+E:\Abdus Salam\NBL\NBL.Contracts\obj\Debug\NBL.Contracts.dll
+E:\Abdus Salam\NBL\NBL.Contracts\obj\Debug\NBL.Contracts.pdb
+E:\API\NBL\NBL.Contracts\bin\Debug\NBL.Contracts.dll
+E:\API\NBL\NBL.Contracts\bin\Debug\NBL.Contracts.pdb
+E:\API\NBL\NBL.Contracts\obj\Debug\NBL.Contracts.dll
+E:\API\NBL\NBL.Contracts\obj\Debug\NBL.Contracts.pdb

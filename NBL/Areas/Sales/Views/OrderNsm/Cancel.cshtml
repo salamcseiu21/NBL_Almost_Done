@@ -1,0 +1,114 @@
+﻿
+@model NBL.Models.ViewModels.Orders.ViewOrder
+@{
+    ViewBag.Title = "Cancel";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+
+}
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Cancel Order</h3>
+    <br />
+    <div style="border: 1px dotted; padding: 10px; font-size: 18px">
+
+        @Html.Partial("_OrderDetailsHeaderPartialPage", Model)
+
+        <div class="row" style="padding:0 10px">
+            <p style="font-weight: bolder;font-size: 20px" class="text-center text-green">Product List</p>
+            <table id="table_product_list" class="table table-bordered" style="border:1px solid black;font-size:14px">
+
+                <thead>
+
+                <tr>
+                    <th class="text-center">Product Name</th>
+                    <th class="text-center">Category Name</th>
+                    <th class="text-center">Unit Price (&#2547;)</th>
+                    <th class="text-center">Vat (&#2547;)</th>
+                    <th class="text-center">Discount (&#2547;)</th>
+                    <th class="text-center">Sale Price(&#2547;)</th>
+                    <th style="width: 10%" class="text-center">Quantity</th>
+                    <th class="text-center">Sub Total (&#2547;)</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.OrderItems) 
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.ProductCategoryName</td>
+                        <td class="text-right">@item.UnitPrice</td>
+                        <td class="text-right">@item.Vat</td>
+                        <td class="text-right">@item.DiscountAmount</td>
+                        <td class="text-right">@item.SalePrice</td>
+                        <td class="text-right">@item.Quantity</td>
+                        <td class="text-right">@item.SubTotal</td>
+                    </tr>
+                }
+
+
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="6" class="text-right">Total</th>
+                    <th class="text-right">@Model.OrderItems.Sum(n => n.Quantity)</th>
+                    <th class="text-right">@Model.OrderItems.Sum(n => n.SubTotal)</th>
+                </tr>
+                </tfoot>
+
+            </table>
+
+        </div><hr />
+        @using (Html.BeginForm("Cancel", "Order", FormMethod.Post, new { id = "CancelOrderByNsmForm" }))
+        {
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Reason</label>
+                    <div class="col-md-10">
+                        <input id="OrderId" name="OrderId" value="@Model.OrderId" type="hidden" />
+                        <textarea id="Reason" name="Reason" class="form-control" style="resize:none;" rows="2" placeholder="Reason for cancel !" autofocus></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2"></label>
+                    <div class="col-md-10 text-right">
+                        @Html.ActionLink("Back", "PendingOrder", "Ordernsm", new { area = "Sales" }, new { @class = "btn btn-info" })
+                        <input type="button" value="Cancel" onclick="Cancel(this)" class="btn btn-danger" />
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+        function Cancel(id) {
+            if ($("#Reason").val() === "") {
+                alert("Please write the reason of Cancel.......");
+            }
+            else {
+                if (confirm("Are you sure to cancel  this Order ?")) {
+                    // alert(id.id);
+                    $("#CancelOrderByNsmForm").submit();
+                } else {
+                    return false;// if it's a link to prevent post
+                }
+
+                return false;// if it's a link to prevent post
+            }
+
+        }
+    </script>
+
+    <script>
+
+        $('#table_product_list').DataTable({
+            bFilter: false,
+            bInfo: false,
+            "bPaginate": false,
+
+        });
+    </script>
+}

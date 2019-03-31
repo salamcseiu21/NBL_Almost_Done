@@ -1,0 +1,14 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.ViewProductionNoteModel>
+@{
+    ViewBag.Title = "Pending Production Note";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    @Html.Partial("_ViewProductNotePartialPage")
+</section>
+@section Scripts
+{
+    <script src="~/Scripts/Production/ViewProductionNote.js"></script>
+   
+}

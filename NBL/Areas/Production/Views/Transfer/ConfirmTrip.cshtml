@@ -1,0 +1,162 @@
+﻿@using NBL.Models.ViewModels.TransferProducts
+@model IEnumerable<ViewTripModel>
+@{
+    ViewBag.Title = "ConfirmTrip";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+}
+
+<section class="content">
+    
+    <div class="form-horizontal">
+       @using (Html.BeginForm("CreateTrip", "Transfer", FormMethod.Post, new { id = "saveTripInformationForm" }))
+       {
+        <div class="form-horizontal">
+            <div class="row">
+                <h3 class="text-center headingStyle text-green">Delivery Info</h3>
+                <hr/>
+                <div class="col-md-6">
+                    
+                    <div class="form-group">
+
+                        <label for="Transportation" class="control-label col-md-3">Remarks:</label>
+                        <div class="col-md-9">
+                            
+                            <textarea type="text" id="Remarks" name="Remarks" autofocus class="form-control" value="Remarks here...." placeholder="Remarks..." required rows="3" style="resize: none"></textarea>
+
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="DriverName" class="control-label col-md-3">Driver Name:</label>
+                        <div class="col-md-9">
+                            <input type="text" id="DriverName" name="DriverName" value="Mr. Abc" class="form-control" placeholder="Driver Name" required/>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="DriverName" class="control-label col-md-3">Driver Phone:</label>
+                        <div class="col-md-9">
+                            <input type="text" id="DriverPhone" name="DriverPhone" value="02123456" class="form-control" placeholder="Driver Phone" required/>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <label for="Transportation" class="control-label col-md-3">Transportation:</label>
+                        <div class="col-md-9">
+                            <input type="text" id="Transportation" name="Transportation" class="form-control" value="Transport" placeholder="Transportation Name" required />
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="VehicleNo" class="control-label col-md-3">Vehicle No:</label>
+                        <div class="col-md-9">
+                            <input type="text" id="VehicleNo" name="VehicleNo" value="D-25850" placeholder="Vehicle No" class="form-control" required/>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="TransportationCost" class="control-label col-md-3">Transportation Cost:</label>
+                        <div class="col-md-9">
+                            <input type="number" id="TransportationCost" name="TransportationCost" value="5000" class="form-control" placeholder="Transportation Cost" required/>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="DeliveryDate" class="control-label col-md-3">Date</label>
+                        <div class="col-md-9">
+                            <input type="text" id="DeliveryDate" name="DeliveryDate" value="@date" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+
+                        <div class="col-md-9 col-md-offset-3">
+                            <div class="btn-toolbar">
+
+                                @Html.ActionLink("Back", "CreateTrip", "Transfer", new {area = "Production"}, new {@class = "btn btn-danger"})
+                                <input type="submit" value="Save" class="btn btn-info"/>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+       }
+
+    </div>
+
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <p style="color: black;font-weight: bolder">Trip Summary</p>
+        </div>
+        <div class="panel-body">
+            
+            
+            
+            @if (Model != null)
+            {
+
+                var tempList = Model.GroupBy(n => n.RequisitionRef);
+                foreach (IGrouping<string, ViewTripModel> requisitionModels in tempList)
+                {
+
+                    <div  class="row text-center" style="padding: 5px">
+                        Requisition Ref :   @requisitionModels.Key
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">Branch</div>
+                        <div class="col-md-3">Product Name</div>
+                        <div class="col-md-3">Requisition Qty</div>
+                        <div class="col-md-3">Delivery Qty</div>
+                    </div>
+                    <hr/>
+                    var groupByBranch = requisitionModels.GroupBy(n => n.ToBranch.BranchName);
+                    foreach (IGrouping<string, ViewTripModel> models in groupByBranch)
+                    {
+
+                        <div class="row">
+                            
+                            <div class="col-md-3">
+                                @models.Key
+                            </div>
+                            <div class="col-md-9">
+                               
+                                @foreach (var item in models)
+                                {
+
+                                    <div class="row" style="border: 1px solid">
+                                        <div class="col-md-4">@item.ProuctName</div>
+                                        <div class="col-md-4">@item.RequisitionQty</div>
+                                        <div class="col-md-4">@item.DeliveryQuantity</div>
+                                           
+                                    </div>
+                                }
+                                
+                            </div>
+                        </div>
+                       <hr/>
+                    }
+
+                }
+
+            }
+            
+
+        </div>
+        <div class="panel-footer">Total Delivereable Qty: @Model.Sum(n=>n.DeliveryQuantity)</div>
+    </div>
+</section>
+@section Scripts
+{
+    <script>
+        $("#DeliveryDate").datepicker({ dateFormat: 'dd-MM-yy' });
+    </script>
+}

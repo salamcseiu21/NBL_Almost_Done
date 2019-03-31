@@ -1,0 +1,57 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Clients.Client>
+@{
+    ViewBag.Title = "Client List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+
+}
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Client List</h3>
+    <table id="table_client_list" class="table table table-striped table-bordered" style="border:1px solid black">
+       
+
+        <thead>
+        <tr>
+            <th>Basic Info</th>
+            <th>Contact Info</th>
+            <th>Total Order</th>
+            <th class="text-center">View</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.Raw(item.GetBasicInformation())</td>
+                <td>@Html.Raw(item.GetContactInformation())</td>
+                <td>@item.GetTotalOrder()</td>
+                <td class="text-center">
+                    @*@Html.ActionLink(" Edit", "Edit", new { id = item.ClientId }, new { @class = "fa fa-edit" }) |*@
+                    @Html.ActionLink(" Profile", "ClientProfile", new { id = item.ClientId }, new { @class = "fa fa-eye" })
+                </td>
+            </tr>
+        }
+
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Basic Info</th>
+            <th>Contact Info</th>
+            <th>Total Order</th>
+            <th class="text-center">View</th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+
+@section Scripts
+{
+    <script>
+
+        $('#table_client_list').DataTable({
+            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]]
+        });
+
+    </script>
+}

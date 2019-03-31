@@ -1,0 +1,89 @@
+﻿@model NBL.Models.ViewModels.TransferProducts.ViewTransferIssueDetailsModel
+@{
+    ViewBag.Title = "Issue Details";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var fBranch = Model.FromBranch;
+    var tBranch = Model.ToBranch;
+
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Transfer Issue Details</h3>
+    <div style="border: 1px dotted; padding: 10px;">
+
+        <div class="row">
+
+            <div class="col-md-6">
+               <h3> From : @fBranch.BranchName </h3>
+                <p>@fBranch.BranchAddress</p>
+
+            </div>
+            <div class="col-md-6">
+                <h3>  To : @tBranch.BranchName</h3>
+                <p>@tBranch.BranchAddress</p>
+               
+            </div>
+           
+
+        </div>
+        <hr />
+        <table id="table_transfer_issue_details" class="display" style="border:1px solid black">
+            <caption class="text-center text-green" style="font-weight:bold;">Product List</caption>
+
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model.TransferIssueDetailses)
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.Quantity</td>
+                    
+                        
+                    </tr>
+                }
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                   
+                </tr>
+            </tfoot>
+        </table>
+  
+        @using (Html.BeginForm("ApproveTransferIssue", "Approve", FormMethod.Post, new { id = "ApproveTransferIssueForm" }))
+        {
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input type="hidden" value="@Model.TransferIssue.TransferIssueId" id="TransferIssueId" name="TransferIssueId" />
+                        <input type="submit" value="Approve" class="btn btn-info" />
+                    </div>
+                </div>
+            </div>
+        }
+      
+       
+    </div>
+</section>
+@section Scripts
+{
+    <script>
+
+        $('#table_transfer_issue_details').DataTable({
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false
+        });
+
+    </script>
+
+}

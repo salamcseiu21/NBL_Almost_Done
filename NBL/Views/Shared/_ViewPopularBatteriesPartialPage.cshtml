@@ -1,0 +1,39 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.ViewProduct>
+<div class="box box-success">
+    <div class="box-header with-border" style="background-color: #00A65A;color: white">
+        <h3 class="box-title">Popular 6 Batteries (@DateTime.Now.Year)</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus" style="color: white"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" style="color: white"></i></button>
+        </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <div class="table-responsive">
+            <table class="table no-margin">
+                          
+                <tbody>
+                @foreach (var battery in Model.ToList())
+                {
+                    <tr>
+                        <td>
+                            @battery.ProductName
+                        </td>
+                        <td class="text-right">@battery.TotalSoldQty (Pcs)</td>
+                    </tr>
+                }
+
+                </tbody>
+            </table>
+        </div>
+        <!-- /.table-responsive -->
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer clearfix">
+
+        <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-right">View All</a>
+    </div>
+    <!-- /.box-footer -->
+</div>

@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+<style>
+    .FeaturesProduct {
+        border:.5px solid; 
+        padding: 10px;
+        min-height: 300px; 
+        font-family: 'Times New Roman';
+        font-size: 16px
+    }
+    .FeaturesProduct h4 {
+        color: green;
+        font-weight: bolder
+    }
+    .FeaturesProduct p{
+        text-align: justify
+    }
+</style>
+<div class="row" style="padding: 10px 15px">
+    <img src="~/Images/banner1.jpg" class="img-responsive"/>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="FeaturesProduct">
+            <h4 class="text-center">Passenger Car (PC) Battery</h4>
+            <p>
+                Navana Passenger Car ( PC-Series, Maintenance Type ) batteries ensure you a trustworthy power for a guaranteed ignition , superior performance and reliable lifespan i.e. value for money .Navana PC battery ranges from 32AH to 80AH of nominal voltage 12 applicable for Sedan Car, Jeep, Station Wagon, Micro-bus and efficient management duly certified by ISO where reference of IEC and JIS also followed for quality control.
+            </p>
+            
+        </div>
+
+    </div>
+    <div class="col-md-4">
+
+
+        <div class="FeaturesProduct">
+            <h4 class="text-center">Commercial Vehicle (CV) Battery</h4>
+            <p>
+                Commercial Vehicle (CV) Battery Series, ensure a trustworthy power for a guaranteed ignition, superior performance and reliable lifespan. These are ranges from 15 plates to 29 plates of nominal voltage 12 applicable for bus, truck, covered-van, pick-up, prime-mover, container mover, etc. It is also applicable for river and sea going vessels.
+            </p>
+          
+               
+                @*@Html.ActionLink("View R1", "TestResult", "Home", new { Area = "", id ="c" }, new { target = "_blank" })*@
+                @*@Html.ActionLink("View R2", "TestResult", "Home", new { Area = "", id = "p" }, new { target = "_blank" })*@
+                @*@Html.ActionLink("View R3", "TestResult", "Home", new { Area = "", id = "e" }, new { target = "_blank" })
+                    @Html.ActionLink("View R4", "TestResult", "Home", new { Area = "", id = "prod" }, new { target = "_blank" })
+                     @Html.ActionLink("Order Details", "TestResult", "Home", new { Area = "", id = "o" }, new { target = "_blank" })*@
+
+                @*@Html.ActionLink(" Read Excel File", "getExcelFile", "Test", new { Area = ""},null)*@
+        </div>
+    </div>
+    <div class="col-md-4">
+
+        <div class="FeaturesProduct">
+            <h4 class="text-center">Motorcycle (MC) Battery</h4>
+            <p>
+                NAVANA Race+R, flooded types Motorcycle automotive Battery that powers the starter motor, the lights, and the ignition system of Motorcycle engine.
+
+                The flooded type Motorcycle Battery is designed to deliver large bursts of cranking current for a short time, which is needed to start an engine. Once the engine starts, the battery is recharged by the engine –driven charging system.
+              
+            </p>
+           
+        </div>
+    </div>
+</div>

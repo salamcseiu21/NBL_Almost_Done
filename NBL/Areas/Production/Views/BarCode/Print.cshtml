@@ -1,0 +1,119 @@
+﻿@model NBL.Models.EntityModels.BarCodes.PrintBarCodeModel
+@{
+    ViewBag.Title = "Print BarCode";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    @using (Html.BeginForm("Print", "BarCode", FormMethod.Post,new {target="_blank"}))
+    {
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                
+                <div class="text-center text-danger">
+                    @if (TempData["Message"] != null)
+                    {
+                        @Html.Raw(TempData["Message"])
+                    }
+                </div>
+                <h3 class="text-center text-green">Print BarCode</h3>
+
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BarCodeMasterId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.BarCodeMasterId, null, "--Select--", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.BarCodeMasterId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                   
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.From, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.From, new { @class = "form-control", placeholder = "From number.." })
+                            @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.To, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.To, new { @class = "form-control", placeholder = "From number.." })
+                            @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-9 text-right">
+                                <div class="btn toolbar">
+
+                                 
+                                    <a class="btn btn-danger" href="~/production">Cancel</a>
+                                    <input type="submit" Class="btn btn-primary" ID="btnPrint" value="Print" />
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+
+                @if (ViewBag.BarcodeImage != null)
+                {
+                    <img src="@ViewBag.BarcodeImage" alt="" />
+                }
+            </div>
+
+
+        </div>
+    }
+
+</section>
+
+@section Scripts
+{
+    <script>
+
+        $(function () {
+            $("#ProductName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: RootUrl + 'common/ProductNameAutoComplete/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function (item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#ProductId").val(i.item.val);
+                },
+                minLength: 1
+            });
+        });
+    </script>
+}

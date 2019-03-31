@@ -1,0 +1,77 @@
+﻿
+@model IEnumerable<NBL.Models.ViewModels.Orders.ViewOrder>
+@{
+    ViewBag.Title = "Pending Order";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+   
+}
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Pending Orders</h3>
+
+    <table id="table_pending_order_list" class="table table-bordered" style="border:1px solid black">
+        <thead>
+            <tr>
+                <th>Client Info</th>
+                <th>Order Slip No</th>
+                <th class="text-center">Qty</th>
+                <th class="text-center">Amount (&#2547;)</th>
+                <th class="text-center">Order Date</th>
+                <th class="text-center">Order By</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                   
+                    <td>
+                       @Html.Raw(item.Client.GetBasicInformation())
+                   </td>
+                    <td>@item.OrderSlipNo</td>
+                    <td class="text-right">@item.Quantity</td>
+                    <td class="text-right">@item.NetAmounts</td>
+                    <td class="text-center">@item.SysDate.ToShortTimeString(),@item.SysDate.ToString("dd-MMM-yyyy")
+                        @*<br/>
+                       @{
+                         @Calculator.TimeDuration(item.SysDate, DateTime.Now)
+                       }*@
+                    </td>
+                    <td>@(item.User?.EmployeeName?? "N/A")</td>
+                    <td class="text-center">
+                        @Html.ActionLink(" Cancel", "Cancel", "OrderNsm", new { id = item.OrderId }, new { @class = "fa fa-times" ,style="color:red;"}) &nbsp;|
+                        @Html.ActionLink(" Details", "Edit", "OrderNsm", new { area = "Sales", id = item.OrderId }, new { @class = "fa fa-eye" })
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Client Info</th>
+                <th>Order Slip No</th>
+                <th class="text-center">Qty</th>
+                <th class="text-center">Amount (&#2547;)</th>
+                <th class="text-center">Order Date</th>
+                <th class="text-center">Order By</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+   
+</section>
+@section Scripts
+{
+    <script>
+
+        $('#table_pending_order_list').DataTable({
+            "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+            "oLanguage": {
+                "sEmptyTable": "<h4 style='color:green;font-weight:bolder;'>There is no pending order in the list right now !</h4>"
+            }
+        });
+
+    </script>
+}

@@ -1,0 +1,247 @@
+﻿@model NBL.Models.ViewModels.Orders.ViewOrderSearchModel
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">
+        Search Order
+    </h3>
+    <br/>
+    
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "salesSummaryForm" }))
+    {
+        <div class="panel panel-default">
+            <div class="form-horizontal" style="padding: 10px">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BranchId, new {@class = "control-label col-md-3"})
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(model => Model.BranchId, null, "--Select--", new {@class = "form-control"})
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ClientName, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.ClientName, new { @class = "form-control", placeholder = "Client Name..." })
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Date range</label>
+
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                                        <span>
+                                            <i class="fa fa-calendar"></i> Select a Date range
+                                        </span>
+                                       
+                                        <i class="fa fa-caret-down"></i>
+                                    </button>
+                                    @Html.HiddenFor(m=>m.DateFrom)
+                                    @Html.HiddenFor(m => m.DateTo)
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="form-group">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-9">
+                                <button type="button" class="btn btn-success" onclick="ViewFilteredOrder()"><i class="fa fa-search"></i> Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           
+            </div>
+        </div>
+    }
+    <div style="padding: 10px;border: 1px solid">
+
+        <table id="table_Order_list" class="display table table-bordered responsive" style="border: 1px solid black">
+
+            <thead>
+                <tr>
+                    <th>Order Slip No</th>
+                    <th class="text-center">Order Date</th>
+                    <th class="text-center">Client Name</th>
+                    <th class="text-right">Amount (&#2547;)</th>
+                    <th class="text-right">Vat (&#2547;)</th>
+                    <th class="text-right">Discount (&#2547;)</th>
+                    <th class="text-center">View</th>
+                </tr>
+            </thead>
+
+            <tbody></tbody>
+            <tfoot>
+                <tr>
+                    <th>Order Slip No</th>
+                    <th class="text-center">Order Date</th>
+                    <th class="text-center">Client Name</th>
+                    <th class="text-right">Amount (&#2547;)</th>
+                    <th class="text-right">Vat (&#2547;)</th>
+                    <th class="text-right">Discount (&#2547;)</th>
+                    <th class="text-center">View</th>
+                </tr>
+            </tfoot>
+        </table>
+
+    </div>
+
+    <!--load modal partial here...-->
+    @Html.Partial("_ModalPartialPage")
+</section>
+
+@section Scripts
+{
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '@Url.Action("GetAllOrders", "Common", new { area = "" })',
+                method: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    InitialiseDataTable(data);
+                   
+                }
+            });
+        });
+    </script>
+
+
+    <script>
+
+        function ViewFilteredOrder() {
+            var startDate = null;
+            var endDate = null;
+            if ($("#DateFrom").val() !== "") {
+                startDate = new Date($("#DateFrom").val()).format("%Y-%m-%d");
+            }
+            if ($("#DateTo").val() !== "") {
+                endDate = new Date($("#DateTo").val()).format("%Y-%m-%d");
+            }
+            var branchId = $("#BranchId").val();
+            var clientName = $("#ClientName").val();
+            $.ajax({
+                url: '@Url.Action("GetOrdersByBranchId", "Common", new { area = "" })',
+                method: 'post',
+                dataType: 'json',
+                data: { branchId: branchId, clientName: clientName, startDate: startDate, endDate: endDate },
+                success: function (data) {
+
+                    InitialiseDataTable(data);
+                   
+                }
+            });
+        }
+
+        function InitialiseDataTable(data) {
+
+            if ($.fn.dataTable.isDataTable('#table_Order_list')) {
+                var table = $('#table_Order_list').DataTable();
+                table.destroy();
+            } 
+            $("#DateFrom").val("");
+            $("#DateTo").val("");
+            $('#daterange-btn span').html('<i class="fa fa-calendar"></i> Select a Date range');
+            $('#table_Order_list').dataTable({
+                destroy: true,
+                paging: true,
+                lengthMenu: [[15, 30, 50, -1], [15, 30, 50, "All"]],
+                sort: true,
+                searching: true,
+                scroller: true,
+                scrollY: 500,
+                data: data,
+                columns: [
+                    { 'data': 'OrderSlipNo' },
+                    {
+                        'data': 'OrderDate',
+                        className: "text-center",
+                        'render': function (jsonDate) {
+                            var date = new Date(parseInt(jsonDate.substr(6)));
+                            var month = date.getMonth() + 1;
+                            return date.getDate() + "-" + month + "-" + date.getFullYear();
+                        }
+                    },
+                    {
+                        'data': 'Client.CommercialName'
+                    },
+                    {
+                        'data': 'Amounts',
+                        className: "text-right"
+                    },
+                   
+                    {
+                        'data': 'Vat',
+                        className: "text-right"
+                    },
+                    {
+                        'data': 'Discount',
+                        className: "text-right",
+                    },
+                    {
+                        data: null,
+                        className: "text-center",
+                        render: function (data, type, row) {
+                            return '<button type="button" class="btn btn-info" value=' + data.OrderId + ' onclick="viewDetails(this)"> <i class="fa fa-eye"></i> View</button>';
+                        }
+                    }
+
+                ]
+            });
+        }
+    </script>
+    <script>
+
+        function viewDetails(orderId) {
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ViewOrderDetails", "Common", new { area = "" })",
+                data: { orderId: orderId.value },
+                success: function (response) {
+                    $('#modalBody').html(response);
+                    $('#showOrderDetailsModal').modal('show');
+                }
+            });
+        }
+
+    </script>
+    <script>
+        $('#daterange-btn').daterangepicker(
+            {
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                startDate: moment().subtract(29, 'days'),
+                endDate: moment()
+            },
+            function (start, end) {
+                $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                $("#DateFrom").val(start.format('MMMM D, YYYY'));
+                $("#DateTo").val(end.format('MMMM D, YYYY'));
+            }
+        )
+    </script>
+
+}
+
+

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Products.Product>
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Prodcut List</h3>
+    <table id="table_product_list" class="display table table-bordered" style="border:1px solid black">
+      
+
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Sub Sub Account Code</th>
+                <th class="text-right">Unit Price (&#2547;) </th>
+                <th class="text-right">Vat (&#2547;) </th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.SubSubSubAccountCode</td>
+                    <td class="text-right">@item.UnitPrice</td>
+                    <td class="text-right">@item.Vat</td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Product Name</th>
+                <th>Sub Sub Account Code</th>
+                <th class="text-right">Unit Price (&#2547;) </th>
+                <th class="text-right">Vat (&#2547;) </th>
+            </tr>
+        </tfoot>
+    </table>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+
+
+    <script>
+
+    $('#table_product_list').DataTable({
+        "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]]
+    });
+
+    </script>
+</section>
+
+

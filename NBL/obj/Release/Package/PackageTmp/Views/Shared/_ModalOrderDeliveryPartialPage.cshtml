@@ -1,0 +1,111 @@
+﻿@model NBL.Models.EntityModels.Invoices.Invoice
+@{
+    var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+}
+@using (Html.BeginForm("Delivery", "Delivery", FormMethod.Post, new { id = "saveDeliveryInfoForm" }))
+{
+    <div class="form-horizontal">
+       
+        <div class="text-center">
+            <input type="checkbox" name="ownTransport" id="ownTransport" onchange="ToggleTransportationInfo(this)"> Own Transport<br>
+        </div>
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div class="form-group">
+
+                    @Html.HiddenFor(m => m.InvoiceId)
+                    <label for="Transportation" class="control-label col-md-4">Transportation :</label>
+                    <div class="col-md-8">
+                        <input type="text" id="Transportation" name="Transportation" class="form-control" value="Transport" placeholder="Transportation Name" required/>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="DriverName" class="control-label col-md-4">Driver Name :</label>
+                    <div class="col-md-8">
+                        <input type="text" id="DriverName" name="DriverName" value="Mr. Abc" class="form-control" placeholder="Driver Name" required/>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="DriverPhone" class="control-label col-md-4">Driver Phone :</label>
+                    <div class="col-md-8">
+                        <input type="text" id="DriverPhone" name="DriverPhone" value="012855555" class="form-control" placeholder="Driver Phone" required/>
+
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="VehicleNo" class="control-label col-md-4">Vehicle No :</label>
+                    <div class="col-md-8">
+                        <input type="text" id="VehicleNo" name="VehicleNo" value="D-25850" placeholder="Vehicle No" class="form-control" required />
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="TransportationCost" class="control-label col-md-4">Fare :</label>
+                    <div class="col-md-8">
+                        <input type="number" id="TransportationCost" name="TransportationCost" value="5000" class="form-control" placeholder="Transportation Cost" required/>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="DeliveryDate" class="control-label col-md-4">Date :</label>
+                    <div class="col-md-8">
+                        <input type="text" id="DeliveryDate" name="DeliveryDate" value="@date" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+
+
+                    <div class="col-md-8 col-md-offset-4">
+                        <div class="btn-toolbar">
+                            <input type="button" value="Save" onclick="SaveDeliveryInfo(this)" class="btn btn-info"/>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+
+    $(document).ready(function() {
+        $("#DeliveryDate").datepicker({ dateFormat: 'dd-MM-yy' });
+    });
+    function ToggleTransportationInfo(event) {
+        if ($(event).prop("checked") === true) {
+           
+            $("#Transportation").attr('disabled', true);
+            $("#DriverName").attr('disabled', true);
+            $("#DriverPhone").attr('disabled', true);
+            $("#VehicleNo").attr('disabled', true);
+            $("#TransportationCost").attr('disabled', true);
+            
+
+
+            $("#Transportation").val('Own');
+            $("#DriverName").val('Own');
+            $("#DriverPhone").val('Own');
+            $("#VehicleNo").val('Own');
+            $("#TransportationCost").val(0);
+        }
+        else if ($(event).prop("checked") === false) {
+           
+            $("#Transportation").removeAttr('disabled');
+            $("#DriverName").removeAttr('disabled');
+            $("#DriverPhone").removeAttr('disabled');
+            $("#VehicleNo").removeAttr('disabled');
+            $("#TransportationCost").removeAttr('disabled');
+
+        }
+    }
+</script>

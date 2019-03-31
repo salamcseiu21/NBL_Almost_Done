@@ -1,0 +1,71 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.ViewBranch>
+@{
+    ViewBag.Title = "Branch List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <div class="text-center">
+
+        @Html.ActionLink("Add New Branch", "AddBranch", "Branch", new { area = "Editor" }, new { @class = "btn btn-info" })
+    </div>
+    <table id="table_branch_list" class="display table-bordered" style="border:1px solid black">
+        <caption class="text-center text-green headingStyle">Branch List</caption>
+
+        <thead>
+            <tr>
+                <th>Branch Name</th>
+                <th>Title</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Opening Date</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.BranchName</td>
+                    <td>@item.Title</td>
+                    <td>@item.BranchAddress</td>
+                    <td>@item.BranchPhone</td>
+                    <td>@item.BranchEmail</td>
+                    <td>@item.BranchOpenigDate.ToString("D")</td>
+                    <td class="text-center">
+                        @Html.ActionLink(" Edit", "Edit","Branch", new { id = item.BranchId },new {@class="fa fa-edit"})
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Branch Name</th>
+                <th>Title</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Opening Date</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+
+
+</section>
+@section Scripts
+{
+    <script>
+
+        $('#table_branch_list').DataTable({
+            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]]
+        });
+
+    </script>
+
+}

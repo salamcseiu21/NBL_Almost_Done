@@ -1,0 +1,32 @@
+﻿@*Corporate sales admin  Menu*@
+<ul class="sidebar-menu" data-widget="tree" style="font-size: 16px; font-weight: bolder">
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-tachometer"></i>
+            <span>Dashboard</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                @Html.ActionLink(" Dashboard-1 ", "Home", "SalesAdmin", new { area = "Corporate" }, new { @class = "fa fa-eye", style = "font-weight: bolder" })
+            </li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-pencil"></i>
+            <span>Requisition</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" All", "All", "Requisition", new {area = "Corporate"}, new {@class = "fa fa-list", style = "font-weight: bolder"})</li>
+            <li>@Html.ActionLink(" New Requisition", "Create", "Requisition", new {area = "Corporate"}, new {@class = "fa fa-plus", style = "font-weight: bolder"})</li>
+            <li>@Html.ActionLink(" Monthly Requisition", "MonthlyRequisition", "Requisition", new {area = "Corporate"}, new {@class = "fa fa-plus", style = "font-weight: bolder"})</li>
+        </ul>
+    </li>
+    @Html.Partial("_MenuPartialPage")
+</ul>

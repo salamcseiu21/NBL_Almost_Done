@@ -1,0 +1,11 @@
+﻿
+@model IEnumerable<NBL.Models.EntityModels.Clients.Client>
+@{
+    ViewBag.Title = "Client List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+
+}
+<section class="content">
+
+    @Html.Partial("_ViewClientPartialPage", Model)
+</section>

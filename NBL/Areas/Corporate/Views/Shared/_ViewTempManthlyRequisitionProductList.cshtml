@@ -1,0 +1,43 @@
+﻿
+@model IEnumerable<NBL.Models.EntityModels.Products.Product>
+
+    <table class="display" id="tbl_Monthly_Requisiton_Product_List" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th class="text-center" style="width: 50px">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Quantity
+                    <input type="hidden" id="total_quantity" value="@Model.Sum(n => n.Quantity)"/>
+                </td>
+                <td class="text-center">
+
+                    <button type="button" value="@item.ProductId" onclick="RemoveProduct(this)"><i class="fa fa-times" style="color: red;"></i></button>
+
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th class="text-center" style="width: 50px">Action</th>
+        </tr>
+        </tfoot>
+    </table>
+
+<script>
+    
+    $("#tbl_Monthly_Requisiton_Product_List").DataTable();
+
+ 
+</script>

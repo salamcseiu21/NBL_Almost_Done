@@ -1,0 +1,82 @@
+﻿@model NBL.Models.ViewModels.Summaries.SummaryModel
+@{
+    ViewBag.Title = "Invoice dOrders";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Invoiced Order List</h3>
+    <table id="table_Invoiced_Order_list" class="table table-bordered" style="border:1px solid black">
+
+        <thead>
+            <tr>
+                <th>Client Info</th>
+                <th>Invoice Ref</th>
+                <th class="text-center">Invoice At</th>
+                <th class="text-right">Amount (&#2547;)</th>
+                <th class="text-right">Vat (&#2547;)</th>
+                <th class="text-right">Discount (&#2547;)</th>
+                <th class="text-right">S.D (&#2547;)</th>
+                <th class="text-right">Net Amount (&#2547;)</th>
+                <th class="text-right">Qty</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model.InvoicedOrderList)
+            {
+               
+                <tr>
+
+                    <td>@Html.Raw(item.Client.GetBasicInformation())</td>
+                    <td>@item.InvoiceRef</td>
+                    
+                    <td class="text-center">
+                        @item.InvoiceDateTime.ToShortTimeString()
+                        @if (!(item.InvoiceDateTime.Date.Equals(DateTime.Now.Date))) {
+                            <span>, @item.InvoiceDateTime.ToString("dd-MMM-yyyy")</span>
+                        }
+                    </td>
+                    <td class="text-right">@(item.Amounts-item.Vat)</td>
+                    <td class="text-right">@item.Vat</td>
+                    <td class="text-right">@item.Discount</td>
+                    <td class="text-right">@item.SpecialDiscount</td>
+                    <td class="text-right">@item.NetAmounts</td>
+                    <td class="text-right">@item.Quantity</td>
+                    <td class="text-center">
+                        @Html.ActionLink(" Preview & Print", "Invoice", new { id = item.InvoiceId }, new { target = "_blank",@class="fa fa-eye" })
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Client Info</th>
+                <th>Invoice Ref</th>
+                <th class="text-center">Invoice At</th>
+                <th class="text-right">Amount (&#2547;)</th>
+                <th class="text-right">Vat (&#2547;)</th>
+                <th class="text-right">Discount (&#2547;)</th>
+                <th class="text-right">S.D (&#2547;)</th>
+                <th class="text-right">Net Amount (&#2547;)</th>
+                <th class="text-right">Qty</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+
+</section>
+
+@section Scripts
+{
+    <script>
+
+        $('#table_Invoiced_Order_list').DataTable({
+            "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+            "order": [[1, "desc"]]
+        });
+
+    </script>
+}

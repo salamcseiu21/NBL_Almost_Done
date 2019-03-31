@@ -1,0 +1,83 @@
+﻿@using NBL.Areas.Accounts.Models
+@model IEnumerable<NBL.Areas.AccountsAndFinance.Models.JournalVoucher> 
+@{
+    ViewBag.Title = "Journals";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-green text-center headingStyle">Journals</h3>
+    
+    <table id="table_journal" class="table table-bordered" style="border:1px solid black">
+
+
+        <thead>
+            <tr>
+                <th>Voucher Ref</th>
+                <th class="text-center">Date </th>
+                <th class="text-right" style="width:10%"> Amount (&#2547;)</th>
+                <th class="text-center">Status </th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+
+                <tr>
+
+                    <td>@item.VoucherRef</td>
+                    <td class="text-center">@item.VoucherDate.ToString("dd-MMM-yyyy")</td>
+                    <td class="text-right">@item.Amounts</td>
+                    <td class="text-center">@{
+                                                switch (item.Status)
+                                                { 
+                                                    case 0:<label class="fa fa-spinner text-warning"> Pending</label>
+                                                        break;
+                                                    case 1:<label class="text-green fa fa-check">Approved</label>
+                                                        break;
+                                                    case 3: <label class="fa fa-times text-danger">Cancelled</label>
+                                                        break;
+
+                                                }
+                                            }</td>
+                    <td class="text-center">
+                        @if (item.Status.Equals(0))
+                        {
+                            @Html.ActionLink(" Edit", "EditJournalVoucher", "Voucher", new {id = item.JournalId, area = "Accounts"}, new {@class = "fa fa-edit"})<span>|</span>
+                            @Html.ActionLink(" Details", "JournalDetails", "Voucher", new {id = item.JournalId, area = "Accounts"}, new {@class = "fa fa-eye"})<span>|</span>
+                        }
+                        @Html.ActionLink(" Preview & Print", "JournalPreview", "Voucher", new {area = "Accounts", id = item.JournalId}, new {target = "_blank", @class = "fa fa-eye"})
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Voucher Ref</th>
+                <th class="text-center">Date </th>
+                <th class="text-right" style="width:10%"> Amount (&#2547;)</th>
+                <th class="text-center">Status </th>
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+
+
+</section>
+
+@section Scripts
+{
+    
+    <script>
+
+        $('#table_journal').DataTable({
+            "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+            "order": [[1, "desc"]]
+        });
+
+    </script>
+}

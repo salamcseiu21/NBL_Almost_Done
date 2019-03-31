@@ -1,0 +1,583 @@
+﻿@model NBL.Models.ViewModels.ViewReceivableCreateModel
+@{
+    ViewBag.Title = "Receiveable";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+    
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Receivable</h3>
+    <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
+    </div>
+    <hr />
+    @using (Html.BeginForm("SaveReceivable", "Account", FormMethod.Post, new { id = "ReceivableForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Remarks" class="control-label col-md-3">Remarks</label>
+                        <div class="col-md-9">
+                            <textarea id="Remarks" name="Remarks" class="form-control" rows="2" placeholder="Remarks" style="resize:none" autofocus></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="TransactionTypeId" class="control-label col-md-3">Transaction Type</label>
+                        <div class="col-md-9">
+                            <select id="TransactionTypeId" name="TransactionTypeId" class="form-control" autofocus required>
+                                <option value="">--Select--</option>
+                                @foreach (var item in Model.TransactionTypes)
+                                {
+                                    <option value="@item.TransactionTypeId">@item.TransactionTypeName</option> 
+                                }
+                                
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ClientName" class="control-label col-md-3">Client Name</label>
+                        <div class="col-md-9">
+                            <input type="text" id="ClientName" name="ClientName" class="form-control" placeholder="Start typing Client Name" required />
+                            <input type="hidden" id="ClientId" name="ClientId" />
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Address" class="control-label col-md-3">Address</label>
+                        <div class="col-md-9">
+
+                            <textarea id="Address" name="Address" class="form-control" placeholder="client address" readonly="readonly" rows="2" style="resize: none"></textarea>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="SubSubSubAccountCode" class="control-label col-md-3">Client Code</label>
+                        <div class="col-md-9">
+                            <input type="text" id="SubSubSubAccountCode" name="SubSubSubAccountCode" class="form-control" placeholder="Client Code" readonly="readonly" />
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ClientTypeName" class="control-label col-md-3">Type</label>
+                        <div class="col-md-9">
+                            <input type="text" id="ClientTypeName" name="ClientTypeName" placeholder="client type" class="form-control" readonly />
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="CreditLimit" class="control-label col-md-3">Credit Limit</label>
+                        <div class="col-md-9">
+                            <input type="text" id="CreditLimit" name="CreditLimit" placeholder="Credit Limit" class="form-control" readonly />
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Balance" class="control-label col-md-3">Balance</label>
+                        <div class="col-md-9">
+                            <input type="text" id="Balance" name="Balance" placeholder="client Balance" class="form-control" readonly />
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="InvoiceRef" class="control-label col-md-3">Invoice Ref</label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="InvoiceRef" name="InvoiceRef">
+                                <option value="IN00">--Select--</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                        <label for="InvoiceRef" class="control-label col-md-3">Invoice Ref</label>
+                        <div class="col-md-9">
+                            <input type="text" id="InvoiceRef" name="InvoiceRef" placeholder="Invoice Ref" class="form-control"  />
+                            <input type="hidden" id="InvoiceId" name="InvoiceId"/>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="PaymentTypeId" class="control-label col-md-3">Payment Type</label>
+                                <div class="col-md-9">
+
+                                    <select class="form-control" id="PaymentTypeId" name="PaymentTypeId"  required>
+                                        @foreach (var item in Model.PaymentTypes)
+                                        {
+                                            <option value="@item.PaymentTypeId">@item.PaymentTypeName</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="SourceBankName" class="control-label col-md-3">Source Bank Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="SourceBankName" name="SourceBankName" placeholder="Type Bank Name" class="form-control" required />
+                                </div>
+                            </div>
+                            <div class="form-group bankInfo">
+                                <label for="BankAccountNo" class="control-label col-md-3">Account No</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="BankAccountNo" name="BankAccountNo" placeholder="Type Account No" class="form-control" required />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ChequeNo" class="control-label col-md-3">Cheque No / Trx ID</label>
+                                <div class="col-md-9">
+
+                                    <input type="text" id="ChequeNo" name="ChequeNo" placeholder="Cheque No / Trx ID" class="form-control" required />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Date" class="control-label col-md-3">Date</label>
+                                <div class="col-md-9">
+
+                                    <input type="text" id="Date" name="Date" value="@date" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Amount" class="control-label col-md-3">Amount</label>
+                                <div class="col-md-9">
+
+                                    <input type="number" id="Amount" name="Amount" placeholder="Amount" class="form-control" min="0" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-9 col-md-offset-3">
+                                    <div class="row">
+                                        <div class="col-md-6">
+
+                                        </div>
+                                        <div class="col-md-6 text-right">
+
+                                            <input type="button" value="Add to List" onclick="AddChequeInfoToList(this)" class="btn btn-info" id="addItemButton" />
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "updateQuantiyForm" }))
+                    {
+                        <input type="hidden" id="chequeNoToRemove" name="chequeNoToRemove" />
+
+                        <table class="table table-bordered bankInfo" style="margin: 0; padding: 0;">
+
+                            <thead>
+
+                                <tr>
+                                    <th style="border: .5px solid gray;" class="text-center">Bank Name</th>
+                                    <th style="border: .5px solid gray; width: 10%" class="text-center">Cheque No</th>
+                                    <th style="border: .5px solid gray;" class="text-center">Cheque date</th>
+                                    <th style="border: 1px solid gray;" class="text-center">Amount (&#2547;)</th>
+                                    <th style="border: 1px solid gray;" class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="chequeInfo"></tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="form-group">
+
+                    <div class="col-md-9 col-md-offset-3">
+                        <div class="row">
+                            <div class="col-md-10">
+                             
+                            </div>
+                            <div class="col-md-2">
+                                @Html.ActionLink("Cancel", "Home", "Home", new { area = "Accounts" }, new { @class = "btn btn-danger" })
+                                <input type="button" value="Save" id="submitButton" onclick="SaveReceivable(this)" class="btn btn-success" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+</section>
+@section Scripts
+{
+    @* Date picker*@
+    <script>
+    $(function () {
+
+        $("#ReceiveDate").datepicker({
+            dateFormat: 'dd-MM-yy',
+            minDate: 0
+        });
+        $("#Date").datepicker({
+            dateFormat: 'dd-MM-yy',
+            minDate: -15
+            //maxDate:15
+        });
+    });
+    </script>
+
+    @*Client Name Auto Complete*@
+    <script type="text/javascript">
+    $(function () {
+        $("#ClientName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: RootUrl+'Common/ClientNameAutoComplete/',
+                    data: "{ 'prefix': '" + request.term + "' }",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data,
+                            function (item) {
+                                return item;
+                            }));
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#ClientId").val(i.item.val);
+                //alert(i.item.val);
+                $("#InvoiceRef").empty();
+                $("#InvoiceRef").append('<option value="IN00">--Select--</option>');
+                $("#Discount").val('');
+                $("#Address").val('');
+                $("#ClientPhone").val('');
+                $("#ClientEmail").val('');
+                $("#CreditLimit").val('');
+                $("#Balance").val('');
+                var cId = i.item.val;
+                var json = { clientId: cId };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetClientById", "Common", new { area = "" })',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+
+                        var address = data.Address;
+                        var phone = data.Phone;
+                        var email = data.Email;
+                        var discount = data.Discount;
+                        var code = data.SubSubSubAccountCode;
+                        var ctype = data.ClientTypeName;
+                        var cl = data.CreditLimit;
+
+                        $("#Address").val(address);
+                        $("#ClientPhone").val(phone);
+                        $("#ClientEmail").val(email);
+                        $("#Discount").val(discount);
+                        $("#SubSubSubAccountCode").val(code);
+                        $("#ClientTypeName").val(ctype);
+                        $("#CreditLimit").val(cl);
+                        $("#Balance").val(cl);
+
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetInvoiceRefByClientId", "Common", new { area = "" })',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+
+
+                        $.each(data, function (key, value) {
+                            //alert(key);
+                            $("#InvoiceRef").append('<option value=' + value.InvoiceRef + '>' + value.InvoiceRef + '</option>');
+
+                        });
+                    }
+                });
+            },
+            minLength: 1
+        });
+    });
+    </script>
+
+    @*Invoice Reference Auto Complete by Client Id*@
+    <script type="text/javascript">
+    $(function () {
+
+        $("#InvoiceRef").autocomplete({
+
+            source: function (request, response) {
+                var clientId = parseInt($("#ClientId").val());
+                $.ajax({
+                    url: RootUrl +'/Common/InvoiceRefAutoComplete/',
+                    data: "{ 'prefix': '" + request.term + "','clientId': '" + clientId + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data,
+                            function (item) {
+                                return item;
+                            }));
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#InvoiceId").val(i.item.val);
+
+            },
+            minLength: 1
+        });
+    });
+    </script>
+
+    @*Add cheque info to lsit (Ajax form Submit)*@
+    <script>
+    var bankChecqueNoList = [];
+    function AddChequeInfoToList(btnClicked) {
+
+        if ($("#TransactionTypeId").val() === "") {
+            alert("Please select Transaction Type...");
+        }
+        else if ($("#ClientName").val() === "") {
+            alert("Please Enter Client name...");
+        }
+        else if ($("#SourceBankName").val() === "") {
+            alert("Please Enter Source Bank name..");
+        }
+        else if ($("#BankAccountNo").val() === "") {
+            alert("Please Enter  Bank account no...");
+        }
+        else if ($("#ChequeNo").val() === "") {
+            alert("There is no value in Cheque No...");
+        }
+
+        else if ($("#Amount").val() === "") {
+            alert("Please Enter amount...");
+        }
+
+        else if ($("#PaymentTypeId").val() === "") {
+            alert("please select Payment Type...");
+        }
+        else {
+            var cNo = $("#ChequeNo").val();
+            //alert(btnClicked.id);
+            var a = $.inArray(cNo, bankChecqueNoList);
+            if (a < 0) {
+                bankChecqueNoList.push(cNo);
+                var $form = $(btnClicked).parents('form');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Receivable")',
+                    data: $form.serialize(),
+                    error: function (xhr, status, error) {
+                        //do something about the error
+                    },
+                    success: function (response) {
+                        //alert("Saved Successfully");
+                        ViewTempChequeInformation();
+                    }
+                });
+
+                return false; // if it's a link to prevent post
+            }
+            else {
+                alert("This check info already exits in the list...");
+            }
+        }
+
+    }
+
+    function ViewTempChequeInformation() {
+        $("#chequeInfo").html("");
+        //alert("Hi");
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetTempChequeInformation", "Account")',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                var total = 0;
+                for (var i = 0; i < data.length; i++) {
+                    total = total + data[i].SubTotal;
+                }
+                $.each(data, function (key, value) {
+
+                    var row = $("<tr><td style='border: 1px solid black; padding: 5px 10px;'>" + value.BankBranchName + "</td><td style='border: 1px solid black; padding: 5px 10px;'>" + value.ChequeNo + "</td><td style='border: 1px solid black; padding: 5px 10px;'>" + formatDate(value.ChequeDate) + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-right'><input type='hidden' name='product_Id_" + value.BankBranchId + "' value='" + value.BankBranchId + "'> " + value.ChequeAmount + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-center'><button id='" + value.ChequeNo + "' type='button' onclick='RemoveChequeInfo(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color:red;'></i></button>" + "</td></tr>");
+                    $("#chequeInfo").append(row);
+                });
+                $("#Total").val(total.toFixed(2));
+                var discount = $("#SpecialDiscount").val();
+                var net = total - discount;
+                $("#Net").val(net.toFixed(2));
+            }
+        });
+    }
+
+
+    function formatDate(chequedate) {
+
+        var month = new Array();
+        month[0] = "January";
+        month[1] = "February";
+        month[2] = "March";
+        month[3] = "April";
+        month[4] = "May";
+        month[5] = "June";
+        month[6] = "July";
+        month[7] = "August";
+        month[8] = "September";
+        month[9] = "October";
+        month[10] = "November";
+        month[11] = "December";
+
+        var dateString = chequedate.substr(6);
+        var currentTime = new Date(parseInt(dateString));
+        var mm = currentTime.getMonth();
+        var day = currentTime.getDate();
+        var year = currentTime.getFullYear();
+        var date = day + "-" + month[mm] + "-" + year;
+        return date// Function returns the date
+    }
+
+    function RemoveChequeInfo(btnClicked) {
+      
+
+        if (confirm("Are you sure to remove this Cheque info... ??")) {
+            //alert(btnClicked);
+            $("#chequeNoToRemove").val(btnClicked.id);
+            //alert(btnClicked.id);
+            //alert(btnClicked["delBtn"]);
+            var $form = $(btnClicked).parents('form');
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Remove")',
+                data: $form.serialize(),
+                error: function (xhr, status, error) {
+                    //do something about the error
+                },
+                success: function (response) {
+                    for (var i = bankChecqueNoList.length - 1; i >= 0; i--) {
+                        if (bankChecqueNoList[i] === btnClicked.id) {
+                            bankChecqueNoList.splice(i, 1);
+                        }
+                    }
+                    ViewTempChequeInformation();
+                }
+            });
+        } else {
+            return false;// if it's a link to prevent post
+        }
+
+        return false;// if it's a link to prevent post
+
+    }
+
+
+      function SaveReceivable(btnClicked) {
+
+          if ($("#ClientName").val() === "") {
+              alert("Can not submit empty info...");
+          } else {
+              if (confirm("Are you sure to Save this receivable info ??")) {
+
+                  var $form = $(btnClicked).parents('form');
+                  $.ajax({
+                      type: "POST",
+                      url: '@Url.Action("SaveReceivable")',
+                      data: $form.serialize(),
+                      error: function (xhr, status, error) {
+                          //do something about the error
+                      },
+                      success: function (response) {
+                          var result = response.Message;
+                          bankChecqueNoList = [];
+
+                          $('#message').html(response).fadeIn('slow');
+                          $('#message').html(result).fadeIn('slow') //also show a success message
+                          $('#message').delay(5000).fadeOut('slow');
+                          setTimeout(function () { ReloadPage(); }, 6000);
+
+                      }
+                  });
+              } else {
+                  return false;// if it's a link to prevent post
+              }
+
+              return false;// if it's a link to prevent post
+          }
+      }
+    function ReloadPage() {
+        location.reload();
+    }
+    </script>
+
+    <script>
+    $("#PaymentTypeId").change(function () {
+        var ptId = parseInt($("#PaymentTypeId").val());
+        //alert(ptId);
+        if (ptId === 4) {
+            $("#SourceBankName").val('Cash');
+            $("#BankAccountNo").val('Cash');
+            $("#ChequeNo").val('Cash');
+            $('#ChequeNo').prop('readonly', true);
+            $('#BankAccountNo').prop('readonly', true);
+            $('#SourceBankName').prop('readonly', true);
+        }
+        else if (ptId === 3) {
+            $("#SourceBankName").val('DBBL Mobile Banking (Rocket)');
+            $("#BankAccountNo").val('');
+            $("#ChequeNo").val('');
+            $('#SourceBankName').prop('readonly', true);
+            $('#ChequeNo').prop('readonly', false);
+            $('#BankAccountNo').prop('readonly', false);
+
+        }
+        else if(ptId===2){
+            $("#SourceBankName").val('bKash');
+            $("#BankAccountNo").val('');
+            $("#ChequeNo").val('');
+            $('#SourceBankName').prop('readonly', true);
+            $('#ChequeNo').prop('readonly', false);
+            $('#BankAccountNo').prop('readonly', false);
+        }
+        else {
+            $("#SourceBankName").val('');
+            $("#BankAccountNo").val('');
+            $("#ChequeNo").val('');
+            $('#SourceBankName').prop('readonly', false);
+            $('#ChequeNo').prop('readonly', false);
+            $('#BankAccountNo').prop('readonly', false);
+        }
+
+    });
+    </script>
+}

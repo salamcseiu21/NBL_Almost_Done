@@ -1,0 +1,102 @@
+﻿
+@model NBL.Models.EntityModels.Designations.Designation
+
+@{
+    ViewBag.Title = "Add New Designation";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content" style="margin:0;padding:0;">
+  <div class="col-md-8 col-md-offset-2">
+      <h3 class="text-center text-green">Add New Designation</h3>
+
+      @using (Html.BeginForm())
+      {
+          @Html.AntiForgeryToken()
+
+          <div class="form-horizontal">
+
+              <div class="text-center">
+                  @if (ViewBag.Message != null)
+                {
+                      @ViewBag.Message
+                  } 
+              </div>
+              <hr />
+              <div class="form-group">
+                  @Html.LabelFor(model=>model.DesignationCode,new { @class = "control-label col-md-2" })
+                  <div class="col-md-10">
+                      @Html.TextBoxFor(model=>model.DesignationCode,new { placeholder = "Enter designation code" ,@class="form-control", onblur = "clearFileds()" })
+                        @Html.ValidationMessageFor(model=>model.DesignationCode,"",new {@class="text-danger"})
+                      <div id="divCodeExitsOutput"></div>
+                  </div>
+              </div>
+              <div class="form-group">
+                  @Html.LabelFor(model=>model.DesignationName,new {@class="control-label col-md-2"})
+                  <div class="col-md-10">
+                      @Html.TextBoxFor(model=>model.DesignationName,new { placeholder = "Enter designation name" ,@class="form-control"})
+                      @Html.ValidationMessageFor(model=>model.DesignationName,"",new {@class="text-danger"})
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <div class="col-md-offset-2 col-md-10">
+                      <div class="row">
+                          <div class="col-md-6">
+                              @Html.ActionLink("Back to List", "DesignationList", "Designation", new { area = "Editor" }, new { @class = "btn btn-info" })
+                              <input type="submit" value="Save" class="btn btn-primary" />
+                          </div>
+                          <div class="col-md-6">
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      }
+  </div>
+
+</section>
+
+
+@section Scripts
+{
+    @*Is Designation code exits or not*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#DesignationCode').keyup(function () {
+                var code = $(this).val();
+
+                if (code.length >= 2) {
+                    $.ajax({
+                        url: '/Editor/Designation/DesignationCodeExists',
+                        method: 'post',
+                        data: { code: code },
+                        dataType: 'json',
+                        success: function (data) {
+                            var divElement = $('#divCodeExitsOutput');
+                            if (data.DesignationCodeInUse) {
+                                divElement.text('The designation code "' + data.DesignationCode + '" is already in use');
+                                divElement.css('color', 'red');
+                            }
+                            else {
+                                divElement.text('The designation code "' + data.DesignationCode + '" is available')
+                                divElement.css('color', 'green');
+                            }
+                        },
+                        error: function (err) {
+                            alert(err);
+                        }
+                    });
+                }
+            });
+        });
+        function clearFileds() {
+            var divElement = $('#divCodeExitsOutput');
+            divElement.text('');
+
+        }
+
+    </script>
+}

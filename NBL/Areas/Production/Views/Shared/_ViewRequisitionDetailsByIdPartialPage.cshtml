@@ -1,0 +1,157 @@
+﻿
+@using NBL.Models.EntityModels.Requisitions
+@model IEnumerable<RequisitionModel>
+<section class="content">
+    
+    @using (Html.BeginForm("AddRequistionToTripXmlFile", "Transfer", FormMethod.Post, new {id = "AddRequistionToTripForm"}))
+    {
+        <input type="hidden" name="RIdNo" value="@Model.First().RequisitionId"/>
+        <table id="tbl_requisition_details_list" class="table-bordered" style="border: 1px solid">
+
+            <thead>
+
+            <tr>
+                <th rowspan="2">Branch</th>
+                <th colspan="2">Products</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            @{
+                var groupBy = Model.GroupBy(n => n.ToBranch.BranchName);
+                foreach (IGrouping<string, RequisitionModel> requisitionModels in groupBy)
+                {
+                    <tr>
+                        <td>@requisitionModels.Key
+
+                        </td>
+
+                        <td>
+                            <table class="table" style="margin: 0; padding: 0;">
+                                <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th class="text-right">Qty</th>
+                                    <th class="text-right">Delivery</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var item in requisitionModels)
+                                {
+                                    <tr>
+
+                                        <td style="margin: 0; padding: 0;">@item.ProductName</td>
+                                        <td style="margin: 0; padding: 0;" class="text-right">
+                                            @item.PendingQty
+                                        </td>
+                                        <td style="margin: 0; padding: 0;" class="text-right">
+                                            <input class="input-selector" type="number" id="@("Qty_Of_" + item.ToBranchId.ToString("D2") + "_" + item.ProductId.ToString("D3") + "_" + item.PendingQty)" name="@("Qty_Of_" + item.ToBranchId.ToString("D2") + "_" + item.ProductId.ToString("D3") + "_" + item.PendingQty)"  max="@item.PendingQty" min="0" onkeyup="ValidateMaxQuantity(this)"/>
+                                        </td>
+                                    </tr>
+
+                                }
+                                </tbody>
+                            </table>
+
+                        </td>
+
+                    </tr>
+
+                }
+            }
+
+            </tbody>
+
+        </table>
+        <br/>
+        <div class="btn-toolbar">
+            <input type="button" value="Save" class="btn btn-info" onclick="AddRequistionToTripXmlFile(this)"/>
+        </div>
+    }
+    <div id="dialog" title="Warning">
+        <p>Delivery qty must be less than or equal requisition qty.</p>
+    </div>
+</section>
+
+
+
+<script>
+
+    $('#tbl_requisition_details_list').DataTable({
+        "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
+    });
+</script>
+
+<script>
+    function AddRequistionToTripXmlFile(event) {
+        var $form = $(event).parents('form');
+        $.ajax({
+            type: "POST",
+            url: RootUrl + 'production/transfer/AddRequistionToTripXmlFile',
+            data: $form.serialize(),
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+            success: function (response) {
+                var result = response.Message;
+                //alert("Saved Successfully");
+                $('#message').html(response).fadeIn('slow');
+                $('#message').html(result).fadeIn('slow'); //also show a success message
+                $('#message').delay(700).fadeOut('slow');
+                loadTempTripProducts();
+                $('#Requisitiondetails').html('');
+               
+            }
+        });
+    }
+</script>
+<script>
+
+    $('.input-selector').on('keypress',
+        function(e) {
+            return e.metaKey || // cmd/ctrl
+                e.which <= 0 || // arrow keys
+                e.which === 8 || // delete key
+                /[0-9]/.test(String.fromCharCode(e.which)); // numbers
+        });
+
+    function ValidateMaxQuantity(event) {
+        var id = event.id;
+        var deliverqty = $("#" + id).val();
+        if (deliverqty === '') {
+            deliverqty = 0;
+        } else {
+            deliverqty = parseInt($("#" + id).val(),10);
+        }
+        //alert(deliverqty);
+        var quantity = parseInt($("#" + id).attr("max"), 10);
+        if (deliverqty > quantity || deliverqty<0) {
+            ShowWarningDialog();
+            $("#" + id).val('0');
+        }
+
+    }
+
+    function  ShowWarningDialog(){
+        $("#dialog").dialog("open").parent().addClass("ui-state-error");
+    }
+</script>
+
+
+<script>
+    $( function() {
+        $( "#dialog" ).dialog({
+            autoOpen: false,
+            show: {
+                effect: "blind"
+               
+            },
+            hide: {
+                effect: "explode"
+               
+            }
+        });
+ 
+        
+    } );
+</script>

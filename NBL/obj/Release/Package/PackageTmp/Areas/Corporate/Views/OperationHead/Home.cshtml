@@ -1,0 +1,161 @@
+﻿
+@model NBL.Models.ViewModels.Summaries.SummaryModel
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    
+}
+
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3 style="font-size: 20px">&#2547; @Model.AccountSummary.TotalSaleValue.ToString("N")</h3>
+                    <p>TOTAL SALE AMOUNT</p>
+                </div>
+                <div class="icon">
+                    &#2547;
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3 style="font-size: 20px">&#2547; @Model.AccountSummary.TotalCollection.ToString("N")</h3>
+                    <p>TOTAL COLLECTION AMOUNT</p>
+                </div>
+                <div class="icon">
+                    &#2547;
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+
+                    <h3 style="font-size: 20px">&#2547; @Model.AccountSummary.TotalOrderedAmount.ToString("N")</h3>
+                    <p>TOTAL ORDERED AMOUNT</p>
+                </div>
+                <div class="icon">
+                    &#2547;
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3 style="font-size: 20px">@Model.AccountSummary.CollectionPercentageOfSale.ToString("N") (%)</h3>
+                    <p>COLLECTION</p>
+                </div>
+                <div class="icon">
+                    &#2547;
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+    @*<div class="row">
+        <marquee behavior="scroll" direction="left"><h4 class="text-green" style="margin:0;padding-bottom:10px;">Today's (@DateTime.Now.ToString("dd-MMM-yyyy")) total sales: 4,00000&#2547;&nbsp; ,Collection:50,00000&#2547;&nbsp;, Expence:3,50000&#2547;</h4></marquee>
+    </div>*@
+    
+    <div class="box">
+      
+        <div class="box-body">
+            <a class="btn btn-app">
+                <span class="badge bg-green" style="font-size: 14px">@Model.Products.Sum(n=>n.StockQuantity)</span>
+                <i class="fa fa-barcode"></i> Product
+            </a>
+            <a class="btn btn-app">
+                <span class="badge bg-red" style="font-size: 14px">@Model.DelayedOrders.ToList().FindAll(n=>n.Status.Equals(1)).Count</span>
+                <i class="fa fa-bullhorn"></i> Delayed Order
+            </a>
+            <a class="btn btn-app">
+                <span class="badge bg-teal" style="font-size: 14px">@Model.DelayedOrders.ToList().FindAll(n => n.Status.Equals(1)).Count</span>
+                <i class="fa fa-spinner fa-spin"></i> Order Verifing
+            </a>
+            <a class="btn btn-app">
+                <span class="badge bg-yellow" style="font-size: 14px">@Model.PendingOrders.Count()</span>
+                <i class="fa  fa-spinner"></i> Pending Order
+            </a>
+            <a class="btn btn-app" href="@Url.Action("AllOrders","Home",new {area="Corporate"},null)">
+                <span class="badge bg-teal" style="font-size: 14px">@Model.Orders.ToList().Count</span>
+
+                <i class="fa fa-shopping-cart"></i> Total Order
+            </a>
+            <a class="btn btn-app" href="@Url.Action("ViewClient","Home",new {area="Corporate"},null)">
+                <span class="badge bg-purple" style="font-size: 14px">@Model.Clients.Count()</span>
+                <i class="fa fa-users"></i> Client
+            </a>
+            <a class="btn btn-app" href="@Url.Action("ViewEmployee","Home",new {area="Corporate"},null)">
+                <span class="badge bg-teal" style="font-size: 14px">@Model.Employees.Count()</span>
+                <i class="fa fa-users"></i> Employee
+            </a>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <div class="row">
+       @Html.Partial("_ViewSalesReportChartPartialPage",Model.TotalOrder)
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    @*<img src="@Url.Action("MyChart")" alt="Simple Chart"/>*@
+    @*<div class="row">
+        <div class="col-md-6 text-center">
+            <strong>Branch Wise Sale</strong>
+            <div style="width:100%">
+                <div id="canvas-holder">
+
+
+                    <canvas id="chart-area" width="300" height="300" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6"></div>
+    </div>*@
+    <div class="row">
+        <div class="col-md-6">
+            <!-- TABLE: Top clients -->
+            @Html.Partial("_ViewTopClientsPartialPage",Model.TopClients)
+            <!-- /.box -->
+        </div>
+        <div class="col-md-6">
+            <!-- TABLE: Popular batteries -->
+            @Html.Partial("_ViewPopularBatteriesPartialPage",Model.TopProducts)
+            <!-- /.box -->
+        </div>
+    </div>
+   
+</section>
+@section Scripts
+{
+    @*Reload page after 1 minute *@
+    <script type="text/javascript">
+        var timeout = setTimeout("location.reload(true);", 60000);
+        function resetTimeout() {
+            clearTimeout(timeout);
+            timeout = setTimeout("location.reload(true);", 60000);
+        }
+    </script>
+
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2();
+
+        })
+    </script>
+
+}

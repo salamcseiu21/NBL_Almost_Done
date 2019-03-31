@@ -1,0 +1,94 @@
+﻿
+@using NBL.Areas.Accounts.Models
+@model IEnumerable<NBL.Areas.AccountsAndFinance.Models.Voucher>
+@{
+    ViewBag.Title = "Vouchers";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <h3 class="text-green text-center headingStyle"> All Vouchers</h3>
+    <table id="table_Credit_Voucher" class="display table table-bordered" style="border:1px solid black">
+
+        <thead>
+            <tr>
+                <th class="text-center">Voucher Name </th>
+                <th class="text-center">Transaction Type </th>
+                <th class="text-center">Date </th>
+                <th class="text-right" style="width:10%">Amount (&#2547;)</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+
+                <tr>
+
+                    <td>@item.VoucherName</td>
+                    <td class="text-center">
+                        @{
+                            if (item.TransactionTypeId == 1)
+                            {
+                                <label>Cash</label>
+                            }
+                            else
+                            {
+                                <label>Bank</label>
+                            }
+                        }
+                    </td>
+                    <td class="text-center">@item.VoucherDate.ToString("dd-MMM-yyyy")</td>
+                    <td class="text-right">@item.Amounts</td>
+                    <td class="text-center">
+                        @{
+                            switch (item.Status)
+                            {
+                                case 0:<label class="fa fa-spinner text-warning"> Pending</label>
+                                    break;
+                                case 1:<label class="text-green fa fa-check">Approved</label>
+                                    break;
+                                case 3: <label class="fa fa-times text-danger">Cancelled</label>
+                                    break;
+
+                            }
+                        }
+                    </td>
+
+
+                    <td class="text-center">
+                        @Html.ActionLink(" Preview & Print", "VoucherPreview", "Home", new { id = item.VoucherId }, new { target = "_blank", @class = "fa fa-eye" })
+                    </td>
+                </tr>
+                            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="text-center">Voucher Name </th>
+                <th class="text-center">Transaction Type </th>
+                <th class="text-center">Date </th>
+                <th class="text-right" style="width:10%">Amount (&#2547;)</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+
+</section>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+
+
+<script>
+
+    $('#table_Credit_Voucher').DataTable({
+                        "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],
+        "order": [[1, "desc"]]
+    });
+
+</script>
+
+

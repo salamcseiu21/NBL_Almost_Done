@@ -1,0 +1,38 @@
+﻿<li class="treeview">
+    <a href="#">
+        <i class="fa fa-eye"></i>
+        <span>View/Show</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-circle-o"></i> Orders
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Latest Orders", "LatestOrders", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+                <li>@Html.ActionLink(" Current Month Orders", "CurrentMonthOrders", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+                <li>@Html.ActionLink(" All Orders", "AllOrders", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+
+                <li>@Html.ActionLink(" Test", "Test", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            </ul>
+        </li>
+        <li>@Html.ActionLink(" Employee List", "ViewEmployee", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        <li>@Html.ActionLink(" Client List", "ViewClient", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        @*<li>@Html.ActionLink(" Product List", "ProductInStock", "Home", new { area = "Corporate" }, new { @class = "fa fa-list" })</li>*@
+        <li>@Html.ActionLink(" Branch List", "ViewBranch", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        <li>@Html.ActionLink(" Division List", "ViewDivision", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        <li>@Html.ActionLink(" Region List", "ViewRegion", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        <li>@Html.ActionLink(" Territory List", "ViewTerritory", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        <li>@Html.ActionLink(" Supplier List", "Supplier", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        <li>@Html.ActionLink(" Departments", "ViewDepartment", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        <li>@Html.ActionLink(" Product Wish Vat", "ProductWishVat", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        <li>@Html.ActionLink(" Discounts", "ViewDiscount", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        <li>@Html.ActionLink(" Business Area", "BusinessArea", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+    </ul>
+</li>

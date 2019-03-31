@@ -1,0 +1,120 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Orders.ViewOrder>
+@{
+    ViewBag.Title = ViewBag.Heading;
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <h3 class="headingStyle text-center text-green">@ViewBag.Heading</h3>
+    <table id="table_Order_list" class="table table-bordered" style="border:1px solid black">
+
+        <thead>
+            <tr>
+                <th>Client Info</th>
+                <th>Order Slip No</th>
+                <th class="text-right"> Amount (&#2547;)</th>
+                <th class="text-right">Qty</th>
+                <th class="text-center">Order At</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">View</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.Raw(item.Client.GetBasicInformation())</td>
+                    <td>@item.OrderSlipNo</td>
+                    <td class="text-right">@item.NetAmounts</td>
+                    <td class="text-right">@item.Quantity</td>
+                    <td class="text-center">
+                        @item.SysDate.ToShortTimeString(), @item.SysDate.ToString("dd-MMM-yyyy")
+                    </td>
+                    <td class="text-center">
+                        @{
+
+                            if (item.Status == 0)
+                            {
+                                <label class="text-danger">Pending</label>
+                            }
+                            else if (item.Status == 1)
+                            {
+                                <label>Approved</label>
+                            }
+                            else if (item.Status == 2)
+                            {
+                                <label>Approve By Admin / Invoiced</label>
+                            }
+                            else if (item.Status == 3)
+                            {
+                                <label style="color:orange;">Partially Deliverd</label>
+                            }
+
+                            else if (item.Status == 4)
+                            {
+                                <label class="text-green"><i class="fa fa-check-circle-o"></i> Delivered</label>
+                            }
+                            else if (item.Status == 5)
+                            {
+                                <label style="color:red;" title="@item.ResonOfCancel"><i class="fa fa-times"></i> Cancelled by Sales</label>
+                            }
+                            else if (item.Status == 6)
+                            {
+                                <label style="color:red;" title="@item.ResonOfCancel"><i class="fa fa-times"></i> Cancelled</label>
+                            }
+                            else if (item.Status == 7)
+                            {
+                                <label style="color:red;" title="@item.ResonOfCancel"><i class="fa fa-times"></i> Cancelled by Admin</label>
+                            }
+                        }
+                    </td>
+                    <td class="text-center">
+                        <button type="button" value="@item.OrderId" class="btn btn-success btn-sm" onclick="viewDetails(this)"><i class="fa fa-eye"></i> Details</button>
+                    </td>
+                </tr>
+                            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Client Info</th>
+                <th>Order Slip No</th>
+                <th class="text-right"> Amount (&#2547;)</th>
+                <th class="text-right">Qty</th>
+                <th class="text-center">Order At</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">View</th>
+            </tr>
+        </tfoot>
+    </table>
+    @Html.Partial("_ModalPartialPage")
+</section>
+@section Scripts
+{
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+
+    <script>
+
+        $('#table_Order_list').DataTable({
+            "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
+        });
+
+    </script>
+
+    <script>
+
+        function viewDetails(orderId) {
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ViewOrderDetails", "Common", new { area = "" })",
+                data: { orderId: orderId.value },
+                success: function (response) {
+                    $('#modalBody').html(response);
+                    $('#showOrderDetailsModal').modal('show');
+                }
+            });
+        }
+
+    </script>
+}
+
+

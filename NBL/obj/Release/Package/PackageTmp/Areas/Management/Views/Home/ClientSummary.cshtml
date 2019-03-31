@@ -1,0 +1,82 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.ViewClientSummaryModel>
+@{
+    ViewBag.Title = "Client Summary";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+
+    <table class="display responsive table-bordered" id="table_client_summary" style="border: 1px solid black;width: 100%">
+        <thead>
+            <tr>
+                <th colspan="5" class="text-center text-green headingStyle">
+                    Client Summary
+                </th>
+            </tr>
+            <tr>
+                <th rowspan="2" style="padding:25px 10px"> Client info</th>
+                <th rowspan="2" style="padding:25px 10px">Total Order</th>
+                <th colspan="2" class="text-center">Transaction</th>
+                <th rowspan="2" style="padding:25px 10px" class="text-center">   Outstanding (&#2547;)</th>
+            </tr>
+            <tr>
+
+                <th class="text-right">
+                    Debit (&#2547;)
+                </th>
+                <th class="text-right">
+                    Credit (&#2547;)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var client in Model)
+            {
+                <tr>
+                    <td>@(Html.ActionLink(client.CommercialName, "ViewClientProfile", "Home", new { id = client.ClientId }, null))</td>
+                    <td class="text-right">
+                        @client.TotalOrder
+                    </td>
+                    <td class="text-right">
+                        @client.Debit
+                    </td>
+                    <td class="text-right">
+                        @client.Credit
+                    </td>
+                    <td class="text-right">
+                        @(client.Outstanding > 0 ? client.Outstanding : 0)
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>
+                    Client info
+                </th>
+                <th class="text-right">
+                    Total Order
+                </th>
+                <th class="text-right">
+                    Debit (&#2547;)
+                </th>
+                <th class="text-right">
+                    Credit (&#2547;)
+                </th>
+                <th class="text-right">
+                    Outstanding (&#2547;)
+                </th>
+            </tr>
+    </table>
+</section>
+
+
+@section Scripts
+{
+    <script>
+        $('#table_client_summary').DataTable({
+            "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+
+        });
+    </script>
+}

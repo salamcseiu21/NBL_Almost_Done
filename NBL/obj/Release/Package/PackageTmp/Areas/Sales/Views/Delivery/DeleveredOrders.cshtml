@@ -1,0 +1,74 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Deliveries.Delivery>
+@{
+    ViewBag.Title = "Delevered Orders";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+   
+}
+
+
+<section class="content">
+    <p class="text-center text-green headingStyle">All Delivered orders</p>
+    <table id="table_Order_list" class="table table-bordered" style="border:1px solid black">
+        <thead>
+            <tr>
+                <th>Client Info</th>
+                <th>Transportation</th>
+                <th>Delivery Ref</th>
+                <th class="text-center">Delivery Date</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+
+                var aClient = item.Client;
+                <tr>
+                    <td>@Html.Raw(aClient.GetBasicInformation())</td>
+                   <td>
+                       @Html.Raw(item.Transport.GetFullInformation())
+                   </td>
+                    <td>@item.DeliveryRef</td>
+
+                    <td class="text-center">
+
+                        @item.SysDateTime.ToString("F")
+                    </td>
+                    
+                    <td class="text-center">
+                        @Html.ActionLink(" Preview & Print", "Chalan", new { id = item.DeliveryId }, new { target = "_blank", @class="fa fa-eye" })
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Client Info</th>
+                <th>Transportation</th>
+                <th>Delivery Ref</th>
+                <th class="text-center">Delivery Date</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+
+
+
+  
+</section>
+
+@section Scripts
+{
+    <script>
+
+        $('#table_Order_list').DataTable({
+            "lengthMenu": [[5, 10, 30, -1], [5, 10, 30, "All"]],
+            "order": [[2, "desc"]]
+        });
+
+    </script>
+
+}

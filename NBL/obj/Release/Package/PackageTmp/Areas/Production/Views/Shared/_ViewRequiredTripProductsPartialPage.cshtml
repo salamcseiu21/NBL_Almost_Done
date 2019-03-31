@@ -1,0 +1,43 @@
+﻿@using NBL.Models.ViewModels.Deliveries
+@model IEnumerable<ViewDispatchModel>
+    
+
+<table id="tbl_required_Trip_products" class="display" style="border:1px solid black">
+    <caption class="text-center text-green" style="font-weight:bolder;font-size:20px">Product List</caption>
+
+    <thead>
+    <tr>
+       
+        <th>Product Name</th>
+        <th>Category</th>
+        <th>Quantity
+            <input type="hidden" id="total_requisition_qty" value="@Model.Sum(n=>n.Quantity)"/>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (IGrouping<string,ViewDispatchModel> item in Model.GroupBy(n=>n.ProductName))
+    {
+        <tr>
+
+            <td>@item.Key</td>
+            <td>@item.First().ProductCategory.ProductCategoryName</td>
+            <td>@item.Sum(n=>n.Quantity)</td>
+        </tr>
+    }
+    </tbody>
+    <tfoot>
+    <tr>
+
+        <th>Product Name</th>
+        <th>Category</th>
+        <th>Quantity</th>
+
+    </tr>
+    </tfoot>
+</table>
+<script>
+    $("#tbl_required_Trip_products").DataTable({
+        lengthMenu: [[10, 30, 50, -1], [15, 30, 50, "All"]]
+    });
+</script>

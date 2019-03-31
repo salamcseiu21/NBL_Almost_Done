@@ -1,0 +1,30 @@
+﻿
+@model IEnumerable<NBL.Models.EntityModels.Orders.Order>
+@{ 
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<table id="example" class="display">
+    <thead>
+    <tr>
+        <th></th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Position</th>
+        <th>Office</th>
+        <th width="18%">Start date</th>
+        <th>Salary</th>
+    </tr>
+    </thead>
+</table>
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "ajax": '../ajax/data/arrays.txt'
+            });
+        });
+    </script>
+}

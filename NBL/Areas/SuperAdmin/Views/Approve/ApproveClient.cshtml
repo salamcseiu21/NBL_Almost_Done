@@ -1,0 +1,110 @@
+﻿
+@model IEnumerable<NBL.Models.EntityModels.Clients.Client>
+@{
+    ViewBag.Title = "Approve Client";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-green text-center headingStyle">Approve Client</h3>
+    <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
+    </div>
+    <hr />
+    <table id="table_pending_client_list" class="display table table-bordered"  style="border:1px solid black">
+        <thead>
+            <tr>
+                <th class="text-center">S.N</th>
+                <th class="text-center">Client Name</th>
+                <th class="text-center">Phone</th>
+                <th class="text-center">Alt Phone</th>
+                <th class="text-center">E-Mail</th>
+                <th class="text-center">Address</th>
+              
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.SerialNo</td>
+                    <td>@item.ClientName</td>
+                    <td>@item.Phone</td>
+                    <td>@(item.AlternatePhone?? "N/A")</td>
+                    <td>@(item.Email?? "N/A")</td>
+                    <td>@item.Address</td>
+                   
+                    <td class="text-center">
+                        @using (Html.BeginForm("ApproveClient", "Approve", FormMethod.Post, new { id = item.ClientId }))
+                        {
+                        <input type="hidden" value="@item.ClientId" id="ClientId" name="ClientId" />
+                        <a href="#" id="@item.ClientId" onclick="Approve(this)">Approve</a>
+                        }
+                   
+                    @Html.ActionLink(" Edit","Edit","Approve",new {Area="SuperAdmin",id=item.ClientId },new {@class= "fa fa-edit" })</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="text-center">S.N</th>
+                <th class="text-center">Client Name</th>
+                <th class="text-center">Phone</th>
+                <th class="text-center">Alt Phone</th>
+                <th class="text-center">E-Mail</th>
+                <th class="text-center">Address</th>
+              
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+</section>
+@section Scripts
+{
+    <script>
+        $('#table_pending_client_list').DataTable({
+            "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+            "order": [[1, "desc"]]
+        });
+    </script>
+
+
+    <script>
+        function Approve(id) {
+
+            if (confirm("Are you sure to Approve  this Client ?")) {
+                //$("#" + id.id).submit();
+
+                var $form = $(id).parents('form');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ApproveClient", "Approve", new { area = "SuperAdmin" })',
+                    data: $form.serialize(),
+                    error: function (xhr, status, error) {
+                        //do something about the error
+                    },
+                    success: function (response) {
+                        var result = response.Message;
+                        $('#message').html(response).fadeIn('slow');
+                        $('#message').html(result).fadeIn('slow') //also show a success message
+                        $('#message').delay(5000).fadeOut('slow');
+                        setTimeout(function () { ReloadPage(); }, 6000);
+
+                    }
+                });
+
+
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+
+        }
+        function ReloadPage() {
+            location.reload();
+        }
+    </script>
+
+}

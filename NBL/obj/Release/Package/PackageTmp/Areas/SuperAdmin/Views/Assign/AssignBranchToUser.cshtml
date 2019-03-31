@@ -1,0 +1,108 @@
+﻿
+@model IEnumerable<NBL.Models.ViewModels.ViewBranch>
+
+@{
+    ViewBag.Title = "Assign Branch";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Assign Branch To User</h3>
+    <hr/>
+    <div class="col-md-6 col-md-offset-3">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="text-center">
+                @if (TempData["Message"] != null)
+                {
+                    @TempData["Message"]
+                }
+            </div>
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label for="UserName" class="control-label col-md-2">User Name</label>
+                    <div class="col-md-10">
+                        <input type="text" name="UserName" placeholder="type user name slowly" id="UserName" class="form-control" required />
+                        <input type="hidden" name="UserId" id="UserId" />
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="BranchList" class="control-label col-md-2">Branches</label>
+                    <div class="col-md-10">
+                        <div class="row">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-md-6">
+
+
+                                    <label>
+                                        <input type="checkbox"
+                                               name="SelectedBranch"
+                                               value="@item.BranchId" /> @item.BranchName
+                                        </label>
+                                    </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.ActionLink("Cancel", "ViewUser", null,null, new { @class = "btn btn-danger" })
+                        <input type="submit" value="Assign" class="btn btn-success"/>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+
+</section>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#UserName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+
+                        url:'@Url.Action("UserAutoComplete", "Home", new { area = "SuperAdmin" })',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function(item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#UserId").val(i.item.val);
+                },
+                minLength: 1
+            });
+        });
+    </script>
+
+}

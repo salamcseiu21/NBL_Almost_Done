@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "Log In";
+}
+<div class="container login-container">
+    <div class="row">
+        <div class="col-md-6 login-left" style="color: white; font-size: 20px;">
+            <div class="text-center" style="padding: 22px">
+                <img src="~/Images/n_battery_logo.png" />
+            </div>
+            <p>
+                <i class="fa fa-phone-square"> (+880) 2-8870976</i>
+            </p>
+            <p>
+                <i class="fa fa-envelope"> itsupport@navana-battery.com</i>
+            </p>
+            <p>
+                <i class="fa fa-phone-square"> (+880) 175 566 1212</i>
+            </p>
+
+            <p>
+                <i class="fa fa-envelope"> cit@navana.com</i>
+            </p>
+
+            <p>
+                <i class="fa fa-globe" aria-hidden="true"> <a href="https://www.navana.com" style="text-decoration: none;color: white" target="_blank"> https://www.navana.com</a></i>
+            </p>
+
+        </div>
+        <div class="col-md-6 login-right" style="background-color: #C0DD9D">
+
+            <form class="form-signin" method="post">
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-life-saver"></i></span>
+                            <select class="form-control" required name="companyId" autofocus>
+                               
+                                @{
+                                    foreach (var company in ViewBag.Companies)
+                                    {
+                                        <option value="@company.CompanyId">@company.CompanyName</option>
+                                    }
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" id="userName" class="form-control" name="userName" placeholder="User Name" required>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                            <input type="password" id="Password" name="Password" class="form-control" placeholder="Password" required>
+
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+
+                        <button class="btn  btn-info" type="submit">Log in</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .login-container{
+        margin-top: 10%;
+        margin-bottom: 10%;
+    }
+    .login-right{
+        padding: 5%;
+        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+    }
+    .login-right h3{
+        text-align: center;
+        color: #333;
+    }
+    .login-left{
+        padding: 5%;
+        background: #24B7FA;
+        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+    }
+    .login-left h3{
+        text-align: center;
+        color: #fff;
+    }
+    .login-container form{
+        padding: 10%;
+    }
+    .btnSubmit
+    {
+        width: 50%;
+        border-radius: 1rem;
+        padding: 1.5%;
+        border: none;
+        cursor: pointer;
+    }
+    .login-right .btnSubmit{
+        font-weight: 600;
+        color: #fff;
+        background-color: #0062cc;
+    }
+    .login-left .btnSubmit{
+        font-weight: 600;
+        color: #0062cc;
+        background-color: #fff;
+    }
+    .login-left .ForgetPwd{
+        color: #fff;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .login-right .ForgetPwd{
+        color: #0062cc;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+</style>

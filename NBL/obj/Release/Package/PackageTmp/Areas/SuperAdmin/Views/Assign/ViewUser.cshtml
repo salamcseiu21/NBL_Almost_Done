@@ -1,0 +1,76 @@
+﻿
+@model IEnumerable<NBL.Models.EntityModels.Identities.User>
+@{
+    ViewBag.Title = "User List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">User List with Role</h3>
+    <table id="table_user_list" class="table table-bordered" style="border:1px solid black">
+
+
+        <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Password</th>
+            <th>Role</th>
+              
+            <th>Employee Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th class="text-center">Action</th> 
+        </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    
+                    <td>@item.UserName</td>
+                    <td>@item.Password</td>
+                    <td>@item.Roles</td>
+                  
+                    <td>@(item.EmployeeName?? "N/A")</td>
+                    <td>@(item.PresentAddress?? "N/A")</td>
+                    <td>@(item.Phone??"N/A")</td>
+                    <td>@(item.Email?? "N/A")</td>
+                    <td class="text-center">
+                        @Html.ActionLink("Details", "ViewUserDetails", "Home", new { userId = item.UserId }, null)
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>User Name</th>
+                <th>Password</th>
+                <th>Role</th>
+              
+                <th>Employee Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+</section>
+@section Scripts
+{
+    <script>
+
+        $('#table_user_list').DataTable({
+            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]]
+        });
+
+    </script>
+
+}
+

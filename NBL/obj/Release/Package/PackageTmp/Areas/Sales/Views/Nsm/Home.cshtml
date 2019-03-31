@@ -1,0 +1,53 @@
+﻿@model NBL.Models.ViewModels.Summaries.SummaryModel
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+
+    <div class="box">
+
+        <div class="box-body">
+            <a class="btn btn-app" href="@Url.Action("Stock","Product",new {area="Sales"},null)">
+                <span class="badge bg-green" style="font-size: 14px">@Model.Products.Sum(n => n.StockQuantity)</span>
+                <i class="fa fa-barcode"></i> Product
+            </a>
+            <a class="btn btn-app" href="@Url.Action("DelayedOrders","Order",new {area="Nsm"},null)">
+                <span class="badge bg-red" style="font-size: 14px">@Model.DelayedOrders.ToList().Count</span>
+                <i class="fa fa-bullhorn"></i> Delayed Order
+            </a>
+            <a class="btn btn-app">
+                <span class="badge bg-teal" style="font-size: 14px">@Model.VerifiedOrders.ToList().Count</span>
+                <i class="fa fa-spinner fa-spin"></i> Order Verifing
+            </a>
+            <a class="btn btn-app" href="@Url.Action("PendingOrder","Order",new {area="Nsm"},null)">
+                <span class="badge bg-yellow" style="font-size: 14px">@Model.PendingOrders.Count()</span>
+                <i class="fa  fa-spinner"></i> Pending Order
+            </a>
+            <a class="btn btn-app" href="@Url.Action("All","Order",new {area="Nsm"},null)">
+                <span class="badge bg-teal" style="font-size: 14px">@Model.Orders.ToList().Count</span>
+
+                <i class="fa fa-shopping-cart"></i> Total Order
+            </a>
+            <a class="btn btn-app" href="@Url.Action("ViewClient","Home",new {area="Sales"},null)">
+                <span class="badge bg-purple" style="font-size: 14px">@Model.Clients.Count()</span>
+                <i class="fa fa-users"></i> Client
+            </a>
+
+        </div>
+        <!-- /.box-body -->
+    </div>
+</section>
+
+}
+@section Scripts
+{
+    @*Reload page after 1 minute *@
+    <script type="text/javascript">
+        var timeout = setTimeout("location.reload(true);", 60000);
+        function resetTimeout() {
+            clearTimeout(timeout);
+            timeout = setTimeout("location.reload(true);", 60000);
+        }
+    </script>
+}

@@ -1,0 +1,4 @@
+SELECT f.ProductBarCode,CONVERT(numeric,substring(f.ProductBarCode,1,3)) as ProductId,
+FORMAT(CONVERT(date,CONCAT(SUBSTRING(f.ProductBarCode,6,2),'-',SUBSTRING(f.ProductBarCode,4,2),'-',
+SUBSTRING(f.ProductBarCode,8,2))),N'dd-MMM-yyyy') as ProductionDate,f.Status,f.DeliveryId,f.UserId,f.CreatedAt as ComeIntoInventory
+FROM FactoryInventory f

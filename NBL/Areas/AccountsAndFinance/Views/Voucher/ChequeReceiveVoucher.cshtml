@@ -1,0 +1,330 @@
+﻿
+@{
+    ViewBag.Title = "Cheque Receive Voucher";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Cheque Receive Voucher</h3>
+    <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
+    </div>
+    <hr />
+    @using (Html.BeginForm("ChequePaymentVoucher", "Voucher", FormMethod.Post, new { id = "ChequePaymentVoucherForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Date" class="control-label col-md-3">Date</label>
+                                <div class="col-md-9">
+
+                                    <input type="text" id="Date" name="Date" value="@date" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Account Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" placeholder="Account Name" id="PurposeName" name="PurposeName" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-6">Account Code</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" placeholder="Account code" id="PurposeCode" name="PurposeCode" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label for="Balance" class="control-label col-md-5">Ledger Balance (&#2547;)</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="Balance" name="Balance" style="text-align:right" placeholder="Ledger Balance" class="form-control" readonly />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Bank Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="BankName" name="BankName" placeholder="Type bank name here!!" />
+                                    <input type="hidden" id="BankId" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Branch Name</label>
+                                <div class="col-md-9">
+                                    <select id="BankBranchId" name="BankBranchId" class="form-control">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                           <div class="row">
+                               <div class="col-md-6">
+
+                                   <div class="form-group">
+                                       <label class="col-md-6 control-label">Account Code</label>
+                                       <div class="col-md-6">
+                                           <input type="text" class="form-control" id="BankCode" name="BankCode" readonly />
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="col-md-6">
+                                   <div class="form-group">
+                                       <label for="Amount" class="control-label col-md-6">Amount (&#2547;)</label>
+                                       <div class="col-md-6">
+
+                                           <input type="number" id="Amount" name="Amount" placeholder="Amount" style="text-align:right" class="form-control" min="0" required />
+                                       </div>
+                                   </div>
+                               </div>
+                               
+                           </div>
+                          
+                            <div class="form-group">
+                                <label for="Remarks" class="control-label col-md-3">Remarks</label>
+                                <div class="col-md-9">
+                                    <textarea id="Remarks" name="Remarks" class="form-control" rows="2" placeholder="Remarks" style="resize:none"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-9 col-md-offset-3">
+                                    <div class="row">
+                                        <div class="col-md-6">
+
+                                        </div>
+                                        <div class="col-md-6 text-right">
+
+                                            @Html.ActionLink("Cancel", "Home", "Home", new { area = "Accounts" }, new { @class = "btn btn-danger" })
+                                            <input type="button" value="Save" id="submitButton" onclick="SaveReceivable(this)" class="btn btn-primary" />
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    }
+</section>
+
+@section Scripts
+{
+    @* Date picker*@
+    <script>
+    $(function () {
+
+        $("#ReceiveDate").datepicker({ dateFormat: 'dd-MM-yy' });
+        $("#Date").datepicker({ dateFormat: 'dd-MM-yy' });
+    });
+    </script>
+
+    @* (Ajax form Submit)*@
+    <script>
+
+
+    function SaveReceivable(btnClicked) {
+
+     if ($("#PurposeName").val() == "") {
+        alert("Please Purpose name");
+    }
+
+     else if ($("#BankName").val() == "") {
+              alert("Please type  Bank name");
+          }
+          else if ($("#BankBranchId").val() == "") {
+              alert("Please Select  account no");
+          }
+
+          else if ($("#Amount").val() == "") {
+              alert("Please Enter amount");
+          }
+
+          else {
+              if (confirm("Are you sure to Save??")) {
+
+                  var $form = $(btnClicked).parents('form');
+                  $.ajax({
+                      type: "POST",
+                      url: '@Url.Action("ChequeReceiveVoucher")',
+                      data: $form.serialize(),
+                      error: function (xhr, status, error) {
+                          //do something about the error
+                      },
+                      success: function (response) {
+                          var result = response.Message;
+                          bankChecqueNoList = [];
+
+                          $('#message').html(response).fadeIn('slow');
+                          $('#message').html(result).fadeIn('slow') //also show a success message
+                          $('#message').delay(5000).fadeOut('slow');
+                          setTimeout(function () { ReloadPage(); }, 6000);
+
+                      }
+                  });
+              } else {
+                  return false;// if it's a link to prevent post
+              }
+
+              return false;// if it's a link to prevent post
+          }
+
+
+      }
+    function ReloadPage() {
+        location.reload();
+    }
+    </script>
+    @*Sub Sub Sub Account list Auto Complete*@
+    <script type="text/javascript">
+    $(function () {
+        $("#PurposeName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: RootUrl + 'Common/SubSubSubAccountNameAutoComplete/',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data,
+                            function (item) {
+                                return item;
+                            }));
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#SubSubSubAccountId").val(i.item.val);
+                //alert(i.item.val);
+
+                $("#PurposeCode").val('');
+                var sssAId = i.item.val;
+                var json = { subSubSubAccountId: sssAId };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetSubSubSubAccountById", "Common", new { area = "" })',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+
+                        var code = data.SubSubSubAccountCode;
+                        $("#PurposeCode").val(code);
+                    }
+                });
+            },
+            minLength: 1,
+
+
+        });
+    });
+    </script>
+
+    @*Bank Name Auto Complete*@
+    <script type="text/javascript">
+        $(function () {
+            $("#BankName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: RootUrl + 'Common/BankNameAutoComplete/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function(item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#BankId").val(i.item.val);
+                    $("#BankBranchId").empty();
+                    $("#BankCode").val('');
+                    $("#BankBranchId").append('<option value="">--Select--</option>');
+                    var bId = i.item.val;
+                    var json = { bankId: bId };
+
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("GetAllBankBranchByBankId", "Common",new { area=""})',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(json),
+                        success: function (data) {
+
+                            $.each(data, function (key, value) {
+
+                                $("#BankBranchId").append('<option value=' + value.BankBranchId + '>' + value.BankBranchName + '</option>');
+
+                            });
+                        }
+                    });
+                },
+                minLength: 1
+            });
+        });
+    </script>
+    <script>
+    $("#BankBranchId").change(function () {
+        var bankBranchId = $(this).val();
+        $("#BankCode").val('');
+
+        var json = { bankBranchId: bankBranchId };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetBankBranchById", "Common",new { area=""})',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(json),
+            success: function (data) {
+                var bankCode = data.BankBranchAccountCode;
+                $("#BankCode").val(bankCode);
+            }
+        });
+
+    });
+
+
+    </script>
+}

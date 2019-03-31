@@ -1,0 +1,96 @@
+﻿@*Account Executive Menu *@
+<ul class="sidebar-menu" data-widget="tree" style="font-weight: bolder;font-size: 16px">
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-money"></i>
+            <span>Approve/Active</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Active Receivable", "ActiveReceivable", "Account", new { area = "AccountExecutive" }, new { @class = "fa fa-file", style = "font-weight: bolder;"})</li>
+            <li>@Html.ActionLink(" Vouchers", "Vouchers", "Account", new { area = "AccountExecutive" }, new { @class = "fa fa-file", style = "font-weight: bolder;"})</li>
+            <li>@Html.ActionLink(" Journal Vouchers", "ViewJournal", "Account", new { area = "AccountExecutive" }, new { @class = "fa fa-file", style = "font-weight: bolder;"})</li>
+            <li>@Html.ActionLink(" Approve Vats", "Vats", "Account", new { area = "AccountExecutive" }, new { @class = "fa fa-file", style = "font-weight: bolder;"})</li>
+            <li>@Html.ActionLink(" Approve Discounts", "Discounts", "Account", new { area = "AccountExecutive" }, new { @class = "fa fa-file", style = "font-weight: bolder;"})</li>
+        </ul>
+    </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-book"></i> <span>Reports</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle-o"></i> Sales
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-circle-o"></i> Level Two
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle-o"></i> Clients
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-circle-o"></i> Level Two
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-eye"></i>
+            <span>View/Show</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink("  Employees", "ViewEmployee", "Home", new { area = "AccountExecutive" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
+            <li>@Html.ActionLink(" Clients", "ViewClient", "Home", new { area = "AccountExecutive" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
+            <li>@Html.ActionLink(" Products", "ViewProduct", "Home", new { area = "AccountExecutive" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
+            <li>@Html.ActionLink(" Branch List", "ViewBranch", "Home", new { area = "AccountExecutive" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
+        </ul>
+    </li>
+</ul>
+
+

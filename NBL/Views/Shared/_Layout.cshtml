@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Navana Battery</title>
+    <link rel='icon' href='~/Images/logo.png' type='image/x-icon' />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Assets/bower_components/font-awesome/css/font-awesome.min.css" />
+    <style>
+        body 
+        {
+            background-image: url("/Images/bg.jpg");
+            background-size: cover;
+        }
+    </style>
+  
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top bg-info" style="background-color: #17A2B8;">
+   
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @*<a class="navbar-brand" href="#">
+        <img src="~/Images/logo.png" alt="Logo" style="width:40px;">
+    </a>*@
+            @Html.ActionLink("Navana Batteries Ltd.", "Index", "Home", new {area = ""}, new {@class = "navbar-brand", style = "color:white;font-weight:bolder"})
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home", new {area = ""}, new {style = "color:white;font-weight:bolder"})</li>
+                <li>@Html.ActionLink("About", "About", "Home", new {area = ""}, new {style = "color:white;font-weight:bolder"})</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home", new {area = ""}, new {style = "color:white;font-weight:bolder"})</li>
+                
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink(" LogIn", "LogIn", "LogIn", new {area = ""}, new {style = "color:white;font-weight:bolder"})</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer class="text-center">
+            <strong>Copyright &copy; @DateTime.Now.Year <a href="~/" style="text-decoration:none"> <i>Navana Batteries Ltd.</i> </a></strong> All rights
+            reserved.
+        </footer>
+    </div>
+
+    <script src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
+   <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+</body>
+</html>

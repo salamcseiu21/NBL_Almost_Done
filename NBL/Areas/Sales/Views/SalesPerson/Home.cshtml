@@ -1,0 +1,152 @@
+﻿
+@model NBL.Models.ViewModels.Summaries.SummaryModel
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+
+}
+<!-- Info boxes -->
+<section class="content">
+
+    <div class="box">
+
+        <div class="box-body">
+            <a class="btn btn-app" href="@Url.Action("Stock","Product",new {area="Sales"},null)">
+                <span class="badge bg-green" style="font-size: 14px">@Model.Products.Sum(n => n.StockQuantity)</span>
+                <i class="fa fa-barcode"></i> Product
+            </a>
+            <a class="btn btn-app" href="@Url.Action("DelayedOrders","Order",new {area="Sales"},null)">
+                <span class="badge bg-red" style="font-size: 14px">@Model.DelayedOrders.ToList().Count</span>
+                <i class="fa fa-bullhorn"></i> Delayed Order
+            </a>
+            <a class="btn btn-app" href="@Url.Action("PendingOrders","Order",new {area="Sales"},null)">
+                <span class="badge bg-yellow" style="font-size: 14px">@Model.PendingOrders.ToList().Count</span>
+                <i class="fa  fa-spinner"></i> Pending Order
+            </a>
+            <a class="btn btn-app" href="@Url.Action("All","Order",new {area="Sales"},null)">
+                <span class="badge bg-teal" style="font-size: 14px">@Model.Orders.ToList().Count</span>
+
+                <i class="fa fa-shopping-cart"></i> Total Order
+            </a>
+            <a class="btn btn-app" href="@Url.Action("ViewClient","Home",new {area="Sales"},null)">
+                <span class="badge bg-purple" style="font-size: 14px">@Model.Clients.Count()</span>
+                <i class="fa fa-users"></i> Client
+            </a>
+
+        </div>
+        <!-- /.box-body -->
+    </div>
+    @*<div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+
+
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"> &#2547;</span>
+                    <div class="info-box-content">
+                        @Ajax.ActionLink("TOTAL ORDERS", "All",
+                            new AjaxOptions
+                            {
+                                HttpMethod = "GET", // HttpMethod to use, GET or POST
+                                UpdateTargetId = "BranchDivOrders", // ID of the HTML element to update
+                                InsertionMode = InsertionMode.Replace, // Replace the existing contents
+                                LoadingElementId = "divloading",
+                                OnBegin = "ClearResults('All Orders')"
+                            })
+
+                        <span class="info-box-number">
+
+                            @Model.Orders.ToList().Count
+
+
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"> &#2547;</span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">ORDERS ( @Ajax.ActionLink(DateTime.Now.ToString("MMMM"), "CurrentMonthsOrder",
+                                                                 new AjaxOptions
+                                                                 {
+                                                                     HttpMethod = "GET", // HttpMethod to use, GET or POST
+                                                                     UpdateTargetId = "BranchDivOrders", // ID of the HTML element to update
+                                                                     InsertionMode = InsertionMode.Replace, // Replace the existing contents
+                                                                     LoadingElementId = "divloading",
+                                                                     OnBegin = "ClearResults('Orders of " + DateTime.Now.ToString("MMMM") + "')"
+
+                                                                 }))</span>
+                        <span class="info-box-number">
+                            @Model.Orders.ToList().FindAll(n => n.OrderDate.Month.Equals(DateTime.Now.Month)).Count
+
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <!-- fix for small devices only -->
+            <div class="clearfix visible-sm-block"></div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua">&#2547;</span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">ORDERS (Yesterday)</span>
+                        <span class="info-box-number">
+
+                            @Model.Orders.ToList().FindAll(n => n.OrderDate.Month.Equals(DateTime.Now.Month) && n.OrderDate.Day.Equals(DateTime.Now.Date.Day - 1)).Count
+
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua">&#2547;</span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">ORDERS (Today)</span>
+                        <span class="info-box-number">
+                            @Model.Orders.ToList().FindAll(n => n.OrderDate.Month.Equals(DateTime.Now.Month) && n.OrderDate.Day.Equals(DateTime.Now.Date.Day)).Count
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+        </div>*@
+    <!-- /.box -->
+    <div class="text-center text-green" style="font-size: 20px">
+        <label id="branchName"></label>
+    </div>
+    <div id="divloading" style="display: none;" class="text-center">
+        <img src="~/Images/loading.gif" />
+    </div>
+    <div id="BranchDivOrders">
+
+    </div>
+</section>
+@section Scripts{
+
+    <script>
+        function ClearResults(msg) {
+            $("#BranchDivOrders").empty();
+            $("#branchName").html(msg);
+        }
+    </script>
+    @*Reload page after 1 minute *@
+    <script type="text/javascript">
+        var timeout = setTimeout("location.reload(true);", 60000);
+        function resetTimeout() {
+            clearTimeout(timeout);
+            timeout = setTimeout("location.reload(true);", 60000);
+        }
+    </script>
+}

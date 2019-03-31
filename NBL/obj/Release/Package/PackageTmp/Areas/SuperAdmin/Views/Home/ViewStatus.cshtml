@@ -1,0 +1,43 @@
+﻿@model IEnumerable<NBL.Models.Status>
+@{
+    ViewBag.Title = "View Status";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Status List</h3>
+    <table class="display responsive table-bordered" id="table_status_list" style="border: 1px solid black;width: 100%">
+        <thead>
+        <tr>
+            <th>
+                Flag
+            </th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Flag</td>
+                <td>@item.Description</td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>
+                    Flag
+                </th>
+                <th>Description</th>
+            </tr>
+        </tfoot>
+    </table>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#table_status_list").DataTable();
+    </script>
+}

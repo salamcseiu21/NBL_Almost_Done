@@ -1,0 +1,115 @@
+﻿
+@model IEnumerable<NBL.Models.ViewModels.Orders.ViewOrder>
+@{
+    ViewBag.Title = "Order List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Today's Order List</h3>
+    <table id="table_Order_list" class="table table-bordered" style="border:1px solid black">
+       
+
+        <thead>
+            <tr>
+                <th>Client Name</th>
+                <th>Order Slip No</th>
+                <th class="text-right">Amount (&#2547;)</th>
+                <th class="text-right">Vat (&#2547;)</th>
+                <th class="text-right">Discount (&#2547;)</th>
+                <th class="text-right">Special Discount (&#2547;)</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+
+
+                <tr>
+
+                    <td>@item.ClientName</td>
+                    <td>@item.OrderSlipNo</td>
+                    <td class="text-right">@(item.Amounts-item.Vat)</td>
+                    <td class="text-right">@item.Vat</td>
+                    <td class="text-right">@item.Discount</td>
+                    <td class="text-right">@item.SpecialDiscount</td>
+                   
+                    <td class="text-center">
+
+                        @item.OrderDate.ToString("dd-MMM-yyyy")
+                    </td>
+                    <td class="text-center">
+                        <label class="text-danger"><i class="fa fa-spinner"></i> Pending</label>
+                       
+                    </td>
+                    <td class="text-center">
+                        @if (item.Status == 0)
+                        {
+
+                                @Html.ActionLink(" Edit ", "Edit", new { id = item.OrderId },new { @class="fa fa-edit"})<span>&nbsp;|</span>
+                                @Html.ActionLink(" Cancel ", "Cancel", new { id = item.OrderId }, new { @class = "fa fa-trash" ,style="color:red;" })
+                                @*<span>&nbsp;|</span> @Html.ActionLink(" Preview & Print ", "OrderSlip", new { id = item.OrderId }, new { target = "_blank",@class="fa fa-eye" })*@
+                        }
+                        else
+                        {
+                            @*@Html.ActionLink(" Preview & Print", "OrderSlip", new { id = item.OrderId }, new { target = "_blank" })*@
+                            <p>Approved</p>
+                        }
+
+
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Client Name</th>
+                <th>Order Slip No</th>
+                <th class="text-right">Amounts (&#2547;)</th>
+                <th class="text-right">Vat (&#2547;)</th>
+                <th class="text-right">Discount (&#2547;)</th>
+                <th class="text-right">Special Discount (&#2547;)</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+
+</section>
+
+@section Scripts
+{
+    <script>
+
+        $('#table_Order_list').DataTable({
+            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],
+            "oLanguage": {
+                "sEmptyTable": "<h4 style='color:green;font-weight:bolder;'>There is no order in the list right now !</h4>"
+            }
+        });
+
+    </script>
+
+    <script>
+        function Cancel(id) {
+
+            if (confirm("Are you sure to cancel  this Order ?")) {
+                // alert(id.id);
+                $("#"+id.id).submit();
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+
+        }
+    </script>
+}

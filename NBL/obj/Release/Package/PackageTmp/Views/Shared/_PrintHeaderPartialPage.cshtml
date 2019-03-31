@@ -1,0 +1,24 @@
+﻿
+@using NBL.Models
+@using NBL.Models.EntityModels.Branches
+@using NBL.Models.EntityModels.Companies
+
+<div class="row">
+    <div class="col-md-6" style="float:left">
+        @{
+            var branch = (Branch)Session["Branch"];
+            var company = (Company)Session["Company"];
+            <p style="font-size: 25px; font-weight: bolder; margin: 0; padding: 0;color: green !important">@branch.BranchName</p>
+            <p style="font-size: 20px; font-weight: bolder; margin: 0; padding: 0;">@branch.Title</p>
+                        <address>
+                            @branch.BranchAddress<br />
+                            Phone: @branch.BranchPhone,E-mail: @branch.BranchEmail
+                        </address>
+
+        }
+    </div>
+    <div class="col-md-6" style="float:right">
+        <img src="~/Images/@company.Logo" />
+    </div>
+</div>
+

@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C9AFFD73-668D-41E4-9771-15E084E5FEF6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NBL.DAL</RootNamespace>
+    <AssemblyName>NBL.DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BarCodeGateway.cs" />
+    <Compile Include="BranchGateway.cs" />
+    <Compile Include="ClientGateway.cs" />
+    <Compile Include="CommonGateway.cs" />
+    <Compile Include="CompanyGateway.cs" />
+    <Compile Include="Contracts\IBarCodeGateway.cs" />
+    <Compile Include="Contracts\IBranchGateway.cs" />
+    <Compile Include="Contracts\IClientGateway.cs" />
+    <Compile Include="Contracts\ICommonGateway.cs" />
+    <Compile Include="Contracts\ICompanyGateway.cs" />
+    <Compile Include="Contracts\IDeliveryGateway.cs" />
+    <Compile Include="Contracts\IDepartmentGateway.cs" />
+    <Compile Include="Contracts\IDesignationGateway.cs" />
+    <Compile Include="Contracts\IDiscountGateway.cs" />
+    <Compile Include="Contracts\IDistrictGateway.cs" />
+    <Compile Include="Contracts\IDivisionGateway.cs" />
+    <Compile Include="Contracts\IEmployeeGateway.cs" />
+    <Compile Include="Contracts\IEmployeeTypeGateway.cs" />
+    <Compile Include="Contracts\IFactoryDeliveryGateway.cs" />
+    <Compile Include="Contracts\IGateway.cs" />
+    <Compile Include="Contracts\IInventoryGateway.cs" />
+    <Compile Include="Contracts\IOrderGateway.cs" />
+    <Compile Include="Contracts\IPostOfficeGateway.cs" />
+    <Compile Include="Contracts\IProductGateway.cs" />
+    <Compile Include="Contracts\IRegionGateway.cs" />
+    <Compile Include="Contracts\IReportGateway.cs" />
+    <Compile Include="Contracts\ITerritoryGateway.cs" />
+    <Compile Include="Contracts\IUpazillaGateway.cs" />
+    <Compile Include="Contracts\IUserGateway.cs" />
+    <Compile Include="Contracts\IVatGateway.cs" />
+    <Compile Include="DbGateway.cs" />
+    <Compile Include="DeliveryGateway.cs" />
+    <Compile Include="DepartmentGateway.cs" />
+    <Compile Include="DesignationGateway.cs" />
+    <Compile Include="DiscountGateway.cs" />
+    <Compile Include="DistrictGateway.cs" />
+    <Compile Include="DivisionGateway.cs" />
+    <Compile Include="EmployeeGateway.cs" />
+    <Compile Include="EmployeeTypeGateway.cs" />
+    <Compile Include="FactoryDeliveryGateway.cs" />
+    <Compile Include="InventoryGateway.cs" />
+    <Compile Include="OrderGateway.cs" />
+    <Compile Include="PostOfficeGateway.cs" />
+    <Compile Include="ProductGateway.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegionGateway.cs" />
+    <Compile Include="ReportGateway.cs" />
+    <Compile Include="TerritoryGateway.cs" />
+    <Compile Include="UpazillaGateway.cs" />
+    <Compile Include="UserGateway.cs" />
+    <Compile Include="VatGateway.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NBL.Models\NBL.Models.csproj">
+      <Project>{572727b4-5ab4-4a58-a9c4-d3168bc93465}</Project>
+      <Name>NBL.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

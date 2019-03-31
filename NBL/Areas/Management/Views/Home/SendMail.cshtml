@@ -1,0 +1,157 @@
+﻿@using NBL.Models.ViewModels
+
+@{
+    ViewBag.Title = "Send Mail";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var user = (ViewUser) Session["user"];
+}
+
+<section class="content" style="background-color: gainsboro">
+    <div class="box box-primary">
+        @if(ViewBag.ErrorMessage!=null)
+        {
+        <div class="alert-danger text-center" style="padding: 10px">
+            @ViewBag.ErrorMessage
+        </div>
+        }
+        
+        @if(ViewBag.SuccessMessage != null)
+        {
+            <div class="alert-success text-center" style="padding: 10px">
+                @ViewBag.SuccessMessage
+            </div>
+        }
+        
+        @using (Html.BeginForm("SendMail", "Home", FormMethod.Post, new {enctype = "multipart/form-data"}))
+        {
+            <div class="box-header with-border">
+                <h3 class="box-title text-green" style="font-weight: bolder">Send New Mail</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="To: type client name..." id="ClientName" required>
+                    <input type="hidden" name="ToEmail" id="ToEmail"/>
+                    <input type="hidden" name="ClientId" id="ClientId"/>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" placeholder="Subject:" name="Subject" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="compose-textarea" name="MessageBody" class="form-control" style="height: 300px" required>
+                          <h1><u>Heading Of Message</u></h1>
+                          <h4>Subheading</h4>
+                          <p>
+                              But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain
+                              was born and I will give you a complete account of the system, and expound the actual teachings
+                              of the great explorer of the truth, the master-builder of human happiness. No one rejects,
+                              dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know
+                              how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again
+                              is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain,
+                              but because occasionally circumstances occur in which toil and pain can procure him some great
+                              pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise,
+                              except to obtain some advantage from it? But who has any right to find fault with a man who
+                              chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that
+                              produces no resultant pleasure? On the other hand, we denounce with righteous indignation and
+                              dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so
+                              blinded by desire, that they cannot foresee
+                          </p>
+                          <ul>
+                              <li>List item one</li>
+                              <li>List item two</li>
+                              <li>List item three</li>
+                              <li>List item four</li>
+                          </ul>
+                          <p>Thank you,</p>
+                          <p>@user.EmployeeName,</p>
+                          <p>Management, NBL</p>
+                      </textarea>
+                </div>
+                <div class="form-group">
+                    <input type="file" name="attachment" class="form-control">
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button>
+                </div>
+                <button type="reset" class="btn btn-danger"><i class="fa fa-times"></i> Discard</button>
+
+            </div>
+            <!-- /.box-footer -->
+
+        }
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+    $(function () {
+        //Add text editor
+        $("#compose-textarea").wysihtml5();
+    });
+</script>
+
+@*Client Name Auto Complete*@
+<script type="text/javascript">
+    $(function () {
+        $("#ClientName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: RootUrl + 'Common/ClientNameAutoComplete/',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data,
+                            function(item) {
+                                return item;
+                            }));
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#ClientId").val(i.item.val);
+                $("#CId").val(i.item.val);
+                $("#orders").html("");
+                productIdlist = [];
+                $("#Total").val('');
+                $("#Net").val('');
+                $("#SpecialDiscount").val('');
+                //alert(i.item.val);
+
+                $("#Discount").val('');
+                $("#Address").val('');
+                $("#ClientPhone").val('');
+                $("#ClientEmail").val('');
+                 $("#CreditLimit").val('');
+                var cId = i.item.val;
+                var json = { clientId: cId };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetClientById", "Common", new { area = "" })',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $("#ToEmail").val(data.Email);
+
+
+
+                    }
+                });
+            },
+            minLength: 1
+        });
+    });
+</script>
+}

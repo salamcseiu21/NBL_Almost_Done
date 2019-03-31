@@ -1,0 +1,37 @@
+﻿@model NBL.Models.ViewModels.TransferProducts.ViewTransferIssueModel
+@{
+    ViewBag.Title = "Pending Transfer Issue";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content" style="margin:0;padding:0">
+    <h3 class="text-center text-green">Transfer Issued List</h3>
+    <div class="col-md-8 col-md-offset-2">
+        <div id="accordion">
+            @foreach (var issue in Model.TransferIssues.OrderByDescending(n => n.TransferIssueId))
+            {
+
+
+                <h3>@issue.TransferIssueRef</h3>
+                <div class="row" style="border: 1px dotted;background-color: peachpuff">
+                    <div class="col-md-3">
+                        <label>From Branch :</label>  @Model.FromBranch.BranchName
+                    </div>
+                    <div class="col-md-3">
+                        <label>To Branch :</label> @Model.ToBranch.BranchName
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <label>Issue Date: </label>  @issue.SysDateTime
+                    </div>
+
+                    <div class="col-md-2 text-right">
+
+                        @Html.ActionLink("Details", "ApproveTransferIssue", "Approve", new { area = "Factory", id = issue.TransferIssueId }, new { @class = "btn btn-info" })
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</section>
+

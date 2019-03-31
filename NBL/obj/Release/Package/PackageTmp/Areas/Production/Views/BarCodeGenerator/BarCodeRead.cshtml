@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "BarCodeRead";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    @using (Html.BeginForm("BarCodeRead", "BarCodeGenerator", FormMethod.Post,new { @enctype = "multipart/form-data" }))   
+    {  
+        <div class="row">  
+  
+            <div class="col-md-3"></div>  
+            <div class="col-md-3">  
+                <div align="center">  
+                    <br />  
+                    <input type="file" name="barCodeUpload" Class="form-control" ID="barCodeUpload" /><br />  
+                    <br />  
+                    <input type="submit" Class="btn btn-primary" ID="UploadButton" value="Upload">  
+                    <br />  
+                    <br />  
+                    <span Class="btn alert-danger">@ViewBag.ErrorMessage</span>  
+                    <br />  
+                    <input type="text" Class="form-control col-md-8" value="@ViewBag.BarCode" /><br />  
+                    <br />  
+                    <img type="image" src="@ViewBag.BarImage"/>  
+                </div>  
+  
+            </div>  
+        </div>  
+    }  
+</section>

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Locations.Region>
+@{
+    ViewBag.Title = "Business Area";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="headingStyle text-center text-green" style="padding: 10px">Business Area</h3>
+    <div class="row" style="margin: 0; padding: 0;">
+        @foreach (var region in Model)
+        {
+            <div class="col-md-4">
+                <div class="panel panel-success" >
+                    <div class="panel panel-heading" style="margin-bottom: 0;">
+                        <h3 class="text-center" style="margin: 0; padding: 0;">Region: @region.RegionName</h3>
+                    </div>
+                    <div class="panel panel-body" style="margin-bottom: 0;">
+                        <u><h3>District List</h3></u>
+                        <ol type="1">
+
+                            @foreach (var district in region.Districts.ToList())
+                            {
+
+                                <li><p style="font-weight: bolder">@district.DistrictName</p></li>
+
+                            }
+                        </ol>
+
+                    </div>
+                    
+                </div>
+            </div>
+        }
+    </div>
+</section>
+

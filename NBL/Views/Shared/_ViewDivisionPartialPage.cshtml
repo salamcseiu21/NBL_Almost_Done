@@ -1,0 +1,69 @@
+﻿
+@model IEnumerable<NBL.Models.EntityModels.Locations.Division>
+@{
+    ViewBag.Title = "Division List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+
+    <h3 class="text-center text-green headingStyle">Division List</h3>
+    <table id="table_division_list" class="display table table-bordered" style="border:1px solid black">
+
+        <thead>
+        <tr>
+            <th width="15%">Division Name</th>
+            <th>Regions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    <h4 style="font-weight: bolder;color: green">@item.DivisionName</h4>
+
+                </td>
+                <td>
+                    <ol type="1">
+                        @foreach (var r in item.Regions.ToList())
+                        {
+                            <li>
+                                <h4> @r.RegionName</h4>
+
+                            </li>
+
+
+                        }
+                    </ol>
+
+                </td>
+
+            </tr>
+        }
+
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Division Name</th>
+            <th>Regions</th>
+        </tr>
+        </tfoot>
+    </table>
+
+
+</section>
+
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+
+<script>
+
+        $('#table_division_list').DataTable({
+            "lengthMenu": [[2, 8, 12, -1], [2,8, 12, "All"]],
+            "order": [[1, "desc"]]
+        });
+
+</script>

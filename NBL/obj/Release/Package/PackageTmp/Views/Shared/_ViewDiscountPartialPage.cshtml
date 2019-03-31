@@ -1,0 +1,56 @@
+﻿
+@using NBL.Models.EntityModels.VatDiscounts
+@model IEnumerable<Discount>
+@{
+    ViewBag.Title = "Discounts";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Discounts</h3>
+    <hr />
+    <table id="table_view_discount" class="display table table-bordered" style="border:1px solid black">
+        <thead>
+        <tr>
+            <th>Product Info</th>
+            <th class="text-center" style="width: 50%">Discount (%) </th>
+        </tr>
+        </thead>
+        <tbody>
+        
+        @foreach (IGrouping<int,Discount> discounts in Model.ToList().GroupBy(n=>n.ProductId))
+        {
+
+            <tr>
+                <td>@Html.Raw(discounts.Key)</td>
+                <td>@foreach (Discount discount in discounts) 
+                                       {
+                                           <p>@discount.ClientType.ClientTypeName- @discount.DiscountPercent</p>
+                                       }
+                   <span>Last Update: @discounts.ToList().First().ApprovedDate.ToString("dd-MMMM-yyyy")</span>
+                </td>
+              
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Product Info</th>
+            <th class="text-center" style="width: 50%">Discount (%) </th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+@section Scripts
+{
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+    <script>
+
+        $('#table_view_discount').DataTable({
+            "lengthMenu": [[10, 30, 50, -1], [10, 30, 50, "All"]],
+            "oLanguage": {
+                "sEmptyTable": "<h4 style='color:green;font-weight:bolder;'>There is no discount right now !</h4>"
+            }
+        });
+
+    </script>
+}

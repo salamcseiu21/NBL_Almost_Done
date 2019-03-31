@@ -1,0 +1,104 @@
+﻿@model NBL.Models.ViewModels.TransferProducts.ViewTripModel
+@{
+    ViewBag.Title = "Delivery";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <p class="text-center text-green" style="font-weight:bolder;font-size:20px">Deliverable Trip Details</p>
+
+    <div class="row" style="padding: 10px">
+
+
+        <div class="col-md-6 col-md-offset-3" style="border: 1px solid;">
+            
+            <div class="form-horizontal">
+                <h3 class="text-center">Scan Product</h3>
+                @if (TempData["QuantityNotSame"] != null)
+                {
+                    <p class="text-danger">@TempData["QuantityNotSame"]</p>
+                }
+                <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ProductCode, new { @class = "control-label col-md-2" })
+                    <input type="hidden" id="TripId" name="TripId" value="@Model.TripId" />
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.ProductCode, new { @class = "form-control", placeholder = "Always keep pointer here..!!", autofocus = "", onchange = "SaveScannedBarcodeToTextFile(this)" })
+                        @Html.ValidationMessageFor(m => m.ProductCode, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="btn-toolbar">
+                            <button type="button" id="btnSaveDispatchInfo" value="@Model.TripId" class="btn btn-success" onclick="SaveDispatchInfo(this)"> Dispatch</button>
+                            <a class="btn btn-danger" href="~/production">Cancel</a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <div class="row" style="padding: 10px">
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="control-label">Requisition Qty :</label>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="control-label" id="lbl_requisition_qty"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <label class="control-label">Scanned Qty :</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="control-label" id="lbl_scanned_qty"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <label class="control-label">Scan Status :</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="div_status" style="font-weight: bold;padding: 5px">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row" style="padding: 15px; border: 1px solid;margin: 10px">
+        <div class="col-md-6">
+            <div id="required_Trip_products"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="scanned_Trip_Products"></div>
+        </div>
+        <hr />
+    </div>
+</section>
+
+@section Scripts
+{
+   
+    <script src="@Url.Content("~/Areas/Production/Scripts/dispatchProduct.js")"></script>
+    
+}

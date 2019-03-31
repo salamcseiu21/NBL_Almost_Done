@@ -1,0 +1,121 @@
+﻿
+@model IEnumerable<NBL.Models.ViewModels.Orders.ViewOrder>
+@{
+    ViewBag.Title =ViewBag.Heading;
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="headingStyle text-center text-green">@Html.Raw(ViewBag.Heading)</h3>
+    <table id="table_Order_list" class="display table-bordered responsive" style="border: 1px solid black">
+
+        <thead>
+        <tr>
+            <th>Order Slip No</th>
+            <th>Client Info</th>
+            <th class="text-center">Order Date</th>
+            <th class="text-right">Amount (&#2547;)</th>
+            <th class="text-right">Qty</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@item.OrderSlipNo</td>
+                <td>
+                    @{
+
+                        @Html.Raw(item.Client?.GetBasicInformation()?? "")
+                    }
+                </td>
+                <td class="text-center">
+
+                    @item.SysDate.ToShortTimeString(),@item.SysDate.ToString("dd-MMM-yyyy")
+                </td>
+                <td class="text-right">
+                    @item.NetAmounts
+                </td>
+                <td class="text-right">
+                    @item.Quantity
+                </td>
+                <td class="text-center">
+                    @{
+                        <label> </label>
+
+                        switch (item.Status)
+                        {
+                            case 0:
+                                <label class="text-danger"><i class="fa fa-spinner"></i> @item.StatusDescription</label>
+                                break;
+                            case 1:
+                                <label class="text-success"><i class="fa fa-spinner"></i> @item.StatusDescription</label>
+                                break;
+                            case 2:
+                                <label class="text-success"><i class="fa fa-spinner"></i> @item.StatusDescription</label>
+                                break;
+                            case 3:
+                                <label class="text-orange"> @item.StatusDescription</label>
+                                break;
+                            case 4:<label class="text-green"><i class="fa fa-check-circle-o"></i> @item.StatusDescription</label>
+                                break;
+                            default:
+                                <label style="color: red;" title="@item.ResonOfCancel"><i class="fa fa-times"></i> @item.StatusDescription</label>
+                                break;
+                        }
+                    }
+
+                </td>
+                <td class="text-center">
+                    @*@Html.ActionLink(" Details", "OrderDetails", "Home", new {id = item.OrderId}, new {@class = "fa fa-eye"})*@
+                    <button type="button" class="btn btn-success btn-sm" value="@item.OrderId" onclick="ViewOrderDetails(this)"><i class="fa fa-eye"></i> Details</button>
+                </td>
+            </tr>
+        }
+
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Order Slip No</th>
+            <th>Client Info</th>
+            <th class="text-center">Order Date</th>
+            <th class="text-right">Amount (&#2547;)</th>
+            <th class="text-right">Qty</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </tfoot>
+    </table>
+    @Html.Partial("_ModalPartialPage")
+</section>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+<script>
+
+    $('#table_Order_list').DataTable({
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        "order": [[1, "desc"]]
+    });
+
+</script>
+
+<script>
+
+    function ViewOrderDetails(orderId) {
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewOrderDetails", "Common", new { area = "" })",
+            data: { orderId: orderId.value },
+            success: function (response) {
+                $('#modalBody').html(response);
+                $('#showOrderDetailsModal').modal('show');
+            }
+        });
+    }
+
+</script>

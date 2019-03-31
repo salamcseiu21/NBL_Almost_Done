@@ -1,0 +1,109 @@
+﻿
+@*Sales Admin Menu*@
+<ul class="sidebar-menu" data-widget="tree" style="font-size: 16px; font-weight: bolder">
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-tachometer"></i>
+            <span>Dashboard</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                @Html.ActionLink(" Dashboard-1 ", "Home", "SalesAdmin", new { area = "Sales" }, new { @class = "fa fa-eye", style = "font-weight: bolder" })
+            </li>
+        </ul>
+    </li>
+    
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-shopping-cart"></i>
+            <span>Orders</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Pending Orders", "PendingOrder", "OrderSalesAdmin", new { area = "Sales" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Verifying Orders", "VerifyingOrders", "OrderSalesAdmin", new { area = "Sales" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Delayed Orders", "DelayedOrders", "OrderSalesAdmin", new { area = "Sales" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Latest Orders", "LatestOrders", "OrderSalesAdmin", new { area = "Sales" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" All Orders", "All", "OrderSalesAdmin", new { area = "Sales" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            @*<li>@Html.ActionLink(" Delivered Orders (2Day)", "ViewTodaysDeliverdOrders", "Order", new { area = "Admin" }, new { @class = "fa fa-list" })</li>*@
+            <li>@Html.ActionLink(" All Delivered Orders", "ViewAllDeliveredOrders", "OrderSalesAdmin", new { area = "Sales" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-shopping-cart"></i>
+            <span>Invoice</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Pending Invoices", "InvoicedOrderList", "OrderSalesAdmin", new { area = "Sales" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        </ul>
+    </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-book"></i> <span>Reports</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle-o"></i> Sales
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-circle-o"></i> Level Two
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle-o"></i> Clients
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-circle-o"></i> Level Two
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+
+    
+    @Html.Partial("_MenuPartialPage")
+</ul>

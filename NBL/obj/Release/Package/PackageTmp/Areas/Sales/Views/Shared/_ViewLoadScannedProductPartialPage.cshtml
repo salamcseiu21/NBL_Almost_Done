@@ -1,0 +1,33 @@
+﻿
+@model IEnumerable<NBL.Models.ViewModels.Productions.ScannedProduct>
+<table id="table_scanned_product_List" class="display" style="border:1px solid black">
+    <caption class="text-center text-green" style="font-weight:bolder;font-size:20px">Scanned Product List</caption>
+
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th style="width: 50px" class="text-center">Quantity
+            <input type="hidden" value="@Model.Count()" id="total_Scanned_qty"/>
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.GroupBy(n=>n.ProductName))
+        {
+            <tr>
+                <td>@item.Key</td>
+                <td class="text-center">@item.Count()</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Product Name</th>
+            <th style="width: 50px" class="text-center">Quantity</th>
+        </tr>
+    </tfoot>
+</table>
+<script>
+    $("#table_scanned_product_List").DataTable();
+</script>

@@ -1,0 +1,77 @@
+﻿@using NBL.Models.ViewModels
+@model NBL.Models.ViewModels.Summaries.SummaryModel
+@{
+    ViewBag.Title = "Branch Wise Summary";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content" style="padding-bottom: 0; margin-bottom: 0;">
+    <div class="row">
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua">&#2547;</span>
+                <div class="info-box-content">
+
+                    @Ajax.ActionLink("TOTAL ORDERS", "All",
+                        new AjaxOptions
+                        {
+                            HttpMethod = "GET", // HttpMethod to use, GET or POST
+                            UpdateTargetId = "divOrders", // ID of the HTML element to update
+                            InsertionMode = InsertionMode.Replace,// Replace the existing contents
+                            LoadingElementId = "divloading",
+                            OnBegin = "ClearResults('All Orders')"
+
+                        })
+                    <span class="info-box-number">@Model.Branches.Sum(n=>n.Orders.Count)</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        @{
+            foreach (ViewBranch branch in Model.Branches)
+            {
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-aqua">&#2547;</span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">
+                                Sales in ( @Ajax.ActionLink(branch.BranchName, "OrderSummary", new { branchId = branch.BranchId },
+                                               new AjaxOptions
+                                               {
+                                                   HttpMethod = "GET", // HttpMethod to use, GET or POST
+                                                   UpdateTargetId = "divOrders", // ID of the HTML element to update
+                                                   InsertionMode = InsertionMode.Replace,// Replace the existing contents
+                                                   LoadingElementId = "divloading",
+                                                   OnBegin = "ClearResults('Branch Name : " + branch.BranchName + "')"
+
+                                               }))
+                            </span>
+                            <span class="info-box-number">@branch.Orders.Count()</span>
+
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+            }
+        }
+    </div>
+</section>
+
+<div class="text-center text-green" style="font-size:25px">
+    <label id="branchName"></label>
+</div>
+<div id="divloading" style="display:none;" class="text-center">
+    <img src="~/Images/loading.gif" />
+</div>
+<div id="divOrders">
+
+</div>
+
+<script>
+    function ClearResults(msg) {
+        $("#divOrders").empty();
+        $("#branchName").html(msg);
+    }
+</script>

@@ -1,0 +1,87 @@
+﻿
+@model IEnumerable<NBL.Models.EntityModels.Locations.Region>
+@{
+    ViewBag.Title = "Assign District To Region";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Assign District To Region</h3>
+    <hr />
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Region</label>
+                    <div class="col-md-9">
+                        <select class="form-control" id="RegionId" name="RegionId" required>
+                            <option value="">--Select--</option>
+                            @foreach (var item in Model)
+                            {
+                                <option value="@item.RegionId">@item.RegionName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">District/Division Name</label>
+                    <div class="col-md-9">
+                        <select class="form-control select2" multiple="multiple" data-placeholder="Type division or district Name" id="DistrictId" name="DistrictId">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2"></label>
+                    <div class="col-md-10 text-right">
+                        @Html.ActionLink("Back to List", "All", "Region", new { area = "Editor" }, new { @class = "btn btn-danger" })
+                        <input type="submit" value="Save" class="btn btn-success" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+
+
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#RegionId").change(function () {
+            //var divId = $(this).val();
+            var regionId = $(this).val();
+            $("#DistrictId").empty();
+
+            $("#DistrictId").append('<option value="">--Select--</option>');
+            //var json = { divisionId: divId };
+            var json = { regionId: regionId };
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetUnAssignedDistrictListByRegionId", "Common", new { area = "" })',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+
+
+                    $.each(data, function (key, value) {
+                        //alert(key);
+                        $("#DistrictId").append('<option value=' + value.DistrictId + '>' + value.DistrictName + '</option>');
+
+                    });
+                }
+            });
+        });
+
+    </script>
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+        })
+    </script>
+}

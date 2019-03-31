@@ -1,0 +1,68 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.ViewEmployee>
+@{
+    ViewBag.Title = "Employee List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+
+}
+<div class="content">
+    <table id="table_employee_list" class="display table table-bordered" style="border:1px solid black">
+        <caption class="text-center text-green" style="font-weight:bold;">Employee List</caption>
+
+        <thead>
+        <tr>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.EmployeeNo</td>
+                <td>@item.EmployeeName</td>
+                <td>@Html.Raw(item.Department.GetFullInformation())</td>
+                <td>@Html.Raw(item.Designation.GetBasicInformation())</td>
+                <td>@item.PresentAddress</td>
+                <td>@item.Phone</td>
+                <td>@item.Email</td>
+                <td class="text-center">
+                    @Html.ActionLink(" Edit", "Edit","Employee",new {id = item.EmployeeId}, new {@class = "fa fa-edit"}) |
+                    @Html.ActionLink(" Details", "Details","Employee", new {id = item.EmployeeId}, new {@class = "fa fa-eye"})
+                </td>
+            </tr>
+        }
+
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </tfoot>
+    </table>
+
+</div>
+@section Scripts{
+    <script>
+
+        $('#table_employee_list').DataTable({
+            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]]
+        });
+
+    </script>
+
+}

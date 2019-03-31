@@ -1,0 +1,24 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Orders.ViewOrder>
+@{
+    ViewBag.Title = "Pending Order";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+ 
+}
+<section class="content">
+    @Html.Partial("_PendingOrdersPartialPage", Model)
+
+</section>
+
+@section Scripts{
+    <script>
+
+        $('#table_pending_order_list').DataTable({
+            "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+            "oLanguage": {
+                "sEmptyTable": "<h4 style='color:green;font-weight:bolder;'>There is no orders to <i>Approve</i> right now !</h4>"
+            }
+        });
+
+    </script>
+
+}

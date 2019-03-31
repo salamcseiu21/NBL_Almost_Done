@@ -1,0 +1,235 @@
+﻿@using NBL.Models
+@using NBL.Models.EntityModels.Masters
+@{
+    ViewBag.Title = "Payable";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+    IEnumerable<PaymentType> paymentTypes = null;
+    if (ViewBag.PaymentTypes != null)
+    {
+        paymentTypes = (IEnumerable<PaymentType>)ViewBag.PaymentTypes;
+    }
+}
+
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Accounts Payable</h3>
+
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "PayableForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="CompanyName">Company Name</label>
+                        <div class="col-md-9">
+                            <input type="text"  class="form-control" id="CompanyName" name="CompanyName" placeholder="Company Name" required autofocus/>
+                            <input type="hidden" id="CompanyId" name="CompanyId"  />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="BranchName">Branch Name</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control"  id="BranchName" name="BranchName" placeholder="Branch Name" required />
+                            <input type="hidden" id="BranchId" name="BranchId" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="SupplierName" class="control-label col-md-3">Supplier Name</label>
+                        <div class="col-md-9">
+                            <input type="text" id="SupplierName" name="SupplierName" class="form-control" placeholder="Start typing Supplier Name" />
+                            <input type="hidden" id="SupplierId" name="SupplierId" />
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Address" class="control-label col-md-3">Address</label>
+                        <div class="col-md-9">
+
+                            <textarea id="Address" name="Address" class="form-control" placeholder="Supplier address" readonly="readonly" rows="2" style="resize: none"></textarea>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="SubSubSubAccountCode" class="control-label col-md-3">Supplier Code</label>
+                        <div class="col-md-9">
+                            <input type="text" id="SubSubSubAccountCode" name="SubSubSubAccountCode" class="form-control" placeholder="Supplier Code" readonly="readonly" />
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="PaymentDate" class="control-label col-md-3">Memo Date</label>
+                        <div class="col-md-9">
+
+                            <input type="text" id="PaymentDate" name="PaymentDate" value="@date" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="PaymentTypeId" class="control-label col-md-3">Payment Type</label>
+                        <div class="col-md-9">
+
+                            <select class="form-control" id="PaymentTypeId">
+
+                                @foreach (var item in paymentTypes)
+                                {
+                                    <option value="@item.PaymentTypeId">@item.PaymentTypeName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group bankInfo">
+                        <label for="BankId" class="control-label col-md-3">Bank Name</label>
+                        <div class="col-md-9">
+
+                            <input type="text" id="BankName" name="BankName" placeholder="Bank Name" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group bankInfo">
+                        <label for="ChequeNo" class="control-label col-md-3">Cheque No/TnxId</label>
+                        <div class="col-md-9">
+
+                            <input type="text" id="ChequeNo" name="ChequeNo" placeholder="Cheque No or Transaction Id" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group bankInfo">
+                        <label for="BankCode" class="control-label col-md-3">Bank Code</label>
+                        <div class="col-md-9">
+
+                            <input type="text" id="BankCode" name="BankCode" placeholder="Bank Code" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ChequeDate" class="control-label col-md-3">Date</label>
+                        <div class="col-md-9">
+
+                            <input type="text" id="ChequeDate" name="ChequeDate" value="@date" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Amount" class="control-label col-md-3">Amount</label>
+                        <div class="col-md-9">
+
+                            <input type="number" id="Amount" name="Amount" placeholder="Amount" class="form-control" min="0" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="col-md-9 col-md-offset-3">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="button" value="Cancel" class="btn btn-danger btn-block" onclick="ClearInputFields()" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="submit" value="Payment" class="btn btn-primary btn-block" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+</section>
+@section Scripts
+{
+    @* Date picker*@
+    <script>
+    $(function () {
+
+        $("#PaymentDate").datepicker({ dateFormat: 'dd-MM-yy' });
+        $("#ChequeDate").datepicker({ dateFormat: 'dd-MM-yy' });
+    } );
+    </script>
+
+    @*Client Name Auto Complete*@
+    <script type="text/javascript">
+    $(function () {
+        $("#CompanyName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/Accounts/Account/ClientNameAutoComplete/',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data,
+                            function(item) {
+                                return item;
+                            }));
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#ClientId").val(i.item.val);
+                //alert(i.item.val);
+
+                $("#Discount").val('');
+                $("#Address").val('');
+                $("#ClientPhone").val('');
+                $("#ClientEmail").val('');
+                 $("#CreditLimit").val('');
+                var cId = i.item.val;
+                var json = { clientId: cId };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetClientById", "Account")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+
+                        var address = data.Address;
+                        var phone = data.Phone;
+                        var email = data.Email;
+                        var discount = data.Discount;
+                        var code = data.SubSubSubAccountCode;
+                        var ctype = data.ClientTypeName;
+                        var cl = data.CreditLimit;
+                        $("#Address").val(address);
+                        $("#ClientPhone").val(phone);
+                        $("#ClientEmail").val(email);
+                        $("#Discount").val(discount);
+                        $("#SubSubSubAccountCode").val(code);
+                        $("#ClientTypeName").val(ctype);
+                        $("#CreditLimit").val(cl);
+
+
+                    }
+                });
+            },
+            minLength: 1
+        });
+    });
+    </script>
+
+    <script>
+
+    $("#PaymentTypeId").change(function () {
+        var ptId = $("#PaymentTypeId").val();
+        if (ptId == 4)
+        {
+            $(".bankInfo").hide();
+        }
+        else {
+            $(".bankInfo").show();
+        }
+
+    });
+    </script>
+
+}

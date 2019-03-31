@@ -1,0 +1,75 @@
+﻿@model NBL.Models.EntityModels.Identities.User
+@using NBL.Models
+@using NBL.Models.EntityModels.Branches
+
+@{
+    ViewBag.Title = "User Details";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    IEnumerable<Branch> branches = null;
+    if(ViewBag.BranchList!=null)
+    {
+        branches = (IEnumerable<Branch>)ViewBag.BranchList;
+    }
+}
+
+<section class="content">
+        <h3 class="text-center text-green headingStyle">User Information</h3>
+       <table class="table table-bordered table-striped">
+           <tr>
+               <td><label>Employee Name: </label> <label>@Model.EmployeeName</label></td>
+               <td><label>User Name: </label><label>@Model.UserName</label></td>
+               <td><label>Role: </label><label>@Model.Roles</label></td>
+           </tr>
+           <tr>
+               <td><label>Active Status: </label> <label>@Model.ActiveStaus</label></td>
+               <td><label>Block Status: </label><label>@Model.BlockStatus</label></td>
+               <td><label>Joining Date: </label><label>@Model.JoiningDate</label></td>
+           </tr>
+       </table>
+
+        <table id="table_assigned_branch_list" class="table table-bordered" style="border:1px solid black">
+            <caption class="text-center text-green" style="font-weight:bold;">Assigned Branch List</caption>
+
+            <thead>
+                <tr>
+                    <th>Branch Name</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in branches)
+            {
+                    <tr>
+
+                        <td>@item.BranchName</td>
+                        <td>@item.BranchAddress</td>
+                    </tr>
+                }
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Branch Name</th>
+                    <th>Address</th>
+                </tr>
+            </tfoot>
+        </table>
+        <div>
+            @Html.ActionLink("Back to List", "ViewUser", "Assign", new { area = "SuperAdmin" }, new { @class = "btn btn-info" })
+        </div>
+
+
+</section>
+
+@section Scripts
+{
+    <script>
+
+        $('#table_assigned_branch_list').DataTable({
+            "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
+        });
+
+    </script>
+}

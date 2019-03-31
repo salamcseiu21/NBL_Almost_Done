@@ -1,0 +1,9 @@
+﻿
+@model IEnumerable<NBL.Models.ViewModels.ViewEmployee>
+@{
+    ViewBag.Title = "Employee List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@Html.Partial("_ViewEmployeePartialPage", Model)

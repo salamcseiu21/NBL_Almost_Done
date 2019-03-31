@@ -1,0 +1,50 @@
+﻿
+@using NBL.Models.ViewModels.TransferProducts
+@model IEnumerable<ViewTripModel>
+<hr/>
+<table class="display" id="tbl_Temp_Trip_Products" style="border: 1px solid;">
+    <caption class="text-center text-green">Trip Summary</caption>
+    <thead>
+    <tr>
+        <th>Branch</th>
+        <th>Product Name</th>
+        <th>Requisition Quantity</th>
+        <th>Deliverable Quantity</th>
+        <th>Action
+        <input type="hidden" id="total_requisition_qty" value="@Model.Sum(n=>n.RequisitionQty)"/>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+
+    @if (Model != null)
+    {
+        var tempList = Model.GroupBy(n => n.RequisitionRef);
+        
+        foreach (IGrouping<string, ViewTripModel> requisitionModels in tempList)
+        {
+            <tr>
+                <td colspan="5" class="text-center" style="background-color: darkcyan; color: white;font-weight: bolder">
+                  Requisition Ref :  @requisitionModels.Key
+                </td>
+            </tr>
+            foreach (ViewTripModel item in requisitionModels)
+            {
+                <tr>
+
+                    <td>@item.ToBranch.BranchName</td>
+                    <td>@item.ProuctName</td>
+                    <td>@item.RequisitionQty</td>
+                    <td>@item.DeliveryQuantity</td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="DeleteProduct(this)" value="@item.Id"><i class="fa fa-times"></i></button>
+                    </td>
+                </tr>
+            }
+        }
+
+    }
+
+    </tbody>
+</table>
+<script src="~/Areas/Production/Scripts/deleteProdcutFromTempTrip.js"></script>

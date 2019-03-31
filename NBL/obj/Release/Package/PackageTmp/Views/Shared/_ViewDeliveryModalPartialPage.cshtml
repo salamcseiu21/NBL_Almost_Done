@@ -1,0 +1,81 @@
+﻿@model NBL.Models.EntityModels.TransferProducts.TransferIssue
+    @{
+        var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+    }
+@using (Html.BeginForm("SaveDispatchInformation", "Delivery", FormMethod.Post, new { id = "saveDeliveryInfoForm" }))
+{
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                  
+                    @Html.HiddenFor(m=>m.TransferIssueId)
+                    <label for="Transportation" class="control-label col-md-3">Transportation:</label>
+                    <div class="col-md-9">
+                        <input type="text" id="Transportation" name="Transportation" class="form-control" value="Transport" placeholder="Transportation Name" required/>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="DriverName" class="control-label col-md-3">Driver Name:</label>
+                    <div class="col-md-9">
+                        <input type="text" id="DriverName" name="DriverName" value="Mr. Abc" class="form-control" placeholder="Driver Name" required />
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="VehicleNo" class="control-label col-md-3">Vehicle No:</label>
+                    <div class="col-md-9">
+                        <input type="text" id="VehicleNo" name="VehicleNo" value="D-25850" placeholder="Vehicle No" class="form-control" required />
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label for="TransportationCost" class="control-label col-md-3">Transportation Cost:</label>
+                    <div class="col-md-9">
+                        <input type="number" id="TransportationCost" name="TransportationCost" value="5000" class="form-control" placeholder="Transportation Cost" required />
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="DeliveryDate" class="control-label col-md-3">Date</label>
+                    <div class="col-md-9">
+                        <input type="text" id="DeliveryDate" name="DeliveryDate" value="@date" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+
+
+                    <div class="col-md-9 col-md-offset-3">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.ActionLink("Cancel", "DeliverableTransferIssueList", "Delivery", new { area = "Manager" }, new { @class = "btn btn-danger" })
+                            </div>
+
+                            <div class="col-md-8">
+
+                                <input type="button" value="Save" onclick="SaveDeliveryInfo(this)" class="btn btn-info" />
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+    $(function () {
+
+        $("#DeliveryDate").datepicker({ dateFormat: 'dd-MM-yy' });
+
+    });
+</script>

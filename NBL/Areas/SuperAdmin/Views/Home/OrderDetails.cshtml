@@ -1,0 +1,13 @@
+﻿@model NBL.Models.ViewModels.Orders.ViewOrder
+
+@{
+    ViewBag.Title = "Order Details";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Order Details</h3>
+    <br/>
+    @Html.Partial("_OrderDetailsPartialPage", Model)
+
+</section>

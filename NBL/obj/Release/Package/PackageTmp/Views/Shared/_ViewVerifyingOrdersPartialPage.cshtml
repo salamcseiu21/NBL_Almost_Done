@@ -1,0 +1,89 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Orders.ViewVerifiedOrderModel>
+@{
+    ViewBag.Title = "Verifying Orders";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Verifying Order Lsit</h3>
+    <table id="table_verifying_order_list" class="table table-bordered" style="border:1px solid black">
+        <thead>
+        <tr>
+            <th>Client Info</th>
+            <th>Order Slip No</th>
+            <th class="text-right">Net Amount (&#2547;)</th>
+            <th class="text-right">Qty</th>
+            <th class="text-center">Approved by NSM At</th>
+            <th class="text-center">Order At</th>
+            <th class="text-center">Order By</th>
+            <th class="text-center" style="width: 20%">Verification Notes</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.Raw(item.Client.GetBasicInformation())
+                </td>
+                <td>@item.OrderSlipNo</td>
+                <td class="text-right">@item.NetAmounts</td>
+                <td class="text-right">@item.Quantity</td>
+                <td class="text-center">
+                    @item.ApprovedByNsmDateTime.ToShortTimeString(), @item.ApprovedByNsmDateTime.ToString("dd-MMM-yyyy")
+                </td>
+                <td class="text-center">
+
+                    @item.SysDate.ToShortTimeString(), @item.SysDate.ToString("dd-MMM-yyyy")
+                </td>
+                <td>@(item.User?.EmployeeName ?? "N/A")</td>
+                <td>@item.Notes</td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-success btn-sm" value="@item.OrderId" onclick="viewDetails(this)"><i class="fa fa-eye"></i>&nbsp;Details</button>
+                </td>
+            </tr>
+        }
+
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Client Info</th>
+            <th>Order Slip No</th>
+            <th class="text-right">Net Amount (&#2547;)</th>
+            <th class="text-right">Qty</th>
+            <th class="text-center">Approved by NSM At</th>
+            <th class="text-center">Order At</th>
+            <th class="text-center">Order By</th>
+            <th class="text-center">Verification Notes</th>
+            <th class="text-center">Action</th>
+
+        </tr>
+        </tfoot>
+    </table>
+    @Html.Partial("_ModalPartialPage")
+</section>
+    @section Scripts
+    {
+        <script>
+            $("#table_verifying_order_list").DataTable();
+        </script>
+        
+        <script>
+
+            function viewDetails(orderId) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ViewOrderDetails", "Common", new { area = "" })",
+                    data: { orderId: orderId.value },
+                    success: function (response) {
+                        $('#modalBody').html(response);
+                        $('#showOrderDetailsModal').modal('show');
+                    }
+                });
+            }
+
+        </script>
+    }

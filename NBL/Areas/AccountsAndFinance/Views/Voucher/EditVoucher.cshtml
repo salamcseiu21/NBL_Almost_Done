@@ -1,0 +1,93 @@
+﻿@using NBL.Areas.Accounts.Models
+@using NBL.Areas.AccountsAndFinance.Models
+@model NBL.Areas.AccountsAndFinance.Models.Voucher
+
+@{
+    ViewBag.Title = "Edit Voucher";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var voucherDetails = (IEnumerable<VoucherDetails>)ViewBag.VoucherDetails;
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">@Model.VoucherName</h3>
+    <hr/>
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>
+                        Account Code
+                    </th>
+                    <th style="width: 10%">
+                        Dr/Cr
+                    </th>
+                    <th style="width:15%">
+                        Amount (&#2547;)
+                       
+                    </th>
+                   
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var vd in voucherDetails)
+                {
+                    <tr>
+                        <td>@vd.AccountCode</td> 
+                        <td>@vd.DebitOrCredit</td>
+                        <td>
+                           
+                            @if (Model.VoucherType == 1 && vd.DebitOrCredit.Equals("Cr"))
+                            {
+                                <input type="number" class="form-control" value="@vd.Amounts" id="Total_Amount" name="amount_of_@vd.VoucherDetailsId" readonly/>
+                            }
+                            else if (Model.VoucherType == 2 && vd.DebitOrCredit.Equals("Dr"))
+                            {
+                                <input type="number" class="form-control" value="@vd.Amounts" id="Total_Amount" name="amount_of_@vd.VoucherDetailsId" readonly/>
+                            }
+                            else if (Model.VoucherType == 3 && vd.DebitOrCredit.Equals("Dr"))
+                            {
+                                <input type="number" class="form-control" value="@vd.Amounts" id="Total_Amount" name="amount_of_@vd.VoucherDetailsId" readonly/>
+                            }
+                            else if (Model.VoucherType == 4 && vd.DebitOrCredit.Equals("Cr"))
+                            {
+                                <input type="number" class="form-control" value="@vd.Amounts" id="Total_Amount" name="amount_of_@vd.VoucherDetailsId" readonly/>
+                            }
+                            else
+                            {
+                                <input type="number" class="form-control amount" id="@vd.VoucherDetailsId" name="amount_of_@vd.VoucherDetailsId" value="@vd.Amounts" onkeyup="CalculateTotalAmount(this)"/>
+                            }
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="2"></td>
+                    <td>
+                        <input type="hidden" value="@Model.Amounts" name="Amount" id="Amount"/>
+                        @Html.ActionLink(" Back to List", "Vouchers", "Voucher", new {area = "Accounts"}, new {@class = "btn btn-danger"})
+                        <input type="submit" class="btn btn-primary" value="Update"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+           
+        </div>
+    }
+</section>
+
+@section Scripts
+{
+    <script>
+        function CalculateTotalAmount(inputId) {
+
+            var sum = 0;
+            $(".amount").each(function () {
+                sum += +$(this).val();
+            });
+            $("#Total_Amount").val(sum);
+            $("#Amount").val(sum);
+        }
+
+    </script>
+}

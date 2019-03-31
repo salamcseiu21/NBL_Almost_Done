@@ -1,0 +1,9 @@
+E:\Abdus Salam\NBL\NBL.Contracts\bin\Release\NBL.Contracts.dll
+E:\Abdus Salam\NBL\NBL.Contracts\bin\Release\NBL.Contracts.pdb
+E:\Abdus Salam\NBL\NBL.Contracts\obj\Release\NBL.Contracts.dll
+E:\Abdus Salam\NBL\NBL.Contracts\obj\Release\NBL.Contracts.pdb
+E:\API\NBL\NBL.Contracts\bin\Release\NBL.Contracts.dll
+E:\API\NBL\NBL.Contracts\bin\Release\NBL.Contracts.pdb
+E:\API\NBL\NBL.Contracts\obj\Release\NBL.Contracts.dll
+E:\API\NBL\NBL.Contracts\obj\Release\NBL.Contracts.pdb
+E:\API\NBL\NBL.Contracts\obj\Release\NBL.Contracts.csprojResolveAssemblyReference.cache

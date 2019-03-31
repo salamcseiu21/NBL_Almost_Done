@@ -1,0 +1,58 @@
+E:\Abdus Salam\NBL\NBL.Models\bin\Release\NBL.Models.dll
+E:\Abdus Salam\NBL\NBL.Models\bin\Release\NBL.Models.pdb
+E:\Abdus Salam\NBL\NBL.Models\bin\Release\AutoMapper.dll
+E:\Abdus Salam\NBL\NBL.Models\bin\Release\NBL.Contracts.dll
+E:\Abdus Salam\NBL\NBL.Models\bin\Release\System.ValueTuple.dll
+E:\Abdus Salam\NBL\NBL.Models\bin\Release\NBL.Contracts.pdb
+E:\Abdus Salam\NBL\NBL.Models\bin\Release\AutoMapper.pdb
+E:\Abdus Salam\NBL\NBL.Models\bin\Release\AutoMapper.xml
+E:\Abdus Salam\NBL\NBL.Models\bin\Release\System.ValueTuple.xml
+E:\Abdus Salam\NBL\NBL.Models\obj\Release\NBL.Models.csprojResolveAssemblyReference.cache
+E:\Abdus Salam\NBL\NBL.Models\obj\Release\NBL.Models.dll
+E:\Abdus Salam\NBL\NBL.Models\obj\Release\NBL.Models.pdb
+E:\API\NBL\NBL.Models\bin\Release\NBL.Models.dll
+E:\API\NBL\NBL.Models\bin\Release\NBL.Models.pdb
+E:\API\NBL\NBL.Models\bin\Release\AutoMapper.dll
+E:\API\NBL\NBL.Models\bin\Release\System.ValueTuple.dll
+E:\API\NBL\NBL.Models\bin\Release\AutoMapper.pdb
+E:\API\NBL\NBL.Models\bin\Release\AutoMapper.xml
+E:\API\NBL\NBL.Models\bin\Release\System.ValueTuple.xml
+E:\API\NBL\NBL.Models\obj\Release\NBL.Models.csprojResolveAssemblyReference.cache
+E:\API\NBL\NBL.Models\obj\Release\NBL.Models.dll
+E:\API\NBL\NBL.Models\obj\Release\NBL.Models.pdb
+E:\API\NBL\NBL.Models\bin\Release\Microsoft.Web.Infrastructure.dll
+E:\API\NBL\NBL.Models\bin\Release\System.Web.Helpers.dll
+E:\API\NBL\NBL.Models\bin\Release\System.Web.Mvc.dll
+E:\API\NBL\NBL.Models\bin\Release\System.Web.Razor.dll
+E:\API\NBL\NBL.Models\bin\Release\System.Web.WebPages.Deployment.dll
+E:\API\NBL\NBL.Models\bin\Release\System.Web.WebPages.dll
+E:\API\NBL\NBL.Models\bin\Release\System.Web.WebPages.Razor.dll
+E:\API\NBL\NBL.Models\bin\Release\System.Web.Helpers.xml
+E:\API\NBL\NBL.Models\bin\Release\System.Web.Mvc.xml
+E:\API\NBL\NBL.Models\bin\Release\System.Web.Razor.xml
+E:\API\NBL\NBL.Models\bin\Release\System.Web.WebPages.xml
+E:\API\NBL\NBL.Models\bin\Release\System.Web.WebPages.Deployment.xml
+E:\API\NBL\NBL.Models\bin\Release\System.Web.WebPages.Razor.xml
+G:\Salam\NBL\NBL.Models\bin\Release\NBL.Models.dll
+G:\Salam\NBL\NBL.Models\bin\Release\NBL.Models.pdb
+G:\Salam\NBL\NBL.Models\bin\Release\AutoMapper.dll
+G:\Salam\NBL\NBL.Models\bin\Release\Microsoft.Web.Infrastructure.dll
+G:\Salam\NBL\NBL.Models\bin\Release\System.ValueTuple.dll
+G:\Salam\NBL\NBL.Models\bin\Release\System.Web.Helpers.dll
+G:\Salam\NBL\NBL.Models\bin\Release\System.Web.Mvc.dll
+G:\Salam\NBL\NBL.Models\bin\Release\System.Web.Razor.dll
+G:\Salam\NBL\NBL.Models\bin\Release\System.Web.WebPages.Deployment.dll
+G:\Salam\NBL\NBL.Models\bin\Release\System.Web.WebPages.dll
+G:\Salam\NBL\NBL.Models\bin\Release\System.Web.WebPages.Razor.dll
+G:\Salam\NBL\NBL.Models\bin\Release\AutoMapper.pdb
+G:\Salam\NBL\NBL.Models\bin\Release\AutoMapper.xml
+G:\Salam\NBL\NBL.Models\bin\Release\System.ValueTuple.xml
+G:\Salam\NBL\NBL.Models\bin\Release\System.Web.Helpers.xml
+G:\Salam\NBL\NBL.Models\bin\Release\System.Web.Mvc.xml
+G:\Salam\NBL\NBL.Models\bin\Release\System.Web.Razor.xml
+G:\Salam\NBL\NBL.Models\bin\Release\System.Web.WebPages.xml
+G:\Salam\NBL\NBL.Models\bin\Release\System.Web.WebPages.Deployment.xml
+G:\Salam\NBL\NBL.Models\bin\Release\System.Web.WebPages.Razor.xml
+G:\Salam\NBL\NBL.Models\obj\Release\NBL.Models.csprojResolveAssemblyReference.cache
+G:\Salam\NBL\NBL.Models\obj\Release\NBL.Models.dll
+G:\Salam\NBL\NBL.Models\obj\Release\NBL.Models.pdb

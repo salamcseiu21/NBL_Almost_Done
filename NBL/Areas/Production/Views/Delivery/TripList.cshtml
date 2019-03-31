@@ -1,0 +1,46 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.TransferProducts.ViewTripModel>
+@{
+    ViewBag.Title = "Trip List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+   
+    @if (TempData["Dispatched"] != null)
+    {
+        <div class="alert-success text-center">
+            @TempData["Dispatched"]
+        </div>
+    }
+    <h3 class="text-center headingStyle text-green">Trip List</h3>
+        <table class="display" id="tbl_trip_List" style="border: 1px solid">
+            <thead>
+            <tr>
+                <th>Trip Ref</th>
+                <th>Quantiy</th>
+                <th>Date</th>
+                <th class="text-center" style="width: 50px">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.TripRef</td>
+                    <td>@item.DeliveryQuantity</td>
+                    <td>@item.SystemDateTime</td>
+                   
+                    <td class="text-center">
+                        @Html.ActionLink("Delivery", "Delivery", "Delivery", new {area = "Production", id = item.TripId}, new {@class = "btn btn-info btn-sm"})
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+</section>
+@section Scripts
+{
+    <script>
+        $("#tbl_trip_List").DataTable();
+    </script>
+}

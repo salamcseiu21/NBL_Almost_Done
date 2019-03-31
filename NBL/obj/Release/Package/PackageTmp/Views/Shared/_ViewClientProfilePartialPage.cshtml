@@ -1,0 +1,252 @@
+﻿
+@model NBL.Models.ViewModels.ViewClient
+@{
+    ViewBag.Title = "Client Profile";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<!-- Main content -->
+<section class="content" style="background-color:aliceblue;">
+    <h3 class="text-center text-green headingStyle" style="padding-bottom:10px ">Client Profile</h3>
+    <div class="row">
+        <div class="col-md-2 text-left">
+            <!-- Profile Image -->
+            <div class="box box-primary">
+                <div class="box-body box-profile" style="margin-bottom:0;padding-bottom:0;">
+                    <img class="profile-user-img img-responsive img-circle" src="~/@(Model.ClientImage?? "Images/User.jpg")" alt="Client Image" title="@Model.ClientName">
+                    <br />
+                    <img class="profile-user-img img-responsive" src="~/@(Model.ClientSignature?? "Images/sign.png")" alt="Client Signature ">
+                    <p class="text-center">@Html.Raw(Model.GetBasicInformation())</p>
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Total purchases</b> <a class="pull-right">@Model.GetTotalOrder()</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Outstanding : </b> <a class="pull-right">@Model.Outstanding</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Credit Limit : </b> <a class="pull-right">@Model.CreditLimit</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Remaining Credit : </b> <a class="pull-right">@Model.CreditLimit</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Max Credit Day: </b> <a class="pull-right">@Model.MaxCreditDay</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+    
+        </div>
+        <!-- /.col -->
+        <div class="col-md-10">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#orders" data-toggle="tab">Orders</a></li>
+                    <li><a href="#personal_info" data-toggle="tab">Personal Information</a></li>
+                    <li><a href="#files" data-toggle="tab">Files</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="active tab-pane" id="orders">
+                        <!-- Post -->
+                        <div class="post">
+                            <table id="table_Order_list" class="display table-bordered" style="border:1px solid black">
+                                <thead>
+                                <tr>
+                                    <th>S.N</th>
+                                    <th>Order Slip No</th>
+                                   
+                                    <th class="text-center">Qty</th>
+                                    <th class="text-center">Net Amount (&#2547;)</th>
+                                    <th class="text-center">Date</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Details</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+
+                                @foreach (var item in Model.Orders.ToList())
+                                {
+
+                                    <tr>
+                                        <td></td>
+                                        <td>@item.OrderSlipNo</td>
+                                       
+                                        <td class="text-right">@item.Quantity</td>
+                                        <td class="text-right">@item.NetAmounts</td>
+                                        <td class="text-center">
+
+                                            @item.OrderDate.ToString("dd-MMM-yyyy")
+                                        </td>
+                                        <td class="text-center">
+
+                                            @{ if (item.Status == 4)
+                                               {
+                                                   <label class="text-green"><i class="fa fa-check-circle-o"></i> Deliverd</label>
+                                               }
+                                                if (item.Status == 2)
+                                                {
+                                                    <label class="text-success">Approved by Admin</label>
+                                                }
+                                                if (item.Status == 6 || item.Status == 5 || item.Status == 7)
+                                                {
+                                                    <label class="text-danger">Cancelled</label>
+                                                }
+                                                
+                                            }
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" value="@item.OrderId" onclick="viewDetails(this)" class="btn btn-success btn-sm"><i class="fa fa-eye"></i>&nbsp;Details</button> 
+                                        </td>
+                                    </tr>
+                                }
+
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    
+                                    <th class="text-right" colspan="2">Total</th>
+                                    <th class="text-right">@Model.Orders.Sum(n => n.Quantity)</th>
+                                    <th class="text-right">@Model.Orders.Sum(n => n.NetAmounts)</th>
+                                   
+                                    <th colspan="3"></th>
+
+                                </tr>
+                                <tr>
+                                    <th>S.N</th>
+                                    <th>Order Slip No</th>
+                                    <th class="text-center">Qty</th>
+                                    <th class="text-center">Net Amount (&#2547;)</th>
+                                    <th class="text-center">Date</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Details</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <div>
+                                @Html.ActionLink("Back to List", "ViewClient", "Home", null, new { @class = "btn btn-info" })
+                            </div>
+                       
+
+                        </div>
+                        <!-- /.post -->
+
+                    </div>
+                
+                    <div class="tab-pane" id="personal_info">
+                        <div class="box-body">
+                            <strong><i class="fa fa-book"></i> Contact Details</strong>
+                            <p class="text-muted">
+                                <strong>
+                                    @Html.Raw(Model.GetMailingAddress())
+                                </strong>
+                            </p>
+                            <hr>
+                            <strong><i class="fa fa-map-marker margin-r-5"></i> Address</strong>
+                            <p class="text-muted">@Model.Address</p>
+
+                            <hr>
+                            <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="files">
+                        <table id="table_client_file_list" class="display table-bordered responsive" style="border:1px solid black">
+                            <thead>
+                            <tr>
+                                <th>S.N</th>
+                                <th>Attachemnt Name</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model.ClientAttachments)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>@item.AttachmentName&nbsp;
+                                        @if (item.FileExtension.ToLower().Equals(".docx"))
+                                        {
+                                            <i class="fa fa-file-word-o"></i>
+
+                                        }
+                                        else if (item.FileExtension.ToLower().Equals(".pdf"))
+                                        {
+                                            <i class="fa fa-file-pdf-o"></i>
+                                        }
+                                        else if (item.FileExtension.ToLower().Equals(".jpg") || item.FileExtension.ToLower().Equals(".png") || item.FileExtension.ToLower().Equals(".jpeg"))
+                                        {
+                                            <i class="fa fa-file-image-o"></i>
+                                        }
+                                        else if (item.FileExtension.ToLower().Equals(".xls") || item.FileExtension.ToLower().Equals(".xlsx"))
+                                        {
+                                            <i class="fa fa-file-excel-o"></i>
+                                        }
+                                    </td>
+
+                                    <td class="text-center">
+                                        @Html.ActionLink(" Download", "GetFileFromDisk", "Common", new {area = "", attachmentId = item.Id}, new {@class = "fa fa-download"})
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>S.N</th>
+                                <th>Attachemnt Name</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+    </div>
+<!--load modal partial here...-->
+    @Html.Partial("_ModalPartialPage")
+</section>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+<script>
+
+    var t= $('#table_Order_list').DataTable({
+        "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "All"]]
+    });
+    var t2= $('#table_client_file_list').DataTable({
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    });
+    t.on('order.dt search.dt', function () {
+        t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
+    t2.on('order.dt search.dt', function () {
+        t2.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
+</script>
+<script>
+
+    function viewDetails(orderId) {
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewOrderDetails", "Common", new { area = "" })",
+            data: { orderId: orderId.value },
+            success: function (response) {
+                $('#modalBody').html(response);
+                $('#showOrderDetailsModal').modal('show');
+            }
+        });
+    }
+
+</script>

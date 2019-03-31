@@ -1,0 +1,10 @@
+﻿
+@model IEnumerable<NBL.Models.ChequeDetails>
+
+@{
+    ViewBag.Title = "Active Receivable";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    @Html.Partial("_ActiveReceivablePartialPage", Model)
+</section>

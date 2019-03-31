@@ -1,0 +1,88 @@
+﻿
+@model IEnumerable<NBL.Models.EntityModels.Locations.Territory>
+@{
+    ViewBag.Title = "Assign Upazilla To Territory";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Assign Upazilla To Territory</h3>
+    <hr />
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Territory</label>
+                    <div class="col-md-9">
+                        <select class="form-control" id="TerritoryId" name="TerritoryId" required>
+                            <option value="">--Select--</option>
+                            @foreach (var item in Model)
+                            {
+                                <option value="@item.TerritoryId">@item.TerritoryName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">District/Upazilla Name</label>
+                    <div class="col-md-9">
+                        <select class="form-control select2" multiple="multiple" data-placeholder="Type district or upazila Name" id="UpazillaId" name="UpazillaId" required>
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2"></label>
+                    <div class="col-md-10 text-right">
+                        @Html.ActionLink("Back", "ViewTerritory", "Home", new { area = "SuperAdmin" }, new { @class = "btn btn-danger" })
+                        <input type="submit" value="Save" class="btn btn-success" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+
+
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#TerritoryId").change(function () {
+            //var divId = $(this).val();
+            var territoryId = $(this).val();
+            $("#UpazillaId").empty();
+
+            $("#UpazillaId").append('<option value="">--Select--</option>');
+            //var json = { divisionId: divId };
+            var json = { territoryId: territoryId };
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetUnAssignedUpazillaByTerritoryId", "Common", new { area = "" })',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+
+
+                    $.each(data, function (key, value) {
+                        //alert(key);
+                        $("#UpazillaId").append('<option value=' + value.UpazillaId + '>' + value.UpazillaName + '</option>');
+
+                    });
+                }
+            });
+        });
+
+    </script>
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2();
+        })
+    </script>
+
+}

@@ -1,0 +1,312 @@
+﻿@model NBL.Models.EntityModels.Clients.Client
+@{
+    ViewBag.Title = "Update Client";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<style>
+    label.error {
+        color: #FF0000;
+    }
+</style>
+<!-- Main content -->
+<section class="content">
+
+    @if (ViewBag.Msg != null)
+    {
+        @ViewBag.Msg;
+    }
+<h3 class="text-center text-green headingStyle">Update Client Information</h3>
+    <hr/>
+    <form id="updateClientForm" method="POST" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ClientName, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.ClientName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter client Name", id = "ClientName", required = "required" } })
+                            @Html.ValidationMessageFor(model=>model.ClientName,"",new {@class="text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter client Address", id = "Address" } })
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.RegionId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model=>model.RegionId,null,"--Select--",new {@class="form-control"})
+                            @Html.ValidationMessageFor(model=>model.RegionId,"",new {@class="text-danger"})
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TerritoryId,new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model=>model.TerritoryId,null,"--Select--",new {@class="form-control"})
+                            @Html.ValidationMessageFor(model => model.TerritoryId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DistrictId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model=>model.DistrictId,null,"--Select--",new {@class="form-control"})
+                            @Html.ValidationMessageFor(model => model.DistrictId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UpazillaId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model=>model.UpazillaId,null,"--Select--",new {@class="form-control"})
+                            @Html.ValidationMessageFor(model => model.UpazillaId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PostOfficeId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model=>model.PostOfficeId,null,"--Select--",new {@class="form-control"})
+                            @Html.ValidationMessageFor(model => model.PostOfficeId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ClientTypeId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model=>model.ClientTypeId,null,"--Select--",new {@class="form-control"})
+                            @Html.ValidationMessageFor(model => model.ClientTypeId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NationalIdNo, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.NationalIdNo, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter client NID", id = "NationalIdNo" } })
+                            @Html.ValidationMessageFor(model => model.NationalIdNo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TinNo, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.TinNo, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter client TIN", id = "TinNo" } })
+                            @Html.ValidationMessageFor(model => model.TinNo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Phone, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter client phone", id = "Phone" } })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AlternatePhone,new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.AlternatePhone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter client Alternate phone", id = "AlternatePhone" } })
+                            @Html.ValidationMessageFor(model => model.AlternatePhone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Gender,new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <select class="form-control" id="Gender" name="Gender">
+                                <option value="M" @( "M" == Model.Gender? "selected" : String.Empty)>Male</option>
+                                <option value="F" @( "F" == Model.Gender? "selected" : String.Empty)>Famale</option>
+                                <option value="O" @( "O" == Model.Gender? "selected" : String.Empty)>Others</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ClientImage,new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input type="file" name="file" id="file" style="width: 100%;" />
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ClientSignature,new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input type="file" name="ClientSignature" id="ClientSignature" style="width: 100%;" />
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "E-mail Address", id = "Email" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CreditLimit, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.CreditLimit, new { htmlAttributes = new { @class = "form-control", @placeholder = "Recommended Credit Limit", id = "CreditLimit" } })
+                            @Html.ValidationMessageFor(model => model.CreditLimit, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="col-md-9 col-md-offset-3">
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    @Html.ActionLink("Back to List", "ApproveClient", "Approve", new { area = "SuperAdmin" }, new { @class = "btn btn-info" })
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="button" value="Cancel" class="btn btn-danger btn-block" onclick="ClearInputFields()" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="submit" value="Approve" class="btn btn-primary btn-block" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+@section Scripts{
+    @* Cascading dropdons implementations *@
+    <script>
+
+         $("#RegionId").change(function () {
+        //var divId = $(this).val();
+        var regionId = $(this).val();
+        $("#DistrictId").empty();
+        $("#UpazillaId").empty();
+        $("#PostOfficeId").empty();
+        $("#TerritoryId").empty();
+        $("#DistrictId").append('<option value="">--Select--</option>');
+        $("#UpazillaId").append('<option value="">--Select--</option>');
+        $("#PostOfficeId").append('<option value="">--Select--</option>');
+        $("#TerritoryId").append('<option value="">--Select--</option>');
+        //var json = { divisionId: divId };
+        var json = { regionId: regionId };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetDistrictByRegionId", "Common", new { area = "" })',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(json),
+            success: function (data) {
+
+
+                $.each(data, function (key, value) {
+                    //alert(key);
+                    $("#DistrictId").append('<option value=' + value.DistrictId + '>' + value.DistrictName + '</option>');
+
+                });
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetTerritoryByRegionId", "Common", new { area = "" })',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(json),
+            success: function (data) {
+
+
+                $.each(data, function (key, value) {
+                    //alert(key);
+                    $("#TerritoryId").append('<option value=' + value.TerritoryId + '>' + value.TerritoryName + '</option>');
+
+                });
+            }
+        });
+    });
+
+    $("#DistrictId").change(function () {
+        var disId = $("#DistrictId").val();
+        $("#UpazillaId").empty();
+        $("#UpazillaId").append('<option value="">--Select--</option>');
+        $("#PostOfficeId").empty();
+        $("#PostOfficeId").append('<option value="">--Select--</option>');
+
+        var json = { districtId: disId };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetUpazillaByDistrictId", "Common", new { area = "" })',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+
+
+                        $.each(data, function (key, value) {
+                            //alert(key);
+                            $("#UpazillaId").append('<option value=' + value.UpazillaId + '>' + value.UpazillaName + '</option>');
+
+                        });
+                    }
+                });
+
+    });
+
+    $("#UpazillaId").change(function () {
+        var upaId = $("#UpazillaId").val();
+        $("#PostOfficeId").empty();
+        $("#PostOfficeId").append('<option value="">--Select--</option>');
+
+        var json = { upazillaId: upaId };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetPostOfficeByUpazillaId", "Common", new { area = "" })',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+
+
+                        $.each(data, function (key, value) {
+                            //alert(key);
+                            $("#PostOfficeId").append('<option value=' + value.PostOfficeId + '>' + value.PostOfficeName + '</option>');
+
+                        });
+                    }
+                });
+
+            });
+
+    </script>
+ 
+    <script>
+
+
+     function ClearInputFields() {
+        $("#DistrictId").empty();
+        $("#UpzillaId").empty();
+        $("#PostOfficeId").empty();
+        $("#DistrictId").append('<option value="">--Select--</option>');
+        $("#UpzillaId").append('<option value="">--Select--</option>');
+        $("#PostOfficeId").append('<option value="">--Select--</option>');
+        $("#ClientName").val('');
+        $("#Address").val('');
+        $("#Phone").val('');
+        $("#AlternatePhone").val('');
+        $("#Email").val('');
+        $("#Fax").val('');
+        $("#Website").val('');
+}
+
+    </script>
+}

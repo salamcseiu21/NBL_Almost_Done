@@ -1,0 +1,50 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Clients.ClientAttachment>
+@{
+    ViewBag.Title = "ViewClientDocuments";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center headingStyle text-green">Client Documents</h3>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Attachemnt Name</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.AttachmentName
+                        @if (item.FileExtension.ToLower().Equals(".docx"))
+                        {
+                            <i class="fa fa-file-word-o"></i>
+
+                        }
+                        else if (item.FileExtension.ToLower().Equals(".pdf"))
+                        {
+                            <i class="fa fa-file-pdf-o"></i>
+                        }
+                        else if (item.FileExtension.ToLower().Equals(".jpg") || item.FileExtension.ToLower().Equals(".png") || item.FileExtension.ToLower().Equals(".jpeg"))
+                        {
+                            <i class="fa fa-file-image-o"></i>
+                        }
+                    </td>
+                    
+                    <td>
+                        @Html.ActionLink(" Download", "GetFileFromDisk", "Client",new {area="Editor", attachmentId = item.Id},new {@class="fa fa-download"})
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Attachemnt Name</th>
+            <th>Action</th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+

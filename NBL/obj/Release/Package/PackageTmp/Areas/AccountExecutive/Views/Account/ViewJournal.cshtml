@@ -1,0 +1,62 @@
+﻿@using NBL.Areas.Accounts.Models
+@model IEnumerable<NBL.Areas.AccountsAndFinance.Models.JournalVoucher>
+@{
+    ViewBag.Title = "Journals";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-green text-center headingStyle">Journals</h3>
+
+    <table id="table_journal" class="table table-bordered" style="border:1px solid black">
+
+
+        <thead>
+            <tr>
+                <th>Voucher Ref</th>
+                <th class="text-center">Date </th>
+                <th class="text-right" style="width:10%"> Amount (&#2547;)</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+
+                <tr>
+
+                    <td>@item.VoucherRef</td>
+                    <td class="text-center">@item.VoucherDate.ToString("dd-MMM-yyyy")</td>
+                    <td class="text-right">@item.Amounts</td>
+                    <td class="text-center">
+                        @Html.ActionLink(" Details", "JournalDetails", "Account", new { id = item.JournalId, area = "AccountExecutive" }, new { @class = "fa fa-eye" })
+                      
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Voucher Ref</th>
+                <th class="text-center">Date </th>
+                <th class="text-right" style="width:10%"> Amount (&#2547;)</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+
+</section>
+@section Scripts
+{
+    <script>
+
+        $('#table_journal').DataTable({
+            "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+            "order": [[1, "desc"]]
+        });
+
+    </script>
+}

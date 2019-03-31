@@ -1,0 +1,12 @@
+﻿
+@model NBL.Models.ViewModels.Summaries.SummaryModel
+@{
+    ViewBag.Title = "Orders Summary";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+
+    @Html.Partial("_ViewOrderSummaryPartialPage", Model)
+</section>
+

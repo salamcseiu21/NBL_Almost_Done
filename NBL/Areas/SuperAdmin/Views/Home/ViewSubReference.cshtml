@@ -1,0 +1,39 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.ViewReferenceAccountModel>
+@{
+    ViewBag.Title = "Sub Reference";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Sub Reference</h3>
+    <table class="display responsive table-bordered" id="table_sub_ref_list" style="border: 1px solid;width: 100%">
+        <thead>
+        <tr>
+            <th>Code</th>
+            <th>Reference for</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Code</td>
+                <td>@item.Name</td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Code</th>
+            <th>Reference for</th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+@section Scripts
+{
+    <script>
+        $("#table_sub_ref_list").DataTable();
+    </script>
+}
+

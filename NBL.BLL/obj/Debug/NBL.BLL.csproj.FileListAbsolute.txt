@@ -1,0 +1,83 @@
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\NBL.BLL.dll
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\NBL.BLL.pdb
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\AutoMapper.dll
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\NBL.Contracts.dll
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\NBL.DAL.dll
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\NBL.Models.dll
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\System.ValueTuple.dll
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\System.Web.Helpers.dll
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\System.Web.Mvc.dll
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\System.Web.Razor.dll
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.dll
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.Razor.dll
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\NBL.Contracts.pdb
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\NBL.DAL.pdb
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\NBL.Models.pdb
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\AutoMapper.pdb
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\AutoMapper.xml
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\System.ValueTuple.xml
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\System.Web.Helpers.xml
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\System.Web.Mvc.xml
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\System.Web.Razor.xml
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.xml
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.Deployment.xml
+E:\Abdus Salam\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.Razor.xml
+E:\Abdus Salam\NBL\NBL.BLL\obj\Debug\NBL.BLL.csprojResolveAssemblyReference.cache
+E:\Abdus Salam\NBL\NBL.BLL\obj\Debug\NBL.BLL.dll
+E:\Abdus Salam\NBL\NBL.BLL\obj\Debug\NBL.BLL.pdb
+G:\Salam\NBL\NBL.BLL\bin\Debug\NBL.BLL.dll
+G:\Salam\NBL\NBL.BLL\bin\Debug\NBL.BLL.pdb
+G:\Salam\NBL\NBL.BLL\bin\Debug\AutoMapper.dll
+G:\Salam\NBL\NBL.BLL\bin\Debug\Microsoft.Web.Infrastructure.dll
+G:\Salam\NBL\NBL.BLL\bin\Debug\NBL.DAL.dll
+G:\Salam\NBL\NBL.BLL\bin\Debug\NBL.Models.dll
+G:\Salam\NBL\NBL.BLL\bin\Debug\System.ValueTuple.dll
+G:\Salam\NBL\NBL.BLL\bin\Debug\System.Web.Helpers.dll
+G:\Salam\NBL\NBL.BLL\bin\Debug\System.Web.Mvc.dll
+G:\Salam\NBL\NBL.BLL\bin\Debug\System.Web.Razor.dll
+G:\Salam\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.Deployment.dll
+G:\Salam\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.dll
+G:\Salam\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.Razor.dll
+G:\Salam\NBL\NBL.BLL\bin\Debug\NBL.DAL.pdb
+G:\Salam\NBL\NBL.BLL\bin\Debug\NBL.Models.pdb
+G:\Salam\NBL\NBL.BLL\bin\Debug\AutoMapper.pdb
+G:\Salam\NBL\NBL.BLL\bin\Debug\AutoMapper.xml
+G:\Salam\NBL\NBL.BLL\bin\Debug\System.ValueTuple.xml
+G:\Salam\NBL\NBL.BLL\bin\Debug\System.Web.Helpers.xml
+G:\Salam\NBL\NBL.BLL\bin\Debug\System.Web.Mvc.xml
+G:\Salam\NBL\NBL.BLL\bin\Debug\System.Web.Razor.xml
+G:\Salam\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.xml
+G:\Salam\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.Deployment.xml
+G:\Salam\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.Razor.xml
+G:\Salam\NBL\NBL.BLL\obj\Debug\NBL.BLL.csprojResolveAssemblyReference.cache
+G:\Salam\NBL\NBL.BLL\obj\Debug\NBL.BLL.dll
+G:\Salam\NBL\NBL.BLL\obj\Debug\NBL.BLL.pdb
+E:\API\NBL\NBL.BLL\bin\Debug\NBL.BLL.dll
+E:\API\NBL\NBL.BLL\bin\Debug\NBL.BLL.pdb
+E:\API\NBL\NBL.BLL\bin\Debug\AutoMapper.dll
+E:\API\NBL\NBL.BLL\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\API\NBL\NBL.BLL\bin\Debug\NBL.DAL.dll
+E:\API\NBL\NBL.BLL\bin\Debug\NBL.Models.dll
+E:\API\NBL\NBL.BLL\bin\Debug\System.ValueTuple.dll
+E:\API\NBL\NBL.BLL\bin\Debug\System.Web.Helpers.dll
+E:\API\NBL\NBL.BLL\bin\Debug\System.Web.Mvc.dll
+E:\API\NBL\NBL.BLL\bin\Debug\System.Web.Razor.dll
+E:\API\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\API\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.dll
+E:\API\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.Razor.dll
+E:\API\NBL\NBL.BLL\bin\Debug\NBL.DAL.pdb
+E:\API\NBL\NBL.BLL\bin\Debug\NBL.Models.pdb
+E:\API\NBL\NBL.BLL\bin\Debug\AutoMapper.pdb
+E:\API\NBL\NBL.BLL\bin\Debug\AutoMapper.xml
+E:\API\NBL\NBL.BLL\bin\Debug\System.ValueTuple.xml
+E:\API\NBL\NBL.BLL\bin\Debug\System.Web.Helpers.xml
+E:\API\NBL\NBL.BLL\bin\Debug\System.Web.Mvc.xml
+E:\API\NBL\NBL.BLL\bin\Debug\System.Web.Razor.xml
+E:\API\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.xml
+E:\API\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.Deployment.xml
+E:\API\NBL\NBL.BLL\bin\Debug\System.Web.WebPages.Razor.xml
+E:\API\NBL\NBL.BLL\obj\Debug\NBL.BLL.csprojResolveAssemblyReference.cache
+E:\API\NBL\NBL.BLL\obj\Debug\NBL.BLL.dll
+E:\API\NBL\NBL.BLL\obj\Debug\NBL.BLL.pdb

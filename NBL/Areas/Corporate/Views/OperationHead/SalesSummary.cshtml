@@ -1,0 +1,190 @@
+﻿@model NBL.Models.ViewModels.Orders.ViewOrderSearchModel
+@{
+    ViewBag.Title = "Sales Summary";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">
+        Sales Summary
+    </h3>
+    <hr/>
+    @using (Html.BeginForm(null,null,FormMethod.Post,new {id="salesSummaryForm"}))
+    {
+        <div class="form-horizontal">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="form-group">
+                @Html.LabelFor(model=>model.BranchId,new {@class="control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => Model.BranchId,null, "--Select--", new { @class = "form-control"})
+                </div>
+            </div>
+        </div>
+        </div>
+    }
+    <div style="padding: 10px">
+          
+        <table id="table_Order_list" class="display table table-bordered responsive" style="border: 1px solid black">
+
+            <thead>
+            <tr>
+                <th>Order Slip No</th>
+                <th class="text-center">Order Date</th>
+                <th class="text-right">Amount (&#2547;)</th>
+                <th class="text-right">Vat (&#2547;)</th>
+                <th class="text-right">Discount (&#2547;)</th>
+                <th class="text-center">View</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>Order Slip No</th>
+                <th class="text-center">Order Date</th>
+                <th class="text-right">Amount (&#2547;)</th>
+                <th class="text-right">Vat (&#2547;)</th>
+                <th class="text-right">Discount (&#2547;)</th>
+                <th class="text-center">View</th>
+            </tr>
+            </tfoot>
+        </table>
+    
+    </div>
+
+    <div id="branch_wish_sales">
+        
+    </div>
+    
+    <div id="showOrderDetailsModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: aquamarine">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Order Details</h4>
+                </div>
+                <div id="modalBody" class="modal-body">
+                    <p>One fine body&hellip;</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</section>
+
+@section Scripts
+{
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+           
+            $.ajax({
+                url: '@Url.Action("GetAllOrders", "Common", new { area = "" })',
+                method: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    InitialiseDataTable(data);
+                }
+            });
+        });
+</script>
+    
+
+    <script>
+        $('#BranchId').change(function () {
+           
+            var branchId = $(this).val();
+            if (branchId > 0) {
+                @*$.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetOrdersByBranchId", "Common",new {area="" })',
+                    data: { branchId: branchId },
+                    datatype: "json",
+                    success: function(response) {
+                        $('#branch_wish_sales').html(response);
+                    }
+                });*@
+
+                $.ajax({
+                    url: '@Url.Action("GetOrdersByBranchId", "Common", new { area = "" })',
+                    method: 'post',
+                    dataType: 'json',
+                    data: { branchId: branchId },
+                    success: function (data) {
+
+                        InitialiseDataTable(data);
+                    }
+                });
+            } else {
+                $('#branch_wish_sales').html(null);
+            }
+        });
+
+        function InitialiseDataTable(data) {
+            $('#table_Order_list').dataTable({
+                destroy: true,
+                paging: true,
+                lengthMenu: [[15, 30, 50, -1], [15, 30, 50, "All"]],
+                sort: true,
+                searching: true,
+                scroller: true,
+                scrollY: 500,
+                data: data,
+                columns: [
+                    { 'data': 'OrderSlipNo' },
+                    {
+                        'data': 'OrderDate',
+                        className: "text-center",
+                        'render': function (jsonDate) {
+                            var date = new Date(parseInt(jsonDate.substr(6)));
+                            var month = date.getMonth() + 1;
+                            return date.getDate() + "-" + month + "-" + date.getFullYear();
+                        }
+                    },
+                    {
+                        'data': 'Amounts',
+                        className: "text-right"
+                    },
+                    {
+                        'data': 'Vat',
+                        className: "text-right"
+                    },
+                    {
+                        'data': 'Discount',
+                        className: "text-right",
+                    },
+                    {
+                        data: null,
+                        className: "text-center",
+                        render: function (data, type, row) {
+                            return '<button type="button" class="btn btn-info" value=' + data.OrderId + ' onclick="viewDetails(this)"> <i class="fa fa-eye"></i> View</button>';
+                        }
+                    }
+
+                ]
+            });
+        }
+    </script>
+    <script>
+
+        function viewDetails(orderId) {
+           
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ViewModalPartial", "Common", new { area = "" })",
+                data: { orderId: orderId.value },
+                success: function (response) {
+                    $('#modalBody').html(response);
+                    $('#showOrderDetailsModal').modal('show');
+                }
+            });
+        }
+        
+    </script>
+    
+
+}

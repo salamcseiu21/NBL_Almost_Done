@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Department List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <div class="text-center">
+
+        @Html.ActionLink("Add New Department", "AddNewDepartment", "Department", new { area = "Editor" }, new { @class = "btn btn-info" })
+    </div>
+    <table id="table_Department_list" class="table table-bordered" style="border:1px solid black">
+        <caption class="text-center text-green " style="font-weight:bold;">Department List</caption>
+
+        <thead>
+            <tr>
+                 <th>Department Code</th>
+                <th>Department Name</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Department Code</th>
+                <th>Department Name</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+</section>
+@section Scripts
+{
+    <script src="@Url.Content("~/Scripts/Department/ViewDepartmentList.js")"></script>
+}

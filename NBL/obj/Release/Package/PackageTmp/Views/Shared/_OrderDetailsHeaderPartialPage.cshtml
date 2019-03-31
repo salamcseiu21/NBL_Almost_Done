@@ -1,0 +1,32 @@
+﻿@model NBL.Models.ViewModels.Orders.ViewOrder
+@{
+
+    var aClient = Model.Client;
+}
+
+<div class="row">
+
+    <div class="col-md-4">
+
+        <section>
+            <img src="~/@aClient.ClientImage" height="120" width="100" style="float:left;margin-right:20px" title="@aClient.ClientName" />
+           
+            <span>
+                @Html.Raw(aClient.GetMailingAddress())
+            </span>
+
+        </section>
+
+
+    </div>
+    <div class="col-md-4">
+        Outstanding: @aClient.Outstanding<br/>
+        Credit Limit: @aClient.CreditLimit<br/>
+        Max Credit Days:@aClient.MaxCreditDay<br/>
+    </div>
+    <div class="col-md-4">
+        Order Slip No :<i>@Model.OrderSlipNo</i><br />
+        Order Date : <i>@Model.SysDate.ToString("D")</i>
+    </div>
+</div>
+<hr />

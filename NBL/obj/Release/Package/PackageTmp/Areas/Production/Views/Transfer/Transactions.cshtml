@@ -1,0 +1,90 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.TransferProducts.ViewProductTransactionModel>
+
+@{
+    ViewBag.Title = "Transactions";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <div style="border: 1px solid;padding: 10px">
+        <h3 class="text-center headingStyle">Transaction Info</h3>
+    
+        <table class="display responsive" id="tbl_transaction_info" style="border: 1px solid">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TransactionRef)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ToBranch.BranchName)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.QuantityIssued)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.DeliveredQuantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReceivedQuantity)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.DeliveredStatus)
+                </th>
+
+            </tr>
+            </thead>
+
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TransactionRef)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ToBranch.BranchName),@Html.DisplayFor(modelItem => item.ToBranch.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QuantityIssued)
+                    </td>
+
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveredQuantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReceivedQuantity)
+                    </td>
+
+                    <td class="text-center">
+                        @if (item.DeliveredQuantity == item.ReceivedQuantity)
+                        {
+                            <i class="fa fa-check-circle text-green"> Delivered</i>
+                        }
+                        else if (item.ReceivedQuantity == 0)
+                        {
+                            <i class="fa fa-spinner text-danger"> Pending</i>
+                        }
+                        else if (item.DeliveredQuantity != item.ReceivedQuantity)
+                        {
+                            <i class="fa fa-times text-danger"> Partially Received</i>
+                        }
+                    </td>
+
+                </tr>
+            }
+            </tbody>
+
+        </table>
+    </div>
+
+</section>
+@section Scripts
+{
+    <script>
+        $("#tbl_transaction_info").DataTable();
+    </script>
+}

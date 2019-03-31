@@ -1,0 +1,554 @@
+﻿
+@{
+    ViewBag.Title = "Credit Voucher";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Credit/Receive Voucher</h3>
+    <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
+    </div>
+    <hr />
+    @using (Html.BeginForm("CreditVoucher", "Voucher", FormMethod.Post, new { id = "CreditVoucherForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+           
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                   
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="Date" class="control-label col-md-3">Date</label>
+                                <div class="col-md-9">
+
+                                    <input type="text" id="Date" name="Date" value="@date" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label for="TransactionTypeId" class="control-label col-md-4">Transaction Type</label>
+                                        <div class="col-md-8">
+
+                                            <select class="form-control" id="TransactionTypeId" name="TransactionTypeId" required>
+                                                @*@foreach (var item in paymentTypes)
+                                                {
+                                                    <option value="@item.PaymentTypeId">@item.PaymentTypeName</option>
+                                                }*@
+                                                <option value="">--Select--</option>
+                                                <option value="1">Cash</option>
+                                                <option value="2">Bank</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+
+                                        <div class="col-md-9">
+                                            <input id="isItContra" name="isItContra" type="checkbox" /> <label>Contra</label>
+                                            <input  type="hidden" id="contraValue"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Bank Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="BankName" name="BankName" placeholder="Type bank name here!!" />
+                                    <input type="hidden" id="BankId" />
+                                </div>
+                            </div>
+                           
+
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label">Account Name</label>
+                                        <div class="col-md-7">
+                                            <select id="BankBranchId" name="BankBranchId" class="form-control">
+                                                <option value="">--Select--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label class="col-md-6 control-label">Account Code</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" id="AccountCode" name="AccountCode" readonly/>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                            </div>
+                        </div>
+                    </div>
+
+                  
+                </div>
+            </div>
+
+            <div class="row" style="padding: 10px 15px">
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="PurposeName">Account Name</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" placeholder="Account Name" id="PurposeName" name="PurposeName" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Amount</label>
+                        <div class="col-md-9">
+                            <input type="number" class="form-control text-right" placeholder="Amount" id="PurposeAmounts" name="PurposeAmounts"/>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="col-md-6">
+
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label class="control-label col-md-6">Account Code</label>
+                              <div class="col-md-6">
+                                  <input type="text" class="form-control" placeholder="Account code" id="PurposeCode" name="PurposeCode" readonly />
+                              </div>
+                          </div>
+                      </div>
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label for="Balance" class="control-label col-md-5">Ledger Balance</label>
+                                <div class="col-md-7">
+                                    <input type="text" id="Balance" name="Balance" placeholder="Ledger Balance" class="form-control" readonly />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Remarks" class="control-label col-md-3">Remarks</label>
+                        <div class="col-md-9">
+                            <textarea id="Remarks" name="Remarks" class="form-control" rows="2" placeholder="Remarks" style="resize:none"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-9 col-md-offset-3">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                </div>
+                                <div class="col-md-6 text-right">
+
+                                    <input type="button" value="Add to List" onclick="AddChequeInfoToList(this)" class="btn btn-info" id="addItemButton" />
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "updateForm" }))
+                {
+                <input type="hidden" id="purposeCodeToRemove" name="purposeCodeToRemove" />
+                <input type="hidden" id="SummationOfAmounts" name="SummationOfAmounts" />
+                    <table class="table table-bordered" style="margin: 0; padding: 0;">
+
+                        <thead>
+
+                            <tr>
+                                <th style="border: .5px solid gray;" class="text-center">Account Name</th>
+                                <th style="border: .5px solid gray; width: 10%" class="text-center">Account Code</th>
+                                <th style="border: 1px solid gray;" class="text-center">Amount (&#2547;)</th>
+                                <th style="border: 1px solid gray;" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="purposeInfo"></tbody>
+                    </table>
+                    <br />
+            }
+            <div class="row">
+
+                <div class="form-group">
+
+                    <div class="col-md-9 col-md-offset-3">
+                        <div class="row">
+                            <div class="col-md-10">
+
+                            </div>
+                            <div class="col-md-2">
+                                @Html.ActionLink("Cancel", "Home", "Home", new { area = "Accounts" }, new { @class = "btn btn-danger" })
+                                <input type="button" value="Save" id="submitButton" onclick="SaveCreditVoucher(this)" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+</section>
+@section Scripts
+{
+    @* Date picker*@
+    <script>
+    $(function () {
+
+        $("#ReceiveDate").datepicker({ dateFormat: 'dd-MM-yy' });
+        $("#Date").datepicker({ dateFormat: 'dd-MM-yy' });
+    });
+    </script>
+
+
+    @*Add purpose info to lsit (Ajax form Submit)*@
+    <script>
+    var purposeCodeList = [];
+    function AddChequeInfoToList(btnClicked) {
+
+        if ($("#TransactionTypeId").val() == "") {
+            alert("Please select transaction type");
+        }
+        else if ($("#AccountCode").val() == "") {
+            alert("Please type bank account name....");
+        }
+        else if ($("#PurposeName").val() == "") {
+            alert("Please Enter Purpose Name");
+        }
+        else if ($("#PurposeAmounts").val() == "") {
+            alert("Please Enter Purpose Amounts!!");
+        }
+
+        else {
+            var code = $("#PurposeCode").val();
+            //alert(btnClicked.id);
+            var a = $.inArray(code, purposeCodeList);
+            if (a < 0) {
+                purposeCodeList.push(code);
+                var $form = $(btnClicked).parents('form');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("CreditVoucher")',
+                    data: $form.serialize(),
+                    error: function (xhr, status, error) {
+                        //do something about the error
+                    },
+                    success: function (response) {
+                        //alert("Saved Successfully");
+                        ViewTempCreditPurposeInformation();
+                    }
+                });
+
+                return false; // if it's a link to prevent post
+            }
+            else {
+                alert("This purpose info already exits in the list");
+            }
+        }
+
+    }
+
+    function ViewTempCreditPurposeInformation() {
+        $("#purposeInfo").html("");
+        //alert("Hi");
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetTempCreditPurposeInformation", "Voucher")',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $.each(data, function (key, value) {
+
+                    var row = $("<tr><td style='border: 1px solid black; padding: 5px 10px;'>" + value.PurposeName + "</td><td style='border: 1px solid black; padding: 5px 10px;'>" + value.PurposeCode + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-right'>" + value.Amounts + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-center'><button id='" + value.PurposeCode + "' type='button' onclick='RemovePurposeInfo(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color:red;'></i></button>" + "</td></tr>");
+                    $("#purposeInfo").append(row);
+                });
+
+            }
+        });
+    }
+
+
+    function formatDate(chequedate) {
+
+        var month = new Array();
+        month[0] = "January";
+        month[1] = "February";
+        month[2] = "March";
+        month[3] = "April";
+        month[4] = "May";
+        month[5] = "June";
+        month[6] = "July";
+        month[7] = "August";
+        month[8] = "September";
+        month[9] = "October";
+        month[10] = "November";
+        month[11] = "December";
+
+        var dateString = chequedate.substr(6);
+        var currentTime = new Date(parseInt(dateString));
+        var mm = currentTime.getMonth();
+        var day = currentTime.getDate();
+        var year = currentTime.getFullYear();
+        var date = day + "-" + month[mm] + "-" + year;
+        return date// Function returns the date
+    }
+
+    function RemovePurposeInfo(btnClicked) {
+
+
+        if (confirm("Are you sure to remove this purpose info ??")) {
+            //alert(btnClicked);
+            $("#purposeCodeToRemove").val(btnClicked.id);
+            //alert(btnClicked.id);
+            //alert(btnClicked["delBtn"]);
+            var $form = $(btnClicked).parents('form');
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("RemoveCreditPurpose")',
+                data: $form.serialize(),
+                error: function (xhr, status, error) {
+                    //do something about the error
+                },
+                success: function (response) {
+                    for (var i = purposeCodeList.length - 1; i >= 0; i--) {
+                        if (purposeCodeList[i] === btnClicked.id) {
+                            purposeCodeList.splice(i, 1);
+                        }
+                    }
+                    ViewTempCreditPurposeInformation();
+                }
+            });
+        } else {
+            return false;// if it's a link to prevent post
+        }
+
+        return false;// if it's a link to prevent post
+
+    }
+
+
+    function SaveCreditVoucher(btnClicked) {
+        if (confirm("Are you sure to Save??")) {
+
+            var $form = $(btnClicked).parents('form');
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SaveCreditVoucher")',
+                data: $form.serialize(),
+                error: function (xhr, status, error) {
+                    //do something about the error
+                },
+                success: function (response) {
+                    var result = response.Message;
+                    bankChecqueNoList = [];
+
+                    $('#message').html(response).fadeIn('slow');
+                    $('#message').html(result).fadeIn('slow') //also show a success message
+                    $('#message').delay(5000).fadeOut('slow');
+                    setTimeout(function () { ReloadPage(); }, 6000);
+
+                }
+            });
+        } else {
+            return false;// if it's a link to prevent post
+        }
+
+        return false;// if it's a link to prevent post
+
+      }
+    function ReloadPage() {
+        location.reload();
+    }
+    </script>
+
+    <script>
+    $("#TransactionTypeId").change(function () {
+        var ptId = parseInt($("#TransactionTypeId").val());
+        if (ptId === 1) {
+            $("#BankName").val('Cash');
+            $('#BankName').prop('readonly', true);
+            $('#BankBranchId').prop('readonly', true);
+            $('#AccountCode').val('3308011');
+
+        }
+        else if (ptId === 3) {
+            $("#SourceBankName").val('DBBL Mobile Banking (Rocket)');
+            $("#BankAccountNo").val('');
+            $("#ChequeNo").val('');
+        }
+        else {
+            $("#BankName").val('');
+            $("#BankName").val('');
+            $('#AccountCode').val('');
+            $('#BankName').prop('readonly', false);
+        }
+
+
+    });
+    </script>
+
+    @*Sub Sub Sub Account list Auto Complete*@
+    <script type="text/javascript">
+    $(function () {
+        $("#PurposeName").autocomplete({
+            source: function (request, response) {
+                var isContra = $('#contraValue').val();
+                var transactionTypeId = parseInt($('#TransactionTypeId').val());
+                $.ajax({
+                    url: RootUrl+'Common/SubSubSubAccountNameAutoCompleteByContra/',
+                    data: "{ 'prefix': '" + request.term + "','isContra': '" + isContra + "','transactionTypeId': '" + transactionTypeId + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data,
+                            function (item) {
+                                return item;
+                            }));
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#SubSubSubAccountId").val(i.item.val);
+                //alert(i.item.val);
+
+                $("#PurposeCode").val('');
+                var sssAId = i.item.val;
+                var json = { subSubSubAccountId: sssAId };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetSubSubSubAccountById", "Common", new { area = "" })',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+
+                        var code = data.SubSubSubAccountCode;
+                        $("#PurposeCode").val(code);
+                    }
+                });
+            },
+            minLength: 1,
+
+
+        });
+    });
+    </script>
+
+
+
+    @*Bank Name Auto Complete*@
+    <script type="text/javascript">
+        $(function () {
+            $("#BankName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: RootUrl + 'Common/BankNameAutoComplete/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function(item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#BankId").val(i.item.val);
+                    $("#BankBranchId").empty();
+                    $("#BankCode").val('');
+                    $("#BankBranchId").append('<option value="">--Select--</option>');
+                    var bId = i.item.val;
+                    var json = { bankId: bId };
+
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("GetAllBankBranchByBankId", "Common",new { area=""})',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(json),
+                        success: function (data) {
+
+                            $.each(data, function (key, value) {
+
+                                $("#BankBranchId").append('<option value=' + value.BankBranchId + '>' + value.BankBranchName + '</option>');
+
+                            });
+                        }
+                    });
+                },
+                minLength: 1
+            });
+        });
+    </script>
+
+    <script>
+    $("#BankBranchId").change(function () {
+        var bankBranchId = $(this).val();
+        $("#AccountCode").val('');
+
+        var json = { bankBranchId: bankBranchId };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetBankBranchById", "Common",new { area=""})',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(json),
+            success: function (data) {
+                var bankCode = data.BankBranchAccountCode;
+                $("#AccountCode").val(bankCode);
+            }
+        });
+
+    });
+
+
+    </script>
+
+
+    <script>
+    $(document).ready(function () {
+        //set initial state.
+        $('#contraValue').val(this.checked);
+
+        $('#isItContra').change(function () {
+            if (this.checked) {
+                var returnVal = confirm(" Is it Contra ?");
+                $(this).prop("checked", returnVal);
+            }
+            $('#contraValue').val(this.checked);
+        });
+    });
+    </script>
+}

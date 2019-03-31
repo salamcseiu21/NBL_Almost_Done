@@ -1,0 +1,253 @@
+﻿@model NBL.Models.ViewModels.ViewClient
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+
+    <div style="border: 1px solid">
+        <div class="row">
+            <h3 class="text-center text-green">Client Details</h3>
+            <hr />
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ClientName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ClientName)
+                    </dd>
+
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ClientImage)
+                    </dt>
+
+                    <dd>
+                        <img class="img-responsive" src="~/@Model.ClientImage" alt="Client Image" title="@Model.ClientName" width="110" height="150">
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ClientSignature)
+                    </dt>
+
+                    <dd>
+                        <img class="img-responsive" src="~/@Model.ClientSignature" alt="Client Signature " width="150" height="60">
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.NationalIdNo)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.NationalIdNo)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.TinNo)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.TinNo)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Address)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Phone)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Phone)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.AlternatePhone)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.AlternatePhone)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Fax)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Fax)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Website)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Website)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FathersName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.FathersName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.MothersName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.MothersName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DoB)
+                    </dt>
+
+                    <dd>
+                        @Model.DoB.Date.ToString("D")
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.MaritalStatus)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.MaritalStatus)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Gender)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Gender)
+                    </dd>
+
+
+
+
+
+                </dl>
+            </div>
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.SubSubSubAccountCode)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.SubSubSubAccountCode)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.BranchName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.BranchName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Active)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Active)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ClientTypeName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ClientTypeName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Discount)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Discount) %
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DivisionName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.DivisionName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DistrictName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.DistrictName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UpazillaName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.UpazillaName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.PostOfficeName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.PostOfficeName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.PostCode)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.PostCode)
+                    </dd>
+
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EntryDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.EntryDate)
+
+                    </dd>
+                </dl>
+            </div>
+
+        <p style="margin: 10px;">
+            @Html.ActionLink("Back to List", "ViewClient", "Home", null, new { @class = "btn btn-danger" }) |
+            @Html.ActionLink("Update", "Edit", "Client", new {id = Model.ClientId}, new {@class = "btn btn-success"}) 
+
+        </p>
+        </div>
+    </div>
+   
+
+</section>

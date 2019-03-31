@@ -1,0 +1,158 @@
+﻿@using NBL.Models.EntityModels.Identities
+@{
+    ViewBag.Title = "Add New User";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    IEnumerable<UserRole> roles = null;
+    if (ViewBag.Roles != null)
+    {
+        roles = (IEnumerable<UserRole>)ViewBag.Roles;
+    }
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Add New User</h3>
+
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="text-center">
+                    @if(TempData["Message"]!=null)
+                    {
+                       <p style="color:forestgreen">@Html.Raw(TempData["Message"])</p>
+                    }
+                    @if (TempData["Error"] != null)
+                    {
+                        <p style="color:orangered">@Html.Raw(TempData["Error"])</p>
+                    }
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Employee Name</label>
+                    <div class="col-md-9">
+                        <input type="text"  class="form-control" placeholder="Enter employee name" id="EmployeeName" name="EmployeeName" required/>
+                        <input  type="hidden" id="EmployeeId" name="EmployeeId"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">User Name</label>
+                    <div class="col-md-9">
+                        <input type="text" id="UserName" name="UserName" class="form-control" placeholder="Enter User Name" required/>
+                        <div id="divOutput"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Password</label>
+                    <div class="col-md-9">
+                        <input type="password" id="Password" name="Password" class="form-control" placeholder="Enter Password" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Confirm Password</label>
+                    <div class="col-md-9">
+                        <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Confirm Password" required />
+                        <span id='message'></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="RoleId" class="control-label col-md-3">Role Name</label>
+                    <div class="col-md-9">
+                        <select id="RoleId" name="RoleId" class="form-control" required>
+                            <option value="">--Select--</option>
+                            @foreach (var item in roles)
+                            {
+                                <option value="@item.RoleId">@item.RoleName</option>
+
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-9">
+                        @Html.ActionLink("Cancel", "ViewUser", "Assign", new { area="SuperAdmin"},new { @class = "btn btn-danger" })
+                        <input type="submit" value="Add User" class="btn btn-success" id="AddButton"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</section>
+
+@section Scripts
+{
+    <script>
+    $('#Password, #ConfirmPassword').on('keyup', function () {
+        if ($('#Password').val() === $('#ConfirmPassword').val()) {
+            $('#message').html('Matching').css('color', 'green');
+
+
+        } else
+            $('#message').html('Not Matching').css('color', 'red');
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#EmployeeName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url :'@Url.Action("EmployeeAutoComplete","Home",new {area="SuperAdmin"})',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data,
+                            function(item) {
+                                return item;
+                            }));
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#EmployeeId").val(i.item.val);
+            },
+            minLength: 1
+        });
+    });
+</script>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#UserName').keyup(function () {
+                var userName = $(this).val();
+
+                if (userName.length >= 1) {
+                    $.ajax({
+                        url: '@Url.Action("UserNameExists","Home",new {area="SuperAdmin"})',
+                        method: 'post',
+                        data: { userName: userName },
+                        dataType: 'json',
+                        success: function (data) {
+                            var divElement = $('#divOutput');
+                            if (data.UserNameInUse) {
+                                divElement.text('The User Name "'+ data.UserName + '" is already in use');
+                                divElement.css('color', 'red');
+                            }
+                            else {
+                                divElement.text('The User Name "' + data.UserName + '" is available')
+                                divElement.css('color', 'green');
+                            }
+                        },
+                        error: function (err) {
+                            alert(err);
+                        }
+                    });
+                }
+            });
+        });
+</script>
+}

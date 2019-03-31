@@ -1,0 +1,360 @@
+﻿
+@model NBL.Models.ViewModels.Orders.ViewOrder
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Update Order</h3>
+    <br />
+    <div style="border: 1px dotted; padding: 10px; font-size: 18px">
+
+      @Html.Partial("_OrderDetailsHeaderPartialPage",Model)
+
+        @using (Html.BeginForm("AddNewItemToExistingOrder", "Order", FormMethod.Post, new { id = "addNewItemForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal" style="padding:0;">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+               
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input type="hidden" name="OrderId" id="OrderId" value="@Model.OrderId" />
+                            <input type="hidden" name="ClientId" id="ClientId" value="@Model.Client.ClientId" />
+                            <label for="ProductId" class="control-label col-md-3">Product</label>
+                            <div class="col-md-9">
+                                <input type="text" name="ProductName" id="ProductName" class="form-control" placeholder="Type Product Name" required />
+                                <input type="hidden" id="ProductId" name="ProductId" />
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+
+
+                            <label for="StockQty" class="control-label col-md-3">Stock</label>
+                            <div class="col-md-9">
+
+                                <input type="number" id="StockQty" name="StockQty" class="form-control" readonly value="0" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="UnitPrice" class="control-label col-md-4">Unit Price (&#2547;)</label>
+                            <div class="col-md-8">
+
+                                <input type="number" id="UnitPrice" name="UnitPrice" class="form-control" readonly />
+
+                            </div>
+                        </div>
+                       
+                     
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="ProductId" class="control-label col-md-4">Quantity</label>
+                            <div class="col-md-8">
+
+                                <input type="number" id="Quantity" name="Quantity" class="form-control" min="1" value="1" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+
+                            <div class="col-md-10">
+
+                                <input type="button" value="Add Item" onclick="AddItemToList(this)" class="btn btn-primary btn-block" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+        <div class="row" style="padding:0 10px">
+            <p style="font-weight: bolder;font-size: 20px" class="text-center text-green">Product List</p>
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "updateQuantiyForm" }))
+            {
+                <input type="hidden" id="productIdToRemove" name="productIdToRemove" />
+                <table class="table table-bordered" style="margin: 0; padding: 0;font-size:14px">
+
+                    <thead>
+
+                        <tr>
+                            <th style="border: 1px solid black;" class="text-center">Product Name</th>
+                            <th style="border: 1px solid black;" class="text-center">Unit Price (&#2547;)</th>
+                            <th style="border: 1px solid black;" class="text-center">Vat (&#2547;)</th>
+                            <th style="border: 1px solid black;" class="text-center">Discount (&#2547;)</th>
+                            <th style="border: 1px solid black;" class="text-center">Sale Price(&#2547;)</th>
+                            <th style="border: 1px solid black; width: 10%" class="text-center">Quantity</th>
+                            <th style="border: 1px solid black;" class="text-center">Sub Total (&#2547;)</th>
+                            <th style="border: 1px solid black;" class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders"></tbody>
+                </table>
+            }
+            <hr />
+        </div>
+
+        <div class="row">
+           
+           
+
+            @using (Html.BeginForm("Edit", "OrderNsm", FormMethod.Post, new { area = "Sales", id = "saveOrderForm" }))
+            {
+                var amounts = Model.OrderItems.Sum(n => n.SubTotal) - Model.SpecialDiscount;
+             <div class="form-horizontal">
+                 <div class="col-md-3" style="border: none">
+                     <div class="form-group">
+                         <label class="control-label col-md-4">Quantity</label>
+                         <div class="col-md-8">
+                             <input type="number" name="TotalQuantity" id="TotalQuantity" class="form-control text-right" readonly="readonly" />
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-md-3" style="border: none">
+                     <div class="form-group">
+                         <label class="control-label col-md-4">Amount (&#2547;)</label>
+                         <div class="col-md-8">
+                             <input type="number" name="Amount" id="Amount" class="form-control text-right" value="@Model.OrderItems.Sum(n=>n.SubTotal)" readonly="readonly" />
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-md-3" style="border: none">
+                     
+                     <div class="form-group">
+                         <label class="control-label col-md-4">Discount (&#2547;)</label>
+                         <div class="col-md-8">
+                             <input type="number" value="@Model.SpecialDiscount" name="Discount" id="Discount" class="form-control text-right" onkeyup="CalculateNetAmount(this)" />
+                         </div>
+                     </div>
+                 </div>
+
+                 <div class="col-md-3" style="border: none">
+                     
+                     <div class="form-group">
+                         <label class="control-label col-md-4">Net (&#2547;)</label>
+                         <div class="col-md-8">
+                             <input type="number" value="@amounts" name="Net" id="Net" class="form-control text-right" readonly />
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label class="control-label col-md-2"></label>
+                         <div class="col-md-10 text-right">
+                             @Html.ActionLink("Back", "PendingOrder", "OrderNsm", new { area = "Sales" }, new { @class = "btn btn-info" })
+                             <input type="button" value="Approve" class="btn btn-success" onclick="ApproveOrder(this)" />
+                         </div>
+                     </div>
+
+                 </div>
+             </div>
+
+            }
+           
+        </div>
+       
+    </div>
+</section>
+@section Scripts
+{
+    <script>
+        window.onload= function() {
+            ViewTempOrdersNsm();
+        }
+    </script>
+
+    <script>
+
+        function CalcualteFinalAmount(value, total) {
+            var t = $("#Amount").val();
+            var f = t - value;
+            $("#due").val(f);
+        }
+
+        function minmax(value, min, max)
+        {
+
+
+            if(parseInt(value) < min || isNaN(parseInt(value)))
+                return 0;
+            else if(parseInt(value) > max)
+                return 0;
+            else return value;
+        }
+    </script>
+
+<script>
+    var productIdlist = [];
+
+    @foreach (var d in Model.OrderItems.ToList().Select(n=>n.ProductId))
+    {
+        @:productIdlist.push("@d");
+    }
+
+
+</script>
+
+
+<script>
+    function CalculateNetAmount(id) {
+
+        var total = $("#Amount").val();
+        var com = $("#Discount").val();
+        var net = total - com;
+        $("#Net").val(net);
+    }
+
+    function ApproveOrder(id) {
+
+        if (confirm("Are you sure to Approve  this Order?")) {
+
+            $("#saveOrderForm").submit();
+        } else {
+            return false;// if it's a link to prevent post
+        }
+
+        return false;// if it's a link to prevent post
+
+
+    }
+</script>
+   
+   
+@*Product name Autocomplete*@
+    <script src="~/Scripts/Products/productAutoComplete.js"></script>
+    
+    <script>
+        function ViewTempOrdersNsm() {
+            $("#orders").html("");
+            $.ajax({
+                type: "GET",
+                url: RootUrl + 'sales/ordernsm/GetTempOrders',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var total = 0;
+                    var tQty = 0;
+                    var discount = $("#Discount").val();
+                    for (var i = 0; i < data.length; i++) {
+                        total = total + data[i].SubTotal;
+                        tQty = tQty + data[i].Quantity;
+                    }
+                    $.each(data, function (key, value) {
+
+                        //total =+ value.SubTotal;
+                        //alert(key);
+                        //$("#orders").append('<option value=' + value.ClientId + '>' + value.ProductId + '</option>');
+                        var row = $("<tr><td style='border: 1px solid black; padding: 5px 10px;'>" + value.ProductName + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-right'>" + value.UnitPrice + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-right'>" + value.Vat + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-right'>" + value.DiscountAmount + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-right'>" + value.SalePrice + "</td><td style='border: 1px solid black; padding: 5px 10px;'>  <input type='number' min='1' value='" + value.Quantity + "' class='form-control text-right' id='" + value.ProductId + "' name='NewQuantity_" + value.ProductId + "'  onchange='Update(this)'/>" + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-right'><input type='hidden' name='product_Id_" + value.ProductId + "' value='" + value.ProductId + "'> " + value.SubTotal + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-center'><button id='" + value.ProductId + "' type='button' onclick='RemoveProduct(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color:red;'></i></button>" + "</td></tr>");
+                        $("#orders").append(row);
+                    });
+                    $("#Amount").val(total);
+                    $("#TotalQuantity").val(tQty);
+                    $("#payment").attr("max", total);
+                    var payment = $("#payment").val();
+                    var net = total - discount;
+                    $("#Net").val(net);
+                }
+            });
+        }
+        function Update(btnClicked) {
+            $("#productIdToRemove").val(0);
+            var $form = $(btnClicked).parents('form');
+            var pId = btnClicked.id;
+            var json = { productId: pId };
+
+            $.ajax({
+                type: "POST",
+                url: RootUrl + 'Common/GetProductQuantityInStockById',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $.ajax({
+                        type: "POST",
+                        url: RootUrl + 'sales/Ordernsm/Update',
+                        data: $form.serialize(),
+                        error: function (xhr, status, error) {
+                            //do something about the error
+                        },
+                        success: function (response) {
+                            //alert("Saved Successfully");
+                            ViewTempOrdersNsm();
+                        }
+                    });
+
+                    return false; // if it's a link to prevent post
+                }
+            });
+
+        }
+
+        function AddItemToList(btnClicked) {
+            var id = $("#ProductId").val();
+            //alert(btnClicked.id);
+
+            var a = $.inArray(id, productIdlist);
+
+            if (a < 0) {
+                productIdlist.push(id);
+                var $form = $(btnClicked).parents('form');
+                $.ajax({
+                    type: "POST",
+                    url: RootUrl + 'sales/Ordernsm/AddNewItemToExistingOrder',
+                    data: $form.serialize(),
+                    error: function (xhr, status, error) {
+                        //do something about the error
+                    },
+                    success: function (response) {
+                        //alert("Saved Successfully");
+                        ViewTempOrdersNsm();
+                    }
+                });
+
+            }
+            else {
+                alert("This Product already exits in the list");
+            }
+
+        }
+
+        function RemoveProduct(btnClicked) {
+
+
+            if (confirm("Are you sure to remove this product ??")) {
+                //alert(btnClicked);
+                $("#productIdToRemove").val(btnClicked.id);
+                //alert(btnClicked.id);
+                //alert(btnClicked["delBtn"]);
+                var $form = $(btnClicked).parents('form');
+                $.ajax({
+                    type: "POST",
+                    url: RootUrl + 'sales/Ordernsm/Update',
+                    data: $form.serialize(),
+                    error: function (xhr, status, error) {
+                        //do something about the error
+                    },
+                    success: function (response) {
+                        for (var i = productIdlist.length - 1; i >= 0; i--) {
+                            if (productIdlist[i] === btnClicked.id) {
+                                productIdlist.splice(i, 1);
+                            }
+                        }
+
+                        ViewTempOrdersNsm();
+                    }
+                });
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+        }
+    </script>
+}

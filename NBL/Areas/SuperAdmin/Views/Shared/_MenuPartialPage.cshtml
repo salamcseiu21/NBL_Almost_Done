@@ -1,0 +1,192 @@
+﻿@*Super Admin Menu*@
+<ul class="sidebar-menu" data-widget="tree" style="font-size: 16px;font-weight: bolder">
+
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-pencil"></i> <span>Reports</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle-o"></i> Sales
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li>@Html.ActionLink(" All", "SuperSalesReport", "SuperReport", new { area = "SuperAdmin" }, new { @class = "fa fa-file" , style = "font-weight: bolder" })</li>
+                    <li><a href="#"><i class="fa fa-file"></i> Daily Reports</a></li>
+                    <li><a href="#"><i class="fa fa-file"></i>Monthly Reports</a></li>
+                    <li><a href="#"><i class="fa fa-file"></i> Yearly Reports</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle-o"></i> Clients
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-circle-o"></i> Level Two
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle-o"></i> Stocks
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-circle-o"></i> Level Two
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-user"></i>
+            <span>Users</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Add New User", "AddUser", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-plus", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" User List", "ViewUser", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        </ul>
+    </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-user"></i>
+            <span>Approve</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Approve Client", "ApproveClient", "Approve", new { area = "SuperAdmin" }, new { @class = "fa fa-plus", style = "font-weight: bolder" })</li>
+           
+        </ul>
+    </li>
+
+
+
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-pencil"></i>
+            <span>Assign</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+           
+            <li>@Html.ActionLink(" Assign Branch to User", "AssignBranchToUser", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Assign Region to Branch", "AssignRegionToBranch", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Assign District to Region", "AssignDistrictToRegion", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-plus", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Assign Upazilla to Territory", "AssignUpazillaToTerritory", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-plus", style = "font-weight: bolder" })</li>
+        </ul>
+    </li>
+    
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-pencil"></i>
+            <span>Un Assign</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+           
+            
+            <li>@Html.ActionLink(" UnAssign District", "UnAssignDistrict", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-minus", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" UnAssign Uapazilla", "UnAssignUpazilla", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-minus", style = "font-weight: bolder" })</li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-eye"></i>
+            <span>View/Show</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Sales", "AllOrders", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink("  Employee List", "ViewEmployee", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Client List", "ViewClient", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Product List", "ViewProduct", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" User List", "ViewUser", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Branch List", "ViewBranch", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Division List", "ViewDivision", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Region List", "ViewRegion", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Territory List", "ViewTerritory", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Supplier List", "Supplier", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Product Wish Vat", "ProductWishVat", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-eye"></i>
+            <span>Vouchers</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Journal", "ViewJournal", "Voucher", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Vouchers", "Vouchers", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        </ul>
+    </li>
+  
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-eye"></i>
+            <span>Others</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Status", "ViewStatus", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Reference", "ViewSubReference", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+           
+        </ul>
+    </li>
+
+</ul>

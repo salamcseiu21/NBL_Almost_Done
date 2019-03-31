@@ -1,0 +1,13 @@
+﻿@using NBL.Areas.Accounts.Models
+@model IEnumerable<NBL.Areas.AccountsAndFinance.Models.Voucher>
+@{
+    ViewBag.Title = "Credit Voucher";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-green text-center headingStyle">Credit Voucher</h3>
+    <h3 class="text-green"><label>Total  Credit : @Model.Sum(n => n.Amounts) (&#2547;)</label></h3>
+    @Html.Partial("_VoucherPartialPage",Model)
+
+</section>

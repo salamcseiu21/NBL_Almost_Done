@@ -1,0 +1,14 @@
+﻿@using NBL.Areas.Accounts.Models
+@model IEnumerable<NBL.Areas.AccountsAndFinance.Models.Voucher>
+@{
+    ViewBag.Title = "Cheque Receive Voucher";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-green text-center headingStyle">Cheque Receive Voucher</h3>
+
+    <h3 class="text-green"><label> Total Cheque Receive : @Model.Sum(n => n.Amounts) (&#2547;)</label></h3>
+    @Html.Partial("_VoucherPartialPage", Model)
+
+</section>

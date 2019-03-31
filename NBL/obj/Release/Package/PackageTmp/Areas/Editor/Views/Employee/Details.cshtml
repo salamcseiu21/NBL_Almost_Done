@@ -1,0 +1,179 @@
+﻿@model NBL.Models.ViewModels.ViewEmployee
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    
+    <div style="border: 1px solid">
+    <div class="row">
+        <h3 class="text-center text-green headingStyle" style="margin: 10px">Employee Details</h3>
+        <hr/>
+        <div class="col-md-6">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.EmployeeName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.EmployeeName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.EmployeeImage)
+                </dt>
+
+                <dd>
+
+                    <img class="img-responsive" src="~/@Model.EmployeeImage" alt="Employee Image" title="@Model.EmployeeName" width="110" height="200">
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.EmployeeSignature)
+                </dt>
+
+                <dd>
+                    <img class="img-responsive" src="~/@Model.EmployeeSignature" alt="Employee Signature " width="120" height="50">
+                </dd>
+
+
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SubSubSubAccountCode)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SubSubSubAccountCode)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.EmployeeTypeId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.EmployeeTypeName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.DesignationId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DesignationName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.DepartmentId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DepartmentName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.BranchId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.BranchName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Gender)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Gender)
+                </dd>
+
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.PresentAddress)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PresentAddress)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PermanentAddress)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PermanentAddress)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Phone)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Phone)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.AlternatePhone)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.AlternatePhone)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.DoB)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DoB)
+                </dd>
+
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.JoiningDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.JoiningDate)
+                </dd>
+
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.NationalIdNo)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.NationalIdNo)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Notes)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Notes)
+                </dd>
+
+            </dl>
+        </div>
+        <p style="padding: 10px">
+            @Html.ActionLink("Back to List", "ViewEmployee", "Home", null, new {@class = "btn btn-danger"}) |
+            @Html.ActionLink("Update", "Edit", "Employee", new {id = Model.EmployeeId}, new {@class = "btn btn-success"})
+
+        </p>
+
+    </div>
+    </div>
+</section>
+

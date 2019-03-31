@@ -1,0 +1,66 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Clients.Client>
+@{
+    ViewBag.Title = "Client List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+
+}
+<section class="content">
+    <table id="table_client_list" class="display table table-bordered" style="border:1px solid black">
+        <caption class="text-center text-green" style="font-weight:bold;">Client List</caption>
+
+        <thead>
+        <tr>
+            <th>Account Code</th>
+            <th>Client Name</th>
+            <th>Commercial Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.SubSubSubAccountCode</td>
+                <td>@item.ClientName</td>
+                <td>@item.CommercialName</td>
+                <td>@item.Address</td>
+                <td>@item.Phone</td>
+                <td>@item.Email</td>
+                <td class="text-center">
+                    @Html.ActionLink(" Edit", "Edit","Client", new { id = item.ClientId },new {@class="fa fa-edit"}) |
+                    @Html.ActionLink(" Details", "Details", "Client", new {id = item.ClientId}, new {@class = "fa fa-eye"})
+                </td>
+            </tr>
+        }
+
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Account Code</th>
+            <th>Client Name</th>
+            <th>Commercial Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+@section Scripts{
+    
+    <script>
+
+        $('#table_client_list').DataTable({
+            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]]
+        });
+
+    </script>
+}
+
+

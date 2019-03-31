@@ -1,0 +1,144 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.ViewRegion>
+@{
+    ViewBag.Title = "UnAssign District";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle" style="padding: 10px">Un Assign District</h3>
+        
+    @using (Html.BeginForm("UnAssignDistrict","Assign"))
+    {
+        <div class="form-horizontal">
+            <div class="col-md-6 col-md-offset-3">
+                <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
+                </div>
+                <hr />
+                <div class="form-group">
+                    <label for="DistrictName" class="control-label col-md-3">District Name</label>
+                    <div class="col-md-9">
+                        <input type="text" id="DistrictName" name="DistrictName" class="form-control" placeholder="Start typing district Name" autofocus required/>
+                        <input type="hidden" id="RegionDetailsId" name="RegionDetailsId"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="RegionName" class="control-label col-md-3">Assigned To</label>
+                    <div class="col-md-9">
+                        <input type="text" id="RegionName" name="RegionName" class="form-control" placeholder="Assigned region name...." readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Reason" class="control-label col-md-3">Reason</label>
+                    <div class="col-md-9">
+                        <textarea class="form-control" id="Reason" placeholder="Please! write the reason of Un Assign" name="Reason" rows="3" style="resize: none" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-3">
+                        <input type="button" value="UnAssign" class="btn btn-info" onclick="UnAssignDistrict(this)"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</section>
+
+@section Scripts{
+    <script type="text/javascript">
+    $(function () {
+        $("#DistrictName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetAssignedDistrictNameAutoComplete", "Common",new {area=""})',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data,
+                            function(item) {
+                                return item;
+                            }));
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#RegionDetailsId").val(i.item.val);
+                var regionDetailsId = i.item.val;
+                var json = { rdId: regionDetailsId };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetRegionDetailsById", "Common", new { area = "" })',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+
+                        var regionName = data.RegionName;
+                        $("#RegionName").val(regionName);
+
+                    }
+                });
+            },
+            minLength: 1
+        });
+    });
+</script>
+<script>
+
+
+    function UnAssignDistrict(id) {
+
+        if ($("#DistrictName").val() === "") {
+            alert("Please! Enter district name....");
+        }
+        else if ($("#Reason").val() === "") {
+            alert("Please! Enter the reason of Un Assign....");
+        }
+        else {
+            if (confirm("Are you sure to UnAssign this district ?")) {
+
+                var $form = $(id).parents('form');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("UnAssignDistrict")',
+                    data: $form.serialize(),
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    },
+                    success: function (response) {
+                        var result = response.Message;
+                        $('#message').html(response).fadeIn('slow');
+                        $('#message').html(result).fadeIn('slow'); //also show a success message
+                        $('#message').delay(5000).fadeOut('slow');
+                        setTimeout(function () { ReloadPage(); }, 6000);
+                    }
+
+                });
+
+                return false; // if it's a link to prevent post
+
+            } else {
+                return false;// if it's a link to prevent post
+            }
+        }
+
+
+
+        return false;// if it's a link to prevent post
+
+
+    }
+    function ReloadPage() {
+        location.reload();
+    }
+</script>
+}

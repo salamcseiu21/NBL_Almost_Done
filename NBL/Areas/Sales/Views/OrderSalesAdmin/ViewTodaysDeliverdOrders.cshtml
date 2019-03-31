@@ -1,0 +1,79 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Deliveries.Delivery>
+@using NBL.BLL
+@{
+    ViewBag.Title = "Today's Delivered Orders";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+
+}
+
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Today's Delivered Orders</h3>
+
+    <table id="table_Order_list" class="table table-bordered" style="border:1px solid black">
+     
+        <thead>
+            <tr>
+               
+                <th>Delivery Ref</th>
+                <th>Transaction Ref</th>
+                <th class="text-center">Delivery Date</th>
+                <th>Delivered By</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                 
+                    <td>@item.DeliveryRef</td>
+                    <td>@item.TransactionRef</td>
+                    <td class="text-center">
+
+                        @item.SysDateTime.ToString("F")
+                    </td>
+                    <td>
+                        @{
+                            UserManager userManager = new UserManager();
+                            int empId = userManager.GetAll.ToList().Find(n => n.UserId == item.DeliveredByUserId).EmployeeId;
+                            EmployeeManager employeeManger = new EmployeeManager();
+                            var emp = employeeManger.EmployeeById(empId);
+                            @emp.EmployeeName
+                        }
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink(" Preview & Print", "Invoice", new { id = item.DeliveryId }, new { target = "_blank" })
+
+
+                    </td>
+                </tr>
+                            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Delivery Ref</th>
+                <th>Transaction Ref</th>
+                <th class="text-center">Delivery Date</th>
+                <th>Delivered By</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+
+</section>
+@section Scripts
+{
+    <script>
+
+        $('#table_Order_list').DataTable({
+            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],
+            "order": [[1, "desc"]]
+        });
+
+</script>
+}

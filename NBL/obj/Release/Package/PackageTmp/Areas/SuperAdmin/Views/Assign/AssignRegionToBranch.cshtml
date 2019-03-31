@@ -1,0 +1,133 @@
+﻿
+@using NBL.Models.ViewModels
+@model IEnumerable<ViewBranch>
+@{
+  
+        ViewBag.Title = "Assign Region To Branch";
+        Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+        var items = (List<ViewAssignedRegion>)ViewBag.AssignedRegions;
+
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Assign Region To Branch</h3>
+    <hr />
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Branch</label>
+                    <div class="col-md-9">
+                        <select class="form-control" id="BranchId" name="BranchId" required>
+                            <option value="">--Select--</option>
+                            @foreach (var item in Model)
+                            {
+                                <option value="@item.BranchId">@item.BranchName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Region Name</label>
+                    <div class="col-md-9">
+                        <select class="form-control select2" multiple="multiple" data-placeholder="Type region Name" id="RegionId" name="RegionId" required>
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2"></label>
+                    <div class="col-md-10 text-right">
+                        
+                        <input type="submit" value="Save" class="btn btn-success" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+    
+    <table id="table_assigned_region_list_to_branch" class="display table-bordered" style="border:1px solid black">
+
+
+        <thead>
+            <tr>
+                <th>Branch Name</th>
+                <th>Assigned Region</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model) 
+            {
+                <tr>
+                    <td>@item.BranchName</td>
+                    <td>
+                    @{
+                        string region = "";
+                        foreach (var i in items.ToList().FindAll(n => n.BranchId == item.BranchId))
+                        {
+                            region = region + i.RegionName + ",";
+                        };
+                        @region
+                    }
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Branch Name</th>
+                <th>Assigned Region</th>
+            </tr>
+        </tfoot>
+    </table>
+   
+</section>
+@section Scripts
+{
+    <script>
+        $("#BranchId").change(function () {
+            //var divId = $(this).val();
+            var regionId = $(this).val();
+            $("#RegionId").empty();
+            $("#RegionId").append('<option value="">--Select--</option>');
+            //var json = { divisionId: divId };
+            var json = { regionId: regionId };
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetUnAssignedRegionList", "Common", new { area = "" })',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+
+
+                    $.each(data, function (key, value) {
+                        //alert(key);
+                        $("#RegionId").append('<option value=' + value.RegionId + '>' + value.RegionName + '</option>');
+
+                    });
+                }
+            });
+        });
+
+    </script>
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2();
+        })
+    </script>
+    <script>
+
+        $('#table_assigned_region_list_to_branch').DataTable({
+            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]]
+        });
+
+    </script>
+}

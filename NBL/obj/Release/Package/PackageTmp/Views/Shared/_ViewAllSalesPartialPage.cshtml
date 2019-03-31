@@ -1,0 +1,87 @@
+﻿@using NBL.BLL
+@model IEnumerable<NBL.Models.EntityModels.Orders.Order> 
+
+
+<table id="table_Order_list" class="display table-bordered" style="border:1px solid black">
+
+    <thead>
+        <tr>
+            <th>Order Slip No</th>
+            <th>Branch</th>
+            <th class="text-center">Order Date</th>
+            <th class="text-center">Approve By NSM Date</th>
+            <th class="text-center">Approve By Accounts Date</th>
+            <th class="text-center">NSM</th>
+            <th class="text-center">Accounts</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@item.OrderSlipNo</td>
+                <td>
+                    @{
+                        BranchManager branchManager = new BranchManager();
+                        UserManager userManger = new UserManager();
+                        var branch = branchManager.GetBranchById(item.BranchId);
+                        @branch.BranchName
+                    }
+                </td>
+                <td class="text-center">
+
+                    @item.SysDate.ToShortTimeString(),@item.SysDate.ToString("dd-MMM-yyyy")
+                </td>
+                <td class="text-center">
+                    @item.ApprovedByNsmDateTime.ToShortTimeString(),@item.ApprovedByNsmDateTime.ToString("dd-MMM-yyyy")
+                   
+                </td>
+                <td class="text-center">
+                    @item.ApprovedByAdminDateTime.ToShortTimeString(),@item.ApprovedByAdminDateTime.ToString("dd-MMM-yyyy")
+                </td>
+
+
+
+                <td class="text-center">
+                    @{
+                        if (item.NsmUserId != 0)
+                        {
+                            @userManger.GetAll.ToList().Find(n=>n.UserId==item.NsmUserId).EmployeeName
+                        }
+                    }
+
+                </td>
+                <td class="text-center">
+                    @{
+                        @item.AdminUserId
+                    }
+
+                </td>
+            </tr>
+                        }
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Order Slip No</th>
+            <th>Branch</th>
+            <th class="text-center">Order Date</th>
+            <th class="text-center">Approve By NSM Date</th>
+            <th class="text-center">Approve By Accounts Date</th>
+            <th class="text-center">NSM</th>
+            <th class="text-center">Accounts</th>
+        </tr>
+    </tfoot>
+</table>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+<script>
+
+        $('#table_Order_list').DataTable({
+            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],
+            "order": [[1, "desc"]]
+        });
+
+</script>

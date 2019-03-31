@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+
+<h2 class="text-center">Orders</h2>
+<section class="content">
+    <table id="myTable" class="display table table-bordered responsive" style="border:1px solid black">
+        <thead>
+        <tr>
+           
+            <th>Order Ref</th>
+            <th>Client</th>
+            <th>Quantity</th>
+            <th>Amounts</th>
+            <th>Order Date</th>
+            <th>Status</th>
+            <th>Details</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th>Order Ref</th>
+            <th>Client</th>
+            <th>Quantity</th>
+            <th>Amounts</th>
+            <th>Order Date</th>
+            <th>Status</th>
+          
+            <th>Details</th>
+        </tr>
+        </tfoot>
+    </table>
+    @Html.Partial("_ModalPartialPage")
+</section>
+
+
+
+@* Load datatable css *@
+@section Scripts{
+    @* Load DataTable js here *@
+   
+    <script>
+        $(document).ready(function () {
+            $("#myTable").DataTable({
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "processing": true, // for show progress bar
+                "serverSide": true, // for process server side
+                "filter": true, // this is for enable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax": {
+                    "url":RootUrl+"corporate/home/LoadData",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columns": [
+                    {
+                        "data": "OrederRef", "name": "OrederRef", "autoWidth": true,
+                        
+                    },
+                    { "data": "Client.CommercialName", "name": "CommercialName", "autoWidth": true },
+                    { "data": "Quantity", "name": "Quantity", "autoWidth": true },
+
+                    { "data": "Amounts", "name": "Amounts", "autoWidth": true },
+                   
+                    {
+                        'data': 'OrderDate',
+                         "name": "OrderDate",
+                         "autoWidth": true,
+                        'render': function (jsonDate) {
+                            var date = new Date(parseInt(jsonDate.substr(6)));
+                            var month = date.getMonth() + 1;
+                            return date.getDate() + "-" + month + "-" + date.getFullYear();
+                        }
+                    },
+                  
+                   
+                    { "data": "StatusDescription", "name": "StatusDescription", "autoWidth": true },
+                 
+
+                    {
+                        data: null,
+                        className: "text-center",
+                        render: function (data, type, row) {
+
+                           return  "<button type='button' value='"+ data.OrderId +"' class='btn btn-success btn-sm' onclick='viewDetails(this)'><i class='fa fa-eye'></i> Details</button>";
+                           
+                        }
+                    }
+
+                ]
+            });
+        });
+    </script>
+    
+    <script>
+        function viewDetails(orderId) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ViewModalPartial", "Common", new { area = "" })",
+                data: { orderId: orderId.value },
+                success: function (response) {
+                    $('#modalBody').html(response);
+                    $('#showOrderDetailsModal').modal('show');
+                }
+            });
+        }
+    </script>
+
+}

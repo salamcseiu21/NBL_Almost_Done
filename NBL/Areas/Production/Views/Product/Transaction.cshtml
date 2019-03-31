@@ -1,0 +1,479 @@
+﻿
+@{
+    ViewBag.Title = "Transaction";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var tdate = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+}
+
+<section class="content">
+    <h2 class="text-center text-green" style="margin: 0;">Product Dispatch</h2>
+    <hr/>
+    
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+        <div class="row">
+            <div class="col-md-6">
+                
+                <div class="form-group">
+                    <label class="control-label col-md-3">To Branch :</label>
+                    <div class="col-md-9">
+                        <input type="text" name="ToBranchName" id="ToBranchName" class="form-control" placeholder="Branch Name" required/>
+                        <input type="hidden" id="BranchId" name="BranchId"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Address :</label>
+                    <div class="col-md-9">
+                        <textarea id="BranchAddress" name="BranchAddress" class="form-control" readonly="readonly" rows="5" style="resize: none"></textarea>
+                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Branch Code :</label>
+                    <div class="col-md-9">
+                        <input type="text" name="BranchCode" id="BranchCode" class="form-control" placeholder="Branch Code" readonly="readonly" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+              
+                <div class="form-group">
+                    <label class="control-label col-md-3">Product Name : </label>
+                    <div class="col-md-9">
+                        <input type="text" name="ProductName" id="ProductName" class="form-control" placeholder="Type Product Name" required />
+                        <input type="hidden" id="ProductId" name="ProductId" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Quantity : </label>
+                    <div class="col-md-9">
+                        <input type="number" name="Quantity" id="Quantity" class="form-control" placeholder="Quantity" required />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="TransactionDate" class="control-label col-md-3">Date</label>
+                    <div class="col-md-9">
+                        <input type="text" id="TransactionDate" name="TransactionDate" value="@tdate" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-9 col-md-offset-3">
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-6">
+
+                                <input type="button" value="Add Item" onclick="AddProduct(this)" class="btn btn-primary btn-block"/>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+        </div>
+    }
+    
+    <p  style="font-weight: bolder;font-size: 20px" class="text-center">Product List</p>
+    @using (Html.BeginForm("Update", "Product", FormMethod.Post, new { id = "updateQuantiyForm" }))
+    {
+        <input type="hidden" id="productIdToRemove" name="productIdToRemove" />
+      
+        <table class="table table-bordered" style="margin: 0; padding: 0;">
+           
+            <thead>
+
+            <tr>
+                <th style="border: 1px solid black;" class="text-center">Product Name</th>
+                <th style="border: 1px solid black; width: 10%" class="text-center">Quantity</th>
+                <th style="border: 1px solid black;" class="text-center">Unit Price (&#2547;)</th>
+                <th style="border: 1px solid black;" class="text-center">Sub Total (&#2547;)</th>
+                <th style="border: 1px solid black;" class="text-center">Action</th>
+            </tr>
+            </thead>
+            <tbody id="orders"></tbody>
+        </table>
+    }
+    <hr/>
+    @using (Html.BeginForm("Transaction", "Product", FormMethod.Post, new { id = "saveTransactionForm" }))
+    {
+        <div class="form-horizontal">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Transportation" class="control-label col-md-3">Transportation:</label>
+                <div class="col-md-9">
+                    <input type="text" id="Transportation" name="Transportation" class="form-control" value="Transport" placeholder="Transportation Name" required/>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="DriverName" class="control-label col-md-3">Driver Name:</label>
+                <div class="col-md-9">
+                    <input type="text" id="DriverName" name="DriverName" value="Mr. Abc" class="form-control" placeholder="Driver Name" required/>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Cost" class="control-label col-md-3">Cost:</label>
+                <div class="col-md-9">
+                    <input type="number" id="Cost" name="Cost" value="5000" class="form-control" placeholder="Transportation Cost" required/>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="VehicleNo" class="control-label col-md-3">Vehicle No:</label>
+                <div class="col-md-9">
+                    <input type="text" id="VehicleNo" name="VehicleNo" value="D-25850" placeholder="Vehicle No" class="form-control" required />
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Total" class="control-label col-md-3"> Quantity :</label>
+                <div class="col-md-9">
+                    <input type="number" id="TotalQty" name="TotalQty" class="form-control" value="0" readonly="readonly" />
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Total" class="control-label col-md-3">Total (&#2547;) :</label>
+                <div class="col-md-9">
+                    <input type="number" id="Total" name="Total" class="form-control" value="0" readonly="readonly" />
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="SpecialComision" class="control-label col-md-3">Special Discount (&#2547;) : </label>
+                <div class="col-md-9">
+
+                    <input type="number" id="SpecialComision" name="SpecialComision" class="form-control" min="0" value="0" onkeyup="CalculateNetAmount(this)" />
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Net" class="control-label col-md-3">Net Amount (&#2547;) :</label>
+                <div class="col-md-9">
+
+                    <input type="number" id="Net" name="Net" class="form-control" readonly="readonly" />
+
+                </div>
+            </div>
+          
+            <div class="form-group">
+
+
+                <div class="col-md-9 col-md-offset-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="button" value="Cancel" class="btn btn-danger btn-block" onclick="ClearInputFields()" />
+                        </div>
+
+                        <div class="col-md-8">
+
+                            <input type="button" value="Save" onclick="PreviewOrderDetails(this)" class="btn btn-info btn-block" />
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+    }
+</section>
+
+@section Scripts
+{
+    <script>
+    $(function () {
+
+        $("#TransactionDate").datepicker({ dateFormat: 'dd-MM-yy' });
+
+    } );
+</script>
+@*Autocomplete*@
+
+<script type="text/javascript">
+    $(function () {
+        $("#ProductName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: RootUrl + 'production/Product/AutoComplete/',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data,
+                            function(item) {
+                                return item;
+                            }));
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#ProductId").val(i.item.val);
+                var pId = $("#ProductId").val();
+                //alert(i.item.val);
+                var json = { productId: pId };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetProductQuantityInStockById", "Sales")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+
+                        var qty = data.StockQty;
+                        $("#StockQty").val(qty);
+                    }
+                });
+
+            },
+            minLength: 1
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#ToBranchName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url:RootUrl+ 'production/Branch/BranchAutoComplete/',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data,
+                            function(item) {
+                                return item;
+                            }));
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#BranchId").val(i.item.val);
+                var bId = $("#BranchId").val();
+                //alert(i.item.val);
+                var json = { branchId: bId };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetBranchDetailsById", "Branch")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+
+                        var address = data.BranchAddress;
+                        var code = data.BranchSubSubSubAccountCode;
+                        $("#BranchAddress").val(address);
+                        $("#BranchCode").val(code);
+                    }
+                });
+            },
+            minLength: 1
+        });
+    });
+</script>
+
+<script>
+    function doCheck() {
+        var allFilled = true;
+
+        var inputs = document.getElementsByTagName('input');
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].type == "text" && inputs[i].value == '') {
+                allFilled = false;
+                break;
+            }
+        }
+
+        document.getElementById("addItemButton").disabled = !allFilled;
+    }
+
+    window.onload = function () {
+        var inputs = document.getElementsByTagName('input');
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].type == "text") {
+                inputs[i].onkeyup = doCheck;
+                inputs[i].onblur = doCheck;
+            }
+        }
+    };
+</script>
+
+@*Ajax form Submit*@
+<script>
+
+    function AddProduct(btnClicked) {
+        //alert(btnClicked.id);
+
+        var stock = 5000;
+        var qty = $("#Quantity").val();
+        if (stock - qty >= 0) {
+            var $form = $(btnClicked).parents('form');
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("TempTransaction")',
+                data: $form.serialize(),
+                error: function(xhr, status, error) {
+                    //do something about the error
+                },
+                success: function(response) {
+                    //alert("Saved Successfully");
+                    ViewTempOrders();
+
+                }
+            });
+
+            return false; // if it's a link to prevent post
+        } else {
+            alert("Quantity Out of Stock!");
+        }
+
+
+
+    }
+</script>
+
+
+<script>
+
+    function Update(btnClicked) {
+        $("#productIdToRemove").val(0);
+        var $form = $(btnClicked).parents('form');
+        //var quantiy = btnClicked.id;
+        //var oldQty = btnClicked.value;
+        var oq = 5000;
+        var q = oq - btnClicked.value;
+        if (q>=0) {
+            //alert("OK");
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Update")',
+                data: $form.serialize(),
+                error: function (xhr, status, error) {
+                    //do something about the error
+                },
+                success: function (response) {
+                    //alert("Saved Successfully");
+                    ViewTempOrders();
+                }
+            });
+
+            return false; // if it's a link to prevent post
+        } else {
+            alert("Quantity out of stock");
+            ViewTempOrders();
+            return $form;
+        }
+
+
+    }
+    function RemoveProduct(btnClicked) {
+
+
+        if (confirm("Are you sure to remove this product ??")) {
+            //alert(btnClicked);
+            $("#productIdToRemove").val(btnClicked.id);
+            //alert(btnClicked.id);
+            //alert(btnClicked["delBtn"]);
+            var $form = $(btnClicked).parents('form');
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Update")',
+                data: $form.serialize(),
+                error: function (xhr, status, error) {
+                    //do something about the error
+                },
+                success: function (response) {
+                    //alert("Saved Successfully");
+                    ViewTempOrders();
+                }
+            });
+        } else {
+            return false;// if it's a link to prevent post
+        }
+
+        return false;// if it's a link to prevent post
+
+    }
+
+    function ViewTempOrders() {
+        $("#orders").html("");
+        //alert("Hi");
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetTempTransactionProductList", "Product")',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                var total = 0;
+                var totalQty = 0;
+                for (var i = 0; i < data.length; i++) {
+                    total = total + data[i].SubTotal;
+                    totalQty = totalQty + data[i].Quantity;
+                }
+                $.each(data, function (key, value) {
+
+                    //total =+ value.SubTotal;
+                    //alert(key);
+                    //$("#orders").append('<option value=' + value.ClientId + '>' + value.ProductId + '</option>');
+                    var row = $("<tr><td style='border: 1px solid black; padding: 5px 10px;'>" + value.ProductName + "</td><td style='border: 1px solid black; padding: 5px 10px;'>  <input type='number' min='1' value='" + value.Quantity + "' class='form-control text-right' id='" + value.ProductId + "' name='NewQuantity_" + value.ProductId + "'  onchange='Update(this)'/>" + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-right'>" + value.UnitPrice + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-right'><input type='hidden' name='product_Id_" + value.ProductId + "' value='" + value.ProductId + "'> " + value.SubTotal + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-center'><button id='" + value.ProductId + "' type='button' onclick='RemoveProduct(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color:red;'></i></button>" + "</td></tr>");
+
+                    $("#orders").append(row);
+                });
+                $("#Total").val(total);
+                $("#TotalQty").val(totalQty);
+                var com = $("#SpecialComision").val();
+                var net = total - com;
+                $("#Net").val(net);
+            }
+        });
+    }
+</script>
+
+<script>
+    function CalculateNetAmount(id) {
+   
+
+        var total=$("#Total").val();
+        var com = $("#SpecialComision").val();
+        var net = total - com;
+        $("#Net").val(net);
+    }
+
+    function PreviewOrderDetails(id) {
+
+        if (confirm("Are you sure to Save  this Transaciton ?")) {
+
+            $("#saveTransactionForm").submit();
+        } else {
+            return false;// if it's a link to prevent post
+        }
+
+        return false;// if it's a link to prevent post
+
+
+    }
+</script>
+}

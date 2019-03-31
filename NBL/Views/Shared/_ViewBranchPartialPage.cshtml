@@ -1,0 +1,58 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.ViewBranch>
+@{
+    ViewBag.Title = "Branch List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Branch List</h3>
+    <table id="table_branch_list" class="display table table-bordered" style="border:1px solid black">
+       
+        <thead>
+        <tr>
+            <th>Branch Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th class="text-center">Opening Date</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    <h4>@item.BranchName</h4>
+                    <h5>@item.Title</h5>
+                </td>
+                <td>@item.BranchAddress</td>
+                <td>@item.BranchPhone</td>
+                <td>@item.BranchEmail</td>
+                <td class="text-center">@item.BranchOpenigDate.ToString("D")</td>
+            </tr>
+        }
+
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Branch Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th class="text-center">Opening Date</th>
+        </tr>
+        </tfoot>
+    </table>
+
+</section>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+
+<script>
+
+        $('#table_branch_list').DataTable({
+            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]]
+        });
+
+</script>

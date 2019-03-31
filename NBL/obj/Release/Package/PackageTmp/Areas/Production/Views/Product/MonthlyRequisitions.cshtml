@@ -1,0 +1,52 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Requisitions.ViewMonthlyRequisitionModel>
+@{
+    ViewBag.Title = "Monthly Requisitions";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    
+    <table class="display table-bordered table-hover" id="tbl_Monthly_Requisiton_List" style="border: 1px solid">
+        <caption class="text-center text-green"><h3>Monthly Requisitions</h3></caption>
+        <thead>
+        <tr>
+            <th>Reference</th>
+            <th>Date</th>
+            <th>Quantity</th>
+            <th>Requisition By</th>
+            <th class="text-center">Action</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.RequisitionRef</td>
+                <td>@item.RequisitionDate</td>
+                <td>@item.Quantity</td>
+                <td>@item.RequisitionBy</td>
+                <td class="text-center">
+                    <button class="btn btn-info"><i class="fa fa-eye"></i> View Details</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Reference</th>
+            <th>Date</th>
+            <th>Quantity</th>
+            <th>Requisition By</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </tfoot>
+    </table>
+
+</section>
+@section Scripts
+{
+    <script>
+        $("#tbl_Monthly_Requisiton_List").DataTable();
+    </script>
+}

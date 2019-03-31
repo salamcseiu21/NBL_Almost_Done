@@ -1,0 +1,216 @@
+﻿
+@model NBL.Models.ViewModels.ViewClient
+@{
+    ViewBag.Title = "Client Profile";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<!-- Main content -->
+<section class="content" style="background-color: aliceblue">
+
+<h3 class="text-center text-green headingStyle">Client Profile</h3>
+<hr />
+<div class="row">
+    <div class="col-md-2">
+        <!-- Profile Image -->
+        <div class="box box-primary">
+            <div class="box-body" style="margin-bottom: 0; padding-bottom: 0;">
+                <img class="profile-user-img img-responsive img-circle" src="~/@Model.ClientImage" alt="Client Image">
+                <br/>
+                <img class="profile-user-img img-responsive" src="~/@Model.ClientSignature" alt="Client Signature ">
+                <p class="text-center">@Html.Raw(Model.GetBasicInformation())</p>
+
+                <ul class="list-group list-group-unbordered">
+                    <li class="list-group-item">
+                        <b>Total purchases</b> <a class="pull-right">@Model.GetTotalOrder()</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Credit Limit:</b> <a class="pull-right">@Model.CreditLimit</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Remaining Credit :</b> <a class="pull-right">@Model.CreditLimit</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Max Credit Day:</b> <a class="pull-right">@Model.MaxCreditDay</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+        <!-- About Me Box -->
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">About Client</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <strong><i class="fa fa-book"></i> Contact Details</strong>
+                <p class="text-muted">
+                    <strong>
+                        @Html.Raw(Model.GetMailingAddress())
+                    </strong>
+                </p>
+                <hr>
+                <strong><i class="fa fa-map-marker margin-r-5"></i> Address</strong>
+                <p class="text-muted">@Model.Address</p>
+
+                <hr>
+                <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-10">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#orders" data-toggle="tab">Orders</a></li>
+                @*<li><a href="#settings" data-toggle="tab">Settings</a></li>*@
+            </ul>
+            <div class="tab-content">
+                <div class="active tab-pane" id="orders">
+                    <div class="post">
+                        <table id="table_Order_list" class="table table-bordered" style="border: 1px solid black">
+                            <thead>
+                            <tr>
+
+                                <th>Order Slip No</th>
+                                <th class="text-right">Amount (&#2547;)</th>
+                                <th class="text-right">Discount (&#2547;)</th>
+                                <th class="text-right">Vat (&#2547;)</th>
+                                <th class="text-right">Net Amount (&#2547;)</th>
+                                <th class="text-center">Order Date</th>
+                                <th class="text-center">Status</th>
+
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            @foreach (var item in Model.Orders.ToList())
+                            {
+
+                                <tr>
+
+                                    <td>@item.OrderSlipNo</td>
+                                    <td class="text-right">@item.Amounts</td>
+                                    <td class="text-right">@item.Discount</td>
+                                    <td class="text-right">@item.Vat</td>
+                                    <td class="text-right">@item.NetAmounts</td>
+                                    <td class="text-center">
+
+                                        @item.OrderDate.ToString("dd-MMM-yyyy")
+                                    </td>
+                                    <td class="text-center">
+
+                                        @{
+                                            if (item.Status == 4)
+                                            {
+                                                <label class="text-green"><i class="fa fa-check-circle-o"></i> Deliverd</label>
+                                            }
+                                            if (item.Status == 1)
+                                            {
+                                                <label class="text-success">Approve By Nsm</label>
+                                            }
+                                            if (item.Status == 2)
+                                            {
+                                                <label class="text-success">Invoiced</label>
+                                            }
+                                        }
+                                    </td>
+
+                                </tr>
+                            }
+
+                            </tbody>
+                            <tfoot>
+                            <tr>
+
+                                <th>Order Slip No</th>
+                                <th class="text-right">Amount (&#2547;)</th>
+                                <th class="text-right">Discount (&#2547;)</th>
+                                <th class="text-right">Vat (&#2547;)</th>
+                                <th class="text-right">Net Amount (&#2547;)</th>
+                                <th class="text-center">Order Date</th>
+                                <th class="text-center">Status</th>
+
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <div>
+                            @Html.ActionLink("Back to List", "All", "Client", null, new {@class = "btn btn-info"})
+                        </div>
+                        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+                        <script>
+
+                            $('#table_Order_list').DataTable({
+                                "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]]
+                            });
+
+                        </script>
+
+                    </div>
+                </div>
+
+                @*<div class="tab-pane" id="settings">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="inputName" placeholder="Name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputName" placeholder="Name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-danger">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>*@
+                <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- /.nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+</section>
+<!-- /.content -->
