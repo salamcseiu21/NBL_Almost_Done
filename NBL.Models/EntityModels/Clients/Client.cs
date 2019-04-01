@@ -15,7 +15,6 @@ namespace NBL.Models.EntityModels.Clients
     public class Client
     {
         public int ClientId { get; set; }
-        [Required(ErrorMessage = "Commercial Name is required")]
         [Display(Name = "Commercial Name")]
         public string CommercialName { get; set; } 
         [Required(ErrorMessage = "Client Name is required")]

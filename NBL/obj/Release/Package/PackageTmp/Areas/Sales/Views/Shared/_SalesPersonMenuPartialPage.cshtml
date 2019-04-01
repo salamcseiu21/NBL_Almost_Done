@@ -74,6 +74,45 @@
 
         </ul>
     </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-book"></i> <span>Return/Replace</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle-o"></i> Return
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li>@Html.ActionLink(" Entry", "Entry", "Return", new {area = "Sales"}, new {@class = "fa fa-plus", style = "font-weight: bolder"})</li>
+                    <li>@Html.ActionLink(" View All", "Home", "Return", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+
+
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle-o"></i> Replace
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li>@Html.ActionLink(" Entry", "Entry", "Replace", new {area = "Sales"}, new {@class = "fa fa-plus", style = "font-weight: bolder"})</li>
+                    <li>@Html.ActionLink(" View All", "Home", "Replace", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+
+
+                </ul>
+            </li>
+        </ul>
+    </li>
     <li class="treeview">
         <a href="#">
             <i class="fa fa-book"></i> <span>Reports</span>
@@ -93,7 +132,6 @@
                     <li>@Html.ActionLink(" All", "Report", "Reoprt", new {area = "Sales"}, new {@class = "fa fa-file", style = "font-weight: bolder"})</li>
                     <li><a href="#"><i class="fa fa-file"></i>Monthly Reports</a></li>
                     <li><a href="#"><i class="fa fa-file"></i> Yearly Reports</a></li>
-                    <li><a href="~/Reports/WebForm1.aspx" target="_blank">View Report</a></li>
                 </ul>
             </li>
             <li class="treeview">

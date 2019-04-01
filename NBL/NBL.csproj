@@ -358,6 +358,8 @@
     <Compile Include="Areas\Sales\Controllers\OrderSalesAdminController.cs" />
     <Compile Include="Areas\Sales\Controllers\ProductController.cs" />
     <Compile Include="Areas\Corporate\Controllers\RequisitionController.cs" />
+    <Compile Include="Areas\Sales\Controllers\ReplaceController.cs" />
+    <Compile Include="Areas\Sales\Controllers\ReturnController.cs" />
     <Compile Include="Areas\Sales\Controllers\SalesAdminController.cs" />
     <Compile Include="Areas\Sales\Controllers\SalesPersonController.cs" />
     <Compile Include="Areas\Sales\DAL\Contracts\IInvoiceGateway.cs" />
@@ -7944,6 +7946,10 @@
     <Content Include="Areas\Corporate\Views\Shared\_OperationHeadMenuPartialPage.cshtml" />
     <Content Include="Areas\ResearchAndDevelopment\Views\Product\ProductLifeCycle.cshtml" />
     <Content Include="Areas\ResearchAndDevelopment\Views\Shared\_MenuPartialPage.cshtml" />
+    <Content Include="Areas\Sales\Views\Replace\Home.cshtml" />
+    <Content Include="Areas\Sales\Views\Return\Home.cshtml" />
+    <Content Include="Areas\Sales\Views\Replace\Entry.cshtml" />
+    <Content Include="Areas\Sales\Views\Return\Entry.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />

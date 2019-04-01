@@ -158,6 +158,7 @@
     <Compile Include="ViewModels\Requisitions\ViewMonthlyRequisitionModel.cs" />
     <Compile Include="ViewModels\Requisitions\ViewRequisitionModel.cs" />
     <Compile Include="EntityModels\Requisitions\RequisitionModel.cs" />
+    <Compile Include="ViewModels\Returns\ViewEntryReturnModel.cs" />
     <Compile Include="ViewModels\Summaries\FactorySummaryModel.cs" />
     <Compile Include="ViewModels\Summaries\SummaryModel.cs" />
     <Compile Include="EntityModels\Suppliers\Supplier.cs" />
@@ -219,6 +220,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="EntityModels\Returns\" />
     <Folder Include="ViewModels\Regions\" />
     <Folder Include="ViewModels\Vouchers\" />
   </ItemGroup>

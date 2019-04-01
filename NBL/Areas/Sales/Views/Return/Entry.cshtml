@@ -1,0 +1,50 @@
+﻿@model NBL.Models.ViewModels.Returns.ViewEntryReturnModel
+@{
+    ViewBag.Title = "Entry";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Return Entry</h3>
+    <div class="row">
+        <div class="col-md-10">
+            @using (Html.BeginForm())
+            {
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BarCode,  new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.BarCode, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter barcode Name"} })
+                            @Html.ValidationMessageFor(model=>model.BarCode, "",new {@class="text-danger"})
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ClientName, new {@class = "control-label col-md-3"})
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.ClientName, new {htmlAttributes = new {@class = "form-control", placeholder = "Client Name",@readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.ClientName, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-9 text-right">
+                                <div class="btn toolbar">
+                                    <input type="button" value="Cancel" class="btn btn-danger" onclick="ClearInputFields()"/>
+                                    <input type="submit" value="Save" class="btn btn-primary"/>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

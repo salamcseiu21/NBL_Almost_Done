@@ -6,7 +6,7 @@ namespace NBL.Models.ViewModels.Clients
     public class ViewCreateClientModel
     {
        
-        [Required(ErrorMessage = "Commercial Name is required")]
+     
         [Display(Name = "Commercial Name")]
         public string CommercialName { get; set; }
         [Required(ErrorMessage = "Client Name is required")]
