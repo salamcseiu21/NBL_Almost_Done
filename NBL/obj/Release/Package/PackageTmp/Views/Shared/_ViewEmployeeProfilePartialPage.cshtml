@@ -12,9 +12,9 @@
             <!-- Profile Image -->
             <div class="box box-primary">
                 <div class="box-body box-profile">
-                    <img class="profile-user-img img-responsive img-circle" src="~/@Model.EmployeeImage" alt="Employee Image" title="@Model.EmployeeName">
+                    <img class="profile-user-img img-responsive img-circle" src="~/@(Model.EmployeeImage?? "Images/User.jpg")" alt="Employee Image" title="@Model.EmployeeName">
                     <br/>
-                    <img class="profile-user-img img-responsive" src="~/@Model.EmployeeSignature" alt="Employee Signature ">
+                    <img class="profile-user-img img-responsive" src="~/@(Model.EmployeeSignature?? "Images/sign.png")" alt="Employee Signature ">
                     <p class="text-muted text-center">@Model.DesignationName</p>
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">

@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<NBL.Models.EntityModels.Clients.Client>
+@model IEnumerable<NBL.Models.ViewModels.ViewClient>
 @{
     ViewBag.Title = "Client List";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
@@ -16,6 +16,7 @@
             <th class="text-center">Basic Information</th>
             <th class="text-center">Contact Info</th>
             <th class="text-center">Total Order</th>
+            <th class="text-center">Executive</th>
             <th class="text-center">View</th>
         </tr>
         </thead>
@@ -33,6 +34,7 @@
                 </td>
                 <td>@Html.Raw(item.GetContactInformation())</td>
                 <td class="text-center">@item.Orders.Count</td>
+                <td class="text-center">@(item.AssignedEmpName)</td>
                 <td class="text-center">
                     @Html.ActionLink(" Profile", "ViewClientProfile", null, new { id = item.ClientId }, new { @class = "fa fa-eye" })
                 </td>
@@ -46,6 +48,7 @@
             <th class="text-center">Basic Information</th>
             <th class="text-center">Contact Info</th>
             <th class="text-center">Total Order</th>
+            <th class="text-center">Executive</th>
             <th class="text-center">View</th>
         </tr>
         </tfoot>

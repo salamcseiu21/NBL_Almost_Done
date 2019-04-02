@@ -104,17 +104,17 @@ namespace NBL.DAL
                             BranchName = reader["BranchName"].ToString()
                         },
                         Gender = reader["Gender"].ToString(),
-                        PermanentAddress = reader["PermanentAddress"].ToString(),
-                        PresentAddress = reader["PresentAddress"].ToString(),
-                        Phone = reader["Phone"].ToString(),
-                        AlternatePhone = reader["AlternatePhone"].ToString(),
-                        Notes = reader["Notes"].ToString(),
-                        NationalIdNo = reader["EmployeeNationalIdNo"].ToString(),
+                        PermanentAddress = DBNull.Value.Equals(reader["PermanentAddress"]) ? null : reader["PermanentAddress"].ToString(),
+                        PresentAddress = DBNull.Value.Equals(reader["PresentAddress"]) ? null : reader["PresentAddress"].ToString(),
+                        Phone = DBNull.Value.Equals(reader["Phone"]) ? null : reader["Phone"].ToString(),
+                        AlternatePhone = DBNull.Value.Equals(reader["AlternatePhone"]) ? null : reader["AlternatePhone"].ToString(),
+                        Notes = DBNull.Value.Equals(reader["Notes"]) ? null : reader["Notes"].ToString(),
+                        NationalIdNo = DBNull.Value.Equals(reader["EmployeeNationalIdNo"]) ? null : reader["EmployeeNationalIdNo"].ToString(),
                         EmployeeImage = DBNull.Value.Equals(reader["EmployeeImage"]) ? null : reader["EmployeeImage"].ToString(),
                         EmployeeSignature = DBNull.Value.Equals(reader["EmployeeSignature"]) ? null : reader["EmployeeSignature"].ToString(),
                         JoiningDate = Convert.ToDateTime(reader["JoiningDate"]),
-                        SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
-                        EmployeeNo = reader["EmployeeNo"].ToString()
+                        SubSubSubAccountCode = DBNull.Value.Equals(reader["SubSubSubAccountCode"]) ? null : reader["SubSubSubAccountCode"].ToString(),
+                        EmployeeNo = DBNull.Value.Equals(reader["EmployeeNo"]) ? null : reader["EmployeeNo"].ToString()
                         
                     });
                 }
@@ -168,16 +168,17 @@ namespace NBL.DAL
                         BranchId = branchId,
                         BranchName = reader["BranchName"].ToString(),
                         Gender = reader["Gender"].ToString(),
-                        PermanentAddress = reader["PermanentAddress"].ToString(),
-                        PresentAddress = reader["PresentAddress"].ToString(),
-                        Phone = reader["Phone"].ToString(),
-                        AlternatePhone = reader["AlternatePhone"].ToString(),
-                        Notes = reader["Notes"].ToString(),
-                        NationalIdNo = reader["EmployeeNationalIdNo"].ToString(),
-                        EmployeeImage = reader["EmployeeImage"].ToString(),
-                        EmployeeSignature = reader["EmployeeSignature"].ToString(),
+                        PermanentAddress =DBNull.Value.Equals(reader["PermanentAddress"])?null: reader["PermanentAddress"].ToString(),
+                        PresentAddress = DBNull.Value.Equals(reader["PresentAddress"]) ? null : reader["PresentAddress"].ToString(),
+                        Phone = DBNull.Value.Equals(reader["Phone"]) ? null : reader["Phone"].ToString(),
+                        AlternatePhone = DBNull.Value.Equals(reader["AlternatePhone"]) ? null : reader["AlternatePhone"].ToString(),
+                        Notes = DBNull.Value.Equals(reader["Notes"]) ? null : reader["Notes"].ToString(),
+                        NationalIdNo = DBNull.Value.Equals(reader["EmployeeNationalIdNo"]) ? null : reader["EmployeeNationalIdNo"].ToString(),
+                        EmployeeImage = DBNull.Value.Equals(reader["EmployeeImage"]) ? null : reader["EmployeeImage"].ToString(),
+                        EmployeeSignature = DBNull.Value.Equals(reader["EmployeeSignature"]) ? null : reader["EmployeeSignature"].ToString(),
                         JoiningDate = Convert.ToDateTime(reader["JoiningDate"]),
-                        SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString()
+                        SubSubSubAccountCode = DBNull.Value.Equals(reader["SubSubSubAccountCode"]) ? null : reader["SubSubSubAccountCode"].ToString(),
+                        EmployeeNo = DBNull.Value.Equals(reader["EmployeeNo"]) ? null : reader["EmployeeNo"].ToString()
                     });
                 }
                 reader.Close();

@@ -12,7 +12,7 @@ namespace NBL.BLL.Contracts
        bool ApproveClient(Client aClient, ViewUser anUser);
        List<Client> GetPendingClients();
        Client GetClientByEmailAddress(string email);
-       IEnumerable<Client> GetClientByBranchId(int branchId);
+       IEnumerable<ViewClient> GetClientByBranchId(int branchId);
        ViewClient GetClientDeailsById(int clientId);
        IEnumerable<ViewClient> GetAllClientDetails();
        IEnumerable<ViewClient> GetAllClientDetailsByBranchId(int branchId);

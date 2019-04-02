@@ -24,13 +24,14 @@ namespace NBL.Areas.Sales.Controllers
         private readonly IOrderManager _iOrderManager;
         private readonly IClientManager _iClientManager;
         private readonly IInventoryManager _iInventoryManager;
-
-        public OrderController(IClientManager iClientManager,IOrderManager iOrderManager,IInventoryManager iInventoryManager,IProductManager iProductManager)
+        private readonly IDeliveryManager _iDeliveryManager;
+        public OrderController(IClientManager iClientManager,IOrderManager iOrderManager,IInventoryManager iInventoryManager,IProductManager iProductManager,IDeliveryManager iDeliveryManager)
         {
             _iClientManager = iClientManager;
             _iOrderManager = iOrderManager;
             _iInventoryManager = iInventoryManager;
             _iProductManager = iProductManager;
+            _iDeliveryManager = iDeliveryManager;
         }
         public PartialViewResult All()
         {
@@ -622,6 +623,12 @@ namespace NBL.Areas.Sales.Controllers
                 Codes.Add(code);
             }
             return Codes;
+        }
+        //-------------------Working here(2nd appril)--------------
+        public JsonResult GetDeliveryRefByClientId(int clientId)
+        {
+            var deliveriedOrders= _iDeliveryManager.GetDeliveryRefByClientId(clientId).ToList(); 
+            return Json(deliveriedOrders,JsonRequestBehavior.AllowGet);
         }
     }
 }

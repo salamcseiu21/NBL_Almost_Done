@@ -13,7 +13,7 @@
         <thead>
         <tr>
             <th width="20%">Territory Name</th>
-            <th>Upazilla/Thana</th>
+            <th>Description</th>
 
         </tr>
         </thead>
@@ -29,12 +29,7 @@
 
                 </td>
                 <td>
-                    <ol type="1">
-                        @foreach (var u in item.UpazillaList)
-                        { 
-                            <li>@u.UpazillaName</li>
-                        }
-                    </ol>
+                    @(item.Description?? "N/A")
 
                 </td>
 
@@ -45,7 +40,7 @@
         <tfoot>
         <tr>
             <th>Territory Name</th>
-            <th>Upazilla/Thana</th>
+            <th>Description</th>
 
         </tr>
         </tfoot>

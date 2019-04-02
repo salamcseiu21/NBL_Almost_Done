@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Orders;
 
 namespace NBL.DAL.Contracts
 {
@@ -23,5 +24,6 @@ namespace NBL.DAL.Contracts
 
         IEnumerable<Delivery> GetAllDeliveredOrdersByInvoiceRef(string invoiceRef);
         IEnumerable<ViewProduct> GetDeliveredProductsByDeliveryIdAndProductId(long deliveryId, int productId);
+        ICollection<DeliveredRefModel> GetDeliveryRefByClientId(int clientId);  
     }
 }

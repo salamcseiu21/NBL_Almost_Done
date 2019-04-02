@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using NBL.DAL.Contracts;
+using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Locations;
 using NBL.Models.EntityModels.Masters;
@@ -519,7 +520,7 @@ namespace NBL.DAL
                         UpazillaName = DBNull.Value.Equals(reader["UpazillaName"]) ? null : reader["UpazillaName"].ToString(),
                         DistrictName = DBNull.Value.Equals(reader["DistrictName"]) ? null : reader["DistrictName"].ToString(),
                         DivisionName = DBNull.Value.Equals(reader["DivisionName"]) ? null : reader["DivisionName"].ToString(),
-                        SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        SubSubSubAccountCode =DBNull.Value.Equals(reader["SubSubSubAccountCode"])?null: reader["SubSubSubAccountCode"].ToString(),
                         EntryDate = Convert.ToDateTime(reader["EntryDate"]),
                         ClientImage = DBNull.Value.Equals(reader["ClientImage"]) ? null : reader["ClientImage"].ToString(),
                         ClientSignature = DBNull.Value.Equals(reader["ClientSignature"]) ? null : reader["ClientSignature"].ToString(),
@@ -527,7 +528,9 @@ namespace NBL.DAL
                         Active = reader["Active"].ToString(),
                         BranchId = Convert.ToInt32(reader["BranchId"]),
                         CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
-                        MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"])
+                        MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"]),
+                        BranchName = DBNull.Value.Equals(reader["NBranchName"])?null:reader["NBranchName"].ToString()
+                        
                     });
 
                 }
@@ -653,12 +656,12 @@ namespace NBL.DAL
             }
         }
 
-        public IEnumerable<Client> GetClientByBranchId(int branchId)
+        public IEnumerable<ViewClient> GetClientByBranchId(int branchId)
         {
             try
             {
 
-                List<Client> clients = new List<Client>();
+                List<ViewClient> clients = new List<ViewClient>();
                 ConnectionObj.Open();
                 CommandObj.CommandText = "UDSP_GetClientByBranchId";
                 CommandObj.CommandType = CommandType.StoredProcedure;
@@ -667,7 +670,7 @@ namespace NBL.DAL
                 while (reader.Read())
                 {
 
-                    clients.Add(new Client
+                    clients.Add(new ViewClient
                     {
                         ClientId = Convert.ToInt32(reader["ClientId"]),
                         ClientName = reader["Name"].ToString(),
@@ -690,7 +693,9 @@ namespace NBL.DAL
                         RegionId = Convert.ToInt32(reader["RegionId"]),
                         TotalOrder = Convert.ToInt32(reader["TotalOrder"]),
                         ClientType = _iCommonGateway.GetAllClientType().ToList().Find(n =>
-                            n.ClientTypeId == Convert.ToInt32(reader["ClientTypeId"]))
+                            n.ClientTypeId == Convert.ToInt32(reader["ClientTypeId"])),
+                        AssignedEmpId = DBNull.Value.Equals(reader["AssignedEmpId"])?default(int):Convert.ToInt32(reader["AssignedEmpId"]),
+                        AssignedEmpName = DBNull.Value.Equals(reader["EmployeeName"]) ? null : reader["EmployeeName"].ToString()
                     });
                 }
                 reader.Close();
@@ -879,12 +884,12 @@ namespace NBL.DAL
                         ClientImage = DBNull.Value.Equals(reader["ClientImage"]) ? null : reader["ClientImage"].ToString(),
                         ClientSignature = DBNull.Value.Equals(reader["ClientSignature"]) ? null : reader["ClientSignature"].ToString(),
                         PostOfficeId = DBNull.Value.Equals(reader["PostOfficeId"])? (int?) null: Convert.ToInt32(reader["PostOfficeId"]),
-                        Phone = reader["Phone"].ToString(),
+                        Phone = DBNull.Value.Equals(reader["Phone"]) ? null : reader["Phone"].ToString(),
                         AlternatePhone = DBNull.Value.Equals(reader["AltPhone"]) ? null : reader["AltPhone"].ToString(),
                         Email = DBNull.Value.Equals(reader["Email"]) ? null : reader["Email"].ToString(),
-                        Address = reader["Address"].ToString(),
+                        Address = DBNull.Value.Equals(reader["Address"]) ? null : reader["Address"].ToString(),
                         Gender = reader["Gender"].ToString(),
-                        SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        SubSubSubAccountCode = DBNull.Value.Equals(reader["SubSubSubAccountCode"]) ? null : reader["SubSubSubAccountCode"].ToString(),
                         BranchId = Convert.ToInt32(reader["BranchId"]),
                         ClientTypeId = Convert.ToInt32(reader["ClientTypeId"]),
                         Active = reader["Active"].ToString(),
@@ -893,7 +898,14 @@ namespace NBL.DAL
                         TerritoryId = Convert.ToInt32(reader["TerritoryId"]),
                         RegionId = Convert.ToInt32(reader["RegionId"]),
                         ClientType = _iCommonGateway.GetAllClientType().ToList()
-                            .Find(n => n.ClientTypeId == Convert.ToInt32(reader["ClientTypeId"]))
+                            .Find(n => n.ClientTypeId == Convert.ToInt32(reader["ClientTypeId"])),
+                        Branch = new Branch
+                        {
+                            BranchName =DBNull.Value.Equals(reader["NBranchName"])?null: reader["NBranchName"].ToString(),
+                            BranchAddress = DBNull.Value.Equals(reader["NBranchAddress"]) ? null : reader["NBranchAddress"].ToString(),
+                            Title = DBNull.Value.Equals(reader["Title"]) ? null : reader["Title"].ToString(),
+                            BranchId = Convert.ToInt32(reader["BranchId"])
+                        }
                     });
                 }
                 reader.Close();

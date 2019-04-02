@@ -29,10 +29,12 @@ namespace NBL.DAL
                     {
                         TerritoryId = Convert.ToInt32(reader["TerritoryId"]),
                         TerritoryName = reader["TerritoryName"].ToString(),
+                        Description =DBNull.Value.Equals(reader["Description"])?null:reader["Description"].ToString(),
                         Region = new Region
                         {
                             RegionId = Convert.ToInt32(reader["RegionId"]),
-                            RegionName = reader["RegionName"].ToString()
+                            RegionName = reader["RegionName"].ToString(),
+                            Description =DBNull.Value.Equals(reader["RDescription"])?null: reader["RDescription"].ToString()
                         }
                     });
                 }

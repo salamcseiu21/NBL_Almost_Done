@@ -109,6 +109,11 @@ namespace NBL.Models.ViewModels
         public Division Division { get; set; }
         public Upazilla Upazilla { get; set; }
         public MailingAddress MailingAddress { get; set; }
+        public int TotalOrder { get; set; }
+        public int? AssignedEmpId { get; set; }
+        public string AssignedEmpName { get; set; }
+        public string AssignedEmpDesignation{ get; set; } 
+
         public int GetTotalOrder()
         {
             return Orders.Count;

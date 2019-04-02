@@ -94,10 +94,10 @@ namespace NBL.BLL
             }
             return clients;
         }
-        public IEnumerable<Client> GetClientByBranchId(int branchId)
+        public IEnumerable<ViewClient> GetClientByBranchId(int branchId)
         {
             var clients = _iClientGateway.GetClientByBranchId(branchId);
-            foreach (Client client in clients)
+            foreach (var client in clients)
             {
                 client.Orders = _iOrderManager.GetOrdersByClientId(client.ClientId).ToList();
             }

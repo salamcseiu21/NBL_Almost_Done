@@ -51,10 +51,10 @@ namespace NBL.Areas.Production.Controllers
             var productionLines = _iCommonManager.GetAllProductionLines().ToList();
 
             string barCodePrefix = model.ProductId.ToString("D3") +
-                                   productionDateCodes.Find(n => n.ProductionDateCodeId.Equals(3))
-                                       .Code + DateTime.Now.Day + productionLines.Find(n => n.ProductionLineId == model.ProductionLineId).LineNumber;
+                                   productionDateCodes.First()
+                                       .Code + DateTime.Now.Day.ToString("D2") + productionLines.Find(n => n.ProductionLineId == model.ProductionLineId).LineNumber;
             string infix = productionDateCodes.First()
-                               .Code + DateTime.Now.Day;
+                               .Code + DateTime.Now.Day.ToString("D2");
 
             var maxSl = _iBarCodeManager.GetMaxBarCodeSlByInfix(infix);
             var user = (ViewUser)Session["user"];
@@ -89,10 +89,16 @@ namespace NBL.Areas.Production.Controllers
           
             var products = _iBarCodeManager.GetTodaysProductionProductList();
             var productionLines = _iCommonManager.GetAllProductionLines().ToList();
-           
+            var monthYear = DateTime.Now.Month.ToString("D2") +
+                            Convert.ToInt32(DateTime.Now.Year.ToString().Substring(2, 2)).ToString("D2");
+            var productionDateCodes = _iCommonManager.GetProductionDateCodeByMonthYear(monthYear).ToList();
+            string infix = productionDateCodes.First()
+                               .Code + DateTime.Now.Day.ToString("D2");
+            List<BarCodeModel> models = _iBarCodeManager.GetAllBarCodeByInfix(infix).ToList();
+
             ViewBag.ProductionLineId = new SelectList(productionLines, "ProductionLineId", "LineNumber");
             ViewBag.BarCodeMasterId = new SelectList(products, "BarCodeMasterId", "ProductName");
-            ViewBag.BarcodeImage = null;
+            ViewBag.BatchNumbers = models;
             return View();
         }
         [HttpPost]

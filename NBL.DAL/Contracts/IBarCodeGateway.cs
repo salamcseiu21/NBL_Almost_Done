@@ -16,5 +16,6 @@ namespace NBL.DAL.Contracts
         ICollection<BarCodeModel> GetBarCodesBySearchCriteria(PrintBarCodeModel model); 
         int SaveBarCodes(ViewCreateBarCodeModel model);
         List<PrintBarCodeModel> GetTodaysProductionProductList();
+        ICollection<BarCodeModel> GetAllBarCodeByInfix(string infix); 
     }
 }

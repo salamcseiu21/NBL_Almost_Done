@@ -7,6 +7,7 @@ using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.EntityModels.Transports;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Orders;
 
 namespace NBL.DAL
 {
@@ -425,6 +426,28 @@ namespace NBL.DAL
             catch (Exception exception)
             {
                 throw new Exception("Could not Collect Delivered products Orders", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<DeliveredRefModel> GetDeliveryRefByClientId(int clientId)
+        {
+            try
+            {
+                return null;
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Could not Collect Delivery ref due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Collect Delivery ref", exception);
             }
             finally
             {

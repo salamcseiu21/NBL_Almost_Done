@@ -75,5 +75,10 @@ namespace NBL.BLL
         {
             return _iBarCodeGateway.GetTodaysProductionProductList();
         }
+
+        public ICollection<BarCodeModel> GetAllBarCodeByInfix(string infix)
+        {
+            return _iBarCodeGateway.GetAllBarCodeByInfix(infix);
+        }
     }
 }

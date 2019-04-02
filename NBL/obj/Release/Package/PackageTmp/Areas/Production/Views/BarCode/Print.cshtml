@@ -70,15 +70,38 @@
                 </div>
 
 
-                @if (ViewBag.BarcodeImage != null)
-                {
-                    <img src="@ViewBag.BarcodeImage" alt="" />
-                }
+                
             </div>
 
 
         </div>
     }
+    <table class="table table-bordered">
+        <caption class="text-center"> Today's Batch Number</caption>
+        <thead>
+        <tr>
+            <th>SL#</th>
+            <th>Line No</th>
+            <th>Batch No</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        @if (ViewBag.BatchNumbers != null)
+        {
+            var i = 0;
+            foreach (var item in ViewBag.BatchNumbers)
+            {
+                i++;
+                <tr>
+                    <td>@i</td>
+                    <td>@item.LineNumber</td>
+                    <td>@item.BatchCode</td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
 
 </section>
 

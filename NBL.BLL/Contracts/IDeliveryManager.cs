@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Orders;
 
 namespace NBL.BLL.Contracts
 {
@@ -36,5 +37,6 @@ namespace NBL.BLL.Contracts
 
         ViewChalanModel GetChalanByDeliveryId(int deliveryId);
 
-    }
+       ICollection<DeliveredRefModel> GetDeliveryRefByClientId(int clientId);
+   }
 }

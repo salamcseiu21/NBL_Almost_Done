@@ -16,6 +16,7 @@
             <th>Address</th>
             <th>Phone</th>
             <th>Email</th>
+            <th>Branch</th>
             <th class="text-center">Action</th>
         </tr>
         </thead>
@@ -25,12 +26,13 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.SubSubSubAccountCode</td>
+                <td>@(item.SubSubSubAccountCode?? "N/A")</td>
                 <td>@item.ClientName</td>
                 <td>@item.CommercialName</td>
-                <td>@item.Address</td>
-                <td>@item.Phone</td>
+                <td>@(item.Address?? "N/A")</td>
+                <td>@(item.Phone?? "N/A")</td>
                 <td>@(item.Email?? "N/A")</td>
+                <td>@(item.Branch.BranchName?? "N/A")</td>
                 <td class="text-center">
                     @Html.ActionLink(" Edit", "Edit","Client", new { id = item.ClientId },new {@class="fa fa-edit"}) |
                     @Html.ActionLink(" Details", "Details", "Client", new {id = item.ClientId}, new {@class = "fa fa-eye"})
@@ -47,6 +49,7 @@
             <th>Address</th>
             <th>Phone</th>
             <th>Email</th>
+            <th>Branch</th>
             <th class="text-center">Action</th>
         </tr>
         </tfoot>

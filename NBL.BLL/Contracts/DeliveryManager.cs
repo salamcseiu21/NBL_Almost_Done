@@ -4,6 +4,7 @@ using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Orders;
 
 namespace NBL.BLL.Contracts
 {
@@ -85,6 +86,11 @@ namespace NBL.BLL.Contracts
                 ViewClient = client
             };
             return chalan;
+        }
+
+        public ICollection<DeliveredRefModel> GetDeliveryRefByClientId(int clientId)
+        {
+            return _iDeliveryGateway.GetDeliveryRefByClientId(clientId);
         }
     }
 }
