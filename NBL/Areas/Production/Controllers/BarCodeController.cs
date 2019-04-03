@@ -16,8 +16,6 @@ namespace NBL.Areas.Production.Controllers
     public class BarCodeController : Controller
     {
 
-
-
         private readonly ICommonManager _iCommonManager;
         private readonly IProductManager _iProductManager;
         private readonly IBarCodeManager _iBarCodeManager;
@@ -38,7 +36,6 @@ namespace NBL.Areas.Production.Controllers
             var productionLines = _iCommonManager.GetAllProductionLines().ToList();
             ViewBag.ProductionDateCodeId = new SelectList(productionDateCodes, "ProductionDateCodeId", "Code", productionDateCodes.First().ProductionDateCodeId);
             ViewBag.ProductionLineId = new SelectList(productionLines, "ProductionLineId", "LineNumber");
-          
             return View();
         }
 
@@ -50,11 +47,8 @@ namespace NBL.Areas.Production.Controllers
             var productionDateCodes = _iCommonManager.GetProductionDateCodeByMonthYear(monthYear).ToList();
             var productionLines = _iCommonManager.GetAllProductionLines().ToList();
 
-            string barCodePrefix = model.ProductId.ToString("D3") +
-                                   productionDateCodes.First()
-                                       .Code + DateTime.Now.Day.ToString("D2") + productionLines.Find(n => n.ProductionLineId == model.ProductionLineId).LineNumber;
-            string infix = productionDateCodes.First()
-                               .Code + DateTime.Now.Day.ToString("D2");
+            string barCodePrefix = productionLines.Find(n => n.ProductionLineId == model.ProductionLineId).LineNumber+model.ProductId.ToString("D3") + DateTime.Now.Day.ToString("D2") +productionDateCodes.First().Code;
+            string infix = DateTime.Now.Day.ToString("D2")+productionDateCodes.First().Code;
 
             var maxSl = _iBarCodeManager.GetMaxBarCodeSlByInfix(infix);
             var user = (ViewUser)Session["user"];
@@ -92,8 +86,7 @@ namespace NBL.Areas.Production.Controllers
             var monthYear = DateTime.Now.Month.ToString("D2") +
                             Convert.ToInt32(DateTime.Now.Year.ToString().Substring(2, 2)).ToString("D2");
             var productionDateCodes = _iCommonManager.GetProductionDateCodeByMonthYear(monthYear).ToList();
-            string infix = productionDateCodes.First()
-                               .Code + DateTime.Now.Day.ToString("D2");
+            string infix = DateTime.Now.Day.ToString("D2")+productionDateCodes.First().Code ;
             List<BarCodeModel> models = _iBarCodeManager.GetAllBarCodeByInfix(infix).ToList();
 
             ViewBag.ProductionLineId = new SelectList(productionLines, "ProductionLineId", "LineNumber");
@@ -137,8 +130,8 @@ namespace NBL.Areas.Production.Controllers
                     Format = BarcodeFormat.CODE_128,
                     Options =
                     {
-                        Height = 80,
-                        Width = 280,
+                        Height = 130,
+                        Width = 185,
                         PureBarcode = false,
                         Margin = 1
                     }

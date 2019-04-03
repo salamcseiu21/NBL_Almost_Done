@@ -17,7 +17,7 @@ using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
 using Unity.Mvc5;
-using DeliveryManager = NBL.BLL.Contracts.DeliveryManager;
+using DeliveryManager = NBL.BLL.DeliveryManager;
 using NBL.Areas.Sales.BLL.Contracts;
 using NBL.Areas.Sales.DAL.Contracts;
 using NBL.Areas.Sales.DAL;

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using NBL.Models.ViewModels.Deliveries;
+using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Returns;
 
 namespace NBL.Areas.Sales.Controllers
@@ -19,11 +18,13 @@ namespace NBL.Areas.Sales.Controllers
 
         public ActionResult Entry()
         {
+            ViewBag.DeliveryId = new SelectList(new List<ViewDeliveredOrderModel>(), "DeliveryId", "DeliveryRef");
             return View();
         }
         [HttpPost]
         public ActionResult Entry(ViewEntryReturnModel model) 
         {
+            ViewBag.DeliveryId = new SelectList(new List<ViewDeliveredOrderModel>(), "DeliveryId", "DeliveryRef");
             return View();
         }
     }

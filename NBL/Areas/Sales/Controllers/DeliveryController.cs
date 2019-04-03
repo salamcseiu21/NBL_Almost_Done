@@ -291,5 +291,11 @@ namespace NBL.Areas.Sales.Controllers
             var orders = _iDeliveryManager.GetAllDeliveredOrdersByBranchCompanyAndUserId(branchId,companyId,user.UserId).ToList();
             return View(orders);
         }
+
+        public ActionResult DeliveryDetailsByDeliveryId(long deliveryId)
+        {
+            ViewDeliveredOrderModel model = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(deliveryId);
+            return View();
+        }
     }
 }

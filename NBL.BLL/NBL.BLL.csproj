@@ -82,7 +82,7 @@
     <Compile Include="ClientManager.cs" />
     <Compile Include="CommonManager.cs" />
     <Compile Include="CompanyManager.cs" />
-    <Compile Include="Contracts\DeliveryManager.cs" />
+    <Compile Include="DeliveryManager.cs" />
     <Compile Include="Contracts\IBarCodeManager.cs" />
     <Compile Include="Contracts\IBranchManager.cs" />
     <Compile Include="Contracts\IClientManager.cs" />

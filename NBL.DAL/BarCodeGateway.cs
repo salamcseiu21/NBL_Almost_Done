@@ -18,14 +18,14 @@ namespace NBL.DAL
             throw new NotImplementedException();
         }
 
-        public int GetMaxBarCodeSlByInfix(string prefix) 
+        public int GetMaxBarCodeSlByInfix(string infix) 
         {
             try
             {
                 int maxSl = 0;
-                CommandObj.CommandText = "UDSP_GetMaxBarCodeSLByPrefix";
+                CommandObj.CommandText = "UDSP_GetMaxBarCodeSLByInfix";
                 CommandObj.CommandType = CommandType.StoredProcedure;
-                CommandObj.Parameters.AddWithValue("@Prefix", prefix);
+                CommandObj.Parameters.AddWithValue("@Infix", infix);
                 ConnectionObj.Open();
                 SqlDataReader reader= CommandObj.ExecuteReader();
                 if (reader.Read())

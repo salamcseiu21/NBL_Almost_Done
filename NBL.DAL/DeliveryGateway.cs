@@ -7,6 +7,7 @@ using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.EntityModels.Transports;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
 
 namespace NBL.DAL
@@ -435,11 +436,116 @@ namespace NBL.DAL
             }
         }
 
-        public ICollection<DeliveredRefModel> GetDeliveryRefByClientId(int clientId)
+        public ICollection<ViewDeliveredOrderModel> GetDeliveredOrderByClientId(int clientId)
         {
             try
             {
-                return null;
+                CommandObj.CommandText = "UDSP_GetDeliveryInfoByClientId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ClientId", clientId);
+                List<ViewDeliveredOrderModel> refModels=new List<ViewDeliveredOrderModel>();
+                ConnectionObj.Open();
+
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    refModels.Add(new ViewDeliveredOrderModel
+                    {
+                        DeliveryId = Convert.ToInt64(reader["DeliveryId"]),
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        InvoiceRef = reader["InvoiceRef"].ToString(),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        InvoiceId = Convert.ToInt64(reader["InvoiceId"]),
+                        DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
+                        DeliveredDateTime = Convert.ToDateTime(reader["DeliveredDateTime"]),
+                        DistributorName = reader["DistributorName"].ToString(),
+                        DeliveredQty = Convert.ToInt32(reader["DeliveredQuantity"]),
+                        DeliveryStatus = Convert.ToInt32(reader["DeliveryStatus"]),
+                        DriverName = reader["DriverName"].ToString(),
+                        DriverPhone = reader["DriverPhone"].ToString(),
+                        ApproveByNsmDateTime = Convert.ToDateTime(reader["ApprovedByNsmDateTime"]),
+                        NsmUserId = Convert.ToInt32(reader["NsmUserId"]),
+                        NsmName = reader["NsmName"].ToString(),
+                        SalesAdminName = reader["SalesAdminName"].ToString(),
+                        ApproveBySalesAdminDateTime = Convert.ToDateTime(reader["ApprovedByAdminDateTime"]),
+                        SalesAdminUserId = Convert.ToInt32(reader["AdminUserId"]),
+                        OrderByUserId = Convert.ToInt32(reader["OrderByUserId"]),
+                        SalesPersonName = reader["SalesPersonName"].ToString(),
+                        OrderDateTime = Convert.ToDateTime(reader["OrderDateTime"]),
+                        OrderId = Convert.ToInt64(reader["OrderId"]),
+                        Amounts = Convert.ToDecimal(reader["Amounts"]),
+                        ClientName = reader["ClientName"].ToString(),
+                        ClientCode = DBNull.Value.Equals(reader["ClientCode"])?null:reader["ClientCode"].ToString(),
+                        ClientId = clientId
+                    });
+                }
+                reader.Close();
+                return refModels;
+
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Could not Collect Delivery ref due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Collect Delivery ref", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ViewDeliveredOrderModel GetDeliveryDetailsInfoByDeliveryId(long deliveryId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetDeliveryInfoByClientId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DeliveryId", deliveryId);
+                ViewDeliveredOrderModel model =null;
+
+                ConnectionObj.Open();
+
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    model=new ViewDeliveredOrderModel
+                    {
+                        DeliveryId = Convert.ToInt64(reader["DeliveryId"]),
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        InvoiceRef = reader["InvoiceRef"].ToString(),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        InvoiceId = Convert.ToInt64(reader["InvoiceId"]),
+                        DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
+                        DeliveredDateTime = Convert.ToDateTime(reader["DeliveredDateTime"]),
+                        DistributorName = reader["DistributorName"].ToString(),
+                        DeliveredQty = Convert.ToInt32(reader["DeliveredQuantity"]),
+                        DeliveryStatus = Convert.ToInt32(reader["DeliveryStatus"]),
+                        DriverName = reader["DriverName"].ToString(),
+                        DriverPhone = reader["DriverPhone"].ToString(),
+                        ApproveByNsmDateTime = Convert.ToDateTime(reader["ApprovedByNsmDateTime"]),
+                        NsmUserId = Convert.ToInt32(reader["NsmUserId"]),
+                        NsmName = reader["NsmName"].ToString(),
+                        SalesAdminName = reader["SalesAdminName"].ToString(),
+                        ApproveBySalesAdminDateTime = Convert.ToDateTime(reader["ApprovedByAdminDateTime"]),
+                        SalesAdminUserId = Convert.ToInt32(reader["AdminUserId"]),
+                        OrderByUserId = Convert.ToInt32(reader["OrderByUserId"]),
+                        SalesPersonName = reader["SalesPersonName"].ToString(),
+                        OrderDateTime = Convert.ToDateTime(reader["OrderDateTime"]),
+                        OrderId = Convert.ToInt64(reader["OrderId"]),
+                        Amounts = Convert.ToDecimal(reader["Amounts"]),
+                        ClientName = reader["ClientName"].ToString(),
+                        ClientCode = DBNull.Value.Equals(reader["ClientCode"]) ? null : reader["ClientCode"].ToString(),
+                        ClientId = Convert.ToInt32(reader["ClientId"])
+                    };
+                }
+                reader.Close();
+                return model;
+
             }
             catch (SqlException exception)
             {

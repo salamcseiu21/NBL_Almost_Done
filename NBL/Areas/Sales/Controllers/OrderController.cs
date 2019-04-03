@@ -625,9 +625,9 @@ namespace NBL.Areas.Sales.Controllers
             return Codes;
         }
         //-------------------Working here(2nd appril)--------------
-        public JsonResult GetDeliveryRefByClientId(int clientId)
+        public JsonResult GetDeliveredOrderByClientId(int clientId)
         {
-            var deliveriedOrders= _iDeliveryManager.GetDeliveryRefByClientId(clientId).ToList(); 
+            var deliveriedOrders= _iDeliveryManager.GetDeliveredOrderByClientId(clientId).ToList(); 
             return Json(deliveriedOrders,JsonRequestBehavior.AllowGet);
         }
     }

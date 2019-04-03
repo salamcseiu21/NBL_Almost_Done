@@ -20,6 +20,14 @@
                             @Html.ValidationMessageFor(model => model.ClientName, "", new {@class = "text-danger"})
                         </div>
                     </div>
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DeliveryId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.DeliveryId, null, "--Select--", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.DeliveryId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
                     <div class="form-group">
 
@@ -70,17 +78,23 @@
                     });
                 },
                 select: function (e, i) {
+                    $("#DeliveryId").empty();
+                    $("#DeliveryId").append('<option value="">--Select--</option>');
                     $("#ClientId").val(i.item.val);
                     var json = { clientId: i.item.val };
 
                     $.ajax({
 
                         type: "POST",
-                        url: RootUrl + 'sales/Order/GetDeliveryRefByClientId/',
+                        url: RootUrl + 'sales/Order/GetDeliveredOrderByClientId/',
                         contentType: "application/json; charset=utf-8",
                         data: JSON.stringify(json),
                         success: function (data) {
+                            $.each(data, function (key, value) {
+                                //alert(key);
+                                $("#DeliveryId").append('<option value=' + value.DeliveryId + '>' + value.DeliveryRef + '</option>');
 
+                            });
                         }
                     });
                 },

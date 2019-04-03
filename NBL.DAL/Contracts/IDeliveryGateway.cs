@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
 
 namespace NBL.DAL.Contracts
@@ -24,6 +21,7 @@ namespace NBL.DAL.Contracts
 
         IEnumerable<Delivery> GetAllDeliveredOrdersByInvoiceRef(string invoiceRef);
         IEnumerable<ViewProduct> GetDeliveredProductsByDeliveryIdAndProductId(long deliveryId, int productId);
-        ICollection<DeliveredRefModel> GetDeliveryRefByClientId(int clientId);  
+        ICollection<ViewDeliveredOrderModel> GetDeliveredOrderByClientId(int clientId);
+        ViewDeliveredOrderModel GetDeliveryDetailsInfoByDeliveryId(long deliveryId);
     }
 }
