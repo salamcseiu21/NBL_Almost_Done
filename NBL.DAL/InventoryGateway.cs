@@ -734,7 +734,7 @@ namespace NBL.DAL
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.Clear();
                 CommandObj.Parameters.AddWithValue("@ProductBarcode", item.ProductCode);
-                CommandObj.Parameters.AddWithValue("@ProductId", Convert.ToInt32(item.ProductCode.Substring(0,3)));
+                CommandObj.Parameters.AddWithValue("@ProductId", Convert.ToInt32(item.ProductCode.Substring(2,3)));
                 CommandObj.Parameters.AddWithValue("@InventoryId", inventoryId);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
@@ -867,7 +867,7 @@ namespace NBL.DAL
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.Clear();
                 CommandObj.Parameters.AddWithValue("@InventoryId", inventoryId);
-                CommandObj.Parameters.AddWithValue("@ProductId", Convert.ToInt32(item.ProductCode.Substring(0,3)));
+                CommandObj.Parameters.AddWithValue("@ProductId", Convert.ToInt32(item.ProductCode.Substring(2,3)));
                 CommandObj.Parameters.AddWithValue("@ProductBarcode", item.ProductCode);
                 CommandObj.Parameters.AddWithValue("@Status", 1);
                 CommandObj.Parameters.AddWithValue("@DeliveryId", deliveryId);

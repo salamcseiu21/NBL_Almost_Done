@@ -39,6 +39,6 @@ namespace NBL.BLL.Contracts
         ViewChalanModel GetChalanByDeliveryId(int deliveryId);
 
        ICollection<ViewDeliveredOrderModel> GetDeliveredOrderByClientId(int clientId);
-       ViewDeliveredOrderModel GetDeliveryDetailsInfoByDeliveryId(long deliveryId);
+       ICollection<ViewDeliveredOrderModel> GetDeliveryDetailsInfoByDeliveryId(long deliveryId);
    }
 }

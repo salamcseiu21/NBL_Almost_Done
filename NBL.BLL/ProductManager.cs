@@ -166,7 +166,7 @@ namespace NBL.BLL
             bool isValid = Validator.ValidateProductBarCode(productCode);
             if(isValid)
             {
-                var productId = Convert.ToInt32(productCode.Substring(0, 3));
+                var productId = Convert.ToInt32(productCode.Substring(2, 3));
                 product =GetProductByProductId(productId);
                 var barcodeList = ScannedProducts(filePath);
                 isScannedBefore=IsScannedBefore(barcodeList, productCode);

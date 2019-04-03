@@ -22,6 +22,6 @@ namespace NBL.DAL.Contracts
         IEnumerable<Delivery> GetAllDeliveredOrdersByInvoiceRef(string invoiceRef);
         IEnumerable<ViewProduct> GetDeliveredProductsByDeliveryIdAndProductId(long deliveryId, int productId);
         ICollection<ViewDeliveredOrderModel> GetDeliveredOrderByClientId(int clientId);
-        ViewDeliveredOrderModel GetDeliveryDetailsInfoByDeliveryId(long deliveryId);
+        ICollection<ViewDeliveredOrderModel> GetDeliveryDetailsInfoByDeliveryId(long deliveryId);
     }
 }

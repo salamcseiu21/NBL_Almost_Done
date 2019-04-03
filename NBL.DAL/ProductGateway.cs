@@ -844,7 +844,7 @@ namespace NBL.DAL
                     string line;
                     while ((line = sr.ReadLine()) != null)
                     {
-                      var product= GetProductByProductId(Convert.ToInt32(line.Substring(0, 3)));
+                      var product= GetProductByProductId(Convert.ToInt32(line.Substring(2, 3)));
                         
                         barCodes.Add(
                             new ScannedProduct
@@ -853,7 +853,7 @@ namespace NBL.DAL
                                 ProductName = product.ProductName,
                                 CategoryId = product.CategoryId,
                                 CategoryName = product.ProductCategory.ProductCategoryName,
-                                ProductId = Convert.ToInt32(line.Substring(0, 3))
+                                ProductId = Convert.ToInt32(line.Substring(2, 3))
 
                             });
                     }

@@ -94,7 +94,7 @@ namespace NBL.BLL
             return _iDeliveryGateway.GetDeliveredOrderByClientId(clientId);
         }
 
-        public ViewDeliveredOrderModel GetDeliveryDetailsInfoByDeliveryId(long deliveryId)
+        public ICollection<ViewDeliveredOrderModel> GetDeliveryDetailsInfoByDeliveryId(long deliveryId)
         {
             return _iDeliveryGateway.GetDeliveryDetailsInfoByDeliveryId(deliveryId);
         }

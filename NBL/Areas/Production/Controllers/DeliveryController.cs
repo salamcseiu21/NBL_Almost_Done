@@ -68,7 +68,7 @@ namespace NBL.Areas.Production.Controllers
                
                 var products = (List<ViewFactoryStockModel>) Session["Factory_Stock"];
                 string scannedBarCode = barcode.ToUpper();
-                int productId = Convert.ToInt32(scannedBarCode.Substring(0, 3));
+                int productId = Convert.ToInt32(scannedBarCode.Substring(2, 3));
                 string fileName = "Deliverable_Product_For_" + tripId;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 var barcodeList = _iProductManager.ScannedProducts(filePath);
@@ -92,7 +92,7 @@ namespace NBL.Areas.Production.Controllers
 
                 bool isContains = issuedProducts.Select(n => n.ProductId).Contains(productId);
                 int reqQty = issuedProducts.ToList().FindAll(n => n.ProductId == productId).Sum(n => n.Quantity);
-                int scannedQty = barcodeList.FindAll(n => Convert.ToInt32(n.ProductCode.Substring(0, 3)) == productId).Count;
+                int scannedQty = barcodeList.FindAll(n => Convert.ToInt32(n.ProductCode.Substring(2, 3)) == productId).Count;
                 bool isScannComplete =reqQty.Equals(scannedQty);
                 bool isComplete = issuedProducts.Sum(n => n.Quantity).Equals(barcodeList.Count);
 

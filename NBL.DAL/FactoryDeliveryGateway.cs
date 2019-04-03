@@ -67,7 +67,7 @@ namespace NBL.DAL
                 CommandObj.CommandText = "UDSP_SaveDispatchInformationDetails";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.Clear();
-                CommandObj.Parameters.AddWithValue("@ProductId", Convert.ToInt32(item.ProductCode.Substring(0,3)));
+                CommandObj.Parameters.AddWithValue("@ProductId", Convert.ToInt32(item.ProductCode.Substring(2,3)));
                 CommandObj.Parameters.AddWithValue("@DispatchId", dispatchId);
                 CommandObj.Parameters.AddWithValue("@ProductBarCode", item.ProductCode);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);

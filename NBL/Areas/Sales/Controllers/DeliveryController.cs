@@ -137,7 +137,7 @@ namespace NBL.Areas.Sales.Controllers
                 var id = invoiceId;
                 var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(id);
                 string scannedBarCode = barcode.ToUpper();
-                int productId = Convert.ToInt32(scannedBarCode.Substring(0, 3));
+                int productId = Convert.ToInt32(scannedBarCode.Substring(2, 3));
                 string fileName = "Ordered_Product_List_For_" + id;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 var barcodeList = _iProductManager.ScannedProducts(filePath);
@@ -291,11 +291,7 @@ namespace NBL.Areas.Sales.Controllers
             var orders = _iDeliveryManager.GetAllDeliveredOrdersByBranchCompanyAndUserId(branchId,companyId,user.UserId).ToList();
             return View(orders);
         }
-
-        public ActionResult DeliveryDetailsByDeliveryId(long deliveryId)
-        {
-            ViewDeliveredOrderModel model = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(deliveryId);
-            return View();
-        }
+       
+       
     }
 }

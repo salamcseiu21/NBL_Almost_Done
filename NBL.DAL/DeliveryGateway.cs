@@ -476,7 +476,8 @@ namespace NBL.DAL
                         Amounts = Convert.ToDecimal(reader["Amounts"]),
                         ClientName = reader["ClientName"].ToString(),
                         ClientCode = DBNull.Value.Equals(reader["ClientCode"])?null:reader["ClientCode"].ToString(),
-                        ClientId = clientId
+                        ClientId = clientId,
+                        TransportationCost = Convert.ToDecimal(reader["TransportationCost"])
                     });
                 }
                 reader.Close();
@@ -499,21 +500,20 @@ namespace NBL.DAL
             }
         }
 
-        public ViewDeliveredOrderModel GetDeliveryDetailsInfoByDeliveryId(long deliveryId)
+        public ICollection<ViewDeliveredOrderModel> GetDeliveryDetailsInfoByDeliveryId(long deliveryId)
         {
             try
             {
-                CommandObj.CommandText = "UDSP_GetDeliveryInfoByClientId";
+                CommandObj.CommandText = "UDSP_GetDeliveryDetailsInfoByDeliveryId";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@DeliveryId", deliveryId);
-                ViewDeliveredOrderModel model =null;
-
+                List<ViewDeliveredOrderModel> models = new List<ViewDeliveredOrderModel>();
                 ConnectionObj.Open();
 
                 SqlDataReader reader = CommandObj.ExecuteReader();
-                if (reader.Read())
+                while (reader.Read())
                 {
-                    model=new ViewDeliveredOrderModel
+                    models.Add(new ViewDeliveredOrderModel
                     {
                         DeliveryId = Convert.ToInt64(reader["DeliveryId"]),
                         DeliveryRef = reader["DeliveryRef"].ToString(),
@@ -540,20 +540,23 @@ namespace NBL.DAL
                         Amounts = Convert.ToDecimal(reader["Amounts"]),
                         ClientName = reader["ClientName"].ToString(),
                         ClientCode = DBNull.Value.Equals(reader["ClientCode"]) ? null : reader["ClientCode"].ToString(),
-                        ClientId = Convert.ToInt32(reader["ClientId"])
-                    };
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        TransportationCost = Convert.ToDecimal(reader["TransportationCost"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString()
+                    });
                 }
                 reader.Close();
-                return model;
+                return models;
 
             }
             catch (SqlException exception)
             {
-                throw new Exception("Could not Collect Delivery ref due to Db Exception", exception);
+                throw new Exception("Could not Collect Delivery details due to Db Exception", exception);
             }
             catch (Exception exception)
             {
-                throw new Exception("Could not Collect Delivery ref", exception);
+                throw new Exception("Could not Collect Delivery details", exception);
             }
             finally
             {

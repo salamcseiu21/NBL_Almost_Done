@@ -35,6 +35,9 @@ namespace NBL.Models.ViewModels.Deliveries
         public DateTime ApproveBySalesAdminDateTime { get; set; }
         public int DeliveredByUserId { get; set; }
         public string DistributorName { get; set; } 
-        public DateTime DeliveredDateTime { get; set; } 
+        public DateTime DeliveredDateTime { get; set; }
+        public int ProductId { get; set; }
+        public string ProductName { get; set; }
+        public int Quantity { get; set; }   
     }
 }

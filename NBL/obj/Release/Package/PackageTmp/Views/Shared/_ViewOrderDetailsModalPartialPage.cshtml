@@ -12,7 +12,7 @@
         <div class="col-md-7">
 
             <section>
-                <img src="~/@aClient.ClientImage" height="100" width="80" style="float:left;margin-right:20px" title="@aClient.ClientName" />
+                <img src="~/@(aClient.ClientImage?? "Images/User.jpg")" height="100" width="80" style="float:left;margin-right:20px" title="@aClient.ClientName" />
                 <span>
                     @Html.Raw(aClient.GetMailingAddress())
                 </span>

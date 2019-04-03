@@ -9,7 +9,7 @@ namespace NBL.Models.Validators
         {
 
             
-            if(IsFirstThreeCharDigit(barCode) && barCode.Length==13)
+            if(IsValiedProductId(barCode) && barCode.Length==13)
             {
                 return true;
             }
@@ -25,10 +25,10 @@ namespace NBL.Models.Validators
             return false;
         }
 
-        private static bool IsFirstThreeCharDigit(string barCode)
+        private static bool IsValiedProductId(string barCode) 
         {
             var charArray = barCode.ToCharArray();
-            if(char.IsDigit(charArray[0]) && char.IsDigit(charArray[1]) && char.IsDigit(charArray[2]))
+            if(char.IsDigit(charArray[2]) && char.IsDigit(charArray[3]) && char.IsDigit(charArray[4]))
             {
                 return true;
             }
