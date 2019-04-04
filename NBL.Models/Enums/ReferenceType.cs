@@ -17,6 +17,7 @@ namespace NBL.Models.Enums
         JournalVoucher=12,
         Requisition=13,
         Trip=14,
-        MonthlyRequisition=15
+        MonthlyRequisition=15,
+        SalesReturn=16
     }
 }

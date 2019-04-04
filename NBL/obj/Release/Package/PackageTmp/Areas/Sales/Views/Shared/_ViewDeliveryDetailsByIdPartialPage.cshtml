@@ -1,20 +1,118 @@
 ﻿@model IEnumerable<NBL.Models.ViewModels.Deliveries.ViewDeliveredOrderModel>
 <section class="content">
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>Product Name</th>
-            <th>Quantity</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model)
-        {
+    
+    @using (Html.BeginForm("AddReturnProductToXmalFile","Return",FormMethod.Post))
+    {
+        <table class="table table-bordered">
+            <thead>
             <tr>
-                <td>@item.ProductName</td>
-                <td>@item.Quantity</td>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Return Quantity</th>
             </tr>
-        }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.Quantity</td>
+                    <td>
+                        <input type="number" id="@(item.DeliveryRef+"_"+item.ProductId.ToString("D3")+"_"+item.DeliveryId)" placeholder="Enter the return quantity.." min="0" name="@(item.DeliveryRef+"_"+item.ProductId.ToString("D3")+"_"+item.DeliveryId)" max="@item.Quantity" class="form-control" onkeyup="ValidateMaxQuantity(this)"/>
+                    </td>
+                </tr>
+                    
+            }
+            <tr>
+                <td colspan="2"></td>
+                <td class="text-right">
+                    <div class="btn toolbar">
+                        <input type="button" value="Save" class="btn btn-primary" onclick="AddReturnProductToXmalFile(this)" />
+
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    }
+    
+    
+    <div id="dialog" title="Warning">
+        <p>Quantity must be less than or equal delivered qty.</p>
+    </div>
+
 </section>
+
+<script>
+    function AddReturnProductToXmalFile(event) {
+        var $form = $(event).parents('form');
+        $.ajax({
+            type: "POST",
+            url: RootUrl + 'sales/return/AddReturnProductToXmalFile',
+            data: $form.serialize(),
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+            success: function (response) {
+                var result = response.Message;
+                //alert("Saved Successfully");
+                $('#message').html(response).fadeIn('slow');
+                $('#message').html(result).fadeIn('slow'); //also show a success message
+                $('#message').delay(700).fadeOut('slow');
+                loadTempReturnProducts();
+                $('#Deliverydetails').html('');
+               
+            }
+        });
+    }
+</script>
+<script>
+
+    $('.input-selector').on('keypress',
+        function(e) {
+            return e.metaKey || // cmd/ctrl
+                e.which <= 0 || // arrow keys
+                e.which === 8 || // delete key
+                /[0-9]/.test(String.fromCharCode(e.which)); // numbers
+        });
+
+    function ValidateMaxQuantity(event) {
+        var id = event.id;
+        var deliverqty = $("#" + id).val();
+        if (deliverqty === '') {
+            deliverqty = 0;
+        } else {
+            deliverqty = parseInt($("#" + id).val(),10);
+        }
+        //alert(deliverqty);
+        var quantity = parseInt($("#" + id).attr("max"), 10);
+        if (deliverqty > quantity || deliverqty<0) {
+            ShowWarningDialog();
+            $("#" + id).val('0');
+        }
+
+    }
+
+    function  ShowWarningDialog(){
+        $("#dialog").dialog("open").parent().addClass("ui-state-error");
+    }
+</script>
+
+
+<script>
+    $( function() {
+        $( "#dialog" ).dialog({
+            autoOpen: false,
+            show: {
+                effect: "blind"
+               
+            },
+            hide: {
+                effect: "explode"
+               
+            }
+        });
+ 
+        
+    } );
+</script>

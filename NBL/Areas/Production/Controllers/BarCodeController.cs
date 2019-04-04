@@ -130,10 +130,9 @@ namespace NBL.Areas.Production.Controllers
                     Format = BarcodeFormat.CODE_128,
                     Options =
                     {
-                        Height = 130,
-                        Width = 185,
-                        PureBarcode = false,
-                        Margin = 1
+                        Height = 100,
+                        Width = 173,
+                        PureBarcode = false
                     }
                 };
                  img = writer.Write(barcode);

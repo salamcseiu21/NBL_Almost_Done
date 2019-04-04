@@ -463,6 +463,8 @@
     <Content Include="Areas\Sales\Scripts\ReceiveProduct\loadAllReceivableProducts.js" />
     <Content Include="Areas\Sales\Scripts\ReceiveProduct\receiveProduct.js" />
     <Content Include="Areas\Sales\Scripts\removeProduct.js" />
+    <Content Include="Areas\Sales\Scripts\RetunProducts\deleteProductFromTempReturn.js" />
+    <Content Include="Areas\Sales\Scripts\RetunProducts\returnProduct.js" />
     <Content Include="Areas\Sales\Scripts\updateOrder.js" />
     <Content Include="Areas\SuperAdmin\Reports\ViewReport.aspx" />
     <Content Include="Assets\.gitignore" />
@@ -7951,6 +7953,9 @@
     <Content Include="Areas\Sales\Views\Replace\Entry.cshtml" />
     <Content Include="Areas\Sales\Views\Return\Entry.cshtml" />
     <Content Include="Areas\Sales\Views\Shared\_ViewDeliveryDetailsByIdPartialPage.cshtml" />
+    <Content Include="Areas\Sales\Views\Shared\_ViewTempReturnProducts.cshtml" />
+    <Content Include="Areas\Sales\Views\Return\ConfirmReturnEntry.cshtml" />
+    <Content Include="Areas\Sales\Views\Return\ViewAll.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8095,6 +8100,7 @@
     <Folder Include="Areas\Purchases\Models\" />
     <Folder Include="Areas\Purchases\Views\Shared\" />
     <Folder Include="Areas\ResearchAndDevelopment\Models\" />
+    <Folder Include="Areas\Sales\Files\Returns\" />
     <Folder Include="Areas\Sales\Models\" />
     <Folder Include="Areas\SCM\Models\" />
     <Folder Include="Areas\SCM\Views\Shared\" />

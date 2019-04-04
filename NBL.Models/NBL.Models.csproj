@@ -111,6 +111,8 @@
     <Compile Include="EntityModels\Departments\Department.cs" />
     <Compile Include="EntityModels\Designations\Designation.cs" />
     <Compile Include="EntityModels\Orders\RetailSale.cs" />
+    <Compile Include="EntityModels\Returns\ReturnModel.cs" />
+    <Compile Include="EntityModels\Returns\ReturnProduct.cs" />
     <Compile Include="EntityModels\TransferProducts\Trip.cs" />
     <Compile Include="EntityModels\TransferProducts\TripDetails.cs" />
     <Compile Include="EntityModels\VatDiscounts\Discount.cs" />
@@ -222,7 +224,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="EntityModels\Returns\" />
     <Folder Include="ViewModels\Regions\" />
     <Folder Include="ViewModels\Vouchers\" />
   </ItemGroup>

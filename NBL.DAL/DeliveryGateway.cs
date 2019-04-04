@@ -543,7 +543,8 @@ namespace NBL.DAL
                         ClientId = Convert.ToInt32(reader["ClientId"]),
                         TransportationCost = Convert.ToDecimal(reader["TransportationCost"]),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
-                        ProductName = reader["ProductName"].ToString()
+                        ProductName = reader["ProductName"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"])
                     });
                 }
                 reader.Close();

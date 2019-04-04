@@ -4,17 +4,22 @@
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
 }
 
+
 <section class="content">
-    <h3 class="text-center text-green">Return Entry</h3>
+    
     <div class="row">
-        <div class="col-md-10">
+        
+        <div class="col-md-6 col-md-offset-3" style="border: 1px solid">
+            
+            <h3 class="text-center  text-green">Return Entry</h3>
+            <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
+            </div>
             @using (Html.BeginForm())
             {
                 <div class="form-horizontal">
-                   
                     <div class="form-group">
-                        @Html.LabelFor(model => model.ClientName, new {@class = "control-label col-md-3"})
-                        <div class="col-md-9">
+                        @Html.LabelFor(model => model.ClientName, new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
                             @Html.EditorFor(model => model.ClientName, new {htmlAttributes = new {@class = "form-control", placeholder = "Client Name" } })
                             <input type="hidden" name="ClientId" id="ClientId"/>
                             @Html.ValidationMessageFor(model => model.ClientName, "", new {@class = "text-danger"})
@@ -22,106 +27,37 @@
                     </div>
                     
                     <div class="form-group">
-                        @Html.LabelFor(model => model.DeliveryId, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
+                        @Html.LabelFor(model => model.DeliveryId, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
                             @Html.DropDownListFor(model => model.DeliveryId, null, "--Select--", new { @class = "form-control" ,onchange="ShowDeliveryDetails(this)"})
                             @Html.ValidationMessageFor(model => model.DeliveryId, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
+                    
                     <div class="form-group">
 
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-9 text-right">
-                                <div class="btn toolbar">
-                                    <input type="button" value="Cancel" class="btn btn-danger" onclick="ClearInputFields()"/>
-                                    <input type="submit" value="Save" class="btn btn-primary"/>
-
-                                </div>
+                        <div class="col-md-8 col-md-offset-2">
+                            <div class="btn-toolbar">
+                                <input type="button" value="Confirm" id="confirmButton" class="btn btn-info" onclick="ConfirmToReturn(this)" disabled="disabled"/>
+                                <button type="button" class="btn btn-danger" onclick="RemoveAll()">Remove All</button>
+                                <button type="button" class="btn btn-success" onclick="ClearFields()">Clear</button>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
+
             }
+            <div id="Deliverydetails"></div>
         </div>
+      
     </div>
-    <div id="Deliverydetails"></div>
+    <div id="TempReturnProducts"></div>
 </section>
+
 
 @section Scripts
 {
-    <script>
-        $(function () {
-            $("#ClientName").autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        url: RootUrl + 'Common/ClientNameAutoComplete/',
-                        data: "{ 'prefix': '" + request.term + "'}",
-                        dataType: "json",
-                        type: "POST",
-                        contentType: "application/json; charset=utf-8",
-                        success: function (data) {
-                            response($.map(data,
-                                function (item) {
-                                    return item;
-                                }));
-                        },
-                        error: function (response) {
-                            alert(response.responseText);
-                        },
-                        failure: function (response) {
-                            alert(response.responseText);
-                        }
-                    });
-                },
-                select: function (e, i) {
-                    $("#DeliveryId").empty();
-                    $("#DeliveryId").append('<option value="">--Select--</option>');
-                    $("#ClientId").val(i.item.val);
-                    var json = { clientId: i.item.val };
-
-                    $.ajax({
-
-                        type: "POST",
-                        url: RootUrl + 'sales/Order/GetDeliveredOrderByClientId/',
-                        contentType: "application/json; charset=utf-8",
-                        data: JSON.stringify(json),
-                        success: function (data) {
-                            $.each(data, function (key, value) {
-                                //alert(key);
-                                $("#DeliveryId").append('<option value=' + value.DeliveryId + '>' + value.DeliveryRef + '</option>');
-
-                            });
-                        }
-                    });
-                },
-                minLength: 1
-            });
-        });
-
-        function ShowDeliveryDetails(event) {
-            var deliveryId = event.value;
-            var json = { deliveryId: deliveryId };
-
-            $.ajax({
-                type: "POST",
-                url: RootUrl + 'sales/return/DeliveryDetailsByDeliveryId',
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(json),
-                success: function (data) {
-                    // var qty = data.Quantity;
-                    // $("#RequisitionQty").val(qty);
-
-                    $('#Deliverydetails').html(data);
-
-                }
-            });
-        }
-        
-</script>
+    
+    <script src="~/Areas/Sales/Scripts/RetunProducts/returnProduct.js"></script>
 
 }

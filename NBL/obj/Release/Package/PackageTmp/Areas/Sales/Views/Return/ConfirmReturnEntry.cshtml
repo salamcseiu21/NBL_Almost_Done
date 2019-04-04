@@ -1,0 +1,57 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Returns.ReturnProduct>
+@{
+    ViewBag.Title = "Confirm Return Entry";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-10">
+            <h3 class="text-center text-green">Confirm Return Entry</h3>
+            @if (ViewBag.Result != null)
+            {
+                <div class="text-center text-danger">@ViewBag.Result</div>
+            }
+            @using (Html.BeginForm())
+            {
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="Remarks" class="control-label col-md-3">Remarks</label>
+                        <div class="col-md-9">
+                            <textarea id="Remarks" name="Remarks" placeholder="Write remarks..." class="form-control" required autofocus style="resize: none" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-9 col-md-offset-3">
+                    
+                            <input type="submit" value="Confirm" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <table id="tbl_return_product_list" class="table table-bordered" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+       @foreach (var item in Model)
+       {
+           <tr>
+               <td>@item.ProductName</td>
+               <td>@item.Quantity</td>
+           </tr>
+       }
+        </tbody>
+    </table>
+</section>
+@section Scripts
+{
+    <script>
+        $("#tbl_return_product_list").DataTable();
+    </script>
+}
