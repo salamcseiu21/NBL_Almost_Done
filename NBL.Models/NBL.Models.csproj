@@ -111,6 +111,7 @@
     <Compile Include="EntityModels\Departments\Department.cs" />
     <Compile Include="EntityModels\Designations\Designation.cs" />
     <Compile Include="EntityModels\Orders\RetailSale.cs" />
+    <Compile Include="EntityModels\Returns\ReturnDetails.cs" />
     <Compile Include="EntityModels\Returns\ReturnModel.cs" />
     <Compile Include="EntityModels\Returns\ReturnProduct.cs" />
     <Compile Include="EntityModels\TransferProducts\Trip.cs" />

@@ -12,5 +12,6 @@ namespace NBL.DAL.Contracts
         int SaveReturnProduct(ReturnModel returnModel);
         long GetMaxSalesReturnNoByYear(int year);
         long GetMaxSalesReturnRefByYear(int year);
+        ICollection<ReturnDetails> GetReturnDetailsBySalesReturnId(long salesReturnId); 
     }
 }

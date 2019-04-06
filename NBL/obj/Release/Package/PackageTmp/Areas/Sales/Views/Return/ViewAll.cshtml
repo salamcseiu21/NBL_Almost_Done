@@ -9,23 +9,32 @@
     <table class="display table-bordered" style="border: 1px solid" id="tbl_Sales_Return_list">
         <thead>
         <tr>
-            <th>Reference</th>
-            <th>Quantity</th>
+            <th class="text-center">Reference</th>
+            <th class="text-center">Quantity</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">View</th>
         </tr>
         </thead>
         <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.ReturnRef</td>
-                <td>@item.TotalQuantity</td>
+                <td class="text-center">@item.ReturnRef</td>
+                <td class="text-center">@item.TotalQuantity</td>
+                <td class="text-center">@item.SystemDateTime.Date.ToString("D")</td>
+                <td class="text-center">
+                   
+                    @Html.ActionLink(" Details", "Details","Return", new { salesReturnId = item.SalesReturnId }, new {@class="fa fa-eye" })
+                </td>
             </tr>
         }
         </tbody>
         <tfoot>
         <tr>
-            <th>Reference</th>
-            <th>Quantity</th>
+            <th class="text-center">Reference</th>
+            <th class="text-center">Quantity</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">View</th>
         </tr>
         </tfoot>
     </table>

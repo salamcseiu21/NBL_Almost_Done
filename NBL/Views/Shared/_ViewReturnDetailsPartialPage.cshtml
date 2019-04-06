@@ -1,0 +1,47 @@
+﻿ <h3 class="text-center text-green"> Return Details</h3>
+<table id="tbl_Return_details" class="display table-bordered" style="border: 1px solid">
+    <thead>
+    <tr>
+        <th colspan="8">
+            @Html.ActionLink(" Back","ViewAll","Return",null,new {@class="fa fa-arrow-left btn btn-info"})
+        </th>
+    </tr>
+    <tr>
+        <th>Product Name</th>
+        <th>Quanity</th>
+        <th>Order Date</th>
+        <th>Nsm Approve</th>
+        <th>Admin Approve</th>
+        <th>Delivery Date</th>
+        <th>Return Date</th>
+        <th>Delivery-to-Return</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ProductName</td>
+            <td>@item.Quantity</td>
+            <td>@item.OrderDateTime.ToString("F")</td>
+            <td>@item.ApproveByNsmDateTime.ToString("F")</td>
+            <td>@item.ApproveBySalesAdminDateTime.ToString("F")</td>
+            <td>@item.DeliveredDateTime.ToString("F")</td>
+            <td>@item.ReturnDateTime.ToString("F")</td>
+            <td>@(Math.Ceiling((item.ReturnDateTime - item.DeliveredDateTime).TotalDays))</td>
+        </tr>
+    }
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>Product Name</th>
+        <th>Quanity</th>
+        <th>Order Date</th>
+        <th>Nsm Approve</th>
+        <th>Admin Approve</th>
+        <th>Delivery Date</th>
+        <th>Return Date</th>
+        <th>Delivery-to-Return</th>
+    </tr>
+    </tfoot>
+</table>

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Returns.ReturnDetails>
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+@Html.Partial("_ViewReturnDetailsPartialPage",Model)
+</section>
+@section Scripts
+{
+    <script>
+        $("#tbl_Return_details").DataTable();
+    </script>
+}

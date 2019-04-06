@@ -7956,6 +7956,7 @@
     <Content Include="Areas\Sales\Views\Shared\_ViewTempReturnProducts.cshtml" />
     <Content Include="Areas\Sales\Views\Return\ConfirmReturnEntry.cshtml" />
     <Content Include="Areas\Sales\Views\Return\ViewAll.cshtml" />
+    <Content Include="Areas\Sales\Views\Return\Details.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8078,6 +8079,7 @@
     <Content Include="Views\Shared\_ModalOrderDeliveryPartialPage.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Shared\_ViewProductLifeCyclePartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewReturnDetailsPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -28,6 +28,7 @@ namespace NBL.BLL
             return rowAffected > 0;
         }
 
+        
         private string GenerateOrderRefNo(long maxsl)
         {
             string refCode = GetReferenceAccountCodeById(Convert.ToInt32(ReferenceType.SalesReturn));
@@ -79,6 +80,10 @@ namespace NBL.BLL
             return _iProductReturnGateway.GetAll();
         }
 
-        
+        public ICollection<ReturnDetails> GetReturnDetailsBySalesReturnId(long salesReturnId)
+        {
+         return   _iProductReturnGateway.GetReturnDetailsBySalesReturnId(salesReturnId);
+        }
+
     }
 }

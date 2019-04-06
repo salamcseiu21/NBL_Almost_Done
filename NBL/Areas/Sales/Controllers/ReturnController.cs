@@ -12,7 +12,7 @@ using NBL.Models.ViewModels.Returns;
 
 namespace NBL.Areas.Sales.Controllers
 {
-    [Authorize(Roles = "User")]
+    [Authorize]
     public class ReturnController : Controller
     {
         private readonly IDeliveryManager _iDeliveryManager;
@@ -30,7 +30,7 @@ namespace NBL.Areas.Sales.Controllers
             return View();
         }
 
-
+        [Authorize(Roles = "User")]
         public ActionResult Entry()
         {
             CreateTempReturnProductXmlFile();
@@ -43,7 +43,7 @@ namespace NBL.Areas.Sales.Controllers
             ViewBag.DeliveryId = new SelectList(new List<ViewDeliveredOrderModel>(), "DeliveryId", "DeliveryRef");
             return View();
         }
-
+        [Authorize(Roles = "User")]
         public ActionResult ConfirmReturnEntry()
         {
             var products= GetProductFromXmalFile(GetTempReturnProductsXmlFilePath());
@@ -74,7 +74,7 @@ namespace NBL.Areas.Sales.Controllers
             ViewBag.Result = "Failed to save";
             return View();
         }
-
+        [Authorize(Roles = "User")]
         public JsonResult AddReturnProductToXmalFile(FormCollection collection)
         {
             SuccessErrorModel model = new SuccessErrorModel();
@@ -126,7 +126,7 @@ namespace NBL.Areas.Sales.Controllers
             }
 
         }
-
+        [Authorize(Roles = "User")]
 
         public PartialViewResult DeliveryDetailsByDeliveryId(long deliveryId)
         {
@@ -135,6 +135,7 @@ namespace NBL.Areas.Sales.Controllers
 
 
         }
+        [Authorize(Roles = "User")]
         //-----------------Delete single product from xml file------------------------
         public JsonResult DeleteProductFromTempReturn(string returnId)
         {
@@ -146,6 +147,7 @@ namespace NBL.Areas.Sales.Controllers
             model.Message = "<p style='color:red;'>Product Removed From lsit!</p>";
             return Json(model, JsonRequestBehavior.AllowGet);
         }
+        [Authorize(Roles = "User")]
         //-------------Delete all added product from xml file---------------
         public void RemoveAll()
         {
@@ -154,6 +156,7 @@ namespace NBL.Areas.Sales.Controllers
             xmlData.Root?.Elements().Remove();
             xmlData.Save(filePath);
         }
+        [Authorize(Roles = "User")]
         private IEnumerable<ReturnProduct> GetProductFromXmalFile(string filePath)
         {
             List<ReturnProduct> products = new List<ReturnProduct>();
@@ -179,6 +182,7 @@ namespace NBL.Areas.Sales.Controllers
             }
             return products;
         }
+        [Authorize(Roles = "User")]
         //--------------Reading product form xml files---------------
         public PartialViewResult GetTempReturnProducts()
         {
@@ -194,6 +198,7 @@ namespace NBL.Areas.Sales.Controllers
             System.IO.File.Create(filePath).Close();
             return PartialView("_ViewTempReturnProducts", new List<ReturnProduct>());
         }
+        [Authorize(Roles = "User")]
         //-----------------Get Temp return file path------------
         private string GetTempReturnProductsXmlFilePath() 
         {
@@ -203,6 +208,7 @@ namespace NBL.Areas.Sales.Controllers
             var filePath = Server.MapPath("~/Areas/Sales/Files/Returns/" + fileName);
             return filePath;
         }
+        [Authorize(Roles = "User")]
         //------------------Create Xml File-------------------
 
         private void CreateTempReturnProductXmlFile()
@@ -219,7 +225,11 @@ namespace NBL.Areas.Sales.Controllers
 
         }
 
-
+        public ActionResult Details(long salesReturnId)
+        {
+            List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList(); 
+            return View(models);
+        }
         public ActionResult ViewAll()
         {
             var products = _iProductReturnManager.GetAll().ToList();

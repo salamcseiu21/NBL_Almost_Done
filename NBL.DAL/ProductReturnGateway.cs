@@ -68,6 +68,8 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@SalesReturnId", masterId);
                 CommandObj.Parameters.AddWithValue("@ProductId", item.ProductId);
                 CommandObj.Parameters.AddWithValue("@Quantity", item.Quantity);
+                CommandObj.Parameters.AddWithValue("@DeliveryId", item.DeliveryId);
+                CommandObj.Parameters.AddWithValue("@DeliveryRef", item.DeliveryRef);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
@@ -134,6 +136,8 @@ namespace NBL.DAL
             }
         }
 
+       
+
         public int Add(ReturnModel model)
         {
             throw new NotImplementedException();
@@ -167,12 +171,14 @@ namespace NBL.DAL
                 {
                     models.Add(new ReturnModel
                     {
+                        SalesReturnId=Convert.ToInt64(reader["SalesReturnId"]),
                         BranchId = Convert.ToInt32(reader["BranchId"]),
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
                         ReturnRef = reader["SalesReturnRef"].ToString(),
                         ReturnNo = Convert.ToInt64(reader["SalesReturnNo"]),
                         TotalQuantity = Convert.ToInt32(reader["TotalQuantity"]),
-                        Remarks = reader["Remarks"].ToString()
+                        Remarks = reader["Remarks"].ToString(),
+                        SystemDateTime = Convert.ToDateTime(reader["SysDateTime"])
                         
                     });
                 }
@@ -191,7 +197,57 @@ namespace NBL.DAL
                
             }
         }
+        public ICollection<ReturnDetails> GetReturnDetailsBySalesReturnId(long salesReturnId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetSalesReturnDetailsBySalesReturnId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@SalesReturnId", salesReturnId);
+                List<ReturnDetails> models = new List<ReturnDetails>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ReturnDetails 
+                    {
+                        SalesReturnId = Convert.ToInt64(reader["SalesReturnId"]),
+                        SalesReturnNo=Convert.ToInt64(reader["SalesReturnNo"]),
+                        ReturnDateTime = Convert.ToDateTime(reader["ReturnDateTime"]),
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        DeliveryId = Convert.ToInt64(reader["DeliveryId"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        SalsesReturnDetailsId = Convert.ToInt64(reader["SalsesReturnDetailsId"]),
+                        SalesAdminUserId = Convert.ToInt32(reader["SalesAdminUserId"]),
+                        ApproveBySalesAdminDateTime = Convert.ToDateTime(reader["ApprovedByAdminDateTime"]),
+                        NsmUserId = Convert.ToInt32(reader["NsmUserId"]),
+                        ApproveByNsmDateTime = Convert.ToDateTime(reader["ApprovedByNsmDateTime"]),
+                        OrderByUserId = Convert.ToInt32(reader["OrderByUserId"]),
+                        OrderDateTime = Convert.ToDateTime(reader["OrderDateTime"]),
+                        OrderId = Convert.ToInt64(reader["OrderId"]),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
+                        DeliveredDateTime = Convert.ToDateTime(reader["DeliveredDateTime"])
 
-        
+                    });
+                }
+                reader.Close();
+                return models;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect sales returns details", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+
+            }
+        }
+
     }
 }
