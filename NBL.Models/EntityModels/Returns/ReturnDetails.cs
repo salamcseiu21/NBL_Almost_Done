@@ -9,7 +9,8 @@ namespace NBL.Models.EntityModels.Returns
 
         public long SalsesReturnDetailsId { get; set; }
         public long SalesReturnId { get; set; }
-        public long SalesReturnNo { get; set; } 
+        public long SalesReturnNo { get; set; }
+        public string SalesReturnRef { get; set; }
         public long DeliveryId { get; set; }
         [Display(Name = "Delivered Quantity")]
         public int DeliveredQty { get; set; }
@@ -29,6 +30,7 @@ namespace NBL.Models.EntityModels.Returns
         public string ClientName { get; set; }
         public string ClientCode { get; set; }
         public long OrderId { get; set; }
+        public int BranchId { get; set; }   
         public decimal Amounts { get; set; }
         public int OrderByUserId { get; set; }
         public string SalesPersonName { get; set; }

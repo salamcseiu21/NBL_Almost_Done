@@ -1,0 +1,33 @@
+﻿
+@*QC Menu*@
+<ul class="sidebar-menu" data-widget="tree">
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-tachometer"></i>
+            <span>Dashboard</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                @Html.ActionLink(" Dashboard-1 ", "Home", "Home", new { area = "QC" }, new { @class = "fa fa-eye", style = "font-weight: bolder" })
+            </li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-product-hunt"></i>
+            <span>Return</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+
+            <li>@Html.ActionLink(" View All ", "ViewAllReturns", "Home", new { area = "QC" }, new { @class = "fa fa-eye" })</li>
+        </ul>
+    </li>
+   
+</ul>

@@ -85,5 +85,9 @@ namespace NBL.BLL
          return   _iProductReturnGateway.GetReturnDetailsBySalesReturnId(salesReturnId);
         }
 
+        public ReturnDetails GetReturnDetailsById(int salsesReturnDetailsId)
+        {
+            return _iProductReturnGateway.GetReturnDetailsById(salsesReturnDetailsId);
+        }
     }
 }

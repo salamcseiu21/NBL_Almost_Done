@@ -225,7 +225,7 @@ namespace NBL.Areas.Sales.Controllers
 
         }
 
-        public ActionResult Details(long salesReturnId)
+        public ActionResult ReturnDetails(long salesReturnId)
         {
             List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList(); 
             return View(models);

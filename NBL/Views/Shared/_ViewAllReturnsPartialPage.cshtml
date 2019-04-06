@@ -1,11 +1,4 @@
-﻿@model IEnumerable<NBL.Models.EntityModels.Returns.ReturnModel>
-@{
-    ViewBag.Title = "Sales Return List";
-    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
-}
-
-<section class="content">
-    <h3 class="text-center text-green">Sales Return List</h3>
+﻿ <h3 class="text-center text-green">Sales Return List</h3>
     <table class="display table-bordered" style="border: 1px solid" id="tbl_Sales_Return_list">
         <thead>
         <tr>
@@ -24,7 +17,7 @@
                 <td class="text-center">@item.SystemDateTime.Date.ToString("D")</td>
                 <td class="text-center">
                    
-                    @Html.ActionLink(" Details", "ReturnDetails","Home", new { salesReturnId = item.SalesReturnId }, new {@class="fa fa-eye" })
+                    @Html.ActionLink(" Details", "ReturnDetails","Return", new { salesReturnId = item.SalesReturnId }, new {@class="fa fa-eye" })
                 </td>
             </tr>
         }
@@ -38,11 +31,3 @@
         </tr>
         </tfoot>
     </table>
-</section>
-@section Scripts
-{
-    <script>
-        $("#tbl_Sales_Return_list").DataTable();
-    </script>
-}
-

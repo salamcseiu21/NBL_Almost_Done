@@ -249,5 +249,59 @@ namespace NBL.DAL
             }
         }
 
+        public ReturnDetails GetReturnDetailsById(int salsesReturnDetailsId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetSalesReturnDetailsById";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@SalesReturnDetailsId", salsesReturnDetailsId);
+                ReturnDetails model = null;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    model = new ReturnDetails
+                    {
+                        SalesReturnId = Convert.ToInt64(reader["SalesReturnId"]),
+                        SalesReturnNo = Convert.ToInt64(reader["SalesReturnNo"]),
+                        ReturnDateTime = Convert.ToDateTime(reader["ReturnDateTime"]),
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        DeliveryId = Convert.ToInt64(reader["DeliveryId"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        SalsesReturnDetailsId = Convert.ToInt64(reader["SalsesReturnDetailsId"]),
+                        SalesAdminUserId = Convert.ToInt32(reader["SalesAdminUserId"]),
+                        ApproveBySalesAdminDateTime = Convert.ToDateTime(reader["ApprovedByAdminDateTime"]),
+                        NsmUserId = Convert.ToInt32(reader["NsmUserId"]),
+                        ApproveByNsmDateTime = Convert.ToDateTime(reader["ApprovedByNsmDateTime"]),
+                        OrderByUserId = Convert.ToInt32(reader["OrderByUserId"]),
+                        OrderDateTime = Convert.ToDateTime(reader["OrderDateTime"]),
+                        OrderId = Convert.ToInt64(reader["OrderId"]),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
+                        DeliveredDateTime = Convert.ToDateTime(reader["DeliveredDateTime"]),
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        SalesReturnRef=reader["SalesReturnRef"].ToString()
+
+
+                    };
+                }
+                reader.Close();
+                return model;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect sales returns details", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+
+            }
+        }
     }
 }
