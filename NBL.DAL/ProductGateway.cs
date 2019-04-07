@@ -1183,7 +1183,8 @@ namespace NBL.DAL
                         DeliveryQty = Convert.ToInt32(reader["DeliveryQty"]),
                         PendingQty = Convert.ToInt32(reader["PendingQty"]),
                         RequisitionRef = reader["RequisitionRef"].ToString(),
-                        Status = Convert.ToInt32(reader["Status"])
+                        Status = Convert.ToInt32(reader["Status"]),
+                        SystemDateTime = DBNull.Value.Equals(reader["SystemDateTime"])?default(DateTime):Convert.ToDateTime(reader["SystemDateTime"])
                     });
                 }
                 reader.Close();

@@ -79,7 +79,11 @@
         roleName = "R & D";
         areas = "researchanddevelopment";
     }
-
+    else if (User.IsInRole("QC"))
+    {
+        roleName = "QC";
+        areas = "qc";
+    }
 }
 <!DOCTYPE html>
 <html>
@@ -230,6 +234,9 @@
                         break;
                     case "R&D":
                         Html.RenderPartial("~/Areas/ResearchAndDevelopment/Views/Shared/_MenuPartialPage.cshtml");
+                        break;
+                    case "QC":
+                        Html.RenderPartial("~/Areas/QC/Views/Shared/_MenuPartialPage.cshtml");
                         break;
                     case "Super":
                         Html.RenderPartial("~/Areas/SuperAdmin/Views/Shared/_MenuPartialPage.cshtml");

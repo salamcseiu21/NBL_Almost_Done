@@ -114,6 +114,7 @@
     <Compile Include="EntityModels\Returns\ReturnDetails.cs" />
     <Compile Include="EntityModels\Returns\ReturnModel.cs" />
     <Compile Include="EntityModels\Returns\ReturnProduct.cs" />
+    <Compile Include="EntityModels\Securities\StringCipher.cs" />
     <Compile Include="EntityModels\TransferProducts\Trip.cs" />
     <Compile Include="EntityModels\TransferProducts\TripDetails.cs" />
     <Compile Include="EntityModels\VatDiscounts\Discount.cs" />

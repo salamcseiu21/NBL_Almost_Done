@@ -1,0 +1,18 @@
+﻿@model NBL.Models.EntityModels.Returns.ReturnDetails
+@{
+    ViewBag.Title = "Receive";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Receive Return Products</h3>
+    <table class="table table-bordered" style="border: 1px solid">
+        <tr>
+            <td>@Model.SalesReturnRef</td>
+            <td>@Model.BranchId</td>
+            <td>@Model.ProductName</td>
+            <td>@Model.Quantity</td>
+        </tr>
+    </table>
+</section>
+

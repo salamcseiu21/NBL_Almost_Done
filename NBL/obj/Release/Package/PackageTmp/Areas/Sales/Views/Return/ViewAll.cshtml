@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<NBL.Models.EntityModels.Returns.ReturnModel>
 @{
-    ViewBag.Title = "View All Sales Return List";
+    ViewBag.Title = "Sales Return List";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
 }
 
@@ -24,7 +24,7 @@
                 <td class="text-center">@item.SystemDateTime.Date.ToString("D")</td>
                 <td class="text-center">
                    
-                    @Html.ActionLink(" Details", "Details","Return", new { salesReturnId = item.SalesReturnId }, new {@class="fa fa-eye" })
+                    @Html.ActionLink(" Details", "ReturnDetails","Home", new { salesReturnId = item.SalesReturnId }, new {@class="fa fa-eye" })
                 </td>
             </tr>
         }
