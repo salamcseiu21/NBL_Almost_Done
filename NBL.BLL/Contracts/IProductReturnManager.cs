@@ -9,5 +9,7 @@ namespace NBL.BLL.Contracts
         bool SaveReturnProduct(ReturnModel returnModel);
         ICollection<ReturnDetails> GetReturnDetailsBySalesReturnId(long salesReturnId);
         ReturnDetails GetReturnDetailsById(int salsesReturnDetailsId);
+        bool ApproveReturnByNsm(string remarks, long salesReturnId, int userUserId);
+        ICollection<ReturnModel> GetAllReturnsByStatus(int status); 
     }
 }

@@ -9,7 +9,10 @@ namespace NBL.Models.EntityModels.Returns
         public List<ReturnProduct> Products { get; set; }
         public int ClientId { get; set; }
         public int ReturnIssueByUserId { get; set; }
-        public int ReturnApproveByUserId { get; set; }  
+        public int ReturnApproveByUserId { get; set; }
+        public string NsmNotes { get; set; }
+        public DateTime ReturnApproveDateTime { get; set; }
+        public int ReturnStatus { get; set; }   
         public long ReturnNo { get; set; }
         public string ReturnRef { get; set; }
         public string TransactionRef { get; set; }

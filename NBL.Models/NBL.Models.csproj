@@ -103,6 +103,7 @@
     <Compile Include="Contracts\IMasterEntity.cs" />
     <Compile Include="EntityModels\Deliveries\DispatchModel.cs" />
     <Compile Include="EntityModels\Deliveries\ReceiveProductViewModel.cs" />
+    <Compile Include="EntityModels\FinanceModels\FinancialTransactionModel.cs" />
     <Compile Include="EntityModels\Masters\ClientType.cs" />
     <Compile Include="EntityModels\Companies\Company.cs" />
     <Compile Include="EntityModels\Deliveries\Delivery.cs" />

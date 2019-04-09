@@ -31,7 +31,7 @@ namespace NBL.Areas.QC.Controllers
         }
         public ActionResult ViewAllReturns() 
         {
-            var products = _iProductReturnManager.GetAll().ToList();
+            List<ReturnModel> products = _iProductReturnManager.GetAllReturnsByStatus(1).ToList();
             return View(products);
         }
 

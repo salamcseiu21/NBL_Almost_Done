@@ -12,6 +12,7 @@
             <th class="text-center">Reference</th>
             <th class="text-center">Quantity</th>
             <th class="text-center">Date</th>
+            <th class="text-center">Status</th>
             <th class="text-center">View</th>
         </tr>
         </thead>
@@ -22,9 +23,23 @@
                 <td class="text-center">@item.ReturnRef</td>
                 <td class="text-center">@item.TotalQuantity</td>
                 <td class="text-center">@item.SystemDateTime.Date.ToString("D")</td>
+                <td class="text-center">@{
+                                            if (item.ReturnStatus == 0)
+                                            {
+                                                <span class="text-warning">Pending</span>
+                    }
+                    else if (item.ReturnStatus == 1)
+                    {
+                        <span class="text-green">Approved</span>
+                    }
+                }</td>
                 <td class="text-center">
-                   
-                    @Html.ActionLink(" Details", "ReturnDetails","Return", new { salesReturnId = item.SalesReturnId }, new {@class="fa fa-eye" })
+                    @if (User.IsInRole("Nsm") && item.ReturnStatus==0)
+                    {
+                        @Html.ActionLink(" Approve", "ApproveByNsm", "Return", new { salesReturnId = item.SalesReturnId },null) <span> | </span>
+                    }
+                    
+                    @Html.ActionLink(" Details", "ReturnDetails", "Return", new {salesReturnId = item.SalesReturnId}, new {@class = "fa fa-eye"})
                 </td>
             </tr>
         }
@@ -34,6 +49,7 @@
             <th class="text-center">Reference</th>
             <th class="text-center">Quantity</th>
             <th class="text-center">Date</th>
+            <th class="text-center">Status</th>
             <th class="text-center">View</th>
         </tr>
         </tfoot>

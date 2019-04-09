@@ -57,6 +57,7 @@ namespace NBL.DAL
             }
         }
 
+
         private int SaveReturnProductDetails(ReturnModel returnModel, long masterId)
         {
             int i = 0;
@@ -178,8 +179,12 @@ namespace NBL.DAL
                         ReturnNo = Convert.ToInt64(reader["SalesReturnNo"]),
                         TotalQuantity = Convert.ToInt32(reader["TotalQuantity"]),
                         Remarks = reader["Remarks"].ToString(),
-                        SystemDateTime = Convert.ToDateTime(reader["SysDateTime"])
-                        
+                        SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        ReturnApproveByUserId = Convert.ToInt32(reader["ReturnApproveByUserId"]),
+                        ReturnApproveDateTime =DBNull.Value.Equals(reader["ReturnApproveDate"])? default(DateTime): Convert.ToDateTime(reader["ReturnApproveDate"]),
+                        NsmNotes = DBNull.Value.Equals(reader["NotesByNsm"])?null: reader["NotesByNsm"].ToString(),
+                        ReturnStatus = Convert.ToInt32(reader["Status"]),
+                        ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"])
                     });
                 }
                 reader.Close();
@@ -195,6 +200,52 @@ namespace NBL.DAL
                 ConnectionObj.Close();
                 CommandObj.Parameters.Clear();
                
+            }
+        }
+
+        public ICollection<ReturnModel> GetAllReturnsByStatus(int status)
+        {
+
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllReturnsByStatus";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Status", status);
+                List<ReturnModel> models = new List<ReturnModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ReturnModel
+                    {
+                        SalesReturnId = Convert.ToInt64(reader["SalesReturnId"]),
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        ReturnRef = reader["SalesReturnRef"].ToString(),
+                        ReturnNo = Convert.ToInt64(reader["SalesReturnNo"]),
+                        TotalQuantity = Convert.ToInt32(reader["TotalQuantity"]),
+                        Remarks = reader["Remarks"].ToString(),
+                        SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        ReturnApproveByUserId = Convert.ToInt32(reader["ReturnApproveByUserId"]),
+                        ReturnApproveDateTime = DBNull.Value.Equals(reader["ReturnApproveDate"]) ? default(DateTime) : Convert.ToDateTime(reader["ReturnApproveDate"]),
+                        NsmNotes = DBNull.Value.Equals(reader["NotesByNsm"]) ? null : reader["NotesByNsm"].ToString(),
+                        ReturnStatus = Convert.ToInt32(reader["Status"]),
+                        ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"])
+                    });
+                }
+                reader.Close();
+                return models;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect sales returns by status", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+
             }
         }
         public ICollection<ReturnDetails> GetReturnDetailsBySalesReturnId(long salesReturnId)
@@ -303,5 +354,37 @@ namespace NBL.DAL
 
             }
         }
+
+        public int ApproveReturnByNsm(string remarks, long salesReturnId, int userUserId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_ApproveSalesReturnByNsm";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Remarks", remarks);
+                CommandObj.Parameters.AddWithValue("@SalesReturnId", salesReturnId);
+                CommandObj.Parameters.AddWithValue("@NsmUserId", userUserId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                int rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not approve sales returns", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+
+            }
+        }
+
+        
     }
 }

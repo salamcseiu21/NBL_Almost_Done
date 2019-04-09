@@ -833,6 +833,48 @@ namespace NBL.DAL
                 int deliveryId = Convert.ToInt32(CommandObj.Parameters["@DeliveryId"].Value);
 
                 int rowAffected = SaveDeliveredOrderDetails(scannedProducts,aDelivery, inventoryId, deliveryId);
+
+
+                //if (rowAffected > 0)
+                //{
+
+                //    for (int i = 1; i <= 2; i++)
+                //    {
+                //        if (i == 1)
+                //        {
+                //            anInvoice.TransactionType = "Dr";
+                //            anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
+                //        }
+                //        else
+                //        {
+                //            anInvoice.TransactionType = "Cr";
+                //            anInvoice.Amounts = anInvoice.Amounts * (-1);
+                //            anInvoice.SubSubSubAccountCode = "1001021";
+                //        }
+                //        accountAffected += SaveInvoiceDetailsToAccountsDetails(anInvoice, accountMasterId);
+                //    }
+
+                //    if (anInvoice.SpecialDiscount != 0)
+                //    {
+                //        for (int i = 1; i <= 2; i++)
+                //        {
+                //            if (i == 1)
+                //            {
+                //                anInvoice.TransactionType = "Dr";
+                //                anInvoice.Amounts = anInvoice.SpecialDiscount;
+                //                anInvoice.SubSubSubAccountCode = anInvoice.DiscountAccountCode;
+                //            }
+                //            else
+                //            {
+                //                anInvoice.TransactionType = "Cr";
+                //                anInvoice.Amounts = anInvoice.SpecialDiscount * (-1);
+                //                anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
+                //            }
+                //            accountAffected += SaveInvoiceDetailsToAccountsDetails(anInvoice, accountMasterId);
+                //        }
+                //    }
+
+
                 if (rowAffected > 0)
                 {
                     sqlTransaction.Commit();

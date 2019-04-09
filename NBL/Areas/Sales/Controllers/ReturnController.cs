@@ -235,5 +235,31 @@ namespace NBL.Areas.Sales.Controllers
             var products = _iProductReturnManager.GetAll().ToList();
             return View(products);
         }
+
+
+
+        //---------------------Approve By NSM---------------
+        [Authorize(Roles = "Nsm")]
+        public ActionResult ApproveByNsm(long salesReturnId)
+        {
+            ViewBag.SalesReturnId = salesReturnId;
+            List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+            return View(models);
+        }
+        [HttpPost]
+        public ActionResult ApproveByNsm(FormCollection collection)
+        {
+            var user = (ViewUser)Session["user"];
+            long salesReturnId = Convert.ToInt64(collection["salesReturnId"]);
+            var remarks = collection["Remarks"];
+            bool result = _iProductReturnManager.ApproveReturnByNsm(remarks, salesReturnId, user.UserId);
+            if (result)
+            {
+                return RedirectToAction("ViewAll");
+            }
+           
+            List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+            return View(models);
+        }
     }
 }

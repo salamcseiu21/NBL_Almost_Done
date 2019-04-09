@@ -14,9 +14,11 @@
         public decimal SalePrice { get; set; }
         public int ProductId { get; set; }
         public string InvoiceRef { get; set; }
-        public string ScannedProductCodes { get; set; } 
-       
-
+        public string ScannedProductCodes { get; set; }
+        public long VatId { get; set; }
+        public decimal Vat { get; set; }
+        public long DiscountId { get; set; }    
+        public decimal Deicount { get; set; }   
       
     }
 }

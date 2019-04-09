@@ -78,7 +78,12 @@ namespace NBL.Areas.Sales.Controllers
                 int deliverebyUserId = ((ViewUser)Session["user"]).UserId;
                 int invoiceId = Convert.ToInt32(collection["InvoiceId"]);
                 var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
+                IEnumerable<InvoiceDetails> details = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceId(invoiceId);
+
+                var client = _iClientManager.GetClientDeailsById(invoice.ClientId);
+
                 var deliveredQty = _iInvoiceManager.GetDeliveredProductsByInvoiceRef(invoice.InvoiceRef).Count;
+
                 var remainingToDeliverQty = invoice.Quantity - deliveredQty;
                 string fileName = "Ordered_Product_List_For_" + invoiceId;
                 var filePath = Server.MapPath("~/Files/" + fileName);

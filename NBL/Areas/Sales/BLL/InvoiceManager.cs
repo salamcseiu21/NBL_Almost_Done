@@ -28,10 +28,11 @@ namespace NBL.Areas.Sales.BLL
         {
             
             string refCode = _iCommonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id==Convert.ToInt32(ReferenceType.Invoice)).Code;
+            anInvoice.VoucherNo = GetMaxVoucherNoByTransactionInfix(refCode);
             int maxSl = _iInvoiceGateway.GetMaxInvoiceNoOfCurrentYear();
             anInvoice.InvoiceNo = _iInvoiceGateway.GetMaxInvoiceNo() + 1;
             anInvoice.InvoiceRef = GenerateInvoiceRef(maxSl);
-            anInvoice.VoucherNo = GetMaxVoucherNoByTransactionInfix(refCode);
+           
 
             int rowAffected = _iInvoiceGateway.Save(orderItems, anInvoice);
             if (rowAffected > 0)

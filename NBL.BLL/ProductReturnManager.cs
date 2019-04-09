@@ -89,5 +89,16 @@ namespace NBL.BLL
         {
             return _iProductReturnGateway.GetReturnDetailsById(salsesReturnDetailsId);
         }
+
+        public bool ApproveReturnByNsm(string remarks, long salesReturnId, int userUserId)
+        {
+            int rowAffected = _iProductReturnGateway.ApproveReturnByNsm(remarks,salesReturnId,userUserId);
+            return rowAffected > 0;
+        }
+
+        public ICollection<ReturnModel> GetAllReturnsByStatus(int status)
+        {
+            return _iProductReturnGateway.GetAllReturnsByStatus(status);
+        }
     }
 }

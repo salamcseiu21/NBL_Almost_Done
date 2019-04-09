@@ -20,6 +20,7 @@ namespace NBL.Models.EntityModels.Invoices
         public string ClientAccountCode { get; set; }
         public string DiscountAccountCode { get; set; }
         public string SubSubSubAccountCode { get; set; }
+        public long OrderId { get; set; }   
         [Display(Name = "Client Id")]
         [Required]
         public int ClientId { get; set; }

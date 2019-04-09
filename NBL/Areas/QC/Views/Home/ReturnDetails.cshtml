@@ -5,49 +5,88 @@
 }
 
 <section class="content">
-    <table id="tbl_Return_details" class="display table-bordered" style="border: 1px solid">
-        <thead>
-        <tr>
-            <th>Product Name</th>
-            <th>Quanity</th>
-            <th>Delivery Date</th>
-            <th>Return Date</th>
-            <th>Delivery-to-Return</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.ProductName</td>
-                <td>@item.Quantity</td>
-                <td>@item.DeliveredDateTime.ToString("F")</td>
-                <td>@item.ReturnDateTime.ToString("F")</td>
-                <td>@(Math.Ceiling((item.ReturnDateTime - item.DeliveredDateTime).TotalDays))</td>
-                <td>
-                    @Html.ActionLink(" Receive","Receive","Product",new {area="QC", salsesReturnDetailsId = item.SalsesReturnDetailsId},new {@class="fa fa-edit"})
-                </td>
+    <div class="row">
+        <div class="col-md-6">
+            <table id="tbl_Return_details" class="display table-bordered" style="border: 1px solid">
+                <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quanity</th>
+                    <th>Delivery Date</th>
+                    <th>Return Date</th>
+                    <th>Delivery-to-Return</th>
+                   
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.DeliveredDateTime.ToString("F")</td>
+                        <td>@item.ReturnDateTime.ToString("F")</td>
+                        <td>@(Math.Ceiling((item.ReturnDateTime - item.DeliveredDateTime).TotalDays))</td>
+                       
 
-            </tr>
-        }
-        </tbody>
-        <tfoot>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quanity</th>
+                    <th>Delivery Date</th>
+                    <th>Return Date</th>
+                    <th>Delivery-to-Return</th>
+                  
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="col-md-6">  <table id="tbl_Return_Scanned_details" class="display table-bordered" style="border: 1px solid">
+            <thead>
             <tr>
                 <th>Product Name</th>
                 <th>Quanity</th>
                 <th>Delivery Date</th>
                 <th>Return Date</th>
                 <th>Delivery-to-Return</th>
-                <th>Action</th>
+              
             </tr>
-        </tfoot>
-    </table>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.DeliveredDateTime.ToString("F")</td>
+                    <td>@item.ReturnDateTime.ToString("F")</td>
+                    <td>@(Math.Ceiling((item.ReturnDateTime - item.DeliveredDateTime).TotalDays))</td>
+                    
+
+                </tr>
+            }
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>Product Name</th>
+                <th>Quanity</th>
+                <th>Delivery Date</th>
+                <th>Return Date</th>
+                <th>Delivery-to-Return</th>
+                
+            </tr>
+            </tfoot>
+        </table></div>
+    </div>
 </section>
 @section Scripts
 {
     <script>
         $("#tbl_Return_details").DataTable();
+        $("#tbl_Return_Scanned_details").DataTable();
     </script>
 }
 

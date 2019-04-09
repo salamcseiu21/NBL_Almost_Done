@@ -174,51 +174,54 @@ namespace NBL.Areas.Sales.DAL
                 CommandObj.Parameters.AddWithValue("@VoucherNo", anInvoice.VoucherNo);
                 CommandObj.Parameters.Add("@InvoiceId", SqlDbType.Int);
                 CommandObj.Parameters["@InvoiceId"].Direction = ParameterDirection.Output;
-                CommandObj.Parameters.Add("@AccountMasterId", SqlDbType.Int);
-                CommandObj.Parameters["@AccountMasterId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
                 int invoiceId = Convert.ToInt32(CommandObj.Parameters["@InvoiceId"].Value);
-                int accountMasterId = Convert.ToInt32(CommandObj.Parameters["@AccountMasterId"].Value);
+                //------------------
+                //CommandObj.Parameters.Add("@AccountMasterId", SqlDbType.Int);
+                //CommandObj.Parameters["@AccountMasterId"].Direction = ParameterDirection.Output;
+
+                // int accountMasterId = Convert.ToInt32(CommandObj.Parameters["@AccountMasterId"].Value);
                 int rowAffected = SaveInvoiceDetails(orderItems, invoiceId);
 
-                if (rowAffected > 0)
-                {
+                //if (rowAffected > 0)
+                //{
 
-                    for (int i = 1; i <= 2; i++)
-                    {
-                        if (i == 1)
-                        {
-                            anInvoice.TransactionType = "Dr";
-                            anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
-                        }
-                        else
-                        {
-                            anInvoice.TransactionType = "Cr";
-                            anInvoice.Amounts = anInvoice.Amounts * (-1);
-                            anInvoice.SubSubSubAccountCode = "1001021";
-                        }
-                        accountAffected += SaveInvoiceDetailsToAccountsDetails(anInvoice, accountMasterId);
-                    }
+                //    for (int i = 1; i <= 2; i++)
+                //    {
+                //        if (i == 1)
+                //        {
+                //            anInvoice.TransactionType = "Dr";
+                //            anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
+                //        }
+                //        else
+                //        {
+                //            anInvoice.TransactionType = "Cr";
+                //            anInvoice.Amounts = anInvoice.Amounts * (-1);
+                //            anInvoice.SubSubSubAccountCode = "1001021";
+                //        }
+                //        accountAffected += SaveInvoiceDetailsToAccountsDetails(anInvoice, accountMasterId);
+                //    }
 
-                    if (anInvoice.SpecialDiscount != 0)
-                    {
-                        for (int i = 1; i <= 2; i++)
-                        {
-                            if (i == 1)
-                            {
-                                anInvoice.TransactionType = "Dr";
-                                anInvoice.Amounts = anInvoice.SpecialDiscount;
-                                anInvoice.SubSubSubAccountCode = anInvoice.DiscountAccountCode;
-                            }
-                            else
-                            {
-                                anInvoice.TransactionType = "Cr";
-                                anInvoice.Amounts = anInvoice.SpecialDiscount * (-1);
-                                anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
-                            }
-                            accountAffected += SaveInvoiceDetailsToAccountsDetails(anInvoice, accountMasterId);
-                        }
-                    }
+                    //if (anInvoice.SpecialDiscount != 0)
+                    //{
+                    //    for (int i = 1; i <= 2; i++)
+                    //    {
+                    //        if (i == 1)
+                    //        {
+                    //            anInvoice.TransactionType = "Dr";
+                    //            anInvoice.Amounts = anInvoice.SpecialDiscount;
+                    //            anInvoice.SubSubSubAccountCode = anInvoice.DiscountAccountCode;
+                    //        }
+                    //        else
+                    //        {
+                    //            anInvoice.TransactionType = "Cr";
+                    //            anInvoice.Amounts = anInvoice.SpecialDiscount * (-1);
+                    //            anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
+                    //        }
+                    //        accountAffected += SaveInvoiceDetailsToAccountsDetails(anInvoice, accountMasterId);
+                    //    }
+                    //}
+                    //---------------------------------END----------
                     //if (anInvoice.Discount != 0)
                     //{
                     //    for (int i = 1; i <= 2; i++)
@@ -239,12 +242,18 @@ namespace NBL.Areas.Sales.DAL
                     //    }
                     //}
 
-                }
-                if (accountAffected > 0)
+                //}
+                //if (accountAffected > 0)
+                //{
+                //    sqlTransaction.Commit();
+                //}
+                //return accountAffected;
+
+                if (rowAffected > 0)
                 {
                     sqlTransaction.Commit();
                 }
-                return accountAffected;
+                return rowAffected;
 
             }
             catch (SqlException sqlException)
@@ -527,7 +536,11 @@ namespace NBL.Areas.Sales.DAL
                         Quantity = Convert.ToInt32(reader["Quantity"]),
                         ProductCategoryName = reader["ProductCategoryName"].ToString(),
                         UnitPrice = Convert.ToDecimal(reader["UnitPrice"]),
-                        SalePrice = Convert.ToDecimal(reader["SalePrice"])
+                        SalePrice = Convert.ToDecimal(reader["SalePrice"]),
+                        DiscountId = Convert.ToInt64(reader["DiscountId"]),
+                        Deicount = Convert.ToDecimal(reader["DiscountAmount"]),
+                        Vat = Convert.ToDecimal(reader["Vat"]),
+                        VatId = Convert.ToInt64(reader["VatId"])
                     };
                     invoiceDetails.Add(invoice);
                 }
@@ -613,6 +626,7 @@ namespace NBL.Areas.Sales.DAL
                           TransactionRef = reader["TransactionRef"].ToString(),
                           SysDateTime = Convert.ToDateTime(reader["SysDateTime"]),
                           ClientId = Convert.ToInt32(reader["ClientId"]),
+                          OrderId = Convert.ToInt64(reader["OrderId"]),
                           Client = new Client
                           {
                               ClientId = Convert.ToInt32(reader["ClientId"]),
