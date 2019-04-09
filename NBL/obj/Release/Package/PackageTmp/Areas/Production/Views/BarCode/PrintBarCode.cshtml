@@ -1,5 +1,4 @@
-﻿@using NBL.Models.EntityModels.Branches
-@using NBL.Models.EntityModels.Companies
+﻿
 @model IEnumerable<NBL.Models.EntityModels.BarCodes.BarCodeModel>
 
 <!DOCTYPE html>
@@ -28,38 +27,38 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <style>
-        tr.spaceUnder>td {
+        tr.spaceUnder > td {
             padding-bottom: 3mm;
         }
     </style>
 </head>
 <body style="height:auto;width:auto;">
-<div class="wrapper">
+    <div class="wrapper">
 
-    <table>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <img src="~/Areas/Production/Images/BarCodes/@(item.Barcode + ".jpg")" style="padding: 5px 0"/>
-                </td>
-                
-            </tr>
-            <tr>
-                <td>
-                    <img src="~/Areas/Production/Images/BarCodes/@(item.Barcode + ".jpg")" style="padding: 5px 0"/>
-                </td>
-                
-            </tr>
-            <tr>
-                <td>
-                    <img src="~/Areas/Production/Images/BarCodes/@(item.Barcode + ".jpg")" style="padding: 5px 0"/>
-                </td>
-                
-            </tr>
-        }
-    </table>
-</div>
-<!-- ./wrapper -->
+        <table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="~/Areas/Production/Images/BarCodes/@(item.Barcode + ".jpg")" style="padding: 5px 0" />
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <img src="~/Areas/Production/Images/BarCodes/@(item.Barcode + ".jpg")" style="padding: 5px 0" />
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <img src="~/Areas/Production/Images/BarCodes/@(item.Barcode + ".jpg")" style="padding: 5px 0" />
+                    </td>
+
+                </tr>
+            }
+        </table>
+    </div>
+    <!-- ./wrapper -->
 </body>
 </html>

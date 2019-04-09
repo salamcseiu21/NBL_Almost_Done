@@ -8,9 +8,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using NBL.BLL;
 using NBL.BLL.Contracts;
-using NBL.Models;
 using NBL.Models.EntityModels.Identities;
-using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
 
 namespace NBL.Controllers
@@ -69,6 +67,7 @@ namespace NBL.Controllers
                 anUser.IpAddress = GetLocalIPAddress();
                 anUser.MacAddress = GetMacAddress().ToString();
                 anUser.LogInDateTime = DateTime.Now;
+
                 bool result = _userManager.ChangeLoginStatus(anUser, 1);
 
                 Session["user"] = anUser;

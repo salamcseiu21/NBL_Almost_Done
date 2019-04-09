@@ -28,7 +28,7 @@
                 <tr>
                     <td>@item.TripRef</td>
                     <td>@item.DeliveryQuantity</td>
-                    <td>@item.SystemDateTime</td>
+                    <td>@item.SystemDateTime.ToString("F")</td>
                    
                     <td class="text-center">
                         @Html.ActionLink("Delivery", "Delivery", "Delivery", new {area = "Production", id = item.TripId}, new {@class = "btn btn-info btn-sm"})

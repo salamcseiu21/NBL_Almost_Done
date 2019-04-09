@@ -10,7 +10,9 @@
         <thead>
         <tr>
             <th>Requisition Ref</th>
-            <th>Quantity</th>
+            <th>Requisition qty</th>
+            <th>Delivered Qty</th>
+            <th>Pending Qty</th>
             <th>Date</th>
             <th>Details</th>
         </tr>
@@ -21,7 +23,9 @@
             <tr>
                 <td>@item.RequisitionRef</td>
                 <td>@item.RequisitionQty</td>
-                <td>@item.RequisitionDate</td>
+                <td>@item.DeliveryQty</td>
+                <td>@item.PendingQty</td>
+                <td>@item.SystemDateTime.ToString("F")</td>
                 <td class="text-center">
                     <button type="button" value="@item.RequisitionId" class="btn btn-success btn-sm" onclick="viewDetails(this)"><i class="fa fa-eye"></i> Details</button>
                 </td>
@@ -31,7 +35,9 @@
         <tfoot>
         <tr>
             <th>Requisition Ref</th>
-            <th>Quantity</th>
+            <th>Requisition qty</th>
+            <th>Delivered Qty</th>
+            <th>Pending Qty</th>
             <th>Date</th>
             <th>Details</th>
         </tr>

@@ -172,6 +172,7 @@ E:\API\NBL\NBL\bin\OnBarcode.Barcode.BarcodeScanner.dll
 E:\API\NBL\NBL\bin\Owin.dll
 E:\API\NBL\NBL\bin\ReportViewerForMvc.dll
 E:\API\NBL\NBL\bin\System.Net.Http.Formatting.dll
+E:\API\NBL\NBL\bin\System.Runtime.InteropServices.RuntimeInformation.dll
 E:\API\NBL\NBL\bin\System.ValueTuple.dll
 E:\API\NBL\NBL\bin\System.Web.Cors.dll
 E:\API\NBL\NBL\bin\System.Web.Helpers.dll

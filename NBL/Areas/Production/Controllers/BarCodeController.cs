@@ -122,6 +122,10 @@ namespace NBL.Areas.Production.Controllers
         private void GenerateBarCodeFromaGivenString(string barcode)
         {
 
+
+
+
+
             Image img = null;
             using (var ms = new MemoryStream())
             {
@@ -130,27 +134,38 @@ namespace NBL.Areas.Production.Controllers
                     Format = BarcodeFormat.CODE_128,
                     Options =
                     {
-                        Height = 100,
-                        Width = 173,
-                        PureBarcode = false
+                        Height = 280,
+                        Width = 400,
+                        PureBarcode = true
                     }
                 };
-                 img = writer.Write(barcode);
-                 //img.Save(ms, ImageFormat.Jpeg);
 
-                var filePath = Server.MapPath("~/Areas/Production/Images/BarCodes/" + barcode + ".jpg");
-                img.Save(filePath, ImageFormat.Jpeg);
-               
+                img = writer.Write(barcode);
+
+                //var test = Server.MapPath("~/Areas/Production/Images/BarCodes/0107208AE0005"+".jpg");
+
+                //using (Bitmap bitmap = (Bitmap)Image.FromFile(test))
+                //{
+                //    using (Bitmap newBitmap = new Bitmap(bitmap))
+                //    {
+                //        newBitmap.SetResolution(300, 300);
+                //        newBitmap.Save(test, ImageFormat.Jpeg);
+                //    }
+                //}
+
+                var filePath = Server.MapPath("~/Areas/Production/Images/BarCodes/" + barcode + ".Png");
+                img.Save(filePath, ImageFormat.Png);
+
 
             }
-            
+
         }
 
 
         public ActionResult PrintBarCode()
         {
             var printableBarcodes=(List<BarCodeModel>)TempData["Codes"];
-            var productId = Convert.ToInt32(printableBarcodes.ToList().First().Barcode.Substring(0, 3));
+            var productId = Convert.ToInt32(printableBarcodes.ToList().First().Barcode.Substring(2, 3));
             var  product= _iProductManager.GetProductByProductId(productId);
             ViewBag.Data = $"BarCode List for <strong> <i> {product.ProductName } </i> </strong>from {printableBarcodes.First().Barcode}- {printableBarcodes.Last().Barcode}";
             return View(printableBarcodes);

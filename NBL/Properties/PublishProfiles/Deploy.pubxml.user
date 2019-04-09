@@ -439,7 +439,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/28/2019 08:02:02</publishTime>
     </File>
     <File Include="Areas/Corporate/Views/Requisition/All.cshtml">
-      <publishTime>03/27/2019 21:51:44</publishTime>
+      <publishTime>04/07/2019 16:29:11</publishTime>
     </File>
     <File Include="Areas/Corporate/Views/Requisition/Create.cshtml">
       <publishTime>03/27/2019 22:18:12</publishTime>
@@ -976,7 +976,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/02/2019 17:23:55</publishTime>
     </File>
     <File Include="Areas/Production/Views/BarCode/PrintBarCode.cshtml">
-      <publishTime>04/04/2019 11:42:49</publishTime>
+      <publishTime>04/07/2019 14:43:37</publishTime>
     </File>
     <File Include="Areas/Production/Views/BarCodeGenerator/BarCodeRead.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -994,7 +994,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/Production/Views/Delivery/TripList.cshtml">
-      <publishTime>03/25/2019 17:37:04</publishTime>
+      <publishTime>04/07/2019 15:23:58</publishTime>
     </File>
     <File Include="Areas/Production/Views/Home/Home.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -1015,7 +1015,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/Production/Views/Product/Requisitions.cshtml">
-      <publishTime>03/25/2019 17:37:04</publishTime>
+      <publishTime>04/07/2019 15:21:43</publishTime>
     </File>
     <File Include="Areas/Production/Views/Product/Transaction.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -1297,7 +1297,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/06/2019 13:50:06</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Return/ViewAll.cshtml">
-      <publishTime>04/06/2019 13:52:39</publishTime>
+      <publishTime>04/07/2019 15:36:50</publishTime>
     </File>
     <File Include="Areas/Sales/Views/SalesAdmin/Home.cshtml">
       <publishTime>03/27/2019 15:13:00</publishTime>
@@ -1312,7 +1312,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/27/2019 12:22:30</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Shared/_MenuPartialPage.cshtml">
-      <publishTime>03/27/2019 11:41:54</publishTime>
+      <publishTime>04/07/2019 15:34:12</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Shared/_NsmMenuPartialPage.cshtml">
       <publishTime>04/06/2019 12:02:29</publishTime>
@@ -22717,16 +22717,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="bin/NBL.BLL.dll">
-      <publishTime>04/06/2019 14:32:21</publishTime>
+      <publishTime>04/07/2019 17:08:04</publishTime>
     </File>
     <File Include="bin/NBL.DAL.dll">
-      <publishTime>04/06/2019 14:32:21</publishTime>
+      <publishTime>04/07/2019 17:08:03</publishTime>
     </File>
     <File Include="bin/NBL.dll">
-      <publishTime>04/06/2019 14:32:26</publishTime>
+      <publishTime>04/07/2019 17:08:13</publishTime>
     </File>
     <File Include="bin/NBL.Models.dll">
-      <publishTime>04/06/2019 14:32:20</publishTime>
+      <publishTime>04/07/2019 17:08:01</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -22918,7 +22918,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Files/Create_Trip_File.xml">
-      <publishTime>04/03/2019 17:14:47</publishTime>
+      <publishTime>04/07/2019 15:23:20</publishTime>
     </File>
     <File Include="Files/Monthly_Requisition_Products.xml">
       <publishTime>03/25/2019 17:37:04</publishTime>

@@ -880,7 +880,7 @@ namespace NBL.DAL
                     {
                         ClientId = Convert.ToInt32(reader["ClientId"]),
                         ClientName = reader["Name"].ToString(),
-                        CommercialName = reader["CommercialName"].ToString(),
+                        CommercialName = DBNull.Value.Equals(reader["CommercialName"]) ? null : reader["CommercialName"].ToString(),
                         ClientImage = DBNull.Value.Equals(reader["ClientImage"]) ? null : reader["ClientImage"].ToString(),
                         ClientSignature = DBNull.Value.Equals(reader["ClientSignature"]) ? null : reader["ClientSignature"].ToString(),
                         PostOfficeId = DBNull.Value.Equals(reader["PostOfficeId"])? (int?) null: Convert.ToInt32(reader["PostOfficeId"]),
