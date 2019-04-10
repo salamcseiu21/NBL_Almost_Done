@@ -1,0 +1,54 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Returns.ViewReturnProductModel>
+@{
+    ViewBag.Title = "All Sales Return";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Sales Return</h3>
+    <table id="tbl_return_product_list" class="display table-bordered" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Barcode</th>
+            <th>Delivery Ref</th>
+            <th>Delivery Date</th>
+            <th>Return Date</th>
+            <th>Delivery-to-Return</th>
+            <th>Notes</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Barcode</td>
+                <td>@item.DeliveryRef</td>
+                <td>@item.DeliveryDate</td>
+                <td>@item.ReturnDate</td>
+                <td>@(Math.Ceiling((item.ReturnDate - item.DeliveryDate).TotalDays))</td>
+                <td>@item.VerifiedNotes</td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Product Name</th>
+                <th>Barcode</th>
+                <th>Delivery Ref</th>
+                <th>Delivery Date</th>
+                <th>Return Date</th>
+                <th>Delivery-to-Return</th>
+                <th>Notes</th>
+            </tr>
+        </tfoot>
+    </table>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_return_product_list").DataTable();
+    </script>
+}

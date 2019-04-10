@@ -19,6 +19,9 @@ namespace NBL.DAL.Contracts
         ICollection<ReturnModel> GetAllReturnsByStatus(int status);
         ReturnModel GetSalesReturnBySalesReturnId(long salesReturnId);
         int ReceiveSalesReturnProduct(ViewReturnReceiveModel model);
-        long GetMaxSalesReturnReceiveRefByYear(int year);   
+        long GetMaxSalesReturnReceiveRefByYear(int year);
+        ICollection<ViewReturnProductModel> GetSalesReturnProductListToTest();
+        int AddVerificationNoteToReturnsProduct(long returnRcvDetailsId, string notes, int userUserId);
+        ICollection<ViewReturnProductModel> GetAllVerifiedSalesReturnProducts();
     }
 }

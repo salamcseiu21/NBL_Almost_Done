@@ -9,7 +9,6 @@ using NBL.Models.Enums;
 using NBL.Models.Logs;
 using NBL.Models.Validators;
 using NBL.Models.ViewModels;
-using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Logs;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Returns;
@@ -168,6 +167,28 @@ namespace NBL.Areas.QC.Controllers
             string fileName = "Received_Sales_return_Product_For_" + salesReturnId + user.UserId;
             var filePath = Server.MapPath("~/Areas/QC/Files/" + fileName);
             return filePath;
+        }
+
+        public ActionResult ProductListToTest()
+        {
+            List<ViewReturnProductModel> products = _iProductReturnManager.GetSalesReturnProductListToTest().ToList();
+            return View(products);
+        }
+
+        public JsonResult AddVerificationNotes(long returnRcvDetailsId,string notes)
+        {
+            var user = (ViewUser)Session["user"];
+            SuccessErrorModel model=new SuccessErrorModel();
+            bool result = _iProductReturnManager.AddVerificationNoteToReturnsProduct(returnRcvDetailsId,notes,user.UserId);
+            if (result)
+            {
+                model.Message = "Added Successfully";
+            }
+            else
+            {
+                model.Message = "Failed to save";
+            }
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
     }
 }

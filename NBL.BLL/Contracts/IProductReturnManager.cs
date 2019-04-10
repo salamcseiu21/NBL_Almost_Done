@@ -14,5 +14,8 @@ namespace NBL.BLL.Contracts
         ICollection<ReturnModel> GetAllReturnsByStatus(int status);
         ReturnModel GetSalesReturnBySalesReturnId(long salesReturnId);
         bool ReceiveSalesReturnProduct(ViewReturnReceiveModel model);
+        ICollection<ViewReturnProductModel> GetSalesReturnProductListToTest();
+        bool AddVerificationNoteToReturnsProduct(long returnRcvDetailsId, string notes, int userUserId);
+        ICollection<ViewReturnProductModel> GetAllVerifiedSalesReturnProducts();
     }
 }

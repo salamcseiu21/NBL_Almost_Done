@@ -1,6 +1,7 @@
 ﻿
 
-@model IEnumerable<NBL.Models.ViewModels.Productions.ScannedProduct>
+@using NBL.Models.ViewModels.Productions
+@model IEnumerable<ScannedProduct>
 
 <table id="tbl_scanned_list" class="display" style="border: 1px solid black">
     <caption class="text-center text-green" style="font-weight: bolder; font-size: 20px">Scanned Product List</caption>
@@ -13,11 +14,12 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model)
+   
+    @foreach(IGrouping<string, ScannedProduct> scannedProducts in Model.GroupBy(n => n.ProductName))
     {
         <tr>
-            <td>@item.ProductName</td>
-            <td>@Model.Count()</td>
+            <td>@scannedProducts.Key</td>
+            <td>@scannedProducts.Count()</td>
         </tr>
     }
     </tbody>

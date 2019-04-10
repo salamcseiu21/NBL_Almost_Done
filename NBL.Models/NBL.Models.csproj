@@ -167,6 +167,7 @@
     <Compile Include="ViewModels\Requisitions\ViewRequisitionModel.cs" />
     <Compile Include="EntityModels\Requisitions\RequisitionModel.cs" />
     <Compile Include="ViewModels\Returns\ViewEntryReturnModel.cs" />
+    <Compile Include="ViewModels\Returns\ViewReturnProductModel.cs" />
     <Compile Include="ViewModels\Returns\ViewReturnReceiveModel.cs" />
     <Compile Include="ViewModels\Summaries\FactorySummaryModel.cs" />
     <Compile Include="ViewModels\Summaries\SummaryModel.cs" />

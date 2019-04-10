@@ -19,6 +19,44 @@
             @*<li>@Html.ActionLink(" Payable", "Payable", "Account", new { area = "Accounts" }, new { @class = "fa fa-file", style = "font-weight: bolder;" })</li>*@
         </ul>
     </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-book"></i> <span>Return/Replace</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle-o"></i> Return
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                   
+                    <li>@Html.ActionLink(" View All", "ViewAllSalesReturn", "Account", new {area = "AccountsAndFinance"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+
+
+                </ul>
+            </li>
+            @*<li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle-o"></i> Replace
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                                     <li>@Html.ActionLink(" View All", "Home", "Replace", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+
+
+                </ul>
+            </li>*@
+        </ul>
+    </li>
+    
 
     <li class="treeview">
         <a href="#">

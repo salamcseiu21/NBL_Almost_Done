@@ -223,16 +223,16 @@
     var purposeCodeList = [];
     function AddChequeInfoToList(btnClicked) {
 
-        if ($("#TransactionTypeId").val() == "") {
+        if ($("#TransactionTypeId").val() === "") {
             alert("Please select transaction type");
         }
-        else if ($("#AccountCode").val() == "") {
+        else if ($("#AccountCode").val() === "") {
             alert("Please type bank account name....");
         }
-        else if ($("#PurposeName").val() == "") {
+        else if ($("#PurposeName").val() === "") {
             alert("Please Enter Purpose Name");
         }
-        else if ($("#PurposeAmounts").val() == "") {
+        else if ($("#PurposeAmounts").val() === "") {
             alert("Please Enter Purpose Amounts!!");
         }
 

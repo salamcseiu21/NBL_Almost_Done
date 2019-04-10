@@ -73,6 +73,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@Quantity", item.Quantity);
                 CommandObj.Parameters.AddWithValue("@DeliveryId", item.DeliveryId);
                 CommandObj.Parameters.AddWithValue("@DeliveryRef", item.DeliveryRef);
+                CommandObj.Parameters.AddWithValue("@DeliveryDate", item.DeliveryDate);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
@@ -168,20 +169,114 @@ namespace NBL.DAL
             }
         }
 
-        public int Add(ReturnModel model)
+        public ICollection<ViewReturnProductModel> GetSalesReturnProductListToTest()
         {
-            throw new NotImplementedException();
+            try
+            {
+                CommandObj.CommandText = "UDSP_SalesReturnProductListToTest";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<ViewReturnProductModel> products=new List<ViewReturnProductModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    products.Add(new ViewReturnProductModel
+                    {
+                        ReturnRef = reader["ReturnRef"].ToString(),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        Barcode = reader["Barcode"].ToString(),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        ReceiveSalesReturnDetailsId = Convert.ToInt64(reader["ReceiveSalesReturnDetailsId"]),
+                        SalesReturnId = Convert.ToInt64(reader["SalesReturnId"]),
+                        ReceiveSalesReturnId = Convert.ToInt64(reader["ReceiveSalesReturnId"])
+                    });
+                }
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect Sales return product list",exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
         }
 
-        public int Update(ReturnModel model)
+        public int AddVerificationNoteToReturnsProduct(long returnRcvDetailsId, string notes, int userUserId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                CommandObj.CommandText = "UDSP_AddVerificationNoteToReturnsProduct";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Notes", notes);
+                CommandObj.Parameters.AddWithValue("@UserId", userUserId);
+                CommandObj.Parameters.AddWithValue("@ReturnDetailsId", returnRcvDetailsId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not add verification staus to returns product", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
         }
 
-        public int Delete(ReturnModel model)
+        public ICollection<ViewReturnProductModel> GetAllVerifiedSalesReturnProducts()
         {
-            throw new NotImplementedException();
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllVerifiedSalesReturnProducts";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<ViewReturnProductModel> products = new List<ViewReturnProductModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    products.Add(new ViewReturnProductModel
+                    {
+                        ReturnRef = reader["ReturnRef"].ToString(),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        Barcode = reader["Barcode"].ToString(),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        ReceiveSalesReturnDetailsId = Convert.ToInt64(reader["ReceiveSalesReturnDetailsId"]),
+                        SalesReturnId = Convert.ToInt64(reader["SalesReturnId"]),
+                        ReceiveSalesReturnId = Convert.ToInt64(reader["ReceiveSalesReturnId"]),
+                        DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
+                        ReturnDate = Convert.ToDateTime(reader["ReturnDateTime"]),
+                        VerifiedNotes = reader["Notes"].ToString(),
+                        DeliveryRef = reader["DeliveryRef"].ToString()
+                    });
+                }
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect verified Sales return product list", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
         }
+
 
         public ReturnModel GetById(int id)
         {
@@ -322,9 +417,9 @@ namespace NBL.DAL
                         ReturnRef = reader["SalesReturnRef"].ToString(),
                         ReturnNo = Convert.ToInt64(reader["SalesReturnNo"]),
                         TotalQuantity = Convert.ToInt32(reader["TotalQuantity"]),
-                        Remarks = reader["Remarks"].ToString(),
+                        Remarks =DBNull.Value.Equals(reader["Remarks"])?null: reader["Remarks"].ToString(),
                         SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
-                        ReturnApproveByUserId = Convert.ToInt32(reader["ReturnApproveByUserId"]),
+                        ReturnApproveByUserId =DBNull.Value.Equals(reader["ReturnApproveByUserId"])? default(int): Convert.ToInt32(reader["ReturnApproveByUserId"]),
                         ReturnApproveDateTime =DBNull.Value.Equals(reader["ReturnApproveDate"])? default(DateTime): Convert.ToDateTime(reader["ReturnApproveDate"]),
                         NsmNotes = DBNull.Value.Equals(reader["NotesByNsm"])?null: reader["NotesByNsm"].ToString(),
                         ReturnStatus = Convert.ToInt32(reader["Status"]),
@@ -532,6 +627,19 @@ namespace NBL.DAL
             }
         }
 
-        
+        public int Add(ReturnModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Update(ReturnModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Delete(ReturnModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -46,13 +46,13 @@ namespace NBL.Areas.Sales.Controllers
         [Authorize(Roles = "User")]
         public ActionResult ConfirmReturnEntry()
         {
-            var products= GetProductFromXmalFile(GetTempReturnProductsXmlFilePath());
+            var products= GetProductFromXmlFile(GetTempReturnProductsXmlFilePath());
             return View(products);
         }
         [HttpPost]
         public ActionResult ConfirmReturnEntry(FormCollection collection)
         {
-            var products = GetProductFromXmalFile(GetTempReturnProductsXmlFilePath());
+            var products = GetProductFromXmlFile(GetTempReturnProductsXmlFilePath());
             var user = (ViewUser)Session["user"];
             var branchId = Convert.ToInt32(Session["BranchId"]);
             var companyId= Convert.ToInt32(Session["CompanyId"]);
@@ -93,6 +93,7 @@ namespace NBL.Areas.Sales.Controllers
                         var product = _iProductManager.GetProductByProductId(productId);
                         var deliveryRef = key.Substring(0, first - 1);
                         var deliveryId = key.Substring(last, key.Length - last);
+                        var deliveredOrder= _iDeliveryManager.GetOrderByDeliveryId(Convert.ToInt32(deliveryId));
                         //var requisition = _iProductManager.GetRequsitions().ToList().Find(n => n.RequisitionId == requisitionId);
                         var filePath = GetTempReturnProductsXmlFilePath();
                         var xmlDocument = XDocument.Load(filePath);
@@ -104,7 +105,8 @@ namespace NBL.Areas.Sales.Controllers
                                     new XElement("DeliveryRef", deliveryRef),
                                     new XElement("ProuctId", productId),
                                     new XElement("Quantity", quantity),
-                                    new XElement("ProductName", product.ProductName)
+                                    new XElement("ProductName", product.ProductName),
+                                    new XElement("DeliveryDate", deliveredOrder.DeliveryDate)
                                 ));
                             xmlDocument.Save(filePath);
                             _count++;
@@ -157,7 +159,7 @@ namespace NBL.Areas.Sales.Controllers
             xmlData.Save(filePath);
         }
         [Authorize(Roles = "User")]
-        private IEnumerable<ReturnProduct> GetProductFromXmalFile(string filePath)
+        private IEnumerable<ReturnProduct> GetProductFromXmlFile(string filePath)
         {
             List<ReturnProduct> products = new List<ReturnProduct>();
             var xmlData = XDocument.Load(filePath).Element("Products")?.Elements();
@@ -174,7 +176,8 @@ namespace NBL.Areas.Sales.Controllers
                     DeliveryRef = xElements[1].Value,
                     ProductId = Convert.ToInt32(xElements[2].Value),
                     Quantity = Convert.ToInt32(xElements[3].Value),
-                    ProductName = xElements[4].Value
+                    ProductName = xElements[4].Value,
+                    DeliveryDate = Convert.ToDateTime(xElements[5].Value)
 
 
                 };
@@ -191,7 +194,7 @@ namespace NBL.Areas.Sales.Controllers
             if (System.IO.File.Exists(filePath))
             {
                 //if the file is exists read the file
-                IEnumerable<ReturnProduct> products = GetProductFromXmalFile(filePath);
+                IEnumerable<ReturnProduct> products = GetProductFromXmlFile(filePath);
                 return PartialView("_ViewTempReturnProducts", products);
             }
             //if the file does not exists create the file

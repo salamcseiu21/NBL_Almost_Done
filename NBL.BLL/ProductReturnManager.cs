@@ -116,5 +116,21 @@ namespace NBL.BLL
             int rowAffected = _iProductReturnGateway.ReceiveSalesReturnProduct(model);
             return rowAffected > 0;
         }
+
+        public ICollection<ViewReturnProductModel> GetSalesReturnProductListToTest()
+        {
+            return _iProductReturnGateway.GetSalesReturnProductListToTest();
+        }
+
+        public bool AddVerificationNoteToReturnsProduct(long returnRcvDetailsId, string notes, int userUserId)
+        {
+            int rowAffected = _iProductReturnGateway.AddVerificationNoteToReturnsProduct(returnRcvDetailsId,notes,userUserId);
+            return rowAffected > 0;
+        }
+
+        public ICollection<ViewReturnProductModel> GetAllVerifiedSalesReturnProducts()
+        {
+            return _iProductReturnGateway.GetAllVerifiedSalesReturnProducts();
+        }
     }
 }

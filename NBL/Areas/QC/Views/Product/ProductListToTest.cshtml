@@ -1,0 +1,71 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Returns.ViewReturnProductModel>
+@{
+    ViewBag.Title = "Product List To Test";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Product List</h3>
+    <table id="tbl_return_product_list" class="display table-bordered" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Barcode</th>
+            <th>Notes</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Barcode</td>
+                <td>
+                    <textarea rows="2" id="notes_of_@item.ReceiveSalesReturnDetailsId" placeholder="Write checked notes here....." style="resize: none;width: 100%"></textarea>
+                </td>
+                <td style="width: 100px">
+                   <button class="btn btn-info" value="@item.ReceiveSalesReturnDetailsId" onclick="isChecked(this)">Is Checked ?</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Product Name</th>
+            <th>Barcode</th>
+            <th>Notes</th>
+            <th>Action</th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+@section Scripts
+{
+    <script>
+        $("#tbl_return_product_list").DataTable();
+        function isChecked(btnClick) {
+            var result = confirm('Are you Sure !');
+            if (result) {
+                
+                var notesId = 'notes_of_' + btnClick.value;
+                var notes = document.getElementById(notesId).value;
+                var returnRcvDetailsId = btnClick.value;
+                var json = { returnRcvDetailsId: returnRcvDetailsId,notes:notes };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddVerificationNotes", "Product",new { area="QC"})',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+                
+            } else {
+                return false;
+            }
+        }
+    </script>
+}

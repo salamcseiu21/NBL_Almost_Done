@@ -12,6 +12,7 @@
             <th class="text-center">Reference</th>
             <th class="text-center">Quantity</th>
             <th class="text-center">Date</th>
+            <th class="text-center">Notes</th>
             <th class="text-center">Status</th>
             <th class="text-center">View</th>
         </tr>
@@ -23,6 +24,7 @@
                 <td class="text-center">@item.ReturnRef</td>
                 <td class="text-center">@item.TotalQuantity</td>
                 <td class="text-center">@item.SystemDateTime.Date.ToString("D")</td>
+                <td class="text-center">@(item.Remarks?? "N/A")</td>
                 <td class="text-center">@{
                                             if (item.ReturnStatus == 0)
                                             {
@@ -49,6 +51,7 @@
             <th class="text-center">Reference</th>
             <th class="text-center">Quantity</th>
             <th class="text-center">Date</th>
+            <th class="text-center">Notes</th>
             <th class="text-center">Status</th>
             <th class="text-center">View</th>
         </tr>

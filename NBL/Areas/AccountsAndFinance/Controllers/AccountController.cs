@@ -9,6 +9,7 @@ using NBL.BLL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Payments;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Returns;
 
 namespace NBL.Areas.AccountsAndFinance.Controllers
 {
@@ -18,12 +19,14 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         private readonly ICommonManager _iCommonManager;
         private readonly IAccountsManager _iAccountsManager;
         private readonly IClientManager _iClientManager;
+        private readonly IProductReturnManager _iProductReturnManager;
         // GET: Accounts/Account
-        public AccountController(IClientManager iClientManager,ICommonManager iCommonManager,IAccountsManager iAccountsManager)
+        public AccountController(IClientManager iClientManager,ICommonManager iCommonManager,IAccountsManager iAccountsManager,IProductReturnManager iProductReturnManager)
         {
             _iClientManager = iClientManager;
             _iCommonManager = iCommonManager;
             _iAccountsManager = iAccountsManager;
+            _iProductReturnManager = iProductReturnManager;
         }
         [HttpGet]
         public ActionResult Receivable()
@@ -183,6 +186,13 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 return Json(payments, JsonRequestBehavior.AllowGet);
             }
             return Json(new List<Payment>(), JsonRequestBehavior.AllowGet);
+        }
+
+        //------------------View Sales return ----------------
+        public ActionResult ViewAllSalesReturn()
+        {
+            List<ViewReturnProductModel> products = _iProductReturnManager.GetAllVerifiedSalesReturnProducts().ToList();
+            return View(products);
         }
     }
 }

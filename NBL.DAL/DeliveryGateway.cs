@@ -61,7 +61,7 @@ namespace NBL.DAL
                         DeliveryId = Convert.ToInt32(reader["DeliveryId"]),
                         ToBranchId = Convert.ToInt32(reader["ToBranchId"]),
                         DeliveryRef = reader["DeliveryRef"].ToString(),
-                        DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
+                        DeliveryDate = Convert.ToDateTime(reader["SysDateTime"]),
                         TransactionRef = reader["TransactionRef"].ToString(),
                         DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
                         Status = Convert.ToInt32(reader["Status"]),
