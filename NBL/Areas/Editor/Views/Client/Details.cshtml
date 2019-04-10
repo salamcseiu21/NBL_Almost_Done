@@ -27,7 +27,7 @@
                     </dt>
 
                     <dd>
-                        <img class="img-responsive" src="~/@Model.ClientImage" alt="Client Image" title="@Model.ClientName" width="110" height="150">
+                        <img class="img-responsive" src="~/@(Model.ClientImage?? "Images/User.jpg")" alt="Client Image" title="@Model.ClientName" width="110" height="150">
                     </dd>
 
                     <dt>
@@ -35,7 +35,7 @@
                     </dt>
 
                     <dd>
-                        <img class="img-responsive" src="~/@Model.ClientSignature" alt="Client Signature " width="150" height="60">
+                        <img class="img-responsive" src="~/@(Model.ClientSignature?? "Images/sign.png")" alt="Client Signature " width="150" height="60">
                     </dd>
 
                     <dt>
@@ -43,7 +43,8 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.NationalIdNo)
+                        @(Model.NationalIdNo?? "N/A")
+
                     </dd>
 
                     <dt>
@@ -51,7 +52,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.TinNo)
+                        @(Model.TinNo ?? "N/A")
                     </dd>
 
                     <dt>
@@ -59,7 +60,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Address)
+                        @(Model.Address ?? "N/A")
                     </dd>
 
                     <dt>
@@ -67,7 +68,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Phone)
+                        @(Model.Phone ?? "N/A")
                     </dd>
 
                     <dt>
@@ -75,7 +76,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.AlternatePhone)
+                        @(Model.AlternatePhone ?? "N/A")
                     </dd>
 
                     <dt>
@@ -83,7 +84,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Email)
+                        @(Model.Email ?? "N/A")
                     </dd>
 
                     <dt>
@@ -91,7 +92,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Fax)
+                        @(Model.Fax ?? "N/A")
                     </dd>
 
                     <dt>
@@ -99,48 +100,12 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Website)
+                        @(Model.Website ?? "N/A")
                     </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.FathersName)
-                    </dt>
+                    
 
-                    <dd>
-                        @Html.DisplayFor(model => model.FathersName)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.MothersName)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.MothersName)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.DoB)
-                    </dt>
-
-                    <dd>
-                        @Model.DoB.Date.ToString("D")
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.MaritalStatus)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.MaritalStatus)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Gender)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Gender)
-                    </dd>
+                   
 
 
 
@@ -151,7 +116,7 @@
             <div class="col-md-6">
                 <dl class="dl-horizontal">
                     <dt>
-                        @Html.DisplayNameFor(model => model.SubSubSubAccountCode)
+                        <span>Account Code</span>
                     </dt>
 
                     <dd>
@@ -163,18 +128,10 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.BranchName)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Active)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Active)
+                        @(Model.BranchName ?? "N/A")
                     </dd>
                     <dt>
-                        @Html.DisplayNameFor(model => model.ClientTypeName)
+                     <span> Client Type</span>
                     </dt>
 
                     <dd>
@@ -182,62 +139,45 @@
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.Discount)
+                        <span> Division</span>
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Discount) %
+                        @(Model.Division?.DivisionName ?? "N/A")
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.DivisionName)
+                        <span> District</span>
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.DivisionName)
+                        @(Model.District?.DistrictName ?? "N/A")
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.DistrictName)
+                        <span> Upazilla</span>
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.DistrictName)
+                        @(Model.Upazilla?.UpazillaName ?? "N/A")
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.UpazillaName)
+                        <span> Post Office</span>
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.UpazillaName)
+                        @(Model.PostOffice?.PostOfficeName ?? "N/A")
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.PostOfficeName)
+                        <span> Post Code</span>
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.PostOfficeName)
+                        @(Model.PostOffice?.Code ?? "N/A")
                     </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.PostCode)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.PostCode)
-                    </dd>
-
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.EntryDate)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.EntryDate)
-
-                    </dd>
+                    
                 </dl>
             </div>
 

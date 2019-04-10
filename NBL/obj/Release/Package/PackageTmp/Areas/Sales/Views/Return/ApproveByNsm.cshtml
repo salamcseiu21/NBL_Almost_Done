@@ -1,0 +1,86 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Returns.ReturnDetails>
+@{
+    ViewBag.Title = "Approve";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-10">
+            <h3 class="text-center text-green">Confirm Return</h3>
+            @if (ViewBag.Result != null)
+            {
+                <div class="text-center text-danger">@ViewBag.Result</div>
+            }
+            @using (Html.BeginForm())
+            {
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="Remarks" class="control-label col-md-3">Remarks</label>
+                        <div class="col-md-9">
+                            <input id="salesReturnId" name="salesReturnId" value="@ViewBag.SalesReturnId" type="hidden"/>
+                            <textarea id="Remarks" name="Remarks" placeholder="Write remarks..." class="form-control" required autofocus style="resize: none" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-9 col-md-offset-3">
+
+                            @Html.ActionLink(" Cancel", "ViewAll", "Return", null, new { @class = "btn btn-danger" })
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <h3 class="text-center text-green"> Return Details</h3>
+    <table id="tbl_Return_details" class="display table-bordered" style="border: 1px solid">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quanity</th>
+                <th>Order Date</th>
+                <th>Nsm Approve</th>
+                <th>Admin Approve</th>
+                <th>Delivery Date</th>
+                <th>Return Date</th>
+                <th>Delivery-to-Return</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.OrderDateTime.ToString("F")</td>
+                    <td>@item.ApproveByNsmDateTime.ToString("F")</td>
+                    <td>@item.ApproveBySalesAdminDateTime.ToString("F")</td>
+                    <td>@item.DeliveredDateTime.ToString("F")</td>
+                    <td>@item.ReturnDateTime.ToString("F")</td>
+                    <td>@(Math.Ceiling((item.ReturnDateTime - item.DeliveredDateTime).TotalDays))</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Product Name</th>
+                <th>Quanity</th>
+                <th>Order Date</th>
+                <th>Nsm Approve</th>
+                <th>Admin Approve</th>
+                <th>Delivery Date</th>
+                <th>Return Date</th>
+                <th>Delivery-to-Return</th>
+            </tr>
+        </tfoot>
+    </table>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_Return_details").DataTable();
+    </script>
+}

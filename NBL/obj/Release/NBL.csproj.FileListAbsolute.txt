@@ -250,3 +250,4 @@ G:\Salam\NBL\NBL\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 G:\Salam\NBL\NBL\obj\Release\NBL.csprojResolveAssemblyReference.cache
 G:\Salam\NBL\NBL\obj\Release\NBL.dll
 G:\Salam\NBL\NBL\obj\Release\NBL.pdb
+E:\API\NBL\NBL\bin\System.Runtime.InteropServices.RuntimeInformation.dll

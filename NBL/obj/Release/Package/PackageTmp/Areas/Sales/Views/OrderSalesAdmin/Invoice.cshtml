@@ -69,7 +69,6 @@
 
                             <tr>
                                 <th>Sl No</th>
-                                <th>Product Serial #</th>
                                 <th>Product Name </th>
                                 <th class="text-right">Quantity</th>
                                 <th class="text-right">Rate (&#2547;)</th>
@@ -92,7 +91,6 @@
 
                                         <tr>
                                             <td>  @(rowNo += 1)</td>
-                                            <td>@item.ProductId</td>
                                             <td>@item.ProductName</td>
                                             <td class="text-right">@item.Quantity</td>
                                             <td class="text-right">@item.SalePrice</td>
@@ -108,7 +106,7 @@
                             }
                             <tr>
 
-                                <th colspan="3" class="text-right">
+                                <th colspan="2" class="text-right">
                                     Total
                                 </th>
                                 <th class="text-right">
@@ -123,7 +121,7 @@
                             </tr>
                             <tr>
 
-                                <th colspan="3" class="text-right">
+                                <th colspan="2" class="text-right">
                                    Special Discount
                                 </th>
                                 <th class="text-right">
@@ -140,7 +138,7 @@
 
                             <tr>
 
-                                <th colspan="3" class="text-right">
+                                <th colspan="2" class="text-right">
                                     Net
                                 </th>
                                 <th class="text-right">

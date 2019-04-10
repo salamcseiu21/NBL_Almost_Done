@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using NBL.Models.EntityModels.Returns;
+using NBL.Models.ViewModels.Returns;
 
 namespace NBL.BLL.Contracts
 {
@@ -10,6 +11,8 @@ namespace NBL.BLL.Contracts
         ICollection<ReturnDetails> GetReturnDetailsBySalesReturnId(long salesReturnId);
         ReturnDetails GetReturnDetailsById(int salsesReturnDetailsId);
         bool ApproveReturnByNsm(string remarks, long salesReturnId, int userUserId);
-        ICollection<ReturnModel> GetAllReturnsByStatus(int status); 
+        ICollection<ReturnModel> GetAllReturnsByStatus(int status);
+        ReturnModel GetSalesReturnBySalesReturnId(long salesReturnId);
+        bool ReceiveSalesReturnProduct(ViewReturnReceiveModel model);
     }
 }

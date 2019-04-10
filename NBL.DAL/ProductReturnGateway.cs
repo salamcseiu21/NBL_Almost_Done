@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Returns;
+using NBL.Models.ViewModels.Productions;
+using NBL.Models.ViewModels.Returns;
 
 namespace NBL.DAL
 {
@@ -137,7 +139,34 @@ namespace NBL.DAL
             }
         }
 
-       
+        public long GetMaxSalesReturnReceiveRefByYear(int year)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetMaxSalesReturnReceiveRefByYear";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Year", year);
+                ConnectionObj.Open();
+                long maxRefNo = 0;
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    maxRefNo = Convert.ToInt64(reader["MaxRefNo"]);
+                }
+                reader.Close();
+                return maxRefNo;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get max sales return receive ref no", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
 
         public int Add(ReturnModel model)
         {
@@ -157,6 +186,121 @@ namespace NBL.DAL
         public ReturnModel GetById(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public ReturnModel GetSalesReturnBySalesReturnId(long salesReturnId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetSalesReturnBySalesReturnId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@SalesReturnId", salesReturnId);
+                ReturnModel model = null;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    model = new ReturnModel
+                    {
+                        SalesReturnId = Convert.ToInt64(reader["SalesReturnId"]),
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        ReturnRef = reader["SalesReturnRef"].ToString(),
+                        ReturnNo = Convert.ToInt64(reader["SalesReturnNo"]),
+                        TotalQuantity = Convert.ToInt32(reader["TotalQuantity"]),
+                        Remarks = reader["Remarks"].ToString(),
+                        SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        ReturnApproveByUserId = Convert.ToInt32(reader["ReturnApproveByUserId"]),
+                        ReturnApproveDateTime = DBNull.Value.Equals(reader["ReturnApproveDate"])
+                            ? default(DateTime)
+                            : Convert.ToDateTime(reader["ReturnApproveDate"]),
+                        NsmNotes = DBNull.Value.Equals(reader["NotesByNsm"]) ? null : reader["NotesByNsm"].ToString(),
+                        ReturnStatus = Convert.ToInt32(reader["Status"]),
+                        ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"])
+                    };
+                }
+                reader.Close();
+                return model;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect sales returns by id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+
+            }
+        }
+
+        public int ReceiveSalesReturnProduct(ViewReturnReceiveModel model)
+        {
+            ConnectionObj.Open();
+            SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
+            try
+            {
+                int rowAffected = 0;
+                CommandObj.Transaction = sqlTransaction;
+                CommandObj.CommandText = "UDSP_ReceiveSalesReturnProduct";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@TotalQuantity", model.Products.Count);
+                CommandObj.Parameters.AddWithValue("@ReturnRef", model.ReturnModel.ReturnRef);
+                CommandObj.Parameters.AddWithValue("@ReturnNo", model.ReturnModel.ReturnNo);
+                CommandObj.Parameters.AddWithValue("@TransactionRef", model.TransactionRef); 
+                CommandObj.Parameters.AddWithValue("@ReceiveByUserId", model.ReceiveByUserId);
+                CommandObj.Parameters.AddWithValue("@Notes", model.Notes??(object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@SalesReturnId", model.ReturnModel.SalesReturnId);
+                CommandObj.Parameters.Add("@MasterId", SqlDbType.BigInt);
+                CommandObj.Parameters["@MasterId"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                var masterId = Convert.ToInt64(CommandObj.Parameters["@MasterId"].Value);
+                rowAffected = SaveSalesReturnDetails(model.Products,masterId);
+                if (rowAffected > 0)
+                {
+                    sqlTransaction.Commit();
+                   
+                }
+                else
+                {
+                    sqlTransaction.Rollback();
+                }
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                sqlTransaction.Rollback();
+                throw new Exception("Could not receive sales return products", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+
+            }
+        }
+
+        
+
+        private int SaveSalesReturnDetails(List<ScannedProduct> modelProducts, long masterId)
+        {
+            int i = 0;
+            foreach (ScannedProduct product in modelProducts)
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.CommandText = "UDSP_SaveReceiveSalesReturnDetails";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@MasterId",masterId);
+                CommandObj.Parameters.AddWithValue("@ProductId",product.ProductId);
+                CommandObj.Parameters.AddWithValue("@BarCode",product.ProductCode);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            }
+            return i;
         }
 
         public ICollection<ReturnModel> GetAll()
@@ -248,6 +392,9 @@ namespace NBL.DAL
 
             }
         }
+
+       
+
         public ICollection<ReturnDetails> GetReturnDetailsBySalesReturnId(long salesReturnId)
         {
             try

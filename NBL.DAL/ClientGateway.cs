@@ -413,28 +413,30 @@ namespace NBL.DAL
                     client.Website = DBNull.Value.Equals(reader["Website"]) ? null : reader["Website"].ToString();
                     client.PostOfficeId = DBNull.Value.Equals(reader["PostOfficeId"]) ?(int?) null: Convert.ToInt32(reader["PostOfficeId"]);
                     client.UserId = Convert.ToInt32(reader["UserId"]);
+                    client.BranchId = Convert.ToInt32(reader["BranchId"]);
+                   
                     client.Division = new Division
                     {
-                        //DivisionId = Convert.ToInt32(reader["DivisionId"]),
+                        DivisionId =DBNull.Value.Equals(reader["DivisionId"])? default(int): Convert.ToInt32(reader["DivisionId"]),
                         DivisionName = reader["DivisionName"].ToString()
                     };
                     client.District = new District
                     {
-                        //DistrictId = Convert.ToInt32(reader["DistrictId"]),
-                        DistrictName = reader["DistrictName"].ToString(),
-                       // DivisionId = Convert.ToInt32(reader["DivisionId"])
+                        DistrictId = DBNull.Value.Equals(reader["DistrictId"]) ? default(int) : Convert.ToInt32(reader["DistrictId"]),
+                        DistrictName =DBNull.Value.Equals(reader["DistrictName"])?null: reader["DistrictName"].ToString(),
+                        DivisionId = DBNull.Value.Equals(reader["DivisionId"]) ? default(int) : Convert.ToInt32(reader["DivisionId"])
                     };
                     client.Upazilla = new Upazilla
                     {
-                       // UpazillaId = Convert.ToInt32(reader["UpazillaId"]),
-                        UpazillaName = reader["UpazillaName"].ToString(),
-                       // DistrictId = Convert.ToInt32(reader["DistrictId"])
+                        UpazillaId = DBNull.Value.Equals(reader["UpazillaId"]) ? default(int) : Convert.ToInt32(reader["UpazillaId"]),
+                        UpazillaName = DBNull.Value.Equals(reader["UpazillaName"]) ? null : reader["UpazillaName"].ToString(),
+                        DistrictId = DBNull.Value.Equals(reader["DistrictId"]) ? default(int) : Convert.ToInt32(reader["DistrictId"])
                     };
                     client.PostOffice = new PostOffice
                     {
-                       //PostOfficeId = Convert.ToInt32(reader["PostOfficeId"]),
-                        PostOfficeName = reader["PostOfficeName"].ToString(),
-                       Code = reader["PostCode"].ToString(),
+                        PostOfficeId =DBNull.Value.Equals(reader["PostOfficeId"])? default(int): Convert.ToInt32(reader["PostOfficeId"]),
+                        PostOfficeName = DBNull.Value.Equals(reader["PostOfficeName"])?null: reader["PostOfficeName"].ToString(),
+                        Code =DBNull.Value.Equals(reader["PostCode"])?null: reader["PostCode"].ToString()
                     };
                     client.ClientType = new ClientType
                     {
@@ -449,7 +451,7 @@ namespace NBL.DAL
                     client.ClientSignature = DBNull.Value.Equals(reader["ClientSignature"]) ? null : reader["ClientSignature"].ToString();
                     client.NationalIdNo = DBNull.Value.Equals(reader["NationalIdNo"]) ? null : reader["NationalIdNo"].ToString();
                     client.Active = reader["Active"].ToString();
-                    //client.BranchName = reader["ClientBranch"].ToString();
+                    client.BranchName = reader["CBranchName"].ToString();
                     client.CreditLimit = Convert.ToDecimal(reader["CreditLimit"]);
                     client.MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"]);
                     client.ClientType = _iCommonGateway.GetAllClientType().ToList()

@@ -127,6 +127,7 @@
     <Compile Include="Enums\ReferenceType.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
     <Compile Include="Enums\RequisitionStatus.cs" />
+    <Compile Include="Enums\SalesReturn.cs" />
     <Compile Include="ErrorModel.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="EntityModels\Invoices\Invoice.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="ViewModels\Requisitions\ViewRequisitionModel.cs" />
     <Compile Include="EntityModels\Requisitions\RequisitionModel.cs" />
     <Compile Include="ViewModels\Returns\ViewEntryReturnModel.cs" />
+    <Compile Include="ViewModels\Returns\ViewReturnReceiveModel.cs" />
     <Compile Include="ViewModels\Summaries\FactorySummaryModel.cs" />
     <Compile Include="ViewModels\Summaries\SummaryModel.cs" />
     <Compile Include="EntityModels\Suppliers\Supplier.cs" />

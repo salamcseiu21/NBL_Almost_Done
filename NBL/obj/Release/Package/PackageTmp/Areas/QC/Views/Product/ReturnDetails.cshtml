@@ -1,0 +1,52 @@
+﻿@model NBL.Models.ViewModels.Returns.ViewReturnReceiveModel
+@{
+    ViewBag.Title = "Return Details";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3" style="border: 1px solid;">
+            
+            <div class="form-horizontal">
+                <h3 class="text-center text-green">Receive Sales Return Products</h3>
+                <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
+                </div>
+                <div class="form-group">
+                    <label for="ProductCode" class="control-label col-md-2"></label>
+                    @Html.HiddenFor(m=>m.SalesReturnId)
+                    <div class="col-md-10">
+                        <input type="text" id="ProductCode" name="ProductCode" class="form-control"placeholder="Always keep pointer here..!!" autofocus onchange="SaveScannedBarcodeToTextFile(this)"/>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                       
+                        <button type="button" class="btn btn-info" onclick="ReceiveProductToBranch(this)">Receive</button>
+                        @Html.ActionLink("Back","ViewAllReturns","Product",new {area="QC"},new {@class="btn btn-danger"})
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="row" style="padding: 15px; border: 1px solid;margin: 10px">
+        <div class="col-md-6">
+            <div id="receivable_list"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="scanned_Products"></div>
+        </div>
+        <hr />
+    </div>
+
+</section>
+@section Scripts
+{
+    
+   <script src="~/Areas/QC/Scripts/receiveSalesReturnProducts.js"></script>
+}
+

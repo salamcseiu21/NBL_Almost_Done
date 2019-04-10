@@ -1,0 +1,36 @@
+﻿
+
+@model IEnumerable<NBL.Models.ViewModels.Productions.ScannedProduct>
+
+<table id="tbl_scanned_list" class="display" style="border: 1px solid black">
+    <caption class="text-center text-green" style="font-weight: bolder; font-size: 20px">Scanned Product List</caption>
+    <thead>
+    <tr>
+
+        <th>Product Name</th>
+        <th> Quantity </th>
+
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ProductName</td>
+            <td>@Model.Count()</td>
+        </tr>
+    }
+    </tbody>
+
+    <tfoot>
+    <tr>
+        <th>Product Name</th>
+        <th> Quantity </th>
+    </tr>
+    </tfoot>
+</table>
+<script>
+    $("#tbl_scanned_list").DataTable({
+        lengthMenu: [[10, 30, 50, -1], [15, 30, 50, "All"]]
+    });
+</script>

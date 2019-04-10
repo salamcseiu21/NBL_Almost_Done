@@ -24,16 +24,6 @@ namespace NBL.Areas.QC.Controllers
             return View();
         }
 
-        public ActionResult ReturnDetails(long salesReturnId) 
-        {
-            List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
-            return View(models);
-        }
-        public ActionResult ViewAllReturns() 
-        {
-            List<ReturnModel> products = _iProductReturnManager.GetAllReturnsByStatus(1).ToList();
-            return View(products);
-        }
 
     }
 }

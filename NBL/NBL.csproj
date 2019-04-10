@@ -461,6 +461,7 @@
     <Content Include="Areas\Production\Scripts\loadAllScannedProducts.js" />
     <Content Include="Areas\Production\Scripts\loadTempTripProducts.js" />
     <Content Include="Areas\Production\Scripts\requisitionReferencesAutoComplete.js" />
+    <Content Include="Areas\QC\Scripts\receiveSalesReturnProducts.js" />
     <Content Include="Areas\Sales\Files\Temp_Sales_Order_By_24.xml" />
     <Content Include="Areas\Sales\Scripts\addNewItemToList.js" />
     <Content Include="Areas\Sales\Scripts\cancelOrder.js" />
@@ -7970,11 +7971,13 @@
     <Content Include="Areas\QC\Views\web.config" />
     <Content Include="Areas\QC\Views\Home\Home.cshtml" />
     <Content Include="Areas\QC\Views\Shared\_MenuPartialPage.cshtml" />
-    <Content Include="Areas\QC\Views\Home\ViewAllReturns.cshtml" />
-    <Content Include="Areas\QC\Views\Home\ReturnDetails.cshtml" />
+    <Content Include="Areas\QC\Views\Product\ViewAllReturns.cshtml" />
+    <Content Include="Areas\QC\Views\Product\ReturnDetails.cshtml" />
     <Content Include="Areas\Sales\Views\Return\ReturnDetails.cshtml" />
     <Content Include="Areas\QC\Views\Product\Receive.cshtml" />
     <Content Include="Areas\Sales\Views\Return\ApproveByNsm.cshtml" />
+    <Content Include="Areas\QC\Views\Shared\_ViewSalesReturnReceivablePartialPage.cshtml" />
+    <Content Include="Areas\QC\Views\Shared\_ViewSalesReturnScannedPartialPage.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8120,6 +8123,7 @@
     <Folder Include="Areas\Production\Models\" />
     <Folder Include="Areas\Purchases\Models\" />
     <Folder Include="Areas\Purchases\Views\Shared\" />
+    <Folder Include="Areas\QC\Files\" />
     <Folder Include="Areas\QC\Models\" />
     <Folder Include="Areas\ResearchAndDevelopment\Models\" />
     <Folder Include="Areas\Sales\Files\Returns\" />

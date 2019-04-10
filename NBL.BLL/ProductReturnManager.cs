@@ -5,6 +5,7 @@ using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Returns;
 using NBL.Models.Enums;
+using NBL.Models.ViewModels.Returns;
 
 namespace NBL.BLL
 {
@@ -99,6 +100,21 @@ namespace NBL.BLL
         public ICollection<ReturnModel> GetAllReturnsByStatus(int status)
         {
             return _iProductReturnGateway.GetAllReturnsByStatus(status);
+        }
+
+        public ReturnModel GetSalesReturnBySalesReturnId(long salesReturnId)
+        {
+            return _iProductReturnGateway.GetSalesReturnBySalesReturnId(salesReturnId);
+        }
+
+        public bool ReceiveSalesReturnProduct(ViewReturnReceiveModel model)
+        {
+            string refCode = GetReferenceAccountCodeById(Convert.ToInt32(ReferenceType.SalesReturnReceive));
+            long maxSl = _iProductReturnGateway.GetMaxSalesReturnReceiveRefByYear(DateTime.Now.Year);
+            model.TransactionRef= DateTime.Now.Date.Year.ToString().Substring(2, 2) +refCode + (maxSl+1);
+
+            int rowAffected = _iProductReturnGateway.ReceiveSalesReturnProduct(model);
+            return rowAffected > 0;
         }
     }
 }
