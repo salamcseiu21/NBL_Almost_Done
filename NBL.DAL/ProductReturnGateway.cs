@@ -463,12 +463,12 @@ namespace NBL.DAL
                         ReturnRef = reader["SalesReturnRef"].ToString(),
                         ReturnNo = Convert.ToInt64(reader["SalesReturnNo"]),
                         TotalQuantity = Convert.ToInt32(reader["TotalQuantity"]),
-                        Remarks = reader["Remarks"].ToString(),
+                        Remarks =DBNull.Value.Equals(reader["Remarks"])?null: reader["Remarks"].ToString(),
                         SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
                         ReturnApproveByUserId = Convert.ToInt32(reader["ReturnApproveByUserId"]),
                         ReturnApproveDateTime = DBNull.Value.Equals(reader["ReturnApproveDate"]) ? default(DateTime) : Convert.ToDateTime(reader["ReturnApproveDate"]),
                         NsmNotes = DBNull.Value.Equals(reader["NotesByNsm"]) ? null : reader["NotesByNsm"].ToString(),
-                        ReturnStatus = Convert.ToInt32(reader["Status"]),
+                        ReturnStatus =DBNull.Value.Equals(reader["Status"])?default(int): Convert.ToInt32(reader["Status"]),
                         ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"])
                     });
                 }

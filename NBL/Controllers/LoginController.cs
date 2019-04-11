@@ -6,9 +6,12 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Web.Mvc;
 using System.Web.Security;
+using AutoMapper;
+using Microsoft.Ajax.Utilities;
 using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Identities;
+using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
 
 namespace NBL.Controllers
@@ -39,19 +42,28 @@ namespace NBL.Controllers
         [HttpPost]
         public ActionResult LogIn(FormCollection collection, string ReturnUrl)
         {
+
             User user = new User();
             string userName = collection["userName"];
             string password = collection["Password"];
             user.Password = password;
             user.UserName = userName;
-            if (IsValid(user))
+
+            bool validUser = _userManager.ValidateUser(user);
+
+            if (validUser)
             {
+                var model = _userManager.GetUserByUserName(user.UserName);
+                var anUser = Mapper.Map<User, ViewUser>(model);
+                Session["Branches"] = _iCommonManager.GetAssignedBranchesToUserByUserId(anUser.UserId).ToList();
+                Session["user"] = anUser;
+
                 int companyId = Convert.ToInt32(collection["companyId"]);
                 var company= _iCompanyManager.GetById(companyId);
                 Session["CompanyId"] = companyId;
                 Session["Company"] = company;
                 FormsAuthentication.SetAuthCookie(user.UserName, false);
-                var anUser = _userManager.GetUserByUserNameAndPassword(user.UserName, user.Password);
+                //var anUser = _userManager.GetUserByUserNameAndPassword(user.UserName, user.Password);
                 var employee = _iEmployeeManager.GetEmployeeById(anUser.EmployeeId);
                 if (employee.EmployeeName!= null)
                 {
@@ -97,19 +109,6 @@ namespace NBL.Controllers
             ViewBag.Message = "Invalid Login";
             ViewBag.Companies = _iCompanyManager.GetAll().ToList().OrderBy(n => n.CompanyId).ToList();
             return View();
-        }
-
-        private bool IsValid(User user)
-        {
-            bool isExits = false;
-            var anUser=_userManager.GetUserByUserNameAndPassword(user.UserName,user.Password);
-            if(anUser.UserName !=null)
-            {
-                Session["Branches"] = _iCommonManager.GetAssignedBranchesToUserByUserId(anUser.UserId).ToList();
-                Session["user"] = anUser;
-                isExits = true;
-            }
-            return isExits;
         }
         public ActionResult GoTo()
         {

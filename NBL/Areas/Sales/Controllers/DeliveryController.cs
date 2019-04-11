@@ -6,6 +6,7 @@ using NBL.Areas.Sales.BLL.Contracts;
 using NBL.BLL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Deliveries;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Invoices;
 using NBL.Models.Enums;
 using NBL.Models.ViewModels;
@@ -73,6 +74,7 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
+                FinancialTransactionModel financialModel=new FinancialTransactionModel();
                 var transport = collection["ownTransport"];
                 bool isOwnTransport =transport!=null;
                 int deliverebyUserId = ((ViewUser)Session["user"]).UserId;
@@ -81,6 +83,7 @@ namespace NBL.Areas.Sales.Controllers
                 IEnumerable<InvoiceDetails> details = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceId(invoiceId);
 
                 var client = _iClientManager.GetClientDeailsById(invoice.ClientId);
+                
 
                 var deliveredQty = _iInvoiceManager.GetDeliveredProductsByInvoiceRef(invoice.InvoiceRef).Count;
 
@@ -98,6 +101,21 @@ namespace NBL.Areas.Sales.Controllers
                     orderStatus = Convert.ToInt32(OrderStatus.Delivered);
                 }
 
+
+                financialModel.ClientCode = client.SubSubSubAccountCode;
+                financialModel.ClientDrAmount = invoice.Amounts-invoice.Discount;
+                //-----------------Credit sale account code =1001021 ---------------
+                financialModel.SalesRevenueCode = "1001021";
+                financialModel.SalesRevenueAmount = invoice.Amounts-invoice.Vat;
+                //financialModel.GrossDiscountCode = "2102011";
+                //financialModel.GrossDiscountAmount = (invoice.SpecialDiscount/invoice.Quantity)*barcodeList.Count;
+                //-----------------Credit vat account code =2102013 ---------------
+                financialModel.VatCode = "2102013";
+                financialModel.VatAmount = invoice.Vat;
+                //-----------------Credit invoice discount account code =2102012 ---------------
+                financialModel.InvoiceDiscountCode = "2102012";
+                financialModel.InvoiceDiscountAmount = invoice.Discount;
+
                 var aDelivery = new Delivery
                 {
                     IsOwnTransport =isOwnTransport,
@@ -113,7 +131,8 @@ namespace NBL.Areas.Sales.Controllers
                     CompanyId = invoice.CompanyId,
                     ToBranchId = invoice.BranchId,
                     InvoiceId = invoiceId,
-                    FromBranchId = invoice.BranchId
+                    FromBranchId = invoice.BranchId,
+                    FinancialTransactionModel = financialModel
                 };
                 string result = _iInventoryManager.SaveDeliveredOrder(barcodeList, aDelivery, invoiceStatus,orderStatus);
                 if (result.StartsWith("S"))

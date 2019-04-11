@@ -615,6 +615,7 @@ namespace NBL.Areas.Sales.DAL
                           Amounts = Convert.ToDecimal(reader["Amounts"]),
                           Discount= Convert.ToDecimal(reader["Discount"]),
                           SpecialDiscount = Convert.ToDecimal(reader["SpecialDiscount"]),
+                          Vat = Convert.ToDecimal(reader["Vat"]),
                           InvoiceByUserId = Convert.ToInt32(reader["InvoiceByUserId"]),
                           InvoiceNo = Convert.ToInt32(reader["InvoiceNo"]),
                           InvoiceRef = reader["InvoiceRef"].ToString(),

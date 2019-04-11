@@ -29,5 +29,10 @@ namespace NBL.Models.EntityModels.Identities
         public Department Department { get; set; }
         public Designation Designation { get; set; }
 
+        public string IpAddress { get; set; }
+        public string MacAddress { get; set; }
+        public DateTime LogInDateTime { get; set; }
+        public DateTime LogOutDateTime { get; set; }
+
     }
 }

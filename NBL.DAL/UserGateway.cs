@@ -115,42 +115,7 @@ namespace NBL.DAL
             }
         }
 
-        public User GetUserByUserName(string userName)
-        {
-            try
-            {
-                User user = new User();
-                ConnectionObj.Open();
-                CommandObj.CommandText = "spGetUserByUserName";
-                CommandObj.CommandType = CommandType.StoredProcedure;
-                CommandObj.Parameters.AddWithValue("@UserName", userName);
-                SqlDataReader reader = CommandObj.ExecuteReader();
-                if (reader.Read())
-                {
-                    user.UserId = Convert.ToInt32(reader["UserId"]);
-                    user.UserName = reader["UserName"].ToString();
-                    user.Password = reader["UserPassword"].ToString();
-                    user.ActiveStaus = Convert.ToInt32(reader["ActiveStatus"]);
-                    user.BlockStatus = Convert.ToInt32(reader["BlockStatus"]);
-                    user.EmployeeId = Convert.ToInt32(reader["EmployeeId"]);
-                    user.JoiningDate = Convert.ToDateTime(reader["UserJoiningDate"]);
-                    user.UserRoleId = Convert.ToInt32(reader["RoleId"]);
-                    user.Roles = reader["Roles"].ToString();
-                }
-                reader.Close();
-                return user;
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Unable to find user by User Name", e);
-            }
-            finally
-            {
-                ConnectionObj.Close();
-                CommandObj.Dispose();
-                CommandObj.Parameters.Clear();
-            }
-        }
+      
 
         public int AddNewUser(User user)
         {
@@ -181,7 +146,50 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+        public User GetUserByUserName(string userName)
+        {
+            try
+            {
+                User user = null;
+                ConnectionObj.Open();
+                CommandObj.CommandText = "spGetUserByUserName";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@UserName", userName);
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    user = new User
+                    {
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        UserName = reader["UserName"].ToString(),
+                        Password = reader["UserPassword"].ToString(),
+                        ActiveStaus = Convert.ToInt32(reader["ActiveStatus"]),
+                        EmployeeId = Convert.ToInt32(reader["EmployeeId"]),
+                        JoiningDate = Convert.ToDateTime(reader["UserJoiningDate"]),
+                        UserRoleId = Convert.ToInt32(reader["RoleId"]),
+                        Roles = reader["Roles"].ToString(),
+                        BlockStatus = Convert.ToInt32(reader["BlockStatus"]),
+                        IpAddress =DBNull.Value.Equals(reader["IpAddress"])?null: reader["IpAddress"].ToString(),
+                        MacAddress = DBNull.Value.Equals(reader["MacAddress"]) ? null : reader["MacAddress"].ToString(),
+                        LogInDateTime = DBNull.Value.Equals(reader["LogInDateTime"]) ? default(DateTime) : Convert.ToDateTime(reader["LogInDateTime"]),
+                        LogOutDateTime = DBNull.Value.Equals(reader["LogOutDateTime"]) ? default(DateTime) : Convert.ToDateTime(reader["LogOutDateTime"])
+                    };
 
+                }
+                reader.Close();
+                return user;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Unable to find user by User Name", e);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
         public ViewUser GetUserByUserNameAndPassword(string userName, string password)
         {
             try

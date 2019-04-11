@@ -3,6 +3,7 @@ using NBL.BLL.Contracts;
 using NBL.DAL;
 using NBL.Models;
 using NBL.Models.EntityModels.Identities;
+using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
 
 namespace NBL.BLL
@@ -24,6 +25,7 @@ namespace NBL.BLL
         {
             return _userGateway.GetUserByUserNameAndPassword(userName, password);
         }
+        
 
         public bool ChangeLoginStatus(ViewUser user, int status)
         {
@@ -42,6 +44,23 @@ namespace NBL.BLL
         public User GetUserByUserName(string userName)
         {
             return _userGateway.GetUserByUserName(userName);
+        }
+
+        public bool ValidateUser(User user)
+        {
+            bool result = false;
+            var userByUserName = _userGateway.GetUserByUserName(user.UserName);
+           
+            if (!userByUserName.Equals(null))
+            {
+                var originalPasss = StringCipher.Decrypt(userByUserName.Password, "salam_cse_10_R");
+                if (user.Password == originalPasss)
+                {
+                    result = true;
+                }
+              
+            }
+            return result;
         }
     }
 }

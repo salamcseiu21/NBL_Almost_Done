@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Clients;
+using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.Returns;
@@ -28,6 +29,9 @@ namespace NBL.Models.AutoMapper
             CreateMap<ViewCreateRetailSaleModel, RetailSale>();
             CreateMap<RetailSale, ViewCreateRetailSaleModel>();
             CreateMap<ReturnDetails, ViewDeliveredOrderModel>();
+
+            CreateMap<ViewUser, User>();
+            CreateMap<User, ViewUser>();
         }
     }
 }

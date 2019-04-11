@@ -6,6 +6,7 @@ using System.Linq;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Deliveries;
+using NBL.Models.EntityModels.Invoices;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.Enums;
@@ -825,57 +826,90 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@UserId", aDelivery.DeliveredByUserId);
                 CommandObj.Parameters.AddWithValue("@Quantity", scannedProducts.Count);
                 CommandObj.Parameters.Add("@InventoryId", SqlDbType.Int);
+                CommandObj.Parameters.Add("@AccountMasterId", SqlDbType.BigInt);
                 CommandObj.Parameters["@InventoryId"].Direction = ParameterDirection.Output;
+                CommandObj.Parameters["@AccountMasterId"].Direction = ParameterDirection.Output;
                 CommandObj.Parameters.Add("@DeliveryId", SqlDbType.Int);
                 CommandObj.Parameters["@DeliveryId"].Direction = ParameterDirection.Output;
+
                 CommandObj.ExecuteNonQuery();
                 int inventoryId = Convert.ToInt32(CommandObj.Parameters["@InventoryId"].Value);
                 int deliveryId = Convert.ToInt32(CommandObj.Parameters["@DeliveryId"].Value);
-
+                var accountMasterId= Convert.ToInt32(CommandObj.Parameters["@AccountMasterId"].Value);
                 int rowAffected = SaveDeliveredOrderDetails(scannedProducts,aDelivery, inventoryId, deliveryId);
+
+                int accountAffected = 0;
+                if (rowAffected > 0)
+                {
+
+                   var financial= aDelivery.FinancialTransactionModel;
+                  
+                    for (int i = 1; i <= 4; i++)
+                    {
+                        if (i == 1)
+                        {
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Dr",financial.ClientCode,financial.ClientDrAmount, accountMasterId);
+                        }
+                        else if(i==2)
+                        {
+
+                          
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.SalesRevenueCode, financial.SalesRevenueAmount*(-1), accountMasterId);
+                        }
+                        else if(i==3)
+                        {
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.InvoiceDiscountCode, financial.InvoiceDiscountAmount, accountMasterId);
+                        }
+                        else if (i == 4)
+                        {
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.VatCode, financial.VatAmount*(-1), accountMasterId);
+                        }
+
+                    }
+                }
 
 
                 //if (rowAffected > 0)
-                //{
+                    //{
 
-                //    for (int i = 1; i <= 2; i++)
-                //    {
-                //        if (i == 1)
-                //        {
-                //            anInvoice.TransactionType = "Dr";
-                //            anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
-                //        }
-                //        else
-                //        {
-                //            anInvoice.TransactionType = "Cr";
-                //            anInvoice.Amounts = anInvoice.Amounts * (-1);
-                //            anInvoice.SubSubSubAccountCode = "1001021";
-                //        }
-                //        accountAffected += SaveInvoiceDetailsToAccountsDetails(anInvoice, accountMasterId);
-                //    }
+                    //    for (int i = 1; i <= 2; i++)
+                    //    {
+                    //        if (i == 1)
+                    //        {
+                    //            anInvoice.TransactionType = "Dr";
+                    //            anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
+                    //        }
+                    //        else
+                    //        {
+                    //            anInvoice.TransactionType = "Cr";
+                    //            anInvoice.Amounts = anInvoice.Amounts * (-1);
+                    //            anInvoice.SubSubSubAccountCode = "1001021";
+                    //        }
+                    //        accountAffected += SaveFinancialTransactionToAccountsDetails(anInvoice, accountMasterId);
+                    //    }
 
-                //    if (anInvoice.SpecialDiscount != 0)
-                //    {
-                //        for (int i = 1; i <= 2; i++)
-                //        {
-                //            if (i == 1)
-                //            {
-                //                anInvoice.TransactionType = "Dr";
-                //                anInvoice.Amounts = anInvoice.SpecialDiscount;
-                //                anInvoice.SubSubSubAccountCode = anInvoice.DiscountAccountCode;
-                //            }
-                //            else
-                //            {
-                //                anInvoice.TransactionType = "Cr";
-                //                anInvoice.Amounts = anInvoice.SpecialDiscount * (-1);
-                //                anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
-                //            }
-                //            accountAffected += SaveInvoiceDetailsToAccountsDetails(anInvoice, accountMasterId);
-                //        }
-                //    }
+                    //    if (anInvoice.SpecialDiscount != 0)
+                    //    {
+                    //        for (int i = 1; i <= 2; i++)
+                    //        {
+                    //            if (i == 1)
+                    //            {
+                    //                anInvoice.TransactionType = "Dr";
+                    //                anInvoice.Amounts = anInvoice.SpecialDiscount;
+                    //                anInvoice.SubSubSubAccountCode = anInvoice.DiscountAccountCode;
+                    //            }
+                    //            else
+                    //            {
+                    //                anInvoice.TransactionType = "Cr";
+                    //                anInvoice.Amounts = anInvoice.SpecialDiscount * (-1);
+                    //                anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
+                    //            }
+                    //            accountAffected += SaveFinancialTransactionToAccountsDetails(anInvoice, accountMasterId);
+                    //        }
+                    //    }
 
 
-                if (rowAffected > 0)
+                 if (accountAffected > 0)
                 {
                     sqlTransaction.Commit();
                 }
@@ -947,6 +981,27 @@ namespace NBL.DAL
             }
             return i;
         }
+
+
+        private int SaveFinancialTransactionToAccountsDetails(string transactionType,string accountCode,decimal amounts, int accountMasterId)
+        {
+
+            var i = 0;
+            CommandObj.CommandText = "UDSP_SaveFinancialTransactionToAccountsDetails";
+            CommandObj.CommandType = CommandType.StoredProcedure;
+            CommandObj.Parameters.Clear();
+            CommandObj.Parameters.AddWithValue("@AccountMasterId", accountMasterId);
+            CommandObj.Parameters.AddWithValue("@SubSubSubAccountCode", accountCode);
+            CommandObj.Parameters.AddWithValue("@TransactionType", transactionType);
+            CommandObj.Parameters.AddWithValue("@Amount", amounts);
+            CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+            CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+            CommandObj.ExecuteNonQuery();
+            i = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            return i;
+
+        }
+
         public ViewProductLifeCycleModel GetProductLifeCycleByBarcode(string productBarCode)
         {
             try

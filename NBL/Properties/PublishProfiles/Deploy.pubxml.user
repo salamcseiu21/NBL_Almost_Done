@@ -1099,7 +1099,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/10/2019 11:28:49</publishTime>
     </File>
     <File Include="Areas/QC/Views/Product/ViewAllReturns.cshtml">
-      <publishTime>04/10/2019 10:40:03</publishTime>
+      <publishTime>04/11/2019 09:53:05</publishTime>
     </File>
     <File Include="Areas/QC/Views/Shared/_MenuPartialPage.cshtml">
       <publishTime>04/10/2019 14:15:45</publishTime>
@@ -1435,7 +1435,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/SuperAdmin/Views/Assign/ViewUser.cshtml">
-      <publishTime>03/25/2019 17:37:04</publishTime>
+      <publishTime>04/11/2019 11:33:16</publishTime>
     </File>
     <File Include="Areas/SuperAdmin/Views/Home/AddUser.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -22741,16 +22741,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="bin/NBL.BLL.dll">
-      <publishTime>04/10/2019 17:29:06</publishTime>
+      <publishTime>04/11/2019 11:53:19</publishTime>
     </File>
     <File Include="bin/NBL.DAL.dll">
-      <publishTime>04/10/2019 17:29:06</publishTime>
+      <publishTime>04/11/2019 11:53:18</publishTime>
     </File>
     <File Include="bin/NBL.dll">
-      <publishTime>04/10/2019 17:29:11</publishTime>
+      <publishTime>04/11/2019 11:53:24</publishTime>
     </File>
     <File Include="bin/NBL.Models.dll">
-      <publishTime>04/10/2019 17:29:05</publishTime>
+      <publishTime>04/11/2019 11:53:18</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -23764,7 +23764,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/10/2019 13:24:11</publishTime>
+      <publishTime>04/11/2019 11:53:31</publishTime>
     </File>
   </ItemGroup>
 </Project>

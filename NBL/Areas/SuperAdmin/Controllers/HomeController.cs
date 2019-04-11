@@ -12,6 +12,7 @@ using NBL.DAL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Orders;
+using NBL.Models.EntityModels.Securities;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
@@ -170,6 +171,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
         {
             try
             {
+                
                 var empId = Convert.ToInt32(collection["EmployeeId"]);
                 var uName = collection["UserName"];
                 var pass = collection["ConfirmPassword"];
@@ -178,7 +180,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
                 {
                     EmployeeId = empId,
                     UserName = uName,
-                    Password = pass,
+                    Password = StringCipher.Encrypt(pass,"salam_cse_10_R"),
                     UserRoleId = roleId,
                     AddedByUserId = ((ViewUser) Session["user"]).UserId
                 };

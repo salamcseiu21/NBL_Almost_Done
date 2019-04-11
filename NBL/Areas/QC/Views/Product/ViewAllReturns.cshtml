@@ -12,6 +12,7 @@
             <th class="text-center">Reference</th>
             <th class="text-center">Quantity</th>
             <th class="text-center">Date</th>
+            <th class="text-center">Notes</th>
             <th class="text-center">View</th>
         </tr>
         </thead>
@@ -21,7 +22,9 @@
             <tr>
                 <td class="text-center">@item.ReturnRef</td>
                 <td class="text-center">@item.TotalQuantity</td>
+             
                 <td class="text-center">@item.SystemDateTime.Date.ToString("D")</td>
+                <td class="text-center">@(item.NsmNotes?? "N/A")</td>
                 <td class="text-center">
                    
                     @Html.ActionLink(" Details", "ReturnDetails","Product", new { area="QC",salesReturnId = item.SalesReturnId }, new {@class="fa fa-eye" })
@@ -34,6 +37,7 @@
             <th class="text-center">Reference</th>
             <th class="text-center">Quantity</th>
             <th class="text-center">Date</th>
+            <th class="text-center">Notes</th>
             <th class="text-center">View</th>
         </tr>
         </tfoot>
