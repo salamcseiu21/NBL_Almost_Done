@@ -6,8 +6,11 @@ using System.Linq;
 using System.Web.Mvc;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.Areas.Sales.BLL.Contracts;
+using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
+using NBL.Models.EntityModels.Identities;
+using NBL.Models.EntityModels.Securities;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Searchs;
 using NBL.Models.ViewModels.Orders;
@@ -34,6 +37,7 @@ namespace NBL.Areas.Corporate.Controllers
         private readonly IOrderManager _iOrderManager;
         private readonly IClientManager _iClientManager;
         private readonly IProductManager _iProductManager;
+        private readonly UserManager _userManager=new UserManager();
 
         public HomeController(IVatManager iVatManager,IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IReportManager iReportManager,IDepartmentManager iDepartmentManager,IEmployeeManager iEmployeeManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager,IDiscountManager iDiscountManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IAccountsManager iAccountsManager,IInvoiceManager iInvoiceManager,IDivisionGateway iDivisionGateway,IProductManager iProductManager)
         {
@@ -273,6 +277,25 @@ namespace NBL.Areas.Corporate.Controllers
             var v=_iOrderManager.GetOrder(aCriteriaModel);
             int recordsTotal = _iOrderManager.GetAll().Count();
             return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = v }, JsonRequestBehavior.AllowGet);
+        }
+
+        //------------------ Change password------------------------
+        public PartialViewResult ChangePassword(int id)
+        {
+
+            var user = _userManager.GetUserInformationByUserId(id);
+            user.Password = StringCipher.Decrypt(user.Password, "salam_cse_10_R");
+            return PartialView("_ChangePasswordPartialPage", user);
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(User model)
+        {
+            model.Password = StringCipher.Encrypt(model.Password, "salam_cse_10_R");
+            bool result = _userManager.UpdatePassword(model);
+            if (result)
+                return RedirectToAction("Home");
+            return RedirectToAction("ChangePassword");
         }
     }
 }

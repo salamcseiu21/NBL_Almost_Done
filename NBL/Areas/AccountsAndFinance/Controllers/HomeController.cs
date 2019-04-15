@@ -2,7 +2,10 @@
 using System.Linq;
 using System.Web.Mvc;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
+using NBL.BLL;
 using NBL.BLL.Contracts;
+using NBL.Models.EntityModels.Identities;
+using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Summaries;
 
@@ -17,6 +20,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         private readonly IBranchManager _iBranchManager;
         private readonly IReportManager _iReportManager;
         private readonly IAccountsManager _iAccountsManager;
+        private readonly UserManager _userManager=new UserManager();
 
         public HomeController(IBranchManager iBranchManager,IClientManager iClientManager,IReportManager iReportManager,IEmployeeManager iEmployeeManager,IProductManager iProductManager,IAccountsManager iAccountsManager)
         {
@@ -86,6 +90,25 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         {
             var branches = _iBranchManager.GetAllBranches().ToList();
             return PartialView("_ViewBranchPartialPage", branches);
+        }
+
+        //------------------ Change password------------------------
+        public PartialViewResult ChangePassword(int id)
+        {
+
+            var user = _userManager.GetUserInformationByUserId(id);
+            user.Password = StringCipher.Decrypt(user.Password, "salam_cse_10_R");
+            return PartialView("_ChangePasswordPartialPage", user);
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(User model)
+        {
+            model.Password = StringCipher.Encrypt(model.Password, "salam_cse_10_R");
+            bool result = _userManager.UpdatePassword(model);
+            if (result)
+                return RedirectToAction("Home");
+            return RedirectToAction("ChangePassword");
         }
     }
 }

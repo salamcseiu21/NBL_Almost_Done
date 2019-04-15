@@ -173,9 +173,20 @@ namespace NBL.Controllers
 
         }
 
-        public ActionResult ChangePassword()
+        //public ActionResult ChangePassword(int id)
+        //{
+        //    var user = _userManager.GetUserInformationByUserId(id);
+        //    user.Password = StringCipher.Decrypt(user.Password, "salam_cse_10_R");
+        //    return View(user);
+        //}
+
+        //------------------ Change password------------------------
+        public PartialViewResult ChangePassword(int id)
         {
-            return View();
+
+            var user = _userManager.GetUserInformationByUserId(id);
+            user.Password = StringCipher.Decrypt(user.Password, "salam_cse_10_R");
+            return PartialView("_ChangePasswordPartialPage", user);
         }
 
         public static PhysicalAddress GetMacAddress()

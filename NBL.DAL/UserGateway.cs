@@ -75,28 +75,28 @@ namespace NBL.DAL
                     {
                         UserId = userId,
                         ActiveStaus = Convert.ToInt32(reader["ActiveStatus"]),
-                        EmployeeId = Convert.ToInt32(reader["EmployeeId"]),
+                        EmployeeId =DBNull.Value.Equals(reader["EmployeeId"])?default(int): Convert.ToInt32(reader["EmployeeId"]),
                         UserName = reader["UserName"].ToString(),
                         BlockStatus = Convert.ToInt32(reader["BlockStatus"]),
                         Department = new Department
                         {
-                          DepartmentCode  = reader["DepartmentCode"].ToString(),
-                          DepartmentId = Convert.ToInt32(reader["DepartmentId"]),
-                          DepartmentName = reader["DepartmentName"].ToString(),
+                          DepartmentCode  = DBNull.Value.Equals(reader["DepartmentCode"])?null: reader["DepartmentCode"].ToString(),
+                          DepartmentId = DBNull.Value.Equals(reader["DepartmentId"]) ? default(int) : Convert.ToInt32(reader["DepartmentId"]),
+                          DepartmentName = DBNull.Value.Equals(reader["DepartmentName"]) ? null : reader["DepartmentName"].ToString()
                         },
                         Designation = new Designation
                         {
-                          DesignationCode  = reader["DesignationCode"].ToString(),
-                          DesignationName = reader["DesignationName"].ToString(),
-                          DesignationId =Convert.ToInt32(reader["DesignationId"])
+                          DesignationCode  = DBNull.Value.Equals(reader["DesignationCode"]) ? null : reader["DesignationCode"].ToString(),
+                          DesignationName = DBNull.Value.Equals(reader["DesignationName"]) ? null : reader["DesignationName"].ToString(),
+                          DesignationId = DBNull.Value.Equals(reader["DesignationId"]) ? default(int) : Convert.ToInt32(reader["DesignationId"])
                         },
                         Password = reader["UserPassword"].ToString(),
-                        EmployeeName = reader["EmployeeName"].ToString(),
-                        Phone = reader["Phone"].ToString(),
-                        Email = reader["EmailAddress"].ToString(),
+                        EmployeeName = DBNull.Value.Equals(reader["EmployeeName"]) ? null : reader["EmployeeName"].ToString(),
+                        Phone = DBNull.Value.Equals(reader["Phone"]) ? null : reader["Phone"].ToString(),
+                        Email = DBNull.Value.Equals(reader["EmailAddress"]) ? null : reader["EmailAddress"].ToString(),
                         Roles = reader["RoleName"].ToString(),
                         UserRoleId = Convert.ToInt32(reader["RoleId"]),
-                        PresentAddress = reader["PresentAddress"].ToString(),
+                        PresentAddress = DBNull.Value.Equals(reader["PresentAddress"]) ? null : reader["PresentAddress"].ToString(),
                         JoiningDate = Convert.ToDateTime(reader["UserJoiningDate"])
                     };
                 }
@@ -310,5 +310,31 @@ namespace NBL.DAL
             }
         }
 
+        public int UpdatePassword(User model)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_UpdatePassword";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                CommandObj.Parameters.AddWithValue("@Password", model.Password);
+                CommandObj.Parameters.AddWithValue("@UserId", model.UserId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not update User password", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }

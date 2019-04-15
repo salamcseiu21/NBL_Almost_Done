@@ -85,9 +85,6 @@
 
                                 foreach (IGrouping<string, DeliveryDetails> orderDetailses in Model.DeliveryDetailses.ToList().GroupBy(n => n.CategoryName))
                                 {
-                                    <tr style="border: none">
-                                        <td colspan="5" class="text-center" style="font-weight: bolder">@orderDetailses.Key</td>
-                                    </tr>
                                     foreach (DeliveryDetails item in orderDetailses)
                                     {
 

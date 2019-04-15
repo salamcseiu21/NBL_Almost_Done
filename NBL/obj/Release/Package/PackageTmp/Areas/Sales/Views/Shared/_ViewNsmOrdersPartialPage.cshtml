@@ -24,7 +24,7 @@
                 <tr>
                     <td>@Html.Raw(item.Client.GetBasicInformation())</td>
                     <td>@item.OrderSlipNo</td>
-                    <td class="text-right">@item.NetAmounts</td>
+                    <td class="text-right">@item.Amounts</td>
                     <td class="text-right">@item.Quantity</td>
                     <td class="text-center">
                         @item.SysDate.ToShortTimeString(), @item.SysDate.ToString("dd-MMM-yyyy")

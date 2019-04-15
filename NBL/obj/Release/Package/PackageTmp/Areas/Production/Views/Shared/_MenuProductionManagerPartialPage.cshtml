@@ -1,0 +1,44 @@
+﻿@*Factory Menu*@
+<ul class="sidebar-menu" data-widget="tree">
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-product-hunt"></i>
+            <span>BarCode</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Generate", "Generate", "BarCode", new { area = "Production" }, new { @class = "fa fa-list" })</li>
+            <li>@Html.ActionLink(" Print", "Print", "BarCode", new { area = "Production" }, new { @class = "fa fa-list" })</li>
+
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-product-hunt"></i>
+            <span>Store</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Stock", "Stock", "Home", new {area = "Production" }, new {@class = "fa fa-eye"})</li>
+        </ul>
+    </li>
+  
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-list"></i>
+            <span>View/Show</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink("  Branch List", "ViewBranch", "Branch", new { area = "Production" }, new { @class = "fa fa-list" })</li>
+        </ul>
+    </li>
+</ul>
+

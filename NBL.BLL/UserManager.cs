@@ -62,5 +62,11 @@ namespace NBL.BLL
             }
             return result;
         }
+
+        public bool UpdatePassword(User model)
+        {
+            int rowAffected = _userGateway.UpdatePassword(model);
+            return rowAffected > 0;
+        }
     }
 }

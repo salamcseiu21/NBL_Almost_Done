@@ -44,6 +44,17 @@
         roleName = "Factory";
         areas = "production";
     }
+    else if(User.IsInRole("ProductionManager"))
+    {
+        roleName = "P.M";
+        areas = "production"; 
+    }
+
+    else if(User.IsInRole("DispatchManager"))
+    {
+        roleName = "Dispatch";
+        areas = "production";
+    }
     else if (User.IsInRole("Accounts"))
     {
         roleName = "A & F";
@@ -188,6 +199,7 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
+                                        @*@Html.ActionLink(" Change Password", "ChangePassword", "Login", new {area="", id = user.EmployeeId }, new { @class = "btn btn-info btn-flat" })*@
                                         @*@Html.ActionLink(" Profile", "ViewEmployeeProfile", "Home", new { id = user.EmployeeId }, new { @class = "btn btn-info btn-flat" })*@
                                     </div>
                                     <div class="pull-right">
@@ -252,6 +264,12 @@
                         break;
                     case "Factory":
                         Html.RenderPartial("~/Areas/Production/Views/Shared/_MenuPartialPage.cshtml");
+                        break;
+                    case "ProductionManager":
+                        Html.RenderPartial("~/Areas/Production/Views/Shared/_MenuProductionManagerPartialPage.cshtml");
+                        break;
+                    case "DispatchManager":
+                        Html.RenderPartial("~/Areas/Production/Views/Shared/_MenuDispatchManagerPartialPage.cshtml");
                         break;
                     case "Accounts":
                         Html.RenderPartial("~/Areas/AccountsAndFinance/Views/Shared/_MenuPartialPage.cshtml");

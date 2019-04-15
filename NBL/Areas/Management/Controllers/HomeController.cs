@@ -9,12 +9,14 @@ using System.Web.Mvc;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
+using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
-using NBL.Models;
+using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Summaries;
+using NBL.Models.EntityModels.Identities;
 
 namespace NBL.Areas.Management.Controllers
 {
@@ -33,6 +35,7 @@ namespace NBL.Areas.Management.Controllers
         private readonly IAccountsManager _iAccountsManager;
         private readonly IEmployeeManager _iEmployeeManager;
         private readonly IReportManager _iReportManager;
+        private readonly UserManager _userManager=new UserManager();
 
         public HomeController(IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IReportManager iReportManager,IEmployeeManager iEmployeeManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IAccountsManager iAccountsManager,IDivisionGateway iDivisionGateway)
         {
@@ -310,6 +313,25 @@ namespace NBL.Areas.Management.Controllers
             ViewOrderSearchModel model = new ViewOrderSearchModel();
             ViewBag.BranchId = _iBranchManager.GetBranchSelectList();
             return View(model);
+        }
+
+        //------------------ Change password------------------------
+        public PartialViewResult ChangePassword(int id)
+        {
+
+            var user = _userManager.GetUserInformationByUserId(id);
+            user.Password = StringCipher.Decrypt(user.Password, "salam_cse_10_R");
+            return PartialView("_ChangePasswordPartialPage", user);
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(User model)
+        {
+            model.Password = StringCipher.Encrypt(model.Password, "salam_cse_10_R");
+            bool result = _userManager.UpdatePassword(model);
+            if (result)
+                return RedirectToAction("Home");
+            return RedirectToAction("ChangePassword");
         }
     }
 }
