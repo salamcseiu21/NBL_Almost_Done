@@ -4,7 +4,7 @@ using NBL.BLL.Contracts;
 
 namespace NBL.Areas.Production.Controllers
 {
-    [Authorize(Roles = "Factory")]
+    [Authorize]
     public class BranchController : Controller
     {
         // GET: Factory/Branch

@@ -233,14 +233,17 @@ namespace NBL.Areas.SuperAdmin.Controllers
         {
 
            var user= _userManager.GetUserByUserName(userName);
-            if(user.UserName !=null)
+            if(user !=null)
             {
                 user.UserNameInUse = true; 
             }
             else
             {
-                user.UserNameInUse = false;
-                user.UserName = userName;
+                user = new User
+                {
+                    UserNameInUse = false,
+                    UserName = userName
+                };
             }
             return Json(user);
         }

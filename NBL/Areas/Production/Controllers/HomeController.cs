@@ -6,7 +6,7 @@ using NBL.Models.ViewModels.Summaries;
 namespace NBL.Areas.Production.Controllers
 {
 
-    [Authorize(Roles ="Factory")]
+    [Authorize]
     public class HomeController : Controller
     {
 

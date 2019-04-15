@@ -12,7 +12,7 @@ using ZXing;
 
 namespace NBL.Areas.Production.Controllers
 {
-    [Authorize(Roles = "Factory")]
+    [Authorize(Roles = "ProductionManager")]
     public class BarCodeGeneratorController : Controller
     {
         private readonly ICommonManager _iCommonManager;

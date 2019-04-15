@@ -93,7 +93,11 @@ namespace NBL.Controllers
                     case "Super":
                         return RedirectToAction("Home", "Home", new { area = "SuperAdmin" });
                     case "Factory":
-                        return RedirectToAction("Home", "Home", new { area = "Production" });
+                        return RedirectToAction("Home", "Home", new {area = "Production"});
+                    case "ProductionManager":
+                        return RedirectToAction("Home", "ProductionManager", new { area = "Production" });
+                    case "DispatchManager":
+                        return RedirectToAction("Home", "DispatchManager", new { area = "Production" });
                     case "Editor":
                         return RedirectToAction("Home", "Home", new { area = "Editor" });
                     case "Corporate":

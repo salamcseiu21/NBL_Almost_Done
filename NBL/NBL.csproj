@@ -340,8 +340,10 @@
     <Compile Include="Areas\Production\Controllers\BarCodeGeneratorController.cs" />
     <Compile Include="Areas\Production\Controllers\BranchController.cs" />
     <Compile Include="Areas\Production\Controllers\DeliveryController.cs" />
+    <Compile Include="Areas\Production\Controllers\DispatchManagerController.cs" />
     <Compile Include="Areas\Production\Controllers\HomeController.cs" />
     <Compile Include="Areas\Production\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Production\Controllers\ProductionManagerController.cs" />
     <Compile Include="Areas\Production\Controllers\TransferController.cs" />
     <Compile Include="Areas\HR\Controllers\HomeController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
@@ -7981,6 +7983,10 @@
     <Content Include="Areas\QC\Views\Product\ProductListToTest.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Account\ViewAllSalesReturn.cshtml" />
     <Content Include="Areas\Sales\Views\Delivery\Invoice.cshtml" />
+    <Content Include="Areas\Production\Views\ProductionManager\Home.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_MenuProductionManagerPartialPage.cshtml" />
+    <Content Include="Areas\Production\Views\DispatchManager\Home.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_MenuDispatchManagerPartialPage.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
