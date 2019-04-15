@@ -7,6 +7,8 @@ namespace NBL.Controllers
         // GET: Home
         public ActionResult Index()
         {
+
+
             return View();
         }
         public ActionResult About()

@@ -42,5 +42,6 @@ namespace NBL.BLL.Contracts
         ICollection<ProductionDateCode> GetAllProductionDateCode();
         ICollection<ProductionLine> GetAllProductionLines();
         ICollection<ProductionDateCode> GetProductionDateCodeByMonthYear(string monthYear);
+        bool SaveEncriptedConString(string chipartext);
     }
 }

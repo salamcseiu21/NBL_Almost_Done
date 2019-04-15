@@ -91,7 +91,7 @@ namespace NBL.BLL
         {
             return _iOrderGateway.GetLatestOrdersByBranchAndCompanyId(branchId,companyId);
         }
-        public IEnumerable<OrderDetails> GetOrderDetailsByOrderId(int orderId)
+        public IEnumerable<OrderDetails> GetOrderDetailsByOrderId(long orderId)
         {
             var orderModels = _iOrderGateway.GetOrderDetailsByOrderId(orderId);
             return orderModels;

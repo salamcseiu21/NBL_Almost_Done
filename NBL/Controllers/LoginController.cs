@@ -34,6 +34,10 @@ namespace NBL.Controllers
         // GET: LogIn
         public ActionResult LogIn()
         {
+            //var text = StringCipher.Encrypt(
+            //     "Data Source=192.168.2.62; Initial Catalog=dbUniversalBusinessSolution1; User Id=sa; Password=Nbl&Cit&Navana;Integrated Security=false;MultipleActiveResultSets=true;",
+            //     "salam_cse_10_R");
+            //_iCommonManager.SaveEncriptedConString(text);
             Session["user"] = null;
             Session["Branches"] = null;
             ViewBag.Companies = _iCompanyManager.GetAll().ToList().OrderBy(n => n.CompanyId).ToList();
@@ -163,6 +167,11 @@ namespace NBL.Controllers
             _userManager.ChangeLoginStatus(user, 0);
             return Redirect("~/Home/Index");
 
+        }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
         }
 
         public static PhysicalAddress GetMacAddress()

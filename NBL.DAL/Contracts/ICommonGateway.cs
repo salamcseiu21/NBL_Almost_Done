@@ -39,5 +39,6 @@ namespace NBL.DAL.Contracts
        ICollection<ProductionDateCode> GetAllProductionDateCode();
        ICollection<ProductionLine> GetAllProductionLines();
        ICollection<ProductionDateCode> GetProductionDateCodeByMonthYear(string monthYear);
+       int SaveEncriptedConString(string chipartext);
    }
 }

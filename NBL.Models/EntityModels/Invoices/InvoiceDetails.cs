@@ -18,7 +18,7 @@
         public long VatId { get; set; }
         public decimal Vat { get; set; }
         public long DiscountId { get; set; }    
-        public decimal Deicount { get; set; }   
+        public decimal Discount { get; set; }    
       
     }
 }

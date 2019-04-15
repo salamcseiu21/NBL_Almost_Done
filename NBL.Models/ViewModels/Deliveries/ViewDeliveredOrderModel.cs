@@ -38,6 +38,11 @@ namespace NBL.Models.ViewModels.Deliveries
         public DateTime DeliveredDateTime { get; set; }
         public int ProductId { get; set; }
         public string ProductName { get; set; }
-        public int Quantity { get; set; }   
+        public string ProductCategoryName { get; set; } 
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; } 
+        public decimal SalePrice { get; set; }
+        public decimal VatAmount { get; set; }
+        public decimal UnitDiscount { get; set; }
     }
 }

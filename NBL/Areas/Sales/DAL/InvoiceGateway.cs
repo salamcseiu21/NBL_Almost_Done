@@ -538,7 +538,7 @@ namespace NBL.Areas.Sales.DAL
                         UnitPrice = Convert.ToDecimal(reader["UnitPrice"]),
                         SalePrice = Convert.ToDecimal(reader["SalePrice"]),
                         DiscountId = Convert.ToInt64(reader["DiscountId"]),
-                        Deicount = Convert.ToDecimal(reader["DiscountAmount"]),
+                        Discount = Convert.ToDecimal(reader["DiscountAmount"]),
                         Vat = Convert.ToDecimal(reader["Vat"]),
                         VatId = Convert.ToInt64(reader["VatId"])
                     };

@@ -7980,6 +7980,7 @@
     <Content Include="Areas\QC\Views\Shared\_ViewSalesReturnScannedPartialPage.cshtml" />
     <Content Include="Areas\QC\Views\Product\ProductListToTest.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Account\ViewAllSalesReturn.cshtml" />
+    <Content Include="Areas\Sales\Views\Delivery\Invoice.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8104,6 +8105,7 @@
     <Content Include="Views\Shared\_ViewProductLifeCyclePartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewReturnDetailsPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewAllReturnsPartialPage.cshtml" />
+    <Content Include="Views\Login\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

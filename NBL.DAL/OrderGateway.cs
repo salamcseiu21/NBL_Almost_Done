@@ -1032,7 +1032,7 @@ CommandObj.Dispose();
 ConnectionObj.Close();
 }
         }
-        public IEnumerable<OrderDetails> GetOrderDetailsByOrderId(int orderId) 
+        public IEnumerable<OrderDetails> GetOrderDetailsByOrderId(long orderId) 
         {
            
                 try

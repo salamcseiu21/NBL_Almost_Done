@@ -27,8 +27,9 @@ namespace NBL.Areas.Sales.Controllers
         private readonly IDeliveryManager _iDeliveryManager;
         private readonly IClientManager _iClientManager;
         private readonly ICommonManager _iCommonManager;
+        private readonly IOrderManager _iOrderManager;
 
-        public DeliveryController(IDeliveryManager iDeliveryManager,IInventoryManager iInventoryManager,IProductManager iProductManager,IClientManager iClientManager,IInvoiceManager iInvoiceManager,ICommonManager iCommonManager)
+        public DeliveryController(IDeliveryManager iDeliveryManager,IInventoryManager iInventoryManager,IProductManager iProductManager,IClientManager iClientManager,IInvoiceManager iInvoiceManager,ICommonManager iCommonManager,IOrderManager iOrderManager)
         {
             _iDeliveryManager = iDeliveryManager;
             _iInventoryManager = iInventoryManager;
@@ -36,6 +37,7 @@ namespace NBL.Areas.Sales.Controllers
             _iClientManager = iClientManager;
             _iInvoiceManager = iInvoiceManager;
             _iCommonManager = iCommonManager;
+            _iOrderManager = iOrderManager;
         }
         public ActionResult OrderList()
         {
@@ -74,24 +76,21 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
-                FinancialTransactionModel financialModel=new FinancialTransactionModel();
+              
                 var transport = collection["ownTransport"];
                 bool isOwnTransport =transport!=null;
                 int deliverebyUserId = ((ViewUser)Session["user"]).UserId;
                 int invoiceId = Convert.ToInt32(collection["InvoiceId"]);
                 var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
                 IEnumerable<InvoiceDetails> details = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceId(invoiceId);
-
                 var client = _iClientManager.GetClientDeailsById(invoice.ClientId);
-                
-
                 var deliveredQty = _iInvoiceManager.GetDeliveredProductsByInvoiceRef(invoice.InvoiceRef).Count;
-
                 var remainingToDeliverQty = invoice.Quantity - deliveredQty;
                 string fileName = "Ordered_Product_List_For_" + invoiceId;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                     //if the file is exists read the file
                 var barcodeList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                
 
                 int invoiceStatus = Convert.ToInt32(InvoiceStatus.PartiallyDelivered);
                 int orderStatus = Convert.ToInt32(OrderStatus.PartiallyDelivered);
@@ -101,20 +100,37 @@ namespace NBL.Areas.Sales.Controllers
                     orderStatus = Convert.ToInt32(OrderStatus.Delivered);
                 }
 
+                List<InvoiceDetails> deliveredProductList=new List<InvoiceDetails>();
+                foreach (ScannedProduct product in barcodeList)
+                {
+                   deliveredProductList.Add(details.ToList().Find(n => n.ProductId.Equals(product.ProductId)));
 
-                financialModel.ClientCode = client.SubSubSubAccountCode;
-                financialModel.ClientDrAmount = invoice.Amounts-invoice.Discount;
+                }
                 //-----------------Credit sale account code =1001021 ---------------
-                financialModel.SalesRevenueCode = "1001021";
-                financialModel.SalesRevenueAmount = invoice.Amounts-invoice.Vat;
                 //financialModel.GrossDiscountCode = "2102011";
                 //financialModel.GrossDiscountAmount = (invoice.SpecialDiscount/invoice.Quantity)*barcodeList.Count;
                 //-----------------Credit vat account code =2102013 ---------------
-                financialModel.VatCode = "2102013";
-                financialModel.VatAmount = invoice.Vat;
                 //-----------------Credit invoice discount account code =2102012 ---------------
-                financialModel.InvoiceDiscountCode = "2102012";
-                financialModel.InvoiceDiscountAmount = invoice.Discount;
+
+                var grossAmount = deliveredProductList.Sum(n => (n.UnitPrice + n.Vat) * n.Quantity);
+                var invoiceDiscount = deliveredProductList.Sum(n => n.Discount * n.Quantity);
+                var vat= deliveredProductList.Sum(n => n.Vat * n.Quantity);
+
+                FinancialTransactionModel financialModel =
+                    new FinancialTransactionModel
+                    {
+                        ClientCode = client.SubSubSubAccountCode,
+                        ClientDrAmount = grossAmount-invoiceDiscount,
+                        SalesRevenueCode = "1001021",
+                        SalesRevenueAmount = grossAmount-vat,
+                        VatCode = "2102013",
+                        VatAmount = vat,
+                        InvoiceDiscountCode = "2102012",
+                        InvoiceDiscountAmount = invoiceDiscount,
+                        GrossDiscountAmount = (invoice.SpecialDiscount / invoice.Quantity) * barcodeList.Count,
+                        GrossDiscountCode = "2102011"
+                    };
+               
 
                 var aDelivery = new Delivery
                 {
@@ -301,10 +317,33 @@ namespace NBL.Areas.Sales.Controllers
             return PartialView("_ViewLoadScannedProductPartialPage", list);
         }
 
-        public ActionResult Chalan(int id)
+        public ActionResult Chalan(int deliveryId)
         {
-            var chalan = _iDeliveryManager.GetChalanByDeliveryId(id);
+            var chalan = _iDeliveryManager.GetChalanByDeliveryId(deliveryId);
             return View(chalan);
+
+        }
+
+        [HttpGet]
+        public ActionResult Invoice(int deliveryId)
+        {
+            var delivery= _iDeliveryManager.GetOrderByDeliveryId(deliveryId);
+            //var chalan = _iDeliveryManager.GetChalanByDeliveryId(deliveryId);
+            var deliveryDetails = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(deliveryId); 
+
+           // var invocedOrder = _iInvoiceManager.GetInvoicedOrderByInvoiceId(deliveryId);
+            var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
+           //IEnumerable<InvoiceDetails> details = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceId(deliveryId);
+            var client = _iClientManager.GetClientDeailsById(orderInfo.ClientId);
+
+            ViewInvoiceModel model = new ViewInvoiceModel
+            {
+                Client = client,
+                Order = orderInfo,
+                Delivery = delivery,
+                DeliveryDetails = deliveryDetails
+            };
+            return View(model);
 
         }
         public ActionResult DeleveredOrders()

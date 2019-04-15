@@ -25,7 +25,7 @@ namespace NBL.DAL.Contracts
        IEnumerable<ViewOrder> GetOrdersByNsmUserId(int nsmUserId);
        IEnumerable<ViewOrder> GetLatestOrdersByBranchAndCompanyId(int branchId, int companyId);
        IEnumerable<OrderDetails> GetAllOrderDetails();
-       IEnumerable<OrderDetails> GetOrderDetailsByOrderId(int orderId);
+       IEnumerable<OrderDetails> GetOrderDetailsByOrderId(long orderId);
        ViewOrder GetOrderByOrderId(int orderId);
        int GetOrderMaxSerialNoByYear(int year);
        Order GetOrderInfoByTransactionRef(string transactionRef);

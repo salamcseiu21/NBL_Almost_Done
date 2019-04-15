@@ -189,7 +189,7 @@ namespace NBL.Areas.Sales.Controllers
                 SpecialDiscount = Convert.ToDecimal(collection["SD"]),
                 Vat = vat
               };
-                order.Amounts = amount + order.Discount;
+                order.Amounts = amount;
                 var result = _iOrderManager.Save(order);
                 if (result > 0)
                 {
@@ -282,7 +282,7 @@ namespace NBL.Areas.Sales.Controllers
                 order.Status = Convert.ToInt32(OrderStatus.Pending);
                 var orderItems = (IEnumerable<OrderItem>) Session["TOrders"];
                 order.SpecialDiscount = dicount;
-                order.Discount = orderItems.ToList().Sum(n=>n.Quantity*n.DeletionStatus);
+                order.Discount = orderItems.ToList().Sum(n=>n.Quantity*n.DiscountAmount);
                 order.OrderDate = DateTime.Now;
                 decimal vat = orderItems.Sum(n=>n.Vat*n.Quantity);
                 order.Vat = vat;

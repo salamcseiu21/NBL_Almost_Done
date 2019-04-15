@@ -137,5 +137,11 @@ namespace NBL.BLL
        {
            return _iCommonGateway.GetProductionDateCodeByMonthYear(monthYear);
        }
+
+       public bool SaveEncriptedConString(string chipartext)
+       {
+           int rowAffected = _iCommonGateway.SaveEncriptedConString(chipartext);
+           return rowAffected > 0;
+       }
    }
 }

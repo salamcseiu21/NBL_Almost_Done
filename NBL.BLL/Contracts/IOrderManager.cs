@@ -48,7 +48,7 @@ namespace NBL.BLL.Contracts
         IEnumerable<ViewOrder> GetLatestOrdersByBranchAndCompanyId(int branchId, int companyId);
         
 
-        IEnumerable<OrderDetails> GetOrderDetailsByOrderId(int orderId);
+        IEnumerable<OrderDetails> GetOrderDetailsByOrderId(long orderId);
        
 
         int Save(Order order);

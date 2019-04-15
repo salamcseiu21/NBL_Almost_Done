@@ -544,7 +544,12 @@ namespace NBL.DAL
                         TransportationCost = Convert.ToDecimal(reader["TransportationCost"]),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
                         ProductName = reader["ProductName"].ToString(),
-                        Quantity = Convert.ToInt32(reader["Quantity"])
+                        ProductCategoryName =DBNull.Value.Equals(reader["ProductCategoryName"])?null: reader["ProductCategoryName"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        VatAmount = Convert.ToDecimal(reader["VatAmount"]),
+                        UnitDiscount = Convert.ToDecimal(reader["UnitDiscount"]),
+                        SalePrice = Convert.ToDecimal(reader["SalePrice"]),
+                        UnitPrice = Convert.ToDecimal(reader["UnitPrice"])
                     });
                 }
                 reader.Close();

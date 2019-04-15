@@ -1,5 +1,6 @@
 ﻿using System.Data.SqlClient;
 using System.Web.Configuration;
+using NBL.Models.EntityModels.Securities;
 
 namespace NBL.DAL
 {
@@ -14,7 +15,8 @@ namespace NBL.DAL
             string connectionString =
                 WebConfigurationManager.ConnectionStrings["UniversalBusinessSolutionDbConnectionString"]
                     .ConnectionString;
-            connectionObj = new SqlConnection(connectionString);
+           var str = StringCipher.Decrypt(connectionString, "salam_cse_10_R");
+            connectionObj = new SqlConnection(str);
             commandObj = new SqlCommand();
         }
 

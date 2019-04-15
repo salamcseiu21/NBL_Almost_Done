@@ -35,10 +35,11 @@
                     <td class="text-center">
 
                         @item.SysDateTime.ToString("F")
-                    </td>
+                    </td> 
                     
                     <td class="text-center">
-                        @Html.ActionLink(" Preview & Print", "Chalan", new { id = item.DeliveryId }, new { target = "_blank", @class="fa fa-eye" })
+                        @Html.ActionLink(" Chalan", "Chalan", new { deliveryId = item.DeliveryId }, new { target = "_blank", @class="fa fa-eye" }) |
+                        @Html.ActionLink(" Invoice", "Invoice", new { deliveryId = item.DeliveryId }, new { target = "_blank", @class="fa fa-eye" }) 
                     </td>
                 </tr>
             }
