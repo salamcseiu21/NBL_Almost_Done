@@ -179,17 +179,17 @@ namespace NBL.Areas.Sales.Controllers
                 var vat = productList.Sum(n => n.Vat * n.Quantity);
                 var order = new Order
                 {
-                BranchId = branchId,
-                ClientId = clientId,
-                UserId = orderByUserId,
-                OrderDate = orderDate,
-                CompanyId = companyId,
-                Discount = productList.Sum(n => n.Quantity * n.DiscountAmount),
-                Products = productList,
-                SpecialDiscount = Convert.ToDecimal(collection["SD"]),
-                Vat = vat
-              };
-                order.Amounts = amount;
+                    BranchId = branchId,
+                    ClientId = clientId,
+                    UserId = orderByUserId,
+                    OrderDate = orderDate,
+                    CompanyId = companyId,
+                    Discount = productList.Sum(n => n.Quantity * n.DiscountAmount),
+                    Products = productList,
+                    SpecialDiscount = Convert.ToDecimal(collection["SD"]),
+                    Vat = vat,
+                    Amounts = productList.Sum(n=>(n.UnitPrice+n.Vat)*n.Quantity)
+                };
                 var result = _iOrderManager.Save(order);
                 if (result > 0)
                 {

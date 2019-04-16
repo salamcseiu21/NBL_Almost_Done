@@ -15,6 +15,7 @@ using NBL.Models.EntityModels.Designations;
 using NBL.Models.EntityModels.Locations;
 using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
 
 namespace NBL.Controllers
@@ -37,8 +38,9 @@ namespace NBL.Controllers
         private readonly IOrderManager _iOrderManager;
         private readonly IBranchManager _iBranchManager;
         private readonly IEmployeeManager _iEmployeeManager;
+        private readonly IDeliveryManager _iDeliveryManager;
 
-        public CommonController(IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IDepartmentManager iDepartmentManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager,IDiscountManager iDiscountManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IProductManager iProductManager,IInvoiceManager iInvoiceManager,IUpazillaGateway iUpazillaGateway,IDistrictManager iDistrictManager,IEmployeeManager iEmployeeManager)
+        public CommonController(IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IDepartmentManager iDepartmentManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager,IDiscountManager iDiscountManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IProductManager iProductManager,IInvoiceManager iInvoiceManager,IUpazillaGateway iUpazillaGateway,IDistrictManager iDistrictManager,IEmployeeManager iEmployeeManager,IDeliveryManager iDeliveryManager)
         {
             _iBranchManager = iBranchManager;
             _iClientManager = iClientManager;
@@ -54,6 +56,7 @@ namespace NBL.Controllers
             _iInvoiceManager = iInvoiceManager;
             _iDistrictManager = iDistrictManager;
             _iEmployeeManager = iEmployeeManager;
+            _iDeliveryManager = iDeliveryManager;
         }
         //------------Bank Name autocomplete-----------
         [HttpPost]
@@ -544,6 +547,17 @@ namespace NBL.Controllers
             var model = _iOrderManager.GetOrderByOrderId(orderId);
             model.Client = _iClientManager.GetById(model.ClientId);
             return PartialView("_ViewOrderDetailsModalPartialPage", model);
+        }
+
+        public PartialViewResult ViewDeliveryDetails(long deliveryId)
+        {
+            var deliveryDetails = _iDeliveryManager.GetDeliveredOrderDetailsByDeliveryId(deliveryId); 
+            var delivery= _iDeliveryManager.GetOrderByDeliveryId(deliveryId);
+            ViewDeliveryModel model=new ViewDeliveryModel();
+            model.DeliveryDetailses = deliveryDetails.ToList();
+            model.Delivery = delivery;
+            model.Client = _iClientManager.GetById(delivery.Client.ClientId);
+            return PartialView("_ViewDeliveryOrderDetailsModalPartialPage", model);
         }
         public ActionResult GetAllOrders()
         {

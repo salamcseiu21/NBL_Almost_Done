@@ -811,6 +811,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@TransactionDate", aDelivery.DeliveryDate);
                 CommandObj.Parameters.AddWithValue("@TransactionRef", aDelivery.TransactionRef);
                 CommandObj.Parameters.AddWithValue("@DeliveryRef", aDelivery.DeliveryRef);
+                CommandObj.Parameters.AddWithValue("@VoucherNo", aDelivery.VoucherNo);
                 CommandObj.Parameters.AddWithValue("@InvoiceRef", aDelivery.InvoiceRef);
                 CommandObj.Parameters.AddWithValue("@InvoiceId",aDelivery.InvoiceId);
                 CommandObj.Parameters.AddWithValue("@InvoiceStatus", invoiceStatus);
@@ -848,21 +849,21 @@ namespace NBL.DAL
                     {
                         if (i == 1)
                         {
-                            accountAffected += SaveFinancialTransactionToAccountsDetails("Dr",financial.ClientCode,financial.ClientDrAmount, accountMasterId);
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Dr",financial.ClientCode,financial.ClientDrAmount, accountMasterId,"Client Debit..");
                         }
                         else if(i==2)
                         {
 
                           
-                            accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.SalesRevenueCode, financial.SalesRevenueAmount*(-1), accountMasterId);
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.SalesRevenueCode, financial.SalesRevenueAmount*(-1), accountMasterId,"Salses Credit..");
                         }
                         else if(i==3)
                         {
-                            accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.InvoiceDiscountCode, financial.InvoiceDiscountAmount, accountMasterId);
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.GrossDiscountCode, financial.GrossDiscountAmount, accountMasterId,"Gross Discount Debit..");
                         }
                         else if (i == 4)
                         {
-                            accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.VatCode, financial.VatAmount*(-1), accountMasterId);
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.VatCode, financial.VatAmount*(-1), accountMasterId,"Vat Credit..");
                         }
 
                     }
@@ -983,7 +984,7 @@ namespace NBL.DAL
         }
 
 
-        private int SaveFinancialTransactionToAccountsDetails(string transactionType,string accountCode,decimal amounts, int accountMasterId)
+        private int SaveFinancialTransactionToAccountsDetails(string transactionType,string accountCode,decimal amounts, int accountMasterId,string explanation)
         {
 
             var i = 0;
@@ -994,6 +995,7 @@ namespace NBL.DAL
             CommandObj.Parameters.AddWithValue("@SubSubSubAccountCode", accountCode);
             CommandObj.Parameters.AddWithValue("@TransactionType", transactionType);
             CommandObj.Parameters.AddWithValue("@Amount", amounts);
+            CommandObj.Parameters.AddWithValue("@Explanation", explanation);
             CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
             CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
             CommandObj.ExecuteNonQuery();
@@ -1333,6 +1335,35 @@ namespace NBL.DAL
                 CommandObj.Dispose();
                 CommandObj.Parameters.Clear();
                 
+            }
+        }
+
+        public long GetMaxVoucherNoByTransactionInfix(string infix)
+        {
+            try
+            {
+                CommandObj.CommandText = "spGetMaxVoucherNoOfByTransactionInfix";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@TransactionInfix", infix);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                int voucherNo = 0;
+                if (reader.Read())
+                {
+                    voucherNo = Convert.ToInt32(reader["MaxVoucherNo"]);
+                }
+                reader.Close();
+                return voucherNo;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect max voucher no", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
             }
         }
     }

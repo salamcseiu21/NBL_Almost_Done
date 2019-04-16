@@ -47,7 +47,8 @@ namespace NBL.Areas.Production.Controllers
             var productionDateCodes = _iCommonManager.GetProductionDateCodeByMonthYear(monthYear).ToList();
             var productionLines = _iCommonManager.GetAllProductionLines().ToList();
 
-            string barCodePrefix = productionLines.Find(n => n.ProductionLineId == model.ProductionLineId).LineNumber+model.ProductId.ToString("D3") + DateTime.Now.Day.ToString("D2") +productionDateCodes.First().Code;
+            string barCodePrefix = productionLines.Find(n => n.ProductionLineId == model.ProductionLineId).LineNumber + model.ProductId.ToString("D3") + DateTime.Now.Day.ToString("D2") + productionDateCodes.First().Code;
+            //string barCodePrefix = productionLines.Find(n => n.ProductionLineId == model.ProductionLineId).LineNumber + model.ProductId.ToString("D3") + "09" + productionDateCodes.First().Code;
             string infix = DateTime.Now.Day.ToString("D2")+productionDateCodes.First().Code;
 
             var maxSl = _iBarCodeManager.GetMaxBarCodeSlByInfix(infix);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using NBL.DAL.Contracts;
+using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.EntityModels.Transports;
@@ -44,7 +45,7 @@ namespace NBL.DAL
             }
         }
 
-        public Delivery GetOrderByDeliveryId(int deliveryId)
+        public Delivery GetOrderByDeliveryId(long deliveryId)
         {
             try
             {
@@ -66,7 +67,11 @@ namespace NBL.DAL
                         DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
                         Status = Convert.ToInt32(reader["Status"]),
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
-                        SysDateTime = Convert.ToDateTime(reader["SysDateTime"])
+                        SysDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        Client = new Client
+                        {
+                            ClientId = Convert.ToInt32(reader["ClientId"])
+                        }
                     };
                 }
                 reader.Close();
@@ -132,7 +137,7 @@ namespace NBL.DAL
             }
         }
 
-        public IEnumerable<DeliveryDetails> GetDeliveredOrderDetailsByDeliveryId(int deliveryId)
+        public IEnumerable<DeliveryDetails> GetDeliveredOrderDetailsByDeliveryId(long deliveryId)
         {
             try
             {

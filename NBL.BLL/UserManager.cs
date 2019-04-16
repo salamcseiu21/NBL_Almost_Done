@@ -51,7 +51,7 @@ namespace NBL.BLL
             bool result = false;
             var userByUserName = _userGateway.GetUserByUserName(user.UserName);
            
-            if (!userByUserName.Equals(null))
+            if (userByUserName !=null)
             {
                 var originalPasss = StringCipher.Decrypt(userByUserName.Password, "salam_cse_10_R");
                 if (user.Password == originalPasss)

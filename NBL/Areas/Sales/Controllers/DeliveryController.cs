@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
+using Microsoft.Ajax.Utilities;
 using NBL.Areas.Sales.BLL.Contracts;
 using NBL.BLL.Contracts;
 using NBL.Models;
@@ -101,34 +102,48 @@ namespace NBL.Areas.Sales.Controllers
                 }
 
                 List<InvoiceDetails> deliveredProductList=new List<InvoiceDetails>();
-                foreach (ScannedProduct product in barcodeList)
+                foreach (ScannedProduct product in barcodeList.DistinctBy(n=>n.ProductId))
                 {
-                   deliveredProductList.Add(details.ToList().Find(n => n.ProductId.Equals(product.ProductId)));
-
+                    deliveredProductList.Add(details.ToList().Find(n => n.ProductId.Equals(product.ProductId)));
                 }
                 //-----------------Credit sale account code =1001021 ---------------
-                //financialModel.GrossDiscountCode = "2102011";
-                //financialModel.GrossDiscountAmount = (invoice.SpecialDiscount/invoice.Quantity)*barcodeList.Count;
+                //financialModel.InvoiceDiscountCode = "2102011";
+                //financialModel.InvoiceDiscountAmount = (invoice.SpecialDiscount/invoice.Quantity)*barcodeList.Count;
                 //-----------------Credit vat account code =2102013 ---------------
                 //-----------------Credit invoice discount account code =2102012 ---------------
 
-                var grossAmount = deliveredProductList.Sum(n => (n.UnitPrice + n.Vat) * n.Quantity);
-                var invoiceDiscount = deliveredProductList.Sum(n => n.Discount * n.Quantity);
+                //var up=   deliveredProductList.Sum(n => n.UnitPrice);
+               // var discount = deliveredProductList.Sum(n => n.Discount);
+
+
+                var grossAmount = deliveredProductList.Sum(n => n.UnitPrice * n.Quantity);
+                var tradeDiscount = deliveredProductList.Sum(n => n.Discount * n.Quantity);
+                var invoiceDiscount = (invoice.SpecialDiscount / invoice.Quantity) * barcodeList.Count;
+                var grossDiscount = tradeDiscount + invoiceDiscount;
                 var vat= deliveredProductList.Sum(n => n.Vat * n.Quantity);
+                
 
                 FinancialTransactionModel financialModel =
                     new FinancialTransactionModel
                     {
+                        //--------Dr -------------------
                         ClientCode = client.SubSubSubAccountCode,
-                        ClientDrAmount = grossAmount-invoiceDiscount,
+                        ClientDrAmount = grossAmount-grossDiscount,
+                        GrossDiscountAmount = grossDiscount,
+                        GrossDiscountCode = "2102018",
+
+                        //--------Cr -------------------
                         SalesRevenueCode = "1001021",
                         SalesRevenueAmount = grossAmount-vat,
                         VatCode = "2102013",
                         VatAmount = vat,
-                        InvoiceDiscountCode = "2102012",
+
+                        TradeDiscountCode = "2102012",
+                        TradeDiscountAmount = tradeDiscount,
                         InvoiceDiscountAmount = invoiceDiscount,
-                        GrossDiscountAmount = (invoice.SpecialDiscount / invoice.Quantity) * barcodeList.Count,
-                        GrossDiscountCode = "2102011"
+                        InvoiceDiscountCode = "2102011",
+                       
+
                     };
                
 

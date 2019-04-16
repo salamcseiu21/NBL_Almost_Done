@@ -12,20 +12,23 @@ using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Sales;
-using NBL.Models.ViewModels.TransferProducts;
 
+using NBL.Models.ViewModels.TransferProducts;
 namespace NBL.BLL
 {
     public class InventoryManager:IInventoryManager
     {
 
         private readonly  IInventoryGateway _iInventoryGateway;
-
-        public InventoryManager(IInventoryGateway iInventoryGateway)
+        private readonly ICommonGateway _iCommonGateway;
+        readonly CommonGateway _commonGateway = new CommonGateway();
+      
+        public InventoryManager(IInventoryGateway iInventoryGateway,ICommonGateway iCommonGateway)
         {
             _iInventoryGateway = iInventoryGateway;
+            _iCommonGateway = iCommonGateway;
         }
-        readonly CommonGateway _commonGateway=new CommonGateway();
+      
         public IEnumerable<ViewProduct> GetStockProductByBranchAndCompanyId(int branchId, int companyId)
         {
             return _iInventoryGateway.GetStockProductByBranchAndCompanyId(branchId, companyId);
@@ -58,11 +61,19 @@ namespace NBL.BLL
         public string SaveDeliveredOrder(List<ScannedProduct> scannedProducts, Delivery aDelivery,int invoiceStatus,int orderStatus) 
         {
 
+            string refCode = _iCommonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(ReferenceType.Distribution)).Code;
+            aDelivery.VoucherNo = GetMaxVoucherNoByTransactionInfix(refCode);
             int maxRefNo = _iInventoryGateway.GetMaxDeliveryRefNoOfCurrentYear();
             aDelivery.DeliveryRef = GenerateDeliveryReference(maxRefNo);
             int rowAffected = _iInventoryGateway.SaveDeliveredOrder(scannedProducts, aDelivery, invoiceStatus, orderStatus);
 
             return rowAffected > 0 ? "Saved Successfully!" : "Failed to Save";
+        }
+
+        private long GetMaxVoucherNoByTransactionInfix(string infix)
+        {
+            var temp =_iInventoryGateway.GetMaxVoucherNoByTransactionInfix(infix);
+            return temp + 1;
         }
 
         public string GenerateDeliveryReference(int maxRefNo)

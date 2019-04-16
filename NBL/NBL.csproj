@@ -7988,6 +7988,7 @@
     <Content Include="Areas\Production\Views\DispatchManager\Home.cshtml" />
     <Content Include="Areas\Production\Views\Shared\_MenuDispatchManagerPartialPage.cshtml" />
     <Content Include="Areas\Sales\Views\Home\ChangePassword.cshtml" />
+    <Content Include="Views\Shared\_ModalDeliveryOrderDetailsPartialPage.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8114,6 +8115,7 @@
     <Content Include="Views\Shared\_ViewAllReturnsPartialPage.cshtml" />
     <Content Include="Views\Login\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_ChangePasswordPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewDeliveryOrderDetailsModalPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -54,6 +54,7 @@ namespace NBL.Areas.Sales.Controllers
         public PartialViewResult ViewClientProfile(int id)
         {
             var client = _iClientManager.GetClientDeailsById(id);
+
             return PartialView("_ViewClientProfilePartialPage", client);
         }
 

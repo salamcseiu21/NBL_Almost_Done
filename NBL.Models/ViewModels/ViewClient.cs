@@ -8,6 +8,7 @@ using NBL.Models.EntityModels.Companies;
 using NBL.Models.EntityModels.Locations;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Orders;
+using NBL.Models.ViewModels.Deliveries;
 
 namespace NBL.Models.ViewModels
 {
@@ -100,6 +101,7 @@ namespace NBL.Models.ViewModels
         public int TerritoryId { get; set; }
         public List<Order> Orders { get; set; }
         public List<ClientAttachment> ClientAttachments { set; get; }
+        public ICollection<ViewDeliveredOrderModel> DeliveredOrderModels { get; set; }  
         public ClientType ClientType { get; set; }
         public Territory Territory { set; get; }
         public Branch Branch { get; set; }

@@ -10,9 +10,9 @@ namespace NBL.DAL.Contracts
     public interface IDeliveryGateway:IGateway<Delivery>
     {
         int ChangeOrderStatusByManager(Order aModel);
-        Delivery GetOrderByDeliveryId(int deliveryId);
+        Delivery GetOrderByDeliveryId(long deliveryId);
         IEnumerable<DeliveryModel> GetAllInvoiceOrderListByBranchId(int branchId);
-        IEnumerable<DeliveryDetails> GetDeliveredOrderDetailsByDeliveryId(int deliveryId);
+        IEnumerable<DeliveryDetails> GetDeliveredOrderDetailsByDeliveryId(long deliveryId);
         IEnumerable<Delivery> GetAllDeliveredOrders();
         IEnumerable<Delivery> GetAllDeliveredOrdersByBranchAndCompanyId(int branchId, int companyId);
 

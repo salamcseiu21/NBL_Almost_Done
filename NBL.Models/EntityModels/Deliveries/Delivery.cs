@@ -9,10 +9,11 @@ namespace NBL.Models.EntityModels.Deliveries
 {
     public class Delivery
     {
-        public int DeliveryId { get; set; }
+        public long DeliveryId { get; set; }
         public DateTime DeliveryDate { get; set; }
         public string DeliveryRef { get; set; }
         public string TransactionRef { get; set; }
+        public long VoucherNo { get; set; }   
         public string InvoiceRef { get; set; }
         public int InvoiceId { get; set; }
         public bool? IsOwnTransport { get; set; }

@@ -13,11 +13,12 @@ namespace NBL.BLL
     {
         private readonly IClientGateway _iClientGateway;
         private readonly IOrderManager _iOrderManager;
-
-        public ClientManager(IClientGateway iClientGateway,IOrderManager iOrderManager)
+        private readonly IDeliveryGateway _iDeliveryGateway;
+        public ClientManager(IClientGateway iClientGateway,IOrderManager iOrderManager,IDeliveryGateway iDeliveryGateway)
         {
             _iClientGateway = iClientGateway;
             _iOrderManager = iOrderManager;
+            _iDeliveryGateway = iDeliveryGateway;
         }
         
         public bool Add(Client client)
@@ -120,6 +121,7 @@ namespace NBL.BLL
         {
             var client = _iClientGateway.GetClientDeailsById(clientId);
              client.Orders = _iOrderManager.GetOrdersByClientId(clientId).ToList();
+             client.DeliveredOrderModels = _iDeliveryGateway.GetDeliveredOrderByClientId(clientId);
             return client;
 
         }

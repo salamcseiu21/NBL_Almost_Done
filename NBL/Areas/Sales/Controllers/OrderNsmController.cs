@@ -126,7 +126,7 @@ namespace NBL.Areas.Sales.Controllers
                 var orderItems = (List<OrderItem>)Session["TOrders"];
                 order.Discount = orderItems.Sum(n => n.Quantity * n.DiscountAmount);
                 order.Vat = orderItems.Sum(n => n.Vat * n.Quantity);
-                order.Amounts = amount;
+                order.Amounts = orderItems.Sum(n => (n.UnitPrice+n.Vat )* n.Quantity);
                 order.Status = Convert.ToInt32(OrderStatus.ApprovedbyNsm);
                 order.SpecialDiscount = dicount;
                 order.ApprovedByNsmDateTime = DateTime.Now;

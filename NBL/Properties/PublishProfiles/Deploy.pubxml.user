@@ -1212,6 +1212,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Areas/Sales/Views/Distributor/Home.cshtml">
       <publishTime>03/27/2019 12:25:28</publishTime>
     </File>
+    <File Include="Areas/Sales/Views/Home/ChangePassword.cshtml">
+      <publishTime>04/15/2019 15:08:24</publishTime>
+    </File>
     <File Include="Areas/Sales/Views/Home/Home.cshtml">
       <publishTime>03/27/2019 11:09:12</publishTime>
     </File>
@@ -1348,7 +1351,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Shared/_DistributionMenuPartialPage.cshtml">
-      <publishTime>04/13/2019 10:49:19</publishTime>
+      <publishTime>04/15/2019 15:22:09</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Shared/_MenuPartialPage.cshtml">
       <publishTime>04/07/2019 15:34:12</publishTime>
@@ -22756,13 +22759,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="bin/NBL.BLL.dll">
-      <publishTime>04/15/2019 14:12:26</publishTime>
+      <publishTime>04/15/2019 16:58:57</publishTime>
     </File>
     <File Include="bin/NBL.DAL.dll">
-      <publishTime>04/15/2019 14:12:25</publishTime>
+      <publishTime>04/15/2019 16:58:56</publishTime>
     </File>
     <File Include="bin/NBL.dll">
-      <publishTime>04/15/2019 14:12:31</publishTime>
+      <publishTime>04/15/2019 16:59:03</publishTime>
     </File>
     <File Include="bin/NBL.Models.dll">
       <publishTime>04/15/2019 14:12:25</publishTime>
@@ -23605,7 +23608,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Views/Login/ChangePassword.cshtml">
-      <publishTime>04/15/2019 11:15:55</publishTime>
+      <publishTime>04/15/2019 15:10:38</publishTime>
     </File>
     <File Include="Views/Login/GoTo.cshtml">
       <publishTime>03/26/2019 22:50:32</publishTime>
@@ -23643,6 +23646,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Shared/NotFound.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
+    <File Include="Views/Shared/_ChangePasswordPartialPage.cshtml">
+      <publishTime>04/15/2019 15:32:44</publishTime>
+    </File>
     <File Include="Views/Shared/_ErrorPartial.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
@@ -23677,7 +23683,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Views/Shared/_UserLayoutPage.cshtml">
-      <publishTime>04/15/2019 13:38:57</publishTime>
+      <publishTime>04/15/2019 15:22:39</publishTime>
     </File>
     <File Include="Views/Shared/_ViewAllReturnsPartialPage.cshtml">
       <publishTime>04/06/2019 13:58:09</publishTime>

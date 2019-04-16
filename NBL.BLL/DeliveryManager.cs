@@ -52,12 +52,12 @@ namespace NBL.BLL
         {
             return _iDeliveryGateway.GetAllDeliveredOrdersByInvoiceRef(invoiceRef);
         }
-        public Delivery GetOrderByDeliveryId(int deliveryId) 
+        public Delivery GetOrderByDeliveryId(long deliveryId) 
         {
             return _iDeliveryGateway.GetOrderByDeliveryId(deliveryId);
         }
 
-        public IEnumerable<DeliveryDetails> GetDeliveredOrderDetailsByDeliveryId(int deliveryId) 
+        public IEnumerable<DeliveryDetails> GetDeliveredOrderDetailsByDeliveryId(long deliveryId) 
         {
             return _iDeliveryGateway.GetDeliveredOrderDetailsByDeliveryId(deliveryId);
         }

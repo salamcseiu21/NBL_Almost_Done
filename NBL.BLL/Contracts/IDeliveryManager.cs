@@ -27,10 +27,10 @@ namespace NBL.BLL.Contracts
         IEnumerable<Delivery> GetAllDeliveredOrdersByInvoiceRef(string invoiceRef);
        
 
-        Delivery GetOrderByDeliveryId(int deliveryId);
+        Delivery GetOrderByDeliveryId(long deliveryId);
        
 
-        IEnumerable<DeliveryDetails> GetDeliveredOrderDetailsByDeliveryId(int deliveryId);
+        IEnumerable<DeliveryDetails> GetDeliveredOrderDetailsByDeliveryId(long deliveryId);
         
 
         IEnumerable<DeliveryModel> GetAllInvoiceOrderListByBranchId(int branchId);
