@@ -1,0 +1,65 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Productions.ViewRejectedProduct>
+@{
+    ViewBag.Title = "ViewQcVerifiedProduct";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Qc Verified Products</h3>
+    
+    <table id="tbl_Qc_verified_Products" class="display table-bordered" style="border: 1px solid black">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>BarCode</th>
+            <th>Notes</th>
+            <th>Verificaiton Note</th>
+            <th>Status</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Barcode</td>
+                <td>@item.Notes</td>
+                <td>@item.NotesByQc</td>
+                <td>@{
+                        if (item.VerificationStatus.Equals(0))
+                        {
+                            <span class="text-danger">Fully damaged..</span>
+                        }
+                        else if (item.VerificationStatus.Equals(1))
+                        {
+                            <span class="text-green">This product is okay for dispatch</span>
+                        }
+                    }</td>
+                <td class="text-center">
+                    <button class="btn btn-danger btn-sm">Cancel</button>
+                    <button class="btn btn-info btn-sm">Confirm</button>
+                </td>
+            </tr>
+            
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Product Name</th>
+            <th>BarCode</th>
+            <th>Notes</th>
+            <th>Verificaiton Note</th>
+            <th>Status</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_Qc_verified_Products").DataTable();
+    </script>
+}

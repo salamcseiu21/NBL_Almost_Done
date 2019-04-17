@@ -11,6 +11,7 @@ using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.MobileBankings;
+using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.Suppliers;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.ViewModels;
@@ -899,6 +900,39 @@ CommandObj.Parameters.Clear();
             catch (Exception exception)
             {
                 throw new Exception("Could not save", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<RejectionReason> GetAllRejectionReason()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllRejectionReason";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<RejectionReason> reasons=new List<RejectionReason>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    reasons.Add(new RejectionReason
+                    {
+                        RejectionReasonId = Convert.ToInt32(reader["RejectionReasonId"]),
+                        Reason = reader["Reason"].ToString()
+                    });
+                }
+                reader.Close();
+                return reasons;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Collect rejection reason", exception);
             }
             finally
             {

@@ -36,7 +36,8 @@
                 <td class="text-center">@item.Orders.Count</td>
                 <td class="text-center">@(item.AssignedEmpName)</td>
                 <td class="text-center">
-                    @Html.ActionLink(" Profile", "ViewClientProfile", null, new { id = item.ClientId }, new { @class = "fa fa-eye" })
+                    @Html.ActionLink(" Profile", "ViewClientProfile", null, new { id = item.ClientId }, new { @class = "fa fa-eye" })|
+                    @Html.ActionLink(" Ledger", "ClientLedger", null, new { id = item.ClientId }, new { @class = "fa fa-eye" })
                 </td>
             </tr>
         }

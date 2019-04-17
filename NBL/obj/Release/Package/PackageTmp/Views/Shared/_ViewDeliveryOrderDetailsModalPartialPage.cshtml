@@ -1,0 +1,82 @@
+﻿
+@using NBL.BLL
+@model NBL.Models.ViewModels.Deliveries.ViewDeliveryModel
+@{
+    UserManager userManager = new UserManager();
+    var aClient = Model.Client;
+}
+<div style="border: 1px dotted; padding: 10px; font-size: 18px">
+    <div class="row" style="font-size: 14px">
+        <div class="col-md-7">
+            <section>
+                <img src="~/@(aClient.ClientImage?? "Images/User.jpg")" height="100" width="80" style="float:left;margin-right:20px" title="@aClient.ClientName" />
+                <span>
+                    @Html.Raw(aClient.GetMailingAddress())
+                </span>
+            </section>
+
+        </div>
+        <div class="col-md-5">
+            Delivery Ref :<i>@Model.Delivery.DeliveryRef</i><br />
+            Delivery Date : <i>@Model.Delivery.DeliveryDate.ToString("D")</i>
+        </div>
+    </div>
+    <hr />
+    <h4 class="text-center text-green headingStyle">Product List</h4>
+    <table id="table_product_list" class="display table-bordered responsive" style="border:1px solid black;font-size:13px">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th class="text-center">Quantity</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.DeliveryDetailses)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    
+                    <td class="text-right">@item.Quantity</td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<style>
+    fieldset {
+        margin: 10px;
+        padding: 0 10px 10px;
+        border: 1px solid #666;
+        border-radius: 8px;
+        box-shadow: 0 0 2px #666;
+        padding-top: 5px;
+    }
+
+    legend {
+        padding: 2px 4px;
+        background: #fff;
+        margin-bottom: 0px;
+        color: green;
+        /* For better legibility against the box-shadow */
+    }
+
+    fieldset > legend {
+        float: left;
+        margin-top: -20px;
+    }
+
+        fieldset > legend + * {
+            clear: both;
+        }
+</style>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+<script>
+
+    $('#table_product_list').DataTable({
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        "order": [[1, "desc"]]
+    });
+
+</script>

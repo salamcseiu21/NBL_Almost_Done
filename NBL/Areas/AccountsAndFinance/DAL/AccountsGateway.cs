@@ -12,6 +12,7 @@ using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Payments;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.SummaryModels;
+using NBL.Models.ViewModels.FinanceModels;
 
 namespace NBL.Areas.AccountsAndFinance.DAL
 {
@@ -1484,6 +1485,41 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
         }
 
+        public ICollection<ViewLedgerModel> GetClientLedgerBySubSubSubAccountCode(string clientSubSubSubAccountCode)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetClientLedgerBySubSubSubAccountCode";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@SubSubSubAccountCode", clientSubSubSubAccountCode);
+                ConnectionObj.Open();
+                List<ViewLedgerModel> models=new List<ViewLedgerModel>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ViewLedgerModel
+                    {
+                    
+                     CreditAmount = DBNull.Value.Equals(reader["CreditAmount"]) ? default(decimal) : Convert.ToDecimal(reader["CreditAmount"]),
+                      DebitAmount = DBNull.Value.Equals(reader["DebitAmount"]) ? default(decimal) : Convert.ToDecimal(reader["DebitAmount"]),
+                       TransactionDate = Convert.ToDateTime(reader["TransactionDate"]),
+                       Balance =DBNull.Value.Equals(reader["Balance"])?default(decimal): Convert.ToDecimal(reader["Balance"])
+                    });
+                }
+                reader.Close();
+                return models;
 
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Get Client Ledger by account code", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
     }
 }

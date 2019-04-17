@@ -90,6 +90,8 @@ namespace NBL
             container.RegisterType<IFactoryDeliveryGateway, FactoryDeliveryGateway>();
             container.RegisterType<IProductReturnManager, ProductReturnManager>();
             container.RegisterType<IProductReturnGateway, ProductReturnGateway>();
+            container.RegisterType<IProductionQcManager, ProductionQcManager>();
+            container.RegisterType<IProductionQcGateway, ProductionQcGateway>();
 
             container.RegisterType<DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());
             container.RegisterType<UserManager<ApplicationUser>>(new HierarchicalLifetimeManager());

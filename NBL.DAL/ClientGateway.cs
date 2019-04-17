@@ -765,7 +765,7 @@ namespace NBL.DAL
                 SqlDataReader reader = CommandObj.ExecuteReader();
                 if (reader.Read())
                 {
-                    outstangingBalance = Convert.ToDecimal(reader["Outstanding"]);
+                    outstangingBalance =DBNull.Value.Equals(reader["Outstanding"])?default(decimal): Convert.ToDecimal(reader["Outstanding"]);
                 }
                 reader.Close();
                 return outstangingBalance;

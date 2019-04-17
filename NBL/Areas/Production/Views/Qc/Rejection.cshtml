@@ -1,0 +1,68 @@
+﻿@model NBL.Models.EntityModels.Productions.RejectedProduct
+@{
+    ViewBag.Title = "Rejection";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+
+<section class="content">
+    @using (Html.BeginForm("Rejection", "Qc"))
+    {
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <h3 class="text-center text-green">Rejected Product Entry</h3>
+                <div class="text-center">
+                    @if (TempData["rMessage"] != null)
+                    {
+                        @Html.Raw(TempData["rMessage"])
+                    }
+                </div>
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Barcode, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.Barcode, new { @class = "form-control", placeholder = "Type Product name here.", @autofocus = "autofocus" })
+                            <input type="hidden" id="ProductId" name="ProductId" />
+                            @Html.ValidationMessageFor(model => model.Barcode, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.RejectionReasonId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.RejectionReasonId, null, "--Select--", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.RejectionReasonId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                   
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Notes, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <textarea rows="3" id="Notes" name="Notes" class="form-control" required placeholder="Notes..." style="resize: none"></textarea>
+                            @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-9 text-right">
+                                <div class="btn toolbar">
+
+                                    <a class="btn btn-danger" href="~/production">Cancel</a>
+                                    <input type="submit" Class="btn btn-primary" value="Save" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                   
+                </div>
+            </div>
+
+        </div>
+    }
+
+</section>

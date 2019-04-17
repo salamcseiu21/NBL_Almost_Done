@@ -8,6 +8,7 @@ using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.MobileBankings;
+using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.Suppliers;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.ViewModels;
@@ -40,5 +41,6 @@ namespace NBL.DAL.Contracts
        ICollection<ProductionLine> GetAllProductionLines();
        ICollection<ProductionDateCode> GetProductionDateCodeByMonthYear(string monthYear);
        int SaveEncriptedConString(string chipartext);
+       ICollection<RejectionReason> GetAllRejectionReason();    
    }
 }

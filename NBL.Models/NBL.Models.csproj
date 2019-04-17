@@ -104,6 +104,7 @@
     <Compile Include="EntityModels\Deliveries\DispatchModel.cs" />
     <Compile Include="EntityModels\Deliveries\ReceiveProductViewModel.cs" />
     <Compile Include="EntityModels\FinanceModels\FinancialTransactionModel.cs" />
+    <Compile Include="EntityModels\FinanceModels\LedgerModel.cs" />
     <Compile Include="EntityModels\Masters\ClientType.cs" />
     <Compile Include="EntityModels\Companies\Company.cs" />
     <Compile Include="EntityModels\Deliveries\Delivery.cs" />
@@ -112,6 +113,9 @@
     <Compile Include="EntityModels\Departments\Department.cs" />
     <Compile Include="EntityModels\Designations\Designation.cs" />
     <Compile Include="EntityModels\Orders\RetailSale.cs" />
+    <Compile Include="EntityModels\Productions\ProductVerificationModel.cs" />
+    <Compile Include="EntityModels\Productions\RejectedProduct.cs" />
+    <Compile Include="EntityModels\Productions\RejectionReason.cs" />
     <Compile Include="EntityModels\Returns\ReturnDetails.cs" />
     <Compile Include="EntityModels\Returns\ReturnModel.cs" />
     <Compile Include="EntityModels\Returns\ReturnProduct.cs" />
@@ -156,12 +160,14 @@
     <Compile Include="SuccessErrorModel.cs" />
     <Compile Include="ViewModels\Clients\ViewCreateClientModel.cs" />
     <Compile Include="ViewModels\Deliveries\ViewDeliveredOrderModel.cs" />
+    <Compile Include="ViewModels\FinanceModels\ViewLedgerModel.cs" />
     <Compile Include="ViewModels\Logs\ViewWriteLogModel.cs" />
     <Compile Include="EntityModels\Requisitions\MonthlyRequisitionModel.cs" />
     <Compile Include="EntityModels\Requisitions\RequisitionItem.cs" />
     <Compile Include="ViewModels\Orders\DeliveredRefModel.cs" />
     <Compile Include="ViewModels\Orders\TempOrderedProduct.cs" />
     <Compile Include="ViewModels\Orders\ViewCreateRetailSaleModel.cs" />
+    <Compile Include="ViewModels\Productions\ViewRejectedProduct.cs" />
     <Compile Include="ViewModels\Products\ViewCreateProductDetailsModel.cs" />
     <Compile Include="ViewModels\Requisitions\ViewMonthlyRequisitionModel.cs" />
     <Compile Include="ViewModels\Requisitions\ViewRequisitionModel.cs" />

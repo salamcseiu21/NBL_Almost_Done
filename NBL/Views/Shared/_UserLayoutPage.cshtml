@@ -47,12 +47,22 @@
     else if(User.IsInRole("ProductionManager"))
     {
         roleName = "P.M";
-        areas = "production"; 
+        areas = "production";
     }
 
     else if(User.IsInRole("DispatchManager"))
     {
         roleName = "Dispatch";
+        areas = "production";
+    }
+    else if(User.IsInRole("FQC"))
+    {
+        roleName = "QC";
+        areas = "production";
+    }
+    else if (User.IsInRole("PH"))
+    {
+        roleName = "PH";
         areas = "production";
     }
     else if (User.IsInRole("Accounts"))
@@ -269,6 +279,12 @@
                         break;
                     case "DispatchManager":
                         Html.RenderPartial("~/Areas/Production/Views/Shared/_MenuDispatchManagerPartialPage.cshtml");
+                        break;
+                    case "FQC":
+                        Html.RenderPartial("~/Areas/Production/Views/Shared/_MenuFactoryQcPartialPage.cshtml");
+                        break;
+                    case "PH":
+                        Html.RenderPartial("~/Areas/Production/Views/Shared/_MenuProductionHeadPartialPage.cshtml");
                         break;
                     case "Accounts":
                         Html.RenderPartial("~/Areas/AccountsAndFinance/Views/Shared/_MenuPartialPage.cshtml");

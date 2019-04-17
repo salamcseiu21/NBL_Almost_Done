@@ -11,6 +11,7 @@ using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Enums;
 using NBL.Models.SummaryModels;
+using NBL.Models.ViewModels.FinanceModels;
 
 namespace NBL.Areas.AccountsAndFinance.BLL
 {
@@ -68,6 +69,12 @@ namespace NBL.Areas.AccountsAndFinance.BLL
             int rowAffected= _iAccountGateway.ActiveReceivableCheque(chequeDetails, aReceivable, aClient);
             return rowAffected > 0;
         }
+
+        public ICollection<ViewLedgerModel> GetClientLedgerBySubSubSubAccountCode(string clientSubSubSubAccountCode)
+        {
+            return _iAccountGateway.GetClientLedgerBySubSubSubAccountCode(clientSubSubSubAccountCode);
+        }
+
         private int GetMaxVoucherNoByTransactionInfix(string infix)
         {
             int temp = _invoiceGateway.GetMaxVoucherNoByTransactionInfix(infix);

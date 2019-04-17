@@ -1,0 +1,114 @@
+﻿@*Factory Menu*@
+<ul class="sidebar-menu" data-widget="tree">
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-product-hunt"></i>
+            <span>Product</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            @*<li>@Html.ActionLink(" Production Note", "ProductionNote", "Product", new { area = "Factory" }, new { @class = "fa fa-plus" })</li>
+                <li>@Html.ActionLink(" Pending Production Note", "ViewPendingProductionNote", "Product", new { area = "Factory" }, new { @class = "fa fa-plus" })</li>*@
+
+            <li>@Html.ActionLink(" QC Verified Product", "ViewQcVerifiedProduct", "ProductionHead", new { area = "Production" }, new { @class = "fa fa-eye" })</li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-product-hunt"></i>
+            <span>Store</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Stock", "Stock", "Home", new { area = "Production" }, new { @class = "fa fa-eye" })</li>
+        </ul>
+    </li>
+   <li class="treeview">
+        <a href="#">
+            <i class="fa fa-product-hunt"></i>
+            <span>Requisitions</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Requisition List", "Requisitions", "Product", new { area = "Production" }, new { @class = "fa fa-list" })</li>
+            @*<li>@Html.ActionLink(" Monthly Requisition List", "MonthlyRequisitions", "Product", new {area = "Production" }, new {@class = "fa fa-list"})</li>*@
+            <li>@Html.ActionLink(" Create Trip", "CreateTrip", "Transfer", new { area = "Production" }, new { @class = "fa fa-plus" })</li>
+        </ul>
+    </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-share"></i> <span>Reports</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle-o"></i> Trips
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-circle-o"></i> Level Two
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle-o"></i> Stocks
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-circle-o"></i> Level Two
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-list"></i>
+            <span>View/Show</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink("  Branch List", "ViewBranch", "Branch", new { area = "Production" }, new { @class = "fa fa-list" })</li>
+        </ul>
+    </li>
+</ul>

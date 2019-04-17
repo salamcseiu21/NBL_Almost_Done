@@ -576,8 +576,6 @@ namespace NBL.Controllers
             List<Designation> designations = _idepartmentManager.GetAllDesignationByDepartmentId(departmentId);
             return Json(designations, JsonRequestBehavior.AllowGet);
         }
-
-
         //----------------Product Barcode Auto Complete------------------
         [HttpPost]
         public JsonResult ProductBarCodeAutoComplete(string barcode)  

@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Microsoft.Office.Interop.Excel;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.BLL;
 using NBL.BLL.Contracts;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Securities;
+using NBL.Models.ViewModels.FinanceModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Summaries;
 
@@ -72,6 +76,17 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             return PartialView("_ViewClientProfilePartialPage",client);
 
         }
+
+        public ActionResult ClientLedger(int id)
+        {
+            LedgerModel model=new LedgerModel();
+            var client = _iClientManager.GetById(id);
+            List<ViewLedgerModel> models = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode).ToList();
+            model.Client = client;
+            model.LedgerModels = models;
+            return View(model);
+        }
+
 
         public PartialViewResult ViewEmployee()
         {

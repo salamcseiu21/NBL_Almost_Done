@@ -343,7 +343,9 @@
     <Compile Include="Areas\Production\Controllers\DispatchManagerController.cs" />
     <Compile Include="Areas\Production\Controllers\HomeController.cs" />
     <Compile Include="Areas\Production\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Production\Controllers\ProductionHeadController.cs" />
     <Compile Include="Areas\Production\Controllers\ProductionManagerController.cs" />
+    <Compile Include="Areas\Production\Controllers\QcController.cs" />
     <Compile Include="Areas\Production\Controllers\TransferController.cs" />
     <Compile Include="Areas\HR\Controllers\HomeController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
@@ -7989,6 +7991,14 @@
     <Content Include="Areas\Production\Views\Shared\_MenuDispatchManagerPartialPage.cshtml" />
     <Content Include="Areas\Sales\Views\Home\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_ModalDeliveryOrderDetailsPartialPage.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Home\ClientLedger.cshtml" />
+    <Content Include="Areas\Production\Views\Qc\Home.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_MenuFactoryQcPartialPage.cshtml" />
+    <Content Include="Areas\Production\Views\Qc\Rejection.cshtml" />
+    <Content Include="Areas\Production\Views\Qc\RejectedProductList.cshtml" />
+    <Content Include="Areas\Production\Views\ProductionHead\Home.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_MenuProductionHeadPartialPage.cshtml" />
+    <Content Include="Areas\Production\Views\ProductionHead\ViewQcVerifiedProduct.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />

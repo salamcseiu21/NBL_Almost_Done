@@ -22,7 +22,18 @@
                             <b>Total purchases</b> <a class="pull-right">@Model.GetTotalOrder()</a>
                         </li>
                         <li class="list-group-item">
-                            <b>Outstanding : </b> <a class="pull-right">@Model.Outstanding</a>
+                            <b>Outstanding : </b> <a class="pull-right">@{
+                                if (Model.Outstanding < 0)
+                                {
+                                    <b>(@Model.Outstanding)</b>
+                                }
+                                else
+                                {
+                                    <b>
+                                        @Model.Outstanding
+                                    </b>
+                                                                            }
+                                                                        }</a>
                         </li>
                         <li class="list-group-item">
                             <b>Credit Limit : </b> <a class="pull-right">@Model.CreditLimit</a>
@@ -45,6 +56,7 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#orders" data-toggle="tab">Orders</a></li>
+                    <li><a href="#delivery_info" data-toggle="tab">Delivery</a></li>
                     <li><a href="#personal_info" data-toggle="tab">Personal Information</a></li>
                     <li><a href="#files" data-toggle="tab">Files</a></li>
                 </ul>
@@ -86,7 +98,11 @@
                                             @{ if (item.Status == 4)
                                                {
                                                    <label class="text-green"><i class="fa fa-check-circle-o"></i> Deliverd</label>
-                                               }
+                                                }
+                                                if (item.Status == 3)
+                                                {
+                                                    <label class="text-danger">Partially Delivered</label>
+                                                }
                                                 if (item.Status == 2)
                                                 {
                                                     <label class="text-success">Approved by Admin</label>
@@ -135,7 +151,64 @@
                         <!-- /.post -->
 
                     </div>
-                
+                    <div class="tab-pane" id="delivery_info">
+                        <!-- Post -->
+                        <div class="post">
+                            <table id="table_delivery_Order_list" class="display table-bordered" style="border:1px solid black">
+                                <thead>
+                                    <tr>
+                                       
+                                        <th>Order Ref</th>
+                                        <th>Delivery Ref</th>
+
+                                        <th class="text-center">Qty</th>
+                                        <th class="text-center">Date</th>
+                                       
+                                        <th class="text-center">Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.DeliveredOrderModels.ToList())
+                                    {
+
+                                        <tr>
+                                           
+                                            <td>@item.TransactionRef</td>
+                                            <td>@item.DeliveryRef</td>
+
+                                            <td class="text-right">@item.DeliveredQty</td>
+                                            <td class="text-center">@item.DeliveredDateTime.ToString("F")</td>
+                                            <td class="text-center">
+                                                <button type="button" value="@item.DeliveryId" onclick="viewDeliveryDetails(this)" class="btn btn-success btn-sm"><i class="fa fa-eye"></i>&nbsp;Details</button>
+                                            </td>
+                                        </tr>
+                                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th ></th>
+                                        <th class="text-right">Total</th>
+                                        <th class="text-right">@Model.DeliveredOrderModels.Sum(n => n.DeliveredQty)</th>
+                                        <th colspan="2"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>Order Ref</th>
+                                        <th>Delivery Ref</th>
+
+                                        <th class="text-center">Qty</th>
+                                        <th class="text-center">Date</th>
+                                       
+                                        <th class="text-center">Details</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <div>
+                                @Html.ActionLink("Back to List", "ViewClient", "Home", null, new { @class = "btn btn-info" })
+                            </div>
+
+                        </div>
+                        <!-- /.post -->
+                    </div>
                     <div class="tab-pane" id="personal_info">
                         <div class="box-body">
                             <strong><i class="fa fa-book"></i> Contact Details</strong>
@@ -212,6 +285,7 @@
     </div>
 <!--load modal partial here...-->
     @Html.Partial("_ModalPartialPage")
+    @Html.Partial("_ModalDeliveryOrderDetailsPartialPage")
 </section>
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
@@ -223,12 +297,22 @@
     var t2= $('#table_client_file_list').DataTable({
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     });
+
+    var t3 = $('#table_delivery_Order_list').DataTable({
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    });
     t.on('order.dt search.dt', function () {
         t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
             cell.innerHTML = i + 1;
         });
     }).draw();
     t2.on('order.dt search.dt', function () {
+        t2.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
+
+    t3.on('order.dt search.dt', function () {
         t2.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
             cell.innerHTML = i + 1;
         });
@@ -245,6 +329,24 @@
             success: function (response) {
                 $('#modalBody').html(response);
                 $('#showOrderDetailsModal').modal('show');
+            }
+        });
+    }
+
+</script>
+
+
+<script>
+
+    function viewDeliveryDetails(deliveryId) {
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewDeliveryDetails", "Common", new { area = "" })",
+            data: { deliveryId: deliveryId.value },
+            success: function (response) {
+                $('#DeliveryDetailModalBody').html(response);
+                $('#showDeliveredOrderDetailsModal').modal('show');
             }
         });
     }
