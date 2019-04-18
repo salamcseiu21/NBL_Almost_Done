@@ -104,7 +104,11 @@ namespace NBL.Areas.Sales.Controllers
                 List<InvoiceDetails> deliveredProductList=new List<InvoiceDetails>();
                 foreach (ScannedProduct product in barcodeList.DistinctBy(n=>n.ProductId))
                 {
-                    deliveredProductList.Add(details.ToList().Find(n => n.ProductId.Equals(product.ProductId)));
+
+                    var invoiceDetails= details.ToList().Find(n => n.ProductId.Equals(product.ProductId));
+                    var qty = barcodeList.ToList().FindAll(n => n.ProductId == product.ProductId).Count;
+                    invoiceDetails.Quantity = qty;
+                    deliveredProductList.Add(invoiceDetails);
                 }
                 //-----------------Credit sale account code =1001021 ---------------
                 //financialModel.InvoiceDiscountCode = "2102011";
@@ -116,7 +120,7 @@ namespace NBL.Areas.Sales.Controllers
                // var discount = deliveredProductList.Sum(n => n.Discount);
 
 
-                var grossAmount = deliveredProductList.Sum(n => n.UnitPrice * n.Quantity);
+                var grossAmount = deliveredProductList.Sum(n => (n.UnitPrice+n.Vat) * n.Quantity);
                 var tradeDiscount = deliveredProductList.Sum(n => n.Discount * n.Quantity);
                 var invoiceDiscount = (invoice.SpecialDiscount / invoice.Quantity) * barcodeList.Count;
                 var grossDiscount = tradeDiscount + invoiceDiscount;
@@ -141,7 +145,7 @@ namespace NBL.Areas.Sales.Controllers
                         TradeDiscountCode = "2102012",
                         TradeDiscountAmount = tradeDiscount,
                         InvoiceDiscountAmount = invoiceDiscount,
-                        InvoiceDiscountCode = "2102011",
+                        InvoiceDiscountCode = "2102011"
                        
 
                     };

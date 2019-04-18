@@ -79,12 +79,15 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
 
         public ActionResult ClientLedger(int id)
         {
-            LedgerModel model=new LedgerModel();
             var client = _iClientManager.GetById(id);
-            List<ViewLedgerModel> models = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode).ToList();
-            model.Client = client;
-            model.LedgerModels = models;
+            var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+            LedgerModel model = new LedgerModel
+            {
+                Client = client,
+                LedgerModels = ledgers
+            };
             return View(model);
+
         }
 
 

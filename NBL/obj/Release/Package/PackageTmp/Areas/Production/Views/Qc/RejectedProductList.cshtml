@@ -1,0 +1,99 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Productions.ViewRejectedProduct>
+@{
+    ViewBag.Title = "Rejected Product List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Product List</h3>
+    <table id="tbl_rejected_product_list" class="display table-bordered" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Barcode</th>
+            <th>Notes</th>
+            <th>Verification Notes</th>
+            <th>QC Passed/Failed</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.ToList())
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Barcode</td>
+                <td>@item.Notes</td>
+                <td>
+                    <textarea rows="2" id="notes_of_@item.RejectionId" placeholder="Write checked notes here....." style="resize: none;width: 100%"></textarea>
+                </td>
+                <td><input type="checkbox" id="status_of_@item.RejectionId" onclick="PassOrFailedCheckBox(this);"/> Passed?
+                <input type="hidden" id="pass_failed_status_of_@item.RejectionId" value="0"/>
+                </td>
+                <td style="width: 100px">
+                    <button class="btn btn-info" value="@item.RejectionId" onclick="isChecked(this)">Submit</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Product Name</th>
+            <th>Barcode</th>
+            <th>Notes</th>
+            <th>Verification Notes</th>
+            <th>QC Passed/Failed</th>
+            <th>Action</th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+
+
+@section Scripts
+{
+    <script>
+        $("#tbl_rejected_product_list").DataTable();
+        function isChecked(btnClick) {
+            
+          
+            var result = confirm('Are you Sure !');
+
+            if (result) {
+
+                var notesId = 'notes_of_' + btnClick.value;
+                var notes = document.getElementById(notesId).value;
+                var statusId = 'pass_failed_status_of_' + btnClick.value;
+                var passfailedStatus = document.getElementById(statusId).value;
+               
+              
+                var rejectionId = btnClick.value;
+                var json = { rejectionId: rejectionId, notes: notes, passfailedStatus: passfailedStatus };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddVerificationNotes", "Qc",new { area="Production"})',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+
+            } else {
+                return false;
+            }
+        }
+
+        function PassOrFailedCheckBox(click) {
+            
+            if (document.getElementById(click.id).checked) {
+                document.getElementById('pass_failed_'+click.id).value = 1;
+            } else {
+                document.getElementById('pass_failed_' + click.id).value = 0;
+            }
+           
+        }
+        
+    </script>
+}

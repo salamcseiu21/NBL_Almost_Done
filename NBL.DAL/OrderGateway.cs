@@ -1212,7 +1212,8 @@ ConnectionObj.Close();
                         Status = Convert.ToInt32(reader["OrderStatus"]),
                         ApprovedByNsmDateTime = Convert.ToDateTime(reader["ApprovedByNsmDateTime"]),
                         SysDate = Convert.ToDateTime(reader["SysDateTime"]),
-                        NsmUserId = Convert.ToInt32(reader["NsmUserId"])
+                        NsmUserId = Convert.ToInt32(reader["NsmUserId"]),
+                        Quantity = Convert.ToInt32(reader["Quantity"])
                     };
                 }
 

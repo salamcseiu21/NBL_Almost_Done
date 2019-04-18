@@ -1,0 +1,59 @@
+﻿@model NBL.Models.EntityModels.FinanceModels.LedgerModel
+@{
+    ViewBag.Title = "ClientLedger";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Client Ledger</h3>
+    
+    <table id="tbl_Client_Ledger" class="display table-bordered" style="border: 1px solid gray">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Debit</th>
+            <th>Credit</th>
+            <th>Balance</th>
+          
+           
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.LedgerModels)
+        {
+            <tr>
+                <td>@item.TransactionDate.ToString("dd-MMM-yyyy")</td>
+                <td class="text-right">@item.DebitAmount</td>
+                <td class="text-right">@(item.CreditAmount*(-1))</td>
+                <td class="text-right">@{
+                        if (item.Balance < 0)
+                        {
+                            <span>(@(item.Balance*-1))</span>
+                        }
+                        else
+                        {
+                            <span>@item.Balance</span>
+                        }
+                    }</td>
+            
+               
+            </tr>
+        } 
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Date</th>
+            <th>Debit</th>
+            <th>Credit</th>
+            <th>Balance</th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_Client_Ledger").DataTable();
+    </script>
+}

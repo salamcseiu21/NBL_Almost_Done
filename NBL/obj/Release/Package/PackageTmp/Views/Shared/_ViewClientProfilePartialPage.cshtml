@@ -25,14 +25,14 @@
                             <b>Outstanding : </b> <a class="pull-right">@{
                                 if (Model.Outstanding < 0)
                                 {
-                                    <b>(@Model.Outstanding)</b>
+                                    <b>(@(Model.Outstanding*(-1)))</b>
                                 }
                                 else
                                 {
                                     <b>
                                         @Model.Outstanding
                                     </b>
-                                                                            }
+                                 }
                                                                         }</a>
                         </li>
                         <li class="list-group-item">

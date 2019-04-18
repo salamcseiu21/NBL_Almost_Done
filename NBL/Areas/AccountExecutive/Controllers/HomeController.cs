@@ -6,6 +6,7 @@ using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.Models;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Securities;
 
@@ -55,6 +56,18 @@ namespace NBL.Areas.AccountExecutive.Controllers
             return PartialView("_ViewClientProfilePartialPage",client);
         }
 
+        public ActionResult ClientLedger(int id)
+        {
+            var client = _iClientManager.GetById(id);
+            var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+            LedgerModel model = new LedgerModel
+            {
+                Client = client,
+                LedgerModels = ledgers
+            };
+            return View(model);
+
+        }
         public PartialViewResult ViewEmployee()
         {
             var employees = _iEmployeeManager.GetAllEmployeeWithFullInfo().ToList();

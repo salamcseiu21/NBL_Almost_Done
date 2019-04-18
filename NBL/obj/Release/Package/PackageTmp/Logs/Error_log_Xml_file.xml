@@ -37,4 +37,20 @@
    at NBL.Areas.Sales.Controllers.ProductController.SaveScannedBarcodeToTextFile(String barcode, Int64 tripId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 218</LogMessage>
     <LogDateTime>2019-03-05T12:27:49.4249572+06:00</LogDateTime>
   </Error>
+  <Error LogId="19-Apr-177531c5cf-6cfe-4755-910c-b628606d9bf9">
+    <Heading>System.FormatException</Heading>
+    <LogMessage>   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.Convert.ToInt32(String value)
+   at NBL.Areas.Production.Controllers.DeliveryController.SaveScannedBarcodeToTextFile(String barcode, Int64 tripId) in E:\API\NBL\NBL\Areas\Production\Controllers\DeliveryController.cs:line 71</LogMessage>
+    <LogDateTime>2019-04-17T16:16:35.1305807+06:00</LogDateTime>
+  </Error>
+  <Error LogId="19-Apr-174979fa20-7270-4189-88e1-d86a42f8b31a">
+    <Heading>System.FormatException</Heading>
+    <LogMessage>   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.Convert.ToInt32(String value)
+   at NBL.Areas.Production.Controllers.DeliveryController.SaveScannedBarcodeToTextFile(String barcode, Int64 tripId) in E:\API\NBL\NBL\Areas\Production\Controllers\DeliveryController.cs:line 71</LogMessage>
+    <LogDateTime>2019-04-17T16:16:35.7780472+06:00</LogDateTime>
+  </Error>
 </Errors>

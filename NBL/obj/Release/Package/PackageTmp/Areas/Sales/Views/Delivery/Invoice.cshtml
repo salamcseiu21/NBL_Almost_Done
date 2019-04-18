@@ -124,7 +124,7 @@
                                     =
                                 </th>
                                 <th class="text-right">
-                                    0
+                                  @(((Model.Order.SpecialDiscount/Model.Order.Quantity)*Model.DeliveryDetails.Count).ToString("N2"))
                                 </th>
                             </tr>
                         <tr>
@@ -147,7 +147,11 @@
                                     =
                                 </th>
                                 <th class="text-right">
-                                    @Model.DeliveryDetails.Sum(n=>n.SalePrice * n.Quantity).ToString("N2")
+                                    @{
+                                        var sd=(Model.Order.SpecialDiscount/Model.Order.Quantity)*Model.DeliveryDetails.Count;
+                                        var amount = Model.DeliveryDetails.Sum(n => n.SalePrice * n.Quantity);
+                                        @((amount-sd).ToString("N2"))
+                                    }
                                 </th>
                             </tr>
                         </tbody>

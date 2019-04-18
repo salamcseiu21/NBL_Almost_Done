@@ -5,9 +5,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Clients;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
 using NBL.Models.EntityModels.Identities;
@@ -24,8 +26,9 @@ namespace NBL.Areas.Sales.Controllers
         private readonly ICommonManager _iCommonManager;
         private readonly IInventoryManager _iInventoryManager;
         private readonly UserManager _userManager = new UserManager();
+        private readonly IAccountsManager _iAccountsManager;
 
-        public HomeController(IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IEmployeeManager iEmployeeManager,IInventoryManager iInventoryManager, ICommonManager iCommonManager)
+        public HomeController(IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IEmployeeManager iEmployeeManager,IInventoryManager iInventoryManager, ICommonManager iCommonManager,IAccountsManager iAccountsManager)
         {
             _iBranchManager = iBranchManager;
             _iClientManager = iClientManager;
@@ -33,6 +36,7 @@ namespace NBL.Areas.Sales.Controllers
             _iEmployeeManager = iEmployeeManager;
             _iCommonManager = iCommonManager;
             _iInventoryManager = iInventoryManager;
+            _iAccountsManager = iAccountsManager;
         }
         // GET: User/Home
 
@@ -56,6 +60,19 @@ namespace NBL.Areas.Sales.Controllers
             var client = _iClientManager.GetClientDeailsById(id);
 
             return PartialView("_ViewClientProfilePartialPage", client);
+        }
+
+        public ActionResult ClientLedger(int id)
+        {
+            var client = _iClientManager.GetById(id);
+            var ledgers= _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+            LedgerModel model = new LedgerModel
+            {
+                Client = client,
+                LedgerModels = ledgers
+            };
+            return View(model);
+
         }
 
         public JsonResult GetClients()
