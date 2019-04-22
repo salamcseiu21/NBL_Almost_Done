@@ -18,7 +18,7 @@ using NBL.Models.ViewModels.Requisitions;
 
 namespace NBL.Areas.Production.Controllers
 {
-    [Authorize(Roles = "Factory")]
+    [Authorize]
     public class ProductController : Controller
     {
         // GET: Factory/Product
@@ -30,7 +30,7 @@ namespace NBL.Areas.Production.Controllers
             _iProductManager = iProductManager;
             _iInventoryManager = iInventoryManager;
         }
-
+        [Authorize(Roles = "Factory")]
         [HttpGet]
         public ActionResult Transaction()
         {
@@ -211,7 +211,7 @@ namespace NBL.Areas.Production.Controllers
             return Json(new List<Order>(), JsonRequestBehavior.AllowGet);
         }
 
-
+        [Authorize(Roles = "ProductionManager")]
         public ActionResult ProductionNote()
         {
             return View();
@@ -236,19 +236,19 @@ namespace NBL.Areas.Production.Controllers
             ViewBag.Message = "<p class='text-danger'>Production Note failed to save</p>";
             return View();
         }
-
+        [Authorize(Roles = "ProductionManager")]
         public ActionResult ViewPendingProductionNote()
         {
             var productionNotes = _iProductManager.PendingProductionNote();
             return View(productionNotes);
         }
-
+        [Authorize(Roles = "ProductionManager")]
         public ActionResult GetAllProductionNotes()
         {
             return Json(_iProductManager.PendingProductionNote(), JsonRequestBehavior.AllowGet);
         }
 
-
+        [Authorize(Roles = "ProductionManager")]
         public ActionResult AddProductToTempFile() 
         {
             ScanProductViewModel model=new ScanProductViewModel();
@@ -344,7 +344,7 @@ namespace NBL.Areas.Production.Controllers
                 return RedirectToAction("AddProductToTempFile");
             }
         }
-
+        [Authorize(Roles = "ProductionManager")]
         [HttpGet]
         public PartialViewResult LoadScannedProducts()
         {
@@ -366,24 +366,26 @@ namespace NBL.Areas.Production.Controllers
             return PartialView("_ViewScannedProductPartialPage",model.BarCodes);
         }
 
-
+        [Authorize(Roles = "Factory")]
         public ActionResult Requisitions()
         {
             List<ViewRequisitionModel> requisitions=_iProductManager.GetRequsitions().ToList();
             return View(requisitions);
         }
+        [Authorize(Roles = "Factory")]
         public ActionResult MonthlyRequisitions()
         {
             List<ViewMonthlyRequisitionModel> requisitions = _iProductManager.GetMonthlyRequsitions().ToList();
             return View(requisitions);
         }
-
+        [Authorize(Roles = "Factory")]
         [HttpGet]
         public ActionResult MonthlyRequisitionDetails(long requisitionId)
         {
             List<RequisitionItem> requisitionItems = _iProductManager.GetMonthlyRequsitionItemsById(requisitionId).ToList();
             return View(requisitionItems);
         }
+        [Authorize(Roles = "Factory")]
         public PartialViewResult ViewRequisitionDetails(long requisitionId)
         {
             var requisitions = _iProductManager.GetRequsitionDetailsById(requisitionId);
@@ -393,5 +395,7 @@ namespace NBL.Areas.Production.Controllers
         {
             return View();
         }
+
+        
     }
 }

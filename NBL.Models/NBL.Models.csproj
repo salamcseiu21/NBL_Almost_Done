@@ -167,6 +167,7 @@
     <Compile Include="ViewModels\Orders\DeliveredRefModel.cs" />
     <Compile Include="ViewModels\Orders\TempOrderedProduct.cs" />
     <Compile Include="ViewModels\Orders\ViewCreateRetailSaleModel.cs" />
+    <Compile Include="ViewModels\Productions\ProductionSummary.cs" />
     <Compile Include="ViewModels\Productions\ViewRejectedProduct.cs" />
     <Compile Include="ViewModels\Products\ViewCreateProductDetailsModel.cs" />
     <Compile Include="ViewModels\Requisitions\ViewMonthlyRequisitionModel.cs" />

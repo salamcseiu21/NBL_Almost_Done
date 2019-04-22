@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using NBL.BLL;
 using NBL.BLL.Contracts;
@@ -59,6 +60,11 @@ namespace NBL.Areas.Production.Controllers
             if (result)
                 return RedirectToAction("Home");
             return RedirectToAction("ChangePassword");
+        }
+        public ActionResult ProductionSummary()
+        {
+            var summaries = _iInventoryManager.GetProductionSummaries().ToList();
+            return View(summaries);
         }
     }
 }

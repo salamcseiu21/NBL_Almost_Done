@@ -40,5 +40,6 @@ namespace NBL.DAL.Contracts
        ViewDispatchModel GetDispatchByTripId(long tripId);
        ICollection<ViewDispatchModel> GetAllReceiveableItemsByTripAndBranchId(long tripId, int branchId);
        long GetMaxVoucherNoByTransactionInfix(string infix);
+       ICollection<ProductionSummary> GetProductionSummaries(); 
    }
 }

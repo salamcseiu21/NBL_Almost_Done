@@ -36,5 +36,6 @@ namespace NBL.BLL.Contracts
        IEnumerable<ViewTripModel> GetAllTrip();
         ViewDispatchModel GetDispatchByTripId(long tripId);
        ICollection<ViewDispatchModel> GetAllReceiveableItemsByTripAndBranchId(long tripId, int branchId);
+       ICollection<ProductionSummary> GetProductionSummaries();
    }
 }

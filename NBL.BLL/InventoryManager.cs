@@ -179,5 +179,10 @@ namespace NBL.BLL
         {
             return _iInventoryGateway.GetAllReceiveableItemsByTripAndBranchId(tripId,branchId);
         }
+
+        public ICollection<ProductionSummary> GetProductionSummaries()
+        {
+            return _iInventoryGateway.GetProductionSummaries();
+        }
     }
 }

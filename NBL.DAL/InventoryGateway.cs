@@ -1366,5 +1366,43 @@ namespace NBL.DAL
                 ConnectionObj.Close();
             }
         }
+
+        public ICollection<ProductionSummary> GetProductionSummaries()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetProductionSummary";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<ProductionSummary> summaries=new List<ProductionSummary>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    summaries.Add(new ProductionSummary
+                    {
+                        ProductCode = reader["SubSubSubAccountCode"].ToString(),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        CameToStoreDate = Convert.ToDateTime(reader["CameToStoreDate"]),
+                        CategoryId = Convert.ToInt32(reader["CategoryId"]),
+                        CategoryName = reader["ProductCategoryName"].ToString()
+                    });
+                }
+                reader.Close();
+                return summaries;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect prduction summary", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
     }
 }
