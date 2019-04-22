@@ -32,9 +32,10 @@ namespace NBL.Areas.Production.Controllers
         {
             var monthYear = DateTime.Now.Month.ToString("D2") +
                             Convert.ToInt32(DateTime.Now.Year.ToString().Substring(2, 2)).ToString("D2");
-            var productionDateCodes = _iCommonManager.GetProductionDateCodeByMonthYear(monthYear).ToList();
+            var productionDateCodes = _iCommonManager.GetAllProductionDateCode().ToList();
             var productionLines = _iCommonManager.GetAllProductionLines().ToList();
-            ViewBag.ProductionDateCodeId = new SelectList(productionDateCodes, "ProductionDateCodeId", "Code", productionDateCodes.First().ProductionDateCodeId);
+            var courrentCode=  _iCommonManager.GetProductionDateCodeByMonthYear(monthYear).ToList().First();
+            ViewBag.ProductionDateCodeId = new SelectList(productionDateCodes, "ProductionDateCodeId", "Code",courrentCode.ProductionDateCodeId);
             ViewBag.ProductionLineId = new SelectList(productionLines, "ProductionLineId", "LineNumber");
             return View();
         }
@@ -44,17 +45,43 @@ namespace NBL.Areas.Production.Controllers
         {
             var monthYear = DateTime.Now.Month.ToString("D2") +
                             Convert.ToInt32(DateTime.Now.Year.ToString().Substring(2, 2)).ToString("D2");
-            var productionDateCodes = _iCommonManager.GetProductionDateCodeByMonthYear(monthYear).ToList();
+            var productionDateCodes = _iCommonManager.GetAllProductionDateCode().ToList();
+            var courrentCode = _iCommonManager.GetProductionDateCodeByMonthYear(monthYear).ToList().First();
             var productionLines = _iCommonManager.GetAllProductionLines().ToList();
+           var lineNo=  productionLines.Find(n => n.ProductionLineId == model.ProductionLineId).LineNumber;
+            var selecteDatecode = productionDateCodes.Find(n => n.ProductionDateCodeId == model.ProductionDateCodeId)
+                .Code;
+           var date= Convert.ToDateTime(model.ProductionDate).Day.ToString("D2");
 
-            string barCodePrefix = productionLines.Find(n => n.ProductionLineId == model.ProductionLineId).LineNumber + model.ProductId.ToString("D3") + DateTime.Now.Day.ToString("D2") + productionDateCodes.First().Code;
+            string barCodePrefix = lineNo +model.ShiftNo+ model.ProductId.ToString("D3") + date +selecteDatecode ;
             //string barCodePrefix = productionLines.Find(n => n.ProductionLineId == model.ProductionLineId).LineNumber + model.ProductId.ToString("D3") + "09" + productionDateCodes.First().Code;
-            string infix = DateTime.Now.Day.ToString("D2")+productionDateCodes.First().Code;
+           string infix = date+selecteDatecode;
 
-            var maxSl = _iBarCodeManager.GetMaxBarCodeSlByInfix(infix);
+           var maxSl = _iBarCodeManager.GetMaxBarCodeSlByInfixAndByLineNo(infix,lineNo);
+            //var maxSl = 413;
+            if (maxSl == 0 && lineNo.Equals("1"))
+            {
+                maxSl = 1000;
+            }
+            if (maxSl == 0 && lineNo.Equals("2"))
+            {
+                maxSl = 2000;
+            }
+            if (maxSl == 0 && lineNo.Equals("3"))
+            {
+                maxSl = 3000;
+            }
+            if (maxSl == 0 && lineNo.Equals("4"))
+            {
+                maxSl = 4000;
+            }
+            if (maxSl == 0 && lineNo.Equals("5"))
+            {
+                maxSl = 5000;
+            }
             var user = (ViewUser)Session["user"];
             model.GenerateByUserId = user.UserId;
-            for (int i = 1; i <= model.Total; i++)
+            for (int i = 1; i <=model.Total; i++)
             {
                 var barcode = barCodePrefix + (maxSl + i).ToString("D4");
                 BarCodeModel aBarCodeModel = new BarCodeModel
@@ -73,7 +100,7 @@ namespace NBL.Areas.Production.Controllers
                 ModelState.Clear();
             }
 
-            ViewBag.ProductionDateCodeId = new SelectList(productionDateCodes, "ProductionDateCodeId", "Code", productionDateCodes.First().ProductionDateCodeId);
+            ViewBag.ProductionDateCodeId = new SelectList(productionDateCodes, "ProductionDateCodeId", "Code", courrentCode.ProductionDateCodeId);
             ViewBag.ProductionLineId = new SelectList(productionLines, "ProductionLineId", "LineNumber");
            
             return View();
@@ -82,7 +109,7 @@ namespace NBL.Areas.Production.Controllers
         public ActionResult Print()
         {
           
-            var products = _iBarCodeManager.GetTodaysProductionProductList();
+            var products = _iBarCodeManager.GetTodaysProductionProductList(DateTime.Now);
             var productionLines = _iCommonManager.GetAllProductionLines().ToList();
             var monthYear = DateTime.Now.Month.ToString("D2") +
                             Convert.ToInt32(DateTime.Now.Year.ToString().Substring(2, 2)).ToString("D2");
@@ -98,7 +125,7 @@ namespace NBL.Areas.Production.Controllers
         [HttpPost]
         public ActionResult Print(PrintBarCodeModel model)
         {
-            var products = _iBarCodeManager.GetTodaysProductionProductList();
+            var products = _iBarCodeManager.GetTodaysProductionProductList(model.ProductionDate);
             var barCodeMaster = products.Find(n => n.BarCodeMasterId == model.BarCodeMasterId);
             model.ProductionLineNumber = barCodeMaster.ProductionLineNumber;
 
@@ -108,6 +135,7 @@ namespace NBL.Areas.Production.Controllers
             ViewBag.ProductionLineId = new SelectList(productionLines, "ProductionLineId", "LineNumber");
             ViewBag.BarCodeMasterId = new SelectList(products, "BarCodeMasterId", "ProductName");
             TempData["Codes"] = printableBarcodes;
+            TempData["TotalCopy"] = model.TotalCopy;
             if (printableBarcodes.Count == 0)
             {
 
@@ -122,9 +150,6 @@ namespace NBL.Areas.Production.Controllers
         }
         private void GenerateBarCodeFromaGivenString(string barcode)
         {
-
-
-
 
 
             Image img = null;
@@ -169,7 +194,15 @@ namespace NBL.Areas.Production.Controllers
             var productId = Convert.ToInt32(printableBarcodes.ToList().First().Barcode.Substring(2, 3));
             var  product= _iProductManager.GetProductByProductId(productId);
             ViewBag.Data = $"BarCode List for <strong> <i> {product.ProductName } </i> </strong>from {printableBarcodes.First().Barcode}- {printableBarcodes.Last().Barcode}";
+            ViewBag.TotalCopy = Convert.ToInt32(TempData["TotalCopy"]);
             return View(printableBarcodes);
+        }
+
+        public JsonResult GetBarCodeListByDate(string date)
+        {
+            var datetime = Convert.ToDateTime(date);
+            var products = _iBarCodeManager.GetTodaysProductionProductList(datetime);
+            return Json(products, JsonRequestBehavior.AllowGet);
         }
     }
 }

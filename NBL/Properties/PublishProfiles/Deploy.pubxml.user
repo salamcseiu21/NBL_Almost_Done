@@ -30,6 +30,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Areas/AccountExecutive/Views/Account/VoucherDetails.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
+    <File Include="Areas/AccountExecutive/Views/Home/ClientLedger.cshtml">
+      <publishTime>04/18/2019 14:37:01</publishTime>
+    </File>
     <File Include="Areas/AccountExecutive/Views/Home/Home.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
@@ -127,7 +130,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/10/2019 17:28:30</publishTime>
     </File>
     <File Include="Areas/AccountsAndFinance/Views/Home/ClientLedger.cshtml">
-      <publishTime>04/16/2019 16:32:15</publishTime>
+      <publishTime>04/18/2019 14:35:35</publishTime>
     </File>
     <File Include="Areas/AccountsAndFinance/Views/Home/Home.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -658,7 +661,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/Editor/Views/Employee/AddEmployee.cshtml">
-      <publishTime>03/31/2019 12:30:49</publishTime>
+      <publishTime>04/21/2019 23:05:57</publishTime>
     </File>
     <File Include="Areas/Editor/Views/Employee/Details.cshtml">
       <publishTime>04/10/2019 14:03:04</publishTime>
@@ -976,13 +979,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/Production/Views/BarCode/Generate.cshtml">
-      <publishTime>04/01/2019 09:46:08</publishTime>
+      <publishTime>04/21/2019 21:18:10</publishTime>
     </File>
     <File Include="Areas/Production/Views/BarCode/Print.cshtml">
-      <publishTime>04/02/2019 17:23:55</publishTime>
+      <publishTime>04/21/2019 23:14:10</publishTime>
     </File>
     <File Include="Areas/Production/Views/BarCode/PrintBarCode.cshtml">
-      <publishTime>04/18/2019 13:09:13</publishTime>
+      <publishTime>04/21/2019 22:57:13</publishTime>
     </File>
     <File Include="Areas/Production/Views/BarCodeGenerator/BarCodeRead.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -1009,7 +1012,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/Production/Views/Product/AddProductToTempFile.cshtml">
-      <publishTime>03/25/2019 17:37:04</publishTime>
+      <publishTime>04/21/2019 16:18:45</publishTime>
     </File>
     <File Include="Areas/Production/Views/Product/MonthlyRequisitionDetails.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -1057,7 +1060,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/17/2019 11:34:37</publishTime>
     </File>
     <File Include="Areas/Production/Views/Shared/_MenuPartialPage.cshtml">
-      <publishTime>04/15/2019 14:05:55</publishTime>
+      <publishTime>04/21/2019 16:13:01</publishTime>
     </File>
     <File Include="Areas/Production/Views/Shared/_MenuProductionHeadPartialPage.cshtml">
       <publishTime>04/17/2019 13:00:36</publishTime>
@@ -1219,7 +1222,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Delivery/Chalan.cshtml">
-      <publishTime>04/13/2019 13:15:57</publishTime>
+      <publishTime>04/18/2019 13:52:39</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Delivery/DeleveredOrders.cshtml">
       <publishTime>04/13/2019 10:53:31</publishTime>
@@ -1228,7 +1231,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/03/2019 09:59:51</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Delivery/Invoice.cshtml">
-      <publishTime>04/18/2019 12:45:34</publishTime>
+      <publishTime>04/18/2019 13:52:52</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Delivery/OrderList.cshtml">
       <publishTime>03/27/2019 12:26:16</publishTime>
@@ -1240,7 +1243,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/15/2019 15:08:24</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Home/ClientLedger.cshtml">
-      <publishTime>04/17/2019 17:32:25</publishTime>
+      <publishTime>04/18/2019 14:15:17</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Home/Home.cshtml">
       <publishTime>03/27/2019 11:09:12</publishTime>
@@ -22786,16 +22789,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="bin/NBL.BLL.dll">
-      <publishTime>04/18/2019 13:25:38</publishTime>
+      <publishTime>04/22/2019 09:56:08</publishTime>
     </File>
     <File Include="bin/NBL.DAL.dll">
-      <publishTime>04/18/2019 13:25:38</publishTime>
+      <publishTime>04/22/2019 09:56:07</publishTime>
     </File>
     <File Include="bin/NBL.dll">
-      <publishTime>04/18/2019 13:25:43</publishTime>
+      <publishTime>04/22/2019 09:56:12</publishTime>
     </File>
     <File Include="bin/NBL.Models.dll">
-      <publishTime>04/18/2019 13:25:37</publishTime>
+      <publishTime>04/22/2019 09:56:07</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -23713,7 +23716,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Views/Shared/_UserLayoutPage.cshtml">
-      <publishTime>04/17/2019 12:48:28</publishTime>
+      <publishTime>04/21/2019 09:59:58</publishTime>
     </File>
     <File Include="Views/Shared/_ViewAllReturnsPartialPage.cshtml">
       <publishTime>04/06/2019 13:58:09</publishTime>

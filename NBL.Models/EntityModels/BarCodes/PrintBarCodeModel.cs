@@ -11,6 +11,9 @@ namespace NBL.Models.EntityModels.BarCodes
         [Required]
         [Display(Name = "Production Date Code")]
         public int ProductionDateCodeId { get; set; }
+        [Display(Name = "Date")]
+        [Required]
+        public DateTime ProductionDate { get; set; }
         [Required]
         public int From { get; set; }
         [Required]
@@ -18,6 +21,9 @@ namespace NBL.Models.EntityModels.BarCodes
         [Required]
         [Display(Name = "Line Number")]
         public int ProductionLineId { get; set; }
+        [Required]
+        [Display(Name = "Total Copy")]
+        public int TotalCopy { get; set; }
         public string ProductionLineNumber { get; set; } 
         [Required]
         [Display(Name = "Product")]

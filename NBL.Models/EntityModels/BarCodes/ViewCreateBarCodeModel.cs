@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 namespace NBL.Models.EntityModels.BarCodes
@@ -6,8 +7,14 @@ namespace NBL.Models.EntityModels.BarCodes
     public class ViewCreateBarCodeModel
     {
         [Required]
-        [Display(Name = "Production Date Code")]
+        [Display(Name = "Date Code")]
         public int ProductionDateCodeId { get; set; }
+        [Display(Name = "Date")]
+        [Required]
+        public DateTime ProductionDate { get; set; }
+        [Display(Name = "Shift")]
+        [Required]
+        public string ShiftNo { get; set; }  
         [Required]
         public int Total { get; set; }  
         [Required]

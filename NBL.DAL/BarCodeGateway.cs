@@ -18,14 +18,15 @@ namespace NBL.DAL
             throw new NotImplementedException();
         }
 
-        public int GetMaxBarCodeSlByInfix(string infix) 
+        public int GetMaxBarCodeSlByInfix(string infix,string lineNo) 
         {
             try
             {
                 int maxSl = 0;
-                CommandObj.CommandText = "UDSP_GetMaxBarCodeSLByInfix";
+                CommandObj.CommandText = "UDSP_GetMaxBarCodeSLByInfixAndLineNo";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@Infix", infix);
+                CommandObj.Parameters.AddWithValue("@lineNo", lineNo);
                 ConnectionObj.Open();
                 SqlDataReader reader= CommandObj.ExecuteReader();
                 if (reader.Read())
@@ -179,6 +180,7 @@ namespace NBL.DAL
                 CommandObj.CommandText = "UDSP_AddBarCodeMaster";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@ProductId", model.ProductId);
+                CommandObj.Parameters.AddWithValue("@ProductionDate", model.ProductionDate);
                 CommandObj.Parameters.AddWithValue("@LineNumber", model.ProductionLineId.ToString("D2"));
                 CommandObj.Parameters.AddWithValue("@Quantity", model.BarCodes.Count);
                 CommandObj.Parameters.AddWithValue("@GenerateByUserId", model.GenerateByUserId);
@@ -223,6 +225,7 @@ namespace NBL.DAL
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.Clear();
                 CommandObj.Parameters.AddWithValue("@BarCode", item.Barcode);
+              
                 CommandObj.Parameters.AddWithValue("@BarCodeMasterId", barCodeMasterId);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
@@ -233,13 +236,13 @@ namespace NBL.DAL
             return i;
         }
 
-        public List<PrintBarCodeModel> GetTodaysProductionProductList()
+        public List<PrintBarCodeModel> GetTodaysProductionProductList(DateTime date)
         {
             try
             {
-                CommandObj.CommandText = "UDSP_GetTodaysProductionProductList";
+                CommandObj.CommandText = "UDSP_GetBarCodeListByDate";
                 CommandObj.CommandType = CommandType.StoredProcedure;
-
+                CommandObj.Parameters.AddWithValue("@Date", date);
                 ConnectionObj.Open();
                 SqlDataReader reader = CommandObj.ExecuteReader();
                 List<PrintBarCodeModel> models = new List<PrintBarCodeModel>();

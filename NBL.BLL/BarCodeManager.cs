@@ -50,9 +50,9 @@ namespace NBL.BLL
             return _iBarCodeGateway.GenerateBarCode(model) > 0;
         }
 
-        public int GetMaxBarCodeSlByInfix(string prefix)
+        public int GetMaxBarCodeSlByInfixAndByLineNo(string prefix,string lineNo)
         {
-            return _iBarCodeGateway.GetMaxBarCodeSlByInfix(prefix);
+            return _iBarCodeGateway.GetMaxBarCodeSlByInfix(prefix,lineNo);
         }
 
        public ICollection<BarCodeModel> GetAllByProducitonDateCode(string dateCode)
@@ -71,9 +71,9 @@ namespace NBL.BLL
             return rowAffected > 0;
         }
 
-        public List<PrintBarCodeModel> GetTodaysProductionProductList()
+        public List<PrintBarCodeModel> GetTodaysProductionProductList(DateTime date)
         {
-            return _iBarCodeGateway.GetTodaysProductionProductList();
+            return _iBarCodeGateway.GetTodaysProductionProductList(date);
         }
 
         public ICollection<BarCodeModel> GetAllBarCodeByInfix(string infix)

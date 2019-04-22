@@ -38,38 +38,18 @@
         <table>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td class="text-center">
-                        <img src="~/Areas/Production/Images/BarCodes/@(item.Barcode + ".Png")" style="padding-top: 5px" height="110" width="400" />
-                        <br/>
-                        <span>@item.Barcode</span>
-                    </td>
 
-                </tr>
-                <tr>
-                    <td class="text-center">
-                        <img src="~/Areas/Production/Images/BarCodes/@(item.Barcode + ".Png")" style="padding-top: 5px" height="110" width="400" />
-                        <br />
-                        <span>@item.Barcode</span>
-                    </td>
+                for (int i = 1; i <= Convert.ToInt64(ViewBag.TotalCopy); i++)
+                {
+                    <tr>
+                        <td class="text-center">
+                            <img src="~/Areas/Production/Images/BarCodes/@(item.Barcode + ".Png")" style="padding-top: 5px" height="110" width="400" />
+                            <br/>
+                            <span>@item.Barcode</span>
+                        </td>
 
-                </tr>
-                <tr>
-                    <td class="text-center">
-                        <img src="~/Areas/Production/Images/BarCodes/@(item.Barcode + ".Png")" style="padding-top: 5px" height="110" width="400" />
-                        <br />
-                        <span>@item.Barcode</span>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td class="text-center">
-                        <img src="~/Areas/Production/Images/BarCodes/@(item.Barcode + ".Png")" style="padding-top: 5px" height="110" width="400" />
-                        <br />
-                        <span>@item.Barcode</span>
-                    </td>
-
-                </tr>
+                    </tr>
+                }
             }
         </table>
     </div>

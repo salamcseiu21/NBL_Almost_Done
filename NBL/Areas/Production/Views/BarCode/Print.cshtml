@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Print BarCode";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
 }
 
 <section class="content">
@@ -23,6 +24,13 @@
 
                 <div class="form-horizontal">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProductionDate, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input type="text" id="ProductionDate" name="ProductionDate" value="@date" class="form-control" onchange="LoadBarcodeByDate(this)" />
+                            @Html.ValidationMessageFor(model => model.ProductionDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.BarCodeMasterId, new { @class = "control-label col-md-3" })
@@ -31,9 +39,6 @@
                             @Html.ValidationMessageFor(model => model.BarCodeMasterId, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
-                   
-
                     <div class="form-group">
                         @Html.LabelFor(model => model.From, new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
@@ -47,6 +52,14 @@
                         <div class="col-md-9">
                             @Html.TextBoxFor(model => model.To, new { @class = "form-control", placeholder = "From number.." })
                             @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TotalCopy, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.TotalCopy, new { @class = "form-control", placeholder = "Total copy of each barcode..." })
+                            @Html.ValidationMessageFor(model => model.TotalCopy, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -108,6 +121,44 @@
 @section Scripts
 {
     <script>
+        $(function () {
+
+            $("#ProductionDate").datepicker(
+                {
+                    dateFormat: 'dd-MM-yy',
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "-20:+0"
+                    
+                });
+
+        });
+    </script>
+    <script>
+
+        function LoadBarcodeByDate(even) {
+            var date = even.value;
+            $("#BarCodeMasterId").empty();
+            $("#BarCodeMasterId").append('<option value="">--Select--</option>');
+
+            var json = { date: date };
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetBarCodeListByDate", "BarCode", new { area = "Production" })',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+
+
+                    $.each(data, function (key, value) {
+                        //alert(key);
+                        $("#BarCodeMasterId").append('<option value=' + value.BarCodeMasterId + '>' + value.ProductName + '</option>');
+
+                    });
+                }
+            });
+        }
 
         $(function () {
             $("#ProductName").autocomplete({

@@ -11,11 +11,11 @@ namespace NBL.DAL.Contracts
     public interface IBarCodeGateway:IGateway<BarCodeModel>
     {
         int GenerateBarCode(BarCodeModel model);
-        int GetMaxBarCodeSlByInfix(string prefix);
+        int GetMaxBarCodeSlByInfix(string prefix,string lineNo);
         ICollection<BarCodeModel> GetAllByProducitonDateCode(string dateCode);
         ICollection<BarCodeModel> GetBarCodesBySearchCriteria(PrintBarCodeModel model); 
         int SaveBarCodes(ViewCreateBarCodeModel model);
-        List<PrintBarCodeModel> GetTodaysProductionProductList();
+        List<PrintBarCodeModel> GetTodaysProductionProductList(DateTime date);
         ICollection<BarCodeModel> GetAllBarCodeByInfix(string infix); 
     }
 }
