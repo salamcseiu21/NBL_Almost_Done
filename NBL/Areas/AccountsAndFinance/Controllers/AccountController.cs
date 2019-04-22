@@ -13,7 +13,7 @@ using NBL.Models.ViewModels.Returns;
 
 namespace NBL.Areas.AccountsAndFinance.Controllers
 {
-    [Authorize(Roles ="Accounts")]
+    [Authorize(Roles = "AccountExecutive")]
     public class AccountController : Controller
     {
         private readonly ICommonManager _iCommonManager;

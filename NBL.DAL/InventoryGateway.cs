@@ -1164,11 +1164,12 @@ namespace NBL.DAL
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@TripRef", model.TripRef);
                 CommandObj.Parameters.AddWithValue("@Remarks", model.Remarks);
-                CommandObj.Parameters.AddWithValue("@DriverName", model.DriverName);
-                CommandObj.Parameters.AddWithValue("@DriverPhone", model.DriverPhone);
-                CommandObj.Parameters.AddWithValue("@Transportation", model.Transportation);
-                CommandObj.Parameters.AddWithValue("@VehicleNo", model.VehicleNo);
+                CommandObj.Parameters.AddWithValue("@DriverName", model.DriverName?? "N/A");
+                CommandObj.Parameters.AddWithValue("@DriverPhone", model.DriverPhone ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@Transportation", model.Transportation ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@VehicleNo", model.VehicleNo ?? "N/A");
                 CommandObj.Parameters.AddWithValue("@TransportationCost", model.TransportationCost);
+                CommandObj.Parameters.AddWithValue("@IsOwnTransporatoion", model.IsOwnTransport);
                 CommandObj.Parameters.AddWithValue("@UserId", model.CreatedByUserId);
                 CommandObj.Parameters.Add("@TripId", SqlDbType.BigInt);
                 CommandObj.Parameters["@TripId"].Direction = ParameterDirection.Output;

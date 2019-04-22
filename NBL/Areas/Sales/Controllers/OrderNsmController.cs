@@ -11,7 +11,7 @@ using NBL.Models.ViewModels;
 namespace NBL.Areas.Sales.Controllers
 {
 
-    [Authorize(Roles = "Nsm")]
+    [Authorize(Roles = "SalesManager")]
     public class OrderNsmController : Controller
     {
         // GET: Sales/OrderNsm

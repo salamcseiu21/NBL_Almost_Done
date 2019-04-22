@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace NBL.Areas.Sales.Controllers
 {
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "SalesExecutive")]
     public class ReplaceController : Controller
     {
         // GET: Sales/Replace

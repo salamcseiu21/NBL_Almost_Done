@@ -8,7 +8,7 @@ using NBL.Models.ViewModels;
 
 namespace NBL.Areas.Editor.Controllers
 {
-    [Authorize(Roles = "Editor")]
+    [Authorize(Roles = "SystemAdmin")]
     public class TerritoryController : Controller
     {
 

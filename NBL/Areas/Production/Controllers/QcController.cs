@@ -11,7 +11,7 @@ using NBL.Models.ViewModels.Productions;
 
 namespace NBL.Areas.Production.Controllers
 {
-    [Authorize(Roles = "FQC")]
+    [Authorize(Roles = "FqcExecutive")]
     public class QcController : Controller
     {
         private readonly ICommonManager _iCommonManager;

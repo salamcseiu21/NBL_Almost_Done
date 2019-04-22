@@ -1,2 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Requisitions />
+<Requisitions>
+  <Requisition Id="53c8a08f-093d-4dea-aadd-5f702e76e775">
+    <RequisitionId>68</RequisitionId>
+    <RequisitionRef>192034</RequisitionRef>
+    <ProuctId>109</ProuctId>
+    <RequisitionQty>100</RequisitionQty>
+    <DeliveryQuantity>1</DeliveryQuantity>
+    <ToBranchId>8</ToBranchId>
+    <ProductName>NR 12 N 6A</ProductName>
+  </Requisition>
+  <Requisition Id="9a30b381-478d-4548-bdd2-408aaf8c84cd">
+    <RequisitionId>68</RequisitionId>
+    <RequisitionRef>192034</RequisitionRef>
+    <ProuctId>109</ProuctId>
+    <RequisitionQty>100</RequisitionQty>
+    <DeliveryQuantity>1</DeliveryQuantity>
+    <ToBranchId>10</ToBranchId>
+    <ProductName>NR 12 N 6A</ProductName>
+  </Requisition>
+</Requisitions>

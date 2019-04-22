@@ -85,7 +85,7 @@ function loadScannedProducts() {
             var scannedQty = parseInt($("#total_Scanned_qty").val());
             $("#lbl_requisition_qty").text(requisitionQty);
             $("#lbl_scanned_qty").text(scannedQty);
-            if (requisitionQty !== scannedQty) {
+            if (requisitionQty !== 0) {
                 $("#btnSaveDispatchInfo").prop('disabled', true);
                 $("#div_status").html("<p style='color:red'>Not Complete</p>");
             } else {

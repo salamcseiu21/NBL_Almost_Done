@@ -12,7 +12,7 @@ using NBL.Models.ViewModels;
 
 namespace NBL.Areas.Sales.Controllers
 {
-    [Authorize(Roles ="User")]
+    [Authorize(Roles = "SalesExecutive")]
     public class ClientController : Controller
     {
         private readonly ICommonManager _iCommonManager;

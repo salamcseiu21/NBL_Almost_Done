@@ -30,7 +30,7 @@ namespace NBL.Areas.Production.Controllers
             _iProductManager = iProductManager;
             _iInventoryManager = iInventoryManager;
         }
-        [Authorize(Roles = "Factory")]
+        [Authorize(Roles = "StoreManagerFactory")]
         [HttpGet]
         public ActionResult Transaction()
         {
@@ -366,26 +366,26 @@ namespace NBL.Areas.Production.Controllers
             return PartialView("_ViewScannedProductPartialPage",model.BarCodes);
         }
 
-        [Authorize(Roles = "Factory")]
+        [Authorize(Roles = "StoreManagerFactory")]
         public ActionResult Requisitions()
         {
             List<ViewRequisitionModel> requisitions=_iProductManager.GetRequsitions().ToList();
             return View(requisitions);
         }
-        [Authorize(Roles = "Factory")]
+        [Authorize(Roles = "StoreManagerFactory")]
         public ActionResult MonthlyRequisitions()
         {
             List<ViewMonthlyRequisitionModel> requisitions = _iProductManager.GetMonthlyRequsitions().ToList();
             return View(requisitions);
         }
-        [Authorize(Roles = "Factory")]
+        [Authorize(Roles = "StoreManagerFactory")]
         [HttpGet]
         public ActionResult MonthlyRequisitionDetails(long requisitionId)
         {
             List<RequisitionItem> requisitionItems = _iProductManager.GetMonthlyRequsitionItemsById(requisitionId).ToList();
             return View(requisitionItems);
         }
-        [Authorize(Roles = "Factory")]
+        [Authorize(Roles = "StoreManagerFactory")]
         public PartialViewResult ViewRequisitionDetails(long requisitionId)
         {
             var requisitions = _iProductManager.GetRequsitionDetailsById(requisitionId);

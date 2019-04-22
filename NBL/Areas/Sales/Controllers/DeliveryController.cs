@@ -18,7 +18,7 @@ using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.Sales.Controllers
 {
-    [Authorize(Roles = "Distributor")]
+    [Authorize(Roles = "DistributionManager")]
     public class DeliveryController : Controller
     {
        

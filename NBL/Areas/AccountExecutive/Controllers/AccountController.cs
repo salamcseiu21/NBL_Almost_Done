@@ -14,7 +14,7 @@ using NBL.Models.ViewModels;
 
 namespace NBL.Areas.AccountExecutive.Controllers
 {
-    [Authorize(Roles = "AccountExecutive")]
+    [Authorize(Roles = "AccountManager")]
     public class AccountController : Controller
     {
 

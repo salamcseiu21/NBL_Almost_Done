@@ -15,7 +15,7 @@ using NBL.Models.ViewModels.Returns;
 
 namespace NBL.Areas.QC.Controllers
 {
-    [Authorize(Roles = "QC")]
+    [Authorize(Roles = "ServiceExecutive")]
     public class ProductController : Controller
     {
         private readonly IProductReturnManager _iProductReturnManager;

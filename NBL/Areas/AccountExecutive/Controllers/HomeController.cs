@@ -12,7 +12,7 @@ using NBL.Models.EntityModels.Securities;
 
 namespace NBL.Areas.AccountExecutive.Controllers
 {
-    [Authorize(Roles = "AccountExecutive")]
+    [Authorize(Roles = "AccountManager")]
     public class HomeController : Controller
     {
         private readonly IClientManager _iClientManager;

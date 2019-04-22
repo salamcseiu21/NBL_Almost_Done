@@ -178,7 +178,7 @@ namespace NBL.Areas.Sales.Controllers
 
             }
         }
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "DistributionManager")]
         public ActionResult Receive()
         {
             int branchId = Convert.ToInt32(Session["BranchId"]);

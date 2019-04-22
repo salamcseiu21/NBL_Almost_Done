@@ -13,7 +13,7 @@ using NBL.Models.ViewModels.TransferProducts;
 
 namespace NBL.Areas.Production.Controllers
 {
-    [Authorize(Roles = "Factory")]
+    [Authorize(Roles = "StoreManagerFactory")]
     public class TransferController : Controller
     {
         private readonly IProductManager _iProductManager;
@@ -190,9 +190,11 @@ namespace NBL.Areas.Production.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateTrip(ViewCreateTripModel model)
+        public ActionResult CreateTrip(ViewCreateTripModel model,FormCollection collection)
         {
-
+            var transport = collection["ownTransport"];
+            bool isOwnTransport = transport != null;
+            model.IsOwnTransport = isOwnTransport;
             var user = (ViewUser)Session["user"];
             model.CreatedByUserId = user.UserId;
             var filePath = Server.MapPath("~/Files/" + "Create_Trip_File.xml");

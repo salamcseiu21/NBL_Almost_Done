@@ -20,7 +20,7 @@ using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.SuperAdmin.Controllers
 {
-    [Authorize(Roles ="Super")]
+    [Authorize(Roles = "SuperUser")]
     public class HomeController : Controller
     {
         // GET: SuperAdmin/Home

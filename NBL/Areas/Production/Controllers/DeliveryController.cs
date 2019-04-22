@@ -15,7 +15,7 @@ using NBL.Models.ViewModels.TransferProducts;
 
 namespace NBL.Areas.Production.Controllers
 {
-    [Authorize(Roles = "Factory")]
+    [Authorize(Roles = "StoreManagerFactory")]
     public class DeliveryController : Controller
     {
 

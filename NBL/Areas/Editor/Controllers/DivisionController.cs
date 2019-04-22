@@ -3,7 +3,7 @@ using NBL.DAL.Contracts;
 
 namespace NBL.Areas.Editor.Controllers
 {
-    [Authorize(Roles = "Editor")]
+    [Authorize(Roles = "SystemAdmin")]
     public class DivisionController : Controller
     {
         private readonly IDivisionGateway _iDivisionGateway;

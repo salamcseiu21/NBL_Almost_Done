@@ -12,7 +12,7 @@ using NBL.Models.EntityModels.Securities;
 
 namespace NBL.Areas.QC.Controllers
 {
-    [Authorize(Roles = "QC")]
+    [Authorize(Roles = "ServiceExecutive")]
     public class HomeController : Controller
     {
         private readonly IProductReturnManager _iProductReturnManager;

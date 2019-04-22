@@ -9,9 +9,9 @@
     string roleName = null;
     string areas = null;
 
-    if (User.IsInRole("Super"))
+    if (User.IsInRole("SuperUser"))
     {
-        roleName = "Super Admin";
+        roleName = "Super User";
         areas = "superadmin";
     }
     else if (User.IsInRole("Admin"))
@@ -24,24 +24,24 @@
         roleName = "Sales Admin";
         areas = "sales";
     }
-    else if (User.IsInRole("User"))
+    else if (User.IsInRole("SalesExecutive"))
     {
-        roleName = "Sales";
+        roleName = "Sales Executive";
         areas = "sales";
     }
-    else if (User.IsInRole("Nsm"))
+    else if (User.IsInRole("SalesManager"))
     {
-        roleName = "Nsm";
+        roleName = "Sales Manager";
         areas = "sales";
     }
-    else if(User.IsInRole("Distributor"))
+    else if(User.IsInRole("DistributionManager"))
     {
-        roleName = "Distributor";
+        roleName = "Distribution Manager";
         areas = "sales";
     }
-    else if(User.IsInRole("Factory"))
+    else if(User.IsInRole("StoreManagerFactory"))
     {
-        roleName = "Factory";
+        roleName = "Store Manager";
         areas = "production";
     }
     else if(User.IsInRole("ProductionManager"))
@@ -55,29 +55,29 @@
         roleName = "Dispatch";
         areas = "production";
     }
-    else if(User.IsInRole("FQC"))
+    else if(User.IsInRole("FqcExecutive"))
     {
         roleName = "QC";
         areas = "production";
     }
     else if (User.IsInRole("PH"))
     {
-        roleName = "PH";
+        roleName = "Heat of Plant";
         areas = "production";
-    }
-    else if (User.IsInRole("Accounts"))
-    {
-        roleName = "A & F";
-        areas = "accountsandfinance";
     }
     else if (User.IsInRole("AccountExecutive"))
     {
         roleName = "Account Executive";
+        areas = "accountsandfinance";
+    }
+    else if (User.IsInRole("AccountManager"))
+    {
+        roleName = "Account Manager";
         areas = "accountexecutive";
     }
-    else if(User.IsInRole("Editor"))
+    else if(User.IsInRole("SystemAdmin"))
     {
-        roleName = "Editor";
+        roleName = "System Admin";
         areas = "editor";
     }
     else if (User.IsInRole("Management"))
@@ -100,9 +100,9 @@
         roleName = "R & D";
         areas = "researchanddevelopment";
     }
-    else if (User.IsInRole("QC"))
+    else if (User.IsInRole("ServiceExecutive"))
     {
-        roleName = "QC";
+        roleName = "Service Executive";
         areas = "qc";
     }
 }
@@ -256,22 +256,22 @@
                     case "R&D":
                         Html.RenderPartial("~/Areas/ResearchAndDevelopment/Views/Shared/_MenuPartialPage.cshtml");
                         break;
-                    case "QC":
+                    case "ServiceExecutive":
                         Html.RenderPartial("~/Areas/QC/Views/Shared/_MenuPartialPage.cshtml");
                         break;
-                    case "Super":
+                    case "SuperUser":
                         Html.RenderPartial("~/Areas/SuperAdmin/Views/Shared/_MenuPartialPage.cshtml");
                         break;
-                    case "User":
+                    case "SalesExecutive":
                         Html.RenderPartial("~/Areas/Sales/Views/Shared/_SalesPersonMenuPartialPage.cshtml");
                         break;
-                    case "Nsm":
+                    case "SalesManager":
                         Html.RenderPartial("~/Areas/Sales/Views/Shared/_NsmMenuPartialPage.cshtml");
                         break;
-                    case "Distributor":
+                    case "DistributionManager":
                         Html.RenderPartial("~/Areas/sales/Views/Shared/_DistributionMenuPartialPage.cshtml");
                         break;
-                    case "Factory":
+                    case "StoreManagerFactory":
                         Html.RenderPartial("~/Areas/Production/Views/Shared/_MenuPartialPage.cshtml");
                         break;
                     case "ProductionManager":
@@ -280,19 +280,19 @@
                     case "DispatchManager":
                         Html.RenderPartial("~/Areas/Production/Views/Shared/_MenuDispatchManagerPartialPage.cshtml");
                         break;
-                    case "FQC":
+                    case "FqcExecutive":
                         Html.RenderPartial("~/Areas/Production/Views/Shared/_MenuFactoryQcPartialPage.cshtml");
                         break;
                     case "PH":
                         Html.RenderPartial("~/Areas/Production/Views/Shared/_MenuProductionHeadPartialPage.cshtml");
                         break;
-                    case "Accounts":
+                    case "AccountExecutive":
                         Html.RenderPartial("~/Areas/AccountsAndFinance/Views/Shared/_MenuPartialPage.cshtml");
                         break;
-                    case "AccountExecutive":
+                    case "AccountManager":
                         Html.RenderPartial("~/Areas/AccountExecutive/Views/Shared/_MenuPartialPage.cshtml");
                         break;
-                    case "Editor":
+                    case "SystemAdmin":
                         Html.RenderPartial("~/Areas/Editor/Views/Shared/_MenuPartialPage.cshtml");
                         break;
                     case "Management":

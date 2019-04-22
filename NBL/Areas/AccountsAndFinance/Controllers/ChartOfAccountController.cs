@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace NBL.Areas.AccountsAndFinance.Controllers
 {
-    [Authorize(Roles = "Accounts")]
+    [Authorize(Roles = "AccountExecutive")]
     public class ChartOfAccountController : Controller
     {
         // GET: AccountsAndFinance/ChartOfAccount

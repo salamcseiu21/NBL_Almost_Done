@@ -13,7 +13,7 @@ using NBL.Models.ViewModels;
 
 namespace NBL.Areas.AccountsAndFinance.Controllers
 {
-    [Authorize(Roles = "Accounts")]
+    [Authorize(Roles = "AccountExecutive")]
     public class VoucherController : Controller
     {
         private readonly ICommonManager _iCommonManager;

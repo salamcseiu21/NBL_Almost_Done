@@ -90,19 +90,19 @@ namespace NBL.Controllers
                 Session.Timeout = 180;
                 switch (anUser.Roles)
                 {
-                    case "Super":
+                    case "SuperUser":
                         return RedirectToAction("Home", "Home", new { area = "SuperAdmin" });
-                    case "Factory":
+                    case "StoreManagerFactory":
                         return RedirectToAction("Home", "Home", new {area = "Production"});
                     case "ProductionManager":
                         return RedirectToAction("Home", "ProductionManager", new { area = "Production" });
                     case "DispatchManager":
                         return RedirectToAction("Home", "DispatchManager", new { area = "Production" });
-                    case "FQC":
+                    case "FqcExecutive":
                         return RedirectToAction("Home", "Qc", new { area = "Production" });
                     case "PH":
                         return RedirectToAction("Home", "ProductionHead", new { area = "Production" });
-                    case "Editor":
+                    case "SystemAdmin":
                         return RedirectToAction("Home", "Home", new { area = "Editor" });
                     case "Corporate":
                         return RedirectToAction("Home", "OperationHead", new { area = "Corporate" });
@@ -110,7 +110,7 @@ namespace NBL.Controllers
                         return RedirectToAction("Home", "SalesAdmin", new { area = "Corporate" });
                     case "R&D":
                         return RedirectToAction("Home", "Home", new { area = "ResearchAndDevelopment" });
-                    case "QC":
+                    case "ServiceExecutive":
                         return RedirectToAction("Home", "Home", new { area = "QC" });
                     default:
                         return RedirectToAction("Goto", "LogIn", new { area = "" });
@@ -145,20 +145,20 @@ namespace NBL.Controllers
                 case "Admin":
                     return RedirectToAction("Home", "Home", new { area = "Admin" });
                    
-                case "User":
+                case "SalesExecutive":
                     return RedirectToAction("Home", "SalesPerson", new { area = "Sales" });
-                case "Nsm":
+                case "SalesManager":
                     return RedirectToAction("Home", "Nsm", new { area = "Sales" });
-                case "Distributor":
+                case "DistributionManager":
                     return RedirectToAction("Home", "Distributor", new { area = "Sales" });
                 case "SalesAdmin":
                     return RedirectToAction("Home", "SalesAdmin", new { area = "Sales" });
-                case "Super":
+                case "SuperUser":
                     return RedirectToAction("Home", "Home", new { area = "SuperAdmin" });
                
-                case "Accounts":
-                    return RedirectToAction("Home", "Home", new { area = "AccountsAndFinance" });
                 case "AccountExecutive":
+                    return RedirectToAction("Home", "Home", new { area = "AccountsAndFinance" });
+                case "AccountManager":
                     return RedirectToAction("Home", "Home", new { area = "AccountExecutive" });
                 case "Management":
                     return RedirectToAction("Home", "Home", new { area = "Management" });

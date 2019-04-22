@@ -12,7 +12,7 @@ using NBL.Models.ViewModels;
 
 namespace NBL.Areas.SuperAdmin.Controllers
 {
-    [Authorize(Roles = "Super")]
+    [Authorize(Roles = "SuperUser")]
     public class ApproveController : Controller
     {
         private readonly ICommonManager _iCommonManager;

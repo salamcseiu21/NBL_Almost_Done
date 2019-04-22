@@ -57,7 +57,7 @@
                         <option value="A">A</option>
                         <option value="B">B</option>
                         <option value="C">C</option>
-                        <option value="D">D</option>
+                        <option value="G">G</option>
                     </select>
                     @Html.ValidationMessageFor(model => model.ShiftNo, "", new { @class = "text-danger" })
                 </div>
@@ -116,8 +116,8 @@
             $("#ProductionDate").datepicker(
                 {
                     dateFormat: 'dd-MM-yy',
-                    minDate: '-4D',
-                    maxDate: '+4D'
+                    minDate: '-3D',
+                    maxDate: '+3D'
                 });
 
         });

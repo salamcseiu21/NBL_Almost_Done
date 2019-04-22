@@ -14,7 +14,7 @@ using NBL.Models.ViewModels;
 
 namespace NBL.Areas.SuperAdmin.Controllers
 {
-    [Authorize(Roles = "Super")]
+    [Authorize(Roles = "SuperUser")]
     public class AssignController : Controller
     {
       

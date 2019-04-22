@@ -6,7 +6,7 @@ using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 
 namespace NBL.Areas.SuperAdmin.Controllers
 {
-    [Authorize(Roles = "Super")]
+    [Authorize(Roles = "SuperUser")]
     public class VoucherController : Controller
     {
        private readonly IAccountsManager _iAccountsManager;

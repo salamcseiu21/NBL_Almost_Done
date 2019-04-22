@@ -4,7 +4,7 @@ using NBL.Models.EntityModels.Designations;
 
 namespace NBL.Areas.Editor.Controllers
 {
-    [Authorize(Roles ="Editor")]
+    [Authorize(Roles = "SystemAdmin")]
     public class DesignationController : Controller
     {
         private readonly IDesignationManager _iDesignationManager;

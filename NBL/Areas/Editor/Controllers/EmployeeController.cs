@@ -11,7 +11,7 @@ using NBL.Models.ViewModels.Employees;
 
 namespace NBL.Areas.Editor.Controllers
 {
-    [Authorize(Roles ="Editor")]
+    [Authorize(Roles = "SystemAdmin")]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeManager _iEmployeeManager;

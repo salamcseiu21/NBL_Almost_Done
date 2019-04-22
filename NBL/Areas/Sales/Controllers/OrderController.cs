@@ -17,7 +17,7 @@ using NBL.Models.ViewModels.Orders;
 
 namespace NBL.Areas.Sales.Controllers
 {
-    [Authorize(Roles ="User")] 
+    [Authorize(Roles = "SalesExecutive")]
     public class OrderController : Controller
     {
         private readonly IProductManager _iProductManager;

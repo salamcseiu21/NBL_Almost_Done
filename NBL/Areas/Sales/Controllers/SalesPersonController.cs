@@ -10,7 +10,7 @@ using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.Sales.Controllers
 {
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "SalesExecutive")]
     public class SalesPersonController : Controller
     {
 

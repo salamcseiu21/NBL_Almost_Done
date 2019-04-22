@@ -15,7 +15,7 @@ using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.AccountsAndFinance.Controllers
 {
-    [Authorize(Roles = "Accounts")]
+    [Authorize(Roles = "AccountExecutive")]
     public class HomeController : Controller
     {
         private readonly IClientManager _iClientManager;

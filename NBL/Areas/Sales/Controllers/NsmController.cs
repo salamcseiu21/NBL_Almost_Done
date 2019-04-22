@@ -8,7 +8,7 @@ using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.Sales.Controllers
 {
-    [Authorize(Roles = "Nsm")]
+    [Authorize(Roles = "SalesManager")]
     public class NsmController : Controller
     {
         private readonly IClientManager _iClientManager;

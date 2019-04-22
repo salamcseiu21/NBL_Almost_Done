@@ -3,7 +3,7 @@ using NBL.BLL.Contracts;
 
 namespace NBL.Areas.Editor.Controllers
 {
-    [Authorize(Roles ="Editor")]
+    [Authorize(Roles = "SystemAdmin")]
     public class EmployeeTypeController : Controller
     {
 

@@ -7,7 +7,7 @@ using NBL.Models.EntityModels.Locations;
 
 namespace NBL.Areas.Editor.Controllers
 {
-    [Authorize(Roles = "Editor")]
+    [Authorize(Roles = "SystemAdmin")]
     public class RegionController : Controller
     {
         private readonly IDivisionGateway _iDivisionGateway;
