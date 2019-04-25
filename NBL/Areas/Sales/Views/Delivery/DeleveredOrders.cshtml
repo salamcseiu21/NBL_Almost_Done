@@ -26,7 +26,10 @@
 
                 var aClient = item.Client;
                 <tr>
-                    <td>@Html.Raw(aClient.GetBasicInformation())</td>
+                    <td>
+                        <b>@aClient.ClientName</b>
+                        @Html.Raw(aClient.GetBasicInformation())
+                    </td>
                    <td>
                        @Html.Raw(item.Transport.GetFullInformation())
                    </td>

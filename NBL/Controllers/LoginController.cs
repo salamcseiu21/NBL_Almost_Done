@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -40,6 +41,7 @@ namespace NBL.Controllers
             //_iCommonManager.SaveEncriptedConString(text);
             Session["user"] = null;
             Session["Branches"] = null;
+            Session["Roles"] = null;
             ViewBag.Companies = _iCompanyManager.GetAll().ToList().OrderBy(n => n.CompanyId).ToList();
             return View();
         }
@@ -60,6 +62,7 @@ namespace NBL.Controllers
                 var model = _userManager.GetUserByUserName(user.UserName);
                 var anUser = Mapper.Map<User, ViewUser>(model);
                 Session["Branches"] = _iCommonManager.GetAssignedBranchesToUserByUserId(anUser.UserId).ToList();
+               // Session["Roles"] = _userManager.GetAssignedUserRolesByUserId(anUser.UserId);
                 Session["user"] = anUser;
 
                 int companyId = Convert.ToInt32(collection["companyId"]);
@@ -127,6 +130,8 @@ namespace NBL.Controllers
             var user = Session["user"];
             if (user != null)
             {
+               
+               
                 Session["user"] = user;
                 return View();
             }
@@ -136,10 +141,14 @@ namespace NBL.Controllers
         public ActionResult GoTo(FormCollection collection)
         {
             int branchId = Convert.ToInt32(collection["BranchId"]);
+            int roleId = Convert.ToInt32(collection["RoleId"]);
             var branch= _iBranchManager.GetById(branchId);
             Session["BranchId"] = branchId;
             Session["Branch"] = branch;
             var user = (ViewUser)Session["user"];
+            //var roles = (List<ViewAssignedUserRole>)Session["Roles"];
+            //user.Roles = roles.Find(n => n.RoleId.Equals(roleId)).RoleName;
+            //Session["r"] = roles.Find(n => n.RoleId.Equals(roleId)).RoleName;
             switch (user.Roles)
             {
                 case "Admin":

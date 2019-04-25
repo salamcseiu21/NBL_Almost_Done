@@ -502,6 +502,7 @@ namespace NBL.DAL
                     {
                         ClientId = Convert.ToInt32(reader["ClientId"]),
                         ClientName = reader["Name"].ToString(),
+                        CommercialName =DBNull.Value.Equals(reader["CommercialName"])?null: reader["CommercialName"].ToString(),
                         Address = reader["Address"].ToString(),
                         Phone = reader["Phone"].ToString(),
                         AlternatePhone = DBNull.Value.Equals(reader["AltPhone"]) ? null : reader["AltPhone"].ToString(),
@@ -515,6 +516,10 @@ namespace NBL.DAL
                         UserId = Convert.ToInt32(reader["UserId"]),
                         DistrictId = DBNull.Value.Equals(reader["DistrictId"]) ? default(int) : Convert.ToInt32(reader["DistrictId"]),
                         DivisionId = DBNull.Value.Equals(reader["DivisionId"]) ? default(int) : Convert.ToInt32(reader["DivisionId"]),
+                        ClientType = new ClientType
+                        {
+                            ClientTypeName = reader["ClientTypeName"].ToString(),
+                        },
                         ClientTypeName = reader["ClientTypeName"].ToString(),
                         Discount = Convert.ToDecimal(reader["Discount"]),
                         PostCode = DBNull.Value.Equals(reader["PostCode"])?null: reader["PostCode"].ToString(),

@@ -1,11 +1,13 @@
 ﻿@using NBL.Models
 @using NBL.Models.EntityModels.Branches
+@using NBL.Models.ViewModels
 
 @{
     ViewBag.Title = "Go to";
     Layout = null;
     var branches = (List<Branch>)Session["Branches"];
-    
+    var roles = (List<ViewAssignedUserRole>)Session["Roles"];
+
 }
 
 
@@ -38,7 +40,7 @@
                 <div class="form-group">
                     <label style="font-size: 20px;color: green">Select a Branch</label>
                 </div>
-                <select class="form-control" required name="BranchId" autofocus>
+                <select class="form-control" required name="BranchId" autofocus onchange="LoadUserRoleByBranchId(this)">
                     <option value="">--Select--</option>
                     @{
                         foreach (Branch aBranch in branches)
@@ -50,6 +52,11 @@
 
                 </select>
 
+                @*<br />
+                <select class="form-control" name="RoleId" id="RoleId" required>
+                    <option value="">--Select--</option>
+                   
+                </select>*@
                 <br />
                 <div class="form-group">
 
@@ -60,6 +67,32 @@
 
     </div>
     <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    function LoadUserRoleByBranchId(id) {
+       // alert(id.value);
+        var branchId = id.value;
+        $("#RoleId").empty();
+        $("#RoleId").append('<option value="">--Select--</option>');
+
+        var json = { branchId: branchId };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetAssignedRolesByBranchId", "Common", new { area = "" })',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(json),
+            success: function (data) {
+
+
+                $.each(data, function (key, value) {
+                    //alert(key);
+                    $("#RoleId").append('<option value=' + value.RoleId + '>' + value.RoleName + '</option>');
+
+                });
+            }
+        });
+    }
+</script>
 </body>
 </html>

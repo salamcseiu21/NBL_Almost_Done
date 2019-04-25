@@ -168,9 +168,9 @@ namespace NBL.Areas.Production.Controllers
                 ScannedProducts = scannedProducts,
                 DispatchModels = products
             };
-            
 
-            if (scannedProducts.Count == products.Sum(n => n.Quantity))
+
+            if (scannedProducts.Count>0)
             {
                 string result = _iFactoryDeliveryManager.SaveDispatchInformation(model);
                 if (result.StartsWith("Sa"))
@@ -221,7 +221,15 @@ namespace NBL.Areas.Production.Controllers
             return PartialView("_ViewScannedProductPartialPage", products);
         }
 
+        public ActionResult ViewScannedBarcodeList(long id)
+        {
 
+            List<ScannedProduct> products = new List<ScannedProduct>();
+            string fileName = "Deliverable_Product_For_" + id;
+            var filePath = Server.MapPath("~/Files/" + fileName);
+            products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+            return View(products);
+        }
 
         public ActionResult TripList()
         {

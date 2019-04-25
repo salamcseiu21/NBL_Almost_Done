@@ -71,7 +71,7 @@ namespace NBL.Areas.Corporate.Controllers
         /// <returns></returns>
         public PartialViewResult ViewClient()
         {
-            var clients = _iClientManager.GetAll().ToList();
+            var clients = _iClientManager.GetAllClientDetails().ToList();
             return PartialView("_ViewClientPartialPage",clients);
 
         }
@@ -296,6 +296,19 @@ namespace NBL.Areas.Corporate.Controllers
             if (result)
                 return RedirectToAction("Home");
             return RedirectToAction("ChangePassword");
+        }
+
+        [HttpGet]
+        public PartialViewResult Stock()
+        {
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            var stock = _iInventoryManager.GetStockProductByCompanyId(companyId);
+            return PartialView("_ViewStockProductInBranchPartialPage", stock);
+        }
+        public ActionResult ProductionSummary()
+        {
+            var summaries = _iInventoryManager.GetProductionSummaries().ToList();
+            return View(summaries);
         }
     }
 }

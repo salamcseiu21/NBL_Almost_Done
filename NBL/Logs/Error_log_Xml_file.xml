@@ -53,4 +53,10 @@
    at NBL.Areas.Production.Controllers.DeliveryController.SaveScannedBarcodeToTextFile(String barcode, Int64 tripId) in E:\API\NBL\NBL\Areas\Production\Controllers\DeliveryController.cs:line 71</LogMessage>
     <LogDateTime>2019-04-17T16:16:35.7780472+06:00</LogDateTime>
   </Error>
+  <Error LogId="19-Apr-25b9437d3d-9f54-46d6-953c-faa2534f10f0">
+    <Heading>System.ArgumentOutOfRangeException</Heading>
+    <LogMessage>   at System.String.Substring(Int32 startIndex, Int32 length)
+   at NBL.Areas.Production.Controllers.DeliveryController.SaveScannedBarcodeToTextFile(String barcode, Int64 tripId) in E:\API\NBL\NBL\Areas\Production\Controllers\DeliveryController.cs:line 71</LogMessage>
+    <LogDateTime>2019-04-25T16:24:28.0945081+06:00</LogDateTime>
+  </Error>
 </Errors>

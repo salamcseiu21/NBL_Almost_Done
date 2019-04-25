@@ -336,5 +336,42 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public ICollection<ViewAssignedUserRole> GetAssignedUserRolesByUserId(int userId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAssignedUserRolesByUserId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@UserId", userId);
+                ConnectionObj.Open();
+                List<ViewAssignedUserRole> roles=new List<ViewAssignedUserRole>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    roles.Add(new ViewAssignedUserRole
+                    {
+                        ActiveStatus = Convert.ToInt32(reader["IsActive"]),
+                        RoleId = Convert.ToInt32(reader["RoleId"]),
+                        AssignedId = Convert.ToInt64(reader["AssignedRoleToUserId"]),
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        RoleName = reader["RoleName"].ToString()
+                    });
+                }
+                reader.Close();
+                return roles;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collecd assigned role by username", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using NBL.Areas.Sales.BLL.Contracts;
+using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.DAL;
 using NBL.DAL.Contracts;
@@ -39,7 +40,7 @@ namespace NBL.Controllers
         private readonly IBranchManager _iBranchManager;
         private readonly IEmployeeManager _iEmployeeManager;
         private readonly IDeliveryManager _iDeliveryManager;
-
+        private readonly UserManager _userManager=new UserManager();
         public CommonController(IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IDepartmentManager iDepartmentManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager,IDiscountManager iDiscountManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IProductManager iProductManager,IInvoiceManager iInvoiceManager,IUpazillaGateway iUpazillaGateway,IDistrictManager iDistrictManager,IEmployeeManager iEmployeeManager,IDeliveryManager iDeliveryManager)
         {
             _iBranchManager = iBranchManager;
@@ -612,6 +613,13 @@ namespace NBL.Controllers
                 }).ToList();
 
             return Json(employeeNameList);
+        }
+
+        public JsonResult GetAssignedRolesByBranchId(int branchId)
+        {
+            var user = (ViewUser) Session["user"];
+            var roles = _userManager.GetAssignedUserRolesByUserId(user.UserId).ToList().FindAll(n=>n.BranchId==branchId);
+            return Json(roles, JsonRequestBehavior.AllowGet);
         }
     }
 

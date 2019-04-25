@@ -128,7 +128,7 @@ namespace NBL.Models.ViewModels
 
         public string GetBasicInformation()
         {
-            return $"<strong> {CommercialName}  </strong><br/>Account Code : {SubSubSubAccountCode} <br/>Client Type:{ClientType.ClientTypeName}";
+            return $"<strong> { ClientName }  </strong><br/>Account Code : {SubSubSubAccountCode} <br/>Client Type:{ClientType.ClientTypeName}";
         }
         public string GetContactInformation()
         {

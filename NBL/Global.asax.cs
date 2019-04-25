@@ -69,7 +69,7 @@ namespace NBL
                         HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(
                           new System.Security.Principal.GenericIdentity(username, "Forms"), roles.Split(';'));
                     }
-                    catch (Exception)
+                    catch (Exception exception)
                     {
                         //somehting went wrong
                     }

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Web;
+using AutoMapper;
 using NBL.BLL.Contracts;
 using NBL.DAL;
 using NBL.Models;
@@ -45,7 +47,13 @@ namespace NBL.BLL
         {
             return _userGateway.GetUserByUserName(userName);
         }
-
+        public User GetUserByUserName1(string userName)
+        {
+         
+            var anUser = GetUserByUserName(userName);
+            anUser.Roles = "SalesManager";
+            return anUser;
+        }
         public bool ValidateUser(User user)
         {
             bool result = false;
@@ -63,10 +71,16 @@ namespace NBL.BLL
             return result;
         }
 
+
         public bool UpdatePassword(User model)
         {
             int rowAffected = _userGateway.UpdatePassword(model);
             return rowAffected > 0;
+        }
+
+        public ICollection<ViewAssignedUserRole> GetAssignedUserRolesByUserId(int userId)
+        {
+            return _userGateway.GetAssignedUserRolesByUserId(userId);
         }
     }
 }

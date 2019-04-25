@@ -132,7 +132,12 @@ namespace NBL.BLL
 
         public IEnumerable<ViewClient> GetAllClientDetails()
         {
-            return _iClientGateway.GetAllClientDetails();
+            var clients = _iClientGateway.GetAllClientDetails();
+            foreach (var client in clients)
+            {
+                client.Orders = _iOrderManager.GetOrdersByClientId(client.ClientId).ToList();
+            }
+            return clients;
         }
 
         public IEnumerable<ViewClient> GetAllClientDetailsByBranchId(int branchId)
