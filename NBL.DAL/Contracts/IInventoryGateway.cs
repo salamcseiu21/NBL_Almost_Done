@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.ViewModels;
@@ -40,6 +41,7 @@ namespace NBL.DAL.Contracts
        ViewDispatchModel GetDispatchByTripId(long tripId);
        ICollection<ViewDispatchModel> GetAllReceiveableItemsByTripAndBranchId(long tripId, int branchId);
        long GetMaxVoucherNoByTransactionInfix(string infix);
-       ICollection<ProductionSummary> GetProductionSummaries(); 
+       ICollection<ProductionSummary> GetProductionSummaries();
+       ICollection<ProductionSummary> GetProductionSummaryByMonth(DateTime dateTime);
    }
 }

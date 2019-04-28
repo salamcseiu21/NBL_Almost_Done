@@ -19,7 +19,8 @@ namespace NBL.Models.Enums
         Trip=14,
         MonthlyRequisition=15,
         SalesReturn=16,
-        SalesReturnReceive = 17
+        SalesReturnReceive = 17,
+        Replace=18
     }
 
   

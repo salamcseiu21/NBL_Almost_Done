@@ -84,7 +84,9 @@
     <Compile Include="CommonManager.cs" />
     <Compile Include="CompanyManager.cs" />
     <Compile Include="Contracts\IProductionQcManager.cs" />
+    <Compile Include="Contracts\IProductReplaceManager.cs" />
     <Compile Include="Contracts\IProductReturnManager.cs" />
+    <Compile Include="ProductReplaceManager.cs" />
     <Compile Include="DeliveryManager.cs" />
     <Compile Include="Contracts\IBarCodeManager.cs" />
     <Compile Include="Contracts\IBranchManager.cs" />

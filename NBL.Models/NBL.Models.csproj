@@ -116,6 +116,7 @@
     <Compile Include="EntityModels\Productions\ProductVerificationModel.cs" />
     <Compile Include="EntityModels\Productions\RejectedProduct.cs" />
     <Compile Include="EntityModels\Productions\RejectionReason.cs" />
+    <Compile Include="EntityModels\ReplaceModel.cs" />
     <Compile Include="EntityModels\Returns\ReturnDetails.cs" />
     <Compile Include="EntityModels\Returns\ReturnModel.cs" />
     <Compile Include="EntityModels\Returns\ReturnProduct.cs" />

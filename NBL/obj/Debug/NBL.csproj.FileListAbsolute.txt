@@ -123,6 +123,7 @@ G:\Salam\NBL\NBL\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 G:\Salam\NBL\NBL\obj\Debug\NBL.csprojResolveAssemblyReference.cache
 G:\Salam\NBL\NBL\obj\Debug\NBL.dll
 G:\Salam\NBL\NBL\obj\Debug\NBL.pdb
+E:\API\NBL\NBL\bin\Antlr3.Runtime.pdb
 E:\API\NBL\NBL\bin\roslyn\csc.exe
 E:\API\NBL\NBL\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 E:\API\NBL\NBL\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -225,7 +226,6 @@ E:\API\NBL\NBL\bin\Unity.Interception.Configuration.pdb
 E:\API\NBL\NBL\bin\Unity.RegistrationByConvention.pdb
 E:\API\NBL\NBL\bin\Unity.ServiceLocation.pdb
 E:\API\NBL\NBL\bin\WebApiContrib.Formatting.Jsonp.pdb
-E:\API\NBL\NBL\bin\Antlr3.Runtime.pdb
 E:\API\NBL\NBL\bin\zxing.pdb
 E:\API\NBL\NBL\bin\zxing.xml
 E:\API\NBL\NBL\bin\zxing.presentation.pdb

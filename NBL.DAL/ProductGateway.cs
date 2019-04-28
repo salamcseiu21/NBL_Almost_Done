@@ -1512,6 +1512,9 @@ namespace NBL.DAL
             }
         }
 
-        
+        public List<Product> GetTempReplaceProducts(string filePath)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

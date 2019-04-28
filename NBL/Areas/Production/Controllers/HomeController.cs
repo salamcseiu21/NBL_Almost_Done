@@ -66,5 +66,10 @@ namespace NBL.Areas.Production.Controllers
             var summaries = _iInventoryManager.GetProductionSummaries().ToList();
             return View(summaries);
         }
+        public ActionResult ProductionSummaryByMonth()
+        {
+            var summaries = _iInventoryManager.GetProductionSummaryByMonth(DateTime.Now).ToList();
+            return View(summaries);
+        }
     }
 }

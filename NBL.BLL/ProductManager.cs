@@ -325,6 +325,9 @@ namespace NBL.BLL
             return _iProductGateway.GetAllProductionAbleProductByDateCode(productionDateCode);
         }
 
-        
+        public List<Product> GetTempReplaceProducts(string filePath)
+        {
+            return _iProductGateway.GetTempReplaceProducts(filePath);
+        }
     }
 }

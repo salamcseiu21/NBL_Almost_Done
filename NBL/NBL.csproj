@@ -8004,6 +8004,8 @@
     <Content Include="Areas\Production\Views\Home\ProductionSummary.cshtml" />
     <Content Include="Areas\Corporate\Views\Home\ProductionSummary.cshtml" />
     <Content Include="Areas\Production\Views\Delivery\ViewScannedBarcodeList.cshtml" />
+    <Content Include="Areas\Production\Views\Home\ProductionSummaryByMonth.cshtml" />
+    <Content Include="Areas\Sales\Views\Replace\Delivery.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8131,6 +8133,7 @@
     <Content Include="Views\Login\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_ChangePasswordPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewDeliveryOrderDetailsModalPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewLoadAllTempReplaceProductPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -8155,6 +8158,7 @@
     <Folder Include="Areas\QC\Files\" />
     <Folder Include="Areas\QC\Models\" />
     <Folder Include="Areas\ResearchAndDevelopment\Models\" />
+    <Folder Include="Areas\Sales\Files\Replaces\" />
     <Folder Include="Areas\Sales\Files\Returns\" />
     <Folder Include="Areas\Sales\Models\" />
     <Folder Include="Areas\SCM\Models\" />

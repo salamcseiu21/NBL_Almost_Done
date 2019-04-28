@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Delivery";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Replace Delivery</h3>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4" style="border: 1px solid;">
+            <div class="form-horizontal">
+                <div id="message" style="display: none; font-weight: bold; font-size: 20px" class="text-center">
+                </div>
+                <br/>
+                <div class="form-group">
+                    <label for="ClientId" class="control-label col-md-3">Client Name</label>
+                    <div class="col-md-9">
+                        <input type="text" name="ClientName" id="ClientName" class="form-control" placeholder="Type Client Name" autofocus required/>
+                        <input type="hidden" id="ClientId" name="ClientId"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ProductCode" class="control-label col-md-3">Product Code</label>
+                    <div class="col-md-9">
+
+                        <input type="text" name="ProductCode" id="ProductCode" class="form-control" placeholder="Always keep pointer here.." onchange="SaveScannedBarcodeToTextFile(this)"/>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9">
+                            <div class="btn toolbar">
+                                <button type="button" id="btnDelivery" class="btn btn-success" onclick="Delivery(this)"> Delivery</button>
+                                @Html.ActionLink("Back", "", "Home", null, new {@class = "btn btn-danger"})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

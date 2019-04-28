@@ -1003,10 +1003,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/Production/Views/Delivery/Delivery.cshtml">
-      <publishTime>04/24/2019 13:03:26</publishTime>
+      <publishTime>04/25/2019 16:29:47</publishTime>
     </File>
     <File Include="Areas/Production/Views/Delivery/TripList.cshtml">
       <publishTime>04/07/2019 15:23:58</publishTime>
+    </File>
+    <File Include="Areas/Production/Views/Delivery/ViewScannedBarcodeList.cshtml">
+      <publishTime>04/25/2019 16:29:10</publishTime>
     </File>
     <File Include="Areas/Production/Views/DispatchManager/Home.cshtml">
       <publishTime>04/15/2019 13:33:35</publishTime>
@@ -22795,13 +22798,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="bin/NBL.BLL.dll">
-      <publishTime>04/25/2019 14:22:24</publishTime>
+      <publishTime>04/25/2019 16:57:22</publishTime>
     </File>
     <File Include="bin/NBL.DAL.dll">
-      <publishTime>04/25/2019 14:22:23</publishTime>
+      <publishTime>04/25/2019 16:57:21</publishTime>
     </File>
     <File Include="bin/NBL.dll">
-      <publishTime>04/25/2019 14:22:29</publishTime>
+      <publishTime>04/25/2019 16:57:27</publishTime>
     </File>
     <File Include="bin/NBL.Models.dll">
       <publishTime>04/25/2019 14:22:22</publishTime>
@@ -23473,7 +23476,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Logs/Error_log_Xml_file.xml">
-      <publishTime>04/17/2019 16:16:35</publishTime>
+      <publishTime>04/25/2019 16:24:28</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>04/07/2019 19:43:23</publishTime>

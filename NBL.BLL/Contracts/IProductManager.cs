@@ -49,6 +49,6 @@ namespace NBL.BLL.Contracts
         ICollection<RequisitionItem> GetMonthlyRequsitionItemsById(long requisitionId);
         bool SaveProductDetails(ViewCreateProductDetailsModel model);
         List<Product> GetAllProductionAbleProductByDateCode(string productionDateCode);
-       
+        List<Product> GetTempReplaceProducts(string filePath);
     }
 }

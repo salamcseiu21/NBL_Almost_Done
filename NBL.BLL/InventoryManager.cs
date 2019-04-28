@@ -184,5 +184,10 @@ namespace NBL.BLL
         {
             return _iInventoryGateway.GetProductionSummaries();
         }
+
+        public ICollection<ProductionSummary> GetProductionSummaryByMonth(DateTime dateTime)
+        {
+            return _iInventoryGateway.GetProductionSummaryByMonth(dateTime);
+        }
     }
 }

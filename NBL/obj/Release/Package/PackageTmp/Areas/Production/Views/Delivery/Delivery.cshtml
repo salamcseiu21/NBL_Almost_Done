@@ -34,6 +34,9 @@
                         <div class="btn-toolbar">
                             <button type="button" value="@Model.TripId" class="btn btn-success" onclick="SaveDispatchInfo(this)"> Dispatch</button>
                             <a class="btn btn-danger" href="~/production">Cancel</a>
+                         
+                            @Html.ActionLink("View Scanned Barcodes", "ViewScannedBarcodeList", "Delivery", new { id = Model.TripId}, new {@class="btn btn-info"})
+                         
                         </div>
 
                     </div>
@@ -62,6 +65,7 @@
                                 <div class="col-md-6">
                                     <label class="control-label" id="lbl_scanned_qty"></label>
                                 </div>
+                                
                             </div>
                         </div>
                         <div class="col-md-4">

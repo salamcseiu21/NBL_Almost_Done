@@ -1,0 +1,36 @@
+﻿
+@model IEnumerable<NBL.Models.EntityModels.Products.Product>
+<table id="table_replace_product_List" class="display" style="border:1px solid black">
+    <caption class="text-center text-green" style="font-weight:bolder;font-size:20px">Product List</caption>
+
+    <thead>
+    <tr>
+        <th>Product Name</th>
+        <th style="width: 50px" class="text-center">Quantity</th>
+        <th style="width: 60px" class="text-center">Action</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ProductName</td>
+            <td class="text-center">@item.Quantity</td>
+            <td class="text-center"><button value="@item.ProductId" class="btn btn-sm" onclick="RemoveProductById(this)"><i class="fa fa-times" style="color: red;"></i></button></td>
+        </tr>
+    }
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>Product Name</th>
+        <th style="width: 50px" class="text-center">Quantity</th>
+        <th style="width: 60px" class="text-center">Action</th>
+    </tr>
+    </tfoot>
+</table>
+<script>
+    $("#table_replace_product_List").DataTable();
+
+</script>
+

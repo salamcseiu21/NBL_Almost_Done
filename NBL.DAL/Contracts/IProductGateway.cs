@@ -58,6 +58,7 @@ namespace NBL.DAL.Contracts
         IEnumerable<Product> GetAllProducts();
         int SaveProductDetails(ViewCreateProductDetailsModel model);
         List<Product> GetAllProductionAbleProductByDateCode(string productionDateCode);
-       
+
+        List<Product> GetTempReplaceProducts(string filePath);
     }
 }

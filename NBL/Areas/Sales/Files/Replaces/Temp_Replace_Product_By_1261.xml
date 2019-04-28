@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Products>
+  <Product Id="107">
+    <ProductId>107</ProductId>
+    <ProductName>ANB 29</ProductName>
+    <Quantity>1</Quantity>
+    <UnitPrice>0</UnitPrice>
+    <CategoryId>12</CategoryId>
+    <SubSubSubAccountCode>310103107</SubSubSubAccountCode>
+    <Vat>0</Vat>
+    <VatId>0</VatId>
+    <DiscountAmount>0</DiscountAmount>
+    <DiscountId>0</DiscountId>
+    <SalePrice>0</SalePrice>
+    <ProductDetailsId>0</ProductDetailsId>
+  </Product>
+  <Product Id="31">
+    <ProductId>31</ProductId>
+    <ProductName>NKP 110</ProductName>
+    <Quantity>1</Quantity>
+    <UnitPrice>0</UnitPrice>
+    <CategoryId>4</CategoryId>
+    <SubSubSubAccountCode>31010331</SubSubSubAccountCode>
+    <Vat>0</Vat>
+    <VatId>0</VatId>
+    <DiscountAmount>0</DiscountAmount>
+    <DiscountId>0</DiscountId>
+    <SalePrice>0</SalePrice>
+    <ProductDetailsId>0</ProductDetailsId>
+  </Product>
+  <Product Id="21">
+    <ProductId>21</ProductId>
+    <ProductName>NKP 100</ProductName>
+    <Quantity>2</Quantity>
+    <UnitPrice>0</UnitPrice>
+    <CategoryId>4</CategoryId>
+    <SubSubSubAccountCode>31010321</SubSubSubAccountCode>
+    <Vat>0</Vat>
+    <VatId>0</VatId>
+    <DiscountAmount>0</DiscountAmount>
+    <DiscountId>0</DiscountId>
+    <SalePrice>0</SalePrice>
+    <ProductDetailsId>0</ProductDetailsId>
+  </Product>
+</Products>

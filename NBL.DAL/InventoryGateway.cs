@@ -1405,5 +1405,45 @@ namespace NBL.DAL
                 ConnectionObj.Close();
             }
         }
+
+        public ICollection<ProductionSummary> GetProductionSummaryByMonth(DateTime dateTime)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetProductionSummaryByMonth";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Date", dateTime);
+                ConnectionObj.Open();
+                List<ProductionSummary> summaries = new List<ProductionSummary>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    summaries.Add(new ProductionSummary
+                    {
+                        ProductCode = reader["SubSubSubAccountCode"].ToString(),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                     
+                        CategoryId = Convert.ToInt32(reader["CategoryId"]),
+                        CategoryName = reader["ProductCategoryName"].ToString()
+
+                    });
+                }
+                reader.Close();
+                return summaries;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect prduction summary by month", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
     }
 }

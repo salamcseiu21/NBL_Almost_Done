@@ -127,7 +127,7 @@ namespace NBL.Areas.Sales.Controllers
                 var vat= deliveredProductList.Sum(n => n.Vat * n.Quantity);
                 
 
-                FinancialTransactionModel financialModel =
+                var financialModel =
                     new FinancialTransactionModel
                     {
                         //--------Dr -------------------
