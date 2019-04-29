@@ -1,0 +1,46 @@
+﻿
+@model IEnumerable<NBL.Models.ViewModels.Productions.ProductionSummary>
+@{
+    ViewBag.Title = "Production Summary";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Production in <strong>@DateTime.Now.ToString("MMMM")</strong> Month</h3>
+    <table id="tbl_Production_Summary" class="display table-bordered" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Code</th>
+            <th class="text-center">Quantity</th>
+          
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.ProductCode</td>
+                <td  class="text-right">@item.Quantity</td>
+              
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Product Name</th>
+            <th>Code</th>
+            <th class="text-center">Quantity</th>
+          
+        </tr>
+        </tfoot>
+    </table>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_Production_Summary").DataTable();
+    </script>
+}

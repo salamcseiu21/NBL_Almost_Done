@@ -171,6 +171,8 @@
     <Compile Include="ViewModels\Productions\ProductionSummary.cs" />
     <Compile Include="ViewModels\Productions\ViewRejectedProduct.cs" />
     <Compile Include="ViewModels\Products\ViewCreateProductDetailsModel.cs" />
+    <Compile Include="ViewModels\Replaces\ViewReplaceDetailsModel.cs" />
+    <Compile Include="ViewModels\Replaces\ViewReplaceModel.cs" />
     <Compile Include="ViewModels\Requisitions\ViewMonthlyRequisitionModel.cs" />
     <Compile Include="ViewModels\Requisitions\ViewRequisitionModel.cs" />
     <Compile Include="EntityModels\Requisitions\RequisitionModel.cs" />

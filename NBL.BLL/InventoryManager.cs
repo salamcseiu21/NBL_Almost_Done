@@ -189,5 +189,16 @@ namespace NBL.BLL
         {
             return _iInventoryGateway.GetProductionSummaryByMonth(dateTime);
         }
+        //-----------------------Replace---------------------
+        public string SaveReplaceDeliveryInfo(List<ScannedProduct> scannedProducts, Delivery aDelivery, int replaceStatus)
+        {
+            string refCode = _iCommonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(ReferenceType.Distribution)).Code;
+            aDelivery.VoucherNo = GetMaxVoucherNoByTransactionInfix(refCode);
+            int maxRefNo = _iInventoryGateway.GetMaxDeliveryRefNoOfCurrentYear();
+            aDelivery.DeliveryRef = GenerateDeliveryReference(maxRefNo);
+            int rowAffected = _iInventoryGateway.SaveReplaceDeliveryInfo(scannedProducts, aDelivery, replaceStatus);
+
+            return rowAffected > 0 ? "Saved Successfully!" : "Failed to Save";
+        }
     }
 }

@@ -38,6 +38,7 @@ namespace NBL.BLL.Contracts
         ViewDispatchModel GetDispatchByTripId(long tripId);
        ICollection<ViewDispatchModel> GetAllReceiveableItemsByTripAndBranchId(long tripId, int branchId);
        ICollection<ProductionSummary> GetProductionSummaries();
-       ICollection<ProductionSummary> GetProductionSummaryByMonth(DateTime dateTime); 
+       ICollection<ProductionSummary> GetProductionSummaryByMonth(DateTime dateTime);
+       string SaveReplaceDeliveryInfo(List<ScannedProduct> barcodeList, Delivery aDelivery, int replaceStatus);
    }
 }

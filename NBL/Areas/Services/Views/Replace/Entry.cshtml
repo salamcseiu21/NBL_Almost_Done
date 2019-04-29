@@ -7,6 +7,10 @@
 <section class="content">
     <div class="row">
         <div class="col-md-8 col-md-offset-2" style="border: 1px solid">
+            @if (TempData["SaveReplaceMessage"] != null)
+            {
+                @Html.Raw(TempData["SaveReplaceMessage"])
+            }
             <h3 class="text-center text-green">Replace Entry</h3>
             @using (Ajax.BeginForm("Entry", new AjaxOptions()
             {
@@ -24,8 +28,8 @@
                         <label for="ClientId" class="control-label col-md-3">Client Name</label>
                         <div class="col-md-9">
 
-                            <input type="text" name="ClientName" id="ClientName" class="form-control" placeholder="Type Product Name" required autofocus />
-                            <input type="hidden" id="ClientId" name="ClientId" />
+                            <input type="text" name="ClientName" id="ClientName" class="form-control" placeholder="Type Product Name" required autofocus/>
+                            <input type="hidden" id="ClientId" name="ClientId"/>
 
                         </div>
                     </div>
@@ -35,8 +39,8 @@
                         <label for="ProductId" class="control-label col-md-3">Product</label>
                         <div class="col-md-9">
 
-                            <input type="text" name="ProductName" id="ProductName" class="form-control" placeholder="Type Product Name" required />
-                            <input type="hidden" id="ProductId" name="ProductId" />
+                            <input type="text" name="ProductName" id="ProductName" class="form-control" placeholder="Type Product Name" required/>
+                            <input type="hidden" id="ProductId" name="ProductId"/>
 
                         </div>
                     </div>
@@ -44,10 +48,7 @@
                     <div class="form-group">
                         <label for="Quantity" class="control-label col-md-3">Quantity</label>
                         <div class="col-md-9">
-
-                            <input type="number" name="Quantity" id="Quantity" class="form-control" placeholder="Quantity" required />
-
-
+                            <input type="number" name="Quantity" id="Quantity" class="form-control" placeholder="Quantity" required/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -55,7 +56,7 @@
                         <div class="col-md-9">
 
 
-                            <textarea id="Remarks" name="Remarks" rows="3" required style="resize: none;width: 100%" placeholder="Remarks..."></textarea>
+                            <textarea id="Remarks" name="Remarks" rows="3" required style="resize: none; width: 100%" placeholder="Remarks..."></textarea>
 
 
                         </div>
@@ -65,19 +66,19 @@
                         <div class="col-md-9">
 
                             <div class="btn-toolbar">
-                                <input type="submit" value="Add Item" class="btn btn-info" />
-                                <input type="button" id="removeAllButton" value="Remove All" onclick="RemoveAll(this)" class="btn btn-danger " />
-                                <input type="button" value="Submit" class="btn btn-primary" onclick="SaveReplacementInfo(this.form)" />
+                                <input type="submit" value="Add Item" class="btn btn-info"/>
+                                <input type="button" id="removeAllButton" value="Remove All" onclick="RemoveAll(this)" class="btn btn-danger "/>
+                                <input type="button" value="Submit" class="btn btn-primary" onclick="SaveReplacementInfo(this.form)"/>
                             </div>
                         </div>
                     </div>
                 </div>
             }
-            <hr />
+            <hr/>
             <div id="dane" class="text-center">
                 Number of Details :
             </div>
-            <hr />
+            <hr/>
             <div class="row">
                 <div class="col-md-12">
                     <div id="divReplaceProducts"></div>
@@ -125,7 +126,7 @@
                 var json = { id: id };
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("RemoveProductById", "Replace",new {area="Sales"})',
+                    url: '@Url.Action("RemoveProductById", "Replace",new {area="Services"})',
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(json),
                     success: function (data) {
@@ -142,7 +143,7 @@
             if (result) {
                 $.ajax({
                     type: "GET",
-                    url: '@Url.Action("RemoveAll","Replace",new {area="Sales"})',
+                    url: '@Url.Action("RemoveAll","Replace",new {area="Services"})',
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {
                         LoadAllTempReplaceProduct();
@@ -225,7 +226,7 @@
           
             $.ajax({
                 type: 'Post',
-                url: RootUrl + "sales/replace/LoadAllTempReplaceProduct",
+                url: RootUrl + "services/replace/LoadAllTempReplaceProduct",
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     $("#divReplaceProducts").html(data);

@@ -5,6 +5,7 @@ using NBL.Models.EntityModels.Securities;
 
 namespace NBL.Areas.Services.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly UserManager _userManager=new UserManager();

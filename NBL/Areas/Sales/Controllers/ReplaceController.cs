@@ -3,24 +3,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using System.Xml.Linq;
+using Microsoft.Ajax.Utilities;
 using NBL.BLL.Contracts;
-using NBL.Models.EntityModels;
-using NBL.Models.EntityModels.Products;
+using NBL.Models;
+using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Productions;
+using NBL.Models.ViewModels.Replaces;
+using NBL.Models.ViewModels.Sales;
 
 namespace NBL.Areas.Sales.Controllers
 {
-    [Authorize(Roles = "SalesExecutive")]
+    [Authorize(Roles = "DistributionManager")]
     public class ReplaceController : Controller
     {
 
          private readonly IProductManager _iProductManager;
          private readonly IProductReplaceManager _iProductReplaceManager;
-        public ReplaceController(IProductManager iProductManager,IProductReplaceManager iProductReplaceManager)
+        private readonly IInventoryManager _iInventoryManager;
+        
+        public ReplaceController(IProductManager iProductManager,IProductReplaceManager iProductReplaceManager,IInventoryManager iInventoryManager)
         {
             _iProductManager = iProductManager;
             _iProductReplaceManager = iProductReplaceManager;
+            _iInventoryManager = iInventoryManager;
         }
 
 
@@ -29,101 +35,188 @@ namespace NBL.Areas.Sales.Controllers
         {
             return View();
         }
-        public ActionResult Entry()
-        {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var user = (ViewUser)Session["user"];
-            CreateTempReplaceProductXmlFile(branchId, user.UserId);
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Entry(FormCollection collection,ReplaceModel model)
-        {
-            var productId = Convert.ToInt32(collection["ProductId"]);
-            var qty = Convert.ToInt32(collection["Quantity"]);
-            var aProduct = _iProductManager.GetProductByProductId(productId);
-            aProduct.Quantity = qty;
-            AddProductToTempReplaceProductXmlFile(aProduct);
-          return Json("Added Successfully!", JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult SaveReplacementInfo(FormCollection collection)
+       
+        public ActionResult Delivery(long id)
         {
             int branchId = Convert.ToInt32(Session["BranchId"]);
             int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var user = (ViewUser)Session["user"];
-            var clientId = Convert.ToInt32(collection["clientId1"]);
-            var products = GetProductFromXmalFile(GetTempReplaceProductXmlFilePath());
-            var model = new ReplaceModel
+            var stock = _iInventoryManager.GetStockProductInBranchByBranchAndCompanyId(branchId, companyId);
+            Session["Branch_stock"] = stock;
+            ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(id);
+            List<ViewReplaceDetailsModel> products = _iProductReplaceManager.GetReplaceProductListById(id).ToList();
+            model.Products = products;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Delivery(FormCollection collection)
+        {
+            try
             {
-                ClientId = clientId,
-                Products = products.ToList(),
-                BranchId = branchId,
-                UserId = user.UserId,
-                CompanyId = companyId
 
-            };
-           var result= _iProductReplaceManager.SaveReplacementInfo(model);
-            if (result)
-            {
-                RemoveAll();
+                var transport = collection["ownTransport"];
+                bool isOwnTransport = transport != null;
+                int deliverebyUserId = ((ViewUser)Session["user"]).UserId;
+                int replaceId = Convert.ToInt32(collection["ReplaceId"]);
+                var replace = _iProductReplaceManager.GetReplaceById(replaceId);
+                IEnumerable<ViewReplaceDetailsModel> details = _iProductReplaceManager.GetReplaceProductListById(replaceId);
+                var deliveredQty = _iProductReplaceManager.GetDeliveredProductsByReplaceRef(replace.ReplaceRef).Count;
+                var remainingToDeliverQty = replace.Quantity - deliveredQty;
+                var filePath =GetTempReplaceProductXmlFilePath(replaceId);
+                //if the file is exists read the file
+                var barcodeList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                int replaceStatus = 1;
+                if (remainingToDeliverQty == barcodeList.Count)
+                {
+                    replaceStatus = 2;
+                   
+                }
+
+                List<ViewReplaceDetailsModel> deliveredProductList = new List<ViewReplaceDetailsModel>();
+                foreach (ScannedProduct product in barcodeList.DistinctBy(n => n.ProductId))
+                {
+                    var model = details.ToList().Find(n => n.ProductId.Equals(product.ProductId));
+                    var qty = barcodeList.ToList().FindAll(n => n.ProductId == product.ProductId).Count;
+                    model.Quantity = qty;
+                    deliveredProductList.Add(model);
+                }
+
+                var aDelivery = new Delivery
+                {
+                    IsOwnTransport = isOwnTransport,
+                    TransactionRef = replace.ReplaceRef,
+                    InvoiceRef = replace.ReplaceRef,
+                    DeliveredByUserId = deliverebyUserId,
+                    Transportation = collection["Transportation"],
+                    DriverName = collection["DriverName"],
+                    DriverPhone = collection["DriverPhone"],
+                    TransportationCost = Convert.ToDecimal(collection["TransportationCost"]),
+                    VehicleNo = collection["VehicleNo"],
+                    DeliveryDate = Convert.ToDateTime(collection["DeliveryDate"]).Date,
+                    CompanyId = replace.CompanyId,
+                    ToBranchId = replace.BranchId,
+                    InvoiceId = replaceId,
+                    FromBranchId = replace.BranchId 
+                };
+                string result = _iInventoryManager.SaveReplaceDeliveryInfo(barcodeList, aDelivery,replaceStatus);
+                if (result.StartsWith("S"))
+                {
+                    System.IO.File.Create(filePath).Close();
+                    return RedirectToAction("ViewAll");
+                }
+                return View();
             }
-            return RedirectToAction("Entry");
+            catch (Exception exception)
+            {
+                TempData["Error"] = exception.Message;
+                //return View("Delivery");
+                throw new Exception();
+            }
         }
-        private void AddProductToTempReplaceProductXmlFile(Product aProduct)
-        {
-            var filePath = GetTempReplaceProductXmlFilePath();
-            var xmlDocument = XDocument.Load(filePath);
-            xmlDocument.Root?.Elements().Where(n => n.Attribute("Id")?.Value == aProduct.ProductId.ToString()).Remove();
-            xmlDocument.Save(filePath);
 
-            xmlDocument.Element("Products")?.Add(
-                new XElement("Product", new XAttribute("Id", aProduct.ProductId),
-                    new XElement("ProductId", aProduct.ProductId),
-                    new XElement("ProductName", aProduct.ProductName),
-                    new XElement("Quantity", aProduct.Quantity),
-                    new XElement("UnitPrice", aProduct.UnitPrice),
-                    new XElement("CategoryId", aProduct.CategoryId),
-                    new XElement("SubSubSubAccountCode", aProduct.SubSubSubAccountCode),
-                    new XElement("Vat", aProduct.Vat),
-                    new XElement("VatId", aProduct.VatId),
-                    new XElement("DiscountAmount", aProduct.DiscountAmount),
-                    new XElement("DiscountId", aProduct.DiscountId),
-                    new XElement("SalePrice", aProduct.SalePrice),
-                    new XElement("ProductDetailsId", aProduct.ProductDetailsId)
-
-                ));
-            xmlDocument.Save(filePath);
-        }
-        private string GetTempReplaceProductXmlFilePath()
+        public ActionResult ViewAll()
         {
-            var user = (ViewUser)Session["user"];
             int branchId = Convert.ToInt32(Session["BranchId"]);
-            string fileName = "Temp_Replace_Product_By_" + branchId + user.UserId + ".xml";
-            var filePath = Server.MapPath("~/Areas/Sales/Files/replaces/" + fileName);
-            return filePath;
-        }
-        private void CreateTempReplaceProductXmlFile(int branchId, int userId)
-        {
-            string fileName = "Temp_Replace_Product_By_" + branchId + userId + ".xml";
-            var filePath = Server.MapPath("~/Areas/Sales/Files/replaces/" + fileName);
-            if (!System.IO.File.Exists(filePath))
-            {
-                XDocument xmlDocument = new XDocument(
-                    new XDeclaration("1.0", "utf-8", "yes"),
-                    new XElement("Products"));
-                xmlDocument.Save(filePath);
-            }
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            //-------------Status=0 means pending.-------------
+            var replace = _iProductReplaceManager.GetAllPendingReplaceListByBranchAndCompany(branchId, companyId).ToList(); 
+            return View(replace);
         }
 
         [HttpPost]
-        public PartialViewResult LoadAllTempReplaceProduct()
+        public void SaveScannedBarcodeToTextFile(string barcode, long replaceId)
+        {
+            SuccessErrorModel model = new SuccessErrorModel();
+            try
+            {
+
+                List<ViewBranchStockModel> products = (List<ViewBranchStockModel>)Session["Branch_stock"];
+                var id = replaceId;
+                var replace = _iProductReplaceManager.GetReplaceById(id); 
+                string scannedBarCode = barcode.ToUpper();
+                int productId = Convert.ToInt32(scannedBarCode.Substring(2, 3));
+                var filePath = GetTempReplaceProductXmlFilePath(replaceId);
+                var barcodeList = _iProductManager.ScannedProducts(filePath);
+
+                if (barcodeList.Count != 0)
+                {
+                    foreach (ScannedProduct scannedProduct in barcodeList)
+                    {
+                        var p = products.Find(n => n.ProductBarCode.Equals(scannedProduct.ProductCode));
+                        products.Remove(p);
+                        Session["Branch_stock"] = products;
+                    }
+                }
+
+                // DateTime date = _iCommonManager.GenerateDateFromBarCode(scannedBarCode);
+                // var oldestProducts = products.ToList().FindAll(n => n.ProductionDate < date && n.ProductId == productId).ToList();
+                bool isInInventory = products.Select(n => n.ProductBarCode).Contains(scannedBarCode);
+                bool isScannedBefore = _iProductManager.IsScannedBefore(barcodeList, scannedBarCode);
+
+                bool isSold = _iInventoryManager.IsThisProductSold(scannedBarCode);
+                //------------Get invoced products-------------
+                var replaceDetails = _iProductReplaceManager.GetReplaceProductListById(id).ToList();
+                List<ViewReplaceDetailsModel> list = new List<ViewReplaceDetailsModel>();
+                var deliveredProducts = _iProductReplaceManager.GetDeliveredProductsByReplaceRef(replace.ReplaceRef);
+
+                foreach (var item in replaceDetails)
+                {
+                    var replaceQty = item.Quantity;
+                    var deliveredQty = deliveredProducts.ToList().FindAll(n => n.ProductId == item.ProductId).Count;
+                    if (replaceQty != deliveredQty)
+                    {
+                        item.Quantity = replaceQty - deliveredQty;
+                        list.Add(item);
+                    }
+
+                }
+                bool isValied = list.Select(n => n.ProductId).Contains(productId);
+                bool isScannComplete = list.ToList().FindAll(n => n.ProductId == productId).Sum(n => n.Quantity) == barcodeList.FindAll(n => n.ProductId == productId).Count;
+                if (isScannedBefore)
+                {
+                    model.Message = "<p style='color:red'> Already Scanned</p>";
+                    // return Json(model, JsonRequestBehavior.AllowGet);
+                }
+                else if (isScannComplete)
+                {
+                    model.Message = "<p style='color:green'> Scan Completed.</p>";
+                    // return Json(model, JsonRequestBehavior.AllowGet);
+                }
+
+                //else if (oldestProducts.Count > 0)
+                //{
+                //    model.Message = "<p style='color:red'>There are total " + oldestProducts.Count + " Old product of this type .Please deliver those first .. </p>";
+                //   // return Json(model, JsonRequestBehavior.AllowGet);
+                //}
+                else if (isSold)
+                {
+                    model.Message = "<p style='color:green'> This product Scanned for one of previous invoice... </p>";
+                    //return Json(model, JsonRequestBehavior.AllowGet);
+                }
+                else if (isValied && isInInventory)
+                {
+                    _iProductManager.AddProductToTextFile(scannedBarCode, filePath);
+                }
+            }
+            catch (FormatException exception)
+            {
+                model.Message = "<p style='color:red'>" + exception.GetType() + "</p>";
+                // return Json(model, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception exception)
+            {
+
+                model.Message = "<p style='color:red'>" + exception.Message + "</p>";
+                //return Json(model, JsonRequestBehavior.AllowGet);
+            }
+            // return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public PartialViewResult LoadScannedProduct(long replaceId) 
         {
             // var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
-           
-            var filePath = GetTempReplaceProductXmlFilePath();
-            List<Product> list = new List<Product>();
+            var filePath = GetTempReplaceProductXmlFilePath(replaceId);
+            List<ScannedProduct> list = new List<ScannedProduct>();
             if (!System.IO.File.Exists(filePath))
             {
                 //if the file does not exists create the file
@@ -131,58 +224,25 @@ namespace NBL.Areas.Sales.Controllers
             }
             else
             {
-                list =GetProductFromXmalFile(filePath).ToList();
+                list = _iProductManager.ScannedProducts(filePath);
             }
-            return PartialView("_ViewLoadAllTempReplaceProductPartialPage", list);
+            return PartialView("_ViewLoadScannedProductPartialPage", list);
         }
 
 
-        private IEnumerable<Product> GetProductFromXmalFile(string filePath)
+        private string GetTempReplaceProductXmlFilePath(long replaceId)
         {
-            List<Product> products = new List<Product>();
-            var xmlData = XDocument.Load(filePath).Element("Products")?.Elements();
-            foreach (XElement element in xmlData)
-            {
-                Product aProduct = new Product();
-                var elementValue = element.Elements();
-                var xElements = elementValue as XElement[] ?? elementValue.ToArray();
-                aProduct.ProductId = Convert.ToInt32(xElements[0].Value);
-                aProduct.ProductName = xElements[1].Value;
-                aProduct.Quantity = Convert.ToInt32(xElements[2].Value);
-                products.Add(aProduct);
-            }
-
-            return products;
+            var user = (ViewUser)Session["user"];
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            string fileName = "Replaced_Product_List_For_" + branchId + user.UserId + "_"+replaceId;
+            var filePath = Server.MapPath("~/Areas/Sales/Files/Replaces/" + fileName);
+            return filePath;
         }
 
-        [HttpGet]
-        public void RemoveAll()
+        public PartialViewResult ViewReplaceDetails(long replaceId)
         {
-            var filePath = GetTempReplaceProductXmlFilePath();
-            var xmlData = XDocument.Load(filePath);
-            xmlData.Root?.Elements().Remove();
-            xmlData.Save(filePath);
-
+            var replace= _iProductReplaceManager.GetReplaceById(replaceId);
+            return PartialView("_ModalReplaceDeliveryPartialPage",replace);
         }
-
-        [HttpPost]
-        public void RemoveProductById(string id)
-        {
-            var filePath = GetTempReplaceProductXmlFilePath();
-            var xmlData = XDocument.Load(filePath);
-            xmlData.Root?.Elements().Where(n => n.Attribute("Id")?.Value == id).Remove();
-            xmlData.Save(filePath);
-
-        }
-        public ActionResult Delivery()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult Delivery(FormCollection collection)
-        {
-            return View();
-        }
-
     }
 }

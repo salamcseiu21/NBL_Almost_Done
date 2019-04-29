@@ -103,7 +103,7 @@
     else if (User.IsInRole("ServiceExecutive"))
     {
         roleName = "Service Executive";
-        areas = "qc";
+        areas = "services";
     }
 }
 <!DOCTYPE html>
@@ -257,7 +257,7 @@
                         Html.RenderPartial("~/Areas/ResearchAndDevelopment/Views/Shared/_MenuPartialPage.cshtml");
                         break;
                     case "ServiceExecutive":
-                        Html.RenderPartial("~/Areas/QC/Views/Shared/_MenuPartialPage.cshtml");
+                        Html.RenderPartial("~/Areas/Services/Views/Shared/_ServiceExecutiveMenuPartialPage.cshtml");
                         break;
                     case "SuperUser":
                         Html.RenderPartial("~/Areas/SuperAdmin/Views/Shared/_MenuPartialPage.cshtml");

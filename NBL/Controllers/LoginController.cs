@@ -113,8 +113,6 @@ namespace NBL.Controllers
                         return RedirectToAction("Home", "SalesAdmin", new { area = "Corporate" });
                     case "R&D":
                         return RedirectToAction("Home", "Home", new { area = "ResearchAndDevelopment" });
-                    case "ServiceExecutive":
-                        return RedirectToAction("Home", "Home", new { area = "QC" });
                     default:
                         return RedirectToAction("Goto", "LogIn", new { area = "" });
                 }
@@ -171,6 +169,8 @@ namespace NBL.Controllers
                     return RedirectToAction("Home", "Home", new { area = "AccountExecutive" });
                 case "Management":
                     return RedirectToAction("Home", "Home", new { area = "Management" });
+                case "ServiceExecutive":
+                    return RedirectToAction("Home", "Home", new { area = "Services" });
                 default:
                     return RedirectToAction("LogIn", "LogIn", new { area = "" });
             }

@@ -4,30 +4,59 @@ using System.Linq;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels;
+using NBL.Models.EntityModels.Products;
 using NBL.Models.Enums;
+using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Replaces;
 
 namespace NBL.BLL
 {
     public class ProductReplaceManager:IProductReplaceManager
     {
         private readonly ICommonGateway _iCommonGateway;
-        private readonly IProductReplaceGateway _productReplaceGateway;
+        private readonly IProductReplaceGateway _iProductReplaceGateway;
 
         public ProductReplaceManager(IProductReplaceGateway iProductReplaceGateway,ICommonGateway iCommonGateway)
         {
-            _productReplaceGateway = iProductReplaceGateway;
+            _iProductReplaceGateway = iProductReplaceGateway;
             _iCommonGateway = iCommonGateway;
         }
 
         public bool SaveReplacementInfo(ReplaceModel model)
         {
-            int maxSl = _productReplaceGateway.GetMaxReplaceSerialNoByYear(DateTime.Now.Year);
+            int maxSl = _iProductReplaceGateway.GetMaxReplaceSerialNoByYear(DateTime.Now.Year);
             model.ReplaceNo = maxSl + 1;
             model.ReplaceRef = GenerateOrderRefNo(maxSl);
             model.TransactionRef= GenerateOrderRefNo(maxSl);
-            int rowAffected = _productReplaceGateway.SaveReplacementInfo(model);
+            int rowAffected = _iProductReplaceGateway.SaveReplacementInfo(model);
             return rowAffected > 0;
         }
+
+        public ICollection<ViewReplaceModel> GetAllReplaceListByBranchCompanyAndStatus(int branchId,int companyId,int status)
+        {
+            return _iProductReplaceGateway.GetAllReplaceListByBranchCompanyAndStatus(branchId,companyId,status);
+        }
+
+        public ICollection<ViewReplaceModel> GetAllPendingReplaceListByBranchAndCompany(int branchId, int companyId) 
+        {
+            return _iProductReplaceGateway.GetAllPendingReplaceListByBranchAndCompany(branchId,companyId);
+        }
+
+        public ViewReplaceModel GetReplaceById(long id)
+        {
+            return _iProductReplaceGateway.GetReplaceById(id);
+        }
+
+        public ICollection<ViewReplaceDetailsModel> GetReplaceProductListById(long id)
+        {
+            return _iProductReplaceGateway.GetReplaceProductListById(id);
+        }
+
+        public ICollection<ViewProduct> GetDeliveredProductsByReplaceRef(string replaceRef)
+        {
+            return _iProductReplaceGateway.GetDeliveredProductsByReplaceRef(replaceRef);
+        }
+
         private string GenerateOrderRefNo(int maxsl)
         {
             string refCode = GetReferenceAccountCodeById(Convert.ToInt32(ReferenceType.Replace));

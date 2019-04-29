@@ -43,5 +43,6 @@ namespace NBL.DAL.Contracts
        long GetMaxVoucherNoByTransactionInfix(string infix);
        ICollection<ProductionSummary> GetProductionSummaries();
        ICollection<ProductionSummary> GetProductionSummaryByMonth(DateTime dateTime);
+       int SaveReplaceDeliveryInfo(List<ScannedProduct> scannedProducts, Delivery aDelivery, int replaceStatus);
    }
 }
