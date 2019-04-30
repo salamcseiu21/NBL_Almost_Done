@@ -63,8 +63,9 @@ namespace NBL
                         //let us take out the username now                
                         string username = FormsAuthentication.Decrypt(Request.Cookies[FormsAuthentication.FormsCookieName].Value)?.Name;
                         string roles = string.Empty;
-                        var anUser = _userManager.GetUserByUserName(username);
+                         var anUser = _userManager.GetUserByUserName(username);
                         roles = anUser.Roles;
+
                         //Let us set the Pricipal with our user specific details
                         HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(
                           new System.Security.Principal.GenericIdentity(username, "Forms"), roles.Split(';'));

@@ -43,28 +43,30 @@ namespace NBL.Controllers
             Session["Branches"] = null;
             Session["Roles"] = null;
             ViewBag.Companies = _iCompanyManager.GetAll().ToList().OrderBy(n => n.CompanyId).ToList();
+            ViewBag.Roles = _iCommonManager.GetAllUserRoles();
             return View();
         }
         [HttpPost]
         public ActionResult LogIn(FormCollection collection, string ReturnUrl)
         {
-
+            //int roleId = Convert.ToInt32(collection["RoleId"]);
             User user = new User();
             string userName = collection["userName"];
             string password = collection["Password"];
             user.Password = password;
             user.UserName = userName;
-
+           
             bool validUser = _userManager.ValidateUser(user);
 
             if (validUser)
             {
                 var model = _userManager.GetUserByUserName(user.UserName);
                 var anUser = Mapper.Map<User, ViewUser>(model);
+                //anUser.Roles = _iCommonManager.GetAllUserRoles().ToList().Find(n => n.RoleId.Equals(roleId)).RoleName;
                 Session["Branches"] = _iCommonManager.GetAssignedBranchesToUserByUserId(anUser.UserId).ToList();
-               // Session["Roles"] = _userManager.GetAssignedUserRolesByUserId(anUser.UserId);
+                Session["Roles"] = _userManager.GetAssignedUserRolesByUserId(anUser.UserId);
                 Session["user"] = anUser;
-
+               // Session["Role"] = _iCommonManager.GetAllUserRoles().ToList().Find(n => n.RoleId.Equals(roleId)).RoleName;
                 int companyId = Convert.ToInt32(collection["companyId"]);
                 var company= _iCompanyManager.GetById(companyId);
                 Session["CompanyId"] = companyId;
@@ -86,37 +88,23 @@ namespace NBL.Controllers
                 anUser.IpAddress = GetLocalIPAddress();
                 anUser.MacAddress = GetMacAddress().ToString();
                 anUser.LogInDateTime = DateTime.Now;
-
+               
                 bool result = _userManager.ChangeLoginStatus(anUser, 1);
-
-                Session["user"] = anUser;
                 Session.Timeout = 180;
                 switch (anUser.Roles)
                 {
                     case "SuperUser":
                         return RedirectToAction("Home", "Home", new { area = "SuperAdmin" });
-                    case "StoreManagerFactory":
-                        return RedirectToAction("Home", "Home", new {area = "Production"});
-                    case "ProductionManager":
-                        return RedirectToAction("Home", "ProductionManager", new { area = "Production" });
-                    case "DispatchManager":
-                        return RedirectToAction("Home", "DispatchManager", new { area = "Production" });
-                    case "FqcExecutive":
-                        return RedirectToAction("Home", "Qc", new { area = "Production" });
-                    case "PH":
-                        return RedirectToAction("Home", "ProductionHead", new { area = "Production" });
                     case "SystemAdmin":
                         return RedirectToAction("Home", "Home", new { area = "Editor" });
                     case "Corporate":
                         return RedirectToAction("Home", "OperationHead", new { area = "Corporate" });
                     case "CorporateSalesAdmin":
                         return RedirectToAction("Home", "SalesAdmin", new { area = "Corporate" });
-                    case "R&D":
-                        return RedirectToAction("Home", "Home", new { area = "ResearchAndDevelopment" });
                     default:
                         return RedirectToAction("Goto", "LogIn", new { area = "" });
                 }
-                
+
 
             }
             ViewBag.Message = "Invalid Login";
@@ -139,14 +127,16 @@ namespace NBL.Controllers
         public ActionResult GoTo(FormCollection collection)
         {
             int branchId = Convert.ToInt32(collection["BranchId"]);
-            int roleId = Convert.ToInt32(collection["RoleId"]);
+           int roleId = Convert.ToInt32(collection["RoleId"]);
+            var roles = (List<ViewAssignedUserRole>)Session["Roles"];
+            var user = (ViewUser)Session["user"];
+            user.Roles = roles.Find(n => n.RoleId == roleId).RoleName;
+            bool r = _iCommonManager.UpdateCurrentUserRole(user, roleId);
             var branch= _iBranchManager.GetById(branchId);
             Session["BranchId"] = branchId;
             Session["Branch"] = branch;
-            var user = (ViewUser)Session["user"];
-            //var roles = (List<ViewAssignedUserRole>)Session["Roles"];
-            //user.Roles = roles.Find(n => n.RoleId.Equals(roleId)).RoleName;
-            //Session["r"] = roles.Find(n => n.RoleId.Equals(roleId)).RoleName;
+           
+           
             switch (user.Roles)
             {
                 case "Admin":
@@ -171,6 +161,18 @@ namespace NBL.Controllers
                     return RedirectToAction("Home", "Home", new { area = "Management" });
                 case "ServiceExecutive":
                     return RedirectToAction("Home", "Home", new { area = "Services" });
+                case "StoreManagerFactory":
+                    return RedirectToAction("Home", "Home", new { area = "Production" });
+                case "ProductionManager":
+                    return RedirectToAction("Home", "ProductionManager", new { area = "Production" });
+                case "DispatchManager":
+                    return RedirectToAction("Home", "DispatchManager", new { area = "Production" });
+                case "FqcExecutive":
+                    return RedirectToAction("Home", "Qc", new { area = "Production" });
+                case "PH":
+                    return RedirectToAction("Home", "ProductionHead", new { area = "Production" });
+                case "R&D":
+                    return RedirectToAction("Home", "Home", new { area = "ResearchAndDevelopment" });
                 default:
                     return RedirectToAction("LogIn", "LogIn", new { area = "" });
             }

@@ -51,7 +51,7 @@ namespace NBL.BLL
         {
          
             var anUser = GetUserByUserName(userName);
-            anUser.Roles = "SalesManager";
+            anUser.Roles = "DistributionManager";
             return anUser;
         }
         public bool ValidateUser(User user)

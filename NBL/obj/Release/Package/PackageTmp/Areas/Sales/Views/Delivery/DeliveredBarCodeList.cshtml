@@ -63,10 +63,10 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>Sl No</th>
+                                <th>SL</th>
                                 <th>Product Name </th>
-                                <th class="text-right">Quantity</th>
-                                <th class="text-center">Quantity</th>
+                                <th class="text-right">Qty</th>
+                                <th class="text-center">Barcode</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -86,7 +86,7 @@
                                             <td>@item.ProductName</td>
                                             <td class="text-right">@item.DeliveredProducts.Count</td>
                                             <td>
-                                                @foreach (var i in item.DeliveredProducts)
+                                                @foreach (var i in item.DeliveredProducts.OrderBy(n=>n.ProductBarCode))
                                                 {
                                                     @i.ProductBarCode<span>,</span>
                                                 }

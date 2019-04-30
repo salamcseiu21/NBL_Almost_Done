@@ -45,5 +45,6 @@ namespace NBL.BLL.Contracts
         ICollection<ProductionDateCode> GetProductionDateCodeByMonthYear(string monthYear);
         bool SaveEncriptedConString(string chipartext);
         ICollection<RejectionReason> GetAllRejectionReason();
+        bool UpdateCurrentUserRole(ViewUser user, int roleId);
     }
 }

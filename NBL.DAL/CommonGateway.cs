@@ -941,5 +941,34 @@ CommandObj.Parameters.Clear();
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public int UpdateCurrentUserRole(ViewUser user, int roleId)
+        {
+            
+            try
+            {
+                CommandObj.CommandText = "UDSP_UpdateCurrentUserRole";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@UserID", user.UserId);
+                CommandObj.Parameters.AddWithValue("@RoleId", roleId);
+                CommandObj.Parameters.Add("@RowAffeted", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffeted"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffeted"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not save current user role", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }

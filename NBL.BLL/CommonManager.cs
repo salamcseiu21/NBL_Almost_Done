@@ -149,5 +149,11 @@ namespace NBL.BLL
        {
            return _iCommonGateway.GetAllRejectionReason();
        }
+
+       public bool UpdateCurrentUserRole(ViewUser user, int roleId)
+       {
+           int rowAffected = _iCommonGateway.UpdateCurrentUserRole(user,roleId);
+           return rowAffected > 0;
+       }
    }
 }
