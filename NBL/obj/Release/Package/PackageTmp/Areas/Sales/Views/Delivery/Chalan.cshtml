@@ -72,6 +72,7 @@
                                 <th>Product Name </th>
 
                                 <th class="text-right">Quantity</th>
+                                <th class="text-center">Quantity</th>
 
                             </tr>
                         </thead>
@@ -93,7 +94,12 @@
                                             <td>  @(rowNo += 1)</td>
                                             <td>@item.ProductName</td>
                                             <td class="text-right">@item.DeliveredProducts.Count</td>
-
+                                            <td>
+                                                @foreach (var i in item.DeliveredProducts)
+                                                {
+                                                    @i.ProductBarCode<span>,</span>
+                                                }
+                                            </td>
                                         </tr>
                                     }
 
@@ -107,7 +113,7 @@
                             <tr>
 
                                 <th></th>
-                               
+                                <th></th>
                                 <th class="text-right">
                                     Total
                                 </th>

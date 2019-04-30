@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.ViewModels;
-using NBL.Models.ViewModels.Replaces;
 
 namespace NBL.Areas.Services.Controllers
 {
@@ -26,19 +24,47 @@ namespace NBL.Areas.Services.Controllers
         // GET: Services/Replace
         public ActionResult Entry()
         {
-            CreateTempReplaceProductXmlFile();
+           // CreateTempReplaceProductXmlFile();
             return View();
         }
 
         [HttpPost]
         public ActionResult Entry(FormCollection collection, ReplaceModel model)
         {
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            var clientId = Convert.ToInt32(collection["clientId"]);
+            var user = (ViewUser)Session["user"];
             var productId = Convert.ToInt32(collection["ProductId"]);
             var qty = Convert.ToInt32(collection["Quantity"]);
             var aProduct = _iProductManager.GetProductByProductId(productId);
             aProduct.Quantity = qty;
-            AddProductToTempReplaceProductXmlFile(aProduct);
-            return Json("Added Successfully!", JsonRequestBehavior.AllowGet);
+            aProduct.ExpiryDate = Convert.ToDateTime(collection["ExpiryDate"]);
+            var products = new List<Product> {aProduct};
+            var replaceModel = new ReplaceModel 
+            {
+                ClientId = clientId,
+                Products = products.ToList(),
+                BranchId = branchId,
+                UserId = user.UserId,
+                CompanyId = companyId
+
+            };
+            var  result = _iProductReplaceManager.SaveReplacementInfo(replaceModel);
+            if (result)
+            {
+                ModelState.Clear();
+
+                return View();
+
+            }
+           // AddProductToTempReplaceProductXmlFile(aProduct);
+            else
+            {
+                return View();
+            }
+           
+            //return View();
         }
 
         public ActionResult SaveReplacementInfo(FormCollection collection)
@@ -85,6 +111,7 @@ namespace NBL.Areas.Services.Controllers
                     new XElement("ProductId", aProduct.ProductId),
                     new XElement("ProductName", aProduct.ProductName),
                     new XElement("Quantity", aProduct.Quantity),
+                    new XElement("ExpiryDate", aProduct.ExpiryDate),
                     new XElement("UnitPrice", aProduct.UnitPrice),
                     new XElement("CategoryId", aProduct.CategoryId),
                     new XElement("SubSubSubAccountCode", aProduct.SubSubSubAccountCode),
@@ -151,6 +178,7 @@ namespace NBL.Areas.Services.Controllers
                 aProduct.ProductId = Convert.ToInt32(xElements[0].Value);
                 aProduct.ProductName = xElements[1].Value;
                 aProduct.Quantity = Convert.ToInt32(xElements[2].Value);
+                aProduct.ExpiryDate = Convert.ToDateTime(xElements[3].Value);
                 products.Add(aProduct);
             }
 

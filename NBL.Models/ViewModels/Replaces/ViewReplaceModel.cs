@@ -15,6 +15,7 @@ namespace NBL.Models.ViewModels.Replaces
         public int BranchId { get; set; }
         public int CompanyId { get; set; }
         public string ReplaceRef { get; set; }
+        public DateTime ExpiryDate { get; set; }
         public DateTime EntryDate { get; set; }
         public ICollection<ViewReplaceDetailsModel> Products { set; get; }
     }

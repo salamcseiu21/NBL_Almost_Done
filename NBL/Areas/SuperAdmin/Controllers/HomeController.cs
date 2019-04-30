@@ -82,7 +82,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
         }
         public PartialViewResult ViewClient() 
         {
-            var clients = _iClientManager.GetAll().ToList();
+            var clients = _iClientManager.GetAllClientDetails().ToList();
             return PartialView("_ViewClientPartialPage",clients);
 
         }

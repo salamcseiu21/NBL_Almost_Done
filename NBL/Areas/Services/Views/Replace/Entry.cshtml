@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Entry";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
 }
 
 <section class="content">
@@ -12,18 +13,16 @@
                 @Html.Raw(TempData["SaveReplaceMessage"])
             }
             <h3 class="text-center text-green">Replace Entry</h3>
-            @using (Ajax.BeginForm("Entry", new AjaxOptions()
-            {
-                InsertionMode = InsertionMode.Replace,
-                UpdateTargetId = "dane",
-                OnBegin = "LoadAllTempReplaceProduct",
-                OnSuccess = "LoadAllTempReplaceProduct"
-            }))
+            @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
 
                 <div class="form-horizontal">
+                  
+                    <div id="dane" class="text-center">
+                     
+                    </div>
                     <div class="form-group">
                         <label for="ClientId" class="control-label col-md-3">Client Name</label>
                         <div class="col-md-9">
@@ -48,7 +47,15 @@
                     <div class="form-group">
                         <label for="Quantity" class="control-label col-md-3">Quantity</label>
                         <div class="col-md-9">
-                            <input type="number" name="Quantity" id="Quantity" class="form-control" placeholder="Quantity" required/>
+                            <input type="number" name="Quantity" id="Quantity" class="form-control" value="1" placeholder="Quantity" min="1" max="1" required/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ExpiryDate" class="control-label col-md-3">Expiry Date</label>
+                        <div class="col-md-9">
+
+                            <input type="text" id="ExpiryDate" name="ExpiryDate" value="@date" class="form-control"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -66,25 +73,24 @@
                         <div class="col-md-9">
 
                             <div class="btn-toolbar">
-                                <input type="submit" value="Add Item" class="btn btn-info"/>
-                                <input type="button" id="removeAllButton" value="Remove All" onclick="RemoveAll(this)" class="btn btn-danger "/>
-                                <input type="button" value="Submit" class="btn btn-primary" onclick="SaveReplacementInfo(this.form)"/>
+                                <input type="submit" value="Save" class="btn btn-info"/>
+                                @Html.ActionLink("Back", "ViewAll", "Replace", null, new {@class = "btn btn-danger"})
+
+                                @*<input type="button" id="removeAllButton" value="Remove All" onclick="RemoveAll(this)" class="btn btn-danger "/>
+                                <input type="button" value="Submit" class="btn btn-primary" onclick="SaveReplacementInfo(this.form)"/>*@
                             </div>
                         </div>
                     </div>
                 </div>
             }
-            <hr/>
-            <div id="dane" class="text-center">
-                Number of Details :
-            </div>
-            <hr/>
-            <div class="row">
+           
+           
+            @*<div class="row">
                 <div class="col-md-12">
                     <div id="divReplaceProducts"></div>
                 </div>
 
-            </div>
+            </div>*@
         </div>
     </div>
     <br/>
@@ -104,7 +110,21 @@
 
 @section Scripts
 {
-    
+    <script>
+        $(function () {
+
+            $("#ExpiryDate").datepicker(
+                {
+                    dateFormat: 'dd-MM-yy',
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "0:+1",
+                    minDate: '-0D',
+                    maxDate: '+10M'
+                });
+
+        });
+    </script>
     
     <script>
         
@@ -156,7 +176,8 @@
 
         $(document).ready(function () {
 
-            LoadAllTempReplaceProduct();
+            // LoadAllTempReplaceProduct();
+           
         });
     </script>
     <script>
@@ -232,6 +253,10 @@
                     $("#divReplaceProducts").html(data);
                 }
             });
+        }
+
+        function ClearTextBox() {
+            location.reload(true);
         }
     </script>
 }

@@ -343,6 +343,12 @@ namespace NBL.Areas.Sales.Controllers
 
         }
 
+        public ActionResult DeliveredBarCodeList(int deliveryId) 
+        {
+            var chalan = _iDeliveryManager.GetChalanByDeliveryId(deliveryId);
+            return View(chalan);
+
+        }
         [HttpGet]
         public ActionResult Invoice(int deliveryId)
         {

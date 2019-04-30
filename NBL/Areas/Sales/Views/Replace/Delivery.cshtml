@@ -69,7 +69,8 @@
                 <thead>
                 <tr>
                     <th>Product Name</th>
-                    <th>Quantity</th>
+                    <th class="text-right">Quantity</th>
+                    <th class="text-center">Expiry Date</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -77,14 +78,16 @@
                 {
                     <tr>
                         <td>@item.ProductName</td>
-                        <td>@item.Quantity</td>
+                        <td class="text-right">@item.Quantity</td>
+                        <td class="text-center">@item.ExpiryDate.ToString("dd-MMMM-yyyy")</td>
                     </tr>
                 }
                 </tbody>
                 <tfoot>
                 <tr>
                     <th>Product Name</th>
-                    <th>Quantity</th>
+                    <th class="text-right">Quantity</th>
+                    <th class="text-center">Expiry Date</th>
                 </tr>
                 </tfoot>
             </table>

@@ -230,7 +230,8 @@ namespace NBL.DAL
                         ReplaceDetailsId = Convert.ToInt64(reader["ReplaceDetailsId"]),
                         ProductName = reader["ProductName"].ToString(),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
-                        Quantity = Convert.ToInt32(reader["Quantity"])
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        ExpiryDate = Convert.ToDateTime(reader["ExpiryDate"])
                     });
                 }
                 reader.Close();
@@ -297,6 +298,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@ProductId", item.ProductId);
                 CommandObj.Parameters.AddWithValue("@ReplaceId", masterId);
                 CommandObj.Parameters.AddWithValue("@Quantity", item.Quantity);
+                CommandObj.Parameters.AddWithValue("@ExpiryDate", item.ExpiryDate);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();

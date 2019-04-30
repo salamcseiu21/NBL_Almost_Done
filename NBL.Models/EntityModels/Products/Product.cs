@@ -26,6 +26,8 @@ namespace NBL.Models.EntityModels.Products
         public int UnitInStock { get; set; }
         [Display(Name = "Product Added Date")]
         public DateTime ProductAddedDate { get; set; }
+
+        public DateTime ExpiryDate { get; set; }
         public string ProductImage { get; set; } 
         public int Quantity { get; set; }
         public int ProductDetailsId { get; set; }

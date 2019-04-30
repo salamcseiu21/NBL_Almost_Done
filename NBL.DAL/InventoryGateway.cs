@@ -753,13 +753,22 @@ namespace NBL.DAL
             int i = 0;
             foreach (var item in model.DispatchModels)
             {
+                var qty1 = model.DispatchModels.ToList().FindAll(n => n.ProductId == item.ProductId)
+                    .Sum(n => n.Quantity);
+                var qty2 = model.ScannedProducts.ToList().FindAll(n => n.ProductId == item.ProductId).Count;
+                int status = 2;
+                if (qty1 != qty2)
+                {
+                    status = 1;
+                }
                 CommandObj.CommandText = "spSaveInventoryItem";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.Clear();
                 CommandObj.Parameters.AddWithValue("@DispatchItemId", item.DispatchItemId);
                 CommandObj.Parameters.AddWithValue("@ProductId", item.ProductId);
-                CommandObj.Parameters.AddWithValue("@Quantity", item.Quantity);
+                CommandObj.Parameters.AddWithValue("@Quantity", qty2);
                 CommandObj.Parameters.AddWithValue("@ReceiveByUserId", model.ReceiveByUserId);
+                CommandObj.Parameters.AddWithValue("@Status", status);
                 CommandObj.Parameters.AddWithValue("@InventoryId", inventoryId);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
@@ -809,7 +818,7 @@ namespace NBL.DAL
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.CommandText = "spSaveDeliveredOrderInformation";
                 CommandObj.Parameters.AddWithValue("@TransactionDate", aDelivery.DeliveryDate);
-                CommandObj.Parameters.AddWithValue("@TransactionRef", aDelivery.TransactionRef);
+                CommandObj.Parameters.AddWithValue("@TransactionRef", aDelivery.DeliveryRef);
                 CommandObj.Parameters.AddWithValue("@DeliveryRef", aDelivery.DeliveryRef);
                 CommandObj.Parameters.AddWithValue("@VoucherNo", aDelivery.VoucherNo);
                 CommandObj.Parameters.AddWithValue("@InvoiceRef", aDelivery.InvoiceRef);

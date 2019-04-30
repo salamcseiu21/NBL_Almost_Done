@@ -34,17 +34,17 @@ namespace NBL.BLL
             }
             else
             {
-                string acountPrefix = "33050";
+                string acountPrefix = "31020";
                 switch (client.ClientTypeId)
                 {
                     case 1:
                         acountPrefix += "4";
                         break;
                     case 2:
-                        acountPrefix += "5";
+                        acountPrefix += "2";
                         break;
                     case 3:
-                        acountPrefix += "3";
+                        acountPrefix += "1";
                         break;
                 }
                 var lastClientNo = _iClientGateway.GetMaxSerialNoOfClientByAccountPrefix(acountPrefix);
