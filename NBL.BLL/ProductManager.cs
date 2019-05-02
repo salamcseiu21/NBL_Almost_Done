@@ -290,6 +290,7 @@ namespace NBL.BLL
         {
             return _iProductGateway.GetRequsitions();
         }
+       
 
         public ICollection<ViewDispatchModel> GetDeliverableProductListByTripId(long tripId)
         {
@@ -328,6 +329,16 @@ namespace NBL.BLL
         public List<Product> GetTempReplaceProducts(string filePath)
         {
             return _iProductGateway.GetTempReplaceProducts(filePath);
+        }
+
+        public IEnumerable<ViewRequisitionModel> GetPendingRequsitions()
+        {
+            return _iProductGateway.GetPendingRequsitions();
+        }
+
+        public ICollection<ViewDispatchModel> GetAllDispatchList()
+        {
+            return _iProductGateway.GetAllDispatchList();
         }
     }
 }

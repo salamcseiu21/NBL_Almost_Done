@@ -60,5 +60,7 @@ namespace NBL.DAL.Contracts
         List<Product> GetAllProductionAbleProductByDateCode(string productionDateCode);
 
         List<Product> GetTempReplaceProducts(string filePath);
+        IEnumerable<ViewRequisitionModel> GetPendingRequsitions();
+        ICollection<ViewDispatchModel> GetAllDispatchList();
     }
 }

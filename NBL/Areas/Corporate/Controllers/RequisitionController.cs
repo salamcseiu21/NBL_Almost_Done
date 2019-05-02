@@ -14,7 +14,7 @@ using NBL.Models.ViewModels.Requisitions;
 
 namespace NBL.Areas.Corporate.Controllers
 {
-    [Authorize(Roles = "CorporateSalesAdmin")]
+     [Authorize]
     public class RequisitionController : Controller
     {
 
@@ -30,10 +30,16 @@ namespace NBL.Areas.Corporate.Controllers
         // GET: Admin/Requisition
         public ActionResult All()
         {
-            IEnumerable<ViewRequisitionModel> requisitions = _iProductManager.GetRequsitions();
+           IEnumerable<ViewRequisitionModel> requisitions = _iProductManager.GetRequsitions();
             return View(requisitions);
         }
 
+        public ActionResult PendingRequisition()
+        {
+            IEnumerable<ViewRequisitionModel> requisitions = _iProductManager.GetPendingRequsitions();
+            return View(requisitions);
+        }
+        [Authorize(Roles = "CorporateSalesAdmin")]
         [HttpGet]
         public ActionResult Create()
         {
@@ -221,7 +227,7 @@ namespace NBL.Areas.Corporate.Controllers
 
             xmlDocument.Save(@"C:\Demo\Demo\Data.xml");
         }
-
+        [Authorize(Roles = "CorporateSalesAdmin")]
         //------------------------For Monthly Requisition---------------------
         public ActionResult MonthlyRequisition()
         {

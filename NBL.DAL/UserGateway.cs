@@ -356,7 +356,8 @@ namespace NBL.DAL
                         AssignedId = Convert.ToInt64(reader["AssignedRoleToUserId"]),
                         BranchId = Convert.ToInt32(reader["BranchId"]),
                         UserId = Convert.ToInt32(reader["UserId"]),
-                        RoleName = reader["RoleName"].ToString()
+                        RoleName = reader["RoleName"].ToString(),
+                        Alias =DBNull.Value.Equals(reader["Alias"])?null: reader["Alias"].ToString()
                     });
                 }
                 reader.Close();

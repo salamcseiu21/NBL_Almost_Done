@@ -13,7 +13,9 @@ using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Searchs;
+using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.Corporate.Controllers
 {
@@ -62,7 +64,20 @@ namespace NBL.Areas.Corporate.Controllers
         // GET: Corporate/Home
         public ActionResult Home()
         {
-            return View();
+
+            var branches = _iBranchManager.GetAllBranches().ToList().FindAll(n => n.BranchId != 13).ToList();
+            foreach (ViewBranch branch in branches)
+            {
+                branch.Orders = _iOrderManager.GetOrdersByBranchId(branch.BranchId).ToList();
+            }
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByCompanyId(companyId).ToList();
+            SummaryModel model = new SummaryModel
+            {
+                Branches = branches,
+                InvoicedOrderList = invoicedOrders
+            };
+            return View(model);
         }
        
         /// <summary>

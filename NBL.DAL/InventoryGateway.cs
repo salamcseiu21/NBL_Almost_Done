@@ -818,7 +818,7 @@ namespace NBL.DAL
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.CommandText = "spSaveDeliveredOrderInformation";
                 CommandObj.Parameters.AddWithValue("@TransactionDate", aDelivery.DeliveryDate);
-                CommandObj.Parameters.AddWithValue("@TransactionRef", aDelivery.DeliveryRef);
+                CommandObj.Parameters.AddWithValue("@TransactionRef", aDelivery.TransactionRef);
                 CommandObj.Parameters.AddWithValue("@DeliveryRef", aDelivery.DeliveryRef);
                 CommandObj.Parameters.AddWithValue("@VoucherNo", aDelivery.VoucherNo);
                 CommandObj.Parameters.AddWithValue("@InvoiceRef", aDelivery.InvoiceRef);

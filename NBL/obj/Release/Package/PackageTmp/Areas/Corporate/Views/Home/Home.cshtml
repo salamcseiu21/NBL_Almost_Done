@@ -1,10 +1,50 @@
-﻿
+﻿@using NBL.Models.ViewModels
+@model NBL.Models.ViewModels.Summaries.SummaryModel
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
 }
 
 <section class="content">
-    <h3 class="text-center">Corporate Home</h3>
+  
+    @{
+        foreach (ViewBranch branch in Model.Branches)
+        {
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua">&#2547;</span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">
+                            Sales in ( @Ajax.ActionLink(branch.BranchName, "OrderSummary", new { branchId = branch.BranchId },
+                                           new AjaxOptions
+                                           {
+                                               HttpMethod = "GET", // HttpMethod to use, GET or POST
+                                               UpdateTargetId = "divOrders", // ID of the HTML element to update
+                                               InsertionMode = InsertionMode.Replace,// Replace the existing contents
+                                               LoadingElementId = "divloading",
+                                               OnBegin = "ClearResults('Branch Name : " + branch.BranchName + "')"
+
+                                           }))
+                        </span>
+                        <span class="info-box-number">@branch.Orders.Count()</span>
+
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+        }
+    }
+
 </section>
 
+@section Scripts
+{
+    <script type="text/javascript">
+        var timeout = setTimeout("location.reload(true);", 60000);
+        function resetTimeout() {
+            clearTimeout(timeout);
+            timeout = setTimeout("location.reload(true);", 60000);
+        }
+    </script>
+}

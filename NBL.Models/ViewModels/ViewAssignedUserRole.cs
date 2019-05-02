@@ -14,6 +14,7 @@ namespace NBL.Models.ViewModels
         public string BranchName { get; set; }  
         public int RoleId { get; set; }
         public string RoleName { get; set; }
+        public string Alias { get; set; }   
         public int ActiveStatus { get; set; } 
 
     }

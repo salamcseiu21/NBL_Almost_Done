@@ -52,11 +52,11 @@
 
                 </select>
 
-                @*<br />
+                <br />
                 <select class="form-control" name="RoleId" id="RoleId" required>
                     <option value="">--Select--</option>
                    
-                </select>*@
+                </select>
                 <br />
                 <div class="form-group">
 
@@ -87,7 +87,7 @@
 
                 $.each(data, function (key, value) {
                     //alert(key);
-                    $("#RoleId").append('<option value=' + value.RoleId + '>' + value.RoleName + '</option>');
+                    $("#RoleId").append('<option value=' + value.RoleId + '>' + value.Alias + '</option>');
 
                 });
             }

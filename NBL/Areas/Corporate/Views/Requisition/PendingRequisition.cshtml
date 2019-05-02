@@ -1,0 +1,72 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Requisitions.ViewRequisitionModel>
+@{
+    ViewBag.Title = "All";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <h3 class="text-center text-green">Requisition List</h3>
+    <table class="display table-bordered" id="tbl_requisition_list" style="border: 1px solid">
+        <thead>
+            <tr>
+                <th>Requisition Ref</th>
+                <th>Requisition qty</th>
+                <th>Delivered Qty</th>
+                <th>Pending Qty</th>
+                <th>Date</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.RequisitionRef</td>
+                    <td>@item.RequisitionQty</td>
+                    <td>@item.DeliveryQty</td>
+                    <td>@item.PendingQty</td>
+                    <td>@item.SystemDateTime.ToString("F")</td>
+                    <td class="text-center">
+                        <button type="button" value="@item.RequisitionId" class="btn btn-success btn-sm" onclick="viewDetails(this)"><i class="fa fa-eye"></i> Details</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Requisition Ref</th>
+                <th>Requisition qty</th>
+                <th>Delivered Qty</th>
+                <th>Pending Qty</th>
+                <th>Date</th>
+                <th>Details</th>
+            </tr>
+        </tfoot>
+    </table>
+    @Html.Partial("_RequisitonDetailsModal")
+</section>
+@section Scripts
+{
+    <script>
+        $("#tbl_requisition_list").DataTable();
+        $('#tbl_requisition_details_list').DataTable({
+            "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
+        });
+    </script>
+
+    <script>
+
+        function viewDetails(requisitionId) {
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ViewRequisitionDetails", "Requisition", new { area = "Corporate" })",
+                data: { requisitionId: requisitionId.value },
+                success: function (response) {
+                    $('#modalBody').html(response);
+                    $('#showRequisitionDetailsModal').modal('show');
+                }
+            });
+        }
+
+    </script>
+}

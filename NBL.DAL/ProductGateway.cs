@@ -1516,5 +1516,82 @@ namespace NBL.DAL
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<ViewRequisitionModel> GetPendingRequsitions()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetPendingRequsitions";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<ViewRequisitionModel> requisitions = new List<ViewRequisitionModel>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    requisitions.Add(new ViewRequisitionModel
+                    {
+                        RequisitionId = Convert.ToInt64(reader["RequisitionId"]),
+                        RequisitionByUserId = Convert.ToInt32(reader["RequisitionByUserId"]),
+                        RequisitionBy = reader["RequisitionBy"].ToString(),
+                        RequisitionDate = Convert.ToDateTime(reader["RequisitionDate"]),
+                        RequisitionQty = Convert.ToInt32(reader["RequisitionQty"]),
+                        DeliveryQty = Convert.ToInt32(reader["DeliveryQty"]),
+                        PendingQty = Convert.ToInt32(reader["PendingQty"]),
+                        RequisitionRef = reader["RequisitionRef"].ToString(),
+                        Status = Convert.ToInt32(reader["Status"]),
+                        SystemDateTime = DBNull.Value.Equals(reader["SystemDateTime"]) ? default(DateTime) : Convert.ToDateTime(reader["SystemDateTime"])
+                    });
+                }
+                reader.Close();
+                return requisitions;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get requisition by Status", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<ViewDispatchModel> GetAllDispatchList()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllDispatchList";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<ViewDispatchModel> models=new List<ViewDispatchModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ViewDispatchModel
+                    {
+                        DispatchId = Convert.ToInt64(reader["DispatchId"]),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        DispatchRef = reader["DispatchRef"].ToString(),
+                        DispatchDate = Convert.ToDateTime(reader["SystemDateTime"]),
+                        DispatchByUserId = Convert.ToInt32(reader["DispatchByUserId"]),
+                        DispatchBy = reader["EmployeeName"].ToString()
+                    });
+                }
+                reader.Close();
+                return models;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect dispatch List", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }

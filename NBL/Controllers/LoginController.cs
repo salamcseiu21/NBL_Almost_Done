@@ -93,12 +93,13 @@ namespace NBL.Controllers
                 Session.Timeout = 180;
                 switch (anUser.Roles)
                 {
+                   
                     case "SuperUser":
                         return RedirectToAction("Home", "Home", new { area = "SuperAdmin" });
                     case "SystemAdmin":
                         return RedirectToAction("Home", "Home", new { area = "Editor" });
                     case "Corporate":
-                        return RedirectToAction("Home", "OperationHead", new { area = "Corporate" });
+                        return RedirectToAction("Home", "Home", new { area = "Corporate" });
                     case "CorporateSalesAdmin":
                         return RedirectToAction("Home", "SalesAdmin", new { area = "Corporate" });
                     default:
@@ -150,9 +151,7 @@ namespace NBL.Controllers
                     return RedirectToAction("Home", "Distributor", new { area = "Sales" });
                 case "SalesAdmin":
                     return RedirectToAction("Home", "SalesAdmin", new { area = "Sales" });
-                case "SuperUser":
-                    return RedirectToAction("Home", "Home", new { area = "SuperAdmin" });
-               
+                            
                 case "AccountExecutive":
                     return RedirectToAction("Home", "Home", new { area = "AccountsAndFinance" });
                 case "AccountManager":

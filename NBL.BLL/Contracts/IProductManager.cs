@@ -50,5 +50,7 @@ namespace NBL.BLL.Contracts
         bool SaveProductDetails(ViewCreateProductDetailsModel model);
         List<Product> GetAllProductionAbleProductByDateCode(string productionDateCode);
         List<Product> GetTempReplaceProducts(string filePath);
+        IEnumerable<ViewRequisitionModel> GetPendingRequsitions();
+        ICollection<ViewDispatchModel> GetAllDispatchList();
     }
 }

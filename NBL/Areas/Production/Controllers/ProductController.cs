@@ -13,6 +13,7 @@ using NBL.Models.EntityModels.Requisitions;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.Validators;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Requisitions;
 
@@ -396,6 +397,11 @@ namespace NBL.Areas.Production.Controllers
             return View();
         }
 
-        
+
+        public ActionResult DispatchList()
+        {
+            List<ViewDispatchModel> dispatch = _iProductManager.GetAllDispatchList().ToList();
+            return View(dispatch);
+        }
     }
 }

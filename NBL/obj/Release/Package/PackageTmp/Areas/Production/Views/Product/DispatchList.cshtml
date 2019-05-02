@@ -1,0 +1,36 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Deliveries.ViewDispatchModel>
+@{
+    ViewBag.Title = "DispatchList";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Dispatch List</h3>
+    <table id="tbl_dispatch_list" class="display table-bordered" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>Dispatch Ref</th>
+            <th>Quantity</th>
+            <th>Date</th>
+            <th>Dispatch By</th>
+        </tr>
+        </thead>
+        <tbody>
+       @foreach (var item in Model)
+       {
+           <tr>@item.DispatchRef</tr>
+           <tr>@item.Quantity</tr>
+           <tr>@item.DispatchDate.ToString("dd-MMMM-yyyy")</tr>
+           <tr>@item.DispatchByUserId</tr>
+       }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Dispatch Ref</th>
+            <th>Quantity</th>
+            <th>Date</th>
+            <th>Dispatch By</th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
