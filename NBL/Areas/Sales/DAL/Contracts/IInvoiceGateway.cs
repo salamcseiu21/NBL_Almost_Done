@@ -26,5 +26,6 @@ namespace NBL.Areas.Sales.DAL.Contracts
        IEnumerable<InvoiceDetails> GetInvoicedOrderDetailsByInvoiceRef(string invoiceRef);
        Invoice GetInvoicedOrderByInvoiceId(int invoiceId);
        ICollection<ViewProduct> GetDeliveredProductsByInvoiceRef(string invoiceRef);
+       ICollection<Invoice> GetInvoicedOrdersByCompanyIdAndDate(int companyId, DateTime date);
    }
 }

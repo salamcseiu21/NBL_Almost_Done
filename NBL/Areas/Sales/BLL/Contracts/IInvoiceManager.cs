@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using NBL.Models;
 using NBL.Models.EntityModels.Invoices;
@@ -19,6 +20,7 @@ namespace NBL.Areas.Sales.BLL.Contracts
         IEnumerable<InvoiceDetails> GetInvoicedOrderDetailsByInvoiceId(int invoiceId);
         IEnumerable<InvoiceDetails> GetInvoicedOrderDetailsByInvoiceRef(string invoiceRef);
         Invoice GetInvoicedOrderByInvoiceId(int invoiceId);
-        ICollection<ViewProduct> GetDeliveredProductsByInvoiceRef(string invoiceRef); 
+        ICollection<ViewProduct> GetDeliveredProductsByInvoiceRef(string invoiceRef);
+        ICollection<Invoice> GetInvoicedOrdersByCompanyIdAndDate(int companyId, DateTime date); 
     }
 }

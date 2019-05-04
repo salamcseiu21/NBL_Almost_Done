@@ -14,6 +14,7 @@ using NBL.Models.EntityModels.Securities;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Summaries;
 
@@ -64,18 +65,23 @@ namespace NBL.Areas.Corporate.Controllers
         // GET: Corporate/Home
         public ActionResult Home()
         {
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
 
             var branches = _iBranchManager.GetAllBranches().ToList().FindAll(n => n.BranchId != 13).ToList();
             foreach (ViewBranch branch in branches)
             {
                 branch.Orders = _iOrderManager.GetOrdersByBranchId(branch.BranchId).ToList();
+                branch.Products= _iInventoryManager.GetStockProductByBranchAndCompanyId(branch.BranchId, companyId).ToList();
             }
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
+        
+       
             var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByCompanyId(companyId).ToList();
+           // var todaysInvoceOrders= _iInvoiceManager.GetInvoicedOrdersByCompanyIdAndDate(companyId,DateTime.Now).ToList();
             SummaryModel model = new SummaryModel
             {
                 Branches = branches,
                 InvoicedOrderList = invoicedOrders
+                //OrderListByDate = todaysInvoceOrders
             };
             return View(model);
         }
@@ -324,6 +330,12 @@ namespace NBL.Areas.Corporate.Controllers
         {
             var summaries = _iInventoryManager.GetProductionSummaries().ToList();
             return View(summaries);
+        }
+
+        public ActionResult DispatchList()
+        {
+            List<ViewDispatchModel> dispatch = _iProductManager.GetAllDispatchList().ToList();
+            return View(dispatch);
         }
     }
 }

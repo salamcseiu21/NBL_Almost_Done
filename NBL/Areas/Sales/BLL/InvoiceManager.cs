@@ -93,5 +93,10 @@ namespace NBL.Areas.Sales.BLL
         {
             return _iInvoiceGateway.GetDeliveredProductsByInvoiceRef(invoiceRef);
         }
+
+        public ICollection<Invoice> GetInvoicedOrdersByCompanyIdAndDate(int companyId, DateTime date)
+        {
+            return _iInvoiceGateway.GetInvoicedOrdersByCompanyIdAndDate(companyId,date);
+        }
     }
 }

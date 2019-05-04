@@ -14,7 +14,6 @@
             <li>@Html.ActionLink(" Search", "Search", "OperationHead", new { area = "Corporate" }, new { @class = "fa fa-search", style = "font-weight: bolder" })</li>
         </ul>
     </li>
-    @Html.Partial("_MenuPartialPage")
     
     <li class="treeview">
         <a href="#">
@@ -30,6 +29,9 @@
             @*<li>@Html.ActionLink(" Monthly Requisition", "MonthlyRequisition", "Requisition", new {area = "Corporate"}, new {@class = "fa fa-plus", style = "font-weight: bolder"})</li>*@
         </ul>
     </li>
+    @Html.Partial("_MenuPartialPage")
+    
+   
     <li class="treeview">
         <a href="#">
             <i class="fa fa-book"></i> <span>Reports</span>

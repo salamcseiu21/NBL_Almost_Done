@@ -75,18 +75,19 @@
                     foreach (DeliveryDetails item in orderDetailses)
                     {
 
-                      
+                        code = "";
                         <div class="example" style="border: 1px solid gray;padding: 5px">
                            
                             @foreach (var i in item.DeliveredProducts.OrderBy(n => n.ProductBarCode))
-                                {
-                                    code += i.ProductBarCode + " , ";
-                                }
-                                @code.TrimEnd(' ').TrimEnd(',')
+                            {
+                                code += i.ProductBarCode + " , ";
+                            }
+                            @code.TrimEnd(' ').TrimEnd(',')
                         </div>
+                        <br/>
                                     
                     }
-
+                    
                 }
 
 

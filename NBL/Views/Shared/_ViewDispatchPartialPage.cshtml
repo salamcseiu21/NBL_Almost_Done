@@ -1,0 +1,34 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Deliveries.ViewDispatchModel>
+
+<section class="content">
+    <h3 class="text-center text-green">Dispatch List</h3>
+    <table id="tbl_dispatch_list" class="display table-bordered" style="border: 1px solid">
+        <thead>
+            <tr>
+                <th>Dispatch Ref</th>
+                <th class="text-right">Quantity</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Dispatch By</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.DispatchRef</td>
+                    <td class="text-right">@item.Quantity</td>
+                    <td class="text-center">@item.DispatchDate.ToString("dd-MMMM-yyyy")</td>
+                    <td class="text-center">@item.DispatchBy</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Dispatch Ref</th>
+                <th class="text-right">Quantity</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Dispatch By</th>
+            </tr>
+        </tfoot>
+    </table>
+</section>

@@ -29,5 +29,6 @@ namespace NBL.Models.ViewModels
         public List<Region> RegionList { get; set; }
         public List<Client> Clients { get; set; }
         public List<Order> Orders { get; set; }
+        public List<ViewProduct> Products { get; set; }
     }
 }
