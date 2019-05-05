@@ -25,7 +25,9 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li>@Html.ActionLink(" Requisition List", "Requisitions", "Product", new {area = "Production" }, new {@class = "fa fa-list"})</li>
+            <li>@Html.ActionLink(" Latest List", "LatestRequisitions", "Product", new {area = "Production" }, new {@class = "fa fa-list"})</li>
+            <li>@Html.ActionLink(" Pending List", "PendingRequisitions", "Product", new {area = "Production" }, new {@class = "fa fa-list"})</li>
+            <li>@Html.ActionLink(" All", "Requisitions", "Product", new {area = "Production" }, new {@class = "fa fa-list"})</li>
             @*<li>@Html.ActionLink(" Monthly Requisition List", "MonthlyRequisitions", "Product", new {area = "Production" }, new {@class = "fa fa-list"})</li>*@
             <li>@Html.ActionLink(" Create Trip", "CreateTrip", "Transfer", new {area = "Production" }, new {@class = "fa fa-plus"})</li>
         </ul>

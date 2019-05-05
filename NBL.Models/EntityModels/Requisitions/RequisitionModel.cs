@@ -15,8 +15,8 @@ namespace NBL.Models.EntityModels.Requisitions
         public int RequisitionQty { get; set; }
         public int PendingQty { get; set; }
         public int DeliveryQty { get; set; }
-
         public int ToBranchId { get; set; }
+        public int FromBranchId { get; set; }
         public Branch ToBranch { get; set; }
         public RequisitionModel()
         {

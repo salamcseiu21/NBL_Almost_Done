@@ -121,6 +121,7 @@
     <Compile Include="EntityModels\Returns\ReturnModel.cs" />
     <Compile Include="EntityModels\Returns\ReturnProduct.cs" />
     <Compile Include="EntityModels\Securities\StringCipher.cs" />
+    <Compile Include="EntityModels\TransferProducts\TransferRequisition.cs" />
     <Compile Include="EntityModels\TransferProducts\Trip.cs" />
     <Compile Include="EntityModels\TransferProducts\TripDetails.cs" />
     <Compile Include="EntityModels\VatDiscounts\Discount.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="ViewModels\Sales\ProductReceiveViewModel.cs" />
     <Compile Include="ViewModels\Sales\ViewBranchStockModel.cs" />
     <Compile Include="ViewModels\TransferProducts\CreateTransferIssueViewModel.cs" />
+    <Compile Include="ViewModels\TransferProducts\ViewCreateTransferRequisitionModel.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewCreateTripModel.cs" />
     <Compile Include="ViewModels\Deliveries\ViewDispatchModel.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewProductTransactionModel.cs" />

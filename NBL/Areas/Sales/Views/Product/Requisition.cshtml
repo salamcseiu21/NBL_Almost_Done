@@ -1,0 +1,367 @@
+﻿@model NBL.Models.EntityModels.TransferProducts.TransferRequisition
+@{
+    ViewBag.Title = "Requisition";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var tdate = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+}
+<section class="content">
+    <p class="text-center text-green" style="margin: 0;font-weight:bolder;font-size:20px">Branch Wise Requisition</p>
+    <hr />
+    @using (Html.BeginForm("AddRequisitionProductToXmlFile", "Product", FormMethod.Post))
+    {
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">To Branch :</label>
+                        <div class="col-md-9">
+                            <input type="text" name="RequisitionToBranchName" id="RequisitionToBranchName" class="form-control" placeholder="Branch Name...." autofocus required />
+                            <input type="hidden" id="RequisitionToBranchId" name="RequisitionToBranchId" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Address :</label>
+                        <div class="col-md-9">
+                            <textarea id="BranchAddress" name="BranchAddress" class="form-control" readonly="readonly" rows="2" placeholder="Branch address...." style="resize: none"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Product Name : </label>
+                        <div class="col-md-9">
+                            <input type="text" name="ProductName" id="ProductName" class="form-control" placeholder="Type Product Name" required />
+                            <input type="hidden" id="ProductId" name="ProductId" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Quantity : </label>
+                        <div class="col-md-9">
+                            <input type="number" name="Quantity" id="Quantity" class="form-control" placeholder="Quantity" required min="1" value="1" />
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-9 col-md-offset-3">
+                            <div class="btn-toolbar">
+                                <input type="button" id="addItemButton" value="Add Item" onclick="AddProduct(this)" class="btn btn-primary " />
+                                <input type="button" id="removeAllButton" value="Remove All" onclick="RemoveAll(this)" class="btn btn-danger " />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <p style="font-weight: bolder;font-size: 20px" class="text-center text-green">Product List</p>
+    <table class="table table-bordered" style="margin: 0; padding: 0;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid black;" class="text-center">Product Name</th>
+                <th style="border: 1px solid black; width: 10%" class="text-center">Quantity</th>
+                <th style="border: 1px solid black;" class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody id="requisitions"></tbody>
+    </table>
+    <hr />
+    @using (Html.BeginForm("Requisition", "Product", FormMethod.Post, new { id = "saveRequisitionForm" }))
+    {
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="TotalQty" class="control-label col-md-3"> Quantity :</label>
+                        <div class="col-md-9">
+                            <input type="number" id="TotalQty" name="TotalQty" class="form-control" value="0" readonly="readonly" />
+                            <input type="hidden" id="ToBranchId" name="ToBranchId" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="RequisitionDate" class="control-label col-md-3">Date</label>
+                        <div class="col-md-9">
+                            <input type="text" id="RequisitionDate" name="RequisitionDate" value="@tdate" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-9 col-md-offset-3">
+                                <div class="btn-toolbar">
+                                    @Html.ActionLink(" Cancel", "Home", "Nsm", null, new { @class = "btn btn-danger" })
+                                    <input type="button" value="Save" onclick="ConfirmRequisition(this)" class="btn btn-success" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</section>
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function() {
+            $("#RequisitionDate").datepicker({ dateFormat: 'dd-MM-yy' });
+            ViewTempRequisitionList();
+            var inputs = document.getElementsByTagName('input');
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].type === "text") {
+                    inputs[i].onkeyup = doCheck;
+                    inputs[i].onblur = doCheck;
+                }
+            }
+        });
+
+    </script>
+    @*Autocomplete*@
+    <script>
+        $(function () {
+            $("#ProductName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: RootUrl + 'common/ProductNameAutoComplete/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function(item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#ProductId").val(i.item.val);
+                },
+                minLength: 1
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("#RequisitionToBranchName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: RootUrl + 'common/BranchAutoComplete/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function(item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#RequisitionToBranchId").val(i.item.val);
+                    $("#ToBranchId").val(i.item.val);
+                    var bId = $("#RequisitionToBranchId").val();
+                    //alert(i.item.val);
+                    var json = { branchId: bId };
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("GetBranchDetailsById", "Common",new {area=""})',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(json),
+                        success: function (data) {
+
+                            var address = data.BranchAddress;
+                            $("#BranchAddress").val(address);
+
+                        }
+                    });
+                },
+                minLength: 1
+            });
+        });
+    </script>
+    <script>
+        function doCheck() {
+            var allFilled = true;
+
+            var inputs = document.getElementsByTagName('input');
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].type === "text" && inputs[i].value === '') {
+                    allFilled = false;
+                    break;
+                }
+            }
+
+            document.getElementById("addItemButton").disabled = !allFilled;
+        }
+
+    </script>
+    @*Ajax form Submit*@
+    <script>
+
+        var productIdlist = [];
+        function AddProduct(btnClicked) {
+            var id = $("#ProductId").val();
+            var branchId = $("#RequisitionToBranchId").val();
+            var v = branchId > 9 ? "" + branchId : "0" + branchId;
+            var str=v.concat(id);
+            var a = $.inArray(str, productIdlist);
+            if (a < 0) {
+                productIdlist.push(str);
+                //alert(str);
+                var $form = $(btnClicked).parents('form');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddRequisitionProductToXmlFile")',
+                    data: $form.serialize(),
+                    error: function (xhr, status, error) {
+                        //do something about the error
+                    },
+                    success: function (response) {
+                        //alert("Saved Successfully");
+                        ViewTempRequisitionList();
+
+                    }
+                });
+                return false; // if it's a link to prevent post
+
+
+            }
+            else {
+                alert("This Product already exits in the list");
+            }
+
+        }
+    </script>
+
+    <script>
+
+        function UpdateQuantity(btnClicked) {
+
+            var id = btnClicked.id;
+            var qty = parseInt(btnClicked.value);
+            //alert(id);
+            var json = { id: id,quantity:qty };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdateQuantity", "Product",new {area="Sales"})',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    ViewTempRequisitionList();
+                }
+            });
+        }
+
+        function RemoveProductById(btnClicked) {
+
+            //alert(btnClicked.id);
+            if (confirm("Are you sure to remove this product ??")) {
+                var id = btnClicked.id;
+                var json = { id: id };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("RemoveProductById", "Product",new {area="Sales"})',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+
+                        for (var i = productIdlist.length - 1; i >= 0; i--) {
+                            if (productIdlist[i] === btnClicked.id) {
+                                productIdlist.splice(i, 1);
+                            }
+                        }
+                        ViewTempRequisitionList();
+                    }
+                });
+            }
+
+
+        }
+
+
+        function RemoveAll(btnClick) {
+            var result = confirm('Are you sure to remove all item ?');
+            if (result) {
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("RemoveAll","Product",new {area="Sales"})',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        ViewTempRequisitionList();
+                        productIdlist=[];
+                    }
+
+                });
+
+            }
+        }
+        function ViewTempRequisitionList() {
+            $("#requisitions").html("");
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetTempFromRequsitionList", "Product",new {area="Sales"})',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var total = 0;
+                    var totalQty = 0;
+                    for (var i = 0; i < data.length; i++) {
+                        total = total + data[i].SubTotal;
+                        totalQty = totalQty + data[i].Quantity;
+                    }
+                    $.each(data, function (key, value) {
+
+                        //total =+ value.SubTotal;
+                        //alert(key);
+                        //$("#orders").append('<option value=' + value.ClientId + '>' + value.ProductId + '</option>');
+                        var row = $("<tr><td style='border: 1px solid black; padding: 5px 10px;'>" + value.ProductName + "</td><td style='border: 1px solid black; padding: 5px 10px;'>  <input type='number' min='1' value='" + value.Quantity + "' class='form-control text-right' id='" + value.Serial + "' name='NewQuantity_" + value.Serial + "'  onchange='UpdateQuantity(this)'/>" + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-center'><button id='" + value.Serial + "' type='button' onclick='RemoveProductById(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color:red;'></i></button>" + "</td></tr>");
+
+                        $("#requisitions").append(row);
+                    });
+                    $("#Total").val(total);
+                    $("#TotalQty").val(totalQty);
+                }
+            });
+        }
+    </script>
+    <script>
+        function ConfirmRequisition(id) {
+
+            if (confirm("Are you sure to Save  this requisition?")) {
+
+                $("#saveRequisitionForm").submit();
+                alert("Requisition submited Successfully!");
+
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+
+        }
+    </script>
+}
+

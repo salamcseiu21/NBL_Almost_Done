@@ -13,6 +13,7 @@ namespace NBL.Models.EntityModels.Products
         [Display(Name = "Product Name")]
         public string ProductName { get; set; }
 
+        public string Serial { get; set; }  
         public string ProductCode { get; set; }
         public string ScannedProductCodes { get; set; } 
         [Required]

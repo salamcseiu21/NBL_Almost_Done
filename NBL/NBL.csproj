@@ -8014,8 +8014,11 @@
     <Content Include="Areas\Corporate\Views\Requisition\PendingRequisition.cshtml" />
     <Content Include="Files\Received_Product_For_11312" />
     <Content Include="Areas\Production\Views\Product\DispatchList.cshtml" />
-    <Content Include="Files\Ordered_Product_List_For_152" />
     <Content Include="Areas\Corporate\Views\Home\DispatchList.cshtml" />
+    <Content Include="Areas\Production\Views\Product\LatestRequisitions.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_ViewRequisitionListPartialpage.cshtml" />
+    <Content Include="Areas\Sales\Views\Product\Requisition.cshtml" />
+    <Content Include="Areas\Sales\Views\Product\PendingRequisition.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8171,6 +8174,7 @@
     <Folder Include="Areas\QC\Models\" />
     <Folder Include="Areas\ResearchAndDevelopment\Models\" />
     <Folder Include="Areas\Sales\Files\Replaces\" />
+    <Folder Include="Areas\Sales\Files\Requisitions\" />
     <Folder Include="Areas\Sales\Files\Returns\" />
     <Folder Include="Areas\Sales\Models\" />
     <Folder Include="Areas\SCM\Models\" />

@@ -65,6 +65,8 @@ namespace NBL.Areas.Corporate.Controllers
         // GET: Corporate/Home
         public ActionResult Home()
         {
+            Session.Remove("BranchId");
+            Session.Remove("Branch");
             int companyId = Convert.ToInt32(Session["CompanyId"]);
 
             var branches = _iBranchManager.GetAllBranches().ToList().FindAll(n => n.BranchId != 13).ToList();

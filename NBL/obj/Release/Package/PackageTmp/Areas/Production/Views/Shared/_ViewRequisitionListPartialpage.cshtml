@@ -1,0 +1,85 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Requisitions.ViewRequisitionModel>
+@{
+    ViewBag.Title = "Requisition Lsit";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <h3 class="text-center text-green">Requisition List</h3>
+
+    <table class="display table-bordered" id="tbl_requisition_list" style="border: 1px solid">
+        <thead>
+            <tr>
+                <th class="text-center">Requisition Ref</th>
+                <th class="text-center">Requisition Qty</th>
+                <th class="text-center">Delivered Qty</th>
+                <th class="text-center">Pending Qty</th>
+                <th class="text-center">Requisition By</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center">@item.RequisitionRef</td>
+                    <td class="text-right">@item.RequisitionQty</td>
+                    <td class="text-right">@item.DeliveryQty</td>
+                    <td class="text-right">@item.PendingQty</td>
+                    <td class="text-center">@item.RequisitionBy</td>
+                    <td class="text-center">@item.SystemDateTime.ToString("F")</td>
+                    <td class="text-center">
+                        <button type="button" value="@item.RequisitionId" class="btn btn-success btn-sm" onclick="viewDetails(this)"><i class="fa fa-eye"></i> Details</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+
+            <tr>
+                <th class="text-right">Total Qty:</th>
+                <th class="text-right">@Model.Sum(n => n.RequisitionQty)</th>
+                <th class="text-right">@Model.Sum(n => n.DeliveryQty)</th>
+                <th class="text-right">@Model.Sum(n => n.PendingQty)</th>
+                <th class="text-center">-</th>
+                <th class="text-center">-</th>
+                <th class="text-center">-</th>
+            </tr>
+            <tr>
+                <th class="text-center">Requisition Ref</th>
+                <th class="text-center">Requisition Qty</th>
+                <th class="text-center">Delivered Qty</th>
+                <th class="text-center">Pending Qty</th>
+                <th class="text-center">Requisition By</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Details</th>
+            </tr>
+        </tfoot>
+    </table>
+    @Html.Partial("_RequisitonDetailsModal")
+</section>
+@section Scripts
+{
+    <script>
+        $("#tbl_requisition_list").DataTable();
+        $('#tbl_requisition_details_list').DataTable({
+            "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
+        });
+    </script>
+    <script>
+
+        function viewDetails(requisitionId) {
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ViewRequisitionDetails", "Product", new { area = "Production" })",
+                data: { requisitionId: requisitionId.value },
+                success: function (response) {
+                    $('#modalBody').html(response);
+                    $('#showRequisitionDetailsModal').modal('show');
+                }
+            });
+        }
+
+    </script>
+}

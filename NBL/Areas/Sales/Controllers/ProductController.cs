@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Xml.Linq;
 using Microsoft.Ajax.Utilities;
 using NBL.BLL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Orders;
+using NBL.Models.EntityModels.Products;
+using NBL.Models.EntityModels.Requisitions;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.Logs;
 using NBL.Models.Validators;
@@ -15,6 +18,7 @@ using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Logs;
 using NBL.Models.ViewModels.Productions;
+using NBL.Models.ViewModels.Requisitions;
 
 namespace NBL.Areas.Sales.Controllers
 {
@@ -23,11 +27,13 @@ namespace NBL.Areas.Sales.Controllers
     {
         private readonly IProductManager _iProductManager;
         private readonly IInventoryManager _iInventoryManager;
+        private readonly IBranchManager _iBranchManager;
 
-        public ProductController(IInventoryManager iInventoryManager,IProductManager iProductManager)
+        public ProductController(IInventoryManager iInventoryManager,IProductManager iProductManager,IBranchManager iBranchManager)
         {
             _iInventoryManager = iInventoryManager;
             _iProductManager = iProductManager;
+            _iBranchManager = iBranchManager;
         }
         public PartialViewResult Stock()
         {
@@ -36,6 +42,7 @@ namespace NBL.Areas.Sales.Controllers
             var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).ToList();
             return PartialView("_ViewStockProductInBranchPartialPage", products);
         }
+
         [HttpGet]
         public ActionResult Transaction()
         {
@@ -178,6 +185,8 @@ namespace NBL.Areas.Sales.Controllers
 
             }
         }
+
+
         [Authorize(Roles = "DistributionManager")]
         public ActionResult Receive()
         {
@@ -347,6 +356,188 @@ namespace NBL.Areas.Sales.Controllers
             int companyId = Convert.ToInt32(Session["CompanyId"]);
             var result = _iInventoryManager.GetAllReceiveableListByBranchAndCompanyId(branchId, companyId).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        [Authorize(Roles = "SalesManager")]
+        public ActionResult Requisition()
+        {
+
+            CreateTempRequisitionXmlFile();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Requisition(FormCollection collection)
+        {
+            var user = (ViewUser) Session["user"];
+            var filePath = GetTempRequisitonFIilePath();
+            List<Product> productList = GetProductFromXmalFile(filePath).ToList();
+
+            if (productList.Count != 0)
+            {
+                var xmlData = XDocument.Load(filePath);
+                int toBranchId = Convert.ToInt32(collection["ToBranchId"]);
+
+                TransferRequisition aRequisitionModel = new TransferRequisition
+                {
+                    Products = productList,
+                    RequisitionToBranchId = toBranchId,
+                    RequisitionByBranchId = Convert.ToInt32(Session["BranchId"]),
+                     RequisitionByUserId = user.UserId,
+                    TransferRequisitionDate = Convert.ToDateTime(collection["RequisitionDate"])
+                };
+                int rowAffected = _iProductManager.SaveTransferRequisitionInfo(aRequisitionModel);
+                if (rowAffected > 0)
+                {
+                    xmlData.Root?.Elements().Remove();
+                    xmlData.Save(filePath);
+                    TempData["message"] = "Requisition Create  Successfully!";
+                }
+                else
+                {
+                    TempData["message"] = "Failed to create Requisition!";
+                }
+
+            }
+
+            return View();
+
+        }
+        [HttpPost]
+        public JsonResult AddRequisitionProductToXmlFile(FormCollection collection)
+        {
+
+            SuccessErrorModel msgSuccessErrorModel = new SuccessErrorModel();
+            try
+            {
+
+               
+                var filePath = GetTempRequisitonFIilePath();
+                int productId = Convert.ToInt32(collection["ProductId"]);
+                int toBranchId = Convert.ToInt32(collection["RequisitionToBranchId"]);
+                var id = toBranchId.ToString("D2") + productId;
+                var product = _iProductManager.GetAll().ToList().Find(n => n.ProductId == productId);
+                int quantity = Convert.ToInt32(collection["Quantity"]);
+
+                var xmlDocument = XDocument.Load(filePath);
+                xmlDocument.Element("Products")?.Add(
+                    new XElement("Product", new XAttribute("Id", id),
+                        new XElement("ProductId", product.ProductId),
+                        new XElement("ProductName", product.ProductName),
+                        new XElement("Quantity", quantity),
+                        new XElement("ToBranchId", toBranchId)
+                    ));
+                xmlDocument.Save(filePath);
+            }
+            catch (Exception exception)
+            {
+                msgSuccessErrorModel.Message = "<p style='colore:red'>" + exception.Message + "</p>";
+            }
+            return Json(msgSuccessErrorModel, JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HttpPost]
+        public void UpdateQuantity(string id, int quantity)
+        {
+            try
+            {
+               
+                var filePath = GetTempRequisitonFIilePath();
+                var xmlData = XDocument.Load(filePath);
+                xmlData.Element("Products")?
+                    .Elements("Product")?
+                    .Where(n => n.Attribute("Id")?.Value == id).FirstOrDefault()
+                    ?.SetElementValue("Quantity", quantity);
+                xmlData.Save(filePath);
+
+
+            }
+            catch (Exception e)
+            {
+
+                if (e.InnerException != null)
+                    ViewBag.Error = e.Message + " <br /> System Error:" + e.InnerException?.Message;
+
+            }
+        }
+
+        [HttpPost]
+        public void RemoveProductById(string id)
+        {
+            
+            var filePath = GetTempRequisitonFIilePath();
+            var xmlData = XDocument.Load(filePath);
+            xmlData.Root?.Elements().Where(n => n.Attribute("Id")?.Value == id).Remove();
+            xmlData.Save(filePath);
+
+        }
+        [HttpGet]
+        public void RemoveAll()
+        {
+           
+            var filePath = GetTempRequisitonFIilePath();
+            var xmlData = XDocument.Load(filePath);
+            xmlData.Root?.Elements().Remove();
+            xmlData.Save(filePath);
+
+        }
+
+        public JsonResult GetTempFromRequsitionList()
+        {
+            
+            var filePath = GetTempRequisitonFIilePath();
+            IEnumerable<Product> productList = GetProductFromXmalFile(filePath);
+            return Json(productList, JsonRequestBehavior.AllowGet);
+        }
+
+        private IEnumerable<Product> GetProductFromXmalFile(string filePath)
+        {
+            List<Product> products = new List<Product>();
+            var xmlData = XDocument.Load(filePath).Element("Products")?.Elements();
+            foreach (XElement element in xmlData)
+            {
+                Product aProduct = new Product();
+                var elementFirstAttribute = element.FirstAttribute.Value;
+                aProduct.Serial = elementFirstAttribute;
+                var elementValue = element.Elements();
+                var xElements = elementValue as XElement[] ?? elementValue.ToArray();
+                aProduct.ProductId = Convert.ToInt32(xElements[0].Value);
+                aProduct.ProductName = xElements[1].Value;
+                aProduct.Quantity = Convert.ToInt32(xElements[2].Value); 
+                products.Add(aProduct);
+            }
+
+            return products;
+        }
+        private void CreateTempRequisitionXmlFile()
+        {
+           
+            var filePath = GetTempRequisitonFIilePath();
+            if (!System.IO.File.Exists(filePath))
+            {
+                XDocument xmlDocument = new XDocument(
+                    new XDeclaration("1.0", "utf-8", "yes"),
+                    new XElement("Products"));
+                xmlDocument.Save(filePath);
+            }
+        }
+
+        private string GetTempRequisitonFIilePath()
+        {
+            var user = (ViewUser)Session["user"];
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            string fileName = "Requisition_Products_From_Branch_By_" + branchId + user.UserId + ".xml";
+            var filePath = Server.MapPath("~/Areas/Sales/Files/Requisitions/" + fileName);
+            return filePath;
+        }
+
+        public ActionResult PendingRequisition()
+        {
+            ICollection<TransferRequisition> requisitions = _iProductManager.GetTransferRequsitionByStatus(0);
+            return View(requisitions);
         }
     }
 }

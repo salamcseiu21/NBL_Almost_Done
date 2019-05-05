@@ -81,7 +81,7 @@ namespace NBL.Areas.Production.Controllers
             }
             var user = (ViewUser)Session["user"];
             model.GenerateByUserId = user.UserId;
-            for (int i = 1; i <=model.Total; i++)
+            for (int i = 1; i <= model.Total; i++)
             {
                 var barcode = barCodePrefix + (maxSl + i).ToString("D4");
                 BarCodeModel aBarCodeModel = new BarCodeModel
@@ -90,9 +90,23 @@ namespace NBL.Areas.Production.Controllers
                     PrintByUserId = user.UserId
                 };
                 model.BarCodes.Add(aBarCodeModel);
-               
+
                 GenerateBarCodeFromaGivenString(barcode);
             }
+
+
+            //for (int i = 1049; i <= 1098; i++)
+            //{
+            //    var barcode = "1A16504KE" + i.ToString("D4");
+            //    BarCodeModel aBarCodeModel = new BarCodeModel
+            //    {
+            //        Barcode = barcode,
+            //        PrintByUserId = user.UserId
+            //    };
+            //    model.BarCodes.Add(aBarCodeModel);
+
+            //    GenerateBarCodeFromaGivenString(barcode);
+            //}
 
             bool result = _iBarCodeManager.SaveBarCodes(model);
             if (result)

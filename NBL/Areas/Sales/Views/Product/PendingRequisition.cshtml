@@ -1,0 +1,42 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.TransferProducts.TransferRequisition>
+@{
+    ViewBag.Title = "Requisition";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Requisition List</h3>
+    <table id="tbl_requisition_list" class="display table-bordered" style="border: 1px solid">
+        <thead>
+        <Tr>
+            <th>Requisition Ref</th>
+            <th>Quantity</th>
+            <th>Date</th>
+        </Tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@item.TransferRequisitionRef</th>
+                <th>@item.Quantity</th>
+                <th>@item.TransferRequisitionDate.ToString("dd-MMMM-yyyy")</th>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+            <Tr>
+                <th>Requisition Ref</th>
+                <th>Quantity</th>
+                <th>Date</th>
+            </Tr>
+        </tfoot>
+    </table>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_requisition_list").DataTable();
+    </script>
+}

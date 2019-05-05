@@ -8,7 +8,6 @@ using System.Net.Sockets;
 using System.Web.Mvc;
 using System.Web.Security;
 using AutoMapper;
-using Microsoft.Ajax.Utilities;
 using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Identities;
@@ -128,7 +127,7 @@ namespace NBL.Controllers
         public ActionResult GoTo(FormCollection collection)
         {
             int branchId = Convert.ToInt32(collection["BranchId"]);
-           int roleId = Convert.ToInt32(collection["RoleId"]);
+            int roleId = Convert.ToInt32(collection["RoleId"]);
             var roles = (List<ViewAssignedUserRole>)Session["Roles"];
             var user = (ViewUser)Session["user"];
             user.Roles = roles.Find(n => n.RoleId == roleId).RoleName;

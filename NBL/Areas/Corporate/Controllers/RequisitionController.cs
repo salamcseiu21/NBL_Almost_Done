@@ -66,6 +66,7 @@ namespace NBL.Areas.Corporate.Controllers
                     Products = productList,
                     ToBranchId = toBranchId,
                     RequisitionByUserId = user.UserId,
+                    
                     RequisitionDate = Convert.ToDateTime(collection["RequisitionDate"])
                 };
                 int rowAffected = _iProductManager.SaveRequisitionInfo(aRequisitionModel);

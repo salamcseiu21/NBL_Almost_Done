@@ -367,12 +367,7 @@ namespace NBL.Areas.Production.Controllers
             return PartialView("_ViewScannedProductPartialPage",model.BarCodes);
         }
 
-        [Authorize(Roles = "StoreManagerFactory")]
-        public ActionResult Requisitions()
-        {
-            List<ViewRequisitionModel> requisitions=_iProductManager.GetRequsitions().ToList();
-            return View(requisitions);
-        }
+       
         [Authorize(Roles = "StoreManagerFactory")]
         public ActionResult MonthlyRequisitions()
         {
@@ -397,7 +392,25 @@ namespace NBL.Areas.Production.Controllers
             return View();
         }
 
+        [Authorize(Roles = "StoreManagerFactory")]
+        public PartialViewResult Requisitions()
+        {
+            List<ViewRequisitionModel> requisitions = _iProductManager.GetRequsitions().ToList();
+            return PartialView("_ViewRequisitionListPartialpage", requisitions);
+        }
 
+        public PartialViewResult LatestRequisitions()
+        {
+            List<ViewRequisitionModel> requisitions = _iProductManager.GetLatestRequisitions().ToList(); 
+            return PartialView("_ViewRequisitionListPartialpage",requisitions);
+        }
+        public PartialViewResult PendingRequisitions()
+        {
+            List<ViewRequisitionModel> requisitions = _iProductManager.GetPendingRequsitions().ToList();
+            return PartialView("_ViewRequisitionListPartialpage", requisitions);
+        }
+
+        [Authorize(Roles = "StoreManagerFactory")]
         public ActionResult DispatchList()
         {
             List<ViewDispatchModel> dispatch = _iProductManager.GetAllDispatchList().ToList();

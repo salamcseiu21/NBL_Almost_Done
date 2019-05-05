@@ -36,8 +36,18 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <th>Branch Name</th>
-                    <th class="text-right">Total Order</th>
+                    <th class="text-right">Total</th>
+                    <th class="text-right">
+                        @{
+                            var total = 0;
+                            foreach (var item in Model.Branches)
+                             {
+                                total+=item.Orders.Count;
+                             }
+                            @total
+                        }
+                       
+                    </th>
 
                 </tr>
                 </tfoot>
@@ -71,8 +81,20 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <th>Branch Name</th>
-                    <th class="text-right">Total Quantity</th>
+                    <th  class="text-right">Total Quantity</th>
+                    <th class="text-right">
+                        @{
+                            var t = 0;
+                            foreach (ViewBranch branch in Model.Branches)
+                            {
+
+                                t += branch.Products.Sum(n => n.StockQuantity);
+                            }
+                        }
+                        @t
+                    </th>
+                   
+                   
 
                 </tr>
                 </tfoot>

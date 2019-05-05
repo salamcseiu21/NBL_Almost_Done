@@ -144,11 +144,11 @@ namespace NBL.DAL
             }
         }
 
-        public int GetMaxTransferIssueNoOfCurrentYear()
+        public int GetMaxTransferRequisitionNoOfCurrentYear()
         {
             try
             {
-                CommandObj.CommandText = "spGetMaxTransferIssueNoOfCurrentYear";
+                CommandObj.CommandText = "spGetMaxTransferRequisitionNoOfCurrentYear";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 ConnectionObj.Open();
                 SqlDataReader reader = CommandObj.ExecuteReader();
@@ -1592,6 +1592,143 @@ namespace NBL.DAL
                 ConnectionObj.Close();
                 CommandObj.Parameters.Clear();
             }
+        }
+
+        public ICollection<ViewRequisitionModel> GetLatestRequisitions()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetLatestRequisitions";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<ViewRequisitionModel> requisitions = new List<ViewRequisitionModel>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    requisitions.Add(new ViewRequisitionModel
+                    {
+                        RequisitionId = Convert.ToInt64(reader["RequisitionId"]),
+                        RequisitionByUserId = Convert.ToInt32(reader["RequisitionByUserId"]),
+                        RequisitionBy = reader["RequisitionBy"].ToString(),
+                        RequisitionDate = Convert.ToDateTime(reader["RequisitionDate"]),
+                        RequisitionQty = Convert.ToInt32(reader["RequisitionQty"]),
+                        DeliveryQty = Convert.ToInt32(reader["DeliveryQty"]),
+                        PendingQty = Convert.ToInt32(reader["PendingQty"]),
+                        RequisitionRef = reader["RequisitionRef"].ToString(),
+                        Status = Convert.ToInt32(reader["Status"]),
+                        SystemDateTime = DBNull.Value.Equals(reader["SystemDateTime"]) ? default(DateTime) : Convert.ToDateTime(reader["SystemDateTime"])
+                    });
+                }
+                reader.Close();
+                return requisitions;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get requisition by Status", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int SaveTransferRequisitionInfo(TransferRequisition aRequisitionModel)
+        {
+            ConnectionObj.Open();
+            SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
+            try
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Transaction = sqlTransaction;
+                CommandObj.CommandText = "UDSP_SaveTransferRequisitionInfo";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@RequisitionDate", aRequisitionModel.TransferRequisitionDate);
+                CommandObj.Parameters.AddWithValue("@RequisitionByUserId", aRequisitionModel.RequisitionByUserId);
+                CommandObj.Parameters.AddWithValue("@RequisitionByBranchId", aRequisitionModel.RequisitionByBranchId);
+                CommandObj.Parameters.AddWithValue("@RequisitionToBranchId", aRequisitionModel.RequisitionToBranchId);
+                CommandObj.Parameters.AddWithValue("@RequisitionRef", aRequisitionModel.TransferRequisitionRef);
+                CommandObj.Parameters.AddWithValue("@Quantity", aRequisitionModel.Products.Sum(n => n.Quantity));
+                CommandObj.Parameters.Add("@RequisitionId", SqlDbType.Int);
+                CommandObj.Parameters["@RequisitionId"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                var requisitionId = Convert.ToInt64(CommandObj.Parameters["@RequisitionId"].Value);
+                int rowAffected = SaveTransferRequisitionDetails(aRequisitionModel.Products, requisitionId);
+                if (rowAffected > 0)
+                {
+                    sqlTransaction.Commit();
+                }
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not save transfer requisition info", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<TransferRequisition> GetTransferRequsitionByStatus(int status)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetTransferRequsitionByStatus";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Status", status);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<TransferRequisition> requisitions = new List<TransferRequisition>();
+                while (reader.Read())
+                {
+                    requisitions.Add(new TransferRequisition
+                    {
+                        RequisitionByBranchId = Convert.ToInt32(reader["RequisitionByBranchId"]),
+                        RequisitionToBranchId = Convert.ToInt32(reader["RequisitionToBranchId"]),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        TransferRequisitionRef = reader["TransferRequisitionRef"].ToString(),
+                        TransferRequisitionDate = Convert.ToDateTime(reader["TransferRequisitionDate"])
+                    });
+                }
+
+                reader.Close();
+                return requisitions;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get transfer requisition by status", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        private int SaveTransferRequisitionDetails(List<Product> products, long requisitionId)
+        {
+
+            int i = 0;
+            foreach (var product in products)
+            {
+                CommandObj.CommandText = "UDSP_SaveTransferRequisitionDetails";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@ProductId", product.ProductId);
+                CommandObj.Parameters.AddWithValue("@Quantity", product.Quantity);
+                CommandObj.Parameters.AddWithValue("@TransferRequisitionId", requisitionId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            }
+            return i;
         }
     }
 }

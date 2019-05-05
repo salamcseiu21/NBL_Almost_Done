@@ -99,7 +99,7 @@ namespace NBL.BLL
 
         public int IssueProductToTransfer(TransferIssue aTransferIssue)
         {
-            int maxTrNo = _iProductGateway.GetMaxTransferIssueNoOfCurrentYear();
+            int maxTrNo = _iProductGateway.GetMaxTransferRequisitionNoOfCurrentYear();
             aTransferIssue.TransferIssueRef = GenerateTransferIssueRef(maxTrNo);
             int rowAffected = _iProductGateway.IssueProductToTransfer(aTransferIssue);
             return rowAffected;
@@ -339,6 +339,32 @@ namespace NBL.BLL
         public ICollection<ViewDispatchModel> GetAllDispatchList()
         {
             return _iProductGateway.GetAllDispatchList();
+        }
+
+        public ICollection<ViewRequisitionModel> GetLatestRequisitions()
+        {
+            return _iProductGateway.GetLatestRequisitions();
+        }
+
+        public int SaveTransferRequisitionInfo(TransferRequisition aRequisitionModel)
+        {
+            int maxTrNo = _iProductGateway.GetMaxTransferRequisitionNoOfCurrentYear();
+            aRequisitionModel.TransferRequisitionRef = GenerateTransferRequisitionRef(maxTrNo);
+            return _iProductGateway.SaveTransferRequisitionInfo(aRequisitionModel);
+        }
+
+        public ICollection<TransferRequisition> GetTransferRequsitionByStatus(int status)
+        {
+            return _iProductGateway.GetTransferRequsitionByStatus(0);
+        }
+
+        private string GenerateTransferRequisitionRef(int maxTrNo)
+        {
+
+            string refCode = _iCommonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(ReferenceType.Transfer)).Code;
+            string temp = (maxTrNo + 1).ToString();
+            string reference = DateTime.Now.Year.ToString().Substring(2, 2) + refCode + temp;
+            return reference;
         }
     }
 }

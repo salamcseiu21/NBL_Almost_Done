@@ -21,7 +21,7 @@ namespace NBL.DAL.Contracts
         IEnumerable<Product> GetAll();
         IEnumerable<ViewProduct> GetAllProductByBranchAndCompanyId(int branchId, int companyId);
         Product GetProductByProductAndClientTypeId(int productId, int clientTypeId);
-        int GetMaxTransferIssueNoOfCurrentYear();
+        int GetMaxTransferRequisitionNoOfCurrentYear();
         IEnumerable<TransferIssue> GetDeliverableTransferIssueList();
         int ApproveTransferIssue(TransferIssue transferIssue);
         int IssueProductToTransfer(TransferIssue aTransferIssue);
@@ -62,5 +62,8 @@ namespace NBL.DAL.Contracts
         List<Product> GetTempReplaceProducts(string filePath);
         IEnumerable<ViewRequisitionModel> GetPendingRequsitions();
         ICollection<ViewDispatchModel> GetAllDispatchList();
+        ICollection<ViewRequisitionModel> GetLatestRequisitions();
+        int SaveTransferRequisitionInfo(TransferRequisition aRequisitionModel);
+        ICollection<TransferRequisition> GetTransferRequsitionByStatus(int status);
     }
 }

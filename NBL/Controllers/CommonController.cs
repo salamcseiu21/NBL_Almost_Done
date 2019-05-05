@@ -221,9 +221,19 @@ namespace NBL.Controllers
         public JsonResult BranchAutoComplete(string prefix)
         {
 
-           // int corporateBarachIndex = _iBranchManager.GetAllBranches().ToList().FindIndex(n => n.BranchName.Contains("Corporate"));
-            var branches = _iBranchManager.GetAllBranches().ToList();
-            //branches.RemoveAt(corporateBarachIndex);
+            var branchId = Convert.ToInt32(Session["BranchId"]);
+            var branches=new List<ViewBranch>();
+            if (branchId != 0)
+            {
+                int corporateBarachIndex = _iBranchManager.GetAllBranches().ToList().FindIndex(n => n.BranchId == branchId);
+                branches = _iBranchManager.GetAllBranches().ToList();
+                branches.RemoveAt(corporateBarachIndex);
+            }
+            else
+            {
+                branches = _iBranchManager.GetAllBranches().ToList();
+            }
+         
             var branchList = (from c in branches.ToList()
                               where c.BranchName.ToLower().Contains(prefix.ToLower())
                               select new

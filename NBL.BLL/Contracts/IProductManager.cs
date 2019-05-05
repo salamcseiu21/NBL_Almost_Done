@@ -52,5 +52,8 @@ namespace NBL.BLL.Contracts
         List<Product> GetTempReplaceProducts(string filePath);
         IEnumerable<ViewRequisitionModel> GetPendingRequsitions();
         ICollection<ViewDispatchModel> GetAllDispatchList();
+        ICollection<ViewRequisitionModel> GetLatestRequisitions();
+        int SaveTransferRequisitionInfo(TransferRequisition aRequisitionModel);
+        ICollection<TransferRequisition> GetTransferRequsitionByStatus(int status);
     }
 }

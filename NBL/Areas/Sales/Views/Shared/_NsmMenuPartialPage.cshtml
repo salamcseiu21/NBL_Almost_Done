@@ -57,6 +57,20 @@
            
         </ul>
     </li>
+    
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-book"></i> <span>Requisitions</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" New Requisition", "Requisition", "Product", new {area = "Sales"}, new {@class = "fa fa-plus", style = "font-weight: bolder"})</li>
+            <li>@Html.ActionLink(" Pending Requisition", "PendingRequisition", "Product", new { area = "Sales" }, new { @class = "fa fa-plus", style = "font-weight: bolder" })</li>
+        </ul>
+    </li>
+
     <li class="treeview">
         <a href="#">
             <i class="fa fa-book"></i> <span>Reports</span>
