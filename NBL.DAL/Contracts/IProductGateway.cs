@@ -13,6 +13,7 @@ using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Requisitions;
+using NBL.Models.ViewModels.TransferProducts;
 
 namespace NBL.DAL.Contracts
 {
@@ -65,5 +66,9 @@ namespace NBL.DAL.Contracts
         ICollection<ViewRequisitionModel> GetLatestRequisitions();
         int SaveTransferRequisitionInfo(TransferRequisition aRequisitionModel);
         ICollection<TransferRequisition> GetTransferRequsitionByStatus(int status);
+        ICollection<TransferRequisitionDetails> GetTransferRequsitionDetailsById(long transferRequisitionId);
+        int RemoveProductRequisitionProductById(long id);
+        int UpdateRequisitionQuantity(long id, int quantity);
+        int ApproveRequisition(long id, ViewUser user);
     }
 }

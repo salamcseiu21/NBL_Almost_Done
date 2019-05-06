@@ -1140,7 +1140,9 @@ namespace NBL.DAL
                         VehicleNo = reader["VehicleNo"].ToString(),
                         Remarks = reader["Remarks"].ToString(),
                         Status = Convert.ToInt32(reader["Status"]),
-                        SystemDateTime = Convert.ToDateTime(reader["SystemDateTime"])
+                        SystemDateTime = Convert.ToDateTime(reader["SystemDateTime"]),
+                        Quantity = Convert.ToInt32(reader["Quantity"])
+                     
                     });
                 }
                 reader.Close();

@@ -12,15 +12,20 @@
             <th>Requisition Ref</th>
             <th>Quantity</th>
             <th>Date</th>
+            <th>Action</th>
         </Tr>
         </thead>
         <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <th>@item.TransferRequisitionRef</th>
-                <th>@item.Quantity</th>
-                <th>@item.TransferRequisitionDate.ToString("dd-MMMM-yyyy")</th>
+                <td>@item.TransferRequisitionRef</td>
+                <td>@item.Quantity</td>
+                <td>@item.TransferRequisitionDate.ToString("dd-MMMM-yyyy")</td>
+                
+                <td class="text-center">
+                    @Html.ActionLink("View Details", "ViewScannedBarcodeList", "Transfer", new { id = item.TransferRequisitionId }, new { @class = "btn-sm btn btn-info" })
+                </td>
             </tr>
         }
         </tbody>
@@ -29,6 +34,7 @@
                 <th>Requisition Ref</th>
                 <th>Quantity</th>
                 <th>Date</th>
+                <th>Action</th>
             </Tr>
         </tfoot>
     </table>

@@ -8,6 +8,7 @@ using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Requisitions;
+using NBL.Models.ViewModels.TransferProducts;
 
 namespace NBL.BLL.Contracts
 {
@@ -55,5 +56,9 @@ namespace NBL.BLL.Contracts
         ICollection<ViewRequisitionModel> GetLatestRequisitions();
         int SaveTransferRequisitionInfo(TransferRequisition aRequisitionModel);
         ICollection<TransferRequisition> GetTransferRequsitionByStatus(int status);
+        ICollection<TransferRequisitionDetails> GetTransferRequsitionDetailsById(long transferRequisitionId);
+        bool RemoveProductRequisitionProductById(long id);
+        bool UpdateRequisitionQuantity(long id, int quantity);
+        bool ApproveRequisition(long id, ViewUser user);
     }
 }

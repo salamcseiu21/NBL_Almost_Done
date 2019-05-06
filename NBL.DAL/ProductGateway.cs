@@ -16,6 +16,7 @@ using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Requisitions;
+using NBL.Models.ViewModels.TransferProducts;
 
 namespace NBL.DAL
 {
@@ -1692,7 +1693,9 @@ namespace NBL.DAL
                         RequisitionToBranchId = Convert.ToInt32(reader["RequisitionToBranchId"]),
                         Quantity = Convert.ToInt32(reader["Quantity"]),
                         TransferRequisitionRef = reader["TransferRequisitionRef"].ToString(),
-                        TransferRequisitionDate = Convert.ToDateTime(reader["TransferRequisitionDate"])
+                        TransferRequisitionDate = Convert.ToDateTime(reader["TransferRequisitionDate"]),
+                        TransferRequisitionId = Convert.ToInt64(reader["TransferRequisitionId"]),
+                        RequisitionByUserId = Convert.ToInt32(reader["RequisitionByUserId"])
                     });
                 }
 
@@ -1702,6 +1705,124 @@ namespace NBL.DAL
             catch (Exception exception)
             {
                 throw new Exception("Could not get transfer requisition by status", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<TransferRequisitionDetails> GetTransferRequsitionDetailsById(long transferRequisitionId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetTransferRequsitionDetailsById";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@TarnsferRequsisitonId", transferRequisitionId);
+                ConnectionObj.Open();
+                List<TransferRequisitionDetails> details=new List<TransferRequisitionDetails>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    details.Add(new TransferRequisitionDetails
+                    {
+                        TransferRequisitionId = transferRequisitionId,
+                        TransferRequisitionDetailsId = Convert.ToInt64(reader["TransferRequisitionDetailsId"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        Quantity = Convert.ToInt32(reader["ProductWiseQty"]),
+                        RequisitionByBranchId = Convert.ToInt32(reader["RequisitionByBranchId"])
+                    });
+                }
+                reader.Close();
+                return details;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get transfer requisition details by requisition Id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int RemoveProductRequisitionProductById(long id)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RemoveProductRequisitionProductById";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@RdId", id);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get remove product form  requisition  by Id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int UpdateRequisitionQuantity(long id, int quantity)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_UpdateRequisitionQuantity";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@RdId", id);
+                CommandObj.Parameters.AddWithValue("@Quantity", quantity);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not  update product  requisition qty  by Id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int ApproveRequisition(long id, ViewUser user)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_ApproveRequisition";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@TrId", id);
+                CommandObj.Parameters.AddWithValue("@UserId", user.UserId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not approve requisition", exception);
             }
             finally
             {

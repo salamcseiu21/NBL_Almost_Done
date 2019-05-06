@@ -1,0 +1,118 @@
+﻿@model NBL.Models.ViewModels.TransferProducts.ViewTransferRequisition
+@{
+    ViewBag.Title = "RequisitionDetails";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var branch = Model.Branch;
+}
+
+<section class="content">
+    <h3 class="text-center">Requisition Details</h3>
+    
+    <table class="display table-bordered" id="tbl_requisition_details_list" style="border:  1px solid">
+        <thead>
+        <tr>
+            <td>
+                <strong>@branch.BranchName</strong><br/>
+                @branch.BranchAddress
+            </td>
+            <td colspan="2">
+                <button type="button" value="@Model.TransferRequisition.TransferRequisitionId" id="@Model.TransferRequisition.TransferRequisitionId" onclick="ApproveRequisition(this)"  class="btn btn-info">Approve</button>
+                @Html.ActionLink(" Back", "RequestedRequisition", "Product", null, new {@class = "btn btn-danger"})
+            </td>
+        </tr>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.TtransferRequisitions)
+        {
+            <tr>
+                <td>@item.ProductName </td>
+                <td>
+                    <input type="number" value="@item.Quantity"  id="@item.TransferRequisitionDetailsId" class="form-control" onchange="UpdateRequisitionQuantity(this)" required/>
+                </td>
+                <td class="text-center"><button class="btn btn-danger" id="@item.TransferRequisitionDetailsId" onclick="RemoveProductRequisitionProductById(this)"><i class="fa fa-times"></i></button></td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_requisition_details_list").DataTable();
+        function ApproveRequisition(btnClicked) {
+
+            if (confirm("Are you confirm to approve this Requisition?")) {
+
+                var id = btnClicked.id;
+              // alert(id);
+                var json = { id: id};
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ApproveRequisition", "Product",new {area="Sales"})',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        location.href = RootUrl + "sales/product/requestedrequisition";
+                    }
+                });
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+
+        }
+        function UpdateRequisitionQuantity(btnClicked) {
+
+            var id = btnClicked.id;
+            var qty = parseInt(btnClicked.value);
+            //alert(id);
+            var json = { id: id, quantity: qty };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdateRequisitionQuantity", "Product",new {area="Sales"})',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        }
+
+        function RemoveProductRequisitionProductById(btnClicked) {
+
+            if (confirm("Are you sure to remove this product ??")) {
+                var id = btnClicked.id;
+                var json = { id: id };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("RemoveProductRequisitionProductById", "Product",new {area="Sales"})',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+        }
+    </script>
+}

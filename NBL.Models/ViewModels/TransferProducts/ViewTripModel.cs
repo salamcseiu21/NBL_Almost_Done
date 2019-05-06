@@ -19,6 +19,7 @@ namespace NBL.Models.ViewModels.TransferProducts
         public Branch ToBranch { get; set; }
         public int ProuctId { get; set; }
         public string ProuctName { get; set; }
+        public int Quantity { get; set; }   
         [Display(Name = "Bar Code")]
         public string ProductCode { get; set; } 
         public string Remarks { get; set; }

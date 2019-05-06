@@ -215,6 +215,12 @@ namespace NBL.Areas.Production.Controllers
             return View(products);
         }
 
+        public ActionResult TripList()
+        {
+            ICollection<ViewTripModel> tripModels = _iInventoryManager.GetAllTrip().ToList();
+            return View(tripModels);
+        }
+
         public JsonResult AddRequistionToTripXmlFile(FormCollection collection)
         {
            SuccessErrorModel model=new SuccessErrorModel();

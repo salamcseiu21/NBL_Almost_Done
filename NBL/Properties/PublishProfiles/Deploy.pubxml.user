@@ -457,7 +457,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/07/2019 16:29:11</publishTime>
     </File>
     <File Include="Areas/Corporate/Views/Requisition/Create.cshtml">
-      <publishTime>03/27/2019 22:18:12</publishTime>
+      <publishTime>05/05/2019 17:09:17</publishTime>
     </File>
     <File Include="Areas/Corporate/Views/Requisition/MonthlyRequisition.cshtml">
       <publishTime>03/27/2019 22:12:12</publishTime>
@@ -1356,11 +1356,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Areas/Sales/Views/OrderSalesAdmin/ViewTodaysDeliverdOrders.cshtml">
       <publishTime>03/27/2019 15:10:18</publishTime>
     </File>
+    <File Include="Areas/Sales/Views/Product/PendingRequisition.cshtml">
+      <publishTime>05/05/2019 17:31:39</publishTime>
+    </File>
     <File Include="Areas/Sales/Views/Product/Receive.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Product/ReceiveableDetails.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
+    </File>
+    <File Include="Areas/Sales/Views/Product/Requisition.cshtml">
+      <publishTime>05/05/2019 17:14:02</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Product/Transaction.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -1423,7 +1429,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/07/2019 15:34:12</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Shared/_NsmMenuPartialPage.cshtml">
-      <publishTime>04/06/2019 12:02:29</publishTime>
+      <publishTime>05/05/2019 17:32:44</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Shared/_OrdersSummaryPartialPage.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -22834,16 +22840,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="bin/NBL.BLL.dll">
-      <publishTime>05/05/2019 10:34:14</publishTime>
+      <publishTime>05/06/2019 10:27:24</publishTime>
     </File>
     <File Include="bin/NBL.DAL.dll">
-      <publishTime>05/05/2019 10:34:14</publishTime>
+      <publishTime>05/06/2019 10:27:23</publishTime>
     </File>
     <File Include="bin/NBL.dll">
-      <publishTime>05/05/2019 10:34:19</publishTime>
+      <publishTime>05/06/2019 10:27:29</publishTime>
     </File>
     <File Include="bin/NBL.Models.dll">
-      <publishTime>05/04/2019 10:39:24</publishTime>
+      <publishTime>05/06/2019 10:27:23</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -23695,7 +23701,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/04/2019 10:01:34</publishTime>
     </File>
     <File Include="Views/Login/LogIn.cshtml">
-      <publishTime>04/30/2019 16:06:41</publishTime>
+      <publishTime>05/05/2019 16:00:53</publishTime>
     </File>
     <File Include="Views/Manage/AddPhoneNumber.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>

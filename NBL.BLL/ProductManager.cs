@@ -15,6 +15,7 @@ using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Requisitions;
+using NBL.Models.ViewModels.TransferProducts;
 
 namespace NBL.BLL
 {
@@ -355,7 +356,30 @@ namespace NBL.BLL
 
         public ICollection<TransferRequisition> GetTransferRequsitionByStatus(int status)
         {
-            return _iProductGateway.GetTransferRequsitionByStatus(0);
+            return _iProductGateway.GetTransferRequsitionByStatus(status);
+        }
+
+        public ICollection<TransferRequisitionDetails> GetTransferRequsitionDetailsById(long transferRequisitionId)
+        {
+            return _iProductGateway.GetTransferRequsitionDetailsById(transferRequisitionId);
+        }
+
+        public bool RemoveProductRequisitionProductById(long id)
+        {
+            int rowAffected = _iProductGateway.RemoveProductRequisitionProductById(id);
+            return rowAffected > 0;
+        }
+
+        public bool UpdateRequisitionQuantity(long id, int quantity)
+        {
+            int rowAffected = _iProductGateway.UpdateRequisitionQuantity(id,quantity);
+            return rowAffected > 0;
+        }
+
+        public bool ApproveRequisition(long id, ViewUser user)
+        {
+            int rowAffected = _iProductGateway.ApproveRequisition(id, user);
+            return rowAffected > 0;
         }
 
         private string GenerateTransferRequisitionRef(int maxTrNo)

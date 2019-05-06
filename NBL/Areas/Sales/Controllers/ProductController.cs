@@ -19,6 +19,7 @@ using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Logs;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Requisitions;
+using NBL.Models.ViewModels.TransferProducts;
 
 namespace NBL.Areas.Sales.Controllers
 {
@@ -474,6 +475,7 @@ namespace NBL.Areas.Sales.Controllers
             xmlData.Save(filePath);
 
         }
+       
         [HttpGet]
         public void RemoveAll()
         {
@@ -536,8 +538,50 @@ namespace NBL.Areas.Sales.Controllers
 
         public ActionResult PendingRequisition()
         {
-            ICollection<TransferRequisition> requisitions = _iProductManager.GetTransferRequsitionByStatus(0);
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            ICollection<TransferRequisition> requisitions = _iProductManager.GetTransferRequsitionByStatus(0).ToList().FindAll(n=>n.RequisitionByBranchId==branchId);
             return View(requisitions);
+        }
+
+
+        public ActionResult RequestedRequisition()
+        {
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            ICollection<TransferRequisition> requisitions = _iProductManager.GetTransferRequsitionByStatus(0).ToList().FindAll(n=>n.RequisitionToBranchId==branchId);
+            return View(requisitions);
+        }
+
+        public ActionResult RequisitionDetails(long id)
+        {
+
+            var requisiton = _iProductManager.GetTransferRequsitionByStatus(0).ToList().ToList()
+                .Find(n => n.TransferRequisitionId == id);
+            ICollection<TransferRequisitionDetails> requisitions = _iProductManager.GetTransferRequsitionDetailsById(id).ToList();
+            ViewTransferRequisition model = new ViewTransferRequisition
+            {
+                TtransferRequisitions = requisitions,
+                Branch = _iBranchManager.GetAllBranches().ToList()
+                    .Find(n => n.BranchId == requisiton.RequisitionByBranchId),
+                TransferRequisition = requisiton
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult ApproveRequisition(long id)
+        {
+            var user = (ViewUser)Session["user"];
+            bool result =_iProductManager.ApproveRequisition(id, user);
+            return RedirectToAction("RequestedRequisition");
+        }
+        [HttpPost]
+        public void RemoveProductRequisitionProductById(long id)
+        {
+          bool result= _iProductManager.RemoveProductRequisitionProductById(id);
+        }
+
+        public void UpdateRequisitionQuantity(long id,int quantity)
+        {
+            bool result = _iProductManager.UpdateRequisitionQuantity(id,quantity);
         }
     }
 }

@@ -9,12 +9,14 @@ using NBL.Models;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Invoices;
+using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.Enums;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Sales;
 using NBL.Models.ViewModels.Summaries;
+using NBL.Models.ViewModels.TransferProducts;
 
 namespace NBL.Areas.Sales.Controllers
 {
@@ -29,8 +31,9 @@ namespace NBL.Areas.Sales.Controllers
         private readonly IClientManager _iClientManager;
         private readonly ICommonManager _iCommonManager;
         private readonly IOrderManager _iOrderManager;
+        private readonly IBranchManager _iBranchManager;
 
-        public DeliveryController(IDeliveryManager iDeliveryManager,IInventoryManager iInventoryManager,IProductManager iProductManager,IClientManager iClientManager,IInvoiceManager iInvoiceManager,ICommonManager iCommonManager,IOrderManager iOrderManager)
+        public DeliveryController(IDeliveryManager iDeliveryManager,IInventoryManager iInventoryManager,IProductManager iProductManager,IClientManager iClientManager,IInvoiceManager iInvoiceManager,ICommonManager iCommonManager,IOrderManager iOrderManager,IBranchManager iBranchManager)
         {
             _iDeliveryManager = iDeliveryManager;
             _iInventoryManager = iInventoryManager;
@@ -39,6 +42,7 @@ namespace NBL.Areas.Sales.Controllers
             _iInvoiceManager = iInvoiceManager;
             _iCommonManager = iCommonManager;
             _iOrderManager = iOrderManager;
+            _iBranchManager = iBranchManager;
         }
         public ActionResult OrderList()
         {
@@ -381,5 +385,141 @@ namespace NBL.Areas.Sales.Controllers
         }
        
        
+
+        //-----------------Transfer product -----------
+
+        public ActionResult TransferList()
+        {
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            ICollection<TransferRequisition> requisitions = _iProductManager.GetTransferRequsitionByStatus(1).ToList()
+                .FindAll(n => n.RequisitionToBranchId == branchId);
+            return View(requisitions);
+        }
+
+        public ActionResult DeliveryTransferProduct(long id)
+        {
+
+            var requisiton = _iProductManager.GetTransferRequsitionByStatus(1).ToList().ToList()
+                .Find(n => n.TransferRequisitionId == id);
+            ICollection<TransferRequisitionDetails> requisitions = _iProductManager.GetTransferRequsitionDetailsById(id).ToList();
+            ViewTransferRequisition model = new ViewTransferRequisition
+            {
+                TtransferRequisitions = requisitions,
+                Branch = _iBranchManager.GetAllBranches().ToList()
+                    .Find(n => n.BranchId == requisiton.RequisitionByBranchId),
+                TransferRequisition = requisiton
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public PartialViewResult ScannedProductsForRequisition(long requisitionId)
+        {
+            // var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
+            string fileName = "Requisition_Product_List_For_" + requisitionId;
+            var filePath = Server.MapPath("~/Files/" + fileName);
+            List<ScannedProduct> list = new List<ScannedProduct>();
+            if (!System.IO.File.Exists(filePath))
+            {
+                //if the file does not exists create the file
+                System.IO.File.Create(filePath).Close();
+            }
+            else
+            {
+                list = _iProductManager.ScannedProducts(filePath);
+            }
+            return PartialView("_ViewLoadScannedProductPartialPage", list);
+        }
+
+      
+        //public void SaveScannedBarcodeToTextFileForRequisition(string barcode, long requisitionId)
+        //{
+        //    SuccessErrorModel model = new SuccessErrorModel();
+        //    try
+        //    {
+
+        //        List<ViewBranchStockModel> products = (List<ViewBranchStockModel>)Session["Branch_stock"];
+        //        var id = requisitionId;
+        //        var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(id);
+        //        string scannedBarCode = barcode.ToUpper();
+        //        int productId = Convert.ToInt32(scannedBarCode.Substring(2, 3));
+        //        string fileName = "Requisition_Product_List_For_" + id;
+        //        var filePath = Server.MapPath("~/Files/" + fileName);
+        //        var barcodeList = _iProductManager.ScannedProducts(filePath);
+
+        //        if (barcodeList.Count != 0)
+        //        {
+        //            foreach (ScannedProduct scannedProduct in barcodeList)
+        //            {
+        //                var p = products.Find(n => n.ProductBarCode.Equals(scannedProduct.ProductCode));
+        //                products.Remove(p);
+        //                Session["Branch_stock"] = products;
+        //            }
+        //        }
+
+        //        // DateTime date = _iCommonManager.GenerateDateFromBarCode(scannedBarCode);
+        //        // var oldestProducts = products.ToList().FindAll(n => n.ProductionDate < date && n.ProductId == productId).ToList();
+        //        bool isInInventory = products.Select(n => n.ProductBarCode).Contains(scannedBarCode);
+        //        bool isScannedBefore = _iProductManager.IsScannedBefore(barcodeList, scannedBarCode);
+
+        //        bool isSold = _iInventoryManager.IsThisProductSold(scannedBarCode);
+        //        //------------Get invoced products-------------
+        //        var invoicedOrders = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceRef(invoice.InvoiceRef).ToList();
+        //        List<InvoiceDetails> list = new List<InvoiceDetails>();
+        //        var deliveredProducts = _iInvoiceManager.GetDeliveredProductsByInvoiceRef(invoice.InvoiceRef);
+
+        //        foreach (InvoiceDetails invoiceDetailse in invoicedOrders)
+        //        {
+        //            var invoiceQty = invoiceDetailse.Quantity;
+        //            var deliveredQty = deliveredProducts.ToList().FindAll(n => n.ProductId == invoiceDetailse.ProductId).Count;
+        //            if (invoiceQty != deliveredQty)
+        //            {
+        //                invoiceDetailse.Quantity = invoiceQty - deliveredQty;
+        //                list.Add(invoiceDetailse);
+        //            }
+
+        //        }
+        //        bool isValied = list.Select(n => n.ProductId).Contains(productId);
+        //        bool isScannComplete = list.ToList().FindAll(n => n.ProductId == productId).Sum(n => n.Quantity) == barcodeList.FindAll(n => n.ProductId == productId).Count;
+        //        if (isScannedBefore)
+        //        {
+        //            model.Message = "<p style='color:red'> Already Scanned</p>";
+        //            // return Json(model, JsonRequestBehavior.AllowGet);
+        //        }
+        //        else if (isScannComplete)
+        //        {
+        //            model.Message = "<p style='color:green'> Scan Completed.</p>";
+        //            // return Json(model, JsonRequestBehavior.AllowGet);
+        //        }
+
+        //        //else if (oldestProducts.Count > 0)
+        //        //{
+        //        //    model.Message = "<p style='color:red'>There are total " + oldestProducts.Count + " Old product of this type .Please deliver those first .. </p>";
+        //        //   // return Json(model, JsonRequestBehavior.AllowGet);
+        //        //}
+        //        else if (isSold)
+        //        {
+        //            model.Message = "<p style='color:green'> This product Scanned for one of previous invoice... </p>";
+        //            //return Json(model, JsonRequestBehavior.AllowGet);
+        //        }
+        //        else if (isValied && isInInventory)
+        //        {
+        //            _iProductManager.AddProductToTextFile(scannedBarCode, filePath);
+        //        }
+        //    }
+        //    catch (FormatException exception)
+        //    {
+        //        model.Message = "<p style='color:red'>" + exception.GetType() + "</p>";
+        //        // return Json(model, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception exception)
+        //    {
+
+        //        model.Message = "<p style='color:red'>" + exception.Message + "</p>";
+        //        //return Json(model, JsonRequestBehavior.AllowGet);
+        //    }
+        //    // return Json(model, JsonRequestBehavior.AllowGet);
+        //}
+        
     }
 }

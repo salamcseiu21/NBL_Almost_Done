@@ -212,6 +212,8 @@
     <Compile Include="ViewModels\TransferProducts\ViewProductTransactionModel.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewTransferIssueDetailsModel.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewTransferIssueModel.cs" />
+    <Compile Include="ViewModels\TransferProducts\TransferRequisitionDetails.cs" />
+    <Compile Include="ViewModels\TransferProducts\ViewTransferRequisition.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewTripModel.cs" />
     <Compile Include="ViewModels\ViewAssignedRegion.cs" />
     <Compile Include="ViewModels\ViewAssignedUpazilla.cs" />

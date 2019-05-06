@@ -1,0 +1,48 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.TransferProducts.TransferRequisition>
+@{
+    ViewBag.Title = "Requisition List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Transferable List</h3>
+    <table id="tbl_requisition_list" class="display table-bordered" style="border: 1px solid">
+        <thead>
+        <Tr>
+            <th>Requisition Ref</th>
+            <th class="text-right">Quantity</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Action</th>
+        </Tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TransferRequisitionRef</td>
+                <td class="text-right">@item.Quantity</td>
+                <td class="text-center">@item.TransferRequisitionDate.ToString("dd-MMMM-yyyy")</td>
+                
+                <td class="text-center">
+                    @Html.ActionLink("Delivery", "DeliveryTransferProduct", "Delivery", new { id = item.TransferRequisitionId }, new { @class = "btn-sm btn btn-info" })
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <Tr>
+            <th>Requisition Ref</th>
+            <th class="text-right">Quantity</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Action</th>
+        </Tr>
+        </tfoot>
+    </table>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_requisition_list").DataTable();
+    </script>
+}
