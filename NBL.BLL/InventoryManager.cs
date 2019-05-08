@@ -200,5 +200,29 @@ namespace NBL.BLL
 
             return rowAffected > 0 ? "Saved Successfully!" : "Failed to Save";
         }
+
+        public string SaveTransferDeliveredProduct(TransferModel aModel)
+        {
+            int maxRefNo = _iInventoryGateway.GetMaxDeliveryRefNoOfCurrentYear();
+            aModel.Delivery.DeliveryRef = GenerateDeliveryReference(maxRefNo);
+            int rowAffected = _iInventoryGateway.SaveTransferDeliveredProduct(aModel);
+            return rowAffected > 0 ? "Saved Successfully!" : "Failed to Save";
+        }
+
+        public ICollection<ViewTransferProductModel> GetAllTransferedListByBranchAndCompanyId(int branchId, int companyId)
+        {
+            return _iInventoryGateway.GetAllTransferedListByBranchAndCompanyId(branchId,companyId);
+        }
+
+        public List<string> GetTransferReceiveableBarcodeList(long transferId)
+        {
+            return _iInventoryGateway.GetTransferReceiveableBarcodeList(transferId);
+        }
+
+        public int ReceiveTransferedProduct(TransferModel aModel)
+        {
+            int rowAffected = _iInventoryGateway.ReceiveTransferedProduct(aModel);
+            return rowAffected;
+        }
     }
 }

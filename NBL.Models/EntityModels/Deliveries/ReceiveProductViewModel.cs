@@ -18,6 +18,7 @@ namespace NBL.Models.EntityModels.Deliveries
         public string TripRef { get; set; }
         public int Status { get; set; }
         public int Quantity { get; set; }
+        public int ReceiveQty { get; set; }
         public int ToBranchId { get; set; }
         public string Remarks { get; set; }
         public string Transportation { set; get; }

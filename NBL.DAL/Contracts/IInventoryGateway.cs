@@ -44,5 +44,9 @@ namespace NBL.DAL.Contracts
        ICollection<ProductionSummary> GetProductionSummaries();
        ICollection<ProductionSummary> GetProductionSummaryByMonth(DateTime dateTime);
        int SaveReplaceDeliveryInfo(List<ScannedProduct> scannedProducts, Delivery aDelivery, int replaceStatus);
+       int SaveTransferDeliveredProduct(TransferModel aModel);
+       ICollection<ViewTransferProductModel> GetAllTransferedListByBranchAndCompanyId(int branchId, int companyId);
+       List<string> GetTransferReceiveableBarcodeList(long transferId);
+       int ReceiveTransferedProduct(TransferModel aModel);
    }
 }

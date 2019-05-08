@@ -1,0 +1,55 @@
+﻿@model NBL.Models.ViewModels.TransferProducts.ViewTransferRequisition
+@{
+    ViewBag.Title = "RequisitionDetails";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var branch = Model.Branch;
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Requisition Details</h3>
+
+    <table class="display table-bordered" id="tbl_requisition_details_list" style="border:  1px solid">
+        <thead>
+            <tr>
+                <td>
+                    <strong>@branch.BranchName</strong><br />
+                    @branch.BranchAddress
+                </td>
+                <td colspan="2">
+                    @Html.ActionLink(" Back", "PendingRequisition", "Product", null, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.TtransferRequisitions)
+            {
+                <tr>
+                    <td>@item.ProductName </td>
+                    <td>
+                        @item.Quantity
+                       
+                    </td>
+                  
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+               
+            </tr>
+        </tfoot>
+    </table>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_requisition_details_list").DataTable();
+    </script>
+}

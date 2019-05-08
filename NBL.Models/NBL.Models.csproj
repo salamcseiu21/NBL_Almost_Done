@@ -206,6 +206,7 @@
     <Compile Include="ViewModels\Sales\ProductReceiveViewModel.cs" />
     <Compile Include="ViewModels\Sales\ViewBranchStockModel.cs" />
     <Compile Include="ViewModels\TransferProducts\CreateTransferIssueViewModel.cs" />
+    <Compile Include="ViewModels\TransferProducts\TransferModel.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewCreateTransferRequisitionModel.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewCreateTripModel.cs" />
     <Compile Include="ViewModels\Deliveries\ViewDispatchModel.cs" />
@@ -213,6 +214,8 @@
     <Compile Include="ViewModels\TransferProducts\ViewTransferIssueDetailsModel.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewTransferIssueModel.cs" />
     <Compile Include="ViewModels\TransferProducts\TransferRequisitionDetails.cs" />
+    <Compile Include="ViewModels\TransferProducts\ViewTransferProductDetails.cs" />
+    <Compile Include="ViewModels\TransferProducts\ViewTransferProductModel.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewTransferRequisition.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewTripModel.cs" />
     <Compile Include="ViewModels\ViewAssignedRegion.cs" />

@@ -1832,6 +1832,48 @@ namespace NBL.DAL
             }
         }
 
+        public List<ViewTransferProductDetails> TransferReceiveableDetails(long transferId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetTransferReceiveableDetails";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@TransferId", transferId);
+                ConnectionObj.Open();
+                List<ViewTransferProductDetails> details = new List<ViewTransferProductDetails>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    details.Add(new ViewTransferProductDetails
+                    {
+                        TransferId = transferId,
+                        TransferItemId = Convert.ToInt64(reader["TransferItemId"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        Quantity = Convert.ToInt32(reader["ProductWiseQty"]),
+                        ProductCategory = new ProductCategory
+                        {
+                            ProductCategoryId = Convert.ToInt32(reader["ProductCategoryId"]),
+                            ProductCategoryName = reader["ProductCategoryName"].ToString()
+                        }
+                    });
+                }
+                reader.Close();
+                return details;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get transfer receiveable details by transfer Id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         private int SaveTransferRequisitionDetails(List<Product> products, long requisitionId)
         {
 

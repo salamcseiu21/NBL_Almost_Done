@@ -298,6 +298,12 @@ namespace NBL.Areas.Sales.Controllers
             }
             return RedirectToAction("Receive");
         }
+
+
+
+
+       
+
         public JsonResult GetTempTransaction()
         {
             if(Session["transactions"] != null)
@@ -543,6 +549,20 @@ namespace NBL.Areas.Sales.Controllers
             return View(requisitions);
         }
 
+        public ActionResult ViewRequisitionDetails(long id)
+        {
+            var requisiton = _iProductManager.GetTransferRequsitionByStatus(0).ToList().ToList()
+                .Find(n => n.TransferRequisitionId == id);
+            ICollection<TransferRequisitionDetails> requisitions = _iProductManager.GetTransferRequsitionDetailsById(id).ToList();
+            ViewTransferRequisition model = new ViewTransferRequisition
+            {
+                TtransferRequisitions = requisitions,
+                Branch = _iBranchManager.GetAllBranches().ToList()
+                    .Find(n => n.BranchId == requisiton.RequisitionByBranchId),
+                TransferRequisition = requisiton
+            };
+            return View(model);
+        }
 
         public ActionResult RequestedRequisition()
         {
@@ -561,7 +581,7 @@ namespace NBL.Areas.Sales.Controllers
             {
                 TtransferRequisitions = requisitions,
                 Branch = _iBranchManager.GetAllBranches().ToList()
-                    .Find(n => n.BranchId == requisiton.RequisitionByBranchId),
+                    .Find(n => n.BranchId == requisiton.RequisitionToBranchId),
                 TransferRequisition = requisiton
             };
             return View(model);
@@ -582,6 +602,153 @@ namespace NBL.Areas.Sales.Controllers
         public void UpdateRequisitionQuantity(long id,int quantity)
         {
             bool result = _iProductManager.UpdateRequisitionQuantity(id,quantity);
+        }
+
+
+
+        //----------------------Receive Transfered product from branch------------------
+
+        [Authorize(Roles = "DistributionManager")]
+        public ActionResult ReceiveTransferProduct()
+        {
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            var result = _iInventoryManager.GetAllTransferedListByBranchAndCompanyId(branchId, companyId).ToList();
+            return View(result);
+        }
+
+        public ActionResult TransferReceiveableDetails(long id)
+        {
+           
+            List<ViewTransferProductDetails> products = _iProductManager.TransferReceiveableDetails(id);
+            TransferModel model = new TransferModel
+            {
+                Products = products,
+                TransferId = id
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult ReceiveTransferProduct(long transferId)
+        {
+           
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            var user = (ViewUser)Session["user"];
+            var companyId = Convert.ToInt32(Session["CompanyId"]);
+            var transfer= _iInventoryManager.GetAllTransferedListByBranchAndCompanyId(branchId, companyId).ToList().Find(n=>n.TransferId==transferId);
+            TransferModel aModel = new TransferModel();
+            var products= _iProductManager.TransferReceiveableDetails(transferId);
+            aModel.Products = products;
+            aModel.TransferId = transferId;
+            aModel.ViewTransferProductModel = transfer;
+            aModel.BranchId = Convert.ToInt32(Session["BranchId"]);
+            aModel.User = user;
+            aModel.CompanyId = companyId;
+            //var receivesProductList = _iInventoryManager.GetAllTransferedListByBranchAndCompanyId(branchId, companyId).ToList().FindAll(n => n.TransferId == transferId);
+            string fileName = "Transfer_Received_Product_For_" + transferId + branchId;
+            var filePath = Server.MapPath("~/Areas/Sales/Files/Requisitions/" + fileName);
+            var receiveProductList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+            aModel.ScannedBarCodes = receiveProductList;
+
+            
+            int result = _iInventoryManager.ReceiveTransferedProduct(aModel);
+            if (result > 0)
+            {
+                System.IO.File.Create(filePath).Close();
+                TempData["ReceiveMessage"] = "Received Successfully!";
+            }
+            else
+            {
+                TempData["ReceiveMessage"] = "Failed to Receive";
+            }
+            return RedirectToAction("ReceiveTransferProduct");
+        }
+        [HttpPost]
+        public void SaveTransferReceivableScannedBarcodeToTextFile(string barcode, long transferId)
+        {
+            SuccessErrorModel model = new SuccessErrorModel();
+            ViewWriteLogModel log = new ViewWriteLogModel();
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var scannedBarCode = barcode.ToUpper();
+                int productId = Convert.ToInt32(scannedBarCode.Substring(2, 3));
+                string fileName = "Transfer_Received_Product_For_" + transferId + branchId;
+                var filePath = Server.MapPath("~/Areas/Sales/Files/Requisitions/" + fileName);
+
+                //------------read Scanned barcode form text file---------
+                var barcodeList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                //------------Load receiveable product---------
+                var receivesProductList = _iInventoryManager.GetAllTransferedListByBranchAndCompanyId(branchId, companyId).ToList().FindAll(n=>n.TransferId==transferId);
+                var receivesProductCodeList = _iInventoryManager.GetTransferReceiveableBarcodeList(transferId).ToList();
+                var isvalid = Validator.ValidateProductBarCode(scannedBarCode);
+
+                int requistionQtyByProductId = receivesProductList.ToList().FindAll(n => n.ProductId == productId).Sum(n => n.Quantity);
+
+                int scannedQtyByProductId = barcodeList
+                    .FindAll(n => Convert.ToInt32(n.ProductCode.Substring(2, 3)) == productId).Count;
+
+                bool isScannComplete = requistionQtyByProductId.Equals(scannedQtyByProductId);
+
+                if (isScannComplete)
+                {
+                    model.Message = "<p style='color:green'> Scanned Complete</p>";
+                    // return Json(model, JsonRequestBehavior.AllowGet);
+                }
+                else if (!isvalid)
+                {
+                    model.Message = "<p style='color:red'> Invalid Barcode</p>";
+                    //return Json(model, JsonRequestBehavior.AllowGet);
+                }
+
+                else if (receivesProductCodeList.Contains(scannedBarCode))
+                {
+                    _iProductManager.AddProductToTextFile(scannedBarCode, filePath);
+                }
+            }
+            catch (FormatException exception)
+            {
+                log.Heading = exception.GetType().ToString();
+                log.LogMessage = exception.StackTrace;
+                Log.WriteErrorLog(log);
+                model.Message = "<p style='color:red'>" + exception.GetType() + "</p>";
+                //return Json(model, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception exception)
+            {
+                log.Heading = exception.GetType().ToString();
+                log.LogMessage = exception.StackTrace;
+                Log.WriteErrorLog(log);
+                model.Message = "<p style='color:red'>" + exception.Message + "</p>";
+                // return Json(model, JsonRequestBehavior.AllowGet);
+            }
+            // return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        public PartialViewResult LoadTransferReceiveableProduct(long transferId)
+        {
+            var products = _iProductManager.TransferReceiveableDetails(transferId);
+            return PartialView("_ViewTransferReceivablePartialPage", products);
+        }
+
+        public PartialViewResult LoadTransferReceivalbeScannecdProduct(long transferId)
+        {
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            List<ScannedProduct> products = new List<ScannedProduct>();
+            string fileName = "Transfer_Received_Product_For_" + transferId + branchId;
+            var filePath = Server.MapPath("~/Areas/Sales/Files/Requisitions/" + fileName);
+            if (System.IO.File.Exists(filePath))
+            {
+                //if the file is exists read the file
+                products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+            }
+            else
+            {
+                //if the file does not exists create the file
+                System.IO.File.Create(filePath).Close();
+            }
+            return PartialView("_ViewScannedProductPartialPage", products);
         }
     }
 }

@@ -40,5 +40,10 @@ namespace NBL.BLL.Contracts
        ICollection<ProductionSummary> GetProductionSummaries();
        ICollection<ProductionSummary> GetProductionSummaryByMonth(DateTime dateTime);
        string SaveReplaceDeliveryInfo(List<ScannedProduct> barcodeList, Delivery aDelivery, int replaceStatus);
+
+       string SaveTransferDeliveredProduct(TransferModel aModel);
+       ICollection<ViewTransferProductModel> GetAllTransferedListByBranchAndCompanyId(int branchId, int companyId);
+       List<string> GetTransferReceiveableBarcodeList(long transferId);
+       int ReceiveTransferedProduct(TransferModel aModel);
    }
 }

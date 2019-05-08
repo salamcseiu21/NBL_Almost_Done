@@ -1,0 +1,55 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.TransferProducts.ViewTripModel>
+@{
+    ViewBag.Title = "Trip List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Trip List</h3>
+    <table id="tbl_trip_List" class="display table-bordered" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>Trip Ref</th>
+            <th>Quantity</th>
+           
+            <th>Remarks</th>
+            <th>Created By</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TripRef</td>
+                <td>@item.Quantity</td>
+                
+                <td>@item.Remarks</td>
+                <td>@item.CreatedByUserId</td>
+                <td class="text-center">@item.SystemDateTime.ToString("dd-MMMM-yyyy")</td>
+                <td class="text-center">
+                    @Html.ActionLink("View Details", "ViewScannedBarcodeList", "Transfer", new { id = item.TripId}, new {@class="btn-sm btn btn-info"})
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Trip Ref</th>
+                <th>Quantity</th>
+                <th>Remarks</th>
+                <th>Created By</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_trip_List").DataTable();
+    </script>
+}

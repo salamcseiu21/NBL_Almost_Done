@@ -382,6 +382,11 @@ namespace NBL.BLL
             return rowAffected > 0;
         }
 
+        public List<ViewTransferProductDetails> TransferReceiveableDetails(long transferId)
+        {
+            return _iProductGateway.TransferReceiveableDetails(transferId);
+        }
+
         private string GenerateTransferRequisitionRef(int maxTrNo)
         {
 

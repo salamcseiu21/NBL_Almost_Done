@@ -1,0 +1,91 @@
+﻿
+@using NBL.Models.ViewModels.TransferProducts
+@model IEnumerable<ViewTransferProductModel>
+@{
+    ViewBag.Title = "Receive";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+
+}
+<section class="content">
+    <h3 class="text-center" style="margin-top: 0; font-weight: bold;color: green"> Receiveable Product List</h3>
+    @if (TempData["ReceiveMessage"] != null)
+    {
+        <div class="alert-success text-center">
+            @TempData["ReceiveMessage"]
+        </div>
+    }
+    <div class="alert-success text-center">
+
+    </div>
+    <table class="display table-bordered table-hover table-responsive" id="table_receivable_list" style="border: 1px solid black">
+        <thead>
+            <tr>
+                <th>
+                    Trip  Reference
+                </th>
+                <th class="text-center">
+                    Quantity
+                </th>
+                <th class="text-center">
+                    Receive Qty
+                </th>
+                <th class="text-center">
+                    Pending Qty
+                </th>
+                <th class="text-center">
+                    Date
+                </th>
+                <th class="text-center" style="width: 50px">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (IGrouping<string, ViewTransferProductModel> item in Model.GroupBy(n => n.TransactionRef))  
+            {
+                <tr>
+
+                    <td>@item.Key</td>
+                    <td class="text-center">@item.Sum(n => n.Quantity)</td>
+                    <td class="text-center">@item.Sum(n => n.ReceivedQuantity)</td>
+                    <td class="text-center">@(item.Sum(n => n.Quantity) - item.Sum(n => n.ReceivedQuantity))</td>
+                    <td class="text-center">@item.First().DeliveredAt.ToString("dd-MMMM-yyyy")</td>
+                    <td class="text-center">
+                        @Html.ActionLink("Details", "TransferReceiveableDetails", new { id = item.First().TransferId }, new { @class = "btn btn-info" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <th>
+                    Trip  Reference
+                </th>
+                <th class="text-center">
+                    Quantity
+                </th>
+                <th class="text-center">
+                    Receive Qty
+                </th>
+                <th class="text-center">
+                    Pending Qty
+                </th>
+                <th class="text-center">
+                    Date
+                </th>
+                <th class="text-center" style="width: 50px">
+                    Action
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#table_receivable_list").DataTable();
+    </script>
+}

@@ -284,6 +284,7 @@ namespace NBL.Areas.Sales.Controllers
             return PartialView("_ModalOrderDeliveryPartialPage",invoice);
         }
 
+      
         [HttpPost]
         public PartialViewResult LoadDeliverableProduct(int invoiceId)
         {
@@ -398,6 +399,10 @@ namespace NBL.Areas.Sales.Controllers
 
         public ActionResult DeliveryTransferProduct(long id)
         {
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            var stock = _iInventoryManager.GetStockProductInBranchByBranchAndCompanyId(branchId, companyId);
+            Session["Branch_stock1"] = stock;
 
             var requisiton = _iProductManager.GetTransferRequsitionByStatus(1).ToList().ToList()
                 .Find(n => n.TransferRequisitionId == id);
@@ -413,11 +418,69 @@ namespace NBL.Areas.Sales.Controllers
         }
 
         [HttpPost]
+        public ActionResult DeliveryTransferProduct(FormCollection collection,long transferRequisitionId)
+        {
+            try
+            {
+               
+                var transport = collection["ownTransport"];
+                bool isOwnTransport = transport != null;
+                int deliverebyUserId = ((ViewUser)Session["user"]).UserId;
+                var requisition = _iProductManager.GetTransferRequsitionByStatus(1).ToList().Find(n => n.TransferRequisitionId == transferRequisitionId);
+                IEnumerable<TransferRequisitionDetails> details = _iProductManager.GetTransferRequsitionDetailsById(transferRequisitionId);
+               
+                string fileName = "Requisition_Product_List_For_" + transferRequisitionId;
+                var filePath = Server.MapPath("~/Areas/Sales/Files/Requisitions/" + fileName);
+
+                //if the file is exists read the file
+                var barcodeList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+
+                var aDelivery = new Delivery
+                {
+                    IsOwnTransport = isOwnTransport,
+                    TransactionRef = requisition.TransferRequisitionRef,
+                    DeliveredByUserId = deliverebyUserId,
+                    Transportation = collection["Transportation"],
+                    DriverName = collection["DriverName"],
+                    DriverPhone = collection["DriverPhone"],
+                    TransportationCost = Convert.ToDecimal(collection["TransportationCost"]),
+                    VehicleNo = collection["VehicleNo"],
+                    DeliveryDate = Convert.ToDateTime(collection["DeliveryDate"]).Date,
+                    ToBranchId = requisition.RequisitionByBranchId,
+                    FromBranchId = requisition.RequisitionToBranchId,
+                    CompanyId = Convert.ToInt32(Session["CompanyId"])
+
+            };
+
+                var aModel = new TransferModel
+                {
+                    ScannedBarCodes = barcodeList,
+                    Delivery = aDelivery,
+                    TransferRequisition = requisition,
+                    Detailses = details.ToList()
+                };
+                string result = _iInventoryManager.SaveTransferDeliveredProduct(aModel);
+                if (result.StartsWith("S"))
+                {
+                    System.IO.File.Create(filePath).Close();
+                    return RedirectToAction("TransferList");
+                }
+                return View();
+            }
+            catch (Exception exception)
+            {
+                TempData["Error"] = exception.Message;
+                //return View("Delivery");
+                throw new Exception();
+            }
+        }
+
+        [HttpPost]
         public PartialViewResult ScannedProductsForRequisition(long requisitionId)
         {
             // var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
             string fileName = "Requisition_Product_List_For_" + requisitionId;
-            var filePath = Server.MapPath("~/Files/" + fileName);
+            var filePath = Server.MapPath("~/Areas/Sales/Files/Requisitions/" + fileName);
             List<ScannedProduct> list = new List<ScannedProduct>();
             if (!System.IO.File.Exists(filePath))
             {
@@ -431,95 +494,100 @@ namespace NBL.Areas.Sales.Controllers
             return PartialView("_ViewLoadScannedProductPartialPage", list);
         }
 
-      
-        //public void SaveScannedBarcodeToTextFileForRequisition(string barcode, long requisitionId)
-        //{
-        //    SuccessErrorModel model = new SuccessErrorModel();
-        //    try
-        //    {
 
-        //        List<ViewBranchStockModel> products = (List<ViewBranchStockModel>)Session["Branch_stock"];
-        //        var id = requisitionId;
-        //        var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(id);
-        //        string scannedBarCode = barcode.ToUpper();
-        //        int productId = Convert.ToInt32(scannedBarCode.Substring(2, 3));
-        //        string fileName = "Requisition_Product_List_For_" + id;
-        //        var filePath = Server.MapPath("~/Files/" + fileName);
-        //        var barcodeList = _iProductManager.ScannedProducts(filePath);
+        public void SaveScannedBarcodeToTextFileForRequisition(string barcode, long requisitionId)
+        {
+            SuccessErrorModel model = new SuccessErrorModel();
+            try
+            {
 
-        //        if (barcodeList.Count != 0)
-        //        {
-        //            foreach (ScannedProduct scannedProduct in barcodeList)
-        //            {
-        //                var p = products.Find(n => n.ProductBarCode.Equals(scannedProduct.ProductCode));
-        //                products.Remove(p);
-        //                Session["Branch_stock"] = products;
-        //            }
-        //        }
+                List<ViewBranchStockModel> products = (List<ViewBranchStockModel>)Session["Branch_stock1"];
+                var id = requisitionId;
+              
+                string scannedBarCode = barcode.ToUpper();
+                int productId = Convert.ToInt32(scannedBarCode.Substring(2, 3));
+                string fileName = "Requisition_Product_List_For_" + id;
+                var filePath = Server.MapPath("~/Areas/Sales/Files/Requisitions/" + fileName);
+                var barcodeList = _iProductManager.ScannedProducts(filePath);
 
-        //        // DateTime date = _iCommonManager.GenerateDateFromBarCode(scannedBarCode);
-        //        // var oldestProducts = products.ToList().FindAll(n => n.ProductionDate < date && n.ProductId == productId).ToList();
-        //        bool isInInventory = products.Select(n => n.ProductBarCode).Contains(scannedBarCode);
-        //        bool isScannedBefore = _iProductManager.IsScannedBefore(barcodeList, scannedBarCode);
+                if (barcodeList.Count != 0)
+                {
+                    foreach (ScannedProduct scannedProduct in barcodeList)
+                    {
+                        var p = products.Find(n => n.ProductBarCode.Equals(scannedProduct.ProductCode));
+                        products.Remove(p);
+                        Session["Branch_stock1"] = products;
+                    }
+                }
 
-        //        bool isSold = _iInventoryManager.IsThisProductSold(scannedBarCode);
-        //        //------------Get invoced products-------------
-        //        var invoicedOrders = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceRef(invoice.InvoiceRef).ToList();
-        //        List<InvoiceDetails> list = new List<InvoiceDetails>();
-        //        var deliveredProducts = _iInvoiceManager.GetDeliveredProductsByInvoiceRef(invoice.InvoiceRef);
+                // DateTime date = _iCommonManager.GenerateDateFromBarCode(scannedBarCode);
+                // var oldestProducts = products.ToList().FindAll(n => n.ProductionDate < date && n.ProductId == productId).ToList();
+                bool isInInventory = products.Select(n => n.ProductBarCode).Contains(scannedBarCode);
+                bool isScannedBefore = _iProductManager.IsScannedBefore(barcodeList, scannedBarCode);
 
-        //        foreach (InvoiceDetails invoiceDetailse in invoicedOrders)
-        //        {
-        //            var invoiceQty = invoiceDetailse.Quantity;
-        //            var deliveredQty = deliveredProducts.ToList().FindAll(n => n.ProductId == invoiceDetailse.ProductId).Count;
-        //            if (invoiceQty != deliveredQty)
-        //            {
-        //                invoiceDetailse.Quantity = invoiceQty - deliveredQty;
-        //                list.Add(invoiceDetailse);
-        //            }
+                bool isSold = _iInventoryManager.IsThisProductSold(scannedBarCode);
+                //------------Get invoced products-------------
+                var requisitionDetailses = _iProductManager.GetTransferRequsitionDetailsById(requisitionId).ToList();
+              //  List<InvoiceDetails> list = new List<InvoiceDetails>();
+                //var deliveredProducts = _iInvoiceManager.GetDeliveredProductsByInvoiceRef(requisition.TransferRequisitionRef);
 
-        //        }
-        //        bool isValied = list.Select(n => n.ProductId).Contains(productId);
-        //        bool isScannComplete = list.ToList().FindAll(n => n.ProductId == productId).Sum(n => n.Quantity) == barcodeList.FindAll(n => n.ProductId == productId).Count;
-        //        if (isScannedBefore)
-        //        {
-        //            model.Message = "<p style='color:red'> Already Scanned</p>";
-        //            // return Json(model, JsonRequestBehavior.AllowGet);
-        //        }
-        //        else if (isScannComplete)
-        //        {
-        //            model.Message = "<p style='color:green'> Scan Completed.</p>";
-        //            // return Json(model, JsonRequestBehavior.AllowGet);
-        //        }
+                //foreach (var item in requisitionDetailses) 
+                //{
+                //    var rQuantity = item.Quantity; 
+                //    var deliveredQty = deliveredProducts.ToList().FindAll(n => n.ProductId == invoiceDetailse.ProductId).Count;
+                //    if (invoiceQty != deliveredQty)
+                //    {
+                //        invoiceDetailse.Quantity = invoiceQty - deliveredQty;
+                //        list.Add(invoiceDetailse);
+                //    }
 
-        //        //else if (oldestProducts.Count > 0)
-        //        //{
-        //        //    model.Message = "<p style='color:red'>There are total " + oldestProducts.Count + " Old product of this type .Please deliver those first .. </p>";
-        //        //   // return Json(model, JsonRequestBehavior.AllowGet);
-        //        //}
-        //        else if (isSold)
-        //        {
-        //            model.Message = "<p style='color:green'> This product Scanned for one of previous invoice... </p>";
-        //            //return Json(model, JsonRequestBehavior.AllowGet);
-        //        }
-        //        else if (isValied && isInInventory)
-        //        {
-        //            _iProductManager.AddProductToTextFile(scannedBarCode, filePath);
-        //        }
-        //    }
-        //    catch (FormatException exception)
-        //    {
-        //        model.Message = "<p style='color:red'>" + exception.GetType() + "</p>";
-        //        // return Json(model, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception exception)
-        //    {
+                //}
+                bool isValied = requisitionDetailses.Select(n => n.ProductId).Contains(productId);
+                bool isScannComplete = requisitionDetailses.ToList().FindAll(n => n.ProductId == productId).Sum(n => n.Quantity) == barcodeList.FindAll(n => n.ProductId == productId).Count;
+                if (isScannedBefore)
+                {
+                    model.Message = "<p style='color:red'> Already Scanned</p>";
+                    // return Json(model, JsonRequestBehavior.AllowGet);
+                }
+                else if (isScannComplete)
+                {
+                    model.Message = "<p style='color:green'> Scan Completed.</p>";
+                    // return Json(model, JsonRequestBehavior.AllowGet);
+                }
 
-        //        model.Message = "<p style='color:red'>" + exception.Message + "</p>";
-        //        //return Json(model, JsonRequestBehavior.AllowGet);
-        //    }
-        //    // return Json(model, JsonRequestBehavior.AllowGet);
-        //}
-        
+                //else if (oldestProducts.Count > 0)
+                //{
+                //    model.Message = "<p style='color:red'>There are total " + oldestProducts.Count + " Old product of this type .Please deliver those first .. </p>";
+                //   // return Json(model, JsonRequestBehavior.AllowGet);
+                //}
+                else if (isSold)
+                {
+                    model.Message = "<p style='color:green'> This product Scanned for one of previous invoice... </p>";
+                    //return Json(model, JsonRequestBehavior.AllowGet);
+                }
+                else if (isValied && isInInventory)
+                {
+                    _iProductManager.AddProductToTextFile(scannedBarCode, filePath);
+                }
+            }
+            catch (FormatException exception)
+            {
+                model.Message = "<p style='color:red'>" + exception.GetType() + "</p>";
+                // return Json(model, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception exception)
+            {
+
+                model.Message = "<p style='color:red'>" + exception.Message + "</p>";
+                //return Json(model, JsonRequestBehavior.AllowGet);
+            }
+            // return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ViewTransferDetails(long requisitionId)
+        {
+            var requisition = _iProductManager.GetTransferRequsitionByStatus(1).ToList().Find(n => n.TransferRequisitionId == requisitionId);
+            return PartialView("_ModalTransferDeliveryPartialPage", requisition);
+        }
+
     }
 }

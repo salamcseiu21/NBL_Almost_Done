@@ -70,5 +70,6 @@ namespace NBL.DAL.Contracts
         int RemoveProductRequisitionProductById(long id);
         int UpdateRequisitionQuantity(long id, int quantity);
         int ApproveRequisition(long id, ViewUser user);
+        List<ViewTransferProductDetails> TransferReceiveableDetails(long transferId);
     }
 }

@@ -649,6 +649,7 @@ namespace NBL.DAL
                         //CreatedByUserId = Convert.ToInt32(reader["CreatedByUserId"]),
                         DispatchByUserId=Convert.ToInt32(reader["DispatchByUserId"]),
                         Quantity = Convert.ToInt32(reader["Quantity"]),
+                        ReceiveQty = Convert.ToInt32(reader["ReceiveQty"]),
                         DispatchId=Convert.ToInt64(reader["DispatchId"]),
                         DispatchItemsId=Convert.ToInt64(reader["DispatchItemsId"]),
                         SystemDateTime = Convert.ToDateTime(reader["SystemDateTime"]),
@@ -759,7 +760,7 @@ namespace NBL.DAL
                 int status = 2;
                 if (qty1 != qty2)
                 {
-                    status = 1;
+                    status = 0;
                 }
                 CommandObj.CommandText = "spSaveInventoryItem";
                 CommandObj.CommandType = CommandType.StoredProcedure;
@@ -1516,6 +1517,286 @@ namespace NBL.DAL
                 CommandObj.Dispose();
                 ConnectionObj.Close();
             }
+        }
+
+        public int SaveTransferDeliveredProduct(TransferModel aModel)
+        {
+            ConnectionObj.Open();
+            SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
+            try
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Transaction = sqlTransaction;
+                CommandObj.CommandText = "UDSP_SaveTransferDeliveredProduct";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+
+                CommandObj.Parameters.AddWithValue("@TransactionDate", aModel.Delivery.DeliveryDate);
+                CommandObj.Parameters.AddWithValue("@DeliveryRef", aModel.Delivery.DeliveryRef);
+                CommandObj.Parameters.AddWithValue("@IsOwnTransporatoion", aModel.Delivery.IsOwnTransport);
+                CommandObj.Parameters.AddWithValue("@Transportation", aModel.Delivery.Transportation ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@DriverName", aModel.Delivery.DriverName ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@DriverPhone", aModel.Delivery.DriverPhone ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@TransportationCost", aModel.Delivery.TransportationCost);
+                CommandObj.Parameters.AddWithValue("@VehicleNo", aModel.Delivery.VehicleNo ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@CompanyId", aModel.Delivery.CompanyId);
+                CommandObj.Parameters.AddWithValue("@TransactionRef", aModel.TransferRequisition.TransferRequisitionRef);
+                CommandObj.Parameters.AddWithValue("@Quantity", aModel.ScannedBarCodes.ToList().Count);
+                CommandObj.Parameters.AddWithValue("@TransferToBranchId", aModel.TransferRequisition.RequisitionByBranchId);
+                CommandObj.Parameters.AddWithValue("@TransferFromBranchId", aModel.TransferRequisition.RequisitionToBranchId);
+                CommandObj.Parameters.AddWithValue("@DeliveredByUserId", aModel.Delivery.DeliveredByUserId);
+                CommandObj.Parameters.Add("@TransferId", SqlDbType.BigInt);
+                CommandObj.Parameters.Add("@InventoryId", SqlDbType.BigInt);
+                CommandObj.Parameters["@TransferId"].Direction = ParameterDirection.Output;
+                CommandObj.Parameters["@InventoryId"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                long transferId = Convert.ToInt64(CommandObj.Parameters["@TransferId"].Value);
+                long inventoryId= Convert.ToInt64(CommandObj.Parameters["@InventoryId"].Value); 
+                int rowAffected = SaveTransferProductDetails(aModel, transferId,inventoryId);
+                if (rowAffected > 0)
+                {
+                    sqlTransaction.Commit();
+                }
+                else
+                {
+                    sqlTransaction.Rollback();
+                }
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                sqlTransaction.Rollback();
+                throw new Exception("Could not Save dispatch Info", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+       
+
+        private int SaveTransferProductDetails(TransferModel aModel, long transferId,long inventoryId)
+        {
+            int i = 0;
+            int n = 0;
+            foreach (var item in aModel.ScannedBarCodes)
+            {
+                CommandObj.CommandText = "UDSP_SaveTransferProductDetails";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@ProductId", Convert.ToInt32(item.ProductCode.Substring(2, 3)));
+                CommandObj.Parameters.AddWithValue("@TransferId", transferId);
+                CommandObj.Parameters.AddWithValue("@InventoryId", inventoryId);
+                CommandObj.Parameters.AddWithValue("@ProductBarCode", item.ProductCode);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            }
+            if (i > 0)
+            {
+                n = SaveTransferedItems(aModel.Detailses, transferId,inventoryId);
+            }
+            return n;
+        }
+
+        private int SaveTransferedItems(IEnumerable<TransferRequisitionDetails> products, long transferId,long inventoryId)
+        {
+            int i = 0;
+            foreach (var item in products)
+            {
+                CommandObj.CommandText = "UDSP_SaveTransferedItems";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@ProductId", item.ProductId);
+                CommandObj.Parameters.AddWithValue("@Quantity", item.Quantity);
+                CommandObj.Parameters.AddWithValue("@TransferId", transferId);
+                CommandObj.Parameters.AddWithValue("@InventoryId", inventoryId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+
+            }
+            return i;
+        }
+        public ICollection<ViewTransferProductModel> GetAllTransferedListByBranchAndCompanyId(int branchId, int companyId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllTransferedListByBranchAndCompanyId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<ViewTransferProductModel> list = new List<ViewTransferProductModel>();
+                while (reader.Read())
+                {
+                    list.Add(new ViewTransferProductModel
+                    {
+
+                        ToBranchId = branchId,
+                        //CreatedByUserId = Convert.ToInt32(reader["CreatedByUserId"]),
+                        TransferByUserId = Convert.ToInt32(reader["TransferByUserId"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        ReceivedQuantity = Convert.ToInt32(reader["ReceiveQuantity"]),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        DeliveredAt = Convert.ToDateTime(reader["SystemDateTime"]),
+                        TransferId = Convert.ToInt64(reader["TransferId"])
+
+                    });
+                }
+
+                reader.Close();
+                return list;
+
+            }
+            catch (Exception exception)
+            {
+
+                throw new Exception("Could not Get receivable product", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public List<string> GetTransferReceiveableBarcodeList(long transferId)
+        {
+            try
+            {
+
+                CommandObj.CommandText = "UDSP_GetTransferReceiveableBarcodeList";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@TransferId", transferId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<string> list = new List<string>();
+                while (reader.Read())
+                {
+                    list.Add(reader["ProductBarCode"].ToString());
+                }
+
+                reader.Close();
+                return list;
+            }
+            catch (Exception exception)
+            {
+
+                throw new Exception("Could not Get transfer receivable product code by transferid", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public int ReceiveTransferedProduct(TransferModel aModel)
+        {
+            ConnectionObj.Open();
+            SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
+            try
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Transaction = sqlTransaction;
+                CommandObj.CommandText = "spSaveReceiveProuctToBranch";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@TransactionDate", DateTime.Now);
+                CommandObj.Parameters.AddWithValue("@TransactionRef", aModel.ViewTransferProductModel.TransactionRef);
+                CommandObj.Parameters.AddWithValue("@Quantity", aModel.ScannedBarCodes.Count);
+                CommandObj.Parameters.AddWithValue("@ToBranchId", aModel.BranchId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", aModel.CompanyId);
+                CommandObj.Parameters.AddWithValue("@UserId", aModel.User.UserId);
+                CommandObj.Parameters.Add("@InventoryId", SqlDbType.Int);
+                CommandObj.Parameters["@InventoryId"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                int inventoryId = Convert.ToInt32(CommandObj.Parameters["@InventoryId"].Value);
+                int rowAffected = SaveTransferReceiveProductDetails(aModel, inventoryId);
+                if (rowAffected > 0)
+                {
+                    sqlTransaction.Commit();
+                }
+                else
+                {
+                    sqlTransaction.Rollback();
+                }
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                sqlTransaction.Rollback();
+                throw new Exception("Could not receive product", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public int SaveTransferReceiveProductDetails(TransferModel model, int inventoryId)
+        {
+            int i = 0;
+            int n = 0;
+            foreach (var item in model.ScannedBarCodes)
+            {
+                CommandObj.CommandText = "spSaveTransferReceiveProduct";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@ProductBarcode", item.ProductCode);
+                CommandObj.Parameters.AddWithValue("@ProductId", Convert.ToInt32(item.ProductCode.Substring(2, 3)));
+                CommandObj.Parameters.AddWithValue("@InventoryId", inventoryId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            }
+            if (i > 0)
+            {
+                n = SaveTransferReceivedItemWithQuantity(model, inventoryId);
+            }
+            return n;
+        }
+        private int SaveTransferReceivedItemWithQuantity(TransferModel model, int inventoryId)
+        {
+            int i = 0;
+            foreach (var item in model.Products)
+            {
+                var qty1 = model.Products.ToList().FindAll(n => n.ProductId == item.ProductId)
+                    .Sum(n => n.Quantity);
+                var qty2 = model.ScannedBarCodes.ToList().FindAll(n => n.ProductId == item.ProductId).Count;
+                int status = 2;
+                if (qty1 != qty2)
+                {
+                    status = 0;
+                }
+                CommandObj.CommandText = "spSaveTransferItemInventory";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@TransferItemId", item.TransferItemId);
+                CommandObj.Parameters.AddWithValue("@ProductId", item.ProductId);
+                CommandObj.Parameters.AddWithValue("@Quantity", qty2);
+                CommandObj.Parameters.AddWithValue("@ReceiveByUserId", model.User.UserId);
+                CommandObj.Parameters.AddWithValue("@Status", status);
+                CommandObj.Parameters.AddWithValue("@InventoryId", inventoryId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+
+            }
+            return i;
         }
     }
 }

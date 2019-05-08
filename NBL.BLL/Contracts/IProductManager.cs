@@ -60,5 +60,6 @@ namespace NBL.BLL.Contracts
         bool RemoveProductRequisitionProductById(long id);
         bool UpdateRequisitionQuantity(long id, int quantity);
         bool ApproveRequisition(long id, ViewUser user);
+        List<ViewTransferProductDetails> TransferReceiveableDetails(long transferId);
     }
 }

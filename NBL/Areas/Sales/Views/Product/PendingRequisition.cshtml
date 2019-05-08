@@ -24,7 +24,7 @@
                 <td>@item.TransferRequisitionDate.ToString("dd-MMMM-yyyy")</td>
                 
                 <td class="text-center">
-                    @Html.ActionLink("View Details", "ViewScannedBarcodeList", "Transfer", new { id = item.TransferRequisitionId }, new { @class = "btn-sm btn btn-info" })
+                    @Html.ActionLink("View Details", "ViewRequisitionDetails", "Product", new { id = item.TransferRequisitionId }, new { @class = "btn-sm btn btn-info" })
                 </td>
             </tr>
         }

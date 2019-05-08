@@ -43,7 +43,18 @@
             <li>@Html.ActionLink(" Order List", "OrderList", "Delivery", new {area = "Sales"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
         </ul>
     </li>
-    
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-shopping-cart"></i>
+            <span>Transfer Product</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Transfer List", "TransferList", "Delivery", new {area = "Sales"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
+        </ul>
+    </li>
 
     <li class="treeview">
         <a href="#">
