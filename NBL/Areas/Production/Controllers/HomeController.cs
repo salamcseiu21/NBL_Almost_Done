@@ -24,8 +24,6 @@ namespace NBL.Areas.Production.Controllers
         // GET: Factory/Home
         public ActionResult Home()
         {
-            Session.Remove("BranchId");
-            Session.Remove("Branch");
             var model=new FactorySummaryModel
             {
                 StockQuantity = _iInventoryManager.GetStockProductInFactory().Count,

@@ -318,14 +318,13 @@ namespace NBL.Areas.Sales.DAL
         }
 
 
-        public ICollection<Invoice> GetLatestInvoicedOrdersByBranchAndCompanyId(int branchId, int companyId)
+        public ICollection<Invoice> GetLatestInvoicedOrdersByDistributionPoint(int distributionPointId)
         {
             try
             {
-                CommandObj.CommandText = "UDSP_GetLatestInvoicedOrdersByBranchAndCompanyId";
+                CommandObj.CommandText = "UDSP_GetLatestInvoicedOrdersByDistributionPoint";
                 CommandObj.CommandType = CommandType.StoredProcedure;
-                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
-                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                CommandObj.Parameters.AddWithValue("@DistributionPointId", distributionPointId);
                 List<Invoice> invoiceList = new List<Invoice>();
                 ConnectionObj.Open();
                 SqlDataReader reader = CommandObj.ExecuteReader();
@@ -345,8 +344,8 @@ namespace NBL.Areas.Sales.DAL
                         InvoiceRef = reader["InvoiceRef"].ToString(),
                         InvoiceStatus = Convert.ToInt16(reader["InvoiceStatus"]),
                         Cancel = Convert.ToChar(reader["Cancel"]),
-                        BranchId = branchId,
-                        CompanyId = companyId,
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
                         TransactionRef = reader["TransactionRef"].ToString(),
                         SysDateTime = Convert.ToDateTime(reader["SysDateTime"]),
                         ClientId = Convert.ToInt32(reader["ClientId"]),
@@ -380,6 +379,69 @@ namespace NBL.Areas.Sales.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public ICollection<Invoice> GetAllInvoicedOrdersByDistributionPoint(int distributionPointId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllInvoicedOrdersByDistributionPoint";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DstributionPointId", distributionPointId);
+                List<Invoice> invoiceList = new List<Invoice>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    Invoice invoice = new Invoice
+                    {
+                        InvoiceId = Convert.ToInt32(reader["InvoiceId"]),
+                        InvoiceDateTime = Convert.ToDateTime(reader["InvoiceDateTime"]),
+                        Amounts = Convert.ToDecimal(reader["Amounts"]),
+                        Discount = Convert.ToDecimal(reader["Discount"]),
+                        SpecialDiscount = Convert.ToDecimal(reader["SpecialDiscount"]),
+                        Vat = Convert.ToDecimal(reader["Vat"]),
+                        NetAmounts = Convert.ToDecimal(reader["NetAmounts"]),
+                        InvoiceByUserId = Convert.ToInt32(reader["InvoiceByUserId"]),
+                        InvoiceNo = Convert.ToInt32(reader["InvoiceNo"]),
+                        InvoiceRef = reader["InvoiceRef"].ToString(),
+                        InvoiceStatus = Convert.ToInt16(reader["InvoiceStatus"]),
+                        Cancel = Convert.ToChar(reader["Cancel"]),
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        SysDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        Client = new Client
+                        {
+                            ClientId = Convert.ToInt32(reader["ClientId"]),
+                            CommercialName = reader["CommercialName"].ToString(),
+                            ClientName = reader["Name"].ToString(),
+                            SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                            ClientType = new ClientType
+                            {
+                                ClientTypeId = Convert.ToInt32(reader["ClientTypeId"]),
+                                ClientTypeName = reader["ClientTypeName"].ToString()
+                            }
+                        },
+                        Quantity = Convert.ToInt32(reader["Quantity"])
+                    };
+                    invoiceList.Add(invoice);
+                }
+                reader.Close();
+                return invoiceList;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get Invoiced orders by distribution point id", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         public IEnumerable<Invoice> GetAllInvoicedOrdersByBranchAndCompanyId(int branchId, int companyId)
         {
             try

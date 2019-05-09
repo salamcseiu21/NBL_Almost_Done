@@ -1133,6 +1133,7 @@ ConnectionObj.Close();
                          CompanyId = Convert.ToInt32(reader["CompanyId"]),
                          DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
                          DeliveryDateTime = Convert.ToDateTime(reader["DeliveredDateTime"]),
+                         DistributionPointId = Convert.ToInt32(reader["DistributionCenterId"])
                         
                      };
                 }
@@ -1607,6 +1608,7 @@ ConnectionObj.Close();
                 CommandObj.Parameters.AddWithValue("@Vat", aModel.Vat);
                 CommandObj.Parameters.AddWithValue("@Discount", aModel.Discount);
                 CommandObj.Parameters.AddWithValue("@SpecialDiscount", aModel.SpecialDiscount);
+                CommandObj.Parameters.AddWithValue("@DistributonPointId", aModel.DistributionPointId);
                 CommandObj.Parameters.AddWithValue("@Status ", aModel.Status);
                 CommandObj.Parameters.AddWithValue("@ApprovedByNsmDateTime", aModel.ApprovedByNsmDateTime);
                 CommandObj.Parameters.AddWithValue("@NsmUserId", aModel.NsmUserId);
@@ -1642,6 +1644,7 @@ ConnectionObj.Close();
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@OrderId", order.OrderId);
                 CommandObj.Parameters.AddWithValue("@SpecialDiscount", order.SpecialDiscount);
+                CommandObj.Parameters.AddWithValue("@DistributionPointId", order.DistributionPointId);
                 CommandObj.Parameters.AddWithValue("@Discount", order.Discount);
                 CommandObj.Parameters.AddWithValue("@Status ", order.Status);
                 CommandObj.Parameters.AddWithValue("@Amounts", order.Amounts);

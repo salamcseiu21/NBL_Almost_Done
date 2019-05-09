@@ -5,6 +5,7 @@ using NBL.Models;
 using NBL.Models.EntityModels.Invoices;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Orders;
 
 namespace NBL.Areas.Sales.BLL.Contracts
 {
@@ -22,6 +23,7 @@ namespace NBL.Areas.Sales.BLL.Contracts
         Invoice GetInvoicedOrderByInvoiceId(int invoiceId);
         ICollection<ViewProduct> GetDeliveredProductsByInvoiceRef(string invoiceRef);
         ICollection<Invoice> GetInvoicedOrdersByCompanyIdAndDate(int companyId, DateTime date);
-        ICollection<Invoice> GetLatestInvoicedOrdersByBranchAndCompanyId(int branchId, int companyId);
+        ICollection<Invoice> GetLatestInvoicedOrdersByDistributionPoint(int distributionPointId);
+        ICollection<Invoice> GetAllInvoicedOrdersByDistributionPoint(int branchId);
     }
 }

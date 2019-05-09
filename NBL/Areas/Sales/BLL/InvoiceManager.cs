@@ -99,9 +99,15 @@ namespace NBL.Areas.Sales.BLL
             return _iInvoiceGateway.GetInvoicedOrdersByCompanyIdAndDate(companyId,date);
         }
 
-        public ICollection<Invoice> GetLatestInvoicedOrdersByBranchAndCompanyId(int branchId, int companyId)
+        public ICollection<Invoice> GetLatestInvoicedOrdersByDistributionPoint(int distributionPointId)
         {
-            var invoices = _iInvoiceGateway.GetLatestInvoicedOrdersByBranchAndCompanyId(branchId, companyId);
+            var invoices = _iInvoiceGateway.GetLatestInvoicedOrdersByDistributionPoint(distributionPointId);
+            return invoices;
+        }
+
+        public ICollection<Invoice> GetAllInvoicedOrdersByDistributionPoint(int distributionPointId)
+        {
+            var invoices = _iInvoiceGateway.GetAllInvoicedOrdersByDistributionPoint(distributionPointId);
             return invoices;
         }
     }

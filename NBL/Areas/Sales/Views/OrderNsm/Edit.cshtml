@@ -11,7 +11,66 @@
     <div style="border: 1px dotted; padding: 10px; font-size: 18px">
 
       @Html.Partial("_OrderDetailsHeaderPartialPage",Model)
+   
 
+
+            @using (Html.BeginForm("Edit", "OrderNsm", FormMethod.Post, new { area = "Sales", id = "saveOrderForm" }))
+            {
+                var amounts = Model.OrderItems.Sum(n => n.SubTotal) - Model.SpecialDiscount;
+                <div class="row">
+                    <div class="form-horizontal">
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Quantity</label>
+                                <div class="col-md-8">
+                                    <input type="number" name="TotalQuantity" id="TotalQuantity" class="form-control text-right" readonly="readonly"/>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Amount (&#2547;)</label>
+                                <div class="col-md-8">
+                                    <input type="number" name="Amount" id="Amount" class="form-control text-right" value="@Model.OrderItems.Sum(n => n.SubTotal)" readonly="readonly"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Discount (&#2547;)</label>
+                                <div class="col-md-8">
+                                    <input type="number" value="@Model.SpecialDiscount" name="Discount" id="Discount" class="form-control text-right" onkeyup="CalculateNetAmount(this)"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Distribution Point</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(model => model.DistributionPointId, null, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Net (&#2547;)</label>
+                                <div class="col-md-8">
+                                    <input type="number" value="@amounts" name="Net" id="Net" class="form-control text-right" readonly/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4"></label>
+                                <div class="col-md-8 text-right">
+                                    @Html.ActionLink("Back", "PendingOrder", "OrderNsm", new {area = "Sales"}, new {@class = "btn btn-info"})
+                                    <input type="button" value="Approve" class="btn btn-success" onclick="ApproveOrder(this)"/>
+                                </div>
+                            </div>
+                        </div>
+                       
+                       
+                       
+                    </div>
+                </div>
+
+            }
+
+        <hr/>
         @using (Html.BeginForm("AddNewItemToExistingOrder", "Order", FormMethod.Post, new { id = "addNewItemForm" }))
         {
             @Html.AntiForgeryToken()
@@ -104,62 +163,7 @@
             <hr />
         </div>
 
-        <div class="row">
-           
-           
-
-            @using (Html.BeginForm("Edit", "OrderNsm", FormMethod.Post, new { area = "Sales", id = "saveOrderForm" }))
-            {
-                var amounts = Model.OrderItems.Sum(n => n.SubTotal) - Model.SpecialDiscount;
-             <div class="form-horizontal">
-                 <div class="col-md-3" style="border: none">
-                     <div class="form-group">
-                         <label class="control-label col-md-4">Quantity</label>
-                         <div class="col-md-8">
-                             <input type="number" name="TotalQuantity" id="TotalQuantity" class="form-control text-right" readonly="readonly" />
-                         </div>
-                     </div>
-                 </div>
-                 <div class="col-md-3" style="border: none">
-                     <div class="form-group">
-                         <label class="control-label col-md-4">Amount (&#2547;)</label>
-                         <div class="col-md-8">
-                             <input type="number" name="Amount" id="Amount" class="form-control text-right" value="@Model.OrderItems.Sum(n=>n.SubTotal)" readonly="readonly" />
-                         </div>
-                     </div>
-                 </div>
-                 <div class="col-md-3" style="border: none">
-                     
-                     <div class="form-group">
-                         <label class="control-label col-md-4">Discount (&#2547;)</label>
-                         <div class="col-md-8">
-                             <input type="number" value="@Model.SpecialDiscount" name="Discount" id="Discount" class="form-control text-right" onkeyup="CalculateNetAmount(this)" />
-                         </div>
-                     </div>
-                 </div>
-
-                 <div class="col-md-3" style="border: none">
-                     
-                     <div class="form-group">
-                         <label class="control-label col-md-4">Net (&#2547;)</label>
-                         <div class="col-md-8">
-                             <input type="number" value="@amounts" name="Net" id="Net" class="form-control text-right" readonly />
-                         </div>
-                     </div>
-                     <div class="form-group">
-                         <label class="control-label col-md-2"></label>
-                         <div class="col-md-10 text-right">
-                             @Html.ActionLink("Back", "PendingOrder", "OrderNsm", new { area = "Sales" }, new { @class = "btn btn-info" })
-                             <input type="button" value="Approve" class="btn btn-success" onclick="ApproveOrder(this)" />
-                         </div>
-                     </div>
-
-                 </div>
-             </div>
-
-            }
-           
-        </div>
+     
        
     </div>
 </section>

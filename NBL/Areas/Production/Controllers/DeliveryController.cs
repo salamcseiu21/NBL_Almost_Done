@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using NBL.Areas.Sales.BLL.Contracts;
 using NBL.BLL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Deliveries;
@@ -11,6 +12,7 @@ using NBL.Models.Validators;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Logs;
 using NBL.Models.ViewModels.Productions;
+using NBL.Models.ViewModels.Summaries;
 using NBL.Models.ViewModels.TransferProducts;
 
 namespace NBL.Areas.Production.Controllers
@@ -24,14 +26,20 @@ namespace NBL.Areas.Production.Controllers
         private readonly IBranchManager _iBranchManager;
         private readonly ICommonManager _iCommonManager;
         private readonly IInventoryManager _iInventoryManager;
+
+        private readonly IInvoiceManager _iInvoiceManager;
+
+        private readonly IClientManager _iClientManager;
         // GET: Factory/Delivery
-        public DeliveryController(IProductManager iProductManager,IFactoryDeliveryManager iFactoryDeliveryManager,IBranchManager iBranchManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager)
+        public DeliveryController(IProductManager iProductManager,IFactoryDeliveryManager iFactoryDeliveryManager,IBranchManager iBranchManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager,IInvoiceManager iInvoiceManager,IClientManager iClientManager)
         {
             _iProductManager = iProductManager;
             _iFactoryDeliveryManager = iFactoryDeliveryManager;
             _iBranchManager = iBranchManager;
             _iInventoryManager = iInventoryManager;
             _iCommonManager = iCommonManager;
+            _iClientManager = iClientManager;
+            _iInvoiceManager = iInvoiceManager;
         }
         public ActionResult DeliverableTransferIssueList() 
         {
@@ -235,6 +243,25 @@ namespace NBL.Areas.Production.Controllers
         {
             IEnumerable<ViewTripModel> tripModels = _iInventoryManager.GetAllTrip().ToList().FindAll(n=>n.Status.Equals(0));
             return View(tripModels);
+        }
+
+        //----------------------------Delivery to Client ---------------------
+        public ActionResult DeliverableOrderList()
+        {
+            SummaryModel model = new SummaryModel();
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByDistributionPoint(branchId).ToList();
+            foreach (var invoice in invoicedOrders)
+            {
+                invoice.Client = _iClientManager.GetById(invoice.ClientId);
+            }
+            model.InvoicedOrderList = invoicedOrders;
+            return View(model);
+        }
+
+        public ActionResult OrderDelivery(long id)
+        {
+            return View();
         }
     }
 }

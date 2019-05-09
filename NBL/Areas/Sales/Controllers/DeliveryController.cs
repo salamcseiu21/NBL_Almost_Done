@@ -48,8 +48,10 @@ namespace NBL.Areas.Sales.Controllers
         {
             SummaryModel model=new SummaryModel();
             int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByBranchAndCompanyId(branchId, companyId).ToList();
+            //int companyId = Convert.ToInt32(Session["CompanyId"]);
+            // var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByBranchAndCompanyId(branchId, companyId).ToList();
+            var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByDistributionPoint(branchId).ToList();
+
             foreach (var invoice in invoicedOrders)
             {
                 invoice.Client = _iClientManager.GetById(invoice.ClientId);
@@ -63,8 +65,8 @@ namespace NBL.Areas.Sales.Controllers
         {
             SummaryModel model = new SummaryModel();
             int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var invoicedOrders = _iInvoiceManager.GetLatestInvoicedOrdersByBranchAndCompanyId(branchId, companyId).ToList();
+            //int companyId = Convert.ToInt32(Session["CompanyId"]);
+            var invoicedOrders = _iInvoiceManager.GetLatestInvoicedOrdersByDistributionPoint(branchId).ToList();
             foreach (var invoice in invoicedOrders)
             {
                 invoice.Client = _iClientManager.GetById(invoice.ClientId);

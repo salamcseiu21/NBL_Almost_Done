@@ -62,7 +62,7 @@ namespace NBL.Models.ViewModels.Orders
         public IEnumerable<OrderItem> OrderItems { get; set; }  
         public Client Client { get; set; }
         public User User { get; set; }
-
+        public int DistributionPointId { get; set; }    
         
 
     }

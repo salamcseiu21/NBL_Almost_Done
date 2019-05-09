@@ -27,6 +27,7 @@ namespace NBL.Areas.Sales.DAL.Contracts
        Invoice GetInvoicedOrderByInvoiceId(int invoiceId);
        ICollection<ViewProduct> GetDeliveredProductsByInvoiceRef(string invoiceRef);
        ICollection<Invoice> GetInvoicedOrdersByCompanyIdAndDate(int companyId, DateTime date);
-       ICollection<Invoice> GetLatestInvoicedOrdersByBranchAndCompanyId(int branchId, int companyId);
+       ICollection<Invoice> GetLatestInvoicedOrdersByDistributionPoint(int distributionPointId);
+       ICollection<Invoice> GetAllInvoicedOrdersByDistributionPoint(int distributionPointId);
    }
 }

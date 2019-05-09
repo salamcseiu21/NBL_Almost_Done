@@ -19,13 +19,15 @@ namespace NBL.Areas.Sales.Controllers
         private readonly IInventoryManager _iInventoryManager;
         private readonly IProductManager _iProductManager;
         private readonly IClientManager _iClientManager;
+        private readonly IBranchManager _iBranchManager;
 
-        public OrderNsmController(IOrderManager iOrderManager, IInventoryManager iInventoryManager, IProductManager iProductManager, IClientManager iClientManager)
+        public OrderNsmController(IOrderManager iOrderManager, IInventoryManager iInventoryManager, IProductManager iProductManager, IClientManager iClientManager,IBranchManager iBranchManager)
         {
             _iOrderManager = iOrderManager;
             _iInventoryManager = iInventoryManager;
             _iProductManager = iProductManager;
             _iClientManager = iClientManager;
+            _iBranchManager = iBranchManager;
 
         }
         public PartialViewResult All()
@@ -104,9 +106,11 @@ namespace NBL.Areas.Sales.Controllers
         //---Edit and approved the order-------
         public ActionResult Edit(int id)
         {
-
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName",branchId);
             var order = _iOrderManager.GetOrderByOrderId(id);
             order.Client = _iClientManager.GetById(order.ClientId);
+            
             Session["TOrders"] = order.OrderItems.ToList();
             return View(order);
 
@@ -130,6 +134,7 @@ namespace NBL.Areas.Sales.Controllers
                 order.Status = Convert.ToInt32(OrderStatus.ApprovedbyNsm);
                 order.SpecialDiscount = dicount;
                 order.ApprovedByNsmDateTime = DateTime.Now;
+                order.DistributionPointId = Convert.ToInt32(collection["DistributionPointId"]);
                 string r = _iOrderManager.UpdateOrderDetails(orderItems);
                 order.NsmUserId = user.UserId;
                 string result = _iOrderManager.ApproveOrderByNsm(order);
