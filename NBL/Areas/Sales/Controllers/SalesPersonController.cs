@@ -38,6 +38,7 @@ namespace NBL.Areas.Sales.Controllers
             var branchId = Convert.ToInt32(Session["BranchId"]);
             var companyId = Convert.ToInt32(Session["CompanyId"]);
             var delayedOrders = _iOrderManager.GetDelayedOrdersToSalesPersonByBranchAndCompanyId(branchId, companyId);
+            var cancelledOrders = _iOrderManager.GetCancelledOrdersToSalesPersonByBranchCompanyUserId(branchId, companyId,user.UserId);
             var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).ToList();
             var clients = _iClientManager.GetAllClientDetailsByBranchId(branchId).ToList();
             var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId, companyId).OrderByDescending(n => n.OrderId).DistinctBy(n => n.OrderId).ToList().FindAll(n => n.UserId == user.UserId);
@@ -47,7 +48,9 @@ namespace NBL.Areas.Sales.Controllers
                 Clients = clients,
                 PendingOrders = _iOrderManager.GetOrdersByBranchIdCompanyIdAndStatus(branchId, companyId, 0),
                 DelayedOrders = delayedOrders,
-                Products = products
+                Products = products,
+                CancelledOrders = cancelledOrders
+                
             };
             return View(model);
         }

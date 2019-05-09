@@ -1,8 +1,6 @@
 ﻿
-@using NBL.BLL
 @model NBL.Models.ViewModels.Orders.ViewOrder
 @{
-    UserManager userManager = new UserManager();
     var aClient = Model.Client;
 }
 
@@ -35,21 +33,21 @@
         <div class="col-md-4">
             <fieldset>
                 <legend>Order By</legend>
-                @userManager.GetUserInformationByUserId(Model.UserId).EmployeeName<br />
+                @Model.OrderBy<br />
                 At:  @Model.SysDate.ToShortTimeString(),@Model.SysDate.ToString("dd-MMM-yyyy")
             </fieldset>
         </div>
         <div class="col-md-4">
             <fieldset>
-                <legend>NSM</legend>
-                @userManager.GetUserInformationByUserId(Model.NsmUserId).EmployeeName<br />
+                <legend>Sales Manager</legend>
+                @Model.SalesManager<br />
                 Approve At : @Model.ApprovedByNsmDateTime.ToShortTimeString(),@Model.ApprovedByNsmDateTime.ToString("dd-MMM-yyyy")
             </fieldset>
         </div>
         <div class="col-md-4">
             <fieldset>
-                <legend>Admin</legend>
-                @userManager.GetUserInformationByUserId(Model.AdminUserId).EmployeeName<br />
+                <legend>Sales Admin</legend>
+                @Model.SalesAdmin<br />
                 Approve At : @Model.ApprovedByAdminDateTime.ToShortTimeString(),@Model.ApprovedByAdminDateTime.ToString("dd-MMM-yyyy")
             </fieldset>
         </div>

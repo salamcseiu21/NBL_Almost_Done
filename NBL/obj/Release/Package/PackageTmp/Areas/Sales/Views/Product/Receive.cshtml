@@ -34,6 +34,9 @@
             <th class="text-center">
                 Pending Qty
             </th>
+            <th class="text-center">
+              Date
+            </th>
             <th class="text-center" style="width: 50px">
                 Action
             </th>
@@ -48,6 +51,7 @@
               <td class="text-center">@item.Sum(n=>n.Quantity)</td>
               <td class="text-center">@item.Sum(n=>n.ReceiveQty)</td>
               <td class="text-center">@(item.Sum(n => n.Quantity)-item.Sum(n=>n.ReceiveQty))</td>
+              <td class="text-center">@item.First().SystemDateTime.ToString("dd-MMMM-yyyy")</td>
               <td class="text-center">
                   @Html.ActionLink("Details","ReceiveableDetails",new {id=item.First().TripId},new {@class="btn btn-info"})
               </td>
@@ -68,6 +72,9 @@
             </th>
             <th class="text-center">
                 Pending Qty
+            </th>
+            <th class="text-center">
+                Date
             </th>
             <th class="text-center" style="width: 50px">
                 Action

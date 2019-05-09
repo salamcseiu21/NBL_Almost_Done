@@ -109,12 +109,30 @@
             <div id="divScannedProducts"></div>
         </div>
     </div>
+      
+    @Html.Partial("_ModalDeliveryPartialPage")
 </section>
 
 @section Scripts
 {
     
-    
+       
+    <script>
+
+        function SaveDeliveryInfo(id) {
+
+            if (confirm("Are you sure to Save  this delivery info?")) {
+                // var invoiceId = $("#InvoiceId").val();
+                $("#saveTransferDeliveryInfoForm").submit();
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+
+        }
+    </script>
     <script>
         function SaveScannedBarcodeToTextFile(btnClicked) {
             //var $form = $(btnClicked).parents('form');
@@ -139,6 +157,24 @@
             });
         }
     </script>
+    
+    <script>
+
+        function Delivery(requisitionId) {
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ViewTransferDetails", "Delivery", new { area = "Sales" })",
+                data: { requisitionId: requisitionId.value },
+                success: function (response) {
+                    $('#modalBody').html(response);
+                    $('#showDeliveryModal').modal('show');
+                }
+            });
+        }
+
+    </script>
+    
     <script>
         
         $("#tbl_requisition_details_list").DataTable();
@@ -149,69 +185,7 @@
             $("#DeliveryDate").datepicker({ dateFormat: 'dd-MM-yy' });
             loadAllScannedProductsForRequisition();
         });
-        function ApproveRequisition(btnClicked) {
-
-            if (confirm("Are you confirm to approve this Requisition?")) {
-
-                var id = btnClicked.id;
-                // alert(id);
-                var json = { id: id};
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("ApproveRequisition", "Product",new {area="Sales"})',
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(json),
-                    success: function (data) {
-                        location.href = RootUrl + "sales/product/requestedrequisition";
-                    }
-                });
-            } else {
-                return false;// if it's a link to prevent post
-            }
-
-            return false;// if it's a link to prevent post
-
-
-        }
-        function UpdateRequisitionQuantity(btnClicked) {
-
-            var id = btnClicked.id;
-            var qty = parseInt(btnClicked.value);
-            //alert(id);
-            var json = { id: id, quantity: qty };
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("UpdateRequisitionQuantity", "Product",new {area="Sales"})',
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(json),
-                success: function (data) {
-                    location.reload();
-                }
-            });
-        }
-
-        function RemoveProductRequisitionProductById(btnClicked) {
-
-            if (confirm("Are you sure to remove this product ??")) {
-                var id = btnClicked.id;
-                var json = { id: id };
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("RemoveProductRequisitionProductById", "Product",new {area="Sales"})',
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(json),
-                    success: function (data) {
-                        location.reload();
-                    }
-                });
-            } else {
-                return false;// if it's a link to prevent post
-            }
-
-            return false;// if it's a link to prevent post
-
-        }
-
+       
         function loadAllScannedProductsForRequisition() {
             var requisitionId = $("#TRequisitionId").val();
             var json = { requisitionId: requisitionId };

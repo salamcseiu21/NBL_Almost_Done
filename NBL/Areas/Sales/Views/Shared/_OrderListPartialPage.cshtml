@@ -1,0 +1,85 @@
+﻿
+@model NBL.Models.ViewModels.Summaries.SummaryModel
+@{
+    ViewBag.Title = "Order List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <div style="border: 1px solid;padding: 5px">
+        <h3 class="text-center text-green headingStyle">Distribution</h3>
+        <table id="table_order_list_to_deliver" class="table table table-striped table-bordered" style="border:1px solid black">
+            <thead>
+                <tr>
+                    <th>Client Info</th>
+                    <th>Invoice Ref</th>
+                    <th>Invoice No</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Invoice At</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.InvoicedOrderList)
+                {
+
+                    var client = item.Client;
+                    <tr>
+                        <td>@Html.Raw(client.GetBasicInformation())</td>
+                        <td>@item.InvoiceRef</td>
+                        <td>
+                            @item.InvoiceNo
+                        </td>
+                        <td class="text-center">
+                            @if (item.InvoiceStatus == 0)
+                            {
+                                <p class="text-danger">Pending</p>
+                            }
+                            else if (item.InvoiceStatus == 1)
+                            {
+                                <p class="text-warning">Patitally Delivered</p>
+                            }
+                            else
+                            {
+                                <p class="text-success">Delivered</p>
+                            }
+                        </td>
+                        <td class="text-center">
+                            @item.InvoiceDateTime.ToShortTimeString()
+                            @if (!(item.InvoiceDateTime.Date.Equals(DateTime.Now.Date)))
+                            {
+                                <span>,@item.InvoiceDateTime.ToString("dd-MMM-yyyy")</span>
+                            }
+                        </td>
+
+                        <td class="text-center">
+                            @Html.ActionLink(" Delivery", "Delivery", "Delivery", new { area = "Sales", id = item.InvoiceId }, new { @class = "fa fa-eye" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Client Info</th>
+                    <th>Invoice Ref</th>
+                    <th>Invoice No</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Invoice At</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</section>
+@section Scripts
+{
+    <script>
+
+        $('#table_order_list_to_deliver').DataTable({
+            "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+            "oLanguage": {
+                "sEmptyTable": "<h4 style='color:green;font-weight:bolder;'>There is no orders to <i>Delivery</i> right now !</h4>"
+            }
+        });
+
+    </script>
+}

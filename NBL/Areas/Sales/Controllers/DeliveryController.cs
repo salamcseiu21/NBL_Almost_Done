@@ -44,7 +44,7 @@ namespace NBL.Areas.Sales.Controllers
             _iOrderManager = iOrderManager;
             _iBranchManager = iBranchManager;
         }
-        public ActionResult OrderList()
+        public PartialViewResult OrderList()
         {
             SummaryModel model=new SummaryModel();
             int branchId = Convert.ToInt32(Session["BranchId"]);
@@ -55,9 +55,25 @@ namespace NBL.Areas.Sales.Controllers
                 invoice.Client = _iClientManager.GetById(invoice.ClientId);
             }
             model.InvoicedOrderList = invoicedOrders;
-            return View(model);
+            return PartialView("_OrderListPartialPage", model);
+
         }
-       
+
+        public PartialViewResult LatestOrderList()
+        {
+            SummaryModel model = new SummaryModel();
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            var invoicedOrders = _iInvoiceManager.GetLatestInvoicedOrdersByBranchAndCompanyId(branchId, companyId).ToList();
+            foreach (var invoice in invoicedOrders)
+            {
+                invoice.Client = _iClientManager.GetById(invoice.ClientId);
+            }
+            model.InvoicedOrderList = invoicedOrders;
+            return PartialView("_OrderListPartialPage",model);
+            
+        }
+
         [HttpGet]
         public ActionResult Delivery(int id)
         {

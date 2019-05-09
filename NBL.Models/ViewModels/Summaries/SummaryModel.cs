@@ -33,6 +33,7 @@ namespace NBL.Models.ViewModels.Summaries
         public IEnumerable<Invoice> OrderListByDate { get; set; }   
         public IEnumerable<ViewOrder> Orders { get; set; }
         public IEnumerable<ViewOrder> DelayedOrders { get; set; }
+        public IEnumerable<ViewOrder> CancelledOrders { get; set; }
         public IEnumerable<ViewOrder> PendingOrders { set; get; }
         public IEnumerable<ViewEmployee> Employees { get; set; }    
         public IEnumerable<ViewVerifiedOrderModel> VerifiedOrders { set; get; }
@@ -49,6 +50,7 @@ namespace NBL.Models.ViewModels.Summaries
             OrderListByDate = new List<Invoice>();
             Orders=new List<ViewOrder>();
             DelayedOrders=new List<ViewOrder>();
+            CancelledOrders=new List<ViewOrder>();
             PendingOrders=new List<ViewOrder>();
             TopClients=new List<ViewClient>();
             Employees=new List<ViewEmployee>();

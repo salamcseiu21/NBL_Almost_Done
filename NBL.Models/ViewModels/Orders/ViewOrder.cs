@@ -24,8 +24,10 @@ namespace NBL.Models.ViewModels.Orders
         public string OrderSlipNo { get; set; }
         [Display(Name = "User")]
         public int UserId { get; set; }
+        public string OrderBy { get; set; }
         [Display(Name = "Nsm User Id")]
         public int NsmUserId { get; set; }
+        public string SalesManager { get; set; }
         [Display(Name = "Delivered Or Receive User Id")]
         public int DeliveredOrReceiveUserId { get; set; }
         [Display(Name = "Branch")]
@@ -44,6 +46,7 @@ namespace NBL.Models.ViewModels.Orders
         public DateTime ApprovedByNsmDateTime { get; set; }
         [Display(Name = "Admin User Id")]
         public int AdminUserId { get; set; }
+        public string SalesAdmin { get; set; }
         [Display(Name = "Approved By Admin")]
         public DateTime ApprovedByAdminDateTime { get; set; }
         [Display(Name = "Delivery Date")]
@@ -59,6 +62,8 @@ namespace NBL.Models.ViewModels.Orders
         public IEnumerable<OrderItem> OrderItems { get; set; }  
         public Client Client { get; set; }
         public User User { get; set; }
+
+        
 
     }
 }

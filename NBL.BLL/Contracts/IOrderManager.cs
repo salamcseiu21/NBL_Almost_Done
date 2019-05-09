@@ -123,6 +123,7 @@ namespace NBL.BLL.Contracts
 
         IEnumerable<ViewVerifiedOrderModel> GetVerifiedOrdersByBranchAndCompanyId(int branchId, int companyId);
         IEnumerable<ViewOrder> GetOrder(SearchCriteriaModel searchCriteria);
-        bool SaveSoldProductBarCode(RetailSale retail); 
+        bool SaveSoldProductBarCode(RetailSale retail);
+        ICollection<ViewOrder> GetCancelledOrdersToSalesPersonByBranchCompanyUserId(int branchId, int companyId,int userId);
     }
 }

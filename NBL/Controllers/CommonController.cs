@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
+using Microsoft.Office.Interop.Excel;
 using NBL.Areas.Sales.BLL.Contracts;
 using NBL.BLL;
 using NBL.BLL.Contracts;
@@ -554,9 +555,12 @@ namespace NBL.Controllers
 
         public PartialViewResult ViewOrderDetails(int orderId) 
         {
-
+           
             var model = _iOrderManager.GetOrderByOrderId(orderId);
             model.Client = _iClientManager.GetById(model.ClientId);
+            model.OrderBy = _userManager.GetUserInformationByUserId(model.UserId).EmployeeName;
+            model.SalesAdmin = _userManager.GetUserInformationByUserId(model.AdminUserId).EmployeeName;
+            model.SalesManager = _userManager.GetUserInformationByUserId(model.NsmUserId).EmployeeName;
             return PartialView("_ViewOrderDetailsModalPartialPage", model);
         }
 

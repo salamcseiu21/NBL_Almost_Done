@@ -281,7 +281,10 @@ namespace NBL.BLL
         {
             return _iOrderGateway.GetDelayedOrdersToAdminByBranchAndCompanyId(branchId, companyId);
         }
-
+        public ICollection<ViewOrder> GetCancelledOrdersToSalesPersonByBranchCompanyUserId(int branchId, int companyId, int userId)
+        {
+            return _iOrderGateway.GetCancelledOrdersToSalesPersonByBranchCompanyUserId(branchId, companyId,userId);
+        }
         public bool UpdateVerificationStatus(int orderId, string verificationNote, int userUserId)
         {
             return _iOrderGateway.UpdateVerificationStatus(orderId,verificationNote,userUserId)>0;
@@ -317,6 +320,8 @@ namespace NBL.BLL
             int rowAffected = _iOrderGateway.SaveSoldProductBarCode(retail); 
             return rowAffected > 0;
         }
+
+        
     }
 
 

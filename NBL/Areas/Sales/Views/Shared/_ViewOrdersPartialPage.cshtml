@@ -1,4 +1,5 @@
-﻿@model IEnumerable<NBL.Models.ViewModels.Orders.ViewOrder>
+﻿@using NBL.Models.Enums
+@model IEnumerable<NBL.Models.ViewModels.Orders.ViewOrder>
     
 @{
     ViewBag.Title = ViewBag.Heading;
@@ -57,7 +58,7 @@
                         }
                         else if (item.Status == 2)
                         {
-                            <label>Approve By Admin / Invoiced</label>
+                            <label>Approved by sales Admin</label>
 
                         }
                         else if (item.Status == 3)
@@ -91,7 +92,7 @@
                         else if (item.Status == 6)
                         {
                             <div title="@item.ResonOfCancel">
-                                <label style="color: red;"><i class="fa fa-times"></i> Cancelled by NSM</label><br/>
+                                <label style="color: red;"><i class="fa fa-times"></i> Cancelled by Sales Manager</label><br/>
                                 <span>
                                     At- @{
                                             @item.CancelDateTime.ToShortTimeString()

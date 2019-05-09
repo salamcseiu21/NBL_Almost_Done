@@ -35,9 +35,10 @@ namespace NBL.Areas.Sales.Controllers
         }
         public PartialViewResult All()
         {
+            var user = (ViewUser)Session["user"];
             int branchId = Convert.ToInt32(Session["BranchId"]);
             int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId,companyId).OrderByDescending(n => n.OrderId).DistinctBy(n => n.OrderId).ToList();
+            var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId,companyId).OrderByDescending(n => n.OrderId).DistinctBy(n => n.OrderId).ToList().FindAll(n=>n.UserId==user.UserId);
             ViewBag.Heading = "All Orders";
             return PartialView("_ViewOrdersPartialPage",orders);
         }
@@ -419,31 +420,39 @@ namespace NBL.Areas.Sales.Controllers
 
         public ActionResult OrderList()
         {
-         
+            var user = (ViewUser)Session["user"];
             int branchId = Convert.ToInt32(Session["BranchId"]);
             int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId,companyId).ToList().OrderByDescending(n => n.OrderId).ToList();
+            var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId,companyId).ToList().OrderByDescending(n => n.OrderId).ToList().FindAll(n=>n.UserId==user.UserId);
             return View(orders);
         }
 
         public ActionResult PendingOrders() 
         {
-    
+            var user = (ViewUser)Session["user"];
             int branchId = Convert.ToInt32(Session["BranchId"]);
             int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetOrdersByBranchIdCompanyIdAndStatus(branchId, companyId, Convert.ToInt32(OrderStatus.Pending)).ToList().OrderByDescending(n => n.OrderId).ToList();
+            var orders = _iOrderManager.GetOrdersByBranchIdCompanyIdAndStatus(branchId, companyId, Convert.ToInt32(OrderStatus.Pending)).ToList().OrderByDescending(n => n.OrderId).ToList().FindAll(n=>n.UserId==user.UserId);
             return View(orders);
         }
 
         public ActionResult DelayedOrders() 
         {
-         
+            var user = (ViewUser)Session["user"];
             int branchId = Convert.ToInt32(Session["BranchId"]);
             int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetDelayedOrdersToSalesPersonByBranchAndCompanyId(branchId,companyId);
+            var orders = _iOrderManager.GetDelayedOrdersToSalesPersonByBranchAndCompanyId(branchId,companyId).ToList().FindAll(n=>n.UserId==user.UserId);
             return View(orders);
         }
 
+        public ActionResult CancelledOrders()
+        {
+            var user = (ViewUser) Session["user"];
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            var orders = _iOrderManager.GetCancelledOrdersToSalesPersonByBranchCompanyUserId(branchId, companyId,user.UserId);
+            return View(orders);
+        }
         public ActionResult OrderSlip(int id)
         {
             var orderSlip = _iOrderManager.GetOrderSlipByOrderId(id);

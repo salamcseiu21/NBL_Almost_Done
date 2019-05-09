@@ -51,5 +51,6 @@ namespace NBL.DAL.Contracts
 
        IEnumerable<ViewOrder> GetOrder(SearchCriteriaModel searchCriteria);
        int SaveSoldProductBarCode(RetailSale retail);
+       ICollection<ViewOrder> GetCancelledOrdersToSalesPersonByBranchCompanyUserId(int branchId, int companyId, int userId);
    }
 }

@@ -425,6 +425,7 @@ namespace NBL.Areas.Sales.Controllers
                 int productId = Convert.ToInt32(collection["ProductId"]);
                 int toBranchId = Convert.ToInt32(collection["RequisitionToBranchId"]);
                 var id = toBranchId.ToString("D2") + productId;
+              //var list=  _iProductManager.GetAll();
                 var product = _iProductManager.GetAll().ToList().Find(n => n.ProductId == productId);
                 int quantity = Convert.ToInt32(collection["Quantity"]);
 

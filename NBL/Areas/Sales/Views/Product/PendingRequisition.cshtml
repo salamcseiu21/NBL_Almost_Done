@@ -10,9 +10,9 @@
         <thead>
         <Tr>
             <th>Requisition Ref</th>
-            <th>Quantity</th>
-            <th>Date</th>
-            <th>Action</th>
+            <th class="text-right">Quantity</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Action</th>
         </Tr>
         </thead>
         <tbody>
@@ -20,8 +20,8 @@
         {
             <tr>
                 <td>@item.TransferRequisitionRef</td>
-                <td>@item.Quantity</td>
-                <td>@item.TransferRequisitionDate.ToString("dd-MMMM-yyyy")</td>
+                <td class="text-right">@item.Quantity</td>
+                <td class="text-center">@item.TransferRequisitionDate.ToString("dd-MMMM-yyyy")</td>
                 
                 <td class="text-center">
                     @Html.ActionLink("View Details", "ViewRequisitionDetails", "Product", new { id = item.TransferRequisitionId }, new { @class = "btn-sm btn btn-info" })
@@ -32,9 +32,9 @@
         <tfoot>
             <Tr>
                 <th>Requisition Ref</th>
-                <th>Quantity</th>
-                <th>Date</th>
-                <th>Action</th>
+                <th class="text-right">Quantity</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Action</th>
             </Tr>
         </tfoot>
     </table>

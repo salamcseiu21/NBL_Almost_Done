@@ -26,6 +26,7 @@
             @*<li>@Html.ActionLink(" Test", "Test", "Home", new { area = "Sales" }, new { @class = "fa fa-plus", style = "font-weight: bolder" })</li>*@
             <li>@Html.ActionLink(" Sales Order", "Order", "Order", new {area = "Sales"}, new {@class = "fa fa-plus", style = "font-weight: bolder"})</li>
             <li>@Html.ActionLink(" Latest Orders", "LatestOrders", "Order", new {area = "Sales"}, new {@class = "fa fa-list", style = "font-weight: bolder"})</li>
+            <li>@Html.ActionLink(" Cancelled Orders", "CancelledOrders", "Order", new {area = "Sales"}, new {@class = "fa fa-list", style = "font-weight: bolder"})</li>
             <li>@Html.ActionLink(" All Orders", "All", "Order", new {area = "Sales"}, new {@class = "fa fa-list", style = "font-weight: bolder"})</li>
             @*<li>@Html.ActionLink(" Delivered Sales", "ViewDeliveredOrderList", "Sales", new { area = "Sales" }, new { @class = "fa fa-list" })</li>*@
         </ul>

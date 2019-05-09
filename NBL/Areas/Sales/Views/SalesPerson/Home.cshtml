@@ -32,7 +32,10 @@
                 <span class="badge bg-purple" style="font-size: 14px">@Model.Clients.Count()</span>
                 <i class="fa fa-users"></i> Client
             </a>
-
+            <a class="btn btn-app" href="@Url.Action("CancelledOrders","Order",new {area="Sales"},null)">
+                <span class="badge bg-red" style="font-size: 14px">@Model.CancelledOrders.ToList().Count</span>
+                <i class="fa fa-trash"></i> Cancelled Order
+            </a>
         </div>
         <!-- /.box-body -->
     </div>

@@ -1,0 +1,38 @@
+﻿
+@model IEnumerable<NBL.Models.ViewModels.TransferProducts.ViewTransferProductDetails>
+
+<table id="tbl_receivable_list" class="display" style="border: 1px solid black">
+    <caption class="text-center text-green" style="font-weight: bolder; font-size: 20px">Product List to Receive</caption>
+    <thead>
+    <tr>
+
+        <th>Product Name</th>
+        <th>Category</th>
+        <th> Quantity </th>
+
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ProductName</td>
+            <td>@(item.ProductCategory?.ProductCategoryName?? "N/A")</td>
+            <td>@item.Quantity</td>
+        </tr>
+    }
+    </tbody>
+
+    <tfoot>
+    <tr>
+        <th>Product Name</th>
+        <th>Category</th>
+        <th> Quantity </th>
+    </tr>
+    </tfoot>
+</table>
+<script>
+    $("#tbl_receivable_list").DataTable({
+        lengthMenu: [[10, 30, 50, -1], [15, 30, 50, "All"]]
+    });
+</script>

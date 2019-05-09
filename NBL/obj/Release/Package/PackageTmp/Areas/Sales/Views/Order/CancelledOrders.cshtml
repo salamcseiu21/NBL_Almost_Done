@@ -1,0 +1,117 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Orders.ViewOrder>
+@{
+    ViewBag.Title = "Cancelled Orders";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+
+}
+<section class="content">
+    <h3 class="text-center text-red headingStyle">Cancelled Order List</h3>
+    <table id="table_Order_list" class="table table-bordered" style="border:1px solid black">
+
+        <thead>
+            <tr>
+                <th>Client Info</th>
+                <th>Order Slip No</th>
+                <th class="text-right">Amount (&#2547;)</th>
+                <th class="text-right">Vat (&#2547;)</th>
+                <th class="text-right">Discount (&#2547;)</th>
+                <th class="text-right">S.D (&#2547;)</th>
+                <th class="text-right">Net Amount (&#2547;)</th>
+                <th class="text-right">Qty</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Reason</th>
+
+                <th class="text-center">View</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+
+
+                <tr>
+                    <td>@Html.Raw(order.Client.GetBasicInformation())</td>
+                    <td>@order.OrderSlipNo</td>
+                    <td class="text-right">@(order.Amounts - order.Vat)</td>
+                    <td class="text-right">@order.Vat</td>
+                    <td class="text-right">@order.Discount</td>
+                    <td class="text-right">@order.SpecialDiscount</td>
+                    <td class="text-right">@order.NetAmounts</td>
+                    <td class="text-right">@order.Quantity</td>
+                    <td class="text-center">
+                        @order.OrderDate.ToString("dd-MMM-yyyy")
+                    </td>
+                    <td class="text-center">
+                        <label class="text-danger">@order.ResonOfCancel</label>
+                    </td>
+
+                    <td class="text-center">
+                        <button type="button" value="@order.OrderId" class="btn btn-success btn-sm" onclick="viewDetails(this)"><i class="fa fa-eye"></i> Details</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Client Info</th>
+                <th>Order Slip No</th>
+                <th class="text-right">Amount (&#2547;)</th>
+                <th class="text-right">Vat (&#2547;)</th>
+                <th class="text-right">Discount (&#2547;)</th>
+                <th class="text-right">S.D (&#2547;)</th>
+                <th class="text-right">Net Amount (&#2547;)</th>
+                <th class="text-right">Qty</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Reason</th>
+                <th class="text-center">View</th>
+            </tr>
+        </tfoot>
+    </table>
+    @Html.Partial("_ModalPartialPage")
+</section>
+@section Scripts
+{
+    <script>
+
+        $('#table_Order_list').DataTable({
+            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],
+            "oLanguage": {
+                "sEmptyTable": "<h4 style='color:green;font-weight:bolder;'>There is no order in the list right now !</h4>"
+            }
+        });
+
+    </script>
+    <script>
+        function Cancel(id) {
+
+            if (confirm("Are you sure to cancel  this Order ?")) {
+                // alert(id.id);
+                $("#"+id.id).submit();
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+
+        }
+    </script>
+    <script>
+
+        function viewDetails(orderId) {
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ViewOrderDetails", "Common", new { area = "" })",
+                data: { orderId: orderId.value },
+                success: function (response) {
+                    $('#modalBody').html(response);
+                    $('#showOrderDetailsModal').modal('show');
+                }
+            });
+        }
+
+    </script>
+}
+
+

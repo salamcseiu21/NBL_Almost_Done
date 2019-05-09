@@ -659,15 +659,15 @@ namespace NBL.DAL
                         ProductId = Convert.ToInt32(reader["ProductId"]),
                         Quantity = Convert.ToInt32(reader["Quantity"]),
                         OrderId = Convert.ToInt32(reader["OrderId"]),
-                        UnitPrice = Convert.ToDecimal(reader["UnitPrice"]),
-                        SalePrice = Convert.ToDecimal(reader["SalePrice"]),
+                        UnitPrice =DBNull.Value.Equals(reader["UnitPrice"])? default(decimal):  Convert.ToDecimal(reader["UnitPrice"]),
+                        SalePrice = DBNull.Value.Equals(reader["SalePrice"]) ? default(decimal) : Convert.ToDecimal(reader["SalePrice"]),
                         ProductName = reader["ProductName"].ToString(),
-                        DiscountAmount = Convert.ToDecimal(reader["DiscountAmount"]),
+                        DiscountAmount = DBNull.Value.Equals(reader["DiscountAmount"]) ? default(decimal) : Convert.ToDecimal(reader["DiscountAmount"]),
                         ProductCategoryName = reader["ProductCategoryName"].ToString(),
                         SlNo = Convert.ToInt32(reader["SlNo"]),
                         VatId = Convert.ToInt32(reader["VatId"]),
                         DiscountId = Convert.ToInt32(reader["DiscountId"]),
-                        Vat = Convert.ToDecimal(reader["Vat"])
+                        Vat = DBNull.Value.Equals(reader["Vat"]) ? default(decimal) : Convert.ToDecimal(reader["Vat"])
                     });
                 }
                 reader.Close();
@@ -1896,7 +1896,84 @@ ConnectionObj.Close();
                 ConnectionObj.Close();
             }
         }
+        public ICollection<ViewOrder> GetCancelledOrdersToSalesPersonByBranchCompanyUserId(int branchId, int companyId, int userId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetCancelledOrdersToSalesPersonByBranchCompanyUserId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                CommandObj.Parameters.AddWithValue("@UserId", userId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<ViewOrder> orders = new List<ViewOrder>();
+                while (reader.Read())
+                {
+                    var anOrder = new ViewOrder
+                    {
+                        OrderId = Convert.ToInt32(reader["OrderId"]),
+                        OrderDate = Convert.ToDateTime(reader["OrderDate"]),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        OrderSlipNo = reader["OrderSlipNo"].ToString(),
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        BranchName = reader["BranchName"].ToString(),
+                        ClientName = reader["Name"].ToString(),
+                        Status = Convert.ToInt32(reader["OrderStatus"]),
+                        ClientEmail = reader["Email"].ToString(),
+                        ApprovedByNsmDateTime = Convert.ToDateTime(reader["ApprovedByNsmDateTime"]),
+                        SpecialDiscount = Convert.ToDecimal(reader["SpecialDiscount"]),
+                        Discount = Convert.ToDecimal(reader["Discount"]),
+                        NetAmounts = Convert.ToDecimal(reader["NetAmounts"]),
+                        NsmUserId = Convert.ToInt32(reader["NsmUserId"]),
+                        CompanyId = companyId,
+                        BranchId = branchId,
+                        Vat = Convert.ToDecimal(reader["Vat"]),
+                        Amounts = Convert.ToDecimal(reader["Amounts"]),
+                        CancelByUserId = Convert.ToInt32(reader["CancelByUserId"]),
+                        ResonOfCancel = reader["ReasonOfCancel"].ToString(),
+                        CancelDateTime = Convert.ToDateTime(reader["CancelDateTime"]),
+                        SysDate = Convert.ToDateTime(reader["SysDateTime"]),
+                        StatusDescription = reader["StatusDescription"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        Client = new Client
+                        {
+                            ClientName = reader["Name"].ToString(),
+                            CommercialName = reader["CommercialName"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            Phone = reader["Phone"].ToString(),
+                            Address = reader["Address"].ToString(),
+                            AlternatePhone = reader["AltPhone"].ToString(),
+                            SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                            ClientType = new ClientType
+                            {
+                                ClientTypeName = reader["ClientTypeName"].ToString(),
+                                ClientTypeId = Convert.ToInt32(reader["ClientTypeId"])
+                            }
+                        }
 
+                    };
+                    orders.Add(anOrder);
+                }
+
+                reader.Close();
+                return orders;
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Could not Collect cancelled Orders due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Collect cancelled Orders", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
         public IEnumerable<ViewOrder> GetDelayedOrdersToNsmByBranchAndCompanyId(int branchId, int companyId)
         {
             try
@@ -2266,7 +2343,5 @@ ConnectionObj.Close();
                 ConnectionObj.Close();
             }
         }
-
-     
     }
 }

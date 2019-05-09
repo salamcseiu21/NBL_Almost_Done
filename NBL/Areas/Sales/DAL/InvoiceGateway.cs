@@ -318,6 +318,68 @@ namespace NBL.Areas.Sales.DAL
         }
 
 
+        public ICollection<Invoice> GetLatestInvoicedOrdersByBranchAndCompanyId(int branchId, int companyId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetLatestInvoicedOrdersByBranchAndCompanyId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                List<Invoice> invoiceList = new List<Invoice>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    Invoice invoice = new Invoice
+                    {
+                        InvoiceId = Convert.ToInt32(reader["InvoiceId"]),
+                        InvoiceDateTime = Convert.ToDateTime(reader["InvoiceDateTime"]),
+                        Amounts = Convert.ToDecimal(reader["Amounts"]),
+                        Discount = Convert.ToDecimal(reader["Discount"]),
+                        SpecialDiscount = Convert.ToDecimal(reader["SpecialDiscount"]),
+                        Vat = Convert.ToDecimal(reader["Vat"]),
+                        NetAmounts = Convert.ToDecimal(reader["NetAmounts"]),
+                        InvoiceByUserId = Convert.ToInt32(reader["InvoiceByUserId"]),
+                        InvoiceNo = Convert.ToInt32(reader["InvoiceNo"]),
+                        InvoiceRef = reader["InvoiceRef"].ToString(),
+                        InvoiceStatus = Convert.ToInt16(reader["InvoiceStatus"]),
+                        Cancel = Convert.ToChar(reader["Cancel"]),
+                        BranchId = branchId,
+                        CompanyId = companyId,
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        SysDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        Client = new Client
+                        {
+                            ClientId = Convert.ToInt32(reader["ClientId"]),
+                            CommercialName = reader["CommercialName"].ToString(),
+                            ClientName = reader["Name"].ToString(),
+                            SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                            ClientType = new ClientType
+                            {
+                                ClientTypeId = Convert.ToInt32(reader["ClientTypeId"]),
+                                ClientTypeName = reader["ClientTypeName"].ToString()
+                            }
+                        },
+                        Quantity = Convert.ToInt32(reader["Quantity"])
+                    };
+                    invoiceList.Add(invoice);
+                }
+                reader.Close();
+                return invoiceList;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get latest Invoiced orders by branch and company id", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
         public IEnumerable<Invoice> GetAllInvoicedOrdersByBranchAndCompanyId(int branchId, int companyId)
         {
             try

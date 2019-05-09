@@ -259,7 +259,9 @@
                     success: function (response) {
                         //alert("Saved Successfully");
                         ViewTempRequisitionList();
-
+                        $('#ProductName').val("");
+                        $('#ProductId').val("");
+                        $('#Quantity').val(1);
                     }
                 });
                 return false; // if it's a link to prevent post
