@@ -45,5 +45,6 @@ namespace NBL.BLL.Contracts
        ICollection<ViewTransferProductModel> GetAllTransferedListByBranchAndCompanyId(int branchId, int companyId);
        List<string> GetTransferReceiveableBarcodeList(long transferId);
        int ReceiveTransferedProduct(TransferModel aModel);
+       string SaveDeliveredOrderFromFactory(List<ScannedProduct> barcodeList, Delivery aDelivery, int invoiceStatus, int orderStatus);
    }
 }

@@ -54,7 +54,8 @@ namespace NBL.Models.EntityModels.Orders
         public  IEnumerable<Product> Products { get; set; }
         public IEnumerable<TempOrderedProduct> TempOrderedProducts { get; set; }
         public Client Client { get; set; }
-        public User User { get; set; } 
+        public User User { get; set; }
+        public int DistributionPointId { get; set; }    
         public Order(List<Product> products,int clientId,DateTime date):this()
         {
             this.Products = products;

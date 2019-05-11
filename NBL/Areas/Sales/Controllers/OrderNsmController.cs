@@ -106,9 +106,10 @@ namespace NBL.Areas.Sales.Controllers
         //---Edit and approved the order-------
         public ActionResult Edit(int id)
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName",branchId);
             var order = _iOrderManager.GetOrderByOrderId(id);
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName",order.DistributionPointId);
+          
             order.Client = _iClientManager.GetById(order.ClientId);
             
             Session["TOrders"] = order.OrderItems.ToList();

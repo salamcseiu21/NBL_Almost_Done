@@ -286,7 +286,7 @@ namespace NBL.Areas.Production.Controllers
         public JsonResult GetRequisitionRefeAutoComplete(string prefix)
         {
 
-            var list = ViewPendingRequisitionList();
+            var list = ViewPendingRequisitionList().OrderByDescending(n=>n.SystemDateTime);
             var requisitions = (from c in list where c.RequisitionRef.ToLower().Contains(prefix.ToLower())
                 select new
                 {
@@ -308,7 +308,7 @@ namespace NBL.Areas.Production.Controllers
                 requsitionList.Add(_iProductManager.GetRequsitionsByStatus(0).ToList()
                     .Find(n => n.RequisitionRef.Equals(requisitionRef)));
             }
-            List<ViewRequisitionModel> viewRequisitionModels = _iProductManager.GetRequsitions().ToList();
+            List<ViewRequisitionModel> viewRequisitionModels = _iProductManager.GetPendingRequsitions().ToList();
             foreach (ViewRequisitionModel model in viewRequisitionModels)
             {
                 ViewRequisitionModel viewRequisitionModel =

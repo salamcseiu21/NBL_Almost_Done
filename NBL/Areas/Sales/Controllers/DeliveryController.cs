@@ -344,7 +344,7 @@ namespace NBL.Areas.Sales.Controllers
         public PartialViewResult LoadScannedProduct(int invoiceId)
         {
            // var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
-            string fileName = "Ordered_Product_List_For_" + invoiceId;
+            string fileName = "Scanned_Ordered_Product_List_For_" + invoiceId;
             var filePath = Server.MapPath("~/Files/" + fileName);
             List<ScannedProduct> list=new List<ScannedProduct>();
             if (!System.IO.File.Exists(filePath))

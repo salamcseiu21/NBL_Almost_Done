@@ -1798,5 +1798,165 @@ namespace NBL.DAL
             }
             return i;
         }
+
+        //---------------------delivery order form factory-----------------
+
+        public int SaveDeliveredOrderFromFactory(List<ScannedProduct> scannedProducts, Delivery aDelivery, int invoiceStatus, int orderStatus)
+        {
+            ConnectionObj.Open();
+            SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
+            try
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Transaction = sqlTransaction;
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.CommandText = "UDSP_SaveDeliveredOrderInformationFromFactory";
+                CommandObj.Parameters.AddWithValue("@TransactionDate", aDelivery.DeliveryDate);
+                CommandObj.Parameters.AddWithValue("@TransactionRef", aDelivery.TransactionRef);
+                CommandObj.Parameters.AddWithValue("@DeliveryRef", aDelivery.DeliveryRef);
+                CommandObj.Parameters.AddWithValue("@VoucherNo", aDelivery.VoucherNo);
+                CommandObj.Parameters.AddWithValue("@InvoiceRef", aDelivery.InvoiceRef);
+                CommandObj.Parameters.AddWithValue("@InvoiceId", aDelivery.InvoiceId);
+                CommandObj.Parameters.AddWithValue("@InvoiceStatus", invoiceStatus);
+                CommandObj.Parameters.AddWithValue("@OrderStatus", orderStatus);
+                CommandObj.Parameters.AddWithValue("@IsOwnTransporatoion", aDelivery.IsOwnTransport);
+                CommandObj.Parameters.AddWithValue("@Transportation", aDelivery.Transportation ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@DriverName", aDelivery.DriverName ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@DriverPhone", aDelivery.DriverPhone ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@TransportationCost", aDelivery.TransportationCost);
+                CommandObj.Parameters.AddWithValue("@VehicleNo", aDelivery.VehicleNo ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@ToBranchId", aDelivery.ToBranchId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", aDelivery.CompanyId);
+                CommandObj.Parameters.AddWithValue("@UserId", aDelivery.DeliveredByUserId);
+                CommandObj.Parameters.AddWithValue("@Quantity", scannedProducts.Count);
+                CommandObj.Parameters.Add("@AccountMasterId", SqlDbType.BigInt);
+                CommandObj.Parameters["@AccountMasterId"].Direction = ParameterDirection.Output;
+                CommandObj.Parameters.Add("@DeliveryId", SqlDbType.Int);
+                CommandObj.Parameters["@DeliveryId"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                int deliveryId = Convert.ToInt32(CommandObj.Parameters["@DeliveryId"].Value);
+                var accountMasterId = Convert.ToInt32(CommandObj.Parameters["@AccountMasterId"].Value);
+                int rowAffected = SaveDeliveredOrderDetailsFromFactory(scannedProducts, aDelivery, deliveryId);
+
+                int accountAffected = 0;
+                if (rowAffected > 0)
+                {
+
+                    var financial = aDelivery.FinancialTransactionModel;
+
+                    for (int i = 1; i <= 4; i++)
+                    {
+                        if (i == 1)
+                        {
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.ClientCode, financial.ClientDrAmount, accountMasterId, "Client Debit..");
+                        }
+                        else if (i == 2)
+                        {
+
+
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.SalesRevenueCode, financial.SalesRevenueAmount * (-1), accountMasterId, "Salses Credit..");
+                        }
+                        else if (i == 3)
+                        {
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.GrossDiscountCode, financial.GrossDiscountAmount, accountMasterId, "Gross Discount Debit..");
+                        }
+                        else if (i == 4)
+                        {
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.VatCode, financial.VatAmount * (-1), accountMasterId, "Vat Credit..");
+                        }
+
+                    }
+                }
+
+
+                //if (rowAffected > 0)
+                //{
+
+                //    for (int i = 1; i <= 2; i++)
+                //    {
+                //        if (i == 1)
+                //        {
+                //            anInvoice.TransactionType = "Dr";
+                //            anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
+                //        }
+                //        else
+                //        {
+                //            anInvoice.TransactionType = "Cr";
+                //            anInvoice.Amounts = anInvoice.Amounts * (-1);
+                //            anInvoice.SubSubSubAccountCode = "1001021";
+                //        }
+                //        accountAffected += SaveFinancialTransactionToAccountsDetails(anInvoice, accountMasterId);
+                //    }
+
+                //    if (anInvoice.SpecialDiscount != 0)
+                //    {
+                //        for (int i = 1; i <= 2; i++)
+                //        {
+                //            if (i == 1)
+                //            {
+                //                anInvoice.TransactionType = "Dr";
+                //                anInvoice.Amounts = anInvoice.SpecialDiscount;
+                //                anInvoice.SubSubSubAccountCode = anInvoice.DiscountAccountCode;
+                //            }
+                //            else
+                //            {
+                //                anInvoice.TransactionType = "Cr";
+                //                anInvoice.Amounts = anInvoice.SpecialDiscount * (-1);
+                //                anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
+                //            }
+                //            accountAffected += SaveFinancialTransactionToAccountsDetails(anInvoice, accountMasterId);
+                //        }
+                //    }
+
+
+                if (accountAffected > 0)
+                {
+                    sqlTransaction.Commit();
+                }
+                else
+                {
+                    sqlTransaction.Rollback();
+                }
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                sqlTransaction.Rollback();
+                throw new Exception("Could not Save Order", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        private int SaveDeliveredOrderDetailsFromFactory(List<ScannedProduct> scannedProducts, Delivery aDelivery, int deliveryId)
+        {
+           
+            int n = 0;
+            foreach (var item in scannedProducts)
+            {
+
+                CommandObj.CommandText = "UDSP_SaveDeliveredOrderDetailsFromFactory";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@ProductId", Convert.ToInt32(item.ProductCode.Substring(2, 3)));
+                CommandObj.Parameters.AddWithValue("@ProductBarcode", item.ProductCode);
+                CommandObj.Parameters.AddWithValue("@TransactionRef", aDelivery.DeliveryRef);
+                CommandObj.Parameters.AddWithValue("@Status", 2);
+                CommandObj.Parameters.AddWithValue("@DeliveryId", deliveryId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                n += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            }
+
+           
+            return n;
+        }
+
     }
 }

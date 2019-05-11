@@ -7818,8 +7818,6 @@
     <Content Include="Areas\Production\Views\Product\ProductionNote.cshtml" />
     <Content Include="Areas\Production\Views\Product\Transaction.cshtml" />
     <Content Include="Areas\Production\Views\Product\ViewPendingProductionNote.cshtml" />
-    <Content Include="Areas\Production\Views\Shared\_MenuPartialPage.cshtml" />
-    <Content Include="Areas\Production\Views\Shared\_ViewProductNotePartialPage.cshtml" />
     <Content Include="Areas\Production\Views\Transfer\Issue.cshtml" />
     <Content Include="Areas\Management\Views\Home\BusinessArea.cshtml" />
     <Content Include="Areas\Management\Views\Home\ClientSummary.cshtml" />
@@ -7882,21 +7880,14 @@
     <Content Include="Areas\Production\Views\Product\AddProductToTempFile.cshtml" />
     <Content Include="Areas\Sales\Views\Product\ReceiveableDetails.cshtml" />
     <Content Include="Areas\Production\Views\Transfer\Transactions.cshtml" />
-    <Content Include="Areas\Production\Views\Shared\_ViewDeliverableProductPartialPage.cshtml" />
     <Content Include="Areas\Sales\Views\Shared\_ViewReceivalbeProductPartialPage.cshtml" />
     <Content Include="Areas\Sales\Views\Shared\_ViewReceivableListPartialPage.cshtml" />
     <Content Include="Areas\Production\Views\Product\ProductLifeCycle.cshtml" />
     <Content Include="Areas\Corporate\Views\Shared\_RequisitonDetailsModal.cshtml" />
     <Content Include="Areas\Production\Views\Product\Requisitions.cshtml" />
-    <Content Include="Areas\Production\Views\Shared\_RequisitonDetailsModal.cshtml" />
-    <Content Include="Areas\Production\Views\Shared\_ViewRequisitionDetailsPartialPage.cshtml" />
     <Content Include="Areas\Production\Views\Transfer\CreateTrip.cshtml" />
-    <Content Include="Areas\Production\Views\Shared\_ViewRequisitionDetailsByIdPartialPage.cshtml" />
-    <Content Include="Areas\Production\Views\Shared\_ViewTempTripProductsPartialPage.cshtml" />
     <Content Include="Areas\Production\Views\Transfer\ConfirmTrip.cshtml" />
     <Content Include="Areas\Production\Views\Delivery\TripList.cshtml" />
-    <Content Include="Areas\Production\Views\Shared\_ViewRequiredTripProductsPartialPage.cshtml" />
-    <Content Include="Areas\Production\Views\Shared\_ViewScannedProductPartialPage.cshtml" />
     <Content Include="Areas\Sales\Views\Shared\_ViewScannedProductPartialPage.cshtml" />
     <Content Include="Areas\Production\Views\Product\MonthlyRequisitions.cshtml" />
     <Content Include="Areas\Production\Views\Product\MonthlyRequisitionDetails.cshtml" />
@@ -7904,7 +7895,6 @@
     <Content Include="Areas\Editor\Views\Product\AddProductDetails.cshtml" />
     <Content Include="Areas\Production\Views\BarCodeGenerator\PrintBarCode.cshtml" />
     <Content Include="Areas\Production\Views\BarCode\Print.cshtml" />
-    <Content Include="Areas\Production\Views\Shared\_ViewPrintBarCodePartialPage.cshtml" />
     <Content Include="Areas\Production\Views\BarCode\Generate.cshtml" />
     <Content Include="Areas\Production\Views\BarCode\PrintBarCode.cshtml" />
     <Content Include="Areas\HR\Views\web.config" />
@@ -7936,8 +7926,6 @@
     <Content Include="Areas\Sales\Views\Shared\_ViewNsmOrdersPartialPage.cshtml" />
     <Content Include="Areas\Sales\Views\Shared\_DistributionMenuPartialPage.cshtml" />
     <Content Include="Areas\Sales\Views\Distributor\Home.cshtml" />
-    <Content Include="Areas\Sales\Views\Shared\_ViewLoadScannedProductPartialPage.cshtml" />
-    <Content Include="Areas\Sales\Views\Shared\_ViewLoadDeliverableProductPartialPage.cshtml" />
     <Content Include="Areas\Sales\Views\Delivery\Chalan.cshtml" />
     <Content Include="Areas\Sales\Views\Delivery\DeleveredOrders.cshtml" />
     <Content Include="Areas\Sales\Views\Delivery\Delivery.cshtml" />
@@ -7987,18 +7975,14 @@
     <Content Include="Areas\AccountsAndFinance\Views\Account\ViewAllSalesReturn.cshtml" />
     <Content Include="Areas\Sales\Views\Delivery\Invoice.cshtml" />
     <Content Include="Areas\Production\Views\ProductionManager\Home.cshtml" />
-    <Content Include="Areas\Production\Views\Shared\_MenuProductionManagerPartialPage.cshtml" />
     <Content Include="Areas\Production\Views\DispatchManager\Home.cshtml" />
-    <Content Include="Areas\Production\Views\Shared\_MenuDispatchManagerPartialPage.cshtml" />
     <Content Include="Areas\Sales\Views\Home\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_ModalDeliveryOrderDetailsPartialPage.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Home\ClientLedger.cshtml" />
     <Content Include="Areas\Production\Views\Qc\Home.cshtml" />
-    <Content Include="Areas\Production\Views\Shared\_MenuFactoryQcPartialPage.cshtml" />
     <Content Include="Areas\Production\Views\Qc\Rejection.cshtml" />
     <Content Include="Areas\Production\Views\Qc\RejectedProductList.cshtml" />
     <Content Include="Areas\Production\Views\ProductionHead\Home.cshtml" />
-    <Content Include="Areas\Production\Views\Shared\_MenuProductionHeadPartialPage.cshtml" />
     <Content Include="Areas\Production\Views\ProductionHead\ViewQcVerifiedProduct.cshtml" />
     <Content Include="Areas\Sales\Views\Home\ClientLedger.cshtml" />
     <Content Include="Areas\AccountExecutive\Views\Home\ClientLedger.cshtml" />
@@ -8016,7 +8000,6 @@
     <Content Include="Areas\Production\Views\Product\DispatchList.cshtml" />
     <Content Include="Areas\Corporate\Views\Home\DispatchList.cshtml" />
     <Content Include="Areas\Production\Views\Product\LatestRequisitions.cshtml" />
-    <Content Include="Areas\Production\Views\Shared\_ViewRequisitionListPartialpage.cshtml" />
     <Content Include="Areas\Sales\Views\Product\Requisition.cshtml" />
     <Content Include="Areas\Sales\Views\Product\PendingRequisition.cshtml" />
     <Content Include="Areas\Production\Views\Transfer\TripList.cshtml" />
@@ -8033,6 +8016,23 @@
     <Content Include="Areas\Sales\Views\Order\CancelledOrders.cshtml" />
     <Content Include="Areas\Production\Views\Delivery\DeliverableOrderList.cshtml" />
     <Content Include="Areas\Production\Views\Delivery\OrderDelivery.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_MenuDispatchManagerPartialPage.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_MenuFactoryQcPartialPage.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_MenuPartialPage.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_MenuProductionHeadPartialPage.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_MenuProductionManagerPartialPage.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_RequisitonDetailsModal.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_ViewDeliverableProductPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewLoadDeliverableProductPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewLoadScannedProductPartialPage.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_ViewPrintBarCodePartialPage.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_ViewProductNotePartialPage.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_ViewRequiredTripProductsPartialPage.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_ViewRequisitionDetailsByIdPartialPage.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_ViewRequisitionDetailsPartialPage.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_ViewRequisitionListPartialpage.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_ViewScannedProductPartialPage.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_ViewTempTripProductsPartialPage.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8163,6 +8163,7 @@
     <Content Include="Views\Shared\_ViewLoadAllTempReplaceProductPartialPage.cshtml" />
     <Content Include="Views\Shared\_ModalReplaceDeliveryPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewDispatchPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ModalOrderDeliveryFromFactoryPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

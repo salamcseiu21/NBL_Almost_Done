@@ -181,6 +181,7 @@ namespace NBL.Areas.Sales.Controllers
                 var order = new Order
                 {
                     BranchId = branchId,
+                    DistributionPointId = branchId,
                     ClientId = clientId,
                     UserId = orderByUserId,
                     OrderDate = orderDate,
