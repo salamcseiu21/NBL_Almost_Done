@@ -10,10 +10,10 @@
         <thead>
         <tr>
             <th>Trip Ref</th>
-            <th>Quantity</th>
+            <th class="text-right">Quantity</th>
            
             <th>Remarks</th>
-            <th>Created By</th>
+            <th class="text-center">Created By</th>
             <th class="text-center">Date</th>
             <th class="text-center">Action</th>
         </tr>
@@ -23,10 +23,10 @@
         {
             <tr>
                 <td>@item.TripRef</td>
-                <td>@item.Quantity</td>
+                <td class="text-right">@item.Quantity</td>
                 
                 <td>@item.Remarks</td>
-                <td>@item.CreatedByUserId</td>
+                <td class="text-center">@(item.TripCreatedBy.EmployeeName?? "Demo User")</td>
                 <td class="text-center">@item.SystemDateTime.ToString("dd-MMMM-yyyy")</td>
                 <td class="text-center">
                     @Html.ActionLink("View Details", "ViewScannedBarcodeList", "Transfer", new { id = item.TripId}, new {@class="btn-sm btn btn-info"})
@@ -37,9 +37,9 @@
         <tfoot>
             <tr>
                 <th>Trip Ref</th>
-                <th>Quantity</th>
+                <th class="text-right">Quantity</th>
                 <th>Remarks</th>
-                <th>Created By</th>
+                <th class="text-center">Created By</th>
                 <th class="text-center">Date</th>
                 <th class="text-center">Action</th>
             </tr>

@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.BarCodes;
 using NBL.Models.ViewModels;
 using ZXing;
+using Image = System.Drawing.Image;
 
 namespace NBL.Areas.Production.Controllers
 {
@@ -30,12 +31,15 @@ namespace NBL.Areas.Production.Controllers
 
         public ActionResult Generate()
         {
+
             var monthYear = DateTime.Now.Month.ToString("D2") +
                             Convert.ToInt32(DateTime.Now.Year.ToString().Substring(2, 2)).ToString("D2");
             var productionDateCodes = _iCommonManager.GetAllProductionDateCode().ToList();
             var productionLines = _iCommonManager.GetAllProductionLines().ToList();
             var courrentCode=  _iCommonManager.GetProductionDateCodeByMonthYear(monthYear).ToList().First();
-            ViewBag.ProductionDateCodeId = new SelectList(productionDateCodes, "ProductionDateCodeId", "Code",courrentCode.ProductionDateCodeId);
+            var list=new SelectList(productionDateCodes, "ProductionDateCodeId", "Code", courrentCode.ProductionDateCodeId);
+            
+            ViewBag.ProductionDateCodeId = list;
             ViewBag.ProductionLineId = new SelectList(productionLines, "ProductionLineId", "LineNumber");
             return View();
         }
@@ -63,19 +67,19 @@ namespace NBL.Areas.Production.Controllers
             {
                 maxSl = 1000;
             }
-            if (maxSl == 0 && lineNo.Equals("2"))
+           else if (maxSl == 0 && lineNo.Equals("2"))
             {
                 maxSl = 2000;
             }
-            if (maxSl == 0 && lineNo.Equals("3"))
+            else if (maxSl == 0 && lineNo.Equals("3"))
             {
                 maxSl = 3000;
             }
-            if (maxSl == 0 && lineNo.Equals("4"))
+            else if (maxSl == 0 && lineNo.Equals("4"))
             {
                 maxSl = 4000;
             }
-            if (maxSl == 0 && lineNo.Equals("5"))
+            else if (maxSl == 0 && lineNo.Equals("5"))
             {
                 maxSl = 5000;
             }

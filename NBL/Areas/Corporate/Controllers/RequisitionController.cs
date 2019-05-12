@@ -36,6 +36,7 @@ namespace NBL.Areas.Corporate.Controllers
 
         public ActionResult PendingRequisition()
         {
+           
             IEnumerable<ViewRequisitionModel> requisitions = _iProductManager.GetPendingRequsitions();
             return View(requisitions);
         }

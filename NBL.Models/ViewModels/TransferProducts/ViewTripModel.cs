@@ -29,6 +29,7 @@ namespace NBL.Models.ViewModels.TransferProducts
         public decimal TransportationCost { get; set; }
         public string VehicleNo { get; set; }
         public int CreatedByUserId { get; set; }
+        public ViewEmployee TripCreatedBy { get; set; } 
         public DateTime SystemDateTime { get; set; }   
     }
 }

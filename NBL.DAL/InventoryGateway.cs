@@ -1142,7 +1142,16 @@ namespace NBL.DAL
                         Remarks = reader["Remarks"].ToString(),
                         Status = Convert.ToInt32(reader["Status"]),
                         SystemDateTime = Convert.ToDateTime(reader["SystemDateTime"]),
-                        Quantity = Convert.ToInt32(reader["Quantity"])
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        TripCreatedBy = new ViewEmployee
+                        {
+                            SubSubSubAccountCode = DBNull.Value.Equals(reader["SubSubSubAccountCode"])? null: reader["SubSubSubAccountCode"].ToString(),
+                            EmployeeName = DBNull.Value.Equals(reader["EmployeeName"]) ? null : reader["EmployeeName"].ToString(),
+                            DepartmentName = DBNull.Value.Equals(reader["DepartmentName"]) ? null : reader["DepartmentName"].ToString(),
+                            DesignationName = DBNull.Value.Equals(reader["DesignationName"]) ? null : reader["DesignationName"].ToString(),
+                            EmployeeImage = DBNull.Value.Equals(reader["EmployeeImage"]) ? null : reader["EmployeeImage"].ToString()
+                        }
+                       
                      
                     });
                 }

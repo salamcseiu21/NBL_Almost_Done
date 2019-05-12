@@ -109,7 +109,7 @@ namespace NBL.Areas.Sales.Controllers
                 var client = _iClientManager.GetClientDeailsById(invoice.ClientId);
                 var deliveredQty = _iInvoiceManager.GetDeliveredProductsByInvoiceRef(invoice.InvoiceRef).Count;
                 var remainingToDeliverQty = invoice.Quantity - deliveredQty;
-                string fileName = "Ordered_Product_List_For_" + invoiceId;
+                string fileName = "Scanned_Ordered_Product_List_For_" + invoiceId;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                     //if the file is exists read the file
                 var barcodeList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
@@ -219,7 +219,7 @@ namespace NBL.Areas.Sales.Controllers
                 var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(id);
                 string scannedBarCode = barcode.ToUpper();
                 int productId = Convert.ToInt32(scannedBarCode.Substring(2, 3));
-                string fileName = "Ordered_Product_List_For_" + id;
+                string fileName = "Scanned_Ordered_Product_List_For_" + id;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 var barcodeList = _iProductManager.ScannedProducts(filePath);
 
