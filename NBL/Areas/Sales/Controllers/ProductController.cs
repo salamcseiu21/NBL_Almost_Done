@@ -10,7 +10,6 @@ using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.EntityModels.Products;
-using NBL.Models.EntityModels.Requisitions;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.Logs;
 using NBL.Models.Validators;
@@ -18,7 +17,6 @@ using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Logs;
 using NBL.Models.ViewModels.Productions;
-using NBL.Models.ViewModels.Requisitions;
 using NBL.Models.ViewModels.TransferProducts;
 
 namespace NBL.Areas.Sales.Controllers
@@ -36,14 +34,30 @@ namespace NBL.Areas.Sales.Controllers
             _iProductManager = iProductManager;
             _iBranchManager = iBranchManager;
         }
-        public PartialViewResult Stock()
+        public ActionResult Stock()
         {
             int companyId = Convert.ToInt32(Session["CompanyId"]);
             int branchId = Convert.ToInt32(Session["BranchId"]);
             var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).ToList();
-            return PartialView("_ViewStockProductInBranchPartialPage", products);
+            return View(products);
         }
 
+        public ActionResult TotalReceive()
+        {
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            var products = _iInventoryManager.GetTotalReceiveProductByBranchAndCompanyId(branchId, companyId).ToList();
+            return View(products);
+        }
+
+
+        public ActionResult TotalDelivery() 
+        {
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            var products = _iInventoryManager.GetDeliveredProductByBranchAndCompanyId(branchId, companyId).ToList();
+            return View(products);
+        }
         [HttpGet]
         public ActionResult Transaction()
         {

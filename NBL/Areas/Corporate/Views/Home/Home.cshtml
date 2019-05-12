@@ -72,7 +72,7 @@
 
                         <tr>
                             <td>@branch.BranchName</td>
-                            <td class="text-right">@branch.Products.Sum(n=>n.StockQuantity)</td>
+                            <td class="text-right">@branch.Products.Sum(n=>n.Quantity)</td>
 
                         </tr>
 
@@ -88,7 +88,7 @@
                             foreach (ViewBranch branch in Model.Branches)
                             {
 
-                                t += branch.Products.Sum(n => n.StockQuantity);
+                                t += branch.Products.Sum(n => n.Quantity);
                             }
                         }
                         @t

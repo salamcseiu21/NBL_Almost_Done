@@ -1,48 +1,39 @@
 ﻿@model IEnumerable<NBL.Models.ViewModels.ViewProduct>
-@{
-    ViewBag.Title = "Stock";
-    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
-}
-<section class="content">
+<div style="padding: 10px; margin: 10px; font-weight: bolder; height: 50px;border: 1px solid green"> Total Quantity : @Model.Sum(n => n.Quantity)</div>
+<table id="table_product_list_in_stock" class="display table table-striped table-bordered" style="border:1px solid black">
 
-    <h3 class="text-center text-green" style="font-weight:bold;font-size:20px;margin:0;padding:0;">Prodcut In Stock</h3>
-    <div style="padding: 10px; margin: 10px; font-weight: bolder; height: 50px;border: 1px solid green"> Total Stock Quantity : @Model.Sum(n => n.StockQuantity)</div>
-    <table id="table_product_list_in_stock" class="display table table-striped table-bordered" style="border:1px solid black">
+    <thead>
+    <tr>
+        <th class="text-center">Product Name</th>
+        <th class="text-center">Category </th>
+        <th class="text-center">Account Code  </th>
+        <th class="text-center" style="width: 60px">Stock Qty</th>
+    </tr>
+    </thead>
 
-        <thead>
-            <tr>
-                <th class="text-center">Product Name</th>
-                <th class="text-center">Category </th>
-                <th class="text-center">Account Code  </th>
-                <th class="text-center" style="width: 60px">Stock Qty</th>
-            </tr>
-        </thead>
+    <tbody>
 
-        <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ProductName</td>
+            <td class="text-center">@item.ProductCategoryName</td>
+            <td class="text-center">@item.SubSubSubAccountCode</td>
+            <td class="text-center">@item.Quantity</td>
+        </tr>
+    }
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.ProductName</td>
-                    <td class="text-center">@item.ProductCategoryName</td>
-                    <td class="text-center">@item.SubSubSubAccountCode</td>
-                    <td class="text-center">@item.StockQuantity</td>
-                </tr>
-            }
+    </tbody>
+    <tfoot>
+    <tr>
+        <th class="text-center">Product Name</th>
 
-        </tbody>
-        <tfoot>
-            <tr>
-                <th class="text-center">Product Name</th>
-
-                <th class="text-center">Category </th>
-                <th class="text-center">Account Code  </th>
-                <th class="text-center">Stock Qty</th>
-            </tr>
-        </tfoot>
-    </table>
-
-</section>
+        <th class="text-center">Category </th>
+        <th class="text-center">Account Code  </th>
+        <th class="text-center">Stock Qty</th>
+    </tr>
+    </tfoot>
+</table>
 
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>

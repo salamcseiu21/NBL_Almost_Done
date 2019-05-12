@@ -33,6 +33,14 @@ namespace NBL.BLL
         {
             return _iInventoryGateway.GetStockProductByBranchAndCompanyId(branchId, companyId);
         }
+        public ICollection<ViewProduct> GetTotalReceiveProductByBranchAndCompanyId(int branchId, int companyId)
+        {
+            return _iInventoryGateway.GetTotalReceiveProductByBranchAndCompanyId(branchId, companyId);
+        }
+        public ICollection<ViewProduct> GetDeliveredProductByBranchAndCompanyId(int branchId, int companyId)
+        {
+            return _iInventoryGateway.GetDeliveredProductByBranchAndCompanyId(branchId, companyId);
+        }
         public IEnumerable<ViewProduct> GetStockProductByCompanyId(int companyId)
         {
             return _iInventoryGateway.GetStockProductByCompanyId(companyId);
@@ -234,5 +242,7 @@ namespace NBL.BLL
             int rowAffected = _iInventoryGateway.SaveDeliveredOrderFromFactory(scannedProducts, aDelivery, invoiceStatus, orderStatus);
             return rowAffected > 0 ? "Saved Successfully!" : "Failed to Save";
         }
+
+       
     }
 }

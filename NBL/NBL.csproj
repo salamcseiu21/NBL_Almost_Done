@@ -318,6 +318,7 @@
     <Compile Include="Areas\Corporate\Controllers\HomeController.cs" />
     <Compile Include="Areas\Corporate\Controllers\OperationHeadController.cs" />
     <Compile Include="Areas\Corporate\Controllers\SalesAdminController.cs" />
+    <Compile Include="Areas\Corporate\Controllers\SummariesController.cs" />
     <Compile Include="Areas\Corporate\CorporateAreaRegistration.cs" />
     <Compile Include="Areas\CRM\Controllers\HomeController.cs" />
     <Compile Include="Areas\CRM\CRMAreaRegistration.cs" />
@@ -8033,6 +8034,11 @@
     <Content Include="Areas\Production\Views\Shared\_ViewRequisitionListPartialpage.cshtml" />
     <Content Include="Areas\Production\Views\Shared\_ViewScannedProductPartialPage.cshtml" />
     <Content Include="Areas\Production\Views\Shared\_ViewTempTripProductsPartialPage.cshtml" />
+    <Content Include="Areas\Sales\Views\Product\TotalReceive.cshtml" />
+    <Content Include="Areas\Sales\Views\Product\TotalDelivery.cshtml" />
+    <Content Include="Areas\Sales\Views\Product\Stock.cshtml" />
+    <Content Include="Areas\Corporate\Views\Summaries\Home.cshtml" />
+    <Content Include="Areas\Production\Views\BarCode\ManualGenerateBarcode.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using NBL.BLL.Contracts;
@@ -221,6 +222,19 @@ namespace NBL.Areas.Production.Controllers
             var datetime = Convert.ToDateTime(date);
             var products = _iBarCodeManager.GetTodaysProductionProductList(datetime);
             return Json(products, JsonRequestBehavior.AllowGet);
+        }
+
+
+        //-------------Manually Generate Barcode --------------
+        public ActionResult ManualGenerateBarcode()
+        {
+            var barcodeList = _iCommonManager.GetAllTestBarcode();
+            foreach (string s in barcodeList)
+            {
+                GenerateBarCodeFromaGivenString(Regex.Replace(s, @"\t|\n|\r", ""));
+            }
+
+            return View();
         }
     }
 }

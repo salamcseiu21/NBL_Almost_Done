@@ -9,7 +9,7 @@
     <div class="box">
         <div class="box-body">
             <a class="btn btn-app" href="@Url.Action("Stock","Product",new {area="Sales"},null)">
-                <span class="badge bg-green" style="font-size: 14px">@Model.Products.Sum(n => n.StockQuantity)</span>
+                <span class="badge bg-green" style="font-size: 14px">@Model.Products.Sum(n => n.Quantity)</span>
                 <i class="fa fa-barcode"></i> Product
             </a>
             <a class="btn btn-app" href="@Url.Action("DelayedOrders","OrderSalesAdmin",new {area="Sales"},null)">
