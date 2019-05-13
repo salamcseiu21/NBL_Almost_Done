@@ -1,0 +1,94 @@
+﻿@model NBL.Models.ViewModels.Productions.ViewTotalProduction
+<div class="col-md-12">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Production Report</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="text-center">
+                        <strong>Production: 1 Jan, @DateTime.Now.Year - 31 Dec, @DateTime.Now.Year</strong>
+                    </p>
+                    <div style="width: 100%">
+                        <canvas id="barchart" height="250" width="600"></canvas>
+                    </div>
+                    <!-- /.chart-responsive -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-6 text-center">
+                    <p class="text-center">
+                        <strong>Production: 1 Jan, @DateTime.Now.Year - 31 Dec, @DateTime.Now.Year</strong>
+                    </p>
+                    <div>
+                        <canvas id="line_chart" height="120"></canvas>
+                    </div>
+                    <!-- /.progress-group -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- ./box-body -->
+        <!-- /.box-footer -->
+    </div>
+    <!-- /.box -->
+</div>
+<script>
+
+    var barChartData = {
+        labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        datasets: [
+            {
+                fillColor: "rgba(151,187,205,0.5)",
+                strokeColor: "rgba(151,187,205,0.8)",
+                highlightFill: "rgba(151,187,205,0.75)",
+                highlightStroke: "rgba(151,187,205,1)",
+                data: [@Model.January, @Model.February, @Model.March, @Model.April, @Model.May, @Model.June, @Model.July, @Model.August, @Model.September, @Model.October, @Model.November, @Model.December]
+            }
+
+        ]
+
+    }
+
+    var lineChartData = {
+        labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        datasets : [
+            {
+                label: "My First dataset",
+                fillColor : "rgba(220,220,220,0.2)",
+                strokeColor : "rgba(220,220,220,1)",
+                pointColor : "rgba(220,220,220,1)",
+                pointStrokeColor : "#fff",
+                pointHighlightFill : "#fff",
+                pointHighlightStroke : "rgba(220,220,220,1)",
+                data: [@Model.January, @Model.February, @Model.March, @Model.April, @Model.May, @Model.June, @Model.July, @Model.August, @Model.September, @Model.October, @Model.November, @Model.December]
+            }
+        ]
+
+    }
+
+    window.onload = function () {
+        //var ctx = document.getElementById("chart-area").getContext("2d");
+        //window.myPie = new Chart(ctx).Pie(pieData);
+
+
+        var ctx1 = document.getElementById("barchart").getContext("2d");
+        window.myBar = new Chart(ctx1).Bar(barChartData, {
+            responsive: true
+        });
+
+        var ctx2 = document.getElementById("line_chart").getContext("2d");
+        window.myLine = new Chart(ctx2).Line(lineChartData, {
+            responsive: true
+        });
+    };
+</script>

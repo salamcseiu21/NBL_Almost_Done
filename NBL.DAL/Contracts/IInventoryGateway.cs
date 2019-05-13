@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using NBL.Models;
 using NBL.Models.EntityModels.Deliveries;
+using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
@@ -25,7 +27,7 @@ namespace NBL.DAL.Contracts
        int SaveDeliveredOrderDetails(List<ScannedProduct> scannedProducts,Delivery aDelivery, int inventoryId, int deliveryId);
        ICollection<ViewDispatchModel> GetAllReceiveableProductToBranchByTripId(long tripId,int branchId);
        TransactionModel GetTransactionModelById(long id);
-       int SaveScannedProduct(List<ScannedProduct> scannedProducts,int userId);
+       int SaveScannedProduct(ProductionModel model);
        ScannedProduct IsThisProductSold(string scannedBarCode);
        ICollection<ViewProduct> OldestProductByBarcode(string scannedBarCode);
        ScannedProduct IsThisProductDispachedFromFactory(string scannedBarCode);
@@ -51,5 +53,7 @@ namespace NBL.DAL.Contracts
        int SaveDeliveredOrderFromFactory(List<ScannedProduct> scannedProducts, Delivery aDelivery, int invoiceStatus, int orderStatus);
        ICollection<ViewProduct> GetTotalReceiveProductByBranchAndCompanyId(int branchId, int companyId);
        ICollection<ViewProduct> GetDeliveredProductByBranchAndCompanyId(int branchId, int companyId);
-   }
+       List<ChartModel> GetTotalProductionCompanyIdAndYear(int companyId, int year);
+       long GetmaxProductionRefByYear(int year);
+    }
 }

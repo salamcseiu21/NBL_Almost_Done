@@ -4,7 +4,9 @@ using System.Linq;
 using NBL.BLL.Contracts;
 using NBL.DAL;
 using NBL.DAL.Contracts;
+using NBL.Models;
 using NBL.Models.EntityModels.Deliveries;
+using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.Enums;
 using NBL.Models.ViewModels;
@@ -41,6 +43,12 @@ namespace NBL.BLL
         {
             return _iInventoryGateway.GetDeliveredProductByBranchAndCompanyId(branchId, companyId);
         }
+
+        public List<ChartModel> GetTotalProductionCompanyIdAndYear(int companyId, int year)
+        {
+            return _iInventoryGateway.GetTotalProductionCompanyIdAndYear(companyId,year);
+        }
+
         public IEnumerable<ViewProduct> GetStockProductByCompanyId(int companyId)
         {
             return _iInventoryGateway.GetStockProductByCompanyId(companyId);
@@ -103,11 +111,28 @@ namespace NBL.BLL
             return _iInventoryGateway.GetTransactionModelById(id);
         }
 
-        public int SaveScannedProduct(List<ScannedProduct> scannedProducts,int userId)
+        public int SaveScannedProduct(ProductionModel model)
         {
-            return _iInventoryGateway.SaveScannedProduct(scannedProducts, userId); 
+            var maxProductionNo = _iInventoryGateway.GetmaxProductionRefByYear(DateTime.Now.Year);
+            var productionRef = GenerateProducitonRef(maxProductionNo);
+            model.TransactionRef = productionRef;
+            model.TransactionType = "RE";
+            
+            return _iInventoryGateway.SaveScannedProduct(model); 
         }
 
+        private string GenerateProducitonRef(long maxProductionNo)
+        {
+            string refCode = GetReferenceAccountCodeById(Convert.ToInt32(ReferenceType.ProductionNote));
+            var sN = 1 + maxProductionNo;
+            string ordSlipNo = DateTime.Now.Date.Year.ToString().Substring(2, 2) + refCode + sN;
+            return ordSlipNo;
+        }
+        private string GetReferenceAccountCodeById(int subReferenceAccountId)
+        {
+            var code = _iCommonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id.Equals(subReferenceAccountId)).Code;
+            return code;
+        }
         public bool IsThisProductSold(string scannedBarCode)
         {
             var scannedProduct = _iInventoryGateway.IsThisProductSold(scannedBarCode);

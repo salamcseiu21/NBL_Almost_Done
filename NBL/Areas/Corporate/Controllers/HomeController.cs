@@ -241,7 +241,7 @@ namespace NBL.Areas.Corporate.Controllers
 
 
         }
-
+        
 
         public ActionResult Test()
         {
@@ -322,11 +322,11 @@ namespace NBL.Areas.Corporate.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult Stock()
+        public ActionResult Stock()
         {
             int companyId = Convert.ToInt32(Session["CompanyId"]);
             var stock = _iInventoryManager.GetStockProductByCompanyId(companyId);
-            return PartialView("_ViewStockProductInBranchPartialPage", stock);
+            return View(stock);
         }
         public ActionResult ProductionSummary()
         {

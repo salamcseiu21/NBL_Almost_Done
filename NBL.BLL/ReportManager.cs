@@ -6,6 +6,7 @@ using NBL.DAL;
 using NBL.DAL.Contracts;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Productions;
 
 namespace NBL.BLL
 {
@@ -13,11 +14,13 @@ namespace NBL.BLL
     {
        private readonly IReportGateway _iReportGateway;
        private readonly IOrderManager _iOrderManager;
+        private readonly IInventoryManager _iInventoryManager;
 
-        public ReportManager(IOrderManager iOrderManager,IReportGateway iReportGateway)
+        public ReportManager(IOrderManager iOrderManager,IReportGateway iReportGateway,IInventoryManager iInventoryManager)
         {
             _iOrderManager = iOrderManager;
             _iReportGateway = iReportGateway;
+            _iInventoryManager = iInventoryManager;
         }
         public IEnumerable<ViewClient> GetTopClients()
         {
@@ -119,7 +122,27 @@ namespace NBL.BLL
             };
             return order;
         }
+        //---------------Total Production -----------------------
+        public ViewTotalProduction GetTotalProductionCompanyIdAndYear(int companyId, int year)
+        {
+            var totalProduction = _iInventoryManager.GetTotalProductionCompanyIdAndYear(companyId, year).ToArray();
 
-        
+            ViewTotalProduction production = new ViewTotalProduction
+            {
+                January = totalProduction?.ToList().Find(n => n.MonthName.StartsWith("Jan"))?.Total,
+                February = totalProduction?.ToList().Find(n => n.MonthName.StartsWith("Feb"))?.Total,
+                March = totalProduction?.ToList().Find(n => n.MonthName.StartsWith("Mar"))?.Total,
+                April = totalProduction?.ToList().Find(n => n.MonthName.StartsWith("Ap"))?.Total,
+                May = totalProduction?.ToList().Find(n => n.MonthName.StartsWith("May"))?.Total,
+                June = totalProduction?.ToList().Find(n => n.MonthName.StartsWith("June"))?.Total,
+                July = totalProduction?.ToList().Find(n => n.MonthName.StartsWith("July"))?.Total,
+                August = totalProduction?.ToList().Find(n => n.MonthName.StartsWith("Aug"))?.Total,
+                September = totalProduction?.ToList().Find(n => n.MonthName.StartsWith("Sep"))?.Total,
+                October = totalProduction?.ToList().Find(n => n.MonthName.StartsWith("Oct"))?.Total,
+                November = totalProduction?.ToList().Find(n => n.MonthName.StartsWith("Nov"))?.Total,
+                December = totalProduction?.ToList().Find(n => n.MonthName.StartsWith("Dec"))?.Total
+            };
+            return production;
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Productions;
 
 namespace NBL.BLL.Contracts
 {
@@ -33,5 +34,6 @@ namespace NBL.BLL.Contracts
         
         ViewTotalOrder GetTotalOrdersByYear(int year);
 
+        ViewTotalProduction GetTotalProductionCompanyIdAndYear(int companyId, int nowYear);
     }
 }

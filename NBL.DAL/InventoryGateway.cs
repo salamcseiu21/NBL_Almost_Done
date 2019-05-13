@@ -4,10 +4,12 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using NBL.DAL.Contracts;
+using NBL.Models;
 using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Invoices;
 using NBL.Models.EntityModels.Masters;
+using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.Enums;
 using NBL.Models.ViewModels;
@@ -142,6 +144,79 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public List<ChartModel> GetTotalProductionCompanyIdAndYear(int companyId, int year)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetTotalProductionCompanyIdAndYear";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                CommandObj.Parameters.AddWithValue("@Year", year);
+                List<ChartModel> models = new List<ChartModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    var model = new ChartModel
+                    {
+                        Total = Convert.ToInt32(reader["Total"]),
+                        MonthName = reader["MonthName"].ToString()
+                    };
+                    models.Add(model);
+                }
+                reader.Close();
+                return models;
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Could not Collect production due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Collect total production by company id and year", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public long GetmaxProductionRefByYear(int year)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetmaxProductionRefByYear";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Year", year);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                int slNo = 0;
+                if (reader.Read())
+                {
+                    slNo = Convert.ToInt32(reader["MaxSlNo"]);
+                }
+                reader.Close();
+                return slNo;
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Could not get max Producton ref due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get max Producton ref by year", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
         public IEnumerable<ViewProduct> GetStockProductByCompanyId(int companyId)
         {
 
@@ -159,7 +234,7 @@ namespace NBL.DAL
                     {
                         ProductId = Convert.ToInt32(reader["ProductId"]),
                         ProductName = reader["ProductName"].ToString(),
-                        StockQuantity = Convert.ToInt32(reader["StockQuantity"]),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
                         CostPrice = Convert.ToDecimal(reader["CostPrice"]),
                         Vat = Convert.ToDecimal(reader["Vat"]),
                         SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
@@ -388,7 +463,7 @@ namespace NBL.DAL
                 ConnectionObj.Close();
             }
         }
-        public int SaveScannedProduct(List<ScannedProduct> scannedProducts,int userId)
+        public int SaveScannedProduct(ProductionModel model)
         {
             ConnectionObj.Open();
             SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
@@ -398,13 +473,15 @@ namespace NBL.DAL
                 CommandObj.Transaction = sqlTransaction;
                 CommandObj.CommandText = "UDSP_SaveScannedProduct";
                 CommandObj.CommandType = CommandType.StoredProcedure;
-                CommandObj.Parameters.AddWithValue("@UserId", userId);
-                CommandObj.Parameters.AddWithValue("@Quantity", scannedProducts.Count);
+                CommandObj.Parameters.AddWithValue("@UserId", model.UserId);
+                CommandObj.Parameters.AddWithValue("@Quantity", model.TotalQuantity);
+                CommandObj.Parameters.AddWithValue("@TransactionRef", model.TransactionRef);
+                CommandObj.Parameters.AddWithValue("@TransactionType", model.TransactionType);
                 CommandObj.Parameters.Add("@MasterId", SqlDbType.BigInt);
                 CommandObj.Parameters["@MasterId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
                 long masterId = Convert.ToInt32(CommandObj.Parameters["@MasterId"].Value);
-                var rowAffected = SaveScannedProductToFactoryInventory(scannedProducts,masterId);
+                var rowAffected = SaveScannedProductToFactoryInventory(model,masterId);
                 if (rowAffected > 0)
                 {
                     sqlTransaction.Commit();
@@ -417,10 +494,11 @@ namespace NBL.DAL
                throw new Exception("Could not saved scanned products",exception);
             }
         }
-        private int SaveScannedProductToFactoryInventory(List<ScannedProduct> scannedProducts,long masterId)
+        private int SaveScannedProductToFactoryInventory(ProductionModel model,long masterId)
         {
             int i = 0;
-            foreach (var item in scannedProducts)
+            int n = 0;
+            foreach (var item in model.ScannedProducts)
             {
 
                 CommandObj.CommandText = "UDSP_SaveProductToFactoryInventoryDetails";
@@ -433,9 +511,35 @@ namespace NBL.DAL
                 CommandObj.ExecuteNonQuery();
                 i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
             }
+            if (i > 0)
+            {
+                n = SaveScannedItemWithQuantity(model, masterId);
+            }
+            return n;
+        }
+        private int SaveScannedItemWithQuantity(ProductionModel model, long masterId)
+        {
+            int i = 0;
 
+            foreach (var item in model.ScannedProducts.GroupBy(n => n.ProductId))
+            {
+
+                CommandObj.CommandText = "UDSP_SaveScannedItemWithQuantity";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@ProductId", item.Key);
+                CommandObj.Parameters.AddWithValue("@Quantity", item.Count());
+                CommandObj.Parameters.AddWithValue("@FactoryInventoryId", masterId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            }
+
+           
             return i;
         }
+
         public ScannedProduct IsThisProductSold(string scannedBarCode)
         {
             try
@@ -1920,13 +2024,17 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@UserId", aDelivery.DeliveredByUserId);
                 CommandObj.Parameters.AddWithValue("@Quantity", scannedProducts.Count);
                 CommandObj.Parameters.Add("@AccountMasterId", SqlDbType.BigInt);
+                CommandObj.Parameters.Add("@InventoryMasterId", SqlDbType.BigInt);
                 CommandObj.Parameters["@AccountMasterId"].Direction = ParameterDirection.Output;
+                CommandObj.Parameters["@InventoryMasterId"].Direction = ParameterDirection.Output;
                 CommandObj.Parameters.Add("@DeliveryId", SqlDbType.Int);
                 CommandObj.Parameters["@DeliveryId"].Direction = ParameterDirection.Output;
+               
                 CommandObj.ExecuteNonQuery();
                 int deliveryId = Convert.ToInt32(CommandObj.Parameters["@DeliveryId"].Value);
                 var accountMasterId = Convert.ToInt32(CommandObj.Parameters["@AccountMasterId"].Value);
-                int rowAffected = SaveDeliveredOrderDetailsFromFactory(scannedProducts, aDelivery, deliveryId);
+                var inventoryMasterId = Convert.ToInt32(CommandObj.Parameters["@InventoryMasterId"].Value);
+                int rowAffected = SaveDeliveredOrderDetailsFromFactory(scannedProducts, aDelivery, deliveryId,inventoryMasterId);
 
                 int accountAffected = 0;
                 if (rowAffected > 0)
@@ -2023,10 +2131,11 @@ namespace NBL.DAL
             }
         }
 
-        private int SaveDeliveredOrderDetailsFromFactory(List<ScannedProduct> scannedProducts, Delivery aDelivery, int deliveryId)
+        private int SaveDeliveredOrderDetailsFromFactory(List<ScannedProduct> scannedProducts, Delivery aDelivery, int deliveryId,long inventoryMasterId)
         {
            
             int n = 0;
+            int i = 0;
             foreach (var item in scannedProducts)
             {
 
@@ -2036,6 +2145,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@ProductId", Convert.ToInt32(item.ProductCode.Substring(2, 3)));
                 CommandObj.Parameters.AddWithValue("@ProductBarcode", item.ProductCode);
                 CommandObj.Parameters.AddWithValue("@TransactionRef", aDelivery.DeliveryRef);
+                CommandObj.Parameters.AddWithValue("@InventoryMasterId", inventoryMasterId);
                 CommandObj.Parameters.AddWithValue("@Status", 2);
                 CommandObj.Parameters.AddWithValue("@DeliveryId", deliveryId);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
@@ -2044,8 +2154,35 @@ namespace NBL.DAL
                 n += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
             }
 
+            if (n > 0)
+            {
+                i = SaveDeliveredItemWithQuantityToFactory(scannedProducts, aDelivery, inventoryMasterId);
+            }
            
-            return n;
+            return i;
+        }
+
+
+        private int SaveDeliveredItemWithQuantityToFactory(List<ScannedProduct> deliveredProducts,Delivery aDelivery,long inventoryMasterId)
+        {
+            int i = 0;
+            var groupBy = deliveredProducts.GroupBy(n => n.ProductId);
+            foreach (IGrouping<int, ScannedProduct> scannedProducts in groupBy)
+            {
+                CommandObj.CommandText = "UDSP_SaveDeliveredItemWithQuantityToFactory";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@ProductId", scannedProducts.Key);
+                CommandObj.Parameters.AddWithValue("@Quantity", scannedProducts.Count());
+                CommandObj.Parameters.AddWithValue("@InventoryMasterId", inventoryMasterId);
+                CommandObj.Parameters.AddWithValue("@InvoiceRef", aDelivery.InvoiceRef);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+
+            }
+            return i;
         }
 
     }

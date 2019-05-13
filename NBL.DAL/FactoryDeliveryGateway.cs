@@ -28,11 +28,15 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@DispatchRef", dispatchModel.DispatchRef);
                 CommandObj.Parameters.AddWithValue("@CompanyId", dispatchModel.CompanyId);
                 CommandObj.Parameters.AddWithValue("@DispatchByUserId", dispatchModel.DispatchByUserId);
-                CommandObj.Parameters.Add("@DispatchId", SqlDbType.Int);
+                CommandObj.Parameters.Add("@DispatchId", SqlDbType.BigInt);
                 CommandObj.Parameters["@DispatchId"].Direction = ParameterDirection.Output;
+                CommandObj.Parameters.Add("@InventoryMasterId", SqlDbType.BigInt);
+                CommandObj.Parameters["@InventoryMasterId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
                 long dispatchId = Convert.ToInt64(CommandObj.Parameters["@DispatchId"].Value);
-                int rowAffected = SaveDispatchInformationDetails(dispatchModel, dispatchId);
+                long inventoryMasterId = Convert.ToInt64(CommandObj.Parameters["@InventoryMasterId"].Value);
+
+                int rowAffected = SaveDispatchInformationDetails(dispatchModel, dispatchId,inventoryMasterId);
                 if (rowAffected > 0)
                 {
                     sqlTransaction.Commit();
@@ -57,18 +61,21 @@ namespace NBL.DAL
             }
         }
 
-        private int SaveDispatchInformationDetails(DispatchModel model, long dispatchId)
+        private int SaveDispatchInformationDetails(DispatchModel model, long dispatchId,long inventoryMasterId)
         {
             int i=0;
             int n = 0;
             foreach (var item in model.ScannedProducts) 
             {
+                CommandObj.Parameters.Clear();
                 CommandObj.CommandText = "UDSP_SaveDispatchInformationDetails";
                 CommandObj.CommandType = CommandType.StoredProcedure;
-                CommandObj.Parameters.Clear();
+               
                 CommandObj.Parameters.AddWithValue("@ProductId", Convert.ToInt32(item.ProductCode.Substring(2,3)));
                 CommandObj.Parameters.AddWithValue("@DispatchId", dispatchId);
                 CommandObj.Parameters.AddWithValue("@ProductBarCode", item.ProductCode);
+                CommandObj.Parameters.AddWithValue("@FactoryInventoryMasterId", inventoryMasterId);
+                CommandObj.Parameters.AddWithValue("@TransactionRef", model.DispatchRef);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
@@ -76,23 +83,25 @@ namespace NBL.DAL
             }
             if (i > 0)
             {
-                n = SaveDispatchItems(model.DispatchModels,dispatchId);
+                n = SaveDispatchItems(model.DispatchModels,dispatchId,inventoryMasterId);
             }
             return n;
         }
 
-        private int SaveDispatchItems(IEnumerable<ViewDispatchModel> products, long dispatchId)  
+        private int SaveDispatchItems(IEnumerable<ViewDispatchModel> products, long dispatchId,long inventoryMasterId)  
         {
             int i = 0;
             foreach (var item in products)
             {
+                CommandObj.Parameters.Clear();
                 CommandObj.CommandText = "UDSP_SaveDispatchItems";
                 CommandObj.CommandType = CommandType.StoredProcedure;
-                CommandObj.Parameters.Clear();
+             
                 CommandObj.Parameters.AddWithValue("@ProductId", item.ProductId);
                 CommandObj.Parameters.AddWithValue("@Quantity", item.Quantity);
                 CommandObj.Parameters.AddWithValue("@ToBranchId", item.ToBranchId);
                 CommandObj.Parameters.AddWithValue("@DispatchId", dispatchId);
+                CommandObj.Parameters.AddWithValue("@InventoryMasterId", inventoryMasterId);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();

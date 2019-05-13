@@ -426,6 +426,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Areas/Corporate/Views/Home/Search.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
+    <File Include="Areas/Corporate/Views/Home/Stock.cshtml">
+      <publishTime>05/13/2019 09:23:05</publishTime>
+    </File>
     <File Include="Areas/Corporate/Views/Home/Test.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
@@ -993,6 +996,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Areas/Production/Views/BarCode/Generate.cshtml">
       <publishTime>04/22/2019 18:03:11</publishTime>
     </File>
+    <File Include="Areas/Production/Views/BarCode/ManualGenerateBarcode.cshtml">
+      <publishTime>05/12/2019 14:44:34</publishTime>
+    </File>
     <File Include="Areas/Production/Views/BarCode/Print.cshtml">
       <publishTime>04/21/2019 23:14:10</publishTime>
     </File>
@@ -1030,7 +1036,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/15/2019 13:33:35</publishTime>
     </File>
     <File Include="Areas/Production/Views/Home/Home.cshtml">
-      <publishTime>04/22/2019 18:23:09</publishTime>
+      <publishTime>05/13/2019 12:24:30</publishTime>
     </File>
     <File Include="Areas/Production/Views/Home/ProductionSummary.cshtml">
       <publishTime>04/22/2019 11:46:40</publishTime>
@@ -1099,7 +1105,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/22/2019 21:10:05</publishTime>
     </File>
     <File Include="Areas/Production/Views/Shared/_MenuProductionManagerPartialPage.cshtml">
-      <publishTime>04/25/2019 17:32:56</publishTime>
+      <publishTime>05/12/2019 15:11:00</publishTime>
     </File>
     <File Include="Areas/Production/Views/Shared/_RequisitonDetailsModal.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -1109,6 +1115,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Areas/Production/Views/Shared/_ViewPrintBarCodePartialPage.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
+    </File>
+    <File Include="Areas/Production/Views/Shared/_ViewProductionChartPartialPage.cshtml">
+      <publishTime>05/13/2019 09:38:41</publishTime>
     </File>
     <File Include="Areas/Production/Views/Shared/_ViewProductNotePartialPage.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -22894,16 +22903,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="bin/NBL.BLL.dll">
-      <publishTime>05/12/2019 12:47:32</publishTime>
+      <publishTime>05/13/2019 14:55:56</publishTime>
     </File>
     <File Include="bin/NBL.DAL.dll">
-      <publishTime>05/12/2019 12:47:31</publishTime>
+      <publishTime>05/13/2019 14:55:56</publishTime>
     </File>
     <File Include="bin/NBL.dll">
-      <publishTime>05/12/2019 14:09:33</publishTime>
+      <publishTime>05/13/2019 14:56:01</publishTime>
     </File>
     <File Include="bin/NBL.Models.dll">
-      <publishTime>05/12/2019 10:19:58</publishTime>
+      <publishTime>05/13/2019 14:17:50</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -23098,7 +23107,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Files/Create_Trip_File.xml">
-      <publishTime>05/12/2019 09:35:47</publishTime>
+      <publishTime>05/13/2019 12:25:47</publishTime>
     </File>
     <File Include="Files/Monthly_Requisition_Products.xml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -23956,7 +23965,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/15/2019 14:12:55</publishTime>
+      <publishTime>05/13/2019 14:56:06</publishTime>
     </File>
   </ItemGroup>
 </Project>

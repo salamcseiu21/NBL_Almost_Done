@@ -113,6 +113,7 @@
     <Compile Include="EntityModels\Departments\Department.cs" />
     <Compile Include="EntityModels\Designations\Designation.cs" />
     <Compile Include="EntityModels\Orders\RetailSale.cs" />
+    <Compile Include="EntityModels\Productions\ProductionModel.cs" />
     <Compile Include="EntityModels\Productions\ProductVerificationModel.cs" />
     <Compile Include="EntityModels\Productions\RejectedProduct.cs" />
     <Compile Include="EntityModels\Productions\RejectionReason.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="ViewModels\Orders\ViewCreateRetailSaleModel.cs" />
     <Compile Include="ViewModels\Productions\ProductionSummary.cs" />
     <Compile Include="ViewModels\Productions\ViewRejectedProduct.cs" />
+    <Compile Include="ViewModels\Productions\ViewTotalProduction.cs" />
     <Compile Include="ViewModels\Products\ViewCreateProductDetailsModel.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceDetailsModel.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceModel.cs" />

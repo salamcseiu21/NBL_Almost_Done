@@ -327,9 +327,16 @@ namespace NBL.Areas.Production.Controllers
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 if (System.IO.File.Exists(filePath))
                 {
-                    //if the file is exists read the file
                     var scannedProduct = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
-                    int result = _iInventoryManager.SaveScannedProduct(scannedProduct, userId);
+                    ProductionModel model=new ProductionModel
+                    {
+                        UserId = userId,
+                        ScannedProducts = scannedProduct,
+                        TotalQuantity = scannedProduct.Count
+                    };
+                    //if the file is exists read the file
+                   
+                    int result = _iInventoryManager.SaveScannedProduct(model);
                     if (result > 0)
                         //if the scanned products save successfully then clear the file..
                     {

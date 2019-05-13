@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using NBL.Models;
 using NBL.Models.EntityModels.Deliveries;
+using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
@@ -23,7 +25,7 @@ namespace NBL.BLL.Contracts
        IEnumerable<TransactionModel> GetAllReceiveableProductToBranchByDeliveryRef(string deliveryRef);
        ICollection<ViewDispatchModel> GetAllReceiveableProductToBranchByTripId(long tripId,int branchId);
        TransactionModel GetTransactionModelById(long id);
-       int SaveScannedProduct(List<ScannedProduct> scannedProducts,int userId);
+       int SaveScannedProduct(ProductionModel model);
        bool IsThisProductSold(string scannedBarCode);
        ICollection<ViewProduct> OldestProductByBarcode(string scannedBarCode);
        bool IsThisProductDispachedFromFactory(string scannedBarCode);
@@ -48,5 +50,6 @@ namespace NBL.BLL.Contracts
        string SaveDeliveredOrderFromFactory(List<ScannedProduct> barcodeList, Delivery aDelivery, int invoiceStatus, int orderStatus);
        ICollection<ViewProduct> GetTotalReceiveProductByBranchAndCompanyId(int branchId, int companyId);
        ICollection<ViewProduct> GetDeliveredProductByBranchAndCompanyId(int branchId, int companyId);
+       List<ChartModel> GetTotalProductionCompanyIdAndYear(int companyId, int year);
    }
 }

@@ -5,6 +5,7 @@ using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Securities;
+using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.Production.Controllers
@@ -16,14 +17,18 @@ namespace NBL.Areas.Production.Controllers
 
         private readonly IInventoryManager _iInventoryManager;
         private readonly UserManager _userManager=new UserManager();
+        private readonly IReportManager _iReportManager;
 
-        public HomeController(IInventoryManager iInventoryManager)
+        public HomeController(IInventoryManager iInventoryManager,IReportManager iReportManager)
         {
             _iInventoryManager = iInventoryManager;
+            _iReportManager = iReportManager;
         }
         // GET: Factory/Home
         public ActionResult Home()
         {
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            //var totalProduction = _iReportManager.GetTotalProductionCompanyIdAndYear(companyId, DateTime.Now.Year);
             var model=new FactorySummaryModel
             {
                 StockQuantity = _iInventoryManager.GetStockProductInFactory().Count,
