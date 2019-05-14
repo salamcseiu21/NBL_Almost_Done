@@ -79,6 +79,27 @@ namespace NBL.BLL
            };
             return order;
         }
+        public ViewTotalOrder GetTotalOrdersByBranchCompanyAndYear(int branchId, int companyId, int year)
+        {
+            var totalOrders = _iOrderManager.GetTotalOrdersByBranchIdCompanyIdAndYear(branchId, companyId, year).ToArray();
+
+            ViewTotalOrder order = new ViewTotalOrder
+            {
+                January = totalOrders?.ToList().Find(n => n.MonthName.StartsWith("Jan"))?.Total,
+                February = totalOrders?.ToList().Find(n => n.MonthName.StartsWith("Feb"))?.Total,
+                March = totalOrders?.ToList().Find(n => n.MonthName.StartsWith("Mar"))?.Total,
+                April = totalOrders?.ToList().Find(n => n.MonthName.StartsWith("Ap"))?.Total,
+                May = totalOrders?.ToList().Find(n => n.MonthName.StartsWith("May"))?.Total,
+                June = totalOrders?.ToList().Find(n => n.MonthName.StartsWith("June"))?.Total,
+                July = totalOrders?.ToList().Find(n => n.MonthName.StartsWith("July"))?.Total,
+                August = totalOrders?.ToList().Find(n => n.MonthName.StartsWith("Aug"))?.Total,
+                September = totalOrders?.ToList().Find(n => n.MonthName.StartsWith("Sep"))?.Total,
+                October = totalOrders?.ToList().Find(n => n.MonthName.StartsWith("Oct"))?.Total,
+                November = totalOrders?.ToList().Find(n => n.MonthName.StartsWith("Nov"))?.Total,
+                December = totalOrders?.ToList().Find(n => n.MonthName.StartsWith("Dec"))?.Total
+            };
+            return order;
+        }
 
         public ViewTotalOrder GetTotalOrdersByCompanyIdAndYear(int companyId, int year)
         {
@@ -144,7 +165,7 @@ namespace NBL.BLL
             };
             return production;
         }
-
+        //----------------Total Dispatch ---------------
         public ViewTotalDispatch GetTotalDispatchCompanyIdAndYear(int companyId, int year)
         {
             var totalDispatch = _iInventoryManager.GetTotalDispatchCompanyIdAndYear(companyId, year).ToArray();
@@ -166,5 +187,7 @@ namespace NBL.BLL
             };
             return dispatch;
         }
+
+        
     }
 }

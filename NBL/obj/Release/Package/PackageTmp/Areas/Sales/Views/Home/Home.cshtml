@@ -1,4 +1,4 @@
-﻿
+﻿@model NBL.Models.ViewModels.Summaries.SummaryModel
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
@@ -7,12 +7,20 @@
 
 <!-- Info boxes -->
 <section class="content">
-    
-    <h3 class="text-center">Sales Home</h3>
-
+  
+    <div class="row">
+        @Html.Partial("_ViewSalesReportChartPartialPage", Model.TotalOrder)
+        <!-- /.col -->
+    </div>
 </section>
 @section Scripts{
     
-
+    <script type="text/javascript">
+        var timeout = setTimeout("location.reload(true);", 60000);
+        function resetTimeout() {
+            clearTimeout(timeout);
+            timeout = setTimeout("location.reload(true);", 60000);
+        }
+    </script>
 
 }

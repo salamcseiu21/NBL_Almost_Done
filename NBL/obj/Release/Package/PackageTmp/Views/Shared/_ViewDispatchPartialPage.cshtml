@@ -9,6 +9,7 @@
                 <th class="text-right">Quantity</th>
                 <th class="text-center">Date</th>
                 <th class="text-center">Dispatch By</th>
+                <th class="text-center">Print Chalan</th>
             </tr>
         </thead>
         <tbody>
@@ -19,6 +20,11 @@
                     <td class="text-right">@item.Quantity</td>
                     <td class="text-center">@item.DispatchDate.ToString("dd-MMMM-yyyy")</td>
                     <td class="text-center">@item.DispatchBy</td>
+                  
+                    <td class="text-center">
+                        <button><i class="fa fa-print"></i> Chalan</button>
+                        @*@Html.ActionLink(" Chalan", "Chalan", new { dispatchId = item.DispatchId}, new {target = "_blank", @class = "fa fa-print"})*@
+                    </td>
                 </tr>
             }
         </tbody>
@@ -28,6 +34,7 @@
                 <th class="text-right">Quantity</th>
                 <th class="text-center">Date</th>
                 <th class="text-center">Dispatch By</th>
+                <th class="text-center">Print Chalan</th>
             </tr>
         </tfoot>
     </table>

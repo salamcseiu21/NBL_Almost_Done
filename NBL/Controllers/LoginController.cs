@@ -143,13 +143,10 @@ namespace NBL.Controllers
                     return RedirectToAction("Home", "Home", new { area = "Admin" });
                    
                 case "SalesExecutive":
-                    return RedirectToAction("Home", "SalesPerson", new { area = "Sales" });
                 case "SalesManager":
-                    return RedirectToAction("Home", "Nsm", new { area = "Sales" });
                 case "DistributionManager":
-                    return RedirectToAction("Home", "Distributor", new { area = "Sales" });
                 case "SalesAdmin":
-                    return RedirectToAction("Home", "SalesAdmin", new { area = "Sales" });
+                    return RedirectToAction("Home", "Home", new { area = "Sales" });
                             
                 case "AccountExecutive":
                     return RedirectToAction("Home", "Home", new { area = "AccountsAndFinance" });

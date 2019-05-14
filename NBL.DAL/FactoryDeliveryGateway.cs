@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Deliveries;
+using NBL.Models.EntityModels.Masters;
 using NBL.Models.ViewModels.Deliveries;
 
 namespace NBL.DAL
@@ -61,6 +62,8 @@ namespace NBL.DAL
             }
         }
 
+       
+
         private int SaveDispatchInformationDetails(DispatchModel model, long dispatchId,long inventoryMasterId)
         {
             int i=0;
@@ -109,6 +112,91 @@ namespace NBL.DAL
 
             }
             return i;
+        }
+
+
+        public DispatchModel GetDispatchByDispatchId(long dispatchId)
+        {
+            try
+            {
+
+                CommandObj.CommandText = "UDSP_GetDispatchByDispatchId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DispatchId", dispatchId);
+                DispatchModel dispatch=null;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    dispatch=new DispatchModel
+                    {
+                        DispatchId = dispatchId,
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        TripId = Convert.ToInt64(reader["TripId"]),
+                        DispatchByUserId = Convert.ToInt32(reader["DispatchByUserId"]),
+                        DispatchDate = Convert.ToDateTime(reader["DispatchDate"]),
+                        SystemDateTime = Convert.ToDateTime(reader["SystemDateTime"]),
+                        DispatchRef = reader["DispatchRef"].ToString(),
+                        IsCanclled = reader["IsCancelled"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        Remarks = DBNull.Value.Equals(reader["Remarks"])?null:reader["Remarks"].ToString()
+                    };
+                }
+                reader.Close();
+                return dispatch;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get dispatch Info by dispatchId", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<ViewDispatchModel> GetDispatchDetailsByDispatchId(long dispatchId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetDispatchDetailsByDispatchId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DispatchId", dispatchId);
+                ConnectionObj.Open();
+                List<ViewDispatchModel> dispatchModels=new List<ViewDispatchModel>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    dispatchModels.Add(new ViewDispatchModel
+                    {
+                       ProductName = reader["ProductName"].ToString(),
+                       ToBranchId = Convert.ToInt32(reader["ToBranchId"]),
+                       Quantity = Convert.ToInt32(reader["Quantity"]),
+                       DispatchItemId = Convert.ToInt64(reader["DispatchItemsId"]),
+                       SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                       ProductCategory = new ProductCategory
+                       {
+                           ProductCategoryId = Convert.ToInt32(reader["CategoryId"]),
+                           ProductCategoryName = reader["ProductCategoryName"].ToString(), 
+                       }
+                    });
+                }
+                reader.Close();
+                return dispatchModels;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get dispatch deatils Info by dispatchId", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
         }
 
         public int Add(Delivery model)

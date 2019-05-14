@@ -13,6 +13,8 @@ using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
 using NBL.Models.EntityModels.Identities;
+using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.Sales.Controllers
 {
@@ -27,8 +29,9 @@ namespace NBL.Areas.Sales.Controllers
         private readonly IInventoryManager _iInventoryManager;
         private readonly UserManager _userManager = new UserManager();
         private readonly IAccountsManager _iAccountsManager;
+        private readonly IReportManager _iReportManager;
 
-        public HomeController(IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IEmployeeManager iEmployeeManager,IInventoryManager iInventoryManager, ICommonManager iCommonManager,IAccountsManager iAccountsManager)
+        public HomeController(IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IEmployeeManager iEmployeeManager,IInventoryManager iInventoryManager, ICommonManager iCommonManager,IAccountsManager iAccountsManager,IReportManager iReportManager)
         {
             _iBranchManager = iBranchManager;
             _iClientManager = iClientManager;
@@ -37,13 +40,39 @@ namespace NBL.Areas.Sales.Controllers
             _iCommonManager = iCommonManager;
             _iInventoryManager = iInventoryManager;
             _iAccountsManager = iAccountsManager;
+            _iReportManager = iReportManager;
         }
         // GET: User/Home
 
       
         public ActionResult Home()
         {
-            return View();
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            var branches = _iBranchManager.GetAllBranches();
+            ViewTotalOrder totalOrder = _iReportManager.GetTotalOrdersByBranchCompanyAndYear(branchId,companyId, DateTime.Now.Year);
+            var accountSummary = _iAccountsManager.GetAccountSummaryofCurrentMonthByCompanyId(companyId);
+            var products = _iInventoryManager.GetStockProductByCompanyId(companyId);
+            var orders = _iOrderManager.GetOrdersByCompanyId(companyId).ToList();
+            var topClients = _iReportManager.GetTopClientsByYear(DateTime.Now.Year).ToList();
+            var clients = _iClientManager.GetAllClientDetails();
+            var topProducts = _iReportManager.GetPopularBatteriesByYear(DateTime.Now.Year).ToList();
+            var employees = _iEmployeeManager.GetAllEmployeeWithFullInfo().ToList();
+            SummaryModel summary = new SummaryModel
+            {
+                Branches = branches.ToList(),
+                CompanyId = companyId,
+                TotalOrder = totalOrder,
+                TopClients = topClients,
+                Orders = orders,
+                TopProducts = topProducts,
+                Clients = clients,
+                Employees = employees,
+                Products = products,
+                AccountSummary = accountSummary
+
+            };
+            return View(summary);
 
         }
 

@@ -5,7 +5,10 @@ using NBL.BLL.Contracts;
 using NBL.DAL;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Deliveries;
+using NBL.Models.EntityModels.Orders;
 using NBL.Models.Enums;
+using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Productions;
 
 namespace NBL.BLL
@@ -15,10 +18,12 @@ namespace NBL.BLL
         private readonly IFactoryDeliveryGateway _iFactoryDeliveryGateway;
         readonly InventoryGateway _inventoryGateway = new InventoryGateway();
         readonly CommonGateway _commonGateway = new CommonGateway();
+        readonly private IBranchGateway _iBranchGateway;
 
-        public FactoryDeliveryManager(IFactoryDeliveryGateway iFactoryDeliveryGateway)
+        public FactoryDeliveryManager(IFactoryDeliveryGateway iFactoryDeliveryGateway,IBranchGateway iBranchGateway)
         {
             _iFactoryDeliveryGateway = iFactoryDeliveryGateway;
+            _iBranchGateway = iBranchGateway;
         }
         public string SaveDispatchInformation(DispatchModel dispatchModel) 
         {
@@ -29,6 +34,37 @@ namespace NBL.BLL
                 return "Saved Successfully!";
             return "Failed to Save";
         }
+
+        public DispatchModel GetDispatchByDispatchId(long dispatchId)
+        {
+            return _iFactoryDeliveryGateway.GetDispatchByDispatchId(dispatchId);
+        }
+
+        public ViewDispatchChalan GetDispatchChalanByDispatchId(long dispatchId)
+        {
+            DispatchModel dispatch = GetDispatchByDispatchId(dispatchId);
+            var details = GetDispatchDetailsByDispatchId(dispatchId);
+            //foreach (DeliveryDetails deliveryDetailse in details)
+            //{
+            //    deliveryDetailse.DeliveredProducts = GetDeliveredProductsByDeliveryIdAndProductId(deliveryId, deliveryDetailse.ProductId).ToList();
+            //}
+           
+           
+            var chalan = new ViewDispatchChalan()
+            {
+                DispatchModel = dispatch,
+                DispatchDetails = details
+            };
+            return chalan;
+
+
+        }
+
+        public ICollection<ViewDispatchModel> GetDispatchDetailsByDispatchId(long dispatchId)
+        {
+            return _iFactoryDeliveryGateway.GetDispatchDetailsByDispatchId(dispatchId);
+        }
+
         /// <summary>
         /// id=4 stands dispatch from factory......
         /// </summary>

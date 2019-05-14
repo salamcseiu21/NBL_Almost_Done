@@ -149,7 +149,9 @@ namespace NBL.DAL
                     barcodes.Add(new BarCodeModel
                     {
                         Barcode = reader["BarCode"].ToString(),
-                        BarCodeModelId = Convert.ToInt64(reader["BarcodeId"])
+                        BarCodeModelId = Convert.ToInt64(reader["BarcodeId"]),
+                        ProductName = reader["ProductName"].ToString()
+                        
                     });
                 }
                 

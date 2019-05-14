@@ -40,6 +40,9 @@ namespace NBL.Models.ViewModels.Summaries
         public IEnumerable<Department> Departments { get; set; }
         public IEnumerable<Territory> Territories { get; set; }
         public IEnumerable<Region> Regions { get; set; }
+
+
+
         public SummaryModel()
         {
             TotalOrder=new ViewTotalOrder();

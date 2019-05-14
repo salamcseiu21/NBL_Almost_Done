@@ -200,6 +200,13 @@ namespace NBL.Areas.Production.Controllers
             return RedirectToAction("Delivery",new {id= tripId });
         }
 
+
+        public ActionResult Chalan(long dispatchId)
+        {
+            ViewDispatchChalan chalan = _iFactoryDeliveryManager.GetDispatchChalanByDispatchId(dispatchId);
+            return View(chalan);
+
+        }
         public PartialViewResult ViewOrderDetails(int transferIssueId) 
         {
 
@@ -549,5 +556,6 @@ namespace NBL.Areas.Production.Controllers
             return PartialView("_ViewLoadScannedProductPartialPage", list);
         }
 
+        
     }
 }

@@ -20,7 +20,9 @@ namespace NBL.Models.EntityModels.Deliveries
         public string IsCanclled { get; set; }
         public DateTime SystemDateTime { get; set; }
         public ViewTripModel TripModel { get; set; }
-        public int CompanyId { get; set; }  
+        public int CompanyId { get; set; }
+        public int Quantity { get; set; }   
+        public string Remarks { get; set; }
         public ICollection<ScannedProduct> ScannedProducts { get; set; }
         public ICollection<ViewDispatchModel> DispatchModels { get; set; } 
 

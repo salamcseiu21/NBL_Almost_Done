@@ -161,11 +161,7 @@ namespace NBL.Areas.Production.Controllers
                 TempData["Message"] = $"No Barcode was found for line {model.ProductionLineId}";
                 return View();
             }
-            else
-            {
-                return RedirectToAction("PrintBarCode");
-            }
-           
+            return RedirectToAction("PrintBarCode");
         }
         private void GenerateBarCodeFromaGivenString(string barcode)
         {

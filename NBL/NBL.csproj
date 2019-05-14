@@ -8042,6 +8042,8 @@
     <Content Include="Areas\Corporate\Views\Home\Stock.cshtml" />
     <Content Include="Areas\Production\Views\Shared\_ViewProductionChartPartialPage.cshtml" />
     <Content Include="Areas\Production\Views\Home\Stock.cshtml" />
+    <Content Include="Files\Deliverable_Product_For_130" />
+    <Content Include="Areas\Production\Views\Delivery\Chalan.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />

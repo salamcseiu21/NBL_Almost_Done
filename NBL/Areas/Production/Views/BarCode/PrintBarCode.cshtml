@@ -43,7 +43,8 @@
                 {
                     <tr>
                         <td class="text-center">
-                            <img src="~/Areas/Production/Images/BarCodes/@(item.Barcode + ".Png")" style="padding-top: 5px" height="110" width="400" />
+                            <span>@item.ProductName</span><br style="margin: 0; padding: 0;" />
+                            <img src="~/Areas/Production/Images/BarCodes/@(item.Barcode + ".Png")" style="padding-top: 0" height="95" width="400"/>
                             <br/>
                             <span>@item.Barcode</span>
                         </td>
