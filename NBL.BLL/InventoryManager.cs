@@ -49,6 +49,11 @@ namespace NBL.BLL
             return _iInventoryGateway.GetTotalProductionCompanyIdAndYear(companyId,year);
         }
 
+        public ICollection<ChartModel> GetTotalDispatchCompanyIdAndYear(int companyId, int year)
+        {
+            return _iInventoryGateway.GetTotalDispatchCompanyIdAndYear(companyId,year);
+        }
+
         public IEnumerable<ViewProduct> GetStockProductByCompanyId(int companyId)
         {
             return _iInventoryGateway.GetStockProductByCompanyId(companyId);

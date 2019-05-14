@@ -51,5 +51,6 @@ namespace NBL.BLL.Contracts
        ICollection<ViewProduct> GetTotalReceiveProductByBranchAndCompanyId(int branchId, int companyId);
        ICollection<ViewProduct> GetDeliveredProductByBranchAndCompanyId(int branchId, int companyId);
        List<ChartModel> GetTotalProductionCompanyIdAndYear(int companyId, int year);
+       ICollection<ChartModel> GetTotalDispatchCompanyIdAndYear(int companyId, int year);
    }
 }

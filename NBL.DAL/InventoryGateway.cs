@@ -149,7 +149,7 @@ namespace NBL.DAL
         {
             try
             {
-                CommandObj.CommandText = "UDSP_RptGetTotalProductionCompanyIdAndYear";
+                CommandObj.CommandText = "UDSP_RptGetTotalProductionByCompanyIdAndYear";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
                 CommandObj.Parameters.AddWithValue("@Year", year);
@@ -175,6 +175,45 @@ namespace NBL.DAL
             catch (Exception exception)
             {
                 throw new Exception("Could not Collect total production by company id and year", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<ChartModel> GetTotalDispatchCompanyIdAndYear(int companyId, int year)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetTotalDispatchCompanyIdAndYear";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                CommandObj.Parameters.AddWithValue("@Year", year);
+                List<ChartModel> models = new List<ChartModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    var model = new ChartModel
+                    {
+                        Total = Convert.ToInt32(reader["Total"]),
+                        MonthName = reader["MonthName"].ToString()
+                    };
+                    models.Add(model);
+                }
+                reader.Close();
+                return models;
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Could not Collect dispatch due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Collect total dispatch by company id and year", exception);
             }
             finally
             {
@@ -217,6 +256,7 @@ namespace NBL.DAL
             }
         }
 
+       
         public IEnumerable<ViewProduct> GetStockProductByCompanyId(int companyId)
         {
 

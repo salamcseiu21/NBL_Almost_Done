@@ -8041,6 +8041,7 @@
     <Content Include="Areas\Production\Views\BarCode\ManualGenerateBarcode.cshtml" />
     <Content Include="Areas\Corporate\Views\Home\Stock.cshtml" />
     <Content Include="Areas\Production\Views\Shared\_ViewProductionChartPartialPage.cshtml" />
+    <Content Include="Areas\Production\Views\Home\Stock.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />

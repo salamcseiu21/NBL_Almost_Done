@@ -7,6 +7,7 @@ namespace NBL.Models.ViewModels.Summaries
         public int StockQuantity { get; set; }
         public int IssuedQuantity { get; set; }
         public int ReturnedQuantity { get; set; }
-        public ViewTotalProduction Production { get; set; } 
+        public ViewTotalProduction Production { get; set; }
+        public ViewTotalDispatch Dispatch { get; set; } 
     }
 }

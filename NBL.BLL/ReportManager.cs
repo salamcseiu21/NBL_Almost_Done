@@ -144,5 +144,27 @@ namespace NBL.BLL
             };
             return production;
         }
+
+        public ViewTotalDispatch GetTotalDispatchCompanyIdAndYear(int companyId, int year)
+        {
+            var totalDispatch = _iInventoryManager.GetTotalDispatchCompanyIdAndYear(companyId, year).ToArray();
+
+            ViewTotalDispatch dispatch = new ViewTotalDispatch
+            {
+                January = totalDispatch?.ToList().Find(n => n.MonthName.StartsWith("Jan"))?.Total,
+                February = totalDispatch?.ToList().Find(n => n.MonthName.StartsWith("Feb"))?.Total,
+                March = totalDispatch?.ToList().Find(n => n.MonthName.StartsWith("Mar"))?.Total,
+                April = totalDispatch?.ToList().Find(n => n.MonthName.StartsWith("Ap"))?.Total,
+                May = totalDispatch?.ToList().Find(n => n.MonthName.StartsWith("May"))?.Total,
+                June = totalDispatch?.ToList().Find(n => n.MonthName.StartsWith("June"))?.Total,
+                July = totalDispatch?.ToList().Find(n => n.MonthName.StartsWith("July"))?.Total,
+                August = totalDispatch?.ToList().Find(n => n.MonthName.StartsWith("Aug"))?.Total,
+                September = totalDispatch?.ToList().Find(n => n.MonthName.StartsWith("Sep"))?.Total,
+                October = totalDispatch?.ToList().Find(n => n.MonthName.StartsWith("Oct"))?.Total,
+                November = totalDispatch?.ToList().Find(n => n.MonthName.StartsWith("Nov"))?.Total,
+                December = totalDispatch?.ToList().Find(n => n.MonthName.StartsWith("Dec"))?.Total
+            };
+            return dispatch;
+        }
     }
 }

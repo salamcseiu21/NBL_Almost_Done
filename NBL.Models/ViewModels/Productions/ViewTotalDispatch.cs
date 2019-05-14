@@ -7,7 +7,7 @@ using NBL.Models.Contracts;
 
 namespace NBL.Models.ViewModels.Productions
 {
-  public  class ViewTotalProduction:IMonth
+   public class ViewTotalDispatch:IMonth
     {
         public int? January { get; set; }
         public int? February { get; set; }

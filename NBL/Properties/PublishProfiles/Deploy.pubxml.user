@@ -1036,13 +1036,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/15/2019 13:33:35</publishTime>
     </File>
     <File Include="Areas/Production/Views/Home/Home.cshtml">
-      <publishTime>05/13/2019 12:24:30</publishTime>
+      <publishTime>05/14/2019 09:55:40</publishTime>
     </File>
     <File Include="Areas/Production/Views/Home/ProductionSummary.cshtml">
       <publishTime>04/22/2019 11:46:40</publishTime>
     </File>
     <File Include="Areas/Production/Views/Home/ProductionSummaryByMonth.cshtml">
       <publishTime>04/28/2019 13:21:38</publishTime>
+    </File>
+    <File Include="Areas/Production/Views/Home/Stock.cshtml">
+      <publishTime>05/13/2019 15:12:15</publishTime>
     </File>
     <File Include="Areas/Production/Views/Product/AddProductToTempFile.cshtml">
       <publishTime>04/21/2019 16:18:45</publishTime>
@@ -1081,7 +1084,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/18/2019 10:19:35</publishTime>
     </File>
     <File Include="Areas/Production/Views/ProductionManager/Home.cshtml">
-      <publishTime>04/15/2019 12:35:17</publishTime>
+      <publishTime>05/14/2019 09:55:51</publishTime>
     </File>
     <File Include="Areas/Production/Views/Qc/Home.cshtml">
       <publishTime>04/16/2019 17:26:26</publishTime>
@@ -1117,7 +1120,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/Production/Views/Shared/_ViewProductionChartPartialPage.cshtml">
-      <publishTime>05/13/2019 09:38:41</publishTime>
+      <publishTime>05/14/2019 10:11:28</publishTime>
     </File>
     <File Include="Areas/Production/Views/Shared/_ViewProductNotePartialPage.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -22903,16 +22906,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="bin/NBL.BLL.dll">
-      <publishTime>05/13/2019 14:55:56</publishTime>
+      <publishTime>05/14/2019 10:21:36</publishTime>
     </File>
     <File Include="bin/NBL.DAL.dll">
-      <publishTime>05/13/2019 14:55:56</publishTime>
+      <publishTime>05/14/2019 10:21:36</publishTime>
     </File>
     <File Include="bin/NBL.dll">
-      <publishTime>05/13/2019 14:56:01</publishTime>
+      <publishTime>05/14/2019 10:21:41</publishTime>
     </File>
     <File Include="bin/NBL.Models.dll">
-      <publishTime>05/13/2019 14:17:50</publishTime>
+      <publishTime>05/14/2019 10:21:36</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>03/25/2019 17:37:04</publishTime>

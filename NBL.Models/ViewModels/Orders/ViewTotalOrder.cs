@@ -1,7 +1,9 @@
 ﻿
+using NBL.Models.Contracts;
+
 namespace NBL.Models.ViewModels.Orders
 {
-    public class ViewTotalOrder
+    public class ViewTotalOrder:IMonth
     {
         public int? January { get; set; }
         public int? February { get; set; }
@@ -15,6 +17,5 @@ namespace NBL.Models.ViewModels.Orders
         public int? October { get; set; }
         public int? November { get; set; }
         public int? December { get; set; }
-
     }
 }

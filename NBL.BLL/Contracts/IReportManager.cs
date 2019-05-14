@@ -34,6 +34,7 @@ namespace NBL.BLL.Contracts
         
         ViewTotalOrder GetTotalOrdersByYear(int year);
 
-        ViewTotalProduction GetTotalProductionCompanyIdAndYear(int companyId, int nowYear);
+        ViewTotalProduction GetTotalProductionCompanyIdAndYear(int companyId, int year);
+        ViewTotalDispatch GetTotalDispatchCompanyIdAndYear(int companyId, int year); 
     }
 }

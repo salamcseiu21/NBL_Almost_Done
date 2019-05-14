@@ -1,10 +1,44 @@
-﻿
+﻿@model NBL.Models.ViewModels.Summaries.FactorySummaryModel
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
 }
-
 <section class="content">
-    <h3 class="text-center text-green">Production Manger</h3>
-</section>
+    <div class="box">
 
+        <div class="box-body">
+            <a class="btn btn-app">
+                <span class="badge bg-green" style="font-size: 14px">@Model.StockQuantity</span>
+                <i class="fa fa-barcode"></i> Stock
+            </a>
+            @*<a class="btn btn-app">
+                    <span class="badge bg-red" style="font-size: 14px">@Model.ReturnedQuantity</span>
+                    <i class="fa fa-bullhorn"></i> Returend Product
+                </a>
+                <a class="btn btn-app">
+                    <span class="badge bg-teal" style="font-size: 14px">@Model.IssuedQuantity</span>
+
+                    <i class="fa fa-shopping-cart"></i> Issued Qty
+                </a>*@
+        </div>
+        <!-- /.box-body -->
+
+    </div>
+    <div class="row">
+        @Html.Partial("_ViewProductionChartPartialPage", Model)
+        <!-- /.col -->
+    </div>
+
+</section>
+@section Scripts
+{
+    @*Reload page after 1 minute *@
+    <script type="text/javascript">
+        var timeout = setTimeout("location.reload(true);", 60000);
+        function resetTimeout() {
+            clearTimeout(timeout);
+            timeout = setTimeout("location.reload(true);", 60000);
+        }
+    </script>
+
+}

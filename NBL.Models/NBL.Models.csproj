@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="AutoMapper\DomainProfile.cs" />
+    <Compile Include="Contracts\IMonth.cs" />
     <Compile Include="EntityModels\Banks\Bank.cs" />
     <Compile Include="EntityModels\Banks\BankBranch.cs" />
     <Compile Include="EntityModels\BarCodes\BarCodeModel.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="ViewModels\Orders\ViewCreateRetailSaleModel.cs" />
     <Compile Include="ViewModels\Productions\ProductionSummary.cs" />
     <Compile Include="ViewModels\Productions\ViewRejectedProduct.cs" />
+    <Compile Include="ViewModels\Productions\ViewTotalDispatch.cs" />
     <Compile Include="ViewModels\Productions\ViewTotalProduction.cs" />
     <Compile Include="ViewModels\Products\ViewCreateProductDetailsModel.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceDetailsModel.cs" />

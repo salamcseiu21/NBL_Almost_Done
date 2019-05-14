@@ -55,5 +55,6 @@ namespace NBL.DAL.Contracts
        ICollection<ViewProduct> GetDeliveredProductByBranchAndCompanyId(int branchId, int companyId);
        List<ChartModel> GetTotalProductionCompanyIdAndYear(int companyId, int year);
        long GetmaxProductionRefByYear(int year);
-    }
+       ICollection<ChartModel> GetTotalDispatchCompanyIdAndYear(int companyId, int year);
+   }
 }
