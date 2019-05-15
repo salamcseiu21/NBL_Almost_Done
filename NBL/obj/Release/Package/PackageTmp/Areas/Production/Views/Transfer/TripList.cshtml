@@ -50,6 +50,8 @@
 @section Scripts
 {
     <script>
-        $("#tbl_trip_List").DataTable();
+        $("#tbl_trip_List").DataTable({
+            "order": [[ 0, "desc" ]]
+        });
     </script>
 }

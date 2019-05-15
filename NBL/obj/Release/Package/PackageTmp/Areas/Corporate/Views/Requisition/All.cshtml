@@ -10,11 +10,11 @@
         <thead>
         <tr>
             <th>Requisition Ref</th>
-            <th>Requisition qty</th>
-            <th>Delivered Qty</th>
-            <th>Pending Qty</th>
-            <th>Date</th>
-            <th>Details</th>
+            <th class="text-right">Requisition qty</th>
+            <th class="text-right">Delivered Qty</th>
+            <th class="text-right">Pending Qty</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Details</th>
         </tr>
         </thead>
         <tbody>
@@ -22,10 +22,10 @@
         {
             <tr>
                 <td>@item.RequisitionRef</td>
-                <td>@item.RequisitionQty</td>
-                <td>@item.DeliveryQty</td>
-                <td>@item.PendingQty</td>
-                <td>@item.SystemDateTime.ToString("F")</td>
+                <td class="text-right">@item.RequisitionQty</td>
+                <td class="text-right">@item.DeliveryQty</td>
+                <td class="text-right">@item.PendingQty</td>
+                <td class="text-center">@item.SystemDateTime.ToString("F")</td>
                 <td class="text-center">
                     <button type="button" value="@item.RequisitionId" class="btn btn-success btn-sm" onclick="viewDetails(this)"><i class="fa fa-eye"></i> Details</button>
                 </td>
@@ -35,11 +35,11 @@
         <tfoot>
         <tr>
             <th>Requisition Ref</th>
-            <th>Requisition qty</th>
-            <th>Delivered Qty</th>
-            <th>Pending Qty</th>
-            <th>Date</th>
-            <th>Details</th>
+            <th class="text-right">Requisition qty</th>
+            <th class="text-right">Delivered Qty</th>
+            <th class="text-right">Pending Qty</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Details</th>
         </tr>
         </tfoot>
     </table>
@@ -49,7 +49,9 @@
 @section Scripts
 {
     <script>
-        $("#tbl_requisition_list").DataTable();
+        $("#tbl_requisition_list").DataTable({
+            "order":[[0,"desc"]]
+        });
         $('#tbl_requisition_details_list').DataTable({
             "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
         });

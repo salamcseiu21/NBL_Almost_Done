@@ -4,6 +4,7 @@ using System.Linq;
 using NBL.BLL.Contracts;
 using NBL.DAL;
 using NBL.DAL.Contracts;
+using NBL.Models.EntityModels.BarCodes;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
@@ -15,12 +16,14 @@ namespace NBL.BLL
        private readonly IReportGateway _iReportGateway;
        private readonly IOrderManager _iOrderManager;
         private readonly IInventoryManager _iInventoryManager;
+        private readonly IBarCodeManager _iBarCodeManager;
 
-        public ReportManager(IOrderManager iOrderManager,IReportGateway iReportGateway,IInventoryManager iInventoryManager)
+        public ReportManager(IOrderManager iOrderManager,IReportGateway iReportGateway,IInventoryManager iInventoryManager,IBarCodeManager iBarCodeManager)
         {
             _iOrderManager = iOrderManager;
             _iReportGateway = iReportGateway;
             _iInventoryManager = iInventoryManager;
+            _iBarCodeManager = iBarCodeManager;
         }
         public IEnumerable<ViewClient> GetTopClients()
         {
@@ -100,6 +103,8 @@ namespace NBL.BLL
             };
             return order;
         }
+
+       
 
         public ViewTotalOrder GetTotalOrdersByCompanyIdAndYear(int companyId, int year)
         {
@@ -188,6 +193,10 @@ namespace NBL.BLL
             return dispatch;
         }
 
-        
+        public bool IsValiedBarcode(string barcode)
+        {
+            var model = _iBarCodeManager.GetAll().ToList().Select(n=>n.Barcode).ToList().Contains(barcode);
+            return model;
+        }
     }
 }

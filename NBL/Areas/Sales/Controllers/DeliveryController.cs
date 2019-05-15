@@ -76,6 +76,21 @@ namespace NBL.Areas.Sales.Controllers
             
         }
 
+        public PartialViewResult PartialDeliveredOrderList() 
+        {
+            SummaryModel model = new SummaryModel();
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            //int companyId = Convert.ToInt32(Session["CompanyId"]);
+            var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByDistributionPoint(branchId).ToList().FindAll(n=>n.InvoiceStatus==1);
+            foreach (var invoice in invoicedOrders)
+            {
+                invoice.Client = _iClientManager.GetById(invoice.ClientId);
+            }
+            model.InvoicedOrderList = invoicedOrders;
+            return PartialView("_OrderListPartialPage", model);
+
+        }
+
         [HttpGet]
         public ActionResult Delivery(int id)
         {

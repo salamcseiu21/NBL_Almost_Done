@@ -17,7 +17,6 @@ using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Logs;
 using NBL.Models.ViewModels.Productions;
-using NBL.Models.ViewModels.Sales;
 using NBL.Models.ViewModels.Summaries;
 using NBL.Models.ViewModels.TransferProducts;
 

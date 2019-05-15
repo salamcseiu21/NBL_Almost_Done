@@ -54,6 +54,16 @@ namespace NBL.BLL
             return _iInventoryGateway.GetTotalDispatchCompanyIdAndYear(companyId,year);
         }
 
+        public int GetProductStatusInFactoryByBarCode(string barcode)
+        {
+            return _iInventoryGateway.GetProductStatusInFactoryByBarCode(barcode);
+        }
+
+        public int GetProductStatusInBranchInventoryByBarCode(string barcode)
+        {
+            return _iInventoryGateway.GetProductStatusInBranchInventoryByBarCode(barcode);
+        }
+
         public IEnumerable<ViewProduct> GetStockProductByCompanyId(int companyId)
         {
             return _iInventoryGateway.GetStockProductByCompanyId(companyId);

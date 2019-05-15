@@ -48,9 +48,10 @@ namespace NBL.BLL
             //{
             //    deliveryDetailse.DeliveredProducts = GetDeliveredProductsByDeliveryIdAndProductId(deliveryId, deliveryDetailse.ProductId).ToList();
             //}
-           
-           
-            var chalan = new ViewDispatchChalan()
+
+
+
+            var chalan = new ViewDispatchChalan
             {
                 DispatchModel = dispatch,
                 DispatchDetails = details

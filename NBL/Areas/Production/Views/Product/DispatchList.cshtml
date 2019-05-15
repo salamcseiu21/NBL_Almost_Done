@@ -9,6 +9,8 @@
 @section Scripts
 {
     <script>
-        $("#tbl_dispatch_list").DataTable();
+        $("#tbl_dispatch_list").DataTable({
+            "order": [[ 0, "desc" ]]
+        });
     </script>
 }

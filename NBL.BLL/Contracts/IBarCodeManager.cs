@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NBL.Models.EntityModels.BarCodes;
 
 namespace NBL.BLL.Contracts
@@ -16,5 +13,6 @@ namespace NBL.BLL.Contracts
         bool SaveBarCodes(ViewCreateBarCodeModel model);
         List<PrintBarCodeModel> GetTodaysProductionProductList(DateTime date);
         ICollection<BarCodeModel> GetAllBarCodeByInfix(string infix); 
+
     }
 }

@@ -8044,6 +8044,8 @@
     <Content Include="Areas\Production\Views\Home\Stock.cshtml" />
     <Content Include="Files\Deliverable_Product_For_130" />
     <Content Include="Areas\Production\Views\Delivery\Chalan.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\SuperReport\ProductStatus.cshtml" />
+    <Content Include="Files\Production_In_15May2019" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />

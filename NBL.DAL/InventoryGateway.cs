@@ -223,6 +223,72 @@ namespace NBL.DAL
             }
         }
 
+        public int GetProductStatusInFactoryByBarCode(string barcode)
+        {
+            try
+            {
+                int s = -1;
+                CommandObj.CommandText = "UDSP_RptGetProductStatusInFactoryByBarCode";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BarCode", barcode);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    s = Convert.ToInt32(reader["Status"]);
+                }
+                reader.Close();
+                return s;
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Could not get barcode status due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get total barcode status by company id and year", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+        public int GetProductStatusInBranchInventoryByBarCode(string barcode)
+        {
+            try
+            {
+                int s = -1;
+                CommandObj.CommandText = "UDSP_RptGetProductStatusInBranchInventoryByBarCode";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BarCode", barcode);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    s = Convert.ToInt32(reader["Status"]);
+                }
+                reader.Close();
+                return s;
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Could not get barcode status due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get total barcode status by company id and year", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+
         public long GetmaxProductionRefByYear(int year)
         {
             try

@@ -40,8 +40,8 @@
                     </td> 
                     
                     <td class="text-center">
-                        @Html.ActionLink(" Print Barcode", "DeliveredBarCodeList", new { deliveryId = item.DeliveryId }, new { target = "_blank", @class="fa fa-eye" }) |
-                        @Html.ActionLink(" Chalan", "Chalan", new {deliveryId = item.DeliveryId}, new {target = "_blank", @class = "fa fa-eye"})
+                        @Html.ActionLink(" Barcode", "DeliveredBarCodeList", new { deliveryId = item.DeliveryId }, new { target = "_blank", @class="fa fa-print" }) |
+                        @Html.ActionLink(" Chalan", "Chalan", new {deliveryId = item.DeliveryId}, new {target = "_blank", @class = "fa fa-print"})
                         @*@Html.ActionLink(" Invoice", "Invoice", new {deliveryId = item.DeliveryId}, new {target = "_blank", @class = "fa fa-eye"})*@
                     </td>
                 </tr>

@@ -14,28 +14,18 @@ namespace NBL.BLL.Contracts
        
         IEnumerable<ViewClient> GetTopClients();
         IEnumerable<ViewClient> GetTopClientsByYear(int year);
-
         IEnumerable<ViewClient> GetTopClientsByBranchId(int branchId);
-      
-
         IEnumerable<ViewClient> GetTopClientsByBranchIdAndYear(int branchId, int year);
-        
-
         IEnumerable<ViewProduct> GetPopularBatteries();
         IEnumerable<ViewProduct> GetPopularBatteriesByYear(int year);
-
         IEnumerable<ViewProduct> GetPopularBatteriesByBranchAndCompanyId(int branchId, int companyId);
         IEnumerable<ViewProduct> GetPopularBatteriesByBranchIdCompanyIdAndYear(int branchId, int companyId, int year);
-
         ViewTotalOrder GetTotalOrderByBranchIdCompanyIdAndYear(int branchId, int companyId, int year);
-  
-
         ViewTotalOrder GetTotalOrdersByCompanyIdAndYear(int companyId, int year);
-        
         ViewTotalOrder GetTotalOrdersByYear(int year);
-
         ViewTotalProduction GetTotalProductionCompanyIdAndYear(int companyId, int year);
         ViewTotalDispatch GetTotalDispatchCompanyIdAndYear(int companyId, int year);
-        ViewTotalOrder GetTotalOrdersByBranchCompanyAndYear(int branchid,int companyId, int year); 
+        ViewTotalOrder GetTotalOrdersByBranchCompanyAndYear(int branchid,int companyId, int year);
+        bool IsValiedBarcode(string barcode); 
     }
 }

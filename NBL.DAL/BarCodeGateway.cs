@@ -94,7 +94,35 @@ namespace NBL.DAL
 
         public ICollection<BarCodeModel> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllBarcode";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<BarCodeModel> barcodeList = new List<BarCodeModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    barcodeList.Add(new BarCodeModel
+                    {
+                        Barcode = reader["BarCode"].ToString()
+                    });
+                }
+                reader.Close();
+                return barcodeList;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect barcodes", exception.InnerException);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+
+            }
         }
 
         public ICollection<BarCodeModel> GetAllByProducitonDateCode(string dateCode)

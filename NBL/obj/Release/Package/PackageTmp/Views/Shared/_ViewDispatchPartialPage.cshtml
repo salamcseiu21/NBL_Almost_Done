@@ -22,8 +22,8 @@
                     <td class="text-center">@item.DispatchBy</td>
                   
                     <td class="text-center">
-                        <button><i class="fa fa-print"></i> Chalan</button>
-                        @*@Html.ActionLink(" Chalan", "Chalan", new { dispatchId = item.DispatchId}, new {target = "_blank", @class = "fa fa-print"})*@
+                        @*<button><i class="fa fa-print"></i> Chalan</button>*@
+                        @Html.ActionLink(" Chalan", "Chalan","Delivery", new { dispatchId = item.DispatchId}, new {target = "_blank", @class = "fa fa-print"})
                     </td>
                 </tr>
             }
