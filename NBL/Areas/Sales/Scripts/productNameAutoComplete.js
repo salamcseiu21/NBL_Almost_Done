@@ -3,7 +3,8 @@ $(function () {
     $("#ProductName").autocomplete({
         source: function (request, response) {
             $.ajax({
-                url: RootUrl + 'common/ProductNameAutoComplete/',
+                //url: RootUrl + 'common/ProductNameAutoComplete/',
+                url: RootUrl + 'common/ProductAutoComplete/',
                 data: "{ 'prefix': '" + request.term + "'}",
                 dataType: "json",
                 type: "POST",

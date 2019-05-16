@@ -29,5 +29,6 @@ namespace NBL.Areas.Sales.DAL.Contracts
        ICollection<Invoice> GetInvoicedOrdersByCompanyIdAndDate(int companyId, DateTime date);
        ICollection<Invoice> GetLatestInvoicedOrdersByDistributionPoint(int distributionPointId);
        ICollection<Invoice> GetAllInvoicedOrdersByDistributionPoint(int distributionPointId);
+       ICollection<Invoice> GetAllInvoicedOrdersByCompanyIdAndStatus(int companyId, int status);
    }
 }

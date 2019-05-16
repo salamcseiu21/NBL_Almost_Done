@@ -19,7 +19,7 @@
                   {
                       <tr>
                           <td>
-                              @Html.ActionLink(client.CommercialName,"ViewClientProfile",new {id=client.ClientId},null)
+                              @Html.ActionLink(client.CommercialName,"ViewClientProfile","Home",new {id=client.ClientId},null)
                           </td>
                           <td class="text-right">&#2547; @client.TotalDebitAmount.ToString("N")</td>
                       </tr>

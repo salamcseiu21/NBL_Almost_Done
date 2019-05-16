@@ -15,7 +15,8 @@ namespace NBL.Models.EntityModels
         public int BranchId { get; set; }
         public int CompanyId { get; set; }
         public long ReplaceNo { get; set; }
-        public int Status { get; set; } 
+        public int Status { get; set; }
+        public int DistributionPointId { get; set; }    
         public DateTime SystemDateTime { get; set; }
         public List<Product> Products { get; set; } 
     }

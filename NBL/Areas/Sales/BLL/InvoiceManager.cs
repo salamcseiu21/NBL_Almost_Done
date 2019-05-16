@@ -110,5 +110,11 @@ namespace NBL.Areas.Sales.BLL
             var invoices = _iInvoiceGateway.GetAllInvoicedOrdersByDistributionPoint(distributionPointId);
             return invoices;
         }
+
+        public ICollection<Invoice> GetAllInvoicedOrdersByCompanyIdAndStatus(int companyId, int status)
+        {
+            var invoices = _iInvoiceGateway.GetAllInvoicedOrdersByCompanyIdAndStatus(companyId,status);
+            return invoices;
+        }
     }
 }

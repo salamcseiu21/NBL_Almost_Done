@@ -381,6 +381,7 @@
     <Compile Include="Areas\Sales\DAL\InvoiceGateway.cs" />
     <Compile Include="Areas\Sales\SalesAreaRegistration.cs" />
     <Compile Include="Areas\SCM\Controllers\HomeController.cs" />
+    <Compile Include="Areas\SCM\Controllers\OrderController.cs" />
     <Compile Include="Areas\SCM\SCMAreaRegistration.cs" />
     <Compile Include="Areas\Services\Controllers\HomeController.cs" />
     <Compile Include="Areas\Services\Controllers\ReplaceController.cs" />
@@ -8046,6 +8047,13 @@
     <Content Include="Areas\Production\Views\Delivery\Chalan.cshtml" />
     <Content Include="Areas\SuperAdmin\Views\SuperReport\ProductStatus.cshtml" />
     <Content Include="Files\Production_In_15May2019" />
+    <Content Include="Areas\SCM\Views\Order\Home.cshtml" />
+    <Content Include="Areas\SCM\Views\Shared\_MenuSCMManagerPartialPage.cshtml" />
+    <Content Include="Areas\SCM\Views\Order\PendingOrder.cshtml" />
+    <Content Include="Areas\SCM\Views\Order\Approve.cshtml" />
+    <Content Include="Areas\SCM\Views\Order\ViewAllDeliveredOrders.cshtml" />
+    <Content Include="Areas\SCM\Views\Shared\_ViewDeliveredOrdersPartialPage.cshtml" />
+    <Content Include="Areas\SCM\Views\Shared\_PendingOrdersPartialPage.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8206,7 +8214,6 @@
     <Folder Include="Areas\Sales\Files\Returns\" />
     <Folder Include="Areas\Sales\Models\" />
     <Folder Include="Areas\SCM\Models\" />
-    <Folder Include="Areas\SCM\Views\Shared\" />
     <Folder Include="Areas\Services\Files\Replaces\" />
     <Folder Include="Areas\Services\Models\" />
     <Folder Include="Assets\css\" />

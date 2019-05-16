@@ -1,0 +1,49 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Invoices.Invoice>
+@{
+    ViewBag.Title = "Pending Order";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Pending Order</h3>
+    <table id="tbl_Invoice_List" class="table-bordered display" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>Invoice Ref</th>
+            <th class="text-right">Amounts </th>
+            <th class="text-center">Action </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.InvoiceRef</td>
+             
+                <td class="text-right">@item.Amounts</td>
+                <td class="text-center">
+                    @Html.ActionLink(" Details", "Approve", "Order", new { area = "SCM", id = item.InvoiceId }, new { @class = "fa fa-eye" })
+                </td>
+              
+            </tr>
+            
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Invoice Ref</th>
+            <th class="text-right">Amounts </th>
+            <th class="text-center">Action </th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_Invoice_List").DataTable({
+            "order":[[0,"desc"]]
+        });
+    </script>
+}

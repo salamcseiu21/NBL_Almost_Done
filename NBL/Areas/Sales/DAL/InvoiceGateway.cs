@@ -442,6 +442,59 @@ namespace NBL.Areas.Sales.DAL
             }
         }
 
+        public ICollection<Invoice> GetAllInvoicedOrdersByCompanyIdAndStatus(int companyId, int status)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllInvoicedOrderByCompanyIdAndStatus";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                CommandObj.Parameters.AddWithValue("@Status", status);
+                List<Invoice> invoiceList = new List<Invoice>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    Invoice invoice = new Invoice
+                    {
+                        InvoiceId = Convert.ToInt32(reader["InvoiceId"]),
+                        InvoiceDateTime = Convert.ToDateTime(reader["InvoiceDateTime"]),
+                        Amounts = Convert.ToDecimal(reader["Amounts"]),
+                        Discount = Convert.ToDecimal(reader["Discount"]),
+                        SpecialDiscount = Convert.ToDecimal(reader["SpecialDiscount"]),
+                        Vat = Convert.ToDecimal(reader["Vat"]),
+                        NetAmounts = Convert.ToDecimal(reader["NetAmounts"]),
+                        InvoiceByUserId = Convert.ToInt32(reader["InvoiceByUserId"]),
+                        InvoiceNo = Convert.ToInt32(reader["InvoiceNo"]),
+                        InvoiceRef = reader["InvoiceRef"].ToString(),
+                        InvoiceStatus = Convert.ToInt16(reader["InvoiceStatus"]),
+                        Cancel = Convert.ToChar(reader["Cancel"]),
+                        CompanyId = companyId,
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        SysDateTime = Convert.ToDateTime(reader["SysDateTime"])
+                    };
+                    invoiceList.Add(invoice);
+                }
+                reader.Close();
+                return invoiceList;
+            }
+            catch (SqlException sqlException)
+            {
+                throw new Exception("Could not get Invoiced orders by company id and Status due to Sql Exception", sqlException);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get Invoiced orders by company id and Status", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         public IEnumerable<Invoice> GetAllInvoicedOrdersByBranchAndCompanyId(int branchId, int companyId)
         {
             try

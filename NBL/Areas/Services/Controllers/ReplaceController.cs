@@ -16,15 +16,19 @@ namespace NBL.Areas.Services.Controllers
 
         private readonly IProductManager _iProductManager;
         private readonly IProductReplaceManager _iProductReplaceManager;
-        public ReplaceController(IProductManager iProductManager, IProductReplaceManager iProductReplaceManager)
+        private readonly IBranchManager _iBranchManager;
+        public ReplaceController(IProductManager iProductManager, IProductReplaceManager iProductReplaceManager,IBranchManager iBranchManager)
         {
             _iProductManager = iProductManager;
             _iProductReplaceManager = iProductReplaceManager;
+            _iBranchManager = iBranchManager;
         }
         // GET: Services/Replace
         public ActionResult Entry()
         {
-           // CreateTempReplaceProductXmlFile();
+            // CreateTempReplaceProductXmlFile();
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", branchId);
             return View();
         }
 
@@ -41,29 +45,23 @@ namespace NBL.Areas.Services.Controllers
             aProduct.Quantity = qty;
             aProduct.ExpiryDate = Convert.ToDateTime(collection["ExpiryDate"]);
             var products = new List<Product> {aProduct};
-            var replaceModel = new ReplaceModel 
-            {
-                ClientId = clientId,
-                Products = products.ToList(),
-                BranchId = branchId,
-                UserId = user.UserId,
-                CompanyId = companyId
-
-            };
-            var  result = _iProductReplaceManager.SaveReplacementInfo(replaceModel);
+            model.ClientId = clientId;
+            model.Products = products.ToList();
+            model.BranchId = branchId;
+            model.UserId = user.UserId;
+            model.CompanyId = companyId;
+            var  result = _iProductReplaceManager.SaveReplacementInfo(model);
             if (result)
             {
                 ModelState.Clear();
-
+                ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", branchId);
                 return View();
 
             }
            // AddProductToTempReplaceProductXmlFile(aProduct);
-            else
-            {
-                return View();
-            }
-           
+            ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", branchId);
+            return View();
+
             //return View();
         }
 

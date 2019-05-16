@@ -168,6 +168,8 @@ namespace NBL.Controllers
                     return RedirectToAction("Home", "ProductionHead", new { area = "Production" });
                 case "R&D":
                     return RedirectToAction("Home", "Home", new { area = "ResearchAndDevelopment" });
+                case "SCMManager":
+                    return RedirectToAction("Home", "Home", new { area = "SCM" });
                 default:
                     return RedirectToAction("LogIn", "LogIn", new { area = "" });
             }

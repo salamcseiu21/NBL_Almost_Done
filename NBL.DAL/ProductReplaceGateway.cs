@@ -29,6 +29,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@ReplaceNo", model.ReplaceNo);
                 CommandObj.Parameters.AddWithValue("@TransactionRef", model.ReplaceRef);
                 CommandObj.Parameters.AddWithValue("@BranchId", model.BranchId);
+                CommandObj.Parameters.AddWithValue("@DistributionPointId", model.DistributionPointId);
                 CommandObj.Parameters.AddWithValue("@CompanyId", model.CompanyId);
                 CommandObj.Parameters.AddWithValue("@UserId", model.UserId);
                 CommandObj.Parameters.Add("@ReplaceMasterId", SqlDbType.BigInt);
