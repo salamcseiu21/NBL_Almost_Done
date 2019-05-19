@@ -322,18 +322,32 @@ namespace NBL.Areas.Corporate.Controllers
         }
 
         [HttpGet]
-        public ActionResult Stock()
+        public PartialViewResult Stock()
         {
             int companyId = Convert.ToInt32(Session["CompanyId"]);
             var stock = _iInventoryManager.GetStockProductByCompanyId(companyId);
-            return View(stock);
+            return PartialView("_ViewStockProductInBranchPartialPage",stock);
         }
-        public ActionResult ProductionSummary()
+        public PartialViewResult ProductionSummary()
         {
             var summaries = _iInventoryManager.GetProductionSummaries().ToList();
-            return View(summaries);
+            return PartialView("_RptProductionSummaryPartialPage", summaries);
         }
 
+        public PartialViewResult StockByBranch(int id)
+        {
+           
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(id, companyId).ToList();
+            var branch = _iBranchManager.GetAllBranches().ToList().Find(n => n.BranchId == id);
+            SummaryModel model = new SummaryModel
+            {
+                Products = products,
+                Branch = branch
+            };
+
+            return PartialView("_ViewStockProductInBranchPartialPage", model);
+        }
         public ActionResult DispatchList()
         {
             List<ViewDispatchModel> dispatch = _iProductManager.GetAllDispatchList().ToList();

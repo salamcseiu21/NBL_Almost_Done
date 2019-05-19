@@ -472,7 +472,20 @@ namespace NBL.Areas.Sales.DAL
                         CompanyId = companyId,
                         BranchId = Convert.ToInt32(reader["BranchId"]),
                         TransactionRef = reader["TransactionRef"].ToString(),
-                        SysDateTime = Convert.ToDateTime(reader["SysDateTime"])
+                        SysDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        Client = new Client
+                        {
+                            ClientId = Convert.ToInt32(reader["ClientId"]),
+                            SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                            ClientName = reader["Name"].ToString(),
+                            CommercialName = reader["CommercialName"].ToString(),
+                            ClientType = new ClientType
+                            {
+                                ClientTypeId = Convert.ToInt32(reader["ClientTypeId"]),
+                                ClientTypeName = reader["ClientTypeName"].ToString()
+                            }
+                        },
+                       
                     };
                     invoiceList.Add(invoice);
                 }

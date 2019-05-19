@@ -285,6 +285,18 @@ namespace NBL.BLL
         {
             return _iOrderGateway.GetCancelledOrdersToSalesPersonByBranchCompanyUserId(branchId, companyId,userId);
         }
+
+        public string ApproveOrderByScmManager(ViewOrder order)
+        {
+            int rowAffected = _iOrderGateway.ApproveOrderByScmManager(order);
+            return rowAffected > 0 ? "Updated Successfully!" : "Failed to Update";
+        }
+
+        public ICollection<ViewOrder> GetOrdersByCompanyIdAndStatus(int companyId, int status)
+        {
+            return _iOrderGateway.GetOrdersByCompanyIdAndStatus(companyId,status);
+        }
+
         public bool UpdateVerificationStatus(int orderId, string verificationNote, int userUserId)
         {
             return _iOrderGateway.UpdateVerificationStatus(orderId,verificationNote,userUserId)>0;

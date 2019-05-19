@@ -68,10 +68,10 @@ namespace NBL.Areas.Sales.Controllers
         //---Approved order by Accounts/Admin
         public ActionResult Approve(int id)
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
+           
             var order = _iOrderManager.GetOrderByOrderId(id);
             order.Client = _iClientManager.GetById(order.ClientId);
-            ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", order.DistributionPointId);
+            //ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", order.DistributionPointId);
             return View(order);
 
         }
@@ -85,7 +85,7 @@ namespace NBL.Areas.Sales.Controllers
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
                 var anUser = (ViewUser)Session["user"];
                 var order = _iOrderManager.GetOrderByOrderId(id);
-                order.DistributionPointId = Convert.ToInt32(collection["DistributionPointId"]);
+               // order.DistributionPointId = Convert.ToInt32(collection["DistributionPointId"]);
                 order.Client = _iClientManager.GetById(order.ClientId);
                 decimal specialDiscount = Convert.ToDecimal(collection["Discount"]);
                 Invoice anInvoice = new Invoice

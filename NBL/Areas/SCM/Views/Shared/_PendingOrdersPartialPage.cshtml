@@ -7,7 +7,7 @@
             <th>Order Slip No</th>
             <th class="text-right">Qty</th>
             <th class="text-right">Amount  (&#2547;)</th>
-            <th class="text-center">Approved by NSM At</th>
+            <th class="text-center">Approved by Salse Admin At</th>
             <th class="text-center">Order At</th>
             <th class="text-center">Order By</th>
             <th class="text-center">Action</th>
@@ -20,14 +20,15 @@
             {
             <tr>
                 <td>
-                    @Html.Raw(item.Client.GetBasicInformation())
+                    @Html.Raw(item.Client.GetBasicInformation())<br/>
+                    <b class="text-green">@item.Branch.BranchName</b>
                 </td>
                 <td>@item.OrderSlipNo</td>
                 <td class="text-right">@item.Quantity</td>
                 <td class="text-right">@item.Amounts</td>
                 <td class="text-center">
 
-                    @item.ApprovedByNsmDateTime.ToShortTimeString(), @item.ApprovedByNsmDateTime.ToString("dd-MMM-yyyy")
+                    @item.ApprovedByAdminDateTime.ToShortTimeString(), @item.ApprovedByAdminDateTime.ToString("dd-MMM-yyyy")
                 </td>
                 <td class="text-center">
 
@@ -35,16 +36,7 @@
                 </td>
                 <td>@(item.User?.EmployeeName?? "N/A")</td>
                 <td class="text-center">
-                    @if (item.VerificationStatus.Equals(0))
-                    {
-                        @Html.ActionLink(" Verify", "Verify", "OrderSalesAdmin", new {id = item.OrderId}, new {style = "color:green;font-weight:bolder"})
-                    }
-                    else if(item.VerificationStatus.Equals(1))
-                    {
-                        <i class="fa fa-spinner fa-spin" aria-hidden="true"></i><span> &nbsp;Verifing</span>
-                    }&nbsp;|
-                    @Html.ActionLink(" Cancel", "Cancel", "OrderSalesAdmin", new {id = item.OrderId}, new {@class = "fa fa-times", style = "color:red;"}) &nbsp;|
-                    @Html.ActionLink(" Details", "Approve", "OrderSalesAdmin", new {area = "Sales", id = item.OrderId}, new {@class = "fa fa-eye"})
+                    @Html.ActionLink(" Details", "Approve", "Order", new {area = "SCM", id = item.OrderId}, new {@class = "fa fa-eye"})
                 </td>
             </tr>
         }
@@ -56,7 +48,7 @@
             <th>Order Slip No</th>
             <th class="text-right">Qty</th>
             <th class="text-right">Amount  (&#2547;)</th>
-            <th class="text-center">Approved by NSM At</th>
+            <th class="text-center">Approved by Salse Admin At</th>
             <th class="text-center">Order At</th>
             <th class="text-center">Order By</th>
             <th class="text-center">Action</th>

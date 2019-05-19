@@ -73,7 +73,7 @@ namespace NBL.Areas.Production.Controllers
         public ActionResult ProductionSummary()
         {
             var summaries = _iInventoryManager.GetProductionSummaries().ToList();
-            return View(summaries);
+            return PartialView("_RptProductionSummaryPartialPage",summaries);
         }
         public ActionResult ProductionSummaryByMonth()
         {

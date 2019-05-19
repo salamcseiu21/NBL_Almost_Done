@@ -190,7 +190,7 @@ namespace NBL.Areas.Sales.Controllers
         public PartialViewResult ChangePassword(int id)
         {
 
-          var user=_userManager.GetUserInformationByUserId(id);
+            var user=_userManager.GetUserInformationByUserId(id);
             user.Password = StringCipher.Decrypt(user.Password, "salam_cse_10_R");
             return PartialView("_ChangePasswordPartialPage",user);
         }

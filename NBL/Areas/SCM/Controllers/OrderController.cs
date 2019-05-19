@@ -61,9 +61,9 @@ namespace NBL.Areas.SCM.Controllers
         }
         public ActionResult PendingOrder()
         {
-           
             int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iInvoiceManager.GetAllInvoicedOrdersByCompanyIdAndStatus(companyId, 0);
+            //var orders = _iInvoiceManager.GetAllInvoicedOrdersByCompanyIdAndStatus(companyId, 0);
+            var orders = _iOrderManager.GetOrdersByCompanyIdAndStatus(companyId, Convert.ToInt32(OrderStatus.InvoicedOrApprovedbyAdmin)).ToList();
             return View(orders);
 
         }
@@ -81,7 +81,6 @@ namespace NBL.Areas.SCM.Controllers
         }
         public ActionResult Approve(int id)
         {
-           
             var order = _iOrderManager.GetOrderByOrderId(id);
             order.Client = _iClientManager.GetById(order.ClientId);
             ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", order.DistributionPointId);
@@ -94,33 +93,33 @@ namespace NBL.Areas.SCM.Controllers
             try
             {
 
-                int branchId = Convert.ToInt32(Session["BranchId"]);
-                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var invoicebyId= _iInvoiceManager.GetInvoicedOrderByInvoiceId(id);
+                //int branchId = Convert.ToInt32(Session["BranchId"]);
+                //int companyId = Convert.ToInt32(Session["CompanyId"]);
                 var anUser = (ViewUser)Session["user"];
+
                 var order = _iOrderManager.GetOrderByOrderId(id);
                 order.DistributionPointId = Convert.ToInt32(collection["DistributionPointId"]);
                 order.Client = _iClientManager.GetById(order.ClientId);
-                decimal specialDiscount = Convert.ToDecimal(collection["Discount"]);
-                Invoice anInvoice = new Invoice
-                {
-                    InvoiceDateTime = DateTime.Now,
-                    CompanyId = companyId,
-                    BranchId = branchId,
-                    ClientId = order.ClientId,
-                    Amounts = order.Amounts,
-                    Discount = order.Discount,
-                    SpecialDiscount = specialDiscount,
-                    InvoiceByUserId = anUser.UserId,
-                    TransactionRef = order.OrederRef,
-                    ClientAccountCode = order.Client.SubSubSubAccountCode,
-                    Explanation = "Credit sale by " + anUser.UserId,
-                    DiscountAccountCode = _iOrderManager.GetDiscountAccountCodeByClintTypeId(order.Client.ClientTypeId)
-                };
-                string invoice = _iInvoiceManager.Save(order.OrderItems, anInvoice);
-                order.Status = Convert.ToInt32(OrderStatus.InvoicedOrApprovedbyAdmin);
-                order.SpecialDiscount = specialDiscount;
-                order.AdminUserId = anUser.UserId;
-                string result = _iOrderManager.ApproveOrderByAdmin(order);
+                order.DistributionPointSetByUserId = anUser.UserId;
+              
+                //Invoice anInvoice = new Invoice
+                //{
+                //    InvoiceDateTime = DateTime.Now,
+                //    CompanyId = companyId,
+                //    BranchId = branchId,
+                //    ClientId = order.ClientId,
+                //    Amounts = order.Amounts,
+                //    Discount = order.Discount,
+                //    InvoiceByUserId = anUser.UserId,
+                //    TransactionRef = order.OrederRef,
+                //    ClientAccountCode = order.Client.SubSubSubAccountCode,
+                //    Explanation = "Credit sale by " + anUser.UserId,
+                //    DiscountAccountCode = _iOrderManager.GetDiscountAccountCodeByClintTypeId(order.Client.ClientTypeId)
+                //};
+               // string invoice = _iInvoiceManager.Save(order.OrderItems, anInvoice);
+                order.Status = Convert.ToInt32(OrderStatus.DistributionPointSet);
+                string result = _iOrderManager.ApproveOrderByScmManager(order);
                 return RedirectToAction("PendingOrder");
             }
             catch (Exception exception)

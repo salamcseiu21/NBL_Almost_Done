@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using NBL.DAL.Contracts;
 using NBL.Models;
+using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Masters;
@@ -1977,6 +1978,132 @@ ConnectionObj.Close();
                 ConnectionObj.Close();
             }
         }
+
+        public int ApproveOrderByScmManager(ViewOrder order)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_ApproveOrderByScmManager";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DistributionPoint", order.DistributionPointId);
+                CommandObj.Parameters.AddWithValue("@SetByUserId", order.DistributionPointSetByUserId);
+                CommandObj.Parameters.AddWithValue("@OrderStatus", order.Status);
+                CommandObj.Parameters.AddWithValue("@OrderId", order.OrderId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Could not update Distribution Point due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not update Distribution Point", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<ViewOrder> GetOrdersByCompanyIdAndStatus(int companyId, int status)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetOrdersByCompanyIdAndStatus";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                CommandObj.Parameters.AddWithValue("@Status", status);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<ViewOrder> orders = new List<ViewOrder>();
+                while (reader.Read())
+                {
+
+                    var anOrder = new ViewOrder
+                    {
+                        OrderId = Convert.ToInt32(reader["OrderId"]),
+                        OrderDate = Convert.ToDateTime(reader["OrderDate"]),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        OrderSlipNo = reader["OrderSlipNo"].ToString(),
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        User = new User
+                        {
+                            UserId = Convert.ToInt32(reader["UserId"]),
+                            UserName = reader["UserName"].ToString(),
+                            EmployeeName = reader["EmployeeName"].ToString()
+                        },
+                        BranchName = reader["BranchName"].ToString(),
+                        Client = new Client
+                        {
+                            ClientName = reader["Name"].ToString(),
+                            CommercialName = reader["CommercialName"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            ClientId = Convert.ToInt32(reader["ClientId"]),
+                            Address = reader["Address"].ToString(),
+                            AlternatePhone = reader["AltPhone"].ToString(),
+                            Phone = reader["Phone"].ToString(),
+                            SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                            ClientType = new ClientType
+                            {
+                                ClientTypeId = Convert.ToInt32(reader["ClientTypeId"]),
+                                ClientTypeName = reader["ClientTypeName"].ToString()
+                            }
+                        },
+
+                        ApprovedByNsmDateTime = Convert.ToDateTime(reader["ApprovedByNsmDateTime"]),
+                        ApprovedByAdminDateTime = Convert.ToDateTime(reader["ApprovedByAdminDateTime"]),
+                        Discount = Convert.ToDecimal(reader["Discount"]),
+                        SpecialDiscount = Convert.ToDecimal(reader["SpecialDiscount"]),
+                        NetAmounts = Convert.ToDecimal(reader["NetAmounts"]),
+                        NsmUserId = Convert.ToInt32(reader["NsmUserId"]),
+                        CompanyId = companyId,
+                        Status = status,
+                        DistributionPointId =DBNull.Value.Equals(reader["DistributionCenterId"])?default(int): Convert.ToInt32(reader["DistributionCenterId"]),
+                        Vat = Convert.ToDecimal(reader["Vat"]),
+                        Amounts = Convert.ToDecimal(reader["Amounts"]),
+                        CancelByUserId = Convert.ToInt32(reader["CancelByUserId"]),
+                        ResonOfCancel = reader["ReasonOfCancel"].ToString(),
+                        CancelDateTime = Convert.ToDateTime(reader["CancelDateTime"]),
+                        SysDate = Convert.ToDateTime(reader["SysDateTime"]),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        VerificationStatus = Convert.ToInt32(reader["VerificationStatus"]),
+                        Branch = new Branch
+                        {
+                            BranchId = Convert.ToInt32(reader["BranchId"]),
+                            BranchName = reader["BranchName"].ToString()
+                        }
+                        
+                    };
+
+                    orders.Add(anOrder);
+                }
+
+                reader.Close();
+                return orders;
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Could not Collect Orders due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Collect pending Orders", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
         public IEnumerable<ViewOrder> GetDelayedOrdersToNsmByBranchAndCompanyId(int branchId, int companyId)
         {
             try

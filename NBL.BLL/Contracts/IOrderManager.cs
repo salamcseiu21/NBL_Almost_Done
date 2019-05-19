@@ -125,5 +125,8 @@ namespace NBL.BLL.Contracts
         IEnumerable<ViewOrder> GetOrder(SearchCriteriaModel searchCriteria);
         bool SaveSoldProductBarCode(RetailSale retail);
         ICollection<ViewOrder> GetCancelledOrdersToSalesPersonByBranchCompanyUserId(int branchId, int companyId,int userId);
+        string ApproveOrderByScmManager(ViewOrder order);
+
+        ICollection<ViewOrder> GetOrdersByCompanyIdAndStatus(int companyId, int status);    
     }
 }

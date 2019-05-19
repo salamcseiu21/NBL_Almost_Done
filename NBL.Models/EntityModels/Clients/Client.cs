@@ -138,7 +138,7 @@ namespace NBL.Models.EntityModels.Clients
 
         public string GetBasicInformation()
         {
-            return $"<strong> {CommercialName}  </strong><br/>Client Type:{ClientType.ClientTypeName}";
+            return $"<strong> {CommercialName}  </strong>-({ClientType.ClientTypeName})";
         }
         public string GetContactInformation()
         {

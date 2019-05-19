@@ -34,12 +34,12 @@ namespace NBL.Areas.Sales.Controllers
             _iProductManager = iProductManager;
             _iBranchManager = iBranchManager;
         }
-        public ActionResult Stock()
+        public PartialViewResult Stock()
         {
             int companyId = Convert.ToInt32(Session["CompanyId"]);
             int branchId = Convert.ToInt32(Session["BranchId"]);
             var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).ToList();
-            return View(products);
+            return PartialView("_ViewStockProductInBranchPartialPage",products);
         }
 
         public ActionResult TotalReceive()

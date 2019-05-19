@@ -16,6 +16,7 @@ namespace NBL.Models.ViewModels.Summaries
         public AccountSummary AccountSummary { get; set; }  
         public int CompanyId { get; set; }
         public int BranchId { get; set; }
+        public ViewBranch Branch { get; set; }  
         public decimal CollectionPercentageOfSale
         {
             get

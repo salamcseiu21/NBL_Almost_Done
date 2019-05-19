@@ -1,8 +1,27 @@
 ﻿
+@model NBL.Models.ViewModels.Summaries.SummaryModel
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
 }
 
-<h2>Home</h2>
+<section class="content">
 
+    @Html.Partial("_RptOrderStockSummaryPartialPage",Model)
+
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_Sales_summary").DataTable();
+        $("#tbl_Stock_summary").DataTable();
+    </script>
+    <script type="text/javascript">
+        var timeout = setTimeout("location.reload(true);", 60000);
+        function resetTimeout() {
+            clearTimeout(timeout);
+            timeout = setTimeout("location.reload(true);", 60000);
+        }
+    </script>
+}

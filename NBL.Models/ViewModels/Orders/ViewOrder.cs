@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Orders;
@@ -32,6 +33,8 @@ namespace NBL.Models.ViewModels.Orders
         public int DeliveredOrReceiveUserId { get; set; }
         [Display(Name = "Branch")]
         public int BranchId { get; set; }
+         
+        public Branch Branch { get; set; }
         public int CompanyId { get; set; }
         public decimal Amounts { get; set; }
         public decimal NetAmounts { get; set; }
@@ -62,8 +65,9 @@ namespace NBL.Models.ViewModels.Orders
         public IEnumerable<OrderItem> OrderItems { get; set; }  
         public Client Client { get; set; }
         public User User { get; set; }
-        public int DistributionPointId { get; set; }    
-        
+        public int DistributionPointId { get; set; }
+        public int DistributionPointSetByUserId { get; set; } 
+        public DateTime DistributionPointSetDateTime { get; set; } 
 
     }
 }

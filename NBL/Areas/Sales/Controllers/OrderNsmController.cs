@@ -107,8 +107,8 @@ namespace NBL.Areas.Sales.Controllers
         public ActionResult Edit(int id)
         {
             var order = _iOrderManager.GetOrderByOrderId(id);
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName",order.DistributionPointId);
+            //int branchId = Convert.ToInt32(Session["BranchId"]);
+            //ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName",order.DistributionPointId);
           
             order.Client = _iClientManager.GetById(order.ClientId);
             
@@ -124,7 +124,6 @@ namespace NBL.Areas.Sales.Controllers
             {
 
                 var user = (ViewUser)Session["user"];
-                decimal amount = Convert.ToDecimal(collection["Amount"]);
                 var dicount = Convert.ToDecimal(collection["Discount"]);
                 var order = _iOrderManager.GetOrderByOrderId(id);
                 order.Client = _iClientManager.GetById(order.ClientId);
@@ -135,7 +134,7 @@ namespace NBL.Areas.Sales.Controllers
                 order.Status = Convert.ToInt32(OrderStatus.ApprovedbyNsm);
                 order.SpecialDiscount = dicount;
                 order.ApprovedByNsmDateTime = DateTime.Now;
-                order.DistributionPointId = Convert.ToInt32(collection["DistributionPointId"]);
+                //order.DistributionPointId = Convert.ToInt32(collection["DistributionPointId"]);
                 string r = _iOrderManager.UpdateOrderDetails(orderItems);
                 order.NsmUserId = user.UserId;
                 string result = _iOrderManager.ApproveOrderByNsm(order);

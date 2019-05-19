@@ -28,10 +28,22 @@
             <li>@Html.ActionLink(" Pending Orders", "PendingOrder", "Order", new { area = "SCM" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
             <li>@Html.ActionLink(" Latest Orders", "LatestOrders", "Order", new { area = "SCM" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
             <li>@Html.ActionLink(" All Orders", "All", "Order", new { area = "SCM" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-            <li>@Html.ActionLink(" All Delivered Orders", "ViewAllDeliveredOrders", "Order", new { area = "SCM" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            @*<li>@Html.ActionLink(" All Delivered Orders", "ViewAllDeliveredOrders", "Order", new { area = "SCM" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>*@
         </ul>
     </li>
-
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-product-hunt"></i>
+            <span>Store</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Production Summary", "ProductionSummary", "Home", new {area = "SCM" }, new {@class = "fa fa-eye"})</li>
+            <li>@Html.ActionLink(" Factory Stock", "Stock", "Home", new {area = "SCM"}, new {@class = "fa fa-eye"})</li>
+        </ul>
+    </li>
     <li class="treeview">
         <a href="#">
             <i class="fa fa-book"></i> <span>Reports</span>

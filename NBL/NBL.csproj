@@ -8054,6 +8054,8 @@
     <Content Include="Areas\SCM\Views\Order\ViewAllDeliveredOrders.cshtml" />
     <Content Include="Areas\SCM\Views\Shared\_ViewDeliveredOrdersPartialPage.cshtml" />
     <Content Include="Areas\SCM\Views\Shared\_PendingOrdersPartialPage.cshtml" />
+    <Content Include="Areas\SCM\Views\Home\Stock.cshtml" />
+    <Content Include="Areas\SCM\Views\Home\ProductionSummary.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8185,6 +8187,9 @@
     <Content Include="Views\Shared\_ModalReplaceDeliveryPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewDispatchPartialPage.cshtml" />
     <Content Include="Views\Shared\_ModalOrderDeliveryFromFactoryPartialPage.cshtml" />
+    <Content Include="Views\Shared\_RptFactoryStockPartialPage.cshtml" />
+    <Content Include="Views\Shared\_RptProductionSummaryPartialPage.cshtml" />
+    <Content Include="Views\Shared\_RptOrderStockSummaryPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
