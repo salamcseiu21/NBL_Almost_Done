@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI.WebControls.WebParts;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.Areas.Sales.BLL.Contracts;
 using NBL.BLL;
@@ -16,6 +17,7 @@ using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.Corporate.Controllers
@@ -41,8 +43,8 @@ namespace NBL.Areas.Corporate.Controllers
         private readonly IClientManager _iClientManager;
         private readonly IProductManager _iProductManager;
         private readonly UserManager _userManager=new UserManager();
-
-        public HomeController(IVatManager iVatManager,IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IReportManager iReportManager,IDepartmentManager iDepartmentManager,IEmployeeManager iEmployeeManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager,IDiscountManager iDiscountManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IAccountsManager iAccountsManager,IInvoiceManager iInvoiceManager,IDivisionGateway iDivisionGateway,IProductManager iProductManager)
+        private readonly IFactoryDeliveryManager _iFactoryDeliveryManager;
+        public HomeController(IVatManager iVatManager,IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IReportManager iReportManager,IDepartmentManager iDepartmentManager,IEmployeeManager iEmployeeManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager,IDiscountManager iDiscountManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IAccountsManager iAccountsManager,IInvoiceManager iInvoiceManager,IDivisionGateway iDivisionGateway,IProductManager iProductManager,IFactoryDeliveryManager iFactoryDeliveryManager)
         {
             _iVatManager = iVatManager;
             _iBranchManager = iBranchManager;
@@ -60,6 +62,7 @@ namespace NBL.Areas.Corporate.Controllers
             _iInvoiceManager = iInvoiceManager;
             _iDivisionGateway = iDivisionGateway;
             _iProductManager = iProductManager;
+            _iFactoryDeliveryManager = iFactoryDeliveryManager;
         }
 
         // GET: Corporate/Home
@@ -326,7 +329,7 @@ namespace NBL.Areas.Corporate.Controllers
         {
             int companyId = Convert.ToInt32(Session["CompanyId"]);
             var stock = _iInventoryManager.GetStockProductByCompanyId(companyId);
-            return PartialView("_ViewStockProductInBranchPartialPage",stock);
+            return PartialView("_RptFactoryStockPartialPage",stock);
         }
         public PartialViewResult ProductionSummary()
         {
@@ -352,6 +355,13 @@ namespace NBL.Areas.Corporate.Controllers
         {
             List<ViewDispatchModel> dispatch = _iProductManager.GetAllDispatchList().ToList();
             return View(dispatch);
+        }
+
+        public PartialViewResult Chalan(long dispatchId)
+        {
+            ViewDispatchChalan chalan = _iFactoryDeliveryManager.GetDispatchChalanByDispatchId(dispatchId);
+            return PartialView("_ViewDispatchChalanPartialPage",chalan);
+
         }
     }
 }

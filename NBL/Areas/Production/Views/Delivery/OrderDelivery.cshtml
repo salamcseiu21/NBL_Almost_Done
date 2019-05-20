@@ -63,6 +63,7 @@
                             <div class="btn toolbar">
                                 <button type="button" id="btnDelivery" value="@Model.Invoice.InvoiceId" class="btn btn-success" onclick="Delivery(this)"> Delivery</button>
                                 @Html.ActionLink("Back", "DeliverableOrderList", "Delivery", null, new { @class = "btn btn-danger" })
+                                @Html.ActionLink("View Scanned Barcodes", "ScannedBarcodeList", "Delivery", new {  id = Model.Invoice.InvoiceId}, new {@class="btn btn-info", target = "_blank"})
                             </div>
                         </div>
                     </div>

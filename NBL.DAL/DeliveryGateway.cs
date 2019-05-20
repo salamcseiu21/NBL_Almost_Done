@@ -577,6 +577,160 @@ namespace NBL.DAL
             }
         }
 
+        public IEnumerable<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyAndUserId(int distributionPointId, int companyId,
+            int userId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllDeliveredOrdersByDistributionPointCompanyAndUserId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DistributionPointId", distributionPointId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                CommandObj.Parameters.AddWithValue("@DeliveredByUserId", userId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<Delivery> orders = new List<Delivery>();
+                while (reader.Read())
+                {
+                    Delivery aModel = new Delivery
+                    {
+                        DeliveryId = Convert.ToInt32(reader["DeliveryId"]),
+                        ToBranchId = Convert.ToInt32(reader["ToBranchId"]),
+                        FromBranchId = Convert.ToInt32(reader["ToBranchId"]),
+                        CompanyId = companyId,
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
+                        Status = Convert.ToInt32(reader["Status"]),
+                        SysDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        Transport = new Transport
+                        {
+                            DriverName = reader["DriverName"].ToString(),
+                            DriverPhone = reader["DriverPhone"].ToString(),
+                            Transportation = reader["Transportation"].ToString(),
+                            TransportationCost = Convert.ToDecimal(reader["TransportationCost"]),
+                            VehicleNo = reader["VehicleNo"].ToString()
+                        }
+                    };
+                    orders.Add(aModel);
+                }
+                reader.Close();
+                return orders;
+
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Could not Collect Delivered Orders due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Collect Delivered Orders by branch,Company and User Id", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public IEnumerable<DeliveryDetails> GetDeliveredOrderDetailsByDeliveryIdFromFactory(int deliveryId)
+        {
+            try
+            {
+
+                CommandObj.CommandText = "spGetDeliveredOrderDetailsByDeliveryIdFromFactory";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DeliveryId", deliveryId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<DeliveryDetails> orders = new List<DeliveryDetails>();
+                while (reader.Read())
+                {
+                    var aModel = new DeliveryDetails
+                    {
+                        DeliveryId = deliveryId,
+                        ToBranchId = Convert.ToInt32(reader["ToBranchId"]),
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
+                        Quantity = reader["DeliveredQuantity"] is DBNull ? 0 : Convert.ToInt32(reader["DeliveredQuantity"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        //ProductBarCode = reader["ProductBarCode"].ToString(),
+                        CategoryId = Convert.ToInt32(reader["CategoryId"]),
+                        CategoryName = reader["ProductCategoryName"].ToString()
+                    };
+                    orders.Add(aModel);
+                }
+                reader.Close();
+                return orders;
+
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Could not Collect Delivered Orders details due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Collect Delivered details Orders", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public IEnumerable<ViewProduct> GetDeliveredProductsByDeliveryIdAndProductIdFromFactory(int deliveryId, int productId)
+        {
+
+            try
+            {
+
+                CommandObj.CommandText = "spGetDeliveredProductsByDeliveryIdAndProductIdFromFactory";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DeliveryId", deliveryId);
+                CommandObj.Parameters.AddWithValue("@productId", productId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<ViewProduct> products = new List<ViewProduct>();
+                while (reader.Read())
+                {
+                    ViewProduct aModel = new ViewProduct
+                    {
+
+                        ProductId = productId,
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductBarCode = reader["ProductBarCode"].ToString(),
+                        CategoryId = Convert.ToInt32(reader["CategoryId"]),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString()
+                    };
+                    products.Add(aModel);
+                }
+                reader.Close();
+                return products;
+
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Could not Collect Delivered products due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Collect Delivered products Orders", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
         public int Add(Delivery model)
         {
             throw new NotImplementedException();

@@ -17,6 +17,7 @@ using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Logs;
 using NBL.Models.ViewModels.Productions;
+using NBL.Models.ViewModels.Summaries;
 using NBL.Models.ViewModels.TransferProducts;
 
 namespace NBL.Areas.Sales.Controllers
@@ -34,12 +35,13 @@ namespace NBL.Areas.Sales.Controllers
             _iProductManager = iProductManager;
             _iBranchManager = iBranchManager;
         }
-        public PartialViewResult Stock()
+        public ActionResult Stock()
         {
             int companyId = Convert.ToInt32(Session["CompanyId"]);
             int branchId = Convert.ToInt32(Session["BranchId"]);
             var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).ToList();
-            return PartialView("_ViewStockProductInBranchPartialPage",products);
+       
+            return View(products);
         }
 
         public ActionResult TotalReceive()
@@ -56,6 +58,7 @@ namespace NBL.Areas.Sales.Controllers
             int companyId = Convert.ToInt32(Session["CompanyId"]);
             int branchId = Convert.ToInt32(Session["BranchId"]);
             var products = _iInventoryManager.GetDeliveredProductByBranchAndCompanyId(branchId, companyId).ToList();
+
             return View(products);
         }
         [HttpGet]

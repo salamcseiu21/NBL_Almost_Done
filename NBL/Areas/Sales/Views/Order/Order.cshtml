@@ -153,9 +153,10 @@
     {
         <input type="hidden" id="productIdToRemove" name="productIdToRemove" />
 
-        <table class="table table-bordered" style="margin: 0; padding: 0;">
+        <div class="table-responsive">
+            <table class="table table-bordered" style="margin: 0; padding: 0;">
 
-            <thead>
+                <thead>
 
                 <tr>
                     <th style="border: 1px solid black;" class="text-center">Product Name</th>
@@ -163,13 +164,16 @@
                     <th style="border: 1px solid black;" class="text-center">Vat (&#2547;)</th>
                     <th style="border: 1px solid black;" class="text-center">Discount (&#2547;)</th>
                     <th style="border: 1px solid black;" class="text-center">Sale Price(&#2547;)</th>
-                    <th style="border: 1px solid black; width: 10%" class="text-center">Quantity</th>
+                    <th style="border: 1px solid black; min-width: 100px" class="text-center">Quantity</th>
                     <th style="border: 1px solid black;" class="text-center">Sub Total (&#2547;)</th>
                     <th style="border: 1px solid black;" class="text-center">Action</th>
                 </tr>
-            </thead>
-            <tbody id="orders"></tbody>
-        </table>
+                </thead>
+                <tbody id="orders"></tbody>
+            </table>
+        </div>
+
+
     }
    
 </section>

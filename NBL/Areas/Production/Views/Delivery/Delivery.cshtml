@@ -35,7 +35,7 @@
                             <button type="button" value="@Model.TripId" class="btn btn-success" onclick="SaveDispatchInfo(this)"> Dispatch</button>
                             <a class="btn btn-danger" href="~/production">Back</a>
                          
-                            @Html.ActionLink("View Scanned Barcodes", "ViewScannedBarcodeList", "Delivery", new { id = Model.TripId}, new {@class="btn btn-info"})
+                            @Html.ActionLink("View Scanned Barcodes", "ViewScannedBarcodeList", "Delivery", new { id = Model.TripId}, new {@class="btn btn-info",target="_blank"})
                          
                         </div>
 

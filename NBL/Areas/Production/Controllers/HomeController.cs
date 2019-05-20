@@ -49,7 +49,7 @@ namespace NBL.Areas.Production.Controllers
         {
             int companyId = Convert.ToInt32(Session["CompanyId"]);
             var stock = _iInventoryManager.GetStockProductByCompanyId(companyId);
-            return View(stock);
+            return PartialView("_RptFactoryStockPartialPage",stock);
         }
 
         //------------------ Change password------------------------

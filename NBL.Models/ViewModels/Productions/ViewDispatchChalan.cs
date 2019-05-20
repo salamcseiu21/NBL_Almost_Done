@@ -7,6 +7,7 @@ namespace NBL.Models.ViewModels.Productions
     public class ViewDispatchChalan
     {
         public IEnumerable<ViewDispatchModel> DispatchDetails { get; set; }
-        public DispatchModel DispatchModel { get; set; }  
+        public DispatchModel DispatchModel { get; set; }
+        public string Destination { get; set; }
     }
 }

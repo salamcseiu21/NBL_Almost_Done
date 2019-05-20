@@ -8056,6 +8056,11 @@
     <Content Include="Areas\SCM\Views\Shared\_PendingOrdersPartialPage.cshtml" />
     <Content Include="Areas\SCM\Views\Home\Stock.cshtml" />
     <Content Include="Areas\SCM\Views\Home\ProductionSummary.cshtml" />
+    <Content Include="Areas\Sales\Views\Shared\_ViewProductSummaryPartialPage.cshtml" />
+    <Content Include="Areas\Sales\Views\Delivery\ViewScannedBarcodeList.cshtml" />
+    <Content Include="Areas\Production\Views\Delivery\DeliveredOrderList.cshtml" />
+    <Content Include="Areas\Production\Views\Delivery\DeliveredBarCodeList.cshtml" />
+    <Content Include="Areas\Production\Views\Delivery\OrderChalan.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8190,6 +8195,8 @@
     <Content Include="Views\Shared\_RptFactoryStockPartialPage.cshtml" />
     <Content Include="Views\Shared\_RptProductionSummaryPartialPage.cshtml" />
     <Content Include="Views\Shared\_RptOrderStockSummaryPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewDispatchChalanPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewScannedBarCodePartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

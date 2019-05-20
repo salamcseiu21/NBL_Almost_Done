@@ -311,6 +311,15 @@ namespace NBL.Areas.Sales.Controllers
             }
            // return Json(model, JsonRequestBehavior.AllowGet);
         }
+
+        public PartialViewResult ViewScannedBarcodeList(long id)
+        {
+            List<ScannedProduct> products = new List<ScannedProduct>();
+            string fileName = "Scanned_Ordered_Product_List_For_" + id;
+            var filePath = Server.MapPath("~/Files/" + fileName);
+            products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+            return PartialView("_ViewScannedBarCodePartialPage",products);
+        }
         public ActionResult ViewInvoiceIdOrderDetails(int invoiceId)
         {
             var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);

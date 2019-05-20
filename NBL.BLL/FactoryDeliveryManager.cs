@@ -10,15 +10,16 @@ using NBL.Models.Enums;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Productions;
+using Microsoft.Ajax.Utilities;
 
 namespace NBL.BLL
 {
     public class FactoryDeliveryManager:IFactoryDeliveryManager
     {
         private readonly IFactoryDeliveryGateway _iFactoryDeliveryGateway;
-        readonly InventoryGateway _inventoryGateway = new InventoryGateway();
-        readonly CommonGateway _commonGateway = new CommonGateway();
-        readonly private IBranchGateway _iBranchGateway;
+        private readonly InventoryGateway _inventoryGateway = new InventoryGateway();
+        private readonly CommonGateway _commonGateway = new CommonGateway();
+        private readonly IBranchGateway _iBranchGateway;
 
         public FactoryDeliveryManager(IFactoryDeliveryGateway iFactoryDeliveryGateway,IBranchGateway iBranchGateway)
         {
@@ -42,19 +43,22 @@ namespace NBL.BLL
 
         public ViewDispatchChalan GetDispatchChalanByDispatchId(long dispatchId)
         {
+            var destination = "";
             DispatchModel dispatch = GetDispatchByDispatchId(dispatchId);
             var details = GetDispatchDetailsByDispatchId(dispatchId);
-            //foreach (DeliveryDetails deliveryDetailse in details)
-            //{
-            //    deliveryDetailse.DeliveredProducts = GetDeliveredProductsByDeliveryIdAndProductId(deliveryId, deliveryDetailse.ProductId).ToList();
-            //}
+            foreach (var model in details.ToList().OrderByDescending(n => n.ToBranchId).DistinctBy(n => n.ToBranchId))
+            {
+                var b = _iBranchGateway.GetById(model.ToBranchId);
+                destination += b.BranchName+"-"+b.BranchAddress +",";
+            }
 
 
-
+            destination=destination.TrimEnd(',');
             var chalan = new ViewDispatchChalan
             {
                 DispatchModel = dispatch,
-                DispatchDetails = details
+                DispatchDetails = details,
+                Destination = destination
             };
             return chalan;
 
@@ -74,7 +78,7 @@ namespace NBL.BLL
 
         private string GenerateDispatchReference(int maxDispatchNo)
         {
-            string refCode = _commonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(ReferenceType.Dispatch)).Code;
+            string refCode = _commonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(Models.Enums.ReferenceType.Dispatch)).Code;
             string temp = (maxDispatchNo + 1).ToString();
             string reference = DateTime.Now.Year.ToString().Substring(2, 2) + refCode + temp;
             return reference;

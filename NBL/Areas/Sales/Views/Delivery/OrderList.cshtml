@@ -6,10 +6,13 @@
 }
 
 <section class="content">
-    <div style="border: 1px solid;padding: 5px">
+
         <h3 class="text-center text-green headingStyle">Distribution</h3>
-        <table id="table_order_list_to_deliver" class="table table table-striped table-bordered" style="border:1px solid black">
-            <thead>
+        <div class="table-responsive">
+            
+      
+            <table id="table_order_list_to_deliver" class="table table-bordered" style="border:1px solid black">
+                <thead>
                 <tr>
                     <th>Client Info</th>
                     <th>Invoice Ref</th>
@@ -18,9 +21,9 @@
                     <th class="text-center">Invoice At</th>
                     <th class="text-center">Action</th>
                 </tr>
-            </thead>
+                </thead>
 
-            <tbody>
+                <tbody>
 
                 @foreach (var item in Model.InvoicedOrderList)
                 {
@@ -48,20 +51,20 @@
                         </td>
                         <td class="text-center">
                             @item.InvoiceDateTime.ToShortTimeString()
-                        @if (!(item.InvoiceDateTime.Date.Equals(DateTime.Now.Date)))
-                        {
-                            <span>,@item.InvoiceDateTime.ToString("dd-MMM-yyyy")</span>
-                        }
-                    </td>
+                            @if (!(item.InvoiceDateTime.Date.Equals(DateTime.Now.Date)))
+                            {
+                                <span>,@item.InvoiceDateTime.ToString("dd-MMM-yyyy")</span>
+                            }
+                        </td>
                    
-                    <td class="text-center">
-                        @Html.ActionLink(" Delivery", "Delivery", "Delivery", new { area = "Sales", id = item.InvoiceId }, new { @class = "fa fa-eye" })
-                    </td>
-                </tr>
+                        <td class="text-center">
+                            @Html.ActionLink(" Delivery", "Delivery", "Delivery", new { area = "Sales", id = item.InvoiceId }, new { @class = "fa fa-eye" })
+                        </td>
+                    </tr>
                 }
 
-            </tbody>
-            <tfoot>
+                </tbody>
+                <tfoot>
                 <tr>
                     <th>Client Info</th>
                     <th>Invoice Ref</th>
@@ -71,9 +74,10 @@
                     <th class="text-center">Action</th>
 
                 </tr>
-            </tfoot>
-        </table>
-    </div>
+                </tfoot>
+            </table>
+        </div>
+
 </section>
 
 @section Scripts

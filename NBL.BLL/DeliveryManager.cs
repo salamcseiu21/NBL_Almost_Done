@@ -98,5 +98,46 @@ namespace NBL.BLL
         {
             return _iDeliveryGateway.GetDeliveryDetailsInfoByDeliveryId(deliveryId);
         }
+
+        public ICollection<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyAndUserId(int branchId, int companyId, int userId)
+        {
+            var deliveredOrders =
+                _iDeliveryGateway.GetAllDeliveredOrdersByDistributionPointCompanyAndUserId(branchId, companyId, userId);
+            foreach (Delivery delivery in deliveredOrders)
+            {
+                var order = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
+                delivery.Client = _iClientManager.GetById(order.ClientId);
+            }
+
+            return deliveredOrders.ToList();
+        }
+
+        public ViewChalanModel GetChalanByDeliveryIdFromFactory(int deliveryId)
+        {
+            Delivery delivery = GetOrderByDeliveryId(deliveryId);
+            var details = GetDeliveredOrderDetailsByDeliveryIdFromFactory(deliveryId);
+            foreach (DeliveryDetails deliveryDetailse in details)
+            {
+                deliveryDetailse.DeliveredProducts = GetDeliveredProductsByDeliveryIdAndProductIdFromFactory(deliveryId, deliveryDetailse.ProductId).ToList();
+            }
+            Order order = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
+            var client = _iClientManager.GetClientDeailsById(order.ClientId);
+            var chalan = new ViewChalanModel
+            {
+                DeliveryDetailses = details,
+                ViewClient = client
+            };
+            return chalan;
+        }
+
+        private IEnumerable<ViewProduct> GetDeliveredProductsByDeliveryIdAndProductIdFromFactory(int deliveryId, int productId)
+        {
+            return _iDeliveryGateway.GetDeliveredProductsByDeliveryIdAndProductIdFromFactory(deliveryId, productId);
+        }
+
+        private IEnumerable<DeliveryDetails> GetDeliveredOrderDetailsByDeliveryIdFromFactory(int deliveryId)
+        {
+            return _iDeliveryGateway.GetDeliveredOrderDetailsByDeliveryIdFromFactory(deliveryId);
+        }
     }
 }

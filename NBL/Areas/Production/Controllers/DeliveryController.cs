@@ -31,12 +31,12 @@ namespace NBL.Areas.Production.Controllers
         private readonly IBranchManager _iBranchManager;
         private readonly ICommonManager _iCommonManager;
         private readonly IInventoryManager _iInventoryManager;
-
+        private readonly IDeliveryManager _iDeliveryManager;
         private readonly IInvoiceManager _iInvoiceManager;
 
         private readonly IClientManager _iClientManager;
         // GET: Factory/Delivery
-        public DeliveryController(IProductManager iProductManager,IFactoryDeliveryManager iFactoryDeliveryManager,IBranchManager iBranchManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager,IInvoiceManager iInvoiceManager,IClientManager iClientManager)
+        public DeliveryController(IProductManager iProductManager,IFactoryDeliveryManager iFactoryDeliveryManager,IBranchManager iBranchManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager,IInvoiceManager iInvoiceManager,IClientManager iClientManager,IDeliveryManager iDeliveryManager)
         {
             _iProductManager = iProductManager;
             _iFactoryDeliveryManager = iFactoryDeliveryManager;
@@ -45,6 +45,7 @@ namespace NBL.Areas.Production.Controllers
             _iCommonManager = iCommonManager;
             _iClientManager = iClientManager;
             _iInvoiceManager = iInvoiceManager;
+            _iDeliveryManager = iDeliveryManager;
         }
         public ActionResult DeliverableTransferIssueList() 
         {
@@ -240,15 +241,13 @@ namespace NBL.Areas.Production.Controllers
             }
             return PartialView("_ViewScannedProductPartialPage", products);
         }
-
+        //---------------For dispatch----------
         public ActionResult ViewScannedBarcodeList(long id)
         {
-
-            List<ScannedProduct> products = new List<ScannedProduct>();
             string fileName = "Deliverable_Product_For_" + id;
             var filePath = Server.MapPath("~/Files/" + fileName);
-            products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
-            return View(products);
+            var products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+            return PartialView("_ViewScannedBarCodePartialPage", products);
         }
 
         public ActionResult TripList()
@@ -412,11 +411,10 @@ namespace NBL.Areas.Production.Controllers
             {
 
                 List<ViewFactoryStockModel> products = (List<ViewFactoryStockModel>)Session["Factory_stock1"];
-                var id = invoiceId;
-                var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(id);
+                var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
                 string scannedBarCode = barcode.ToUpper();
                 int productId = Convert.ToInt32(scannedBarCode.Substring(2, 3));
-                string fileName = "Scanned_Ordered_Product_List_For_" + id;
+                string fileName = "Scanned_Ordered_Product_List_For_" + invoiceId;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 var barcodeList = _iProductManager.ScannedProducts(filePath);
 
@@ -493,6 +491,14 @@ namespace NBL.Areas.Production.Controllers
             }
             // return Json(model, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult ScannedBarcodeList(long id)
+        {
+            string fileName = "Scanned_Ordered_Product_List_For_" + id;
+            var filePath = Server.MapPath("~/Files/" + fileName);
+            var products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+            return PartialView("_ViewScannedBarCodePartialPage", products);
+        }
         public ActionResult ViewInvoiceIdOrderDetails(int invoiceId)
         {
             var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
@@ -555,6 +561,28 @@ namespace NBL.Areas.Production.Controllers
             return PartialView("_ViewLoadScannedProductPartialPage", list);
         }
 
-        
+        public ActionResult DeliveredOrderList()
+        {
+
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            var user = (ViewUser)Session["user"];
+            var orders = _iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyAndUserId(branchId, companyId, user.UserId).ToList(); 
+            return View(orders);
+        }
+
+        public ActionResult DeliveredBarCodeList(int deliveryId)
+        {
+            var chalan = _iDeliveryManager.GetChalanByDeliveryIdFromFactory(deliveryId);
+            return View(chalan);
+
+        }
+
+        public ActionResult OrderChalan(int deliveryId)
+        {
+            var chalan = _iDeliveryManager.GetChalanByDeliveryIdFromFactory(deliveryId);
+            return View(chalan);
+
+        }
     }
 }
