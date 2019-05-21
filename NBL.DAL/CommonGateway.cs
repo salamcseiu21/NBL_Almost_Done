@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using NBL.DAL.Contracts;
 using NBL.Models;
+using NBL.Models.EntityModels.Approval;
 using NBL.Models.EntityModels.Banks;
 using NBL.Models.EntityModels.BarCodes;
 using NBL.Models.EntityModels.Branches;
@@ -12,6 +13,7 @@ using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.MobileBankings;
 using NBL.Models.EntityModels.Productions;
+using NBL.Models.EntityModels.Requisitions;
 using NBL.Models.EntityModels.Suppliers;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.ViewModels;
@@ -962,6 +964,75 @@ CommandObj.Parameters.Clear();
             catch (Exception exception)
             {
                 throw new Exception("Could not save current user role", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<RequisitionFor> GetAllRequisitionForList()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllRequisitionForList";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<RequisitionFor> list=new List<RequisitionFor>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new RequisitionFor
+                    {
+                        RequisitionForId = Convert.ToInt32(reader["RequisitionForId"]),
+                        Description = reader["Description"].ToString(),
+                        AccountCode = DBNull.Value.Equals(reader["AccountCode"])?null:reader["AccountCode"].ToString()
+                    });
+                }
+                reader.Close();
+                return list;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not save requisition for list", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ApprovalPathModel GetFirstApprovalPathByUserId(int requisitionByUserId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetFirstApprovalPathByUserId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@UserId", requisitionByUserId);
+                ApprovalPathModel model = null;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    model=new ApprovalPathModel
+                    {
+                        ApprovalLevel = Convert.ToInt32(reader["ApprovalLevel"]),
+                        ApprovalPathModelId = Convert.ToInt32(reader["Id"]),
+                        ApproverUserId = Convert.ToInt32(reader["ApproverUserId"]),
+                        UserId = requisitionByUserId,
+                        SystemDateTime = Convert.ToDateTime(reader["SysDatetime"])
+                    };
+                }
+                reader.Close();
+                return model;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get approval path by user Id", exception);
             }
             finally
             {

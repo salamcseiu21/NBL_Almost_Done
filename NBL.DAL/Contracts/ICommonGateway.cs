@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using NBL.Models;
+using NBL.Models.EntityModels.Approval;
 using NBL.Models.EntityModels.Banks;
 using NBL.Models.EntityModels.BarCodes;
 using NBL.Models.EntityModels.Branches;
@@ -9,6 +10,7 @@ using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.MobileBankings;
 using NBL.Models.EntityModels.Productions;
+using NBL.Models.EntityModels.Requisitions;
 using NBL.Models.EntityModels.Suppliers;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.ViewModels;
@@ -43,5 +45,7 @@ namespace NBL.DAL.Contracts
        int SaveEncriptedConString(string chipartext);
        ICollection<RejectionReason> GetAllRejectionReason();
        int UpdateCurrentUserRole(ViewUser user,int roleId);
+       ICollection<RequisitionFor> GetAllRequisitionForList();
+       ApprovalPathModel GetFirstApprovalPathByUserId(int requisitionByUserId);
    }
 }

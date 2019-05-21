@@ -8061,6 +8061,8 @@
     <Content Include="Areas\Production\Views\Delivery\DeliveredOrderList.cshtml" />
     <Content Include="Areas\Production\Views\Delivery\DeliveredBarCodeList.cshtml" />
     <Content Include="Areas\Production\Views\Delivery\OrderChalan.cshtml" />
+    <Content Include="Areas\ResearchAndDevelopment\Views\Product\ProductStatus.cshtml" />
+    <Content Include="Areas\ResearchAndDevelopment\Views\Home\GeneralRequisition.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8197,6 +8199,7 @@
     <Content Include="Views\Shared\_RptOrderStockSummaryPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewDispatchChalanPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewScannedBarCodePartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewGeneralRequsitionPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -8230,6 +8233,7 @@
     <Folder Include="Areas\Services\Models\" />
     <Folder Include="Assets\css\" />
     <Folder Include="Assets\documentation\build\" />
+    <Folder Include="Files\GeneralRequisition\" />
     <Folder Include="Views\Common\" />
   </ItemGroup>
   <ItemGroup>

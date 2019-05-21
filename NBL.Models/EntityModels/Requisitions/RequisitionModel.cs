@@ -18,6 +18,8 @@ namespace NBL.Models.EntityModels.Requisitions
         public int ToBranchId { get; set; }
         public int FromBranchId { get; set; }
         public Branch ToBranch { get; set; }
+        public int RequisitionForId { get; set; }
+        public RequisitionFor RequisitionFor { get; set; }
         public RequisitionModel()
         {
             ToBranch=new Branch();

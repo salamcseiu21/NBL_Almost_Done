@@ -1,0 +1,39 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Requisitions.RequisitionModel>
+    
+<div class="table-responsive">
+    <table id="tbl_General_requsition_Product" class="table table-bordered" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Requisition For</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>
+                    <input type='number' min='1' value=@item.Quantity class='form-control text-right' id="@item.Serial" name='NewQuantity_@item.Serial'  onchange='Update(this)'/>
+                   
+                </td>
+                <td>@(item.RequisitionFor?.Description?? "N/A")</td>
+                <th class="text-center"><button id="@item.Serial" type='button' onclick='RemoveProductById(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color:red;'></i></button></th>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Requisition For</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<script>
+    $("#tbl_General_requsition_Product").DataTable();
+</script>

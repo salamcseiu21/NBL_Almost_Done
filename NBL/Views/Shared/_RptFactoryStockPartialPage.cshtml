@@ -9,6 +9,7 @@
     <h3 class="text-center text-green">Factory Stock</h3>
 
     <div style="padding: 10px; margin: 10px; font-weight: bolder; height: 50px;border: 1px solid green"> Total Quantity : @Model.Sum(n => n.Quantity)</div>
+    <div class="table-responsive">
     <table id="table_product_list_in_stock" class="display table table-striped table-bordered" style="border:1px solid black">
 
         <thead>
@@ -43,7 +44,7 @@
         </tr>
         </tfoot>
     </table>
-
+    </div>
 </section>
 @section Scripts
 {

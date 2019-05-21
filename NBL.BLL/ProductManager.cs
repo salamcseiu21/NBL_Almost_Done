@@ -4,6 +4,7 @@ using System.Linq;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
 using NBL.Models;
+using NBL.Models.EntityModels.Approval;
 using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Requisitions;
@@ -23,7 +24,7 @@ namespace NBL.BLL
     {
         private readonly  IProductGateway _iProductGateway;
         private readonly ICommonGateway _iCommonGateway;
-
+       
         public ProductManager(IProductGateway iProductGateway,ICommonGateway iCommonGateway)
         {
             _iProductGateway = iProductGateway;
@@ -387,6 +388,29 @@ namespace NBL.BLL
             return _iProductGateway.TransferReceiveableDetails(transferId);
         }
 
+        public int SaveGeneralRequisitionInfo(GeneralRequisitionModel requisition)
+        {
+            var model= _iCommonGateway.GetFirstApprovalPathByUserId(requisition.RequisitionByUserId);
+            int max = _iProductGateway.GetMaxGeneralRequisitionNoOfCurrentYear();
+            requisition.RequisitionRef = GenerateGeneralRequisitionRef(max);
+            requisition.CurrentApprovalLevel = model.ApprovalLevel;
+            requisition.CurrentApproverUserId = model.ApproverUserId;
+            return _iProductGateway.SaveGeneralRequisitionInfo(requisition);
+        }
+
+        private string GenerateGeneralRequisitionRef(int max)
+        {
+            string refCode = _iCommonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(ReferenceType.GeneralRequisition)).Code;
+            string temp = (max + 1).ToString();
+            string reference = DateTime.Now.Year.ToString().Substring(2, 2) + refCode + temp;
+            return reference;
+        }
+
+        public int GetMaxGeneralRequisitionNoOfCurrentYear()
+        {
+            return _iProductGateway.GetMaxGeneralRequisitionNoOfCurrentYear();
+        }
+         
         private string GenerateTransferRequisitionRef(int maxTrNo)
         {
 

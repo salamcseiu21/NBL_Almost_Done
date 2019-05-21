@@ -1052,6 +1052,97 @@ namespace NBL.DAL
             }
             return i;
         }
+
+        public int SaveGeneralRequisitionInfo(GeneralRequisitionModel aRequisitionModel)
+        {
+            ConnectionObj.Open();
+            SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
+            try
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Transaction = sqlTransaction;
+                CommandObj.CommandText = "UDSP_SaveGeneralRequisitionInfo";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@RequisitionDate", aRequisitionModel.RequisitionDate);
+                CommandObj.Parameters.AddWithValue("@RequisitionByUserId", aRequisitionModel.RequisitionByUserId);
+                CommandObj.Parameters.AddWithValue("@RequisitionRef", aRequisitionModel.RequisitionRef);
+                CommandObj.Parameters.AddWithValue("@Quantity", aRequisitionModel.Quantity);
+                CommandObj.Parameters.AddWithValue("@RequisitionRemarks", aRequisitionModel.RequisitionRemarks);
+                CommandObj.Parameters.AddWithValue("@CurrentApprovalLevel", aRequisitionModel.CurrentApprovalLevel);
+                CommandObj.Parameters.AddWithValue("@CurrentApproverUserId", aRequisitionModel.CurrentApproverUserId);
+                CommandObj.Parameters.Add("@RequisitionId", SqlDbType.Int);
+                CommandObj.Parameters["@RequisitionId"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                int requisitionId = Convert.ToInt32(CommandObj.Parameters["@RequisitionId"].Value);
+                int rowAffected = SaveGeneralRequisitionDetails(aRequisitionModel.RequisitionModels.ToList(), requisitionId);
+                if (rowAffected > 0)
+                {
+                    sqlTransaction.Commit();
+                }
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                sqlTransaction.Rollback();
+                throw new Exception("Could not Save general requisition Info", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        private int SaveGeneralRequisitionDetails(List<RequisitionModel> products, int requisitionId)
+        {
+            int i = 0;
+            foreach (var product in products)
+            {
+                CommandObj.CommandText = "UDSP_SaveGeneralRequisitionDetails";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@RequisitionForId", product.RequisitionForId);
+                CommandObj.Parameters.AddWithValue("@ProductId", product.ProductId);
+                CommandObj.Parameters.AddWithValue("@Quantity", product.Quantity);
+                CommandObj.Parameters.AddWithValue("@RequisitionId", requisitionId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            }
+            return i;
+        }
+
+        public int GetMaxGeneralRequisitionNoOfCurrentYear()
+        {
+            try
+            {
+                CommandObj.CommandText = "spGetMaxGeneralRequisitionNoOfCurrentYear";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                int slNo = 0;
+                if (reader.Read())
+                {
+                    slNo = Convert.ToInt32(reader["MaxSlNo"]);
+                }
+                reader.Close();
+                return slNo;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect max requisition no of current Year", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
         public int GetMaxRequisitionNoOfCurrentYear()
         {
             try
@@ -1079,7 +1170,6 @@ namespace NBL.DAL
                 ConnectionObj.Close();
             }
         }
-
         public IEnumerable<ViewRequisitionModel> GetRequsitionsByStatus(int status)
         {
             try

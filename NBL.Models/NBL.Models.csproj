@@ -82,6 +82,7 @@
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="AutoMapper\DomainProfile.cs" />
     <Compile Include="Contracts\IMonth.cs" />
+    <Compile Include="EntityModels\Approval\ApprovalPathModel.cs" />
     <Compile Include="EntityModels\Banks\Bank.cs" />
     <Compile Include="EntityModels\Banks\BankBranch.cs" />
     <Compile Include="EntityModels\BarCodes\BarCodeModel.cs" />
@@ -119,6 +120,8 @@
     <Compile Include="EntityModels\Productions\RejectedProduct.cs" />
     <Compile Include="EntityModels\Productions\RejectionReason.cs" />
     <Compile Include="EntityModels\ReplaceModel.cs" />
+    <Compile Include="EntityModels\Requisitions\GeneralRequisitionModel.cs" />
+    <Compile Include="EntityModels\Requisitions\RequisitionFor.cs" />
     <Compile Include="EntityModels\Returns\ReturnDetails.cs" />
     <Compile Include="EntityModels\Returns\ReturnModel.cs" />
     <Compile Include="EntityModels\Returns\ReturnProduct.cs" />
@@ -180,6 +183,7 @@
     <Compile Include="ViewModels\Products\ViewCreateProductDetailsModel.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceDetailsModel.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceModel.cs" />
+    <Compile Include="ViewModels\Requisitions\ViewCreateGeneralRequsitionModel.cs" />
     <Compile Include="ViewModels\Requisitions\ViewMonthlyRequisitionModel.cs" />
     <Compile Include="ViewModels\Requisitions\ViewRequisitionModel.cs" />
     <Compile Include="EntityModels\Requisitions\RequisitionModel.cs" />

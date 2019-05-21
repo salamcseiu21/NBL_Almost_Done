@@ -35,6 +35,20 @@
     <li class="treeview">
         <a href="#">
             <i class="fa fa-product-hunt"></i>
+            <span>Dispatch</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Deliverable Trip Lsit", "TripList", "Delivery", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
+            <li>@Html.ActionLink(" Dispatch List", "DispatchList", "Product", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
+         
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-product-hunt"></i>
             <span>Delivery</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -46,20 +60,7 @@
             <li>@Html.ActionLink(" Delivered List", "DeliveredOrderList", "Delivery", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
         </ul>
     </li>
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-product-hunt"></i>
-            <span>Dispatch</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li>@Html.ActionLink(" Trip Lsit", "TripList", "Delivery", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
-            <li>@Html.ActionLink(" Dispatch List", "DispatchList", "Product", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
-         
-        </ul>
-    </li>
+   
     
     
     <li class="treeview">
@@ -73,7 +74,7 @@
         <ul class="treeview-menu">
            
             <li>@Html.ActionLink(" Dispatch List", "DispatchList", "Product", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
-         
+            <li>@Html.ActionLink(" Delivered List", "DeliveredOrderList", "Delivery", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
         </ul>
     </li>
     <li class="treeview">

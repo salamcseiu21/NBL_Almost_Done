@@ -11,6 +11,7 @@ using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.MobileBankings;
 using NBL.Models.EntityModels.Productions;
+using NBL.Models.EntityModels.Requisitions;
 using NBL.Models.EntityModels.Suppliers;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.ViewModels;
@@ -46,5 +47,6 @@ namespace NBL.BLL.Contracts
         bool SaveEncriptedConString(string chipartext);
         ICollection<RejectionReason> GetAllRejectionReason();
         bool UpdateCurrentUserRole(ViewUser user, int roleId);
+        ICollection<RequisitionFor> GetAllRequisitionForList();
     }
 }

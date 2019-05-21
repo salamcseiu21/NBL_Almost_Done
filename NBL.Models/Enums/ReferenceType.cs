@@ -20,7 +20,8 @@ namespace NBL.Models.Enums
         MonthlyRequisition=15,
         SalesReturn=16,
         SalesReturnReceive = 17,
-        Replace=18
+        Replace=18,
+        GeneralRequisition=19
     }
 
   

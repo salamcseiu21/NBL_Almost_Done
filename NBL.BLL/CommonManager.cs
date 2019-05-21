@@ -11,6 +11,7 @@ using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.MobileBankings;
 using NBL.Models.EntityModels.Productions;
+using NBL.Models.EntityModels.Requisitions;
 using NBL.Models.EntityModels.Suppliers;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.ViewModels;
@@ -154,6 +155,11 @@ namespace NBL.BLL
        {
            int rowAffected = _iCommonGateway.UpdateCurrentUserRole(user,roleId);
            return rowAffected > 0;
+       }
+
+       public ICollection<RequisitionFor> GetAllRequisitionForList()
+       {
+           return _iCommonGateway.GetAllRequisitionForList();
        }
    }
 }

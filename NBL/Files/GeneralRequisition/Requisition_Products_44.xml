@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Products>
+  <Product Id="01105">
+    <ProductId>105</ProductId>
+    <ProductName>ANB 27</ProductName>
+    <Quantity>2</Quantity>
+    <RequisitionForId>1</RequisitionForId>
+  </Product>
+  <Product Id="02115">
+    <ProductId>115</ProductId>
+    <ProductName>AGM IPS 100</ProductName>
+    <Quantity>3</Quantity>
+    <RequisitionForId>2</RequisitionForId>
+  </Product>
+</Products>

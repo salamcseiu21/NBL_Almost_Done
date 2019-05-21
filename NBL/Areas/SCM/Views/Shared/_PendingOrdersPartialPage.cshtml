@@ -1,58 +1,60 @@
 ﻿@model IEnumerable<NBL.Models.ViewModels.Orders.ViewOrder>
 <h3 class="text-center text-green headingStyle">Pending Orders</h3>
+<div class="table-responsive">
 <table id="table_pending_order_list" class="table table-bordered" style="border:1px solid black">
     <thead>
-        <tr>
-            <th>Client Info</th>
-            <th>Order Slip No</th>
-            <th class="text-right">Qty</th>
-            <th class="text-right">Amount  (&#2547;)</th>
-            <th class="text-center">Approved by Salse Admin At</th>
-            <th class="text-center">Order At</th>
-            <th class="text-center">Order By</th>
-            <th class="text-center">Action</th>
-        </tr>
+    <tr>
+        <th>Client Info</th>
+        <th>Order Slip No</th>
+        <th class="text-right">Qty</th>
+        <th class="text-right">Amount  (&#2547;)</th>
+        <th class="text-center">Approved by Salse Admin At</th>
+        <th class="text-center">Order At</th>
+        <th class="text-center">Order By</th>
+        <th class="text-center">Action</th>
+    </tr>
     </thead>
 
     <tbody>
 
-        @foreach (var item in Model)
-            {
-            <tr>
-                <td>
-                    @Html.Raw(item.Client.GetBasicInformation())<br/>
-                    <b class="text-green">@item.Branch.BranchName</b>
-                </td>
-                <td>@item.OrderSlipNo</td>
-                <td class="text-right">@item.Quantity</td>
-                <td class="text-right">@item.Amounts</td>
-                <td class="text-center">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.Raw(item.Client.GetBasicInformation())<br/>
+                <b class="text-green">@item.Branch.BranchName</b>
+            </td>
+            <td>@item.OrderSlipNo</td>
+            <td class="text-right">@item.Quantity</td>
+            <td class="text-right">@item.Amounts</td>
+            <td class="text-center">
 
-                    @item.ApprovedByAdminDateTime.ToShortTimeString(), @item.ApprovedByAdminDateTime.ToString("dd-MMM-yyyy")
-                </td>
-                <td class="text-center">
+                @item.ApprovedByAdminDateTime.ToShortTimeString(), @item.ApprovedByAdminDateTime.ToString("dd-MMM-yyyy")
+            </td>
+            <td class="text-center">
 
-                    @item.SysDate.ToShortTimeString(), @item.SysDate.ToString("dd-MMM-yyyy")
-                </td>
-                <td>@(item.User?.EmployeeName?? "N/A")</td>
-                <td class="text-center">
-                    @Html.ActionLink(" Details", "Approve", "Order", new {area = "SCM", id = item.OrderId}, new {@class = "fa fa-eye"})
-                </td>
-            </tr>
-        }
+                @item.SysDate.ToShortTimeString(), @item.SysDate.ToString("dd-MMM-yyyy")
+            </td>
+            <td>@(item.User?.EmployeeName?? "N/A")</td>
+            <td class="text-center">
+                @Html.ActionLink(" Details", "Approve", "Order", new {area = "SCM", id = item.OrderId}, new {@class = "fa fa-eye"})
+            </td>
+        </tr>
+    }
 
     </tbody>
     <tfoot>
-        <tr>
-            <th>Client Info</th>
-            <th>Order Slip No</th>
-            <th class="text-right">Qty</th>
-            <th class="text-right">Amount  (&#2547;)</th>
-            <th class="text-center">Approved by Salse Admin At</th>
-            <th class="text-center">Order At</th>
-            <th class="text-center">Order By</th>
-            <th class="text-center">Action</th>
+    <tr>
+        <th>Client Info</th>
+        <th>Order Slip No</th>
+        <th class="text-right">Qty</th>
+        <th class="text-right">Amount  (&#2547;)</th>
+        <th class="text-center">Approved by Salse Admin At</th>
+        <th class="text-center">Order At</th>
+        <th class="text-center">Order By</th>
+        <th class="text-center">Action</th>
 
-        </tr>
+    </tr>
     </tfoot>
 </table>
+</div>

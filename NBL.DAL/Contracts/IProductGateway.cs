@@ -71,5 +71,7 @@ namespace NBL.DAL.Contracts
         int UpdateRequisitionQuantity(long id, int quantity);
         int ApproveRequisition(long id, ViewUser user);
         List<ViewTransferProductDetails> TransferReceiveableDetails(long transferId);
+        int SaveGeneralRequisitionInfo(GeneralRequisitionModel requisition);
+        int GetMaxGeneralRequisitionNoOfCurrentYear();
     }
 }
