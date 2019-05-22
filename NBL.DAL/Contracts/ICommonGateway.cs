@@ -47,5 +47,7 @@ namespace NBL.DAL.Contracts
        int UpdateCurrentUserRole(ViewUser user,int roleId);
        ICollection<RequisitionFor> GetAllRequisitionForList();
        ApprovalPathModel GetFirstApprovalPathByUserId(int requisitionByUserId);
+       ApprovalPathModel GetFirstApprovalPathByApproverUserId(int approverUserId);
+       ICollection<ApprovalAction> GetAllApprovalActionList();
    }
 }

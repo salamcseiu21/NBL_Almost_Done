@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
 using NBL.Models;
+using NBL.Models.EntityModels.Approval;
 using NBL.Models.EntityModels.Banks;
 using NBL.Models.EntityModels.BarCodes;
 using NBL.Models.EntityModels.Branches;
@@ -157,9 +158,33 @@ namespace NBL.BLL
            return rowAffected > 0;
        }
 
-       public ICollection<RequisitionFor> GetAllRequisitionForList()
+       public bool GetFirstApprovalPathByUserId(int requisitionByUserId)
+       {
+          var model=_iCommonGateway.GetFirstApprovalPathByUserId(requisitionByUserId);
+           if (model!=null)
+           {
+               return true;
+           }
+           return false;
+       }
+        public  bool GetFirstApprovalPathByApproverUserId(int approverUserId)
+       {
+           var model = _iCommonGateway.GetFirstApprovalPathByApproverUserId(approverUserId);
+           if (model != null)
+           {
+               return true;
+           }
+           return false;
+        }
+
+        public ICollection<RequisitionFor> GetAllRequisitionForList()
        {
            return _iCommonGateway.GetAllRequisitionForList();
+       }
+
+       public ICollection<ApprovalAction> GetAllApprovalActionList()
+       {
+           return _iCommonGateway.GetAllApprovalActionList();
        }
    }
 }

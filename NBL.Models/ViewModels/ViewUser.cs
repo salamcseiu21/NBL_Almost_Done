@@ -30,6 +30,7 @@ namespace NBL.Models.ViewModels
         [Display(Name = "Signature")]
         public string EmployeeSignature { get; set; }
         public int UserId { get; set; }
-
+        public bool IsApprovalRight { get; set; } 
+        public bool IsGeneralRequisitionRight { set; get; }
     }
 }

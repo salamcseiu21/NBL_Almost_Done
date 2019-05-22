@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using NBL.BLL;
@@ -16,13 +15,10 @@ using NBL.Models.ViewModels.Requisitions;
 namespace NBL.Areas.ResearchAndDevelopment.Controllers
 {
     [Authorize(Roles = "R&D")]
-    
-
     public class HomeController : Controller
     {
 
         private readonly UserManager _userManager=new UserManager();
-
         private readonly ICommonManager _iCommonManager;
         private readonly IProductManager _iProductManager;
 
@@ -37,6 +33,17 @@ namespace NBL.Areas.ResearchAndDevelopment.Controllers
             return View();
         }
 
+        public PartialViewResult GeneralRequisitionList()
+        {
+            ICollection<ViewGeneralRequisitionModel> requisitions = _iProductManager.GetAllGeneralRequisitions();
+            return PartialView("_ViewGeneralRequisitionListPartialPage",requisitions);
+        }
+
+        public PartialViewResult GeneralRequisitionDetails(long id)
+        {
+            var details = _iProductManager.GetGeneralRequisitionDetailsById(id);
+            return PartialView("_ViewGeneralRequisitionDetailsPartialPage",details);
+        }
         public ActionResult GeneralRequisition()
         {
             var user = (ViewUser)Session["user"];
@@ -109,7 +116,7 @@ namespace NBL.Areas.ResearchAndDevelopment.Controllers
                 var product = _iProductManager.GetAll().ToList().Find(n => n.ProductId == model.ProductId);
                 var xmlDocument = XDocument.Load(filePath);
                 xmlDocument.Element("Products")?.Add(
-                    new XElement("Product", new XAttribute("Id", id),
+                        new XElement("Product", new XAttribute("Id", id),
                         new XElement("ProductId", product.ProductId),
                         new XElement("ProductName", product.ProductName),
                         new XElement("Quantity", model.Quantity),

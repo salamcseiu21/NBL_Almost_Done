@@ -1143,6 +1143,149 @@ namespace NBL.DAL
             }
         }
 
+        public ICollection<ViewGeneralRequisitionModel> GetAllGeneralRequisitions()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllGeneralRequsitions";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<ViewGeneralRequisitionModel> requisitions=new List<ViewGeneralRequisitionModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    requisitions.Add(new ViewGeneralRequisitionModel
+                    {
+                        
+                        RequisitionId = Convert.ToInt64(reader["RequisitionId"]),
+                        RequisitionByUserId = Convert.ToInt32(reader["RequisitionByUserId"]),
+                        RequisitionDate = Convert.ToDateTime(reader["RequisitionDate"]),
+                        ApproverEmp = reader["ApproverName"].ToString(),
+                        CurrentApproverUserId = Convert.ToInt32(reader["CurrentApproverUserId"]),
+                        CurrentApprovalLevel = Convert.ToInt32(reader["CurrentApprovalLevel"]),
+                        DistributionPointId = DBNull.Value.Equals(reader["DistributionPointId"])?default(int):Convert.ToInt32(reader["DistributionPointId"]),
+                        EntryStatus = reader["EntryStatus"].ToString(),
+                        IsCancelled = reader["IsCancelled"].ToString(),
+                        IsFinalApproved = reader["IsFinalApproved"].ToString(),
+                        RequisitionByEmp = reader["RequsitionBy"].ToString(),
+                        RequisitionRemarks = reader["RequisitionRemarks"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        RequisitionRef = reader["RequisitionRef"].ToString(),
+                        LastApproverUserId = DBNull.Value.Equals(reader["LastApproverUserId"])?default(int):Convert.ToInt32(reader["LastApproverUserId"]),
+                        LastApproveDateTime = DBNull.Value.Equals(reader["LastApproveDateTime"])?default(DateTime):Convert.ToDateTime(reader["LastApproveDateTime"])
+
+                    });
+                }
+                reader.Close();
+                return requisitions;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect general requisition list", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<ViewGeneralRequistionDetailsModel> GetGeneralRequisitionDetailsById(long requisitiionId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetGeneralRequisitionDetailsById";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@RequisitionId", requisitiionId);
+                List<ViewGeneralRequistionDetailsModel> details=new List<ViewGeneralRequistionDetailsModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    details.Add(new ViewGeneralRequistionDetailsModel
+                    {
+                        AccountCode = DBNull.Value.Equals(reader["AccountCode"])?null:reader["AccountCode"].ToString(),
+                        RequisitionForId = Convert.ToInt32(reader["RequisitionForId"]),
+                        Description = reader["Description"].ToString(),
+                        GeneralRequisitionDetailsId = Convert.ToInt64(reader["GeneralRequisitionDetailsId"]),
+                        GeneralRequisitionId = Convert.ToInt64(reader["GeneralRequisitionId"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString()
+                    });
+                }
+                reader.Close();
+                return details;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect general requisition details by Id", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public int UpdateGeneralRequisitionQuantity(string id, int quantity)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_UpdateGeneralRequisitionQuantity";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@GeneralRequisitionDetailsId", Convert.ToInt64(id));
+                CommandObj.Parameters.AddWithValue("@Quantity", quantity);
+                ConnectionObj.Open();
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not update general requisition qty", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public int RemoveProductByIdDuringApproval(string id)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RemoveProductByIdDuringApproval";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@GeneralRequisitionDetailsId", Convert.ToInt64(id));
+                ConnectionObj.Open();
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not remove product from general requisition", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
         public int GetMaxRequisitionNoOfCurrentYear()
         {
             try

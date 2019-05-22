@@ -1,0 +1,61 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Requisitions.ViewGeneralRequisitionModel>
+@{
+    ViewBag.Title = "General Requisition List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <h3 class="text-center text-green">General Requisition List</h3>
+    <div class="table-responsive">
+        <table id="tbl_General_requsition_List" class="display table-bordered table-hover" style="border: 1px solid">
+            <thead>
+                <tr>
+                    <th>Reference</th>
+                    <th>Requisition By</th>
+                    <th>Quantity</th>
+                    <th>Requisiton Date</th>
+                    <th>Remarks</th>
+                    <th>Current Approval Level</th>
+                    <th>Last Approver</th>
+                    <th>Current Approver</th>
+                    <th>Is Final Approved</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>@item.RequisitionRef</td>
+                        <td>@item.RequisitionByEmp</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.RequisitionDate.ToString("dd-MMMM-yyyy")</td>
+                        <td>@item.RequisitionRemarks</td>
+                        <td>@item.CurrentApprovalLevel</td>
+                        <td>@item.LastApproverUserId</td>
+                        <td>@item.ApproverEmp</td>
+                        <td>@item.IsFinalApproved</td>
+                        
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Reference</th>
+                    <th>Requisition By</th>
+                    <th>Quantity</th>
+                    <th>Requisiton Date</th>
+                    <th>Remarks</th>
+                    <th>Current Approval Level</th>
+                    <th>Last Approver</th>
+                    <th>Current Approver</th>
+                    <th>Is Final Approved</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</section>
+@section Scripts
+{
+    <script>
+        $("#tbl_General_requsition_List").DataTable();
+    </script>
+}

@@ -64,6 +64,8 @@ namespace NBL.Controllers
                 //anUser.Roles = _iCommonManager.GetAllUserRoles().ToList().Find(n => n.RoleId.Equals(roleId)).RoleName;
                 Session["Branches"] = _iCommonManager.GetAssignedBranchesToUserByUserId(anUser.UserId).ToList();
                 Session["Roles"] = _userManager.GetAssignedUserRolesByUserId(anUser.UserId);
+                anUser.IsGeneralRequisitionRight = _iCommonManager.GetFirstApprovalPathByUserId(anUser.UserId);
+                anUser.IsApprovalRight = _iCommonManager.GetFirstApprovalPathByApproverUserId(anUser.UserId);
                 Session["user"] = anUser;
                // Session["Role"] = _iCommonManager.GetAllUserRoles().ToList().Find(n => n.RoleId.Equals(roleId)).RoleName;
                 int companyId = Convert.ToInt32(collection["companyId"]);

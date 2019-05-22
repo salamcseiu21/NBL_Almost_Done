@@ -315,6 +315,8 @@
     <Compile Include="Areas\AccountsAndFinance\Models\VoucherDetails.cs" />
     <Compile Include="Areas\Administrative\AdministrativeAreaRegistration.cs" />
     <Compile Include="Areas\Administrative\Controllers\HomeController.cs" />
+    <Compile Include="Areas\CommonArea\CommonAreaAreaRegistration.cs" />
+    <Compile Include="Areas\CommonArea\Controllers\HomeController.cs" />
     <Compile Include="Areas\Corporate\Controllers\HomeController.cs" />
     <Compile Include="Areas\Corporate\Controllers\OperationHeadController.cs" />
     <Compile Include="Areas\Corporate\Controllers\SalesAdminController.cs" />
@@ -8063,6 +8065,10 @@
     <Content Include="Areas\Production\Views\Delivery\OrderChalan.cshtml" />
     <Content Include="Areas\ResearchAndDevelopment\Views\Product\ProductStatus.cshtml" />
     <Content Include="Areas\ResearchAndDevelopment\Views\Home\GeneralRequisition.cshtml" />
+    <Content Include="Areas\CommonArea\Views\web.config" />
+    <Content Include="Areas\CommonArea\Views\Home\Home.cshtml" />
+    <Content Include="Areas\CommonArea\Views\Home\GeneralRequisition.cshtml" />
+    <Content Include="Areas\CommonArea\Views\Shared\_MenuPartialPage.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8200,6 +8206,10 @@
     <Content Include="Views\Shared\_ViewDispatchChalanPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewScannedBarCodePartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewGeneralRequsitionPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewGeneralRequisitionListPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewGeneralRequisitionDetailsPartialPage.cshtml" />
+    <Content Include="Views\Shared\_CommonMenuPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewGeneralRequisitionList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -8207,6 +8217,7 @@
     <Folder Include="Areas\AccountsAndFinance\Views\ChartOfAccount\" />
     <Folder Include="Areas\Administrative\Models\" />
     <Folder Include="Areas\Administrative\Views\Shared\" />
+    <Folder Include="Areas\CommonArea\Models\" />
     <Folder Include="Areas\Corporate\Files\" />
     <Folder Include="Areas\Corporate\Models\" />
     <Folder Include="Areas\CRM\Models\" />

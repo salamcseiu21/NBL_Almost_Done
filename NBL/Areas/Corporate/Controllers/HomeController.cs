@@ -363,5 +363,15 @@ namespace NBL.Areas.Corporate.Controllers
             return PartialView("_ViewDispatchChalanPartialPage",chalan);
 
         }
+
+        public ActionResult OrderListByBranch(int id)
+        {
+
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(id, companyId).OrderByDescending(n => n.OrderId).DistinctBy(n => n.OrderId).ToList();
+
+            return PartialView("_ViewOrdersPartialPage", orders);
+        }
+        
     }
 }

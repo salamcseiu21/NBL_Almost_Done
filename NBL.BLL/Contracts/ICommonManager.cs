@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NBL.Models;
+using NBL.Models.EntityModels.Approval;
 using NBL.Models.EntityModels.Banks;
 using NBL.Models.EntityModels.BarCodes;
 using NBL.Models.EntityModels.Branches;
@@ -47,6 +48,10 @@ namespace NBL.BLL.Contracts
         bool SaveEncriptedConString(string chipartext);
         ICollection<RejectionReason> GetAllRejectionReason();
         bool UpdateCurrentUserRole(ViewUser user, int roleId);
+        bool GetFirstApprovalPathByUserId(int requisitionByUserId);
+        bool GetFirstApprovalPathByApproverUserId(int approverUserId);
         ICollection<RequisitionFor> GetAllRequisitionForList();
+        ICollection<ApprovalAction> GetAllApprovalActionList();
+
     }
 }

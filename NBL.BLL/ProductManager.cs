@@ -410,7 +410,29 @@ namespace NBL.BLL
         {
             return _iProductGateway.GetMaxGeneralRequisitionNoOfCurrentYear();
         }
-         
+
+        public ICollection<ViewGeneralRequisitionModel> GetAllGeneralRequisitions()
+        {
+            return _iProductGateway.GetAllGeneralRequisitions();
+        }
+
+        public ICollection<ViewGeneralRequistionDetailsModel> GetGeneralRequisitionDetailsById(long requisitiionId)
+        {
+            return _iProductGateway.GetGeneralRequisitionDetailsById(requisitiionId);
+        }
+
+        public bool UpdateGeneralRequisitionQuantity(string id, int quantity)
+        {
+            int rowAffected = _iProductGateway.UpdateGeneralRequisitionQuantity(id,quantity);
+            return rowAffected > 0;
+        }
+
+        public bool RemoveProductByIdDuringApproval(string id)
+        {
+            int rowAffected = _iProductGateway.RemoveProductByIdDuringApproval(id);
+            return rowAffected > 0;
+        }
+
         private string GenerateTransferRequisitionRef(int maxTrNo)
         {
 

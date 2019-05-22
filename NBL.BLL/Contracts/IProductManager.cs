@@ -63,6 +63,9 @@ namespace NBL.BLL.Contracts
         List<ViewTransferProductDetails> TransferReceiveableDetails(long transferId);
         int SaveGeneralRequisitionInfo(GeneralRequisitionModel requisition);
         int GetMaxGeneralRequisitionNoOfCurrentYear();
-        
+        ICollection<ViewGeneralRequisitionModel> GetAllGeneralRequisitions();
+        ICollection<ViewGeneralRequistionDetailsModel> GetGeneralRequisitionDetailsById(long requisitiionId);
+        bool UpdateGeneralRequisitionQuantity(string id, int quantity);
+        bool RemoveProductByIdDuringApproval(string id);
     }
 }

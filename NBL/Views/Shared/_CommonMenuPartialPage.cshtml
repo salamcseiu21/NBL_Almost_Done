@@ -1,0 +1,31 @@
+﻿@using NBL.Models.ViewModels
+@*Common Menu*@
+@{
+    var user = (ViewUser)Session["user"];
+}
+
+
+@if (user.IsApprovalRight || user.IsGeneralRequisitionRight)
+{
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-product-hunt"></i>
+            <span>General Requisitions</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+
+            @if (user.IsGeneralRequisitionRight)
+            {
+                <li>@Html.ActionLink(" New Requisition", "GeneralRequisition", "Home", new { area = "CommonArea" }, new { @class = "fa fa-eye" })</li>
+                <li>@Html.ActionLink(" Requisition List", "GeneralRequisitionList", "Home", new { area = "CommonArea" }, new { @class = "fa fa-eye" })</li>
+            }
+            @if (user.IsApprovalRight)
+            {
+                <li>@Html.ActionLink(" Approve", "GeneralRequisitionListForApproval", "Home", new { area = "CommonArea" }, new { @class = "fa fa-eye" })</li>
+            }
+        </ul>
+    </li>
+}

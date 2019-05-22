@@ -1018,7 +1018,7 @@ CommandObj.Parameters.Clear();
                 SqlDataReader reader = CommandObj.ExecuteReader();
                 if (reader.Read())
                 {
-                    model=new ApprovalPathModel
+                    model = new ApprovalPathModel
                     {
                         ApprovalLevel = Convert.ToInt32(reader["ApprovalLevel"]),
                         ApprovalPathModelId = Convert.ToInt32(reader["Id"]),
@@ -1033,6 +1033,74 @@ CommandObj.Parameters.Clear();
             catch (Exception exception)
             {
                 throw new Exception("Could not get approval path by user Id", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ApprovalPathModel GetFirstApprovalPathByApproverUserId(int approverUserId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetFirstApprovalPathByApproverUserId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@UserId", approverUserId);
+                ApprovalPathModel model = null;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    model = new ApprovalPathModel
+                    {
+                        ApprovalLevel = Convert.ToInt32(reader["ApprovalLevel"]),
+                        ApprovalPathModelId = Convert.ToInt32(reader["Id"]),
+                        ApproverUserId = approverUserId,
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        SystemDateTime = Convert.ToDateTime(reader["SysDatetime"])
+                    };
+                }
+                reader.Close();
+                return model;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get approval path by user Id", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<ApprovalAction> GetAllApprovalActionList()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllApprovalActionList";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<ApprovalAction> list=new List<ApprovalAction>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new ApprovalAction
+                    {
+                        ApproverActionId = Convert.ToInt32(reader["ApproverActionId"]),
+                        ApproverActionType = reader["ApproverActionType"].ToString()
+                    });
+                }
+                reader.Close();
+                return list;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get approval action", exception);
             }
             finally
             {
