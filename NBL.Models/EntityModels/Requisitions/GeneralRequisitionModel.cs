@@ -16,6 +16,7 @@ namespace NBL.Models.EntityModels.Requisitions
         public int RequisitionByUserId { get; set; }
         public int Quantity { get; set; }
         public int LastApproverUserId { get; set; }
+        public DateTime LastApproveDateTime { get; set; }
         public int CurrentApprovalLevel { get; set; }
         public int CurrentApproverUserId { get; set; }
         public string IsFinalApproved { get; set; }

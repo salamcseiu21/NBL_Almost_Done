@@ -1,0 +1,32 @@
+﻿
+@model IEnumerable<NBL.Models.ViewModels.Requisitions.ViewGeneralRequistionDetailsModel> 
+<table id="table_deliverable_product_List" class="display" style="border:1px solid black">
+    <caption class="text-center text-green" style="font-weight:bolder;font-size:20px">Orderd Product List</caption>
+
+    <thead>
+    <tr>
+        <th>Product Name</th>
+        <th style="width: 50px" class="text-center">Quantity</th>
+        
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ProductName</td>
+            <td class="text-center">@item.Quantity</td>
+        </tr>
+    }
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>Product Name</th>
+        <th  style="width: 50px" class="text-center">Quantity</th>
+        
+    </tr>
+    </tfoot>
+</table>
+<script>
+    $("#table_deliverable_product_List").DataTable();
+</script>

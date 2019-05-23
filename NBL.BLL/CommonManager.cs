@@ -186,5 +186,15 @@ namespace NBL.BLL
        {
            return _iCommonGateway.GetAllApprovalActionList();
        }
+
+       public ICollection<ApprovalPathModel> GetAllApprovalPath()
+       {
+           return _iCommonGateway.GetAllApprovalPath();
+       }
+
+       public ICollection<ApprovalDetails> GetAllApprovalDetailsByRequistionId(long requisitionId)
+       {
+           return _iCommonGateway.GetAllApprovalDetailsByRequistionId(requisitionId);
+       }
    }
 }

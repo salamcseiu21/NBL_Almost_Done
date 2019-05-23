@@ -7,6 +7,7 @@ using System.Xml.Linq;
 using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.Models;
+using NBL.Models.EntityModels.Approval;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Requisitions;
 using NBL.Models.EntityModels.Securities;
@@ -38,7 +39,7 @@ namespace NBL.Areas.CommonArea.Controllers
         {
             var user = (ViewUser)Session["user"];
             ICollection<ViewGeneralRequisitionModel> requisitions = _iProductManager.GetAllGeneralRequisitions().ToList().FindAll(n=>n.RequisitionByUserId==user.UserId);
-            return PartialView("_ViewGeneralRequisitionList", requisitions);
+            return PartialView("_ViewGeneralRequisitionListPartialPage", requisitions);
         }
         public PartialViewResult GeneralRequisitionListForApproval()
         {
@@ -47,10 +48,10 @@ namespace NBL.Areas.CommonArea.Controllers
             return PartialView("_ViewGeneralRequisitionListPartialPage", requisitions);
         }
 
-        
 
         public PartialViewResult GeneralRequisitionDetails(long id)
         {
+            ViewBag.Requisition=_iProductManager.GetGeneralRequisitionById(id);
             ViewBag.ApproverActionId = _iCommonManager.GetAllApprovalActionList().ToList();
             var details = _iProductManager.GetGeneralRequisitionDetailsById(id);
             return PartialView("_ViewGeneralRequisitionDetailsPartialPage", details);
@@ -59,11 +60,53 @@ namespace NBL.Areas.CommonArea.Controllers
         [HttpPost]
         public ActionResult Approve(FormCollection collection)
         {
-            var id = Convert.ToInt64(collection["RequisitionId"]);
-            var details = _iProductManager.GetGeneralRequisitionDetailsById(id);
             var user = (ViewUser)Session["user"];
-            ICollection<ViewGeneralRequisitionModel> requisitions = _iProductManager.GetAllGeneralRequisitions().ToList().FindAll(n => n.CurrentApproverUserId == user.UserId);
-            return PartialView("_ViewGeneralRequisitionListPartialPage", requisitions);
+            try
+            {
+                
+                var id = Convert.ToInt64(collection["RequisitionId"]);
+                var actionId = Convert.ToInt32(collection["ApprovarActionId"]);
+                var remarks = collection["Remarks"];
+                var approval = new ApprovalDetails
+                {
+                    ApprovalActionId = actionId,
+                    ApproverUserId = user.UserId,
+                    Remarks = remarks,
+                    GeneralRequisitionId = id
+                };
+                GeneralRequisitionModel model = _iProductManager.GetGeneralRequisitionById(id);
+                var approvalLevel = _iCommonManager.GetAllApprovalPath().ToList()
+                    .FindAll(n => n.UserId == model.RequisitionByUserId)
+                    .Find(n => n.ApprovalLevel.Equals(model.CurrentApprovalLevel + 1));
+               
+                var nextApprovalLevel = 0;
+                var nextApproverUser = 0;
+                if (approvalLevel != null)
+                {
+                    nextApprovalLevel = approvalLevel.ApprovalLevel;
+                    nextApproverUser = approvalLevel.ApproverUserId;
+                }
+                if (approvalLevel == null)
+                {
+                    model.IsFinalApproved = "Y";
+                }
+                if (actionId !=1)
+                {
+                    model.IsCancelled = "Y";
+                }
+                bool result = _iProductManager.ApproveGeneralRequisition(model, nextApproverUser, nextApprovalLevel,approval);
+
+                ICollection<ViewGeneralRequisitionModel> requisitions = _iProductManager.GetAllGeneralRequisitions()
+                    .ToList().FindAll(n => n.CurrentApproverUserId == user.UserId);
+                return PartialView("_ViewGeneralRequisitionListPartialPage", requisitions);
+            }
+            catch (Exception exception)
+            {
+               
+                ICollection<ViewGeneralRequisitionModel> requisitions = _iProductManager.GetAllGeneralRequisitions()
+                    .ToList().FindAll(n => n.CurrentApproverUserId == user.UserId);
+                return PartialView("_ViewGeneralRequisitionListPartialPage", requisitions);
+            }
 
         }
         public ActionResult GeneralRequisition()

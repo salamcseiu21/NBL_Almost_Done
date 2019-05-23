@@ -1,20 +1,26 @@
 ﻿@using NBL.Models.EntityModels.Approval
+@using NBL.Models.EntityModels.Requisitions
+@using NBL.Models.ViewModels
 @model IEnumerable<NBL.Models.ViewModels.Requisitions.ViewGeneralRequistionDetailsModel>
 @{
     ViewBag.Title = "General Requisition Details";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
-   var approvalActions=(List<ApprovalAction>)ViewBag.ApproverActionId;
+    var approvalActions = (List<ApprovalAction>)ViewBag.ApproverActionId;
+    var requisition=(GeneralRequisitionModel)ViewBag.Requisition;
+    var user = (ViewUser) Session["user"];
+    bool result = requisition.RequisitionByUserId == user.UserId;
 }
 
 <section class="content">
    
-  
-    @using (Html.BeginForm("Approve","Home",FormMethod.Post))
+ @if (!result)
+ {
+    using(Html.BeginForm("Approve", "Home", FormMethod.Post))
     {
         <div class="form-horizontal">
             <div class="row">
-                
-          
+
+
                 <div class="col-md-6 col-md-offset-3">
                     <div class="form-group">
                         <label class="control-label col-md-3">Action</label>
@@ -27,23 +33,23 @@
                                 }
                             </select>
                         </div>
-                        
-                        
+
+
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="control-label col-md-3">Remarks</label>
                         <div class="col-md-9">
                             <textarea rows="3" style="resize: none" name="Remarks" placeholder="Remarks here..." class="form-control" required></textarea>
-                            <input type="hidden" name="RequisitionId" value="@Model.First().GeneralRequisitionId"/>
+                            <input type="hidden" name="RequisitionId" value="@requisition.RequisitionId" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3"></label>
                         <div class="col-md-9">
                             <div class="btn-toolbar">
-                              
-                                <input type="submit" value="Approve" class="btn btn-success"/>
+
+                                <input type="submit" value="Approve" class="btn btn-success" />
                             </div>
                         </div>
                     </div>
@@ -52,6 +58,8 @@
         </div>
     }
 
+ }
+ 
 
     <h3 class="text-center text-green">General Requisition Details</h3>
     <div class="table-responsive">
@@ -76,9 +84,26 @@
                     <td>@item.Description</td>
                     <td>@item.ProductName</td>
                     <td class="text-right">
-                        <input type='number' min='1' value=@item.Quantity class='form-control text-right' id="@item.GeneralRequisitionDetailsId" name='NewQuantity_@item.GeneralRequisitionDetailsId'  onchange='Update(this)'/>
+                        @if (requisition.LastApproverUserId == 0)
+                        {
+                            <input type='number' min='1' value=@item.Quantity class='form-control text-right' id="@item.GeneralRequisitionDetailsId" name='NewQuantity_@item.GeneralRequisitionDetailsId' onchange='Update(this)'/>
+                        }
+                        else
+                        {
+                            @item.Quantity
+                        }
                     </td>
-                    <th class="text-center"><button id="@item.GeneralRequisitionDetailsId" type='button' onclick='RemoveProductById(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color:red;'></i></button></th>
+                    <td class="text-center">
+                        @if (requisition.LastApproverUserId == 0)
+                        {
+                            <button id="@item.GeneralRequisitionDetailsId" type='button' onclick='RemoveProductById(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color: red;'></i></button>
+                        }
+                        else
+                        {
+                            <button class='btn btn-default btn-sm'><i class='fa fa-times' style='color: red;'></i></button>
+                        }
+                        
+                    </td>
                 </tr>
             }
             </tbody>

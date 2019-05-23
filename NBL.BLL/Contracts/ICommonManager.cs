@@ -52,6 +52,7 @@ namespace NBL.BLL.Contracts
         bool GetFirstApprovalPathByApproverUserId(int approverUserId);
         ICollection<RequisitionFor> GetAllRequisitionForList();
         ICollection<ApprovalAction> GetAllApprovalActionList();
-
+        ICollection<ApprovalPathModel> GetAllApprovalPath();
+        ICollection<ApprovalDetails> GetAllApprovalDetailsByRequistionId(long requisitionId);
     }
 }

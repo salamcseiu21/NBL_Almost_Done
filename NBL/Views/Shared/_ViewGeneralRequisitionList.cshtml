@@ -13,11 +13,7 @@
                     <th>Requisition By</th>
                     <th>Quantity</th>
                     <th>Requisiton Date</th>
-                    <th>Remarks</th>
-                    <th>Current Approval Level</th>
-                    <th>Last Approver</th>
-                    <th>Current Approver</th>
-                    <th>Is Final Approved</th>
+                    <th class="text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,11 +24,9 @@
                         <td>@item.RequisitionByEmp</td>
                         <td>@item.Quantity</td>
                         <td>@item.RequisitionDate.ToString("dd-MMMM-yyyy")</td>
-                        <td>@item.RequisitionRemarks</td>
-                        <td>@item.CurrentApprovalLevel</td>
-                        <td>@item.LastApproverUserId</td>
-                        <td>@item.ApproverEmp</td>
-                        <td>@item.IsFinalApproved</td>
+                        <td class="text-center">
+                            @Html.ActionLink(" Delivery", "Delivery", "Requisition", new { area = "Sales", id = item.RequisitionId }, new { @class = "fa fa-eye" })
+                        </td>
                         
                     </tr>
                 }
@@ -43,11 +37,8 @@
                     <th>Requisition By</th>
                     <th>Quantity</th>
                     <th>Requisiton Date</th>
-                    <th>Remarks</th>
-                    <th>Current Approval Level</th>
-                    <th>Last Approver</th>
-                    <th>Current Approver</th>
-                    <th>Is Final Approved</th>
+                  
+                    <th class="text-center">Action</th>
                 </tr>
             </tfoot>
         </table>

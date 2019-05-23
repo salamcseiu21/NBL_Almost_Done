@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NBL.Models.EntityModels.Approval;
 using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Requisitions;
@@ -67,5 +68,8 @@ namespace NBL.BLL.Contracts
         ICollection<ViewGeneralRequistionDetailsModel> GetGeneralRequisitionDetailsById(long requisitiionId);
         bool UpdateGeneralRequisitionQuantity(string id, int quantity);
         bool RemoveProductByIdDuringApproval(string id);
+        GeneralRequisitionModel GetGeneralRequisitionById(long requisitiionId);
+        bool ApproveGeneralRequisition(GeneralRequisitionModel model, int nextApproverUser, int nextApprovalLevel,ApprovalDetails approval);
+        bool ApproveGeneralRequisitionByScm(int userId, int distributionPoint, long requisitiionId); 
     }
 }

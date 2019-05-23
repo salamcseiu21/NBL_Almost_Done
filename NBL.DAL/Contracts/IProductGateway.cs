@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NBL.Models;
+using NBL.Models.EntityModels.Approval;
 using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Requisitions;
@@ -77,5 +78,8 @@ namespace NBL.DAL.Contracts
         ICollection<ViewGeneralRequistionDetailsModel> GetGeneralRequisitionDetailsById(long requisitiionId);
         int UpdateGeneralRequisitionQuantity(string id, int quantity);
         int RemoveProductByIdDuringApproval(string id);
+        GeneralRequisitionModel GetGeneralRequisitionById(long requisitiionId);
+        int ApproveGeneralRequisition(GeneralRequisitionModel model, int nextApproverUser, int nextApprovalLevel,ApprovalDetails approval);
+        int ApproveGeneralRequisitionByScm(int userId, int distributionPoint,long requisitiionId);
     }
 }

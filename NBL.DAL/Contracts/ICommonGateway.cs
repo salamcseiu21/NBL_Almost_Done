@@ -49,5 +49,7 @@ namespace NBL.DAL.Contracts
        ApprovalPathModel GetFirstApprovalPathByUserId(int requisitionByUserId);
        ApprovalPathModel GetFirstApprovalPathByApproverUserId(int approverUserId);
        ICollection<ApprovalAction> GetAllApprovalActionList();
+       ICollection<ApprovalPathModel> GetAllApprovalPath();
+       ICollection<ApprovalDetails> GetAllApprovalDetailsByRequistionId(long requisitionId); 
    }
 }

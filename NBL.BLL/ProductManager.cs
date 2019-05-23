@@ -433,6 +433,23 @@ namespace NBL.BLL
             return rowAffected > 0;
         }
 
+        public GeneralRequisitionModel GetGeneralRequisitionById(long requisitiionId)
+        {
+            return _iProductGateway.GetGeneralRequisitionById(requisitiionId);
+        }
+
+        public bool ApproveGeneralRequisition(GeneralRequisitionModel model, int nextApproverUser, int nextApprovalLevel,ApprovalDetails approval)
+        {
+            int rowAffected = _iProductGateway.ApproveGeneralRequisition(model,nextApproverUser,nextApprovalLevel,approval);
+            return rowAffected > 0;
+        }
+
+        public bool ApproveGeneralRequisitionByScm(int userId, int distributionPoint,long requisitiionId)
+        {
+            int rowAffected = _iProductGateway.ApproveGeneralRequisitionByScm(userId,distributionPoint,requisitiionId);
+            return rowAffected > 0;
+        }
+
         private string GenerateTransferRequisitionRef(int maxTrNo)
         {
 

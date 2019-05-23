@@ -83,6 +83,7 @@
     <Compile Include="AutoMapper\DomainProfile.cs" />
     <Compile Include="Contracts\IMonth.cs" />
     <Compile Include="EntityModels\Approval\ApprovalAction.cs" />
+    <Compile Include="EntityModels\Approval\ApprovalDetails.cs" />
     <Compile Include="EntityModels\Approval\ApprovalPathModel.cs" />
     <Compile Include="EntityModels\Banks\Bank.cs" />
     <Compile Include="EntityModels\Banks\BankBranch.cs" />

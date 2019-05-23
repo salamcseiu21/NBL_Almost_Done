@@ -376,6 +376,7 @@
     <Compile Include="Areas\Sales\Controllers\ProductController.cs" />
     <Compile Include="Areas\Corporate\Controllers\RequisitionController.cs" />
     <Compile Include="Areas\Sales\Controllers\ReplaceController.cs" />
+    <Compile Include="Areas\Sales\Controllers\RequisitionController.cs" />
     <Compile Include="Areas\Sales\Controllers\ReturnController.cs" />
     <Compile Include="Areas\Sales\Controllers\SalesAdminController.cs" />
     <Compile Include="Areas\Sales\Controllers\SalesPersonController.cs" />
@@ -8069,6 +8070,9 @@
     <Content Include="Areas\CommonArea\Views\Home\Home.cshtml" />
     <Content Include="Areas\CommonArea\Views\Home\GeneralRequisition.cshtml" />
     <Content Include="Areas\CommonArea\Views\Shared\_MenuPartialPage.cshtml" />
+    <Content Include="Areas\SCM\Views\Order\GeneralRequisitionDetails.cshtml" />
+    <Content Include="Areas\Sales\Views\Requisition\Delivery.cshtml" />
+    <Content Include="Areas\Sales\Views\Shared\_ViewGeneralRequisitionDetailsPartialPage.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />

@@ -6,10 +6,12 @@ using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using NBL.Areas.Sales.BLL.Contracts;
 using NBL.BLL.Contracts;
+using NBL.Models.EntityModels.Approval;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Invoices;
 using NBL.Models.Enums;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Requisitions;
 using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.SCM.Controllers
@@ -126,6 +128,53 @@ namespace NBL.Areas.SCM.Controllers
             {
                 string messge = exception.Message;
                 return View();
+            }
+
+        }
+
+        public ActionResult PendingGeneralRequisitions()
+        {
+            var requisitions=_iProductManager.GetAllGeneralRequisitions().ToList().FindAll(n=>n.Status.Equals(0) && n.IsFinalApproved.Equals("Y"));
+           return PartialView("_ViewGeneralRequisitionListPartialPage", requisitions);
+        }
+
+        public ActionResult GeneralRequisitionDetails(long id)
+        {
+            try
+            {
+
+                ICollection<ApprovalDetails> approval= _iCommonManager.GetAllApprovalDetailsByRequistionId(id);
+                var model=new ViewGeneralRequisitionModel
+                {
+                    GeneralRequistionDetails = _iProductManager.GetGeneralRequisitionDetailsById(id),
+                    GeneralRequisitionModel = _iProductManager.GetGeneralRequisitionById(id),
+                    ApprovalDetails = approval
+
+                };
+                ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName","--Select--");
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+        [HttpPost]
+        public ActionResult GeneralRequisitionDetails(long id,FormCollection collection)
+        {
+            try
+            {
+                var user = (ViewUser) Session["user"];
+               var distributionPoint=Convert.ToInt32(collection["DistributionPointId"]);
+                bool result = _iProductManager.ApproveGeneralRequisitionByScm(user.UserId,distributionPoint,id);
+                var requisitions = _iProductManager.GetAllGeneralRequisitions().ToList().FindAll(n => n.Status.Equals(0) && n.IsFinalApproved.Equals("Y"));
+                return PartialView("_ViewGeneralRequisitionListPartialPage", requisitions);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
     }

@@ -86,6 +86,20 @@
 
     <li class="treeview">
         <a href="#">
+            <i class="fa fa-product-hunt"></i>
+            <span>Requisitions</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" General Requisition", "GeneralRequisitionList", "Requisition", new { area = "Sales" }, new { @class = "fa fa-eye", style = "font-weight: bolder" })</li>
+        </ul>
+    </li>
+
+
+    <li class="treeview">
+        <a href="#">
             <i class="fa fa-book"></i> <span>Reports</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>

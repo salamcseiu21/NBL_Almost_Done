@@ -1109,5 +1109,79 @@ CommandObj.Parameters.Clear();
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public ICollection<ApprovalPathModel> GetAllApprovalPath()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllApprovalPath";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<ApprovalPathModel> list=new List<ApprovalPathModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new ApprovalPathModel
+                    {
+                        ApprovalLevel = Convert.ToInt32(reader["ApprovalLevel"]),
+                        ApprovalPathModelId = Convert.ToInt32(reader["Id"]),
+                        ApproverUserId = Convert.ToInt32(reader["ApproverUserId"]),
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        SystemDateTime = Convert.ToDateTime(reader["SysDatetime"])
+                    });
+                }
+              
+                reader.Close();
+                return list;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect approval path", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<ApprovalDetails> GetAllApprovalDetailsByRequistionId(long requisitionId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllApprovalDetailsByRequistionId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@RequisitionId", requisitionId);
+                List<ApprovalDetails> list = new List<ApprovalDetails>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new ApprovalDetails
+                    {
+                        ApproverName = reader["ApproverName"].ToString(),
+                        ApproverActionType = reader["ApproverActionType"].ToString(),
+                        ApproverUserId = Convert.ToInt32(reader["ApproverUserId"]),
+                        Remarks = reader["Remarks"].ToString(),
+                        ApproveDateTime = Convert.ToDateTime(reader["ApproveDateTime"]),
+                        ApprovalDetailsId = Convert.ToInt64(reader["Id"])
+                    });
+                }
+
+                reader.Close();
+                return list;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect approval details", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }

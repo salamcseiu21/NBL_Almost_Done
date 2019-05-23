@@ -1,7 +1,9 @@
-﻿@model IEnumerable<NBL.Models.ViewModels.Requisitions.ViewGeneralRequisitionModel>
+﻿@using NBL.Models.ViewModels
+@model IEnumerable<NBL.Models.ViewModels.Requisitions.ViewGeneralRequisitionModel>
 @{
     ViewBag.Title = "General Requisition List";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var user = (ViewUser) Session["user"];
 }
 <section class="content">
     <h3 class="text-center text-green">General Requisition List</h3>
@@ -14,10 +16,12 @@
                 <th>Quantity</th>
                 <th>Requisiton Date</th>
                 <th>Remarks</th>
-                <th>Current Approval Level</th>
                 <th>Last Approver</th>
+                <th>Last Approve Date</th>
+                <th>Current Approval Level</th>
                 <th>Current Approver</th>
-                <th>Is Final Approved</th>
+               
+                <th class="text-center">Status</th>
                 <th class="text-center">Action</th>
             </tr>
             </thead>
@@ -30,12 +34,62 @@
                     <td>@item.Quantity</td>
                     <td>@item.RequisitionDate.ToString("dd-MMMM-yyyy")</td>
                     <td>@item.RequisitionRemarks</td>
-                    <td>@item.CurrentApprovalLevel</td>
-                    <td>@item.LastApproverUserId</td>
-                    <td>@item.ApproverEmp</td>
-                    <td>@item.IsFinalApproved</td>
+                   
+                    <td>
+
+                        @(item.LastApproverEmp?? "Initial Stage")
+                    </td>
+                    <td>
+
+                        @item.LastApproveDateTime.ToString("F")
+                    </td>
+                    <td>
+                        @if (item.IsFinalApproved.Equals("Y"))
+                        {
+                            <span>Final</span>
+                        }
+                        else
+                        {
+                            @item.CurrentApprovalLevel
+                        }
+                       
+                    </td>
+                    <td>
+                        @if (item.IsFinalApproved.Equals("Y"))
+                        {
+                            <span>Final</span>
+                        }
+                        else
+                        {
+                            @item.ApproverEmp
+                        }
+                      
+                    </td>
+
+                  
+                    <td class="text-center">@if (item.Status == 0)
+                                            {
+                                                <i class="fa fa-spinner"> Pending</i>
+                    }
+                    else if (item.Status == 1)
+                    {
+                        <i class="fa fa-spinner"> Approved By SCM</i>
+                    }
+                    else
+                    {
+                                                <i class="fa fa-check-circle-o"> Delivered</i>
+                                            }
+                    </td>
                     <td class="text-center">
-                        @Html.ActionLink(" Details", "GeneralRequisitionDetails", "Home", new { id = item.RequisitionId },new { @class="fa fa-eye"})
+                        @if(User.IsInRole("SCMManager"))
+                        {
+                            @Html.ActionLink(" Details", "GeneralRequisitionDetails", "Order", new {area="SCM", id = item.RequisitionId }, new { @class = "fa fa-eye" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink(" Details", "GeneralRequisitionDetails", "Home", new {id = item.RequisitionId}, new {@class = "fa fa-eye"})
+                        }
+                       
                     </td>
                 </tr>
             }
@@ -47,10 +101,12 @@
                 <th>Quantity</th>
                 <th>Requisiton Date</th>
                 <th>Remarks</th>
-                <th>Current Approval Level</th>
                 <th>Last Approver</th>
+                <th>Last Approve Date</th>
+                <th>Current Approval Level</th>
                 <th>Current Approver</th>
-                <th>Is Final Approved</th>
+               
+                <th class="text-center">Status</th>
                 <th class="text-center">Action</th>
             </tr>
             </tfoot>

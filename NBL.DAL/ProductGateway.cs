@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using NBL.DAL.Contracts;
+using NBL.Models.EntityModels.Approval;
 using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Productions;
@@ -1066,7 +1067,6 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@RequisitionDate", aRequisitionModel.RequisitionDate);
                 CommandObj.Parameters.AddWithValue("@RequisitionByUserId", aRequisitionModel.RequisitionByUserId);
                 CommandObj.Parameters.AddWithValue("@RequisitionRef", aRequisitionModel.RequisitionRef);
-                CommandObj.Parameters.AddWithValue("@Quantity", aRequisitionModel.Quantity);
                 CommandObj.Parameters.AddWithValue("@RequisitionRemarks", aRequisitionModel.RequisitionRemarks);
                 CommandObj.Parameters.AddWithValue("@CurrentApprovalLevel", aRequisitionModel.CurrentApprovalLevel);
                 CommandObj.Parameters.AddWithValue("@CurrentApproverUserId", aRequisitionModel.CurrentApproverUserId);
@@ -1165,6 +1165,7 @@ namespace NBL.DAL
                         CurrentApprovalLevel = Convert.ToInt32(reader["CurrentApprovalLevel"]),
                         DistributionPointId = DBNull.Value.Equals(reader["DistributionPointId"])?default(int):Convert.ToInt32(reader["DistributionPointId"]),
                         EntryStatus = reader["EntryStatus"].ToString(),
+                        Status = Convert.ToInt32(reader["Status"]),
                         IsCancelled = reader["IsCancelled"].ToString(),
                         IsFinalApproved = reader["IsFinalApproved"].ToString(),
                         RequisitionByEmp = reader["RequsitionBy"].ToString(),
@@ -1172,7 +1173,8 @@ namespace NBL.DAL
                         Quantity = Convert.ToInt32(reader["Quantity"]),
                         RequisitionRef = reader["RequisitionRef"].ToString(),
                         LastApproverUserId = DBNull.Value.Equals(reader["LastApproverUserId"])?default(int):Convert.ToInt32(reader["LastApproverUserId"]),
-                        LastApproveDateTime = DBNull.Value.Equals(reader["LastApproveDateTime"])?default(DateTime):Convert.ToDateTime(reader["LastApproveDateTime"])
+                        LastApproveDateTime = DBNull.Value.Equals(reader["LastApproveDateTime"])?default(DateTime):Convert.ToDateTime(reader["LastApproveDateTime"]),
+                        LastApproverEmp = DBNull.Value.Equals(reader["LastApproverEmpName"])?null:reader["LastApproverEmpName"].ToString()
 
                     });
                 }
@@ -1277,6 +1279,114 @@ namespace NBL.DAL
             catch (Exception exception)
             {
                 throw new Exception("Could not remove product from general requisition", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public GeneralRequisitionModel GetGeneralRequisitionById(long requisitiionId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetGeneralRequisitionById";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@RequisitionId", requisitiionId);
+                GeneralRequisitionModel model = null;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    model=new GeneralRequisitionModel
+                    {
+                        RequisitionId = requisitiionId,
+                        RequisitionByUserId = Convert.ToInt32(reader["RequisitionByUserId"]),
+                        RequisitionDate = Convert.ToDateTime(reader["RequisitionDate"]),
+                        CurrentApproverUserId = Convert.ToInt32(reader["CurrentApproverUserId"]),
+                        CurrentApprovalLevel = Convert.ToInt32(reader["CurrentApprovalLevel"]),
+                        DistributionPointId = DBNull.Value.Equals(reader["DistributionPointId"]) ? default(int) : Convert.ToInt32(reader["DistributionPointId"]),
+                        EntryStatus = reader["EntryStatus"].ToString(),
+                        IsCancelled = reader["IsCancelled"].ToString(),
+                        IsFinalApproved = reader["IsFinalApproved"].ToString(),
+                        RequisitionRemarks = reader["RequisitionRemarks"].ToString(),
+                        RequisitionRef = reader["RequisitionRef"].ToString(),
+                        LastApproverUserId = DBNull.Value.Equals(reader["LastApproverUserId"]) ? default(int) : Convert.ToInt32(reader["LastApproverUserId"]),
+                        LastApproveDateTime = DBNull.Value.Equals(reader["LastApproveDateTime"]) ? default(DateTime) : Convert.ToDateTime(reader["LastApproveDateTime"])
+                    };
+                }
+                reader.Close();
+                return model;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not get general requisition by id", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public int ApproveGeneralRequisition(GeneralRequisitionModel model, int nextApproverUser, int nextApprovalLevel,ApprovalDetails approval)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_ApproveGeneralRequisition";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@LastApproverUserId", model.CurrentApproverUserId);
+                CommandObj.Parameters.AddWithValue("@CurrentApprovalLevel", nextApprovalLevel);
+                CommandObj.Parameters.AddWithValue("@CurrentApproverUserId", nextApproverUser);
+                CommandObj.Parameters.AddWithValue("@IsFinalApproved", model.IsFinalApproved);
+                CommandObj.Parameters.AddWithValue("@ApproverId", approval.ApproverUserId);
+                CommandObj.Parameters.AddWithValue("@ApproverActionId", approval.ApprovalActionId);
+                CommandObj.Parameters.AddWithValue("@Remarks", approval.Remarks);
+                CommandObj.Parameters.AddWithValue("@RequisitionId", model.RequisitionId);
+                CommandObj.Parameters.AddWithValue("@IsCancelled", model.IsCancelled);
+                CommandObj.Parameters.AddWithValue("@EntryStatus", "E");
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not approve general requisition", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public int ApproveGeneralRequisitionByScm(int userId, int distributionPoint,long requisitionId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_ApproveGeneralRequisitionByScm";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@UserId", userId);
+                CommandObj.Parameters.AddWithValue("@DIstributionPointId", distributionPoint);
+                CommandObj.Parameters.AddWithValue("@RequisitionId", requisitionId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not approve general requisition", exception);
             }
             finally
             {
