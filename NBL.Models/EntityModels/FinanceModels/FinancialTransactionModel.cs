@@ -15,6 +15,12 @@ namespace NBL.Models.EntityModels.FinanceModels
         public decimal VatAmount { get; set; }   
         public string SalesRevenueCode { get; set; }
         public decimal SalesRevenueAmount { get; set; }
-        public string TransactionType { get; set; } 
+        public string TransactionType { get; set; }
+
+        public string ExpenceCode { get; set; }
+        public decimal ExpenceAmount { get; set; }
+        public string InventoryCode { get; set; }
+        public decimal InventoryAmount { get; set; } 
+
     }
 }

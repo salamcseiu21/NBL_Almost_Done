@@ -12,8 +12,12 @@ namespace NBL.Models.ViewModels.Requisitions
         public string AccountCode { get; set; }
         public int ProductId { get; set; }
         public string ProductName { get; set; }
-        public string SubSubSubAccountCode { get; set; }    
+        public string SubSubSubAccountCode { get; set; }
+        public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
-       
+        public decimal Vat { get; set; }
+        public long DiscountId { get; set; }
+        public decimal Discount { get; set; }
+
     }
 }

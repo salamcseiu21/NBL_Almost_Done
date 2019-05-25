@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace NBL.Models.EntityModels.ChartOfAccounts
 {
    public  class SubAccount
@@ -13,8 +8,9 @@ namespace NBL.Models.EntityModels.ChartOfAccounts
         public string SubAccountName { get; set; }
         public string SubAccountDescription { get; set; }
         public string SubAccountNote { get; set; }
-        public int AccountTypeId { get; set; }
-        public string AccountCode { get; set; }
+        public int AccountHeadId { get; set; } 
+        public string AccountHeadCode { get; set; }
+        public int UserId { get; set; }
         public DateTime SystemDateTime { get; set; } 
     }
 }

@@ -14,6 +14,7 @@ namespace NBL.Models.EntityModels.ChartOfAccounts
         public string SubSubAccountDescription { get; set; }    
         public int SubAccountId { get; set; }
         public string SubAccountCode { get; set; }
+        public int UserId { get; set; }
         public DateTime SystemDateTime { get; set; }    
 
     }

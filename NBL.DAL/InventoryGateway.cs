@@ -288,6 +288,7 @@ namespace NBL.DAL
             }
         }
 
+     
 
         public long GetmaxProductionRefByYear(int year)
         {
@@ -2289,6 +2290,92 @@ namespace NBL.DAL
 
             }
             return i;
+        }
+        public int SaveDeliveredGeneralRequisition(List<ScannedProduct> scannedProducts, Delivery aDelivery)
+        {
+            ConnectionObj.Open();
+            SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
+            try
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Transaction = sqlTransaction;
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.CommandText = "UDSP_SaveDeliveredRequisitionInformation";
+                CommandObj.Parameters.AddWithValue("@TransactionDate", aDelivery.DeliveryDate);
+                CommandObj.Parameters.AddWithValue("@TransactionRef", aDelivery.TransactionRef);
+                CommandObj.Parameters.AddWithValue("@DeliveryRef", aDelivery.DeliveryRef);
+                CommandObj.Parameters.AddWithValue("@VoucherNo", aDelivery.VoucherNo);
+                CommandObj.Parameters.AddWithValue("@InvoiceRef", aDelivery.InvoiceRef);
+                CommandObj.Parameters.AddWithValue("@InvoiceId", aDelivery.InvoiceId);
+                CommandObj.Parameters.AddWithValue("@IsOwnTransporatoion", aDelivery.IsOwnTransport);
+                CommandObj.Parameters.AddWithValue("@Transportation", aDelivery.Transportation ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@DriverName", aDelivery.DriverName ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@DriverPhone", aDelivery.DriverPhone ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@TransportationCost", aDelivery.TransportationCost);
+                CommandObj.Parameters.AddWithValue("@VehicleNo", aDelivery.VehicleNo ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@ToBranchId", aDelivery.ToBranchId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", aDelivery.CompanyId);
+                CommandObj.Parameters.AddWithValue("@UserId", aDelivery.DeliveredByUserId);
+                CommandObj.Parameters.AddWithValue("@Quantity", scannedProducts.Count);
+                CommandObj.Parameters.Add("@AccountMasterId", SqlDbType.BigInt);
+                CommandObj.Parameters.Add("@InventoryMasterId", SqlDbType.BigInt);
+                CommandObj.Parameters["@AccountMasterId"].Direction = ParameterDirection.Output;
+                CommandObj.Parameters["@InventoryMasterId"].Direction = ParameterDirection.Output;
+                CommandObj.Parameters.Add("@DeliveryId", SqlDbType.Int);
+                CommandObj.Parameters["@DeliveryId"].Direction = ParameterDirection.Output;
+
+                CommandObj.ExecuteNonQuery();
+                int deliveryId = Convert.ToInt32(CommandObj.Parameters["@DeliveryId"].Value);
+                var accountMasterId = Convert.ToInt32(CommandObj.Parameters["@AccountMasterId"].Value);
+                var inventoryMasterId = Convert.ToInt32(CommandObj.Parameters["@InventoryMasterId"].Value);
+                int rowAffected = SaveDeliveredOrderDetailsFromFactory(scannedProducts, aDelivery, deliveryId, inventoryMasterId);
+
+                int accountAffected = 0;
+                if (rowAffected > 0)
+                {
+
+                    var financial = aDelivery.FinancialTransactionModel;
+
+                    for (int i = 1; i <= 2; i++)
+                    {
+                        if(i == 1)
+                        {
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.ExpenceCode, financial.ExpenceAmount, accountMasterId, "Expence code Debit..");
+                        }
+                        else if (i == 2)
+                        {
+
+
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.InventoryCode, financial.InventoryAmount * (-1), accountMasterId, "Inventory code Credit..");
+                        }
+                        
+
+                    }
+                }
+
+
+                if (accountAffected > 0)
+                {
+                    sqlTransaction.Commit();
+                }
+                else
+                {
+                    sqlTransaction.Rollback();
+                }
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                sqlTransaction.Rollback();
+                throw new Exception("Could not Save general Requisition", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
         }
 
     }

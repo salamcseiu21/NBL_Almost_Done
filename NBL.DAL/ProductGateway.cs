@@ -7,6 +7,7 @@ using System.Linq;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Approval;
 using NBL.Models.EntityModels.Branches;
+using NBL.Models.EntityModels.Employees;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.Products;
@@ -1304,6 +1305,12 @@ namespace NBL.DAL
                     {
                         RequisitionId = requisitiionId,
                         RequisitionByUserId = Convert.ToInt32(reader["RequisitionByUserId"]),
+                        RequisitionByEmployee = new Employee
+                        {
+                          Email  = reader["REEmail"].ToString(),
+                          EmployeeName = reader["RequisitionBy"].ToString(),
+                          EmployeeId = Convert.ToInt32(reader["EmployeeId"])
+                        },
                         RequisitionDate = Convert.ToDateTime(reader["RequisitionDate"]),
                         CurrentApproverUserId = Convert.ToInt32(reader["CurrentApproverUserId"]),
                         CurrentApprovalLevel = Convert.ToInt32(reader["CurrentApprovalLevel"]),

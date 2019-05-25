@@ -20,7 +20,6 @@ namespace NBL.BLL.Contracts
        ICollection<ReceiveProductViewModel> GetAllReceiveableListByBranchAndCompanyId(int branchId, int companyId);
        int ReceiveProduct(ViewDispatchModel model);
        int GetStockQtyByBranchAndProductId(int branchId, int productId);
-       string SaveDeliveredOrder(List<ScannedProduct> scannedProducts, Delivery aDelivery, int invoiceStatus, int orderStatus);
        string GenerateDeliveryReference(int maxRefNo);
        IEnumerable<TransactionModel> GetAllReceiveableProductToBranchByDeliveryRef(string deliveryRef);
        ICollection<ViewDispatchModel> GetAllReceiveableProductToBranchByTripId(long tripId,int branchId);
@@ -47,12 +46,14 @@ namespace NBL.BLL.Contracts
        ICollection<ViewTransferProductModel> GetAllTransferedListByBranchAndCompanyId(int branchId, int companyId);
        List<string> GetTransferReceiveableBarcodeList(long transferId);
        int ReceiveTransferedProduct(TransferModel aModel);
-       string SaveDeliveredOrderFromFactory(List<ScannedProduct> barcodeList, Delivery aDelivery, int invoiceStatus, int orderStatus);
        ICollection<ViewProduct> GetTotalReceiveProductByBranchAndCompanyId(int branchId, int companyId);
        ICollection<ViewProduct> GetDeliveredProductByBranchAndCompanyId(int branchId, int companyId);
        List<ChartModel> GetTotalProductionCompanyIdAndYear(int companyId, int year);
        ICollection<ChartModel> GetTotalDispatchCompanyIdAndYear(int companyId, int year);
        int GetProductStatusInFactoryByBarCode(string barcode);
-       int GetProductStatusInBranchInventoryByBarCode(string barcode); 
+       int GetProductStatusInBranchInventoryByBarCode(string barcode);
+       string SaveDeliveredOrder(List<ScannedProduct> scannedProducts, Delivery aDelivery, int invoiceStatus, int orderStatus);
+       string SaveDeliveredOrderFromFactory(List<ScannedProduct> barcodeList, Delivery aDelivery, int invoiceStatus, int orderStatus);
+       string SaveDeliveredGeneralRequisition(List<ScannedProduct> barcodeList, Delivery aDelivery);
    }
 }

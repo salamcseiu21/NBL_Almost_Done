@@ -58,5 +58,6 @@ namespace NBL.DAL.Contracts
        ICollection<ChartModel> GetTotalDispatchCompanyIdAndYear(int companyId, int year);
        int GetProductStatusInFactoryByBarCode(string barcode);
        int GetProductStatusInBranchInventoryByBarCode(string barcode);
+       int SaveDeliveredGeneralRequisition(List<ScannedProduct> scannedProducts, Delivery aDelivery);
    }
 }

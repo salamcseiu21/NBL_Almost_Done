@@ -283,6 +283,14 @@ namespace NBL.BLL
             return rowAffected > 0 ? "Saved Successfully!" : "Failed to Save";
         }
 
-       
+        public string SaveDeliveredGeneralRequisition(List<ScannedProduct> scannedProducts, Delivery aDelivery)
+        {
+            string refCode = _iCommonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(ReferenceType.Distribution)).Code;
+            aDelivery.VoucherNo = GetMaxVoucherNoByTransactionInfix(refCode);
+            int maxRefNo = _iInventoryGateway.GetMaxDeliveryRefNoOfCurrentYear();
+            aDelivery.DeliveryRef = GenerateDeliveryReference(maxRefNo);
+            int rowAffected = _iInventoryGateway.SaveDeliveredGeneralRequisition(scannedProducts, aDelivery);
+            return rowAffected > 0 ? "Saved Successfully!" : "Failed to Save";
+        }
     }
 }

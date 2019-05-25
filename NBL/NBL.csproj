@@ -8214,6 +8214,7 @@
     <Content Include="Views\Shared\_ViewGeneralRequisitionDetailsPartialPage.cshtml" />
     <Content Include="Views\Shared\_CommonMenuPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewGeneralRequisitionList.cshtml" />
+    <Content Include="Views\Shared\_ModalRequisitionDeliveryPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

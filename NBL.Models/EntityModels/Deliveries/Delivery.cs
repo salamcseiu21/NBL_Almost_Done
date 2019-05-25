@@ -10,6 +10,7 @@ namespace NBL.Models.EntityModels.Deliveries
     public class Delivery
     {
         public long DeliveryId { get; set; }
+        public long RequisitionId { get; set; } 
         public DateTime DeliveryDate { get; set; }
         public string DeliveryRef { get; set; }
         public string TransactionRef { get; set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NBL.Models.EntityModels.Employees;
 
 namespace NBL.Models.EntityModels.Requisitions
 {
@@ -14,6 +15,7 @@ namespace NBL.Models.EntityModels.Requisitions
         public int RequisitionForId { get; set; }
         public string RequisitionRemarks { get; set; }
         public int RequisitionByUserId { get; set; }
+        public Employee RequisitionByEmployee { get; set; }
         public int Quantity { get; set; }
         public int LastApproverUserId { get; set; }
         public DateTime LastApproveDateTime { get; set; }
