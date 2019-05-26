@@ -21,7 +21,6 @@ namespace NBL.DAL.Contracts
         IEnumerable<ClientAttachment> GetClientAttachmentsByClientId(int clientId);
         IEnumerable<ViewClientSummaryModel> GetClientSummary();
         int GetMaxSerialNoOfClientByAccountPrefix(string acountPrefix);
-
-
+        ICollection<object> GetClientByBranchIdAndSearchTerm(int branchId, string searchTerm);
     }
 }

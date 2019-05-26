@@ -55,6 +55,7 @@ namespace NBL.Areas.Sales.Controllers
         
         public ActionResult Order()
         {
+            
             int branchId = Convert.ToInt32(Session["BranchId"]);
             var user = (ViewUser)Session["user"];
             CreateTempSalseOrderXmlFile(branchId, user.UserId);

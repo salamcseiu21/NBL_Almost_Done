@@ -18,6 +18,7 @@ using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
+using Newtonsoft.Json;
 
 namespace NBL.Controllers
 {
@@ -122,15 +123,19 @@ namespace NBL.Controllers
         {
 
             var branchId = Convert.ToInt32(Session["BranchId"]);
-            var clientList = (from c in _iClientManager.GetClientByBranchId(branchId).ToList().FindAll(n => n.Active.Equals("Y")).ToList()
-                              where c.ClientName.ToLower().Contains(prefix.ToLower())
-                              select new
-                              {
-                                  label = c.ClientName,
-                                  val = c.ClientId
-                              }).ToList();
+            ICollection<object> clients = _iClientManager.GetClientByBranchIdAndSearchTerm(branchId,prefix);
+            //var json = JsonConvert.SerializeObject(clients);
+           // var result = Json(clients);
 
-            return Json(clientList);
+            //var clientList = (from c in clients.ToList()
+            //                  select new
+            //                  {
+            //                      label = c.ClientName,
+            //                      val = c.ClientId
+            //                  }).ToList();
+
+           // var r= Json(clients);
+            return Json(clients);
         }
 
         public JsonResult GetAllClientNameForAutoComplete(string prefix) 

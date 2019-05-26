@@ -593,6 +593,45 @@ namespace NBL.DAL
             }
         }
 
+        public ICollection<object> GetClientByBranchIdAndSearchTerm(int branchId, string searchTerm)
+        {
+            try
+            {
+                List<object> clients = new List<object>();
+                CommandObj.Parameters.Clear();
+                //CommandObj.CommandText = "spGetAllClientDetailsByBranchId";
+                CommandObj.CommandText = "UDSP_GetClientByBranchIdAndSearchTerm";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                CommandObj.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    clients.Add(new 
+                    {
+                        label = reader["Name"].ToString(),
+                        val= Convert.ToInt32(reader["ClientId"])
+                    });
+
+                }
+                reader.Close();
+                return clients;
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception("Unable to collect Client Information for auto complete by Branch and Serach term", e);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         public IEnumerable<ViewClient> GetAllClientDetailsByBranchId(int branchId)
         {
             try
