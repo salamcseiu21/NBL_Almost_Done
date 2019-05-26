@@ -48,7 +48,7 @@ namespace NBL.Areas.Sales.Controllers
         public ActionResult GeneralRequisitionList()
         {
             var branchId = Convert.ToInt32(Session["BranchId"]);
-            var requisitions=_iProductManager.GetAllGeneralRequisitions().ToList().FindAll(n=>n.DistributionPointId==branchId);
+            var requisitions=_iProductManager.GetAllGeneralRequisitions().ToList().FindAll(n=>n.DistributionPointId==branchId).FindAll(n=>n.Status.Equals(1));
             return PartialView("_ViewGeneralRequisitionList",requisitions);
         }
 
@@ -103,8 +103,10 @@ namespace NBL.Areas.Sales.Controllers
                 {
 
                     var model = details.ToList().Find(n => n.ProductId.Equals(product.ProductId));
+                    var up= _iProductManager.GetProductDetailsByProductId(product.ProductId).UnitPrice;
                     var qty = barcodeList.ToList().FindAll(n => n.ProductId == product.ProductId).Count;
                     model.Quantity = qty;
+                    model.UnitPrice = up;
                     deliveredProductList.Add(model);
                 }
                 

@@ -1,9 +1,10 @@
-﻿@model NBL.Models.ViewModels.Requisitions.ViewRequisitionModel
+﻿@using NBL.Models.ViewModels
+@model NBL.Models.ViewModels.Requisitions.ViewRequisitionModel
 
 @{
     ViewBag.Title = "Requisition";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
-    var tdate = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+    var user = (ViewUser) Session["user"];
 }
 
 <section class="content">
@@ -20,6 +21,7 @@
                         <div class="col-md-9">
                             <input type="text" name="ToBranchName" id="ToBranchName" class="form-control" autofocus placeholder="Branch Name...." required />
                             <input type="hidden" id="ToBranchId" name="ToBranchId" />
+                            <input type="hidden" name="RequisitionByUserId" id="RequisitionByUserId" value="@user.UserId"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -40,9 +42,16 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="control-label col-md-3"> Stock Quantity : </label>
+                        <div class="col-md-9">
+                            <input type="number" name="StockQty" id="StockQty" class="form-control" placeholder="Quantity" required readonly="readonly"/>
+                           
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="control-label col-md-3">Quantity : </label>
                         <div class="col-md-9">
-                            <input type="number" name="Quantity" id="Quantity" class="form-control" placeholder="Quantity" required min="1" value="1" />
+                            <input type="number" name="Quantity" id="Quantity" class="form-control" placeholder="Quantity" required min="1" value="1"  onkeyup="ValidateMaxQuantity(this)" OnChange="ValidateMaxQuantity(this)"/>
                            
                         </div>
                     </div>
@@ -61,64 +70,12 @@
     }
  
     <p style="font-weight: bolder;font-size: 20px" class="text-center text-green">Product List</p>
-    <table class="table table-bordered" style="margin: 0; padding: 0;">
-
-        <thead>
-        <tr>
-            <th style="border: 1px solid black;" class="text-center">To Branch</th>
-            <th style="border: 1px solid black;" class="text-center">Product Name</th>
-            <th style="border: 1px solid black; width: 10%" class="text-center">Quantity</th>
-            <th style="border: 1px solid black;" class="text-center">Action</th>
-        </tr>
-        </thead>
-        <tbody id="requisitions"></tbody>
-    </table>
-    <hr />
-    @using (Html.BeginForm("Create", "Requisition", FormMethod.Post, new { id = "saveRequisitionForm" }))
-    {
-        <div class="form-horizontal">
-            <div class="row">
-
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="TotalQty" class="control-label col-md-3"> Quantity :</label>
-                        <div class="col-md-9">
-                            <input type="number" id="TotalQty" name="TotalQty" class="form-control" value="0" readonly="readonly" />
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-md-4">
-
-                    <div class="form-group">
-                        <label for="RequisitionDate" class="control-label col-md-3">Date</label>
-                        <div class="col-md-9">
-                            <input type="text" id="RequisitionDate" name="RequisitionDate" value="@tdate" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    
-
-                    
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-9 col-md-offset-3">
-                                <div class="btn-toolbar">
-                                    @Html.ActionLink(" Cancel", "Home", "SalesAdmin", null, new { @class = "btn btn-danger" })
-                                    <input type="button" value="Save" onclick="ConfirmRequisition(this)" class="btn btn-success" />
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    }
+   
+    <div id="divRequisiontProductsToFactory"></div>
+   
+    <div id="dialog" title="Warning">
+        <p> Requisition qty must be less than or equal stock qty </p>
+    </div>
 </section>
 @section Scripts
 {
@@ -145,7 +102,7 @@
             $("#ProductName").autocomplete({
                 source: function (request, response) {
                     $.ajax({
-                        url: RootUrl + 'common/ProductNameAutoComplete/',
+                        url: RootUrl + 'corporate/Requisition/ProductNameAutoComplete/',
                         data: "{ 'prefix': '" + request.term + "'}",
                         dataType: "json",
                         type: "POST",
@@ -166,6 +123,19 @@
                 },
                 select: function (e, i) {
                     $("#ProductId").val(i.item.val);
+                    var json = { productId: i.item.val };
+                    $.ajax({
+                        type: "POST",
+                        url: RootUrl + 'corporate/Requisition/GetStockProductQuantityInFactoryById/',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(json),
+                        success: function (data) {
+                            var qty = data.StockQty;
+                            $("#StockQty").val(qty);
+                            //$("#Quantity").SetAttr("max", qty);
+                            //document.getElementById("Quantity").max = qty;
+                        }
+                    });
                 },
                 minLength: 1
             });
@@ -279,6 +249,7 @@
     <script>
 
         function Update(btnClicked) {
+            ValidateMaxQuantity(btnClicked);
             var id = btnClicked.id;
             var qty = parseInt(btnClicked.value);
             var json = { id: id,quantity:qty };
@@ -336,33 +307,22 @@
 
             }
         }
+
+
         function ViewTempRequisitionList() {
-            $("#requisitions").html("");
+            var reqByUserId = $("#RequisitionByUserId").val();
+            var json = { RequisitionByUserId: reqByUserId };
             $.ajax({
-                type: "GET",
-                url: '@Url.Action("GetTempToRequsitionList", "Requisition",new {area="Corporate"})',
-                contentType: "application/json; charset=utf-8",
+                type: 'Post',
+                url: RootUrl + "corporate/Requisition/LoadTempRequisitionProductList",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
                 success: function (data) {
-                    var total = 0;
-                    var totalQty = 0;
-                    for (var i = 0; i < data.length; i++) {
-                        total = total + data[i].SubTotal;
-                        totalQty = totalQty + data[i].Quantity;
-                    }
-                    $.each(data, function (key, value) {
-
-                        //total =+ value.SubTotal;
-                        //alert(key);
-                        //$("#orders").append('<option value=' + value.ClientId + '>' + value.ProductId + '</option>');
-                        var row = $("<tr><td style='border: 1px solid black; padding: 5px 10px;'>" + value.ToBranch.BranchName + "</td><td style='border: 1px solid black; padding: 5px 10px;'>" + value.ProductName + "</td><td style='border: 1px solid black; padding: 5px 10px;'>  <input type='number' min='1' value='" + value.Quantity + "' class='form-control text-right' id='" + value.Serial + "' name='NewQuantity_" + value.Serial + "'  onchange='Update(this)'/>" + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-center'><button id='" + value.Serial + "' type='button' onclick='RemoveProductById(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color:red;'></i></button>" + "</td></tr>");
-
-                        $("#requisitions").append(row);
-                    });
-                    $("#Total").val(total);
-                    $("#TotalQty").val(totalQty);
+                    $("#divRequisiontProductsToFactory").html(data);
                 }
             });
         }
+     
     </script>
 
     <script>
@@ -382,6 +342,52 @@
 
         }
     </script>
+    
+@*Validate Max Quantity*@
+<script>
+
+        function ValidateMaxQuantity(event) {
+            var id = event.id;
+            var requsitionQty = $("#" + id).val();
+            if (requsitionQty === '') {
+                requsitionQty = 0;
+            } else {
+                requsitionQty = parseInt($("#" + id).val(), 10);
+            }
+            //alert(deliverqty);
+
+            var quantity = parseInt($("#StockQty").val(), 10);
+            if (requsitionQty > quantity || requsitionQty < 0) {
+                ShowWarningDialog();
+                $("#" + id).val('1');
+            }
+
+        }
+
+        function  ShowWarningDialog(){
+            $("#dialog").dialog("open").parent().addClass("ui-state-error");
+        }
+</script>
+
+<script>
+        $( function() {
+            $( "#dialog" ).dialog({
+                autoOpen: false,
+                show: {
+                    effect: "blind"
+
+                },
+                hide: {
+                    effect: "explode"
+
+                }
+            });
+
+
+        } );
+</script>
+    
+
 }
 
 

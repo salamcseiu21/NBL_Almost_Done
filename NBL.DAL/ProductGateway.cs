@@ -658,7 +658,7 @@ namespace NBL.DAL
                 {
                     product.UpdatedDate = Convert.ToDateTime(reader["UpdatedDate"]);
                     product.UnitPrice = Convert.ToDecimal(reader["UnitPrice"]);
-                    product.DealerPrice = Convert.ToDecimal(reader["DealerPrice"]);
+                    product.DealerPrice =DBNull.Value.Equals(reader["DealerPrice"])? default(decimal): Convert.ToDecimal(reader["DealerPrice"]);
                 }
 
                 reader.Close();
@@ -1400,6 +1400,41 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
                 CommandObj.Dispose();
                 ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<object> GetAllProductBySearchTerm(string searchTerm)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllProductBySearchTerm";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<object> products = new List<object>();
+                while (reader.Read())
+                {
+                    products.Add(new 
+                    {
+
+                        val = Convert.ToInt32(reader["ProductId"]),
+                        label = reader["ProductName"].ToString()
+                    });
+                }
+
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Colud not collect product list by search term", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
             }
         }
 

@@ -292,5 +292,20 @@ namespace NBL.BLL
             int rowAffected = _iInventoryGateway.SaveDeliveredGeneralRequisition(scannedProducts, aDelivery);
             return rowAffected > 0 ? "Saved Successfully!" : "Failed to Save";
         }
+
+        public ICollection<object> GetStockProductByBranchCompanyIdAndSerachTerm(int branchId, int companyId, string searchTerm)
+        {
+            return _iInventoryGateway.GetStockProductByBranchCompanyIdAndSerachTerm(branchId,companyId,searchTerm);
+        }
+
+        public ICollection<object> GetFactoryStockProductBySearchTerm(string searchTerm)
+        {
+            return _iInventoryGateway.GetFactoryStockProductBySearchTerm(searchTerm);
+        }
+
+        public int GetStockProductQuantityInFactoryById(int productId)
+        {
+            return _iInventoryGateway.GetStockProductQuantityInFactoryById(productId);
+        }
     }
 }

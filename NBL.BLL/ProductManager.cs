@@ -450,6 +450,11 @@ namespace NBL.BLL
             return rowAffected > 0;
         }
 
+        public ICollection<object> GetAllProductBySearchTerm(string searchTerm)
+        {
+            return _iProductGateway.GetAllProductBySearchTerm(searchTerm);
+        }
+
         private string GenerateTransferRequisitionRef(int maxTrNo)
         {
 

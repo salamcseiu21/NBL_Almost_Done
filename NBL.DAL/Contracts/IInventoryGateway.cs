@@ -59,5 +59,8 @@ namespace NBL.DAL.Contracts
        int GetProductStatusInFactoryByBarCode(string barcode);
        int GetProductStatusInBranchInventoryByBarCode(string barcode);
        int SaveDeliveredGeneralRequisition(List<ScannedProduct> scannedProducts, Delivery aDelivery);
+       ICollection<object> GetStockProductByBranchCompanyIdAndSerachTerm(int branchId, int companyId, string searchTerm);
+       ICollection<object> GetFactoryStockProductBySearchTerm(string searchTerm);
+       int GetStockProductQuantityInFactoryById(int productId);
    }
 }

@@ -81,5 +81,6 @@ namespace NBL.DAL.Contracts
         GeneralRequisitionModel GetGeneralRequisitionById(long requisitiionId);
         int ApproveGeneralRequisition(GeneralRequisitionModel model, int nextApproverUser, int nextApprovalLevel,ApprovalDetails approval);
         int ApproveGeneralRequisitionByScm(int userId, int distributionPoint,long requisitiionId);
+        ICollection<object> GetAllProductBySearchTerm(string searchTerm);
     }
 }

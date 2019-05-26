@@ -70,6 +70,7 @@ namespace NBL.BLL.Contracts
         bool RemoveProductByIdDuringApproval(string id);
         GeneralRequisitionModel GetGeneralRequisitionById(long requisitiionId);
         bool ApproveGeneralRequisition(GeneralRequisitionModel model, int nextApproverUser, int nextApprovalLevel,ApprovalDetails approval);
-        bool ApproveGeneralRequisitionByScm(int userId, int distributionPoint, long requisitiionId); 
+        bool ApproveGeneralRequisitionByScm(int userId, int distributionPoint, long requisitiionId);
+        ICollection<object> GetAllProductBySearchTerm(string searchTerm);
     }
 }

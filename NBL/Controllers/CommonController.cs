@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-using Microsoft.Ajax.Utilities;
 using NBL.Areas.Sales.BLL.Contracts;
 using NBL.BLL;
 using NBL.BLL.Contracts;
@@ -18,7 +17,6 @@ using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
-using Newtonsoft.Json;
 
 namespace NBL.Controllers
 {
@@ -194,29 +192,31 @@ namespace NBL.Controllers
 
             int branchId = Convert.ToInt32(Session["BranchId"]);
             int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).DistinctBy(n => n.ProductId).ToList();
-            var productList = (from c in products
-                               where c.ProductName.ToLower().Contains(prefix.ToLower())
-                               select new
-                               {
-                                   label = c.ProductName,
-                                   val = c.ProductId
-                               }).ToList();
+            ICollection<object> productList =
+                _iInventoryManager.GetStockProductByBranchCompanyIdAndSerachTerm(branchId, companyId, prefix);
+            //var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).DistinctBy(n => n.ProductId).ToList();
+            //var productList = (from c in products
+            //                   where c.ProductName.ToLower().Contains(prefix.ToLower())
+            //                   select new
+            //                   {
+            //                       label = c.ProductName,
+            //                       val = c.ProductId
+            //                   }).ToList();
 
             return Json(productList);
         }
 
         public JsonResult ProductNameAutoComplete(string prefix)
         {
-
-            var products = _iProductManager.GetAllProducts().ToList();
-            var productList = (from c in products
-                where c.ProductName.ToLower().Contains(prefix.ToLower())
-                select new
-                {
-                    label = c.ProductName,
-                    val = c.ProductId
-                }).ToList();
+            ICollection<object> productList = _iProductManager.GetAllProductBySearchTerm(prefix);
+            //var products = _iProductManager.GetAllProducts().ToList();
+            //var productList = (from c in products
+            //    where c.ProductName.ToLower().Contains(prefix.ToLower())
+            //    select new
+            //    {
+            //        label = c.ProductName,
+            //        val = c.ProductId
+            //    }).ToList();
 
             return Json(productList);
         }

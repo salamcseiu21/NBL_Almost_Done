@@ -2304,9 +2304,6 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@TransactionDate", aDelivery.DeliveryDate);
                 CommandObj.Parameters.AddWithValue("@TransactionRef", aDelivery.TransactionRef);
                 CommandObj.Parameters.AddWithValue("@DeliveryRef", aDelivery.DeliveryRef);
-                CommandObj.Parameters.AddWithValue("@VoucherNo", aDelivery.VoucherNo);
-                CommandObj.Parameters.AddWithValue("@InvoiceRef", aDelivery.InvoiceRef);
-                CommandObj.Parameters.AddWithValue("@InvoiceId", aDelivery.InvoiceId);
                 CommandObj.Parameters.AddWithValue("@IsOwnTransporatoion", aDelivery.IsOwnTransport);
                 CommandObj.Parameters.AddWithValue("@Transportation", aDelivery.Transportation ?? "N/A");
                 CommandObj.Parameters.AddWithValue("@DriverName", aDelivery.DriverName ?? "N/A");
@@ -2328,7 +2325,7 @@ namespace NBL.DAL
                 int deliveryId = Convert.ToInt32(CommandObj.Parameters["@DeliveryId"].Value);
                 var accountMasterId = Convert.ToInt32(CommandObj.Parameters["@AccountMasterId"].Value);
                 var inventoryMasterId = Convert.ToInt32(CommandObj.Parameters["@InventoryMasterId"].Value);
-                int rowAffected = SaveDeliveredOrderDetailsFromFactory(scannedProducts, aDelivery, deliveryId, inventoryMasterId);
+                int rowAffected = SaveDeliveredOrderDetails(scannedProducts,aDelivery,inventoryMasterId,deliveryId);
 
                 int accountAffected = 0;
                 if (rowAffected > 0)
@@ -2378,5 +2375,108 @@ namespace NBL.DAL
             }
         }
 
+        public ICollection<object> GetStockProductByBranchCompanyIdAndSerachTerm(int branchId, int companyId, string searchTerm)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetStockProductInByBranchCompanyIdAndSearchTerm";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                CommandObj.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<object> products = new List<object>();
+                while (reader.Read())
+                {
+                    products.Add(new 
+                    {
+
+                        label = reader["ProductName"].ToString(),
+                        val = Convert.ToInt32(reader["ProductId"])
+                    });
+                }
+
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Colud not collect product list", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<object> GetFactoryStockProductBySearchTerm(string searchTerm)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetFactoryStockProductBySearchTerm";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<object> products = new List<object>();
+                while (reader.Read())
+                {
+                    products.Add(new
+                    {
+
+                        label = reader["ProductName"].ToString(),
+                        val = Convert.ToInt32(reader["ProductId"])
+                    });
+                }
+
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Colud not collect factory stock  product list by Search Term", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int GetStockProductQuantityInFactoryById(int productId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetStockProductQuantityInFactoryById";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ProductId", productId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                int quantity = 0;
+                if(reader.Read())
+                {
+
+                    quantity = Convert.ToInt32(reader["Quantity"]);
+
+                }
+
+                reader.Close();
+                return quantity;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Colud not collect factory stock qty by   product id", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }

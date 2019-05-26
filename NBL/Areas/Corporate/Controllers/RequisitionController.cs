@@ -67,7 +67,6 @@ namespace NBL.Areas.Corporate.Controllers
                     Products = productList,
                     ToBranchId = toBranchId,
                     RequisitionByUserId = user.UserId,
-                    
                     RequisitionDate = Convert.ToDateTime(collection["RequisitionDate"])
                 };
                 int rowAffected = _iProductManager.SaveRequisitionInfo(aRequisitionModel);
@@ -171,6 +170,14 @@ namespace NBL.Areas.Corporate.Controllers
             var filePath = GetBranchWishRequisitionXmlFilePath();
             IEnumerable<RequisitionModel> productList = GetProductFromXmalFile(filePath);
             return Json(productList, JsonRequestBehavior.AllowGet);
+        }
+
+        public PartialViewResult LoadTempRequisitionProductList(int RequisitionByUserId)
+        {
+            string fileName = "Requisition_Products_" + RequisitionByUserId + ".xml";
+            var filePath = Server.MapPath("~/Areas/Corporate/Files/" + fileName);
+            IEnumerable<RequisitionModel> productList = GetProductFromXmalFile(filePath);
+            return PartialView("_ViewRequisitionToFactoryProductList",productList);
         }
 
         //---------------------------Get Requisition file path-------------
@@ -359,6 +366,23 @@ namespace NBL.Areas.Corporate.Controllers
                 xmlDocument.Save(filePath);
             }
 
+        }
+
+
+        //-------------------Factory stock product autocomplete-------------
+
+        public JsonResult ProductNameAutoComplete(string prefix)
+        {
+            ICollection<object> productList = _iInventoryManager.GetFactoryStockProductBySearchTerm(prefix);
+            return Json(productList);
+        }
+
+        public JsonResult GetStockProductQuantityInFactoryById(int productId)
+        {
+            StockModel stock = new StockModel();
+            var qty = _iInventoryManager.GetStockProductQuantityInFactoryById(productId);
+            stock.StockQty = qty;
+            return Json(stock, JsonRequestBehavior.AllowGet);
         }
     }
 }

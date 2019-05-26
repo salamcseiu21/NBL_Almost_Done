@@ -55,5 +55,8 @@ namespace NBL.BLL.Contracts
        string SaveDeliveredOrder(List<ScannedProduct> scannedProducts, Delivery aDelivery, int invoiceStatus, int orderStatus);
        string SaveDeliveredOrderFromFactory(List<ScannedProduct> barcodeList, Delivery aDelivery, int invoiceStatus, int orderStatus);
        string SaveDeliveredGeneralRequisition(List<ScannedProduct> barcodeList, Delivery aDelivery);
+       ICollection<object> GetStockProductByBranchCompanyIdAndSerachTerm(int branchId, int companyId, string searchTerm);
+       ICollection<object> GetFactoryStockProductBySearchTerm(string prefix);
+       int GetStockProductQuantityInFactoryById(int productId);
    }
 }
