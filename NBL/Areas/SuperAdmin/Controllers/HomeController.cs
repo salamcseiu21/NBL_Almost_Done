@@ -200,20 +200,8 @@ namespace NBL.Areas.SuperAdmin.Controllers
             }
         }
 
-    
 
-        public JsonResult EmployeeAutoComplete(string prefix)
-        {
-
-            ICollection<object> employees = _iEmployeeManager.GetEmployeeListBySearchTerm(prefix);
-            return Json(employees);
-        }
-
-        public JsonResult GetEmployeeById(int employeeId)
-        {
-            var emp = _iEmployeeManager.GetEmployeeById(employeeId);
-            return Json(emp, JsonRequestBehavior.AllowGet);
-        }
+        
         public JsonResult UserAutoComplete(string prefix) 
         {
 
@@ -309,25 +297,6 @@ namespace NBL.Areas.SuperAdmin.Controllers
         public ActionResult ViewSubReference()
         {
             return View(_iCommonManager.GetAllSubReferenceAccounts());
-        }
-
-        //------------------ Change password------------------------
-        public PartialViewResult ChangePassword(int id)
-        {
-
-            var user = _userManager.GetUserInformationByUserId(id);
-            user.Password = StringCipher.Decrypt(user.Password, "salam_cse_10_R");
-            return PartialView("_ChangePasswordPartialPage", user);
-        }
-
-        [HttpPost]
-        public ActionResult ChangePassword(User model)
-        {
-            model.Password = StringCipher.Encrypt(model.Password, "salam_cse_10_R");
-            bool result = _userManager.UpdatePassword(model);
-            if (result)
-                return RedirectToAction("Home");
-            return RedirectToAction("ChangePassword");
         }
     }
 

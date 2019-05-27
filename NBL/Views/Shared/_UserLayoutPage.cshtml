@@ -214,7 +214,7 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        @Html.ActionLink(" Change Password", "ChangePassword", "Home", new {id = user.UserId }, new { @class = "btn btn-info btn-flat" })
+                                        @Html.ActionLink(" Change Password", "ChangePassword", "Home", new {area="CommonArea",id = user.UserId }, new { @class = "btn btn-info btn-flat" })
                                         @*@Html.ActionLink(" Profile", "ViewEmployeeProfile", "Home", new { id = user.EmployeeId }, new { @class = "btn btn-info btn-flat" })*@
                                     </div>
                                     <div class="pull-right">

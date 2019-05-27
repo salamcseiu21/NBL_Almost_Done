@@ -158,6 +158,8 @@ namespace NBL.Controllers
             ViewClient client = _iClientManager.GetClientDeailsById(clientId);
             return Json(client, JsonRequestBehavior.AllowGet);
         }
+
+     
         //----------------------Get Stock Quantiy  By  product Id----------
         public JsonResult GetProductQuantityInStockById(int productId)
 
@@ -618,19 +620,20 @@ namespace NBL.Controllers
             var product= _iInventoryManager.GetProductLifeCycleByBarcode(ProductBarCode);
             return Json(product, JsonRequestBehavior.AllowGet);
         }
+
         //----------------Employee name Autocomplete---------------
+
         public JsonResult EmployeeAutoComplete(string prefix)
         {
 
-            var employeeNameList = (from e in _iEmployeeManager.GetAll().ToList()
-                where e.EmployeeName.ToLower().Contains(prefix.ToLower())
-                select new
-                {
-                    label = e.EmployeeName,
-                    val = e.EmployeeId
-                }).ToList();
+            ICollection<object> employees = _iEmployeeManager.GetEmployeeListBySearchTerm(prefix);
+            return Json(employees);
+        }
 
-            return Json(employeeNameList);
+        public JsonResult GetEmployeeById(int employeeId)
+        {
+            var emp = _iEmployeeManager.GetEmployeeById(employeeId);
+            return Json(emp, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetAssignedRolesByBranchId(int branchId)
