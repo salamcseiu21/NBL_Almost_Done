@@ -205,17 +205,15 @@ namespace NBL.Areas.SuperAdmin.Controllers
         public JsonResult EmployeeAutoComplete(string prefix)
         {
 
-            var employeeNameList = (from e in _iEmployeeManager.GetAll().ToList()
-                              where e.EmployeeName.ToLower().Contains(prefix.ToLower())
-                              select new
-                              {
-                                  label = e.EmployeeName,
-                                  val = e.EmployeeId
-                              }).ToList();
-
-            return Json(employeeNameList);
+            ICollection<object> employees = _iEmployeeManager.GetEmployeeListBySearchTerm(prefix);
+            return Json(employees);
         }
 
+        public JsonResult GetEmployeeById(int employeeId)
+        {
+            var emp = _iEmployeeManager.GetEmployeeById(employeeId);
+            return Json(emp, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult UserAutoComplete(string prefix) 
         {
 

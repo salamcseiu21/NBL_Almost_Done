@@ -20,6 +20,6 @@ namespace NBL.BLL.Contracts
         bool CheckEmail(string email);
        
         IEnumerable<Employee> GetEmpoyeeListByDepartmentId(int departmentId);
-
+        ICollection<object> GetEmployeeListBySearchTerm(string searchTerm); 
     }
 }

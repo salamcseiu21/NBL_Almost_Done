@@ -472,5 +472,39 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public ICollection<object> GetEmployeeListBySearchTerm(string searchTerm)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetEmployeeListBySearchTerm";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<object> employees = new List<object>();
+                while (reader.Read())
+                {
+                    employees.Add(new
+                    {
+                       
+                        val = Convert.ToInt32(reader["EmployeeId"]),
+                        label = reader["EmployeeName"].ToString()
+                    });
+                }
+                reader.Close();
+                return employees;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect Employee Information by search Term", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }

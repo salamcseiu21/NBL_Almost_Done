@@ -13,5 +13,6 @@ namespace NBL.DAL.Contracts
        Employee GetEmployeeByEmailAddress(string email);
        int GetEmployeeMaxSerialNo();
        IEnumerable<Employee> GetEmpoyeeListByDepartmentId(int departmentId);
+       ICollection<object> GetEmployeeListBySearchTerm(string searchTerm);
    }
 }
