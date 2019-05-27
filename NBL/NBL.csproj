@@ -8069,6 +8069,8 @@
     <Content Include="Areas\AccountsAndFinance\Views\Shared\_MenuAccountManagerPartialPage.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Shared\_ActiveReceivablePartialPage.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Shared\_ViewTempCreditPurposePartialPage.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Shared\_ViewTempDebitPurposePartialPage.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Shared\_ViewTempJournalPurposePartialPage.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />

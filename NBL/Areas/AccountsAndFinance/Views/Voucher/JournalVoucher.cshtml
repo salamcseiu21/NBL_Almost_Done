@@ -92,63 +92,27 @@
               
                 </div>
             </div>
-          <div class="row" style="margin: 0; padding: 0;">
-              @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "updateJournalInfoForm" }))
-                {
-                  <input type="hidden" id="JournalInfoToRemove" name="JournalInfoToRemove" />
-                  <input type="hidden" id="SummationOfDebitAndCredit" name="SummationOfDebitAndCredit"/>
-
-                      <table class="table table-bordered" style="margin: 0; padding: 0;">
-
-                          <thead>
-
-                              <tr>
-                                  <th style="border: .5px solid gray;" class="text-center">Account Name</th>
-                                  <th style="border: .5px solid gray; width: 10%" class="text-center">Code</th>
-                                  <th style="border: 1px solid gray;" class="text-center"> Dr/Cr</th>
-                                  <th style="border: 1px solid gray;" class="text-center">Amount(&#2547;)</th>
-                                  <th style="border: 1px solid gray;" class="text-center">Action</th>
-                              </tr>
-                          </thead>
-                          <tbody id="JournalInfo"></tbody>
-                      </table>
-              }
-          </div><hr />
-            <div class="row">
-
-               <div class="col-md-6">
-                   
-               </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="Date" class="control-label col-md-3">Date</label>
-                        <div class="col-md-9">
-
-                            <input type="text" id="Date" name="Date" value="@date" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-
-                        <div class="col-md-9 col-md-offset-3">
-                            <div class="row">
-                                <div class="col-md-9">
-
-                                </div>
-                                <div class="col-md-3">
-                                    @Html.ActionLink("Cancel", "Home", "Home", new { area = "Accounts" }, new { @class = "btn btn-danger" })
-                                    <input type="button" value="Save" id="submitButton" onclick="SaveJournalVoucher(this)" class="btn btn-primary" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="divTempjournalVoucherList"></div>
 
         </div>
     }
 </section>
 @section Scripts
 {
+    
+    <script>
+
+        $(document).ready(function() {
+
+            ViewTempJournalInformation();
+            @* Date picker*@
+            $("#ReceiveDate").datepicker({ dateFormat: 'dd-MM-yy' });
+            $("#Date").datepicker({ dateFormat: 'dd-MM-yy' });
+
+        });
+
+    </script>
+
     @*Sub Sub Sub Account list Auto Complete*@
     <script type="text/javascript">
     $(function () {
@@ -231,29 +195,7 @@
 
     }
 
-    function ViewTempJournalInformation() {
-        $("#JournalInfo").html("");
-        //alert("Hi");
-
-        $.ajax({
-            type: "GET",
-            url: '@Url.Action("GetTempJournalInformation", "Voucher")',
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                var summation = 0;
-                for (var i = 0; i < data.length; i++) {
-                    summation = summation + data[i].Amounts;
-
-                }
-                $.each(data, function (key, value) {
-
-                    var row = $("<tr><td style='border: 1px solid black; padding: 5px 10px;'>" + value.PurposeName + "</td><td style='border: 1px solid black; padding: 5px 10px;'>" + value.PurposeCode + "</td><td style='border: 1px solid black; padding: 5px 10px;'>" + value.DebitOrCredit + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-right'><input type='hidden' name='product_Id_" + value.BankBranchId + "' value='" + value.BankBranchId + "'> " + value.Amounts + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-center'><button id='" + value.PurposeCode + "' type='button' onclick='RemoveJournalInfo(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color:red;'></i></button>" + "</td></tr>");
-                    $("#JournalInfo").append(row);
-                });
-                $("#SummationOfDebitAndCredit").val(summation.toFixed(0));
-            }
-        });
-    }
+   
 
 
     function formatDate(chequedate) {
@@ -351,12 +293,73 @@
     }
     </script>
 
-    @* Date picker*@
     <script>
-    $(function () {
 
-        $("#ReceiveDate").datepicker({ dateFormat: 'dd-MM-yy' });
-        $("#Date").datepicker({ dateFormat: 'dd-MM-yy' });
-    });
+
+        function ViewTempJournalInformation() {
+            $("#JournalInfo").html("");
+            //alert("Hi");
+
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetTempJournalInformation", "Voucher")',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var summation = 0;
+                    for (var i = 0; i < data.length; i++) {
+                        summation = summation + data[i].Amounts;
+
+                    }
+                    $("#divTempjournalVoucherList").html(data);
+                    $("#SummationOfDebitAndCredit").val(summation.toFixed(0));
+                }
+            });
+        }
+
+
+        function RemoveDebitPurposeById(btnClicked) {
+
+            //alert(btnClicked.id);
+            if (confirm("Are you sure to remove this product ??")) {
+                var id = btnClicked.id;
+                var json = { id: id };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("RemoveJournalVoucher", "Voucher",new {area="AccountsAndFinance"})',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        ViewTempDebitPurposeInformation();
+                        for (var i = productIdlist.length - 1; i >= 0; i--) {
+                            if (productIdlist[i] === btnClicked.id) {
+                                productIdlist.splice(i, 1);
+                            }
+                        }
+
+                    }
+                });
+            }
+
+
+        }
+
+
+        function RemoveAll(btnClick) {
+            var result = confirm('Are you sure to remove all item ?');
+            if (result) {
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("RemoveAllJournalPurpose","Voucher",new {area="AccountsAndFinance"})',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        location.reload();
+                    }
+
+                });
+
+            }
+        }
+
+
     </script>
 }

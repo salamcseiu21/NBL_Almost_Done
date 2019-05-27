@@ -159,7 +159,7 @@
 
                                 </div>
                                 <div class="col-md-6 text-right">
-
+                                    <input type="button" id="removeAllButton" value="Remove All" onclick="RemoveAll(this)" class="btn btn-danger " />
                                     <input type="button" value="Add to List" onclick="AddPurposeInfoToList(this)" class="btn btn-info"/>
                                 </div>
                                 <br />
@@ -170,57 +170,36 @@
 
             </div>
 
-            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "updateForm" }))
-                {
-                <input type="hidden" id="purposeCodeToRemove" name="purposeCodeToRemove" />
-                <input type="hidden" id="SummationOfDrCrAmounts" name="SummationOfDrCrAmounts" />
-                <table class="table table-bordered" style="margin: 0; padding: 0;">
-
-                    <thead>
-
-                        <tr>
-                            <th style="border: .5px solid gray;" class="text-center">Account Name</th>
-                            <th style="border: .5px solid gray; width: 10%" class="text-center">Account Code</th>
-                            <th style="border: 1px solid gray;" class="text-center">Amount (&#2547;)</th>
-                            <th style="border: 1px solid gray;" class="text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="purposeInfo"></tbody>
-                </table>
-                    <br />
-            }
-            <div class="row">
-
-                <div class="form-group">
-
-                    <div class="col-md-9 col-md-offset-3">
-                        <div class="row">
-                            <div class="col-md-10">
-
-                            </div>
-                            <div class="col-md-2">
-                                @Html.ActionLink("Cancel", "Home", "Home", new { area = "Accounts" }, new { @class = "btn btn-danger" })
-                                <input type="button" value="Save" id="submitButton" onclick="SaveDebitVoucher(this)" class="btn btn-primary" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+         <div id="divTempDebitVoucherList"></div>
         </div>
     }
 </section>
 @section Scripts
 {
-    @* Date picker*@
-    <script>
-    $(function () {
+    
+<script>
 
-        $("#ReceiveDate").datepicker({ dateFormat: 'dd-MM-yy' });
-        $("#Date").datepicker({ dateFormat: 'dd-MM-yy' });
-    });
-    </script>
+        $(document).ready(function() {
 
+            ViewTempDebitPurposeInformation();
+            @* Date picker*@
+            $("#ReceiveDate").datepicker({ dateFormat: 'dd-MM-yy' });
+            $("#Date").datepicker({ dateFormat: 'dd-MM-yy' });
+
+            $('#contraValue').val(this.checked);
+
+            $('#isItContra').change(function () {
+                if (this.checked) {
+                    var returnVal = confirm(" Is it Contra ?");
+                    $(this).prop("checked", returnVal);
+                }
+                $('#contraValue').val(this.checked);
+            });
+
+        });
+
+</script>
+    
 
     @*Add purpose info to lsit (Ajax form Submit)*@
     <script>
@@ -270,32 +249,7 @@
 
     }
 
-    function ViewTempDebitPurposeInformation() {
-        $("#purposeInfo").html("");
-        //alert("Hi");
-
-        $.ajax({
-            type: "GET",
-            url: '@Url.Action("GetTempDebitPurposeInformation", "Voucher")',
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                var cr = 0;
-                var dr = $('#Amount').val();
-                for (var i = 0; i < data.length; i++) {
-                    cr = cr + data[i].Amounts;
-                }
-                $.each(data, function (key, value) {
-
-                    var row = $("<tr><td style='border: 1px solid black; padding: 5px 10px;'>" + value.PurposeName + "</td><td style='border: 1px solid black; padding: 5px 10px;'>" + value.PurposeCode + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-right'>" + value.Amounts + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-center'><button id='" + value.PurposeCode + "' type='button' onclick='RemovePurposeInfo(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color:red;'></i></button>" + "</td></tr>");
-                    $("#purposeInfo").append(row);
-                });
-                var result = dr - cr;
-                $("#SummationOfDrCrAmounts").val(result.toFixed(0));
-            }
-        });
-    }
-
-
+    
     function formatDate(chequedate) {
 
         var month = new Array();
@@ -321,39 +275,7 @@
         return date// Function returns the date
     }
 
-    function RemovePurposeInfo(btnClicked) {
-
-
-        if (confirm("Are you sure to remove this purpose info ??")) {
-            //alert(btnClicked);
-            $("#purposeCodeToRemove").val(btnClicked.id);
-            //alert(btnClicked.id);
-            //alert(btnClicked["delBtn"]);
-            var $form = $(btnClicked).parents('form');
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("RemoveDebitPurpose")',
-                data: $form.serialize(),
-                error: function (xhr, status, error) {
-                    //do something about the error
-                },
-                success: function (response) {
-                    for (var i = purposeCodeList.length - 1; i >= 0; i--) {
-                        if (purposeCodeList[i] === btnClicked.id) {
-                            purposeCodeList.splice(i, 1);
-                        }
-                    }
-                    ViewTempDebitPurposeInformation();
-                }
-            });
-        } else {
-            return false;// if it's a link to prevent post
-        }
-
-        return false;// if it's a link to prevent post
-
-    }
-
+ 
 
     function SaveDebitVoucher(btnClicked) {
         if (confirm("Are you sure to Save??")) {
@@ -550,17 +472,68 @@
 
 
     <script>
-    $(document).ready(function () {
-        //set initial state.
-        $('#contraValue').val(this.checked);
 
-        $('#isItContra').change(function () {
-            if (this.checked) {
-                var returnVal = confirm(" Is it Contra ?");
-                $(this).prop("checked", returnVal);
+
+        function ViewTempDebitPurposeInformation() {
+            //alert("Hi");
+
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetTempDebitPurposeInformation", "Voucher")',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#divTempDebitVoucherList").html(data);
+
+                }
+            });
+        }
+
+
+        function RemoveDebitPurposeById(btnClicked) {
+
+            //alert(btnClicked.id);
+            if (confirm("Are you sure to remove this product ??")) {
+                var id = btnClicked.id;
+                var json = { id: id };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("RemoveDebitPurpose", "Voucher",new {area="AccountsAndFinance"})',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        ViewTempDebitPurposeInformation();
+                        for (var i = productIdlist.length - 1; i >= 0; i--) {
+                            if (productIdlist[i] === btnClicked.id) {
+                                productIdlist.splice(i, 1);
+                            }
+                        }
+
+                    }
+                });
             }
-            $('#contraValue').val(this.checked);
-        });
-    });
+
+
+        }
+
+
+        function RemoveAll(btnClick) {
+            var result = confirm('Are you sure to remove all item ?');
+            if (result) {
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("RemoveAllDebittPurpose","Voucher",new {area="AccountsAndFinance"})',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        location.reload();
+                    }
+
+                });
+
+            }
+        }
+
+
     </script>
+    
+
 }
