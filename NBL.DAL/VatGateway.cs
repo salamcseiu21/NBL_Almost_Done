@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using NBL.DAL.Contracts;
+using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.VatDiscounts;
 
 namespace NBL.DAL
@@ -25,6 +26,12 @@ namespace NBL.DAL
                     {
                         VatId = Convert.ToInt32(reader["VatId"]),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
+                        Product = new Product
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString()
+                        },
                         VatAmount = Convert.ToDecimal(reader["VatAmount"]),
                         UpdateDate = Convert.ToDateTime(reader["UpdateDate"]),
                         UpdateByUserId = Convert.ToInt32(reader["UpdateByUserId"])

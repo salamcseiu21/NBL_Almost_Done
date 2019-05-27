@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<NBL.Models.EntityModels.Products.Product>
+@{
+    ViewBag.Title = "Product List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
 <section class="content">
     <h3 class="text-center text-green headingStyle">Prodcut List</h3>
     <table id="table_product_list" class="display table table-bordered" style="border:1px solid black">

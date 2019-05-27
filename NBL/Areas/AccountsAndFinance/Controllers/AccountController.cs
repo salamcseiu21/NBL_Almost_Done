@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using NBL.Areas.Accounts.Models;
+using System.Xml.Linq;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.Areas.AccountsAndFinance.Models;
 using NBL.BLL.Contracts;
@@ -31,7 +31,8 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         [HttpGet]
         public ActionResult Receivable()
         {
-            Session["Payments"] = null;
+            RemoveAll();
+            CreateTempReceivableXmlFile();
             var model =
                 new ViewReceivableCreateModel
                 {
@@ -52,8 +53,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 };
             try
             {
-                
-               
+
                 int paymentTypeId = Convert.ToInt32(collection["PaymentTypeId"]);
                 var bankBranchName = collection["SourceBankName"];
                 var chequeNo = collection["ChequeNo"];
@@ -63,23 +63,28 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 {
                     ChequeAmount = amount,
                     BankBranchName = bankBranchName,
+                    BankAccountNo = collection["BankAccountNo"],
+                    SourceBankName = collection["SourceBankName"],
                     ChequeNo = chequeNo,
                     ChequeDate = date,
-                    PaymentTypeId = paymentTypeId,
-                    BankAccountNo = collection["BankAccountNo"],
-                    SourceBankName = collection["SourceBankName"]
+                    PaymentTypeId = paymentTypeId
+                  
                 };
-                List<Payment> payments = (List<Payment>)Session["Payments"];
-                if(payments!=null)
-                {
-                    payments.Add(aPayment);
-                }
-                else
-                {
-                    payments = new List<Payment> { aPayment };
-                    Session["Payments"] = payments;
-                    ViewBag.Payments = payments;
-                }
+
+                var filePath = GetTempReceivableXmlFilePath();
+                var id = aPayment.PaymentId.ToString("D2")+"_"+ Guid.NewGuid();
+                var xmlDocument = XDocument.Load(filePath);
+                xmlDocument.Element("Payments")?.Add(
+                    new XElement("Payment", new XAttribute("Id", id),
+                        new XElement("ChequeAmount", aPayment.ChequeAmount),
+                        new XElement("BankBranchName", aPayment.BankBranchName),
+                        new XElement("BankAccountNo", aPayment.BankAccountNo),
+                        new XElement("SourceBankName", aPayment.SourceBankName),
+                        new XElement("ChequeNo", aPayment.ChequeNo),
+                        new XElement("ChequeDate", aPayment.ChequeDate),
+                        new XElement("PaymentTypeId", aPayment.PaymentTypeId)
+                    ));
+                xmlDocument.Save(filePath);
                 return View(model);
             }
             catch (Exception exception)
@@ -90,16 +95,15 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
   
         }
 
+
         [HttpPost]
         public JsonResult SaveReceivable(FormCollection collection)
         {
             SuccessErrorModel aModel = new SuccessErrorModel();
             try
             {
-                
                 var anUser = (ViewUser)Session["user"];
-             
-                List<Payment> payments = (List<Payment>)Session["Payments"];
+                var payments= GetPaymentsFromXmlFile();
                 Receivable receivable = new Receivable
                 {
                     Payments = payments,
@@ -159,17 +163,24 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             return Json(aModel, JsonRequestBehavior.AllowGet);
         }
 
+       
         [HttpPost]
-        public void Remove(FormCollection collection)
+        public void Remove(string id)
         {
-            List<Payment> payments = (List<Payment>)Session["Payments"];
-            string chequeNo = Convert.ToString(collection["chequeNoToRemove"]);
-            var payment = payments.Find(n => n.ChequeNo == chequeNo);
-            payments.Remove(payment);
-            Session["Payments"] = payments;
-            ViewBag.Payments = payments;
+            var filePath = GetTempReceivableXmlFilePath();
+            var xmlData = XDocument.Load(filePath);
+            xmlData.Root?.Elements().Where(n => n.Attribute("Id")?.Value == id).Remove(); 
+            xmlData.Save(filePath);
         }
+        [HttpGet]
+        public void RemoveAll()
+        {
+            var filePath = GetTempReceivableXmlFilePath();
+            var xmlData = XDocument.Load(filePath);
+            xmlData.Root?.Elements().Remove();
+            xmlData.Save(filePath);
 
+        }
         [HttpGet]
         public ActionResult Payable()
         {
@@ -178,14 +189,38 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             return View();
         }
 
-        public JsonResult GetTempChequeInformation()
+        public PartialViewResult GetTempChequeInformation()
         {
-            if (Session["Payments"] != null)
+            var payments = GetPaymentsFromXmlFile();
+            return PartialView("_ViewTempReceivalbePartialPage", payments);
+         
+        }
+
+        private List<Payment> GetPaymentsFromXmlFile()
+        {
+            var filePath = GetTempReceivableXmlFilePath();
+            List<Payment> payments = new List<Payment>();
+            var xmlData = XDocument.Load(filePath).Element("Payments")?.Elements();
+            if (xmlData != null)
             {
-                IEnumerable<Payment> payments = ((List<Payment>)Session["Payments"]).ToList();
-                return Json(payments, JsonRequestBehavior.AllowGet);
+                foreach (XElement element in xmlData)
+                {
+                    Payment aPayment = new Payment();
+                    var elementFirstAttribute = element.FirstAttribute.Value;
+                    aPayment.Serial = elementFirstAttribute;
+                    var elementValue = element.Elements();
+                    var xElements = elementValue as XElement[] ?? elementValue.ToArray();
+                    aPayment.ChequeAmount = Convert.ToDecimal(xElements[0].Value);
+                    aPayment.BankBranchName = xElements[1].Value;
+                    aPayment.BankAccountNo = xElements[2].Value;
+                    aPayment.SourceBankName = xElements[3].Value;
+                    aPayment.ChequeNo = xElements[4].Value;
+                    aPayment.ChequeDate = Convert.ToDateTime(xElements[5].Value);
+                    aPayment.PaymentTypeId = Convert.ToInt32(xElements[6].Value);
+                    payments.Add(aPayment);
+                }
             }
-            return Json(new List<Payment>(), JsonRequestBehavior.AllowGet);
+            return payments;
         }
 
         //------------------View Sales return ----------------
@@ -193,6 +228,31 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         {
             List<ViewReturnProductModel> products = _iProductReturnManager.GetAllVerifiedSalesReturnProducts().ToList();
             return View(products);
+        }
+
+
+
+
+
+        private string GetTempReceivableXmlFilePath()
+        {
+            var user = (ViewUser)Session["user"];
+            string fileName = "Receivable_" + user.UserId + ".xml";
+            var filePath = Server.MapPath("~/Areas/AccountsAndFinance/Files/Receivable/" + fileName);
+            return filePath;
+        }
+        private void CreateTempReceivableXmlFile()
+        {
+
+            var filePath = GetTempReceivableXmlFilePath();
+            if (!System.IO.File.Exists(filePath))
+            {
+                XDocument xmlDocument = new XDocument(
+                    new XDeclaration("1.0", "utf-8", "yes"),
+                    new XElement("Payments"));
+                xmlDocument.Save(filePath);
+            }
+
         }
     }
 }

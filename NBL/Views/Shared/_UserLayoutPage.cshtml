@@ -73,7 +73,7 @@
     else if (User.IsInRole("AccountManager"))
     {
         roleName = "Account Manager";
-        areas = "accountexecutive";
+        areas = "accountsandfinance";
     }
     else if(User.IsInRole("SystemAdmin"))
     {
@@ -298,7 +298,7 @@
                         Html.RenderPartial("~/Areas/AccountsAndFinance/Views/Shared/_MenuPartialPage.cshtml");
                         break;
                     case "AccountManager":
-                        Html.RenderPartial("~/Areas/AccountExecutive/Views/Shared/_MenuPartialPage.cshtml");
+                        Html.RenderPartial("~/Areas/AccountsAndFinance/Views/Shared/_MenuAccountManagerPartialPage.cshtml");
                         break;
                     case "SystemAdmin":
                         Html.RenderPartial("~/Areas/Editor/Views/Shared/_MenuPartialPage.cshtml");

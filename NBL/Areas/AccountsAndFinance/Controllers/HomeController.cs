@@ -15,7 +15,7 @@ using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.AccountsAndFinance.Controllers
 {
-    [Authorize(Roles = "AccountExecutive")]
+    [Authorize(Roles = "AccountExecutive,AccountManager")]
     public class HomeController : Controller
     {
         private readonly IClientManager _iClientManager;
@@ -103,7 +103,12 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             var employee = _iEmployeeManager.GetEmployeeById(id);
             return PartialView("_ViewEmployeeProfilePartialPage",employee);
         }
+        public PartialViewResult ViewProduct()
+        {
+            var products = _iProductManager.GetAll().ToList();
+            return PartialView("_ViewProductPartialPage", products);
 
+        }
         public PartialViewResult ViewBranch()
         {
             var branches = _iBranchManager.GetAllBranches().ToList();

@@ -6,6 +6,7 @@ namespace NBL.Models.EntityModels.Payments
     public class Payment
     {
         public long PaymentId { get; set; }
+        public string Serial { get; set; }
         public string SourceBankName { get; set; }
         public string BankAccountNo { get; set; }  
         public decimal ChequeAmount { get; set; }

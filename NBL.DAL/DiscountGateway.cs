@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Masters;
+using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.VatDiscounts;
 
 namespace NBL.DAL
@@ -67,6 +68,12 @@ namespace NBL.DAL
                         DiscountPercent = Convert.ToDecimal(reader["DiscountPercent"]),
                         ClientTypeId = Convert.ToInt32(reader["ClientTypeId"]),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
+                        Product = new Product
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString()
+                        },
                         UpdateDate = Convert.ToDateTime(reader["UpdateDate"]),
                         ClientType = new ClientType
                         {

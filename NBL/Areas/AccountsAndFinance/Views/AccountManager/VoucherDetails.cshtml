@@ -1,0 +1,13 @@
+﻿
+@model NBL.Areas.Accounts.Models.ViewModels.ViewVoucherModel
+
+@{
+    ViewBag.Title = "Voucher Details";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Voucher details</h3>
+    <br />
+    @Html.Partial("_VoucherDetailsPartialPage", Model)
+</section>

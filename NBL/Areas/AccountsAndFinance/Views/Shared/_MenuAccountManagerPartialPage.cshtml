@@ -16,7 +16,6 @@
             <li>@Html.ActionLink(" Approve Discounts", "Discounts", "AccountManager", new { area = "AccountsAndFinance" }, new { @class = "fa fa-file", style = "font-weight: bolder;"})</li>
         </ul>
     </li>
-
     <li class="treeview">
         <a href="#">
             <i class="fa fa-book"></i> <span>Reports</span>
@@ -25,7 +24,6 @@
             </span>
         </a>
         <ul class="treeview-menu">
-
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-circle-o"></i> Sales
@@ -75,7 +73,6 @@
         </ul>
     </li>
 
-
     <li class="treeview">
         <a href="#">
             <i class="fa fa-eye"></i>
@@ -85,12 +82,10 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li>@Html.ActionLink("  Employees", "ViewEmployee", "Home", new { area = "AccountExecutive" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
-            <li>@Html.ActionLink(" Clients", "ViewClient", "Home", new { area = "AccountExecutive" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
-            <li>@Html.ActionLink(" Products", "ViewProduct", "Home", new { area = "AccountExecutive" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
-            <li>@Html.ActionLink(" Branch List", "ViewBranch", "Home", new { area = "AccountExecutive" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
+            <li>@Html.ActionLink("  Employees", "ViewEmployee", "Home", new { area = "AccountsAndFinance" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
+            <li>@Html.ActionLink(" Clients", "ViewClient", "Home", new { area = "AccountsAndFinance" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
+            <li>@Html.ActionLink(" Products", "ViewProduct", "Home", new { area = "AccountsAndFinance" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
+            <li>@Html.ActionLink(" Branch List", "ViewBranch", "Home", new { area = "AccountsAndFinance" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
         </ul>
     </li>
 </ul>
-
-

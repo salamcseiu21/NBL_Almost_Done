@@ -23,11 +23,12 @@ namespace NBL.Areas.CommonArea.Controllers
         private readonly UserManager _userManager = new UserManager();
         private readonly ICommonManager _iCommonManager;
         private readonly IProductManager _iProductManager;
-
-        public HomeController(ICommonManager iCommonManager, IProductManager iProductManager)
+        private readonly IBranchManager _iBranchManager;
+        public HomeController(ICommonManager iCommonManager, IProductManager iProductManager,IBranchManager iBranchManager)
         {
             _iCommonManager = iCommonManager;
             _iProductManager = iProductManager;
+            _iBranchManager = iBranchManager;
         }
         // GET: CommonArea/Home
         public ActionResult Home()
@@ -337,6 +338,12 @@ namespace NBL.Areas.CommonArea.Controllers
                 xmlDocument.Save(filePath);
             }
 
+        }
+
+        public PartialViewResult ViewBranch()
+        {
+            var branches = _iBranchManager.GetAllBranches().ToList();
+            return PartialView("_ViewBranchPartialPage", branches);
         }
 
         //------------------ Change password------------------------

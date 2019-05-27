@@ -34,7 +34,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                 CommandObj.Parameters.AddWithValue("@UserId", receivable.UserId);
                 CommandObj.Parameters.AddWithValue("@ReceivableNo", receivable.ReceivableNo);
                 CommandObj.Parameters.AddWithValue("@ReceivableRef", receivable.ReceivableRef);
-                CommandObj.Parameters.AddWithValue("@InvoiceRef", receivable.InvoiceRef);
+                CommandObj.Parameters.AddWithValue("@InvoiceRef", receivable.InvoiceRef?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@BranchId", receivable.BranchId);
                 CommandObj.Parameters.AddWithValue("@CompanyId", receivable.CompanyId);
                 CommandObj.Parameters.AddWithValue("@TransactionTypeId", receivable.TransactionTypeId);

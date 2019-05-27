@@ -302,6 +302,7 @@
     <Compile Include="Areas\AccountsAndFinance\BLL\AccountsManager.cs" />
     <Compile Include="Areas\AccountsAndFinance\BLL\Contracts\IAccountsManager.cs" />
     <Compile Include="Areas\AccountsAndFinance\Controllers\AccountController.cs" />
+    <Compile Include="Areas\AccountsAndFinance\Controllers\AccountManagerController.cs" />
     <Compile Include="Areas\AccountsAndFinance\Controllers\ChartOfAccountController.cs" />
     <Compile Include="Areas\AccountsAndFinance\Controllers\HomeController.cs" />
     <Compile Include="Areas\AccountsAndFinance\Controllers\VoucherController.cs" />
@@ -7740,7 +7741,6 @@
     <Content Include="Areas\AccountExecutive\Views\Account\ViewJournal.cshtml" />
     <Content Include="Areas\AccountExecutive\Views\Account\VoucherDetails.cshtml" />
     <Content Include="Areas\AccountExecutive\Views\Home\Home.cshtml" />
-    <Content Include="Areas\AccountExecutive\Views\Shared\_ActiveReceivablePartialPage.cshtml" />
     <Content Include="Areas\AccountExecutive\Views\Shared\_MenuPartialPage.cshtml" />
     <Content Include="Areas\AccountExecutive\Views\Shared\_VoucherDetailsPartialPage.cshtml" />
     <Content Include="Areas\AccountExecutive\Views\Shared\_VoucherPartialPage.cshtml" />
@@ -8074,6 +8074,16 @@
     <Content Include="Areas\SCM\Views\Order\GeneralRequisitionDetails.cshtml" />
     <Content Include="Areas\Sales\Views\Requisition\Delivery.cshtml" />
     <Content Include="Areas\Sales\Views\Shared\_ViewGeneralRequisitionDetailsPartialPage.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Shared\_ViewTempReceivalbePartialPage.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\AccountManager\ActiveReceivable.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\AccountManager\Discounts.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\AccountManager\JournalDetails.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\AccountManager\ReceivableDetails.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\AccountManager\Vats.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\AccountManager\ViewJournal.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\AccountManager\VoucherDetails.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Shared\_MenuAccountManagerPartialPage.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Shared\_ActiveReceivablePartialPage.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8221,6 +8231,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\AccountExecutive\Models\" />
+    <Folder Include="Areas\AccountsAndFinance\Files\Receivable\" />
     <Folder Include="Areas\AccountsAndFinance\Views\ChartOfAccount\" />
     <Folder Include="Areas\Administrative\Models\" />
     <Folder Include="Areas\Administrative\Views\Shared\" />
