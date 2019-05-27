@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Xml.Linq;
 using NBL.Areas.Accounts.Models;
 using NBL.Areas.Accounts.Models.ViewModels;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
@@ -27,9 +28,38 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         [HttpGet]
         public ActionResult CreditVoucher()
         {
-            Session["PurposeList"] = null;
+           
+            CreateCreditVoucherXmlFile();
+           
             return View();
         }
+
+        private void CreateCreditVoucherXmlFile()
+        {
+            var filePath = GetTempCreditVoucherXmlFilePath();
+            if (!System.IO.File.Exists(filePath))
+            {
+                XDocument xmlDocument = new XDocument(
+                    new XDeclaration("1.0", "utf-8", "yes"),
+                    new XElement("PurposeList"));
+                xmlDocument.Save(filePath);
+            }
+            else
+            {
+                RemoveAllFromTempXmlFile(GetTempCreditVoucherXmlFilePath());
+            }
+        }
+
+
+        private string GetTempCreditVoucherXmlFilePath()
+        {
+            var user = (ViewUser)Session["user"];
+            string fileName = "CreditVoucher_" + user.UserId + ".xml";
+            var filePath = Server.MapPath("~/Areas/AccountsAndFinance/Files/Vouchers/" + fileName);
+            return filePath;
+        }
+     
+
         [HttpPost]
         public ActionResult CreditVoucher(FormCollection collection)
         {
@@ -45,19 +75,20 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                     Remarks = collection["Remarks"],
                     DebitOrCredit = "Dr"
                 };
-                List<Purpose> purposeList = (List<Purpose>)Session["PurposeList"];
-               
-                if (purposeList != null)
-                {
-                    purposeList.Add(aPurpose);
-                }
-                else
-                {
-                    purposeList = new List<Purpose> { aPurpose };
-                    Session["PurposeList"] = purposeList;
-                    ViewBag.Payments = purposeList;
-                }
 
+                var filePath = GetTempCreditVoucherXmlFilePath();
+                var id = aPurpose.PurposeCode+ "_" + Guid.NewGuid();
+                var xmlDocument = XDocument.Load(filePath);
+                xmlDocument.Element("PurposeList")?.Add(
+                    new XElement("Purpose", new XAttribute("Id", id),
+                        new XElement("PurposeCode", aPurpose.PurposeCode),
+                        new XElement("Amounts", aPurpose.Amounts),
+                        new XElement("PurposeName", aPurpose.PurposeName),
+                        new XElement("Remarks",aPurpose.Remarks),
+                        new XElement("DebitOrCredit", aPurpose.DebitOrCredit)
+                       
+                    ));
+                xmlDocument.Save(filePath);
                 return View();
             }
             catch (Exception exception)
@@ -67,13 +98,26 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             }
         }
         [HttpPost]
-        public void RemoveCreditPurpose(FormCollection collection)
+        public void RemoveCreditPurpose(string id)
         {
-            List<Purpose> purposeList = (List<Purpose>)Session["PurposeList"];
-            string purposeCode = Convert.ToString(collection["purposeCodeToRemove"]);
-            var purpose = purposeList.Find(n => n.PurposeCode.Equals(purposeCode));
-            purposeList.Remove(purpose);
-            Session["PurposeList"] = purposeList;
+            var filePath = GetTempCreditVoucherXmlFilePath();
+            var xmlData = XDocument.Load(filePath);
+            xmlData.Root?.Elements().Where(n => n.Attribute("Id")?.Value == id).Remove();
+            xmlData.Save(filePath);
+        }
+        [HttpPost]
+        public void RemoveAllCreditPurpose(string id)
+        {
+            var filePath = GetTempCreditVoucherXmlFilePath();
+            var xmlData = XDocument.Load(filePath);
+            xmlData.Root?.Elements().Remove();
+            xmlData.Save(filePath);
+        }
+        private void RemoveAllFromTempXmlFile(string filePath)
+        {
+            var xmlData = XDocument.Load(filePath);
+            xmlData.Root?.Elements().Remove();
+            xmlData.Save(filePath);
         }
 
         [HttpPost]
@@ -83,7 +127,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             try
             {
 
-                List<Purpose> purposeList = (List<Purpose>)Session["PurposeList"];
+                List<Purpose> purposeList = GetCreditPurposesFromXmlFile().ToList();
                 Voucher voucher = new Voucher();
                 var transacitonTypeId = Convert.ToInt32(collection["TransactionTypeId"]);
                 var amount = purposeList.Sum(n=>n.Amounts);
@@ -110,9 +154,9 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 voucher.TransactionTypeId = transacitonTypeId;
                 voucher.AccountCode = accontCode;
                 int rowAffected = _iAccountsManager.SaveVoucher(voucher);
-                if (rowAffected > 0)
+                if(rowAffected > 0)
                 {
-                    Session["PurposeList"] = null;
+                    RemoveAllFromTempXmlFile(GetTempCreditVoucherXmlFilePath());
                     aModel.Message = "<p class='text-green'>Saved credit voucher successfully!</p>";
                 }
                 else
@@ -131,6 +175,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             return Json(aModel, JsonRequestBehavior.AllowGet);
         }
 
+     
         [HttpGet]
         public ActionResult DebitVoucher()
         {
@@ -569,17 +614,40 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         }
 
         //----------------Get temp credit Purpose Information ------------------
-        public JsonResult GetTempCreditPurposeInformation()
+        public PartialViewResult GetTempCreditPurposeInformation()
         {
-            if (Session["PurposeList"] != null)
-            {
-                IEnumerable<Purpose> purposeList = ((List<Purpose>)Session["PurposeList"]).ToList();
-                return Json(purposeList, JsonRequestBehavior.AllowGet);
-            }
-            return Json(new List<Payment>(), JsonRequestBehavior.AllowGet);
+
+            var purposes = GetCreditPurposesFromXmlFile();
+            return PartialView("_ViewTempCreditPurposePartialPage", purposes);
+          
         }
 
-     
+        private IEnumerable<Purpose> GetCreditPurposesFromXmlFile()
+        {
+            var filePath = GetTempCreditVoucherXmlFilePath();
+            List<Purpose> purposes = new List<Purpose>();
+            var xmlData = XDocument.Load(filePath).Element("PurposeList")?.Elements();
+            if (xmlData != null)
+            {
+                foreach (XElement element in xmlData)
+                {
+                    Purpose aPurpose = new Purpose();
+                    var elementFirstAttribute = element.FirstAttribute.Value;
+                    aPurpose.Serial = elementFirstAttribute;
+                    var elementValue = element.Elements();
+                    var xElements = elementValue as XElement[] ?? elementValue.ToArray();
+                    aPurpose.PurposeCode = xElements[0].Value;
+                    aPurpose.Amounts = Convert.ToDecimal(xElements[1].Value);
+                    aPurpose.PurposeName = xElements[2].Value;
+                    aPurpose.Remarks = xElements[3].Value;
+                    aPurpose.DebitOrCredit = xElements[4].Value;
+                 
+                    purposes.Add(aPurpose);
+                }
+            }
+            return purposes;
+        }
+
 
         //----------------Get temp debit Purpose Information ------------------
         public JsonResult GetTempDebitPurposeInformation()

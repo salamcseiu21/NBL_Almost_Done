@@ -295,9 +295,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\AccountExecutive\AccountExecutiveAreaRegistration.cs" />
-    <Compile Include="Areas\AccountExecutive\Controllers\AccountController.cs" />
-    <Compile Include="Areas\AccountExecutive\Controllers\HomeController.cs" />
     <Compile Include="Areas\AccountsAndFinance\AccountsAndFinanceAreaRegistration.cs" />
     <Compile Include="Areas\AccountsAndFinance\BLL\AccountsManager.cs" />
     <Compile Include="Areas\AccountsAndFinance\BLL\Contracts\IAccountsManager.cs" />
@@ -7733,18 +7730,6 @@
     <Content Include="ClientDocuments\be0ecc5c.xlsx" />
     <Content Include="ClientDocuments\c5bd6240.docx" />
     <Content Include="ClientDocuments\cccca809.pdf" />
-    <Content Include="Areas\AccountExecutive\Views\Account\ActiveReceivable.cshtml" />
-    <Content Include="Areas\AccountExecutive\Views\Account\Discounts.cshtml" />
-    <Content Include="Areas\AccountExecutive\Views\Account\JournalDetails.cshtml" />
-    <Content Include="Areas\AccountExecutive\Views\Account\ReceivableDetails.cshtml" />
-    <Content Include="Areas\AccountExecutive\Views\Account\Vats.cshtml" />
-    <Content Include="Areas\AccountExecutive\Views\Account\ViewJournal.cshtml" />
-    <Content Include="Areas\AccountExecutive\Views\Account\VoucherDetails.cshtml" />
-    <Content Include="Areas\AccountExecutive\Views\Home\Home.cshtml" />
-    <Content Include="Areas\AccountExecutive\Views\Shared\_MenuPartialPage.cshtml" />
-    <Content Include="Areas\AccountExecutive\Views\Shared\_VoucherDetailsPartialPage.cshtml" />
-    <Content Include="Areas\AccountExecutive\Views\Shared\_VoucherPartialPage.cshtml" />
-    <Content Include="Areas\AccountExecutive\Views\web.config" />
     <Content Include="Areas\AccountsAndFinance\Views\Account\Payable.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Account\Receivable.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Home\Home.cshtml" />
@@ -7991,7 +7976,6 @@
     <Content Include="Areas\Production\Views\ProductionHead\Home.cshtml" />
     <Content Include="Areas\Production\Views\ProductionHead\ViewQcVerifiedProduct.cshtml" />
     <Content Include="Areas\Sales\Views\Home\ClientLedger.cshtml" />
-    <Content Include="Areas\AccountExecutive\Views\Home\ClientLedger.cshtml" />
     <Content Include="Areas\Production\Views\Home\ProductionSummary.cshtml" />
     <Content Include="Areas\Corporate\Views\Home\ProductionSummary.cshtml" />
     <Content Include="Areas\Production\Views\Delivery\ViewScannedBarcodeList.cshtml" />
@@ -8084,6 +8068,7 @@
     <Content Include="Areas\AccountsAndFinance\Views\AccountManager\VoucherDetails.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Shared\_MenuAccountManagerPartialPage.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Shared\_ActiveReceivablePartialPage.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Shared\_ViewTempCreditPurposePartialPage.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8230,8 +8215,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\AccountExecutive\Models\" />
     <Folder Include="Areas\AccountsAndFinance\Files\Receivable\" />
+    <Folder Include="Areas\AccountsAndFinance\Files\Vouchers\" />
     <Folder Include="Areas\AccountsAndFinance\Views\ChartOfAccount\" />
     <Folder Include="Areas\Administrative\Models\" />
     <Folder Include="Areas\Administrative\Views\Shared\" />
