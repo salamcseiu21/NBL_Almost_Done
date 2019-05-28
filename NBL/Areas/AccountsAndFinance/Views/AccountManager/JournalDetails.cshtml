@@ -68,13 +68,13 @@
 
 
 
-        @using (Html.BeginForm("ApproveJournalVoucher", "Account", FormMethod.Post, new { id = "ApproveJournalVoucherForm" }))
+        @using (Html.BeginForm("ApproveJournalVoucher", "AccountManager", FormMethod.Post, new { id = "ApproveJournalVoucherForm" }))
         {
             <div class="form-horizontal">
                 <div class="row text-right" style="padding: 10px 15px">
                     <input type="hidden" value="@Model.JournalId" name="JournalVoucherIdToApprove" />
-                    @Html.ActionLink(" Back to List", "ViewJournal", "Account", new { area = "AccountExecutive" }, new { @class = "btn btn-info" })
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@Model.VoucherRef">Cancel</button>
+                    @Html.ActionLink(" Back to List", "ViewJournal", "AccountManager", new { area = "AccountsAndFinance" }, new { @class = "btn btn-info" })
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-id="@Model.JournalId" data-target="#exampleModal" data-ref="@Model.VoucherRef" data-whatever="Cancel">Cancel</button>
                     <input type="button" value="Approve" class="btn btn-primary" onclick="ApproveVoucher(this)" />
                 </div>
             </div>
@@ -89,7 +89,7 @@
                 </div>
                 <div class="modal-body">
 
-                    @using (Html.BeginForm("CancelJournalVoucher", "Account", FormMethod.Post))
+                    @using (Html.BeginForm("CancelJournalVoucher", "AccountManager", FormMethod.Post))
                     {
                         <div class="form-horizontal">
 
@@ -104,7 +104,8 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-                                    <input type="submit" class="btn btn-danger" value="Submit" />
+                                    <button type="submit" class="btn btn-info">Submit</button>
+                                  
                                 </div>
                             </div>
                         </div>
@@ -134,11 +135,13 @@
             function(event) {
                 var button = $(event.relatedTarget); // Button that triggered the modal
                 var recipient = button.data('whatever'); // Extract info from data-* attributes
+                var ref = button.data('ref'); // Extract info from data-* attributes
+                var id = button.data('id'); // Extract info from data-* attributes
                 // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-                var modal = $(this)
-                modal.find('.modal-title').text('New message to ' + recipient);
-                modal.find('.modal-body input').val(recipient);
+                var modal = $(this);
+                modal.find('.modal-title').text('Cancel Voucher Ref : ' + ref);
+                modal.find('.modal-body input').val(id);
             });
 
         function ApproveVoucher(btnclick) {

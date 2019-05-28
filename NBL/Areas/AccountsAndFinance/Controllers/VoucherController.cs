@@ -469,10 +469,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                     new XElement("PurposeList"));
                 xmlDocument.Save(filePath);
             }
-            else
-            {
-                RemoveAllFromTempXmlFile(GetTempJournalVoucherXmlFilePath());
-            }
+            
         }
 
         private string GetTempJournalVoucherXmlFilePath()
@@ -570,14 +567,15 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                     SysDateTime = DateTime.Now,
                     BranchId = branchId,
                     CompanyId = companyId,
-                    VoucherByUserId = anUser.UserId
+                    VoucherByUserId = anUser.UserId,
+                   
                 };
-                List<JournalVoucher> journals = (List<JournalVoucher>)Session["Journals"];
+                List<JournalVoucher> journals = GetJournalPurposesFromXmlFile().ToList();
                 //---------------insert code should be write here---
                 int rowAffected = _iAccountsManager.SaveJournalVoucher(aJournal,journals);
                 if (rowAffected > 0)
                 {
-                    Session["Journals"] = null;
+                    RemoveAllJournalPurpose();
                     aModel.Message = "<p class='text-green'>Saved Journal Information successfully!</p>";
                 }
                 else

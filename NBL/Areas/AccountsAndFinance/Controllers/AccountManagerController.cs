@@ -200,7 +200,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             var anUser = (ViewUser)Session["user"];
             var voucherDetails = _iAccountsManager.GetVoucherDetailsByVoucherId(voucherId).ToList();
             bool result = _iAccountsManager.ApproveVoucher(aVoucher, voucherDetails, anUser.UserId);
-            return result ? RedirectToAction("Vouchers") : RedirectToAction("VoucherDetails", "Account", aVoucher);
+            return result ? RedirectToAction("Vouchers") : RedirectToAction("VoucherDetails", "AccountManager", aVoucher);
         }
 
 
@@ -243,7 +243,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             var anUser = (ViewUser)Session["user"];
             var voucherDetails = _iAccountsManager.GetJournalVoucherDetailsById(voucherId).ToList();
             bool result = _iAccountsManager.ApproveJournalVoucher(aVoucher, voucherDetails, anUser.UserId);
-            return result ? RedirectToAction("ViewJournal") : RedirectToAction("JournalDetails", "Account", aVoucher);
+            return result ? RedirectToAction("ViewJournal") : RedirectToAction("JournalDetails", "AccountManager", aVoucher);
         }
 
         public ActionResult Vats()

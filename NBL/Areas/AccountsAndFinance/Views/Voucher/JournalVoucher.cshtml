@@ -109,70 +109,66 @@
             $("#ReceiveDate").datepicker({ dateFormat: 'dd-MM-yy' });
             $("#Date").datepicker({ dateFormat: 'dd-MM-yy' });
 
+
+            @*Sub Sub Sub Account list Auto Complete*@
+            $("#PurposeName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: RootUrl + 'Common/SubSubSubAccountNameAutoComplete/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function (item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#SubSubSubAccountId").val(i.item.val);
+                    //alert(i.item.val);
+
+                    $("#PurposeCode").val('');
+                    var sssAId = i.item.val;
+                    var json = { subSubSubAccountId: sssAId };
+
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("GetSubSubSubAccountById", "Common", new { area = "" })',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(json),
+                        success: function (data) {
+
+                            var code = data.SubSubSubAccountCode;
+                            $("#PurposeCode").val(code);
+                        }
+                    });
+                },
+                minLength: 1
+            });
         });
 
     </script>
 
-    @*Sub Sub Sub Account list Auto Complete*@
-    <script type="text/javascript">
-    $(function () {
-        $("#PurposeName").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: RootUrl + 'Common/SubSubSubAccountNameAutoComplete/',
-                    data: "{ 'prefix': '" + request.term + "'}",
-                    dataType: "json",
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-                        response($.map(data,
-                            function (item) {
-                                return item;
-                            }));
-                    },
-                    error: function (response) {
-                        alert(response.responseText);
-                    },
-                    failure: function (response) {
-                        alert(response.responseText);
-                    }
-                });
-            },
-            select: function (e, i) {
-                $("#SubSubSubAccountId").val(i.item.val);
-                //alert(i.item.val);
-
-                $("#PurposeCode").val('');
-                var sssAId = i.item.val;
-                var json = { subSubSubAccountId: sssAId };
-
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("GetSubSubSubAccountById", "Common", new { area = "" })',
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(json),
-                    success: function (data) {
-
-                        var code = data.SubSubSubAccountCode;
-                        $("#PurposeCode").val(code);
-                    }
-                });
-            },
-            minLength: 1
-        });
-    });
-    </script>
-
-
+   
 
     @*Add Journal info to lsit (Ajax form Submit)*@
     <script>
     function AddJournalInfoToList(btnClicked) {
 
-        if ($("#PurposeName").val() == "") {
+        if ($("#PurposeName").val() === "") {
             alert("Please enter purpose name..");
         }
-        else if ($("#Amount").val() == "") {
+        else if ($("#Amount").val() === "") {
             alert("Please Enter amount");
         }
         else {
@@ -195,33 +191,6 @@
 
     }
 
-   
-
-
-    function formatDate(chequedate) {
-
-        var month = new Array();
-        month[0] = "January";
-        month[1] = "February";
-        month[2] = "March";
-        month[3] = "April";
-        month[4] = "May";
-        month[5] = "June";
-        month[6] = "July";
-        month[7] = "August";
-        month[8] = "September";
-        month[9] = "October";
-        month[10] = "November";
-        month[11] = "December";
-
-        var dateString = chequedate.substr(6);
-        var currentTime = new Date(parseInt(dateString));
-        var mm = currentTime.getMonth();
-        var day = currentTime.getDate();
-        var year = currentTime.getFullYear();
-        var date = day + "-" + month[mm] + "-" + year;
-        return date// Function returns the date
-    }
 
     function RemoveJournalInfo(btnClicked) {
 
@@ -255,7 +224,7 @@
     function SaveJournalVoucher(btnClicked) {
 
         var summationDrCr = parseInt($("#SummationOfDebitAndCredit").val());
-          if (summationDrCr!=0) {
+          if (summationDrCr !==0) {
             alert("Debit and Caredit amount not same!!");
         }
         else {
@@ -297,7 +266,6 @@
 
 
         function ViewTempJournalInformation() {
-            $("#JournalInfo").html("");
             //alert("Hi");
 
             $.ajax({
@@ -305,13 +273,8 @@
                 url: '@Url.Action("GetTempJournalInformation", "Voucher")',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    var summation = 0;
-                    for (var i = 0; i < data.length; i++) {
-                        summation = summation + data[i].Amounts;
-
-                    }
                     $("#divTempjournalVoucherList").html(data);
-                    $("#SummationOfDebitAndCredit").val(summation.toFixed(0));
+                   
                 }
             });
         }
@@ -329,13 +292,7 @@
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(json),
                     success: function (data) {
-                        ViewTempDebitPurposeInformation();
-                        for (var i = productIdlist.length - 1; i >= 0; i--) {
-                            if (productIdlist[i] === btnClicked.id) {
-                                productIdlist.splice(i, 1);
-                            }
-                        }
-
+                        ViewTempJournalInformation();
                     }
                 });
             }

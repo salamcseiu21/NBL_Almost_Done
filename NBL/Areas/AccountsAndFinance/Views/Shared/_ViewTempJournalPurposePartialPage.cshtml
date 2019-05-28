@@ -7,7 +7,7 @@
 }
 
 <div class="table-responsive">
-    <table id="tbl_requsition_Product" class="table table-bordered" style="border: 1px solid">
+    <table id="tbl_journals" class="table table-bordered" style="border: 1px solid">
         <thead>
 
             <tr>
@@ -16,26 +16,18 @@
                     <div class="form-horizontal">
                         <div class="row">
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="TotalQty" class="control-label col-md-3"> Amount :</label>
-                                    <div class="col-md-9">
-                                        <input type="number" id="TotalQty" name="TotalQty" class="form-control text-right" value="@Model.Sum(n=>n.Amounts)" readonly="readonly" />
-
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-md-4">
+                           
+                            <div class="col-md-6">
 
                                 <div class="form-group">
-                                    <label for="RequisitionDate" class="control-label col-md-3">Date</label>
+                                    <label for="Date" class="control-label col-md-3">Date</label>
                                     <div class="col-md-9">
-                                        <input type="text" id="RequisitionDate" name="RequisitionDate" value="@tdate" class="form-control" />
+                                        <input type="text" id="Date" name="Date" value="@tdate" class="form-control" />
+                                        <input  id="SummationOfDebitAndCredit" type="hidden" value="@Model.Sum(n=>n.Amounts)"/>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
 
 
 
@@ -94,17 +86,9 @@
     </table>
 </div>
 <script>
-    $("#tbl_requsition_Product").DataTable();
+    $("#tbl_journals").DataTable();
     $(document).ready(function () {
-        $("#RequisitionDate").datepicker({ dateFormat: 'dd-MM-yy' });
-
-        var inputs = document.getElementsByTagName('input');
-        for (var i = 0; i < inputs.length; i++) {
-            if (inputs[i].type === "text") {
-                inputs[i].onkeyup = doCheck;
-                inputs[i].onblur = doCheck;
-            }
-        }
+        $("#Date").datepicker({ dateFormat: 'dd-MM-yy' });
     });
 
 </script>

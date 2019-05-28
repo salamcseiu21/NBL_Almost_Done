@@ -48,6 +48,11 @@ namespace NBL.Controllers
         [HttpPost]
         public ActionResult LogIn(FormCollection collection, string ReturnUrl)
         {
+
+
+
+         
+
             //int roleId = Convert.ToInt32(collection["RoleId"]);
             User user = new User();
             string userName = collection["userName"];
@@ -86,7 +91,7 @@ namespace NBL.Controllers
                     anUser.EmployeeImage = "Images/login_image.png";
                     anUser.EmployeeName = userName;
                 }
-                anUser.IpAddress = GetLocalIPAddress();
+                anUser.IpAddress = GetRealIpAddress();
                 anUser.MacAddress = GetMacAddress().ToString();
                 anUser.LogInDateTime = DateTime.Now;
                
@@ -228,6 +233,18 @@ namespace NBL.Controllers
                 }
             }
             throw new Exception("No network adapters with an IPv4 address in the system!");
+        }
+
+
+        public string GetRealIpAddress()
+        {
+            string strIpAddress;
+            strIpAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (strIpAddress == null)
+            {
+                strIpAddress = Request.ServerVariables["REMOTE_ADDR"];
+            }
+            return strIpAddress;
         }
     }
 }

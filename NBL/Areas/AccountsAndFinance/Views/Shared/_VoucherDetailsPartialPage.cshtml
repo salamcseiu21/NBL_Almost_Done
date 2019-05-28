@@ -1,6 +1,7 @@
 ﻿
 @using NBL.BLL
 @using NBL.DAL
+@using NBL.Models.ViewModels
 @model NBL.Areas.Accounts.Models.ViewModels.ViewVoucherModel
 @{
 
@@ -9,6 +10,7 @@
     UserManager userManager = new UserManager();
     var user= userManager.GetUserInformationByUserId(voucher.VoucherByUserId);
     CommonGateway commonGateway=new CommonGateway();
+    var logInUser = (ViewUser) Session["user"];
 }
 <div style="border: 1px dotted; padding: 10px; font-size: 14px">
     <div class="row">
@@ -62,18 +64,35 @@
     </table>
     
 
+    
+    @if (logInUser.Roles.Equals("AccountManager"))
+    {
+        using (Html.BeginForm("Approve", "AccountManager", FormMethod.Post, new {id = "ApproveVoucherForm"}))
+        {
+            <div class="form-horizontal">
+                <div class="row text-right" style="padding: 10px 15px">
+                    <input type="hidden" value="@voucher.VoucherId" name="VoucherIdToApprove"/>
+                    @Html.ActionLink(" Back to List", "Vouchers", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "btn btn-info"})
 
-
-    @using (Html.BeginForm("Approve", "Voucher", FormMethod.Post,new {id="ApproveVoucherForm"}))
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@voucher.VoucherRef">Cancel</button>
+                    <input type="button" value="Approve" class="btn btn-primary" onclick="ApproveVoucher(this)"/>
+                </div>
+            </div>
+        }
+    }
+    else
     {
         <div class="form-horizontal">
             <div class="row text-right" style="padding: 10px 15px">
-                <input type="hidden" value="@voucher.VoucherId" name="VoucherIdToApprove"/>
-                @Html.ActionLink(" Back to List", "Vouchers", "Voucher", new {area = "Accounts"}, new {@class = "btn btn-info"})
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@voucher.VoucherRef">Cancel</button>
+               
+                @Html.ActionLink(" Back to List", "Vouchers", "Voucher", new {area = "AccountsAndFinance"}, new {@class = "btn btn-info"})
+
+              
             </div>
         </div>
     }
+
+
 </div>
 @*Cancel modal*@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -84,7 +103,7 @@
             </div>
             <div class="modal-body">
                 
-                @using (Html.BeginForm("Cancel","Voucher",FormMethod.Post))
+                @using (Html.BeginForm("Cancel","AccountManager",FormMethod.Post))
                 {
                     <div class="form-horizontal">
                         
@@ -129,9 +148,17 @@
             var recipient = button.data('whatever'); // Extract info from data-* attributes
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-            var modal = $(this)
+            var modal = $(this);
             modal.find('.modal-title').text('New message to ' + recipient);
             modal.find('.modal-body input').val(recipient);
         });
+    function ApproveVoucher(btnclick) {
+        if (confirm("Are you sure to Approve this Voucher?")) {
 
+            $("#ApproveVoucherForm").submit();
+
+        } else {
+            return false;// if it's a link to prevent post
+        }
+    }
 </script>

@@ -46,10 +46,10 @@
                     <td class="text-center">
                         @if (item.Status.Equals(0))
                         {
-                            @Html.ActionLink(" Edit", "EditJournalVoucher", "Voucher", new {id = item.JournalId, area = "Accounts"}, new {@class = "fa fa-edit"})<span>|</span>
-                            @Html.ActionLink(" Details", "JournalDetails", "Voucher", new {id = item.JournalId, area = "Accounts"}, new {@class = "fa fa-eye"})<span>|</span>
+                            @Html.ActionLink(" Edit", "EditJournalVoucher", "Voucher", new {id = item.JournalId, area = "AccountsAndFinance"}, new {@class = "fa fa-edit"})<span>|</span>
+                            @Html.ActionLink(" Details", "JournalDetails", "Voucher", new {id = item.JournalId, area = "AccountsAndFinance"}, new {@class = "fa fa-eye"})<span>|</span>
                         }
-                        @Html.ActionLink(" Preview & Print", "JournalPreview", "Voucher", new {area = "Accounts", id = item.JournalId}, new {target = "_blank", @class = "fa fa-eye"})
+                        @Html.ActionLink(" Preview & Print", "JournalPreview", "Voucher", new {area = "AccountsAndFinance", id = item.JournalId}, new {target = "_blank", @class = "fa fa-eye"})
                     </td>
                 </tr>
             }

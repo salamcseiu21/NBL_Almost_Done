@@ -31,7 +31,7 @@
                     <td class="text-center">@item.VoucherDate.ToString("dd-MMM-yyyy")</td>
                     <td class="text-right">@item.Amounts</td>
                     <td class="text-center">
-                        @Html.ActionLink(" Details", "JournalDetails", "Account", new { id = item.JournalId, area = "AccountExecutive" }, new { @class = "fa fa-eye" })
+                        @Html.ActionLink(" Details", "JournalDetails", "AccountManager", new { id = item.JournalId, area = "AccountsAndFinance" }, new { @class = "fa fa-eye" })
                       
                     </td>
                 </tr>
