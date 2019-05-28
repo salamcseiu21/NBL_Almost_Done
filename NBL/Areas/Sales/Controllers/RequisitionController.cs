@@ -12,6 +12,7 @@ using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Invoices;
 using NBL.Models.Enums;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Requisitions;
@@ -47,9 +48,18 @@ namespace NBL.Areas.Sales.Controllers
         // GET: Sales/Requisition
         public ActionResult GeneralRequisitionList()
         {
-            var branchId = Convert.ToInt32(Session["BranchId"]);
-            var requisitions=_iProductManager.GetAllGeneralRequisitions().ToList().FindAll(n=>n.DistributionPointId==branchId).FindAll(n=>n.Status.Equals(1));
-            return PartialView("_ViewGeneralRequisitionList",requisitions);
+            try
+            {
+                var branchId = Convert.ToInt32(Session["BranchId"]);
+                var requisitions = _iProductManager.GetAllGeneralRequisitions().ToList().FindAll(n => n.DistributionPointId == branchId).FindAll(n => n.Status.Equals(1));
+                return PartialView("_ViewGeneralRequisitionList", requisitions);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult Delivery(long id)
@@ -71,10 +81,10 @@ namespace NBL.Areas.Sales.Controllers
                 };
                 return View(model);
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                Console.WriteLine(e);
-                throw;
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
         }
 
@@ -157,8 +167,8 @@ namespace NBL.Areas.Sales.Controllers
             catch (Exception exception)
             {
                 TempData["Error"] = exception.Message;
-                //return View("Delivery");
-                throw new Exception();
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
         }
         [HttpPost]
@@ -194,19 +204,7 @@ namespace NBL.Areas.Sales.Controllers
                 //------------Get invoced products-------------
                 var requisitionsById = _iProductManager.GetGeneralRequisitionDetailsById(requisitionId);
                 List<InvoiceDetails> list = new List<InvoiceDetails>();
-                //var deliveredProducts = _iInvoiceManager.GetDeliveredProductsByInvoiceRef(invoice.InvoiceRef); 
-
-                //foreach (InvoiceDetails invoiceDetailse in invoicedOrders)
-                //{
-                //    var invoiceQty = invoiceDetailse.Quantity;
-                //    var deliveredQty = deliveredProducts.ToList().FindAll(n => n.ProductId == invoiceDetailse.ProductId).Count;
-                //    if (invoiceQty != deliveredQty)
-                //    {
-                //        invoiceDetailse.Quantity = invoiceQty - deliveredQty;
-                //        list.Add(invoiceDetailse);
-                //    }
-
-                //}
+                
                 bool isValied = requisitionsById.Select(n => n.ProductId).Contains(productId);
                 bool isScannComplete = requisitionsById.ToList().FindAll(n => n.ProductId == productId).Sum(n => n.Quantity) == barcodeList.FindAll(n => n.ProductId == productId).Count;
                 if (isScannedBefore)
@@ -220,11 +218,7 @@ namespace NBL.Areas.Sales.Controllers
                     // return Json(model, JsonRequestBehavior.AllowGet);
                 }
 
-                //else if (oldestProducts.Count > 0)
-                //{
-                //    model.Message = "<p style='color:red'>There are total " + oldestProducts.Count + " Old product of this type .Please deliver those first .. </p>";
-                //   // return Json(model, JsonRequestBehavior.AllowGet);
-                //}
+               
                 else if (isSold)
                 {
                     model.Message = "<p style='color:green'> This product Scanned for one of previous invoice... </p>";
@@ -237,12 +231,14 @@ namespace NBL.Areas.Sales.Controllers
             }
             catch (FormatException exception)
             {
+                Log.WriteErrorLog(exception);
                 model.Message = "<p style='color:red'>" + exception.GetType() + "</p>";
                 // return Json(model, JsonRequestBehavior.AllowGet);
             }
             catch (Exception exception)
             {
-
+                Log.WriteErrorLog(exception);
+              
                 model.Message = "<p style='color:red'>" + exception.Message + "</p>";
                 //return Json(model, JsonRequestBehavior.AllowGet);
             }
@@ -251,40 +247,76 @@ namespace NBL.Areas.Sales.Controllers
 
         public PartialViewResult ViewScannedBarcodeList(long id)
         {
-            List<ScannedProduct> products = new List<ScannedProduct>();
-            string fileName = "Scanned_GR_Product_List_For_" + id;
-            var filePath = Server.MapPath("~/Files/" + fileName);
-            products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
-            return PartialView("_ViewScannedBarCodePartialPage", products);
+            try
+            {
+                List<ScannedProduct> products = new List<ScannedProduct>();
+                string fileName = "Scanned_GR_Product_List_For_" + id;
+                var filePath = Server.MapPath("~/Files/" + fileName);
+                products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                return PartialView("_ViewScannedBarCodePartialPage", products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public ActionResult LoadDeliverableProduct(long requisitionId)
         {
-            var details=_iProductManager.GetGeneralRequisitionDetailsById(requisitionId);
-            return PartialView("_ViewGeneralRequisitionDetailsPartialPage",details);
+            try
+            {
+                var details = _iProductManager.GetGeneralRequisitionDetailsById(requisitionId);
+                return PartialView("_ViewGeneralRequisitionDetailsPartialPage", details);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public PartialViewResult LoadScannedProduct(long requisitionId)
         {
-            // var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
-            string fileName = "Scanned_GR_Product_List_For_" + requisitionId;
-            var filePath = Server.MapPath("~/Files/" + fileName);
-            List<ScannedProduct> list = new List<ScannedProduct>();
-            if (!System.IO.File.Exists(filePath))
+
+            try
             {
-                //if the file does not exists create the file
-                System.IO.File.Create(filePath).Close();
+                string fileName = "Scanned_GR_Product_List_For_" + requisitionId;
+                var filePath = Server.MapPath("~/Files/" + fileName);
+                List<ScannedProduct> list = new List<ScannedProduct>();
+                if (!System.IO.File.Exists(filePath))
+                {
+                    //if the file does not exists create the file
+                    System.IO.File.Create(filePath).Close();
+                }
+                else
+                {
+                    list = _iProductManager.ScannedProducts(filePath);
+                }
+                return PartialView("_ViewLoadScannedProductPartialPage", list);
             }
-            else
+            catch (Exception exception)
             {
-                list = _iProductManager.ScannedProducts(filePath);
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
-            return PartialView("_ViewLoadScannedProductPartialPage", list);
         }
         public ActionResult ViewGeneralRequisitionDetails(long reqisitionId)
         {
-            var requisition = _iProductManager.GetGeneralRequisitionById(reqisitionId);
-            return PartialView("_ModalRequisitionDeliveryPartialPage", requisition);
+            try
+            {
+                var requisition = _iProductManager.GetGeneralRequisitionById(reqisitionId);
+                return PartialView("_ModalRequisitionDeliveryPartialPage", requisition);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
     }

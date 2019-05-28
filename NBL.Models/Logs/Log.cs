@@ -80,5 +80,19 @@ namespace NBL.Models.Logs
                 ));
             xmlDocument.Save(filePath);
         }
+
+        public static void WriteErrorLog(Exception model)
+        {
+
+            var filePath = HttpContext.Current.Server.MapPath("~/Logs/" + "Error_log_Xml_file.xml");
+            var xmlDocument = XDocument.Load(filePath);
+            xmlDocument.Element("Errors")?.Add(
+                new XElement("Error", new XAttribute("LogId", DateTime.Now.ToString("yy-MMM-dd") + Guid.NewGuid()),
+                    new XElement("Heading", model.GetType().ToString()),
+                    new XElement("LogMessage", model.StackTrace),
+                    new XElement("LogDateTime", DateTime.Now)
+                ));
+            xmlDocument.Save(filePath);
+        }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.Ajax.Utilities;
 using NBL.BLL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Deliveries;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Replaces;
@@ -38,14 +39,23 @@ namespace NBL.Areas.Sales.Controllers
        
         public ActionResult Delivery(long id)
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var stock = _iInventoryManager.GetStockProductInBranchByBranchAndCompanyId(branchId, companyId);
-            Session["Branch_stock"] = stock;
-            ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(id);
-            List<ViewReplaceDetailsModel> products = _iProductReplaceManager.GetReplaceProductListById(id).ToList();
-            model.Products = products;
-            return View(model);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var stock = _iInventoryManager.GetStockProductInBranchByBranchAndCompanyId(branchId, companyId);
+                Session["Branch_stock"] = stock;
+                ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(id);
+                List<ViewReplaceDetailsModel> products = _iProductReplaceManager.GetReplaceProductListById(id).ToList();
+                model.Products = products;
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public ActionResult Delivery(FormCollection collection)
@@ -108,18 +118,27 @@ namespace NBL.Areas.Sales.Controllers
             catch (Exception exception)
             {
                 TempData["Error"] = exception.Message;
-                //return View("Delivery");
-                throw new Exception();
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
         }
 
         public ActionResult ViewAll()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            //-------------Status=0 means pending.-------------
-            var replace = _iProductReplaceManager.GetAllPendingReplaceListByBranchAndCompany(branchId, companyId).ToList(); 
-            return View(replace);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                //-------------Status=0 means pending.-------------
+                var replace = _iProductReplaceManager.GetAllPendingReplaceListByBranchAndCompany(branchId, companyId).ToList();
+                return View(replace);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         [HttpPost]
@@ -204,7 +223,7 @@ namespace NBL.Areas.Sales.Controllers
             }
             catch (Exception exception)
             {
-
+                Log.WriteErrorLog(exception);
                 model.Message = "<p style='color:red'>" + exception.Message + "</p>";
                 //return Json(model, JsonRequestBehavior.AllowGet);
             }
@@ -214,19 +233,28 @@ namespace NBL.Areas.Sales.Controllers
         [HttpPost]
         public PartialViewResult LoadScannedProduct(long replaceId) 
         {
-            // var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
-            var filePath = GetTempReplaceProductXmlFilePath(replaceId);
-            List<ScannedProduct> list = new List<ScannedProduct>();
-            if (!System.IO.File.Exists(filePath))
+
+            try
             {
-                //if the file does not exists create the file
-                System.IO.File.Create(filePath).Close();
+                var filePath = GetTempReplaceProductXmlFilePath(replaceId);
+                List<ScannedProduct> list = new List<ScannedProduct>();
+                if (!System.IO.File.Exists(filePath))
+                {
+                    //if the file does not exists create the file
+                    System.IO.File.Create(filePath).Close();
+                }
+                else
+                {
+                    list = _iProductManager.ScannedProducts(filePath);
+                }
+                return PartialView("_ViewLoadScannedProductPartialPage", list);
             }
-            else
+            catch (Exception exception)
             {
-                list = _iProductManager.ScannedProducts(filePath);
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
-            return PartialView("_ViewLoadScannedProductPartialPage", list);
         }
 
 
@@ -241,8 +269,17 @@ namespace NBL.Areas.Sales.Controllers
 
         public PartialViewResult ViewReplaceDetails(long replaceId)
         {
-            var replace= _iProductReplaceManager.GetReplaceById(replaceId);
-            return PartialView("_ModalReplaceDeliveryPartialPage",replace);
+            try
+            {
+                var replace = _iProductReplaceManager.GetReplaceById(replaceId);
+                return PartialView("_ModalReplaceDeliveryPartialPage", replace);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
     }
 }

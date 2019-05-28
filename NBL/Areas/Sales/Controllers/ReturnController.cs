@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using NBL.BLL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Returns;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Returns;
@@ -33,46 +34,82 @@ namespace NBL.Areas.Sales.Controllers
         [Authorize(Roles = "SalesExecutive")]
         public ActionResult Entry()
         {
-            CreateTempReturnProductXmlFile();
-            ViewBag.DeliveryId = new SelectList(new List<ViewDeliveredOrderModel>(), "DeliveryId", "DeliveryRef");
-            return View();
+            try
+            {
+                CreateTempReturnProductXmlFile();
+                ViewBag.DeliveryId = new SelectList(new List<ViewDeliveredOrderModel>(), "DeliveryId", "DeliveryRef");
+                return View();
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public ActionResult Entry(ViewEntryReturnModel model) 
         {
-            ViewBag.DeliveryId = new SelectList(new List<ViewDeliveredOrderModel>(), "DeliveryId", "DeliveryRef");
-            return View();
+            try
+            {
+                ViewBag.DeliveryId = new SelectList(new List<ViewDeliveredOrderModel>(), "DeliveryId", "DeliveryRef");
+                return View();
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [Authorize(Roles = "User")]
         public ActionResult ConfirmReturnEntry()
         {
-            var products= GetProductFromXmlFile(GetTempReturnProductsXmlFilePath());
-            return View(products);
+            try
+            {
+                var products = GetProductFromXmlFile(GetTempReturnProductsXmlFilePath());
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public ActionResult ConfirmReturnEntry(FormCollection collection)
         {
-            var products = GetProductFromXmlFile(GetTempReturnProductsXmlFilePath());
-            var user = (ViewUser)Session["user"];
-            var branchId = Convert.ToInt32(Session["BranchId"]);
-            var companyId= Convert.ToInt32(Session["CompanyId"]);
-            ReturnModel model = new ReturnModel
+            try
             {
-                ReturnIssueByUserId = user.UserId,
-                Products = products.ToList(),
-                BranchId = branchId,
-                CompanyId = companyId,
-                Remarks = collection["Remarks"]
-            };
+                var products = GetProductFromXmlFile(GetTempReturnProductsXmlFilePath());
+                var user = (ViewUser)Session["user"];
+                var branchId = Convert.ToInt32(Session["BranchId"]);
+                var companyId = Convert.ToInt32(Session["CompanyId"]);
+                ReturnModel model = new ReturnModel
+                {
+                    ReturnIssueByUserId = user.UserId,
+                    Products = products.ToList(),
+                    BranchId = branchId,
+                    CompanyId = companyId,
+                    Remarks = collection["Remarks"]
+                };
 
-            var result = _iProductReturnManager.SaveReturnProduct(model);
-            if (result)
-            {
-                RemoveAll();
-                return RedirectToAction("Entry");
+                var result = _iProductReturnManager.SaveReturnProduct(model);
+                if (result)
+                {
+                    RemoveAll();
+                    return RedirectToAction("Entry");
+                }
+                ViewBag.Result = "Failed to save";
+                return View();
             }
-            ViewBag.Result = "Failed to save";
-            return View();
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [Authorize(Roles = "SalesExecutive")]
         public JsonResult AddReturnProductToXmalFile(FormCollection collection)
@@ -123,6 +160,8 @@ namespace NBL.Areas.Sales.Controllers
             }
             catch (Exception e)
             {
+                Log.WriteErrorLog(e);
+             
                 model.Message = "<p style='color:red'> Failed to add" + e.Message + "</p>";
                 return Json(model, JsonRequestBehavior.AllowGet);
             }
@@ -132,8 +171,17 @@ namespace NBL.Areas.Sales.Controllers
 
         public PartialViewResult DeliveryDetailsByDeliveryId(long deliveryId)
         {
-            var models = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(deliveryId);
-            return PartialView("_ViewDeliveryDetailsByIdPartialPage", models);
+            try
+            {
+                var models = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(deliveryId);
+                return PartialView("_ViewDeliveryDetailsByIdPartialPage", models);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
 
         }
@@ -230,13 +278,31 @@ namespace NBL.Areas.Sales.Controllers
 
         public ActionResult ReturnDetails(long salesReturnId)
         {
-            List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList(); 
-            return View(models);
+            try
+            {
+                List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+                return View(models);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public ActionResult ViewAll()
         {
-            var products = _iProductReturnManager.GetAll().ToList();
-            return View(products);
+            try
+            {
+                var products = _iProductReturnManager.GetAll().ToList();
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
 
@@ -245,24 +311,42 @@ namespace NBL.Areas.Sales.Controllers
         [Authorize(Roles = "Nsm")]
         public ActionResult ApproveByNsm(long salesReturnId)
         {
-            ViewBag.SalesReturnId = salesReturnId;
-            List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
-            return View(models);
+            try
+            {
+                ViewBag.SalesReturnId = salesReturnId;
+                List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+                return View(models);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public ActionResult ApproveByNsm(FormCollection collection)
         {
-            var user = (ViewUser)Session["user"];
-            long salesReturnId = Convert.ToInt64(collection["salesReturnId"]);
-            var remarks = collection["Remarks"];
-            bool result = _iProductReturnManager.ApproveReturnByNsm(remarks, salesReturnId, user.UserId);
-            if (result)
+            try
             {
-                return RedirectToAction("ViewAll");
+                var user = (ViewUser)Session["user"];
+                long salesReturnId = Convert.ToInt64(collection["salesReturnId"]);
+                var remarks = collection["Remarks"];
+                bool result = _iProductReturnManager.ApproveReturnByNsm(remarks, salesReturnId, user.UserId);
+                if (result)
+                {
+                    return RedirectToAction("ViewAll");
+                }
+
+                List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+                return View(models);
             }
-           
-            List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
-            return View(models);
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
     }
 }

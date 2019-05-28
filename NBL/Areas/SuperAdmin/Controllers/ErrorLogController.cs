@@ -66,12 +66,8 @@ namespace NBL.Areas.SuperAdmin.Controllers
             }
             catch(Exception exception)
             {
-                ViewWriteLogModel eLogModel=new ViewWriteLogModel
-                {
-                    Heading =exception.GetType().ToString(),
-                    LogMessage = exception.StackTrace
-                };
-                Log.WriteErrorLog(eLogModel);
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
             return RedirectToAction("ErrorList");
         }

@@ -13,6 +13,7 @@ using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
 using NBL.Models.EntityModels.Identities;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Summaries;
 
@@ -47,60 +48,96 @@ namespace NBL.Areas.Sales.Controllers
       
         public ActionResult Home()
         {
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var branches = _iBranchManager.GetAllBranches();
-            ViewTotalOrder totalOrder = _iReportManager.GetTotalOrdersByBranchCompanyAndYear(branchId,companyId, DateTime.Now.Year);
-            var accountSummary = _iAccountsManager.GetAccountSummaryofCurrentMonthByCompanyId(companyId);
-            var products = _iInventoryManager.GetStockProductByCompanyId(companyId);
-            var orders = _iOrderManager.GetOrdersByCompanyId(companyId).ToList();
-            var topClients = _iReportManager.GetTopClientsByYear(DateTime.Now.Year).ToList();
-            var clients = _iClientManager.GetAllClientDetails();
-            var topProducts = _iReportManager.GetPopularBatteriesByYear(DateTime.Now.Year).ToList();
-            var employees = _iEmployeeManager.GetAllEmployeeWithFullInfo().ToList();
-            SummaryModel summary = new SummaryModel
+            try
             {
-                Branches = branches.ToList(),
-                CompanyId = companyId,
-                TotalOrder = totalOrder,
-                TopClients = topClients,
-                Orders = orders,
-                TopProducts = topProducts,
-                Clients = clients,
-                Employees = employees,
-                Products = products,
-                AccountSummary = accountSummary
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var branches = _iBranchManager.GetAllBranches();
+                ViewTotalOrder totalOrder = _iReportManager.GetTotalOrdersByBranchCompanyAndYear(branchId, companyId, DateTime.Now.Year);
+                var accountSummary = _iAccountsManager.GetAccountSummaryofCurrentMonthByCompanyId(companyId);
+                var products = _iInventoryManager.GetStockProductByCompanyId(companyId);
+                var orders = _iOrderManager.GetOrdersByCompanyId(companyId).ToList();
+                var topClients = _iReportManager.GetTopClientsByYear(DateTime.Now.Year).ToList();
+                var clients = _iClientManager.GetAllClientDetails();
+                var topProducts = _iReportManager.GetPopularBatteriesByYear(DateTime.Now.Year).ToList();
+                var employees = _iEmployeeManager.GetAllEmployeeWithFullInfo().ToList();
+                SummaryModel summary = new SummaryModel
+                {
+                    Branches = branches.ToList(),
+                    CompanyId = companyId,
+                    TotalOrder = totalOrder,
+                    TopClients = topClients,
+                    Orders = orders,
+                    TopProducts = topProducts,
+                    Clients = clients,
+                    Employees = employees,
+                    Products = products,
+                    AccountSummary = accountSummary
 
-            };
-            return View(summary);
+                };
+                return View(summary);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
 
         public PartialViewResult ViewClient()
         {
-           
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var clients = _iClientManager.GetClientByBranchId(branchId).ToList();
-            return PartialView("_ViewClientPartialPage", clients);
+
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var clients = _iClientManager.GetClientByBranchId(branchId).ToList();
+                return PartialView("_ViewClientPartialPage", clients);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
 
         public PartialViewResult ViewClientProfile(int id)
         {
-            var client = _iClientManager.GetClientDeailsById(id);
-            return PartialView("_ViewClientProfilePartialPage", client);
+            try
+            {
+                var client = _iClientManager.GetClientDeailsById(id);
+                return PartialView("_ViewClientProfilePartialPage", client);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception); 
+            }
         }
 
         public ActionResult ClientLedger(int id)
         {
-            var client = _iClientManager.GetById(id);
-            var ledgers= _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
-            LedgerModel model = new LedgerModel
+            try
             {
-                Client = client,
-                LedgerModels = ledgers
-            };
-            return View(model);
+                var client = _iClientManager.GetById(id);
+                var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+                LedgerModel model = new LedgerModel
+                {
+                    Client = client,
+                    LedgerModels = ledgers
+                };
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
 
@@ -129,33 +166,69 @@ namespace NBL.Areas.Sales.Controllers
         }
         public PartialViewResult ViewBranch()
         {
-            var branches = _iBranchManager.GetAllBranches().ToList();
-            return PartialView("_ViewBranchPartialPage", branches);
+            try
+            {
+                var branches = _iBranchManager.GetAllBranches().ToList();
+                return PartialView("_ViewBranchPartialPage", branches);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public ActionResult ViewEmployeeProfile(int id)
         {
-            var employee = _iEmployeeManager.GetEmployeeById(id);
-            return View(employee);
+            try
+            {
+                var employee = _iEmployeeManager.GetEmployeeById(id);
+                return View(employee);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         [Authorize(Roles = "User")]
         public PartialViewResult All()
         {
-            var user = (ViewUser)Session["user"];
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId, companyId).OrderByDescending(n => n.OrderId).DistinctBy(n => n.OrderId).ToList().FindAll(n=>n.Status==4).ToList().FindAll(n=>n.UserId== user.UserId);
-            return PartialView("_OrdersSummaryPartialPage", orders);
+            try
+            {
+                var user = (ViewUser)Session["user"];
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId, companyId).OrderByDescending(n => n.OrderId).DistinctBy(n => n.OrderId).ToList().FindAll(n => n.Status == 4).ToList().FindAll(n => n.UserId == user.UserId);
+                return PartialView("_OrdersSummaryPartialPage", orders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         [Authorize(Roles = "User")]
         public PartialViewResult CurrentMonthsOrder()
         {
-            var user = (ViewUser)Session["user"];
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId, companyId).OrderByDescending(n => n.OrderId).DistinctBy(n => n.OrderId).ToList().FindAll(n => n.Status == 4).FindAll(n=>n.OrderDate.Month.Equals(DateTime.Now.Month)).ToList().FindAll(n => n.UserId == user.UserId);
-            return PartialView("_OrdersSummaryPartialPage", orders);
+            try
+            {
+                var user = (ViewUser)Session["user"];
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId, companyId).OrderByDescending(n => n.OrderId).DistinctBy(n => n.OrderId).ToList().FindAll(n => n.Status == 4).FindAll(n => n.OrderDate.Month.Equals(DateTime.Now.Month)).ToList().FindAll(n => n.UserId == user.UserId);
+                return PartialView("_OrdersSummaryPartialPage", orders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         //public ActionResult Test()

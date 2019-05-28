@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using NBL.Areas.Sales.BLL.Contracts;
 using NBL.BLL.Contracts;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.Sales.Controllers
@@ -27,17 +28,26 @@ namespace NBL.Areas.Sales.Controllers
         }
         public ActionResult Home()
         {
-            SummaryModel model = new SummaryModel();
-            var branchId = Convert.ToInt32(Session["BranchId"]);
-            var companyId = Convert.ToInt32(Session["CompanyId"]);
-            var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).ToList();
-            var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByBranchAndCompanyId(branchId, companyId).ToList();
-            var clients = _iClientManager.GetAllClientDetailsByBranchId(branchId);
-            model.Clients = clients;
-            model.InvoicedOrderList = invoicedOrders;
-            model.Orders = _iOrderManager.GetOrdersByBranchAndCompnayId(branchId, companyId);
-            model.Products = products;
-            return View(model);
+            try
+            {
+                SummaryModel model = new SummaryModel();
+                var branchId = Convert.ToInt32(Session["BranchId"]);
+                var companyId = Convert.ToInt32(Session["CompanyId"]);
+                var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).ToList();
+                var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByBranchAndCompanyId(branchId, companyId).ToList();
+                var clients = _iClientManager.GetAllClientDetailsByBranchId(branchId);
+                model.Clients = clients;
+                model.InvoicedOrderList = invoicedOrders;
+                model.Orders = _iOrderManager.GetOrdersByBranchAndCompnayId(branchId, companyId);
+                model.Products = products;
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
     }

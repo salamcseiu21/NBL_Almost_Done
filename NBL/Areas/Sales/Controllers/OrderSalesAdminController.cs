@@ -9,6 +9,7 @@ using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Invoices;
 using NBL.Models.Enums;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Summaries;
 
@@ -34,45 +35,90 @@ namespace NBL.Areas.Sales.Controllers
         }
         public PartialViewResult All()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId, companyId).ToList();
-            ViewBag.Heading = "All Orders";
-            return PartialView("_ViewOrdersPartialPage", orders);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId, companyId).ToList();
+                ViewBag.Heading = "All Orders";
+                return PartialView("_ViewOrdersPartialPage", orders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public PartialViewResult LatestOrders()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetLatestOrdersByBranchAndCompanyId(branchId, companyId).ToList();
-            ViewBag.Heading = "Latest Orders";
-            return PartialView("_ViewOrdersPartialPage", orders);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var orders = _iOrderManager.GetLatestOrdersByBranchAndCompanyId(branchId, companyId).ToList();
+                ViewBag.Heading = "Latest Orders";
+                return PartialView("_ViewOrdersPartialPage", orders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public ActionResult PendingOrder()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetOrdersByBranchIdCompanyIdAndStatus(branchId, companyId, Convert.ToInt32(OrderStatus.ApprovedbyNsm)).ToList();
-            return View(orders);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var orders = _iOrderManager.GetOrdersByBranchIdCompanyIdAndStatus(branchId, companyId, Convert.ToInt32(OrderStatus.ApprovedbyNsm)).ToList();
+                return View(orders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
 
         public ActionResult DelayedOrders()
         {
 
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetDelayedOrdersToAdminByBranchAndCompanyId(branchId, companyId);
-            return View(orders);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var orders = _iOrderManager.GetDelayedOrdersToAdminByBranchAndCompanyId(branchId, companyId);
+                return View(orders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         //---Approved order by Accounts/Admin
         public ActionResult Approve(int id)
         {
-           
-            var order = _iOrderManager.GetOrderByOrderId(id);
-            order.Client = _iClientManager.GetById(order.ClientId);
-            //ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", order.DistributionPointId);
-            return View(order);
+
+            try
+            {
+                var order = _iOrderManager.GetOrderByOrderId(id);
+                order.Client = _iClientManager.GetById(order.ClientId);
+                //ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", order.DistributionPointId);
+                return View(order);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
         [HttpPost]
@@ -112,8 +158,8 @@ namespace NBL.Areas.Sales.Controllers
             }
             catch (Exception exception)
             {
-                string messge = exception.Message;
-                return View();
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
         }
 
@@ -121,63 +167,108 @@ namespace NBL.Areas.Sales.Controllers
         public ActionResult Invoice(int id)
         {
 
-            var invocedOrder = _iInvoiceManager.GetInvoicedOrderByInvoiceId(id);
-            var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(invocedOrder.TransactionRef);
-            IEnumerable<InvoiceDetails> details = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceId(id);
-            var client = _iClientManager.GetClientDeailsById(orderInfo.ClientId);
-
-            ViewInvoiceModel model = new ViewInvoiceModel
+            try
             {
-                Client = client,
-                Order = orderInfo,
-                Invoice = invocedOrder,
-                InvoiceDetailses = details
-            };
-            return View(model);
+                var invocedOrder = _iInvoiceManager.GetInvoicedOrderByInvoiceId(id);
+                var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(invocedOrder.TransactionRef);
+                IEnumerable<InvoiceDetails> details = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceId(id);
+                var client = _iClientManager.GetClientDeailsById(orderInfo.ClientId);
 
+                ViewInvoiceModel model = new ViewInvoiceModel
+                {
+                    Client = client,
+                    Order = orderInfo,
+                    Invoice = invocedOrder,
+                    InvoiceDetailses = details
+                };
+                return View(model);
+
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult ViewAllDeliveredOrders()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var orders = _iDeliveryManager.GetAllDeliveredOrders().ToList().FindAll(n => n.ToBranchId == branchId).ToList().DistinctBy(n => n.TransactionRef).ToList();
-            foreach (Delivery order in orders)
+            try
             {
-                var ord = _iOrderManager.GetOrderInfoByTransactionRef(order.TransactionRef);
-                order.Client = _iClientManager.GetById(ord.ClientId);
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var orders = _iDeliveryManager.GetAllDeliveredOrders().ToList().FindAll(n => n.ToBranchId == branchId).ToList().DistinctBy(n => n.TransactionRef).ToList();
+                foreach (Delivery order in orders)
+                {
+                    var ord = _iOrderManager.GetOrderInfoByTransactionRef(order.TransactionRef);
+                    order.Client = _iClientManager.GetById(ord.ClientId);
+                }
+                return View(orders);
             }
-            return View(orders);
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult ViewTodaysDeliverdOrders()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var orders = _iDeliveryManager.GetAllDeliveredOrders().ToList().FindAll(n => n.ToBranchId == branchId).ToList();
-            return View(orders);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var orders = _iDeliveryManager.GetAllDeliveredOrders().ToList().FindAll(n => n.ToBranchId == branchId).ToList();
+                return View(orders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
 
         public ActionResult InvoicedOrderList()
         {
-            SummaryModel model = new SummaryModel();
-            var user = (ViewUser)Session["user"];
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iInvoiceManager.GetAllInvoicedOrdersByBranchCompanyAndUserId(branchId, companyId, user.UserId).ToList();
-            foreach (Invoice invoice in orders)
+            try
             {
-                var order = _iOrderManager.GetOrderInfoByTransactionRef(invoice.TransactionRef);
-                invoice.Client = _iClientManager.GetById(order.ClientId);
+                SummaryModel model = new SummaryModel();
+                var user = (ViewUser)Session["user"];
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var orders = _iInvoiceManager.GetAllInvoicedOrdersByBranchCompanyAndUserId(branchId, companyId, user.UserId).ToList();
+                foreach (Invoice invoice in orders)
+                {
+                    var order = _iOrderManager.GetOrderInfoByTransactionRef(invoice.TransactionRef);
+                    invoice.Client = _iClientManager.GetById(order.ClientId);
+                }
+                model.InvoicedOrderList = orders;
+                return View(model);
             }
-            model.InvoicedOrderList = orders;
-            return View(model);
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult Cancel(int id)
         {
-            var order = _iOrderManager.GetOrderByOrderId(id);
-            order.Client = _iClientManager.GetById(order.ClientId);
-            return View(order);
+            try
+            {
+                var order = _iOrderManager.GetOrderByOrderId(id);
+                order.Client = _iClientManager.GetById(order.ClientId);
+                return View(order);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public ActionResult Cancel(FormCollection collection)
@@ -185,45 +276,81 @@ namespace NBL.Areas.Sales.Controllers
 
 
 
-            var user = (ViewUser)Session["user"];
-            int orderId = Convert.ToInt32(collection["OrderId"]);
-            var order = _iOrderManager.GetOrderByOrderId(orderId);
-            order.Client = _iClientManager.GetById(order.ClientId);
-            order.ResonOfCancel = collection["Reason"];
-            order.CancelByUserId = user.UserId;
-            order.Status = Convert.ToInt32(OrderStatus.CancelledbyAdmin);
-            var status = _iOrderManager.CancelOrder(order);
-            return status ? RedirectToAction("All") : RedirectToAction("Cancel", new { id = orderId });
+            try
+            {
+                var user = (ViewUser)Session["user"];
+                int orderId = Convert.ToInt32(collection["OrderId"]);
+                var order = _iOrderManager.GetOrderByOrderId(orderId);
+                order.Client = _iClientManager.GetById(order.ClientId);
+                order.ResonOfCancel = collection["Reason"];
+                order.CancelByUserId = user.UserId;
+                order.Status = Convert.ToInt32(OrderStatus.CancelledbyAdmin);
+                var status = _iOrderManager.CancelOrder(order);
+                return status ? RedirectToAction("All") : RedirectToAction("Cancel", new { id = orderId });
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
 
         public ActionResult Verify(int id)
         {
-            var order = _iOrderManager.GetOrderByOrderId(id);
-            order.Client = _iClientManager.GetById(order.ClientId);
-            return View(order);
+            try
+            {
+                var order = _iOrderManager.GetOrderByOrderId(id);
+                order.Client = _iClientManager.GetById(order.ClientId);
+                return View(order);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public ActionResult Verify(FormCollection collection)
         {
-            int orderId = Convert.ToInt32(collection["OrderId"]);
-            string notes = collection["VerificationNote"];
-            var user = (ViewUser)Session["user"];
-            bool result = _iOrderManager.UpdateVerificationStatus(orderId, notes, user.UserId);
-            if (result)
+            try
             {
+                int orderId = Convert.ToInt32(collection["OrderId"]);
+                string notes = collection["VerificationNote"];
+                var user = (ViewUser)Session["user"];
+                bool result = _iOrderManager.UpdateVerificationStatus(orderId, notes, user.UserId);
+                if (result)
+                {
+                    return RedirectToAction("PendingOrder");
+                }
                 return RedirectToAction("PendingOrder");
             }
-            return RedirectToAction("PendingOrder");
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
 
         public PartialViewResult VerifyingOrders()
         {
-            int branchId = Convert.ToInt32(Session["branchId"]);
-            int companyId = Convert.ToInt32(Session["companyId"]);
-            var verifiedOrders = _iOrderManager.GetVerifiedOrdersByBranchAndCompanyId(branchId, companyId);
-            return PartialView("_ViewVerifyingOrdersPartialPage", verifiedOrders);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["branchId"]);
+                int companyId = Convert.ToInt32(Session["companyId"]);
+                var verifiedOrders = _iOrderManager.GetVerifiedOrdersByBranchAndCompanyId(branchId, companyId);
+                return PartialView("_ViewVerifyingOrdersPartialPage", verifiedOrders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
     }
 }

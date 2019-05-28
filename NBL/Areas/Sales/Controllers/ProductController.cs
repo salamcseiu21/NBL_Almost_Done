@@ -37,29 +37,56 @@ namespace NBL.Areas.Sales.Controllers
         }
         public ActionResult Stock()
         {
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).ToList();
-       
-            return View(products);
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).ToList();
+
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult TotalReceive()
         {
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var products = _iInventoryManager.GetTotalReceiveProductByBranchAndCompanyId(branchId, companyId).ToList();
-            return View(products);
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var products = _iInventoryManager.GetTotalReceiveProductByBranchAndCompanyId(branchId, companyId).ToList();
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
 
         public ActionResult TotalDelivery() 
         {
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var products = _iInventoryManager.GetDeliveredProductByBranchAndCompanyId(branchId, companyId).ToList();
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var products = _iInventoryManager.GetDeliveredProductByBranchAndCompanyId(branchId, companyId).ToList();
 
-            return View(products);
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpGet]
         public ActionResult Transaction()
@@ -208,21 +235,39 @@ namespace NBL.Areas.Sales.Controllers
         [Authorize(Roles = "DistributionManager")]
         public ActionResult Receive()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var result = _iInventoryManager.GetAllReceiveableListByBranchAndCompanyId(branchId, companyId).ToList();
-            return View(result);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var result = _iInventoryManager.GetAllReceiveableListByBranchAndCompanyId(branchId, companyId).ToList();
+                return View(result);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public ActionResult ReceiveableDetails(long id)
         {
-            var receivableProductList = GetReceivesProductList(id);
-            ReceiveProductViewModel aModel = new ReceiveProductViewModel
+            try
             {
-                TripId = id,
-                DispatchModels = receivableProductList
-            };
-          
-            return View(aModel);
+                var receivableProductList = GetReceivesProductList(id);
+                ReceiveProductViewModel aModel = new ReceiveProductViewModel
+                {
+                    TripId = id,
+                    DispatchModels = receivableProductList
+                };
+
+                return View(aModel);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         [HttpPost]
@@ -270,17 +315,14 @@ namespace NBL.Areas.Sales.Controllers
             }
             catch (FormatException exception)
             {
-                log.Heading = exception.GetType().ToString();
-                log.LogMessage = exception.StackTrace;
-                Log.WriteErrorLog(log);
+                Log.WriteErrorLog(exception);
                 model.Message = "<p style='color:red'>" + exception.GetType() + "</p>";
                 //return Json(model, JsonRequestBehavior.AllowGet);
             }
             catch (Exception exception)
             {
-                log.Heading = exception.GetType().ToString();
-                log.LogMessage = exception.StackTrace;
-                Log.WriteErrorLog(log);
+                
+                Log.WriteErrorLog(exception);
                 model.Message = "<p style='color:red'>" + exception.Message + "</p>";
                // return Json(model, JsonRequestBehavior.AllowGet);
             }
@@ -291,29 +333,38 @@ namespace NBL.Areas.Sales.Controllers
         public ActionResult ReceiveProduct(long tripId)
         {
 
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var user = (ViewUser) Session["user"];
-            ViewDispatchModel dispatchModel = _iInventoryManager.GetDispatchByTripId(tripId);
-            dispatchModel.ReceiveByUserId = user.UserId;
-            var receivesProductList = _iInventoryManager.GetAllReceiveableProductToBranchByTripId(tripId, branchId);
-            dispatchModel.DispatchModels = receivesProductList;
-            string fileName = "Received_Product_For_" + tripId + branchId;
-            var filePath = Server.MapPath("~/Files/" + fileName);
-            var receiveProductList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
-            dispatchModel.Quantity = receiveProductList.Count;
-            dispatchModel.ToBranchId = Convert.ToInt32(Session["BranchId"]);
-            dispatchModel.ScannedProducts = receiveProductList;
-           int result= _iInventoryManager.ReceiveProduct(dispatchModel);
-            if (result > 0)
+            try
             {
-                System.IO.File.Create(filePath).Close();
-                TempData["ReceiveMessage"] = "Received Successfully!";
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var user = (ViewUser)Session["user"];
+                ViewDispatchModel dispatchModel = _iInventoryManager.GetDispatchByTripId(tripId);
+                dispatchModel.ReceiveByUserId = user.UserId;
+                var receivesProductList = _iInventoryManager.GetAllReceiveableProductToBranchByTripId(tripId, branchId);
+                dispatchModel.DispatchModels = receivesProductList;
+                string fileName = "Received_Product_For_" + tripId + branchId;
+                var filePath = Server.MapPath("~/Files/" + fileName);
+                var receiveProductList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                dispatchModel.Quantity = receiveProductList.Count;
+                dispatchModel.ToBranchId = Convert.ToInt32(Session["BranchId"]);
+                dispatchModel.ScannedProducts = receiveProductList;
+                int result = _iInventoryManager.ReceiveProduct(dispatchModel);
+                if (result > 0)
+                {
+                    System.IO.File.Create(filePath).Close();
+                    TempData["ReceiveMessage"] = "Received Successfully!";
+                }
+                else
+                {
+                    TempData["ReceiveMessage"] = "Failed to Receive";
+                }
+                return RedirectToAction("Receive");
             }
-            else
+            catch (Exception exception)
             {
-                TempData["ReceiveMessage"] = "Failed to Receive";
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
-            return RedirectToAction("Receive");
         }
 
 
@@ -334,43 +385,70 @@ namespace NBL.Areas.Sales.Controllers
         [HttpPost]
         public PartialViewResult LoadReceiveableProduct(long tripId)
         {
-            var products = GetReceivesProductList(tripId);
-            return PartialView("_ViewReceivalbeProductPartialPage", products);
+            try
+            {
+                var products = GetReceivesProductList(tripId);
+                return PartialView("_ViewReceivalbeProductPartialPage", products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
 
         [HttpPost]
         public PartialViewResult LoadScannecdProduct(long tripId)
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            List<ScannedProduct> products = new List<ScannedProduct>();
-            string fileName = "Received_Product_For_" + tripId + branchId;
-            var filePath = Server.MapPath("~/Files/" + fileName);
-            if (System.IO.File.Exists(filePath))
+            try
             {
-                //if the file is exists read the file
-                products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                List<ScannedProduct> products = new List<ScannedProduct>();
+                string fileName = "Received_Product_For_" + tripId + branchId;
+                var filePath = Server.MapPath("~/Files/" + fileName);
+                if (System.IO.File.Exists(filePath))
+                {
+                    //if the file is exists read the file
+                    products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                }
+                else
+                {
+                    //if the file does not exists create the file
+                    System.IO.File.Create(filePath).Close();
+                }
+                return PartialView("_ViewScannedProductPartialPage", products);
             }
-            else
+            catch (Exception exception)
             {
-                //if the file does not exists create the file
-                System.IO.File.Create(filePath).Close();
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
-            return PartialView("_ViewScannedProductPartialPage", products);
         }
         private List<ViewDispatchModel> GetReceivesProductList(long tripId)
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var receivesProductList = _iInventoryManager.GetAllReceiveableProductToBranchByTripId(tripId,branchId).ToList()
-                .DistinctBy(n => n.ProductName).ToList();
-            string fileName = "Received_Product_For_" + tripId;
-            var filePath = Server.MapPath("~/Files/" + fileName);
-            if (!System.IO.File.Exists(filePath))
+            try
             {
-                //if the file does not exists create the file
-                System.IO.File.Create(filePath).Close();
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var receivesProductList = _iInventoryManager.GetAllReceiveableProductToBranchByTripId(tripId, branchId).ToList()
+                    .DistinctBy(n => n.ProductName).ToList();
+                string fileName = "Received_Product_For_" + tripId;
+                var filePath = Server.MapPath("~/Files/" + fileName);
+                if (!System.IO.File.Exists(filePath))
+                {
+                    //if the file does not exists create the file
+                    System.IO.File.Create(filePath).Close();
+                }
+                return receivesProductList;
             }
-            return receivesProductList;
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+               return new List<ViewDispatchModel>();
+            }
         }
 
         [HttpGet]
@@ -388,45 +466,63 @@ namespace NBL.Areas.Sales.Controllers
         public ActionResult Requisition()
         {
 
-            CreateTempRequisitionXmlFile();
-            return View();
+            try
+            {
+                CreateTempRequisitionXmlFile();
+                return View();
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         [HttpPost]
         public ActionResult Requisition(FormCollection collection)
         {
-            var user = (ViewUser) Session["user"];
-            var filePath = GetTempRequisitonFIilePath();
-            List<Product> productList = GetProductFromXmalFile(filePath).ToList();
-
-            if (productList.Count != 0)
+            try
             {
-                var xmlData = XDocument.Load(filePath);
-                int toBranchId = Convert.ToInt32(collection["ToBranchId"]);
+                var user = (ViewUser)Session["user"];
+                var filePath = GetTempRequisitonFIilePath();
+                List<Product> productList = GetProductFromXmalFile(filePath).ToList();
 
-                TransferRequisition aRequisitionModel = new TransferRequisition
+                if (productList.Count != 0)
                 {
-                    Products = productList,
-                    RequisitionToBranchId = toBranchId,
-                    RequisitionByBranchId = Convert.ToInt32(Session["BranchId"]),
-                     RequisitionByUserId = user.UserId,
-                    TransferRequisitionDate = Convert.ToDateTime(collection["RequisitionDate"])
-                };
-                int rowAffected = _iProductManager.SaveTransferRequisitionInfo(aRequisitionModel);
-                if (rowAffected > 0)
-                {
-                    xmlData.Root?.Elements().Remove();
-                    xmlData.Save(filePath);
-                    TempData["message"] = "Requisition Create  Successfully!";
-                }
-                else
-                {
-                    TempData["message"] = "Failed to create Requisition!";
+                    var xmlData = XDocument.Load(filePath);
+                    int toBranchId = Convert.ToInt32(collection["ToBranchId"]);
+
+                    TransferRequisition aRequisitionModel = new TransferRequisition
+                    {
+                        Products = productList,
+                        RequisitionToBranchId = toBranchId,
+                        RequisitionByBranchId = Convert.ToInt32(Session["BranchId"]),
+                        RequisitionByUserId = user.UserId,
+                        TransferRequisitionDate = Convert.ToDateTime(collection["RequisitionDate"])
+                    };
+                    int rowAffected = _iProductManager.SaveTransferRequisitionInfo(aRequisitionModel);
+                    if (rowAffected > 0)
+                    {
+                        xmlData.Root?.Elements().Remove();
+                        xmlData.Save(filePath);
+                        TempData["message"] = "Requisition Create  Successfully!";
+                    }
+                    else
+                    {
+                        TempData["message"] = "Failed to create Requisition!";
+                    }
+
                 }
 
+                return View();
             }
+            catch (Exception exception)
+            {
 
-            return View();
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
         [HttpPost]
@@ -483,6 +579,8 @@ namespace NBL.Areas.Sales.Controllers
             catch (Exception e)
             {
 
+                Log.WriteErrorLog(e);
+              
                 if (e.InnerException != null)
                     ViewBag.Error = e.Message + " <br /> System Error:" + e.InnerException?.Message;
 
@@ -492,22 +590,40 @@ namespace NBL.Areas.Sales.Controllers
         [HttpPost]
         public void RemoveProductById(string id)
         {
-            
-            var filePath = GetTempRequisitonFIilePath();
-            var xmlData = XDocument.Load(filePath);
-            xmlData.Root?.Elements().Where(n => n.Attribute("Id")?.Value == id).Remove();
-            xmlData.Save(filePath);
+
+            try
+            {
+                var filePath = GetTempRequisitonFIilePath();
+                var xmlData = XDocument.Load(filePath);
+                xmlData.Root?.Elements().Where(n => n.Attribute("Id")?.Value == id).Remove();
+                xmlData.Save(filePath);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+              
+            }
 
         }
        
         [HttpGet]
         public void RemoveAll()
         {
-           
-            var filePath = GetTempRequisitonFIilePath();
-            var xmlData = XDocument.Load(filePath);
-            xmlData.Root?.Elements().Remove();
-            xmlData.Save(filePath);
+
+            try
+            {
+                var filePath = GetTempRequisitonFIilePath();
+                var xmlData = XDocument.Load(filePath);
+                xmlData.Root?.Elements().Remove();
+                xmlData.Save(filePath);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+              
+            }
 
         }
 
@@ -562,64 +678,127 @@ namespace NBL.Areas.Sales.Controllers
 
         public ActionResult PendingRequisition()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            ICollection<TransferRequisition> requisitions = _iProductManager.GetTransferRequsitionByStatus(0).ToList().FindAll(n=>n.RequisitionByBranchId==branchId);
-            return View(requisitions);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                ICollection<TransferRequisition> requisitions = _iProductManager.GetTransferRequsitionByStatus(0).ToList().FindAll(n => n.RequisitionByBranchId == branchId);
+                return View(requisitions);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult ViewRequisitionDetails(long id)
         {
-            var requisiton = _iProductManager.GetTransferRequsitionByStatus(0).ToList().ToList()
-                .Find(n => n.TransferRequisitionId == id);
-            ICollection<TransferRequisitionDetails> requisitions = _iProductManager.GetTransferRequsitionDetailsById(id).ToList();
-            ViewTransferRequisition model = new ViewTransferRequisition
+            try
             {
-                TtransferRequisitions = requisitions,
-                Branch = _iBranchManager.GetAllBranches().ToList()
-                    .Find(n => n.BranchId == requisiton.RequisitionByBranchId),
-                TransferRequisition = requisiton
-            };
-            return View(model);
+                var requisiton = _iProductManager.GetTransferRequsitionByStatus(0).ToList().ToList()
+                       .Find(n => n.TransferRequisitionId == id);
+                ICollection<TransferRequisitionDetails> requisitions = _iProductManager.GetTransferRequsitionDetailsById(id).ToList();
+                ViewTransferRequisition model = new ViewTransferRequisition
+                {
+                    TtransferRequisitions = requisitions,
+                    Branch = _iBranchManager.GetAllBranches().ToList()
+                        .Find(n => n.BranchId == requisiton.RequisitionByBranchId),
+                    TransferRequisition = requisiton
+                };
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult RequestedRequisition()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            ICollection<TransferRequisition> requisitions = _iProductManager.GetTransferRequsitionByStatus(0).ToList().FindAll(n=>n.RequisitionToBranchId==branchId);
-            return View(requisitions);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                ICollection<TransferRequisition> requisitions = _iProductManager.GetTransferRequsitionByStatus(0).ToList().FindAll(n => n.RequisitionToBranchId == branchId);
+                return View(requisitions);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult RequisitionDetails(long id)
         {
 
-            var requisiton = _iProductManager.GetTransferRequsitionByStatus(0).ToList().ToList()
-                .Find(n => n.TransferRequisitionId == id);
-            ICollection<TransferRequisitionDetails> requisitions = _iProductManager.GetTransferRequsitionDetailsById(id).ToList();
-            ViewTransferRequisition model = new ViewTransferRequisition
+            try
             {
-                TtransferRequisitions = requisitions,
-                Branch = _iBranchManager.GetAllBranches().ToList()
-                    .Find(n => n.BranchId == requisiton.RequisitionToBranchId),
-                TransferRequisition = requisiton
-            };
-            return View(model);
+                var requisiton = _iProductManager.GetTransferRequsitionByStatus(0).ToList().ToList()
+                       .Find(n => n.TransferRequisitionId == id);
+                ICollection<TransferRequisitionDetails> requisitions = _iProductManager.GetTransferRequsitionDetailsById(id).ToList();
+                ViewTransferRequisition model = new ViewTransferRequisition
+                {
+                    TtransferRequisitions = requisitions,
+                    Branch = _iBranchManager.GetAllBranches().ToList()
+                        .Find(n => n.BranchId == requisiton.RequisitionToBranchId),
+                    TransferRequisition = requisiton
+                };
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public ActionResult ApproveRequisition(long id)
         {
-            var user = (ViewUser)Session["user"];
-            bool result =_iProductManager.ApproveRequisition(id, user);
-            return RedirectToAction("RequestedRequisition");
+            try
+            {
+                var user = (ViewUser)Session["user"];
+                bool result = _iProductManager.ApproveRequisition(id, user);
+                return RedirectToAction("RequestedRequisition");
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public void RemoveProductRequisitionProductById(long id)
         {
-          bool result= _iProductManager.RemoveProductRequisitionProductById(id);
+         
+            try
+            {
+                bool result = _iProductManager.RemoveProductRequisitionProductById(id);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+              
+            }
         }
 
         public void UpdateRequisitionQuantity(long id,int quantity)
         {
-            bool result = _iProductManager.UpdateRequisitionQuantity(id,quantity);
+            try
+            {
+                bool result = _iProductManager.UpdateRequisitionQuantity(id, quantity);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+
+            }
+           
         }
 
 
@@ -629,64 +808,90 @@ namespace NBL.Areas.Sales.Controllers
         [Authorize(Roles = "DistributionManager")]
         public ActionResult ReceiveTransferProduct()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var result = _iInventoryManager.GetAllTransferedListByBranchAndCompanyId(branchId, companyId).ToList();
-            return View(result);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var result = _iInventoryManager.GetAllTransferedListByBranchAndCompanyId(branchId, companyId).ToList();
+                return View(result);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult TransferReceiveableDetails(long id)
         {
-           
-            List<ViewTransferProductDetails> products = _iProductManager.TransferReceiveableDetails(id);
-            TransferModel model = new TransferModel
+
+            try
             {
-                Products = products,
-                TransferId = id
-            };
-            return View(model);
+                List<ViewTransferProductDetails> products = _iProductManager.TransferReceiveableDetails(id);
+                TransferModel model = new TransferModel
+                {
+                    Products = products,
+                    TransferId = id
+                };
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         [HttpPost]
         public ActionResult ReceiveTransferProduct(long transferId)
         {
-           
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var user = (ViewUser)Session["user"];
-            var companyId = Convert.ToInt32(Session["CompanyId"]);
-            var transfer= _iInventoryManager.GetAllTransferedListByBranchAndCompanyId(branchId, companyId).ToList().Find(n=>n.TransferId==transferId);
-            TransferModel aModel = new TransferModel();
-            var products= _iProductManager.TransferReceiveableDetails(transferId);
-            aModel.Products = products;
-            aModel.TransferId = transferId;
-            aModel.ViewTransferProductModel = transfer;
-            aModel.BranchId = Convert.ToInt32(Session["BranchId"]);
-            aModel.User = user;
-            aModel.CompanyId = companyId;
-            //var receivesProductList = _iInventoryManager.GetAllTransferedListByBranchAndCompanyId(branchId, companyId).ToList().FindAll(n => n.TransferId == transferId);
-            string fileName = "Transfer_Received_Product_For_" + transferId + branchId;
-            var filePath = Server.MapPath("~/Areas/Sales/Files/Requisitions/" + fileName);
-            var receiveProductList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
-            aModel.ScannedBarCodes = receiveProductList;
 
-            
-            int result = _iInventoryManager.ReceiveTransferedProduct(aModel);
-            if (result > 0)
+            try
             {
-                System.IO.File.Create(filePath).Close();
-                TempData["ReceiveMessage"] = "Received Successfully!";
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var user = (ViewUser)Session["user"];
+                var companyId = Convert.ToInt32(Session["CompanyId"]);
+                var transfer = _iInventoryManager.GetAllTransferedListByBranchAndCompanyId(branchId, companyId).ToList().Find(n => n.TransferId == transferId);
+                TransferModel aModel = new TransferModel();
+                var products = _iProductManager.TransferReceiveableDetails(transferId);
+                aModel.Products = products;
+                aModel.TransferId = transferId;
+                aModel.ViewTransferProductModel = transfer;
+                aModel.BranchId = Convert.ToInt32(Session["BranchId"]);
+                aModel.User = user;
+                aModel.CompanyId = companyId;
+                //var receivesProductList = _iInventoryManager.GetAllTransferedListByBranchAndCompanyId(branchId, companyId).ToList().FindAll(n => n.TransferId == transferId);
+                string fileName = "Transfer_Received_Product_For_" + transferId + branchId;
+                var filePath = Server.MapPath("~/Areas/Sales/Files/Requisitions/" + fileName);
+                var receiveProductList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                aModel.ScannedBarCodes = receiveProductList;
+
+
+                int result = _iInventoryManager.ReceiveTransferedProduct(aModel);
+                if (result > 0)
+                {
+                    System.IO.File.Create(filePath).Close();
+                    TempData["ReceiveMessage"] = "Received Successfully!";
+                }
+                else
+                {
+                    TempData["ReceiveMessage"] = "Failed to Receive";
+                }
+                return RedirectToAction("ReceiveTransferProduct");
             }
-            else
+            catch (Exception exception)
             {
-                TempData["ReceiveMessage"] = "Failed to Receive";
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
-            return RedirectToAction("ReceiveTransferProduct");
         }
         [HttpPost]
         public void SaveTransferReceivableScannedBarcodeToTextFile(string barcode, long transferId)
         {
             SuccessErrorModel model = new SuccessErrorModel();
-            ViewWriteLogModel log = new ViewWriteLogModel();
+          
             try
             {
                 int branchId = Convert.ToInt32(Session["BranchId"]);
@@ -728,17 +933,15 @@ namespace NBL.Areas.Sales.Controllers
             }
             catch (FormatException exception)
             {
-                log.Heading = exception.GetType().ToString();
-                log.LogMessage = exception.StackTrace;
-                Log.WriteErrorLog(log);
+                
+                Log.WriteErrorLog(exception);
                 model.Message = "<p style='color:red'>" + exception.GetType() + "</p>";
                 //return Json(model, JsonRequestBehavior.AllowGet);
             }
             catch (Exception exception)
             {
-                log.Heading = exception.GetType().ToString();
-                log.LogMessage = exception.StackTrace;
-                Log.WriteErrorLog(log);
+               
+                Log.WriteErrorLog(exception);
                 model.Message = "<p style='color:red'>" + exception.Message + "</p>";
                 // return Json(model, JsonRequestBehavior.AllowGet);
             }
@@ -746,27 +949,45 @@ namespace NBL.Areas.Sales.Controllers
         }
         public PartialViewResult LoadTransferReceiveableProduct(long transferId)
         {
-            var products = _iProductManager.TransferReceiveableDetails(transferId);
-            return PartialView("_ViewTransferReceivablePartialPage", products);
+            try
+            {
+                var products = _iProductManager.TransferReceiveableDetails(transferId);
+                return PartialView("_ViewTransferReceivablePartialPage", products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public PartialViewResult LoadTransferReceivalbeScannecdProduct(long transferId)
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            List<ScannedProduct> products = new List<ScannedProduct>();
-            string fileName = "Transfer_Received_Product_For_" + transferId + branchId;
-            var filePath = Server.MapPath("~/Areas/Sales/Files/Requisitions/" + fileName);
-            if (System.IO.File.Exists(filePath))
+            try
             {
-                //if the file is exists read the file
-                products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                List<ScannedProduct> products = new List<ScannedProduct>();
+                string fileName = "Transfer_Received_Product_For_" + transferId + branchId;
+                var filePath = Server.MapPath("~/Areas/Sales/Files/Requisitions/" + fileName);
+                if (System.IO.File.Exists(filePath))
+                {
+                    //if the file is exists read the file
+                    products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                }
+                else
+                {
+                    //if the file does not exists create the file
+                    System.IO.File.Create(filePath).Close();
+                }
+                return PartialView("_ViewScannedProductPartialPage", products);
             }
-            else
+            catch (Exception exception)
             {
-                //if the file does not exists create the file
-                System.IO.File.Create(filePath).Close();
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
-            return PartialView("_ViewScannedProductPartialPage", products);
         }
     }
 }

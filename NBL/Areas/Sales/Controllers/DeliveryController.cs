@@ -11,8 +11,10 @@ using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Invoices;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.Enums;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
+using NBL.Models.ViewModels.Logs;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Sales;
 using NBL.Models.ViewModels.Summaries;
@@ -46,33 +48,47 @@ namespace NBL.Areas.Sales.Controllers
         }
         public PartialViewResult OrderList()
         {
-            SummaryModel model=new SummaryModel();
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            //int companyId = Convert.ToInt32(Session["CompanyId"]);
-            // var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByBranchAndCompanyId(branchId, companyId).ToList();
-            var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByDistributionPoint(branchId).ToList();
-
-            foreach (var invoice in invoicedOrders)
+            try
             {
-                invoice.Client = _iClientManager.GetById(invoice.ClientId);
+                SummaryModel model = new SummaryModel();
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByDistributionPoint(branchId).ToList();
+
+                foreach (var invoice in invoicedOrders)
+                {
+                    invoice.Client = _iClientManager.GetById(invoice.ClientId);
+                }
+                model.InvoicedOrderList = invoicedOrders;
+                return PartialView("_OrderListPartialPage", model);
             }
-            model.InvoicedOrderList = invoicedOrders;
-            return PartialView("_OrderListPartialPage", model);
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
 
         public PartialViewResult LatestOrderList()
         {
-            SummaryModel model = new SummaryModel();
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            //int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var invoicedOrders = _iInvoiceManager.GetLatestInvoicedOrdersByDistributionPoint(branchId).ToList();
-            foreach (var invoice in invoicedOrders)
+            try
             {
-                invoice.Client = _iClientManager.GetById(invoice.ClientId);
+                SummaryModel model = new SummaryModel();
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var invoicedOrders = _iInvoiceManager.GetLatestInvoicedOrdersByDistributionPoint(branchId).ToList();
+                foreach (var invoice in invoicedOrders)
+                {
+                    invoice.Client = _iClientManager.GetById(invoice.ClientId);
+                }
+                model.InvoicedOrderList = invoicedOrders;
+                return PartialView("_OrderListPartialPage", model);
             }
-            model.InvoicedOrderList = invoicedOrders;
-            return PartialView("_OrderListPartialPage",model);
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
             
         }
 

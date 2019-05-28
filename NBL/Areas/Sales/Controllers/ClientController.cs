@@ -8,7 +8,9 @@ using NBL.BLL.Contracts;
 using NBL.DAL;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Clients;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Logs;
 
 namespace NBL.Areas.Sales.Controllers
 {
@@ -41,7 +43,8 @@ namespace NBL.Areas.Sales.Controllers
             catch (Exception exception)
             {
                 TempData["Error"] = exception.Message;
-                throw;
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
 
         }
@@ -53,9 +56,17 @@ namespace NBL.Areas.Sales.Controllers
         // GET: Sales/Client/AddNewClient
         public ActionResult AddNewClient()
         {
-            ViewBag.Regions = _iRegionManager.GetAll().ToList();
-            ViewBag.ClientTypes = _iCommonManager.GetAllClientType().ToList();
-            return View();
+            try
+            {
+                ViewBag.Regions = _iRegionManager.GetAll().ToList();
+                ViewBag.ClientTypes = _iCommonManager.GetAllClientType().ToList();
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
 
@@ -125,13 +136,10 @@ namespace NBL.Areas.Sales.Controllers
                 return View();
 
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                if (e.InnerException != null)
-                    ViewBag.Error = e.Message + " <br /> System Error:" + e.InnerException.Message;
-                ViewBag.ClientTypes = _iCommonManager.GetAllClientType().ToList();
-                ViewBag.Regions = _iRegionManager.GetAll().ToList();
-                return View();
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
         }
 
@@ -150,11 +158,11 @@ namespace NBL.Areas.Sales.Controllers
                 ViewBag.ClientTypes = _iCommonManager.GetAllClientType().ToList();
                 return View(client);
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                if (e.InnerException != null)
-                    ViewBag.Msg = e.InnerException.Message;
-                return View();
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+
             }
 
         }
@@ -207,9 +215,10 @@ namespace NBL.Areas.Sales.Controllers
                 bool result = _iClientManager.Update(client);
                 return RedirectToAction("All");
             }
-            catch
+            catch(Exception exception)
             {
-                return View();
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
         }
 

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using NBL.Areas.Sales.BLL.Contracts;
 using NBL.BLL.Contracts;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.Sales.Controllers
@@ -33,25 +34,33 @@ namespace NBL.Areas.Sales.Controllers
         // GET: Sales/SalesAdmin
         public ActionResult Home()
         {
-            SummaryModel model = new SummaryModel();
-            var branchId = Convert.ToInt32(Session["BranchId"]);
-            var companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iInvoiceManager.GetAllInvoicedOrdersByCompanyId(companyId).ToList().FindAll(n => n.BranchId == branchId).ToList();
-            var pendingOrders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId, companyId).ToList().FindAll(n => n.Status == 1).ToList();
-            var clients = _iClientManager.GetAllClientDetailsByBranchId(branchId).ToList();
-            var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).ToList();
-            var delayedOrders = _iOrderManager.GetDelayedOrdersToAdminByBranchAndCompanyId(branchId, companyId);
-            var verifiedOrders = _iOrderManager.GetVerifiedOrdersByBranchAndCompanyId(branchId, companyId);
-            model = new SummaryModel
+            try
             {
-                InvoicedOrderList = orders,
-                PendingOrders = pendingOrders,
-                Clients = clients,
-                Products = products,
-                DelayedOrders = delayedOrders,
-                VerifiedOrders = verifiedOrders
-            };
-            return View(model);
+                var branchId = Convert.ToInt32(Session["BranchId"]);
+                var companyId = Convert.ToInt32(Session["CompanyId"]);
+                var orders = _iInvoiceManager.GetAllInvoicedOrdersByCompanyId(companyId).ToList().FindAll(n => n.BranchId == branchId).ToList();
+                var pendingOrders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId, companyId).ToList().FindAll(n => n.Status == 1).ToList();
+                var clients = _iClientManager.GetAllClientDetailsByBranchId(branchId).ToList();
+                var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).ToList();
+                var delayedOrders = _iOrderManager.GetDelayedOrdersToAdminByBranchAndCompanyId(branchId, companyId);
+                var verifiedOrders = _iOrderManager.GetVerifiedOrdersByBranchAndCompanyId(branchId, companyId);
+                var model = new SummaryModel
+                {
+                    InvoicedOrderList = orders,
+                    PendingOrders = pendingOrders,
+                    Clients = clients,
+                    Products = products,
+                    DelayedOrders = delayedOrders,
+                    VerifiedOrders = verifiedOrders
+                };
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
     }
 }
