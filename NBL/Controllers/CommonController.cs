@@ -122,17 +122,6 @@ namespace NBL.Controllers
 
             var branchId = Convert.ToInt32(Session["BranchId"]);
             ICollection<object> clients = _iClientManager.GetClientByBranchIdAndSearchTerm(branchId,prefix);
-            //var json = JsonConvert.SerializeObject(clients);
-           // var result = Json(clients);
-
-            //var clientList = (from c in clients.ToList()
-            //                  select new
-            //                  {
-            //                      label = c.ClientName,
-            //                      val = c.ClientId
-            //                  }).ToList();
-
-           // var r= Json(clients);
             return Json(clients);
         }
 

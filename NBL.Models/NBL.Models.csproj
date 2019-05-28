@@ -38,6 +38,10 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -111,6 +115,7 @@
     <Compile Include="EntityModels\Deliveries\ReceiveProductViewModel.cs" />
     <Compile Include="EntityModels\FinanceModels\FinancialTransactionModel.cs" />
     <Compile Include="EntityModels\FinanceModels\LedgerModel.cs" />
+    <Compile Include="EntityModels\Identities\UserLocation.cs" />
     <Compile Include="EntityModels\Masters\ClientType.cs" />
     <Compile Include="EntityModels\Companies\Company.cs" />
     <Compile Include="EntityModels\Deliveries\Delivery.cs" />

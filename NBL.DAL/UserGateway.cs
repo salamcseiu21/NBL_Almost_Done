@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using NBL.DAL.Contracts;
+using NBL.Models;
 using NBL.Models.EntityModels.Departments;
 using NBL.Models.EntityModels.Designations;
 using NBL.Models.EntityModels.Identities;
@@ -240,7 +241,7 @@ namespace NBL.DAL
             }
         }
 
-        public bool ChangeLoginStatus(ViewUser user, int status)
+        public bool ChangeLoginStatus(ViewUser user, int status, UserLocation userLocaiton)
         {
 
             try
@@ -249,11 +250,23 @@ namespace NBL.DAL
                 CommandObj.CommandText = "spChangeLoginStatus";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@UserId", user.UserId);
-                CommandObj.Parameters.AddWithValue("@IpAddress", user.IpAddress);
+                CommandObj.Parameters.AddWithValue("@IpAddress", userLocaiton.IPAddress);
+
                 CommandObj.Parameters.AddWithValue("@MacAddress", user.MacAddress);
                 CommandObj.Parameters.AddWithValue("@LoginDateTime", user.LogInDateTime);
                 CommandObj.Parameters.AddWithValue("@LogOutDateTime", user.LogOutDateTime);
                 CommandObj.Parameters.AddWithValue("@ActiveStatus", status);
+
+                CommandObj.Parameters.AddWithValue("@CountryName", userLocaiton.CountryName);
+                CommandObj.Parameters.AddWithValue("@CountryCode", userLocaiton.CountryCode);
+                CommandObj.Parameters.AddWithValue("@CityName", userLocaiton.CityName);
+                CommandObj.Parameters.AddWithValue("@RegionName", userLocaiton.RegionName);
+                CommandObj.Parameters.AddWithValue("@ZipCode", userLocaiton.ZipCode);
+                CommandObj.Parameters.AddWithValue("@Latitude", userLocaiton.Latitude);
+                CommandObj.Parameters.AddWithValue("@Longitude", userLocaiton.Longitude);
+                CommandObj.Parameters.AddWithValue("@TimeZone", userLocaiton.TimeZone);
+                CommandObj.Parameters.AddWithValue("@IsValidLogin", userLocaiton.IsValidLogin);
+
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();

@@ -104,6 +104,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -391,6 +392,7 @@
     <Compile Include="Areas\SuperAdmin\BLL\SuperAdminUserManager.cs" />
     <Compile Include="Areas\SuperAdmin\Controllers\ApproveController.cs" />
     <Compile Include="Areas\SuperAdmin\Controllers\AssignController.cs" />
+    <Compile Include="Areas\SuperAdmin\Controllers\ErrorLogController.cs" />
     <Compile Include="Areas\SuperAdmin\Controllers\HomeController.cs" />
     <Compile Include="Areas\SuperAdmin\Controllers\SuperReportController.cs" />
     <Compile Include="Areas\SuperAdmin\Controllers\VoucherController.cs" />
@@ -407,6 +409,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\ProductsController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\DemoController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -419,6 +422,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IpInfo.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -8071,6 +8075,7 @@
     <Content Include="Areas\AccountsAndFinance\Views\Shared\_ViewTempCreditPurposePartialPage.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Shared\_ViewTempDebitPurposePartialPage.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Shared\_ViewTempJournalPurposePartialPage.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\ErrorLog\ErrorList.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8214,6 +8219,7 @@
     <Content Include="Views\Shared\_ViewGeneralRequisitionList.cshtml" />
     <Content Include="Views\Shared\_ModalRequisitionDeliveryPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewRequisitionToFactoryProductList.cshtml" />
+    <Content Include="Views\Demo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

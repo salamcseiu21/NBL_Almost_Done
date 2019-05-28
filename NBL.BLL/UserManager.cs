@@ -29,9 +29,9 @@ namespace NBL.BLL
         }
         
 
-        public bool ChangeLoginStatus(ViewUser user, int status)
+        public bool ChangeLoginStatus(ViewUser user, int status,UserLocation userLocaiton)
         {
-            return _userGateway.ChangeLoginStatus(user, status);
+            return _userGateway.ChangeLoginStatus(user, status,userLocaiton);
         }
 
         public string AddNewUser(User user)

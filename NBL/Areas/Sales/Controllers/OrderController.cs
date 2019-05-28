@@ -12,7 +12,9 @@ using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.Enums;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Logs;
 using NBL.Models.ViewModels.Orders;
 
 namespace NBL.Areas.Sales.Controllers
@@ -75,11 +77,19 @@ namespace NBL.Areas.Sales.Controllers
                 
                 return View(model);
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
+                var erModel = new ViewWriteLogModel
+                {
+                    Heading = exception.Message,
+                    LogId = Guid.NewGuid().ToString(),
+                    LogDateTime = DateTime.Today,
+                    LogMessage = exception.InnerException?.Message
+                };
+                Log.WriteErrorLog(erModel);
 
-                if (e.InnerException != null)
-                    ViewBag.Error = e.Message + " <br /> System Error:" + e.InnerException.Message;
+                if (exception.InnerException != null)
+                    ViewBag.Error = exception.Message + " <br /> System Error:" + exception.InnerException.Message;
                 return View();
             }
         }
@@ -129,11 +139,18 @@ namespace NBL.Areas.Sales.Controllers
                 xmlData.Save(filePath);
 
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                if (e.InnerException != null)
+                if (exception.InnerException != null)
                 {
-                    string msg = e.InnerException.Message;
+                    var erModel = new ViewWriteLogModel
+                    {
+                        Heading = exception.Message,
+                        LogId = Guid.NewGuid().ToString(),
+                        LogDateTime = DateTime.Now,
+                        LogMessage = exception.InnerException?.Message
+                    };
+                    Log.WriteErrorLog(erModel);
                 }
             }
         }
