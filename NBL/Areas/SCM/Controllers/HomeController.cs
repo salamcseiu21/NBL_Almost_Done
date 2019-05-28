@@ -9,6 +9,7 @@ using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.EntityModels.Identities;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Summaries;
 
@@ -34,27 +35,36 @@ namespace NBL.Areas.SCM.Controllers
         // GET: SCM/Home
         public ActionResult Home() 
         {
-            Session.Remove("BranchId");
-            Session.Remove("Branch");
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-
-            var branches = _iBranchManager.GetAllBranches().ToList().FindAll(n => n.BranchId != 13).ToList();
-            foreach (ViewBranch branch in branches)
+            try
             {
-                branch.Orders = _iOrderManager.GetOrdersByBranchId(branch.BranchId).ToList();
-                branch.Products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branch.BranchId, companyId).ToList();
+                Session.Remove("BranchId");
+                Session.Remove("Branch");
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+
+                var branches = _iBranchManager.GetAllBranches().ToList().FindAll(n => n.BranchId != 13).ToList();
+                foreach (ViewBranch branch in branches)
+                {
+                    branch.Orders = _iOrderManager.GetOrdersByBranchId(branch.BranchId).ToList();
+                    branch.Products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branch.BranchId, companyId).ToList();
+                }
+
+
+                var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByCompanyId(companyId).ToList();
+                // var todaysInvoceOrders= _iInvoiceManager.GetInvoicedOrdersByCompanyIdAndDate(companyId,DateTime.Now).ToList();
+                SummaryModel model = new SummaryModel
+                {
+                    Branches = branches,
+                    InvoicedOrderList = invoicedOrders
+                    //OrderListByDate = todaysInvoceOrders
+                };
+                return View(model);
             }
-
-
-            var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByCompanyId(companyId).ToList();
-            // var todaysInvoceOrders= _iInvoiceManager.GetInvoicedOrdersByCompanyIdAndDate(companyId,DateTime.Now).ToList();
-            SummaryModel model = new SummaryModel
+            catch (Exception exception)
             {
-                Branches = branches,
-                InvoicedOrderList = invoicedOrders
-                //OrderListByDate = todaysInvoceOrders
-            };
-            return View(model);
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
      
@@ -62,37 +72,73 @@ namespace NBL.Areas.SCM.Controllers
         [HttpGet]
         public PartialViewResult Stock()
         {
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var stock = _iInventoryManager.GetStockProductByCompanyId(companyId);
-            return PartialView("_RptFactoryStockPartialPage", stock);
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var stock = _iInventoryManager.GetStockProductByCompanyId(companyId);
+                return PartialView("_RptFactoryStockPartialPage", stock);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public PartialViewResult StockByBranch(int id)
         {
 
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(id, companyId).ToList();
-            var branch = _iBranchManager.GetAllBranches().ToList().Find(n => n.BranchId == id);
-            SummaryModel model = new SummaryModel
+            try
             {
-                Products = products,
-                Branch = branch
-            };
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(id, companyId).ToList();
+                var branch = _iBranchManager.GetAllBranches().ToList().Find(n => n.BranchId == id);
+                SummaryModel model = new SummaryModel
+                {
+                    Products = products,
+                    Branch = branch
+                };
 
-            return PartialView("_ViewStockProductInBranchPartialPage", model);
+                return PartialView("_ViewStockProductInBranchPartialPage", model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult OrderListByBranch(int id)
         {
 
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(id, companyId).OrderByDescending(n => n.OrderId).DistinctBy(n => n.OrderId).ToList();
-           
-            return PartialView("_ViewOrdersPartialPage", orders);
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(id, companyId).OrderByDescending(n => n.OrderId).DistinctBy(n => n.OrderId).ToList();
+
+                return PartialView("_ViewOrdersPartialPage", orders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public PartialViewResult ProductionSummary()
         {
-            var summaries = _iInventoryManager.GetProductionSummaries().ToList();
-            return PartialView("_RptProductionSummaryPartialPage", summaries);
+            try
+            {
+                var summaries = _iInventoryManager.GetProductionSummaries().ToList();
+                return PartialView("_RptProductionSummaryPartialPage", summaries);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
     }
 }

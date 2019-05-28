@@ -340,7 +340,6 @@
     <Compile Include="Areas\Editor\EditorAreaRegistration.cs" />
     <Compile Include="Areas\Production\Controllers\ApproveController.cs" />
     <Compile Include="Areas\Production\Controllers\BarCodeController.cs" />
-    <Compile Include="Areas\Production\Controllers\BarCodeGeneratorController.cs" />
     <Compile Include="Areas\Production\Controllers\BranchController.cs" />
     <Compile Include="Areas\Production\Controllers\DeliveryController.cs" />
     <Compile Include="Areas\Production\Controllers\DispatchManagerController.cs" />

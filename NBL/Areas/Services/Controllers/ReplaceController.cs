@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels;
 using NBL.Models.EntityModels.Products;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 
 namespace NBL.Areas.Services.Controllers
@@ -27,75 +28,102 @@ namespace NBL.Areas.Services.Controllers
         public ActionResult Entry()
         {
             // CreateTempReplaceProductXmlFile();
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", branchId);
-            return View();
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", branchId);
+                return View();
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         [HttpPost]
         public ActionResult Entry(FormCollection collection, ReplaceModel model)
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var clientId = Convert.ToInt32(collection["clientId"]);
-            var user = (ViewUser)Session["user"];
-            var productId = Convert.ToInt32(collection["ProductId"]);
-            var qty = Convert.ToInt32(collection["Quantity"]);
-            var aProduct = _iProductManager.GetProductByProductId(productId);
-            aProduct.Quantity = qty;
-            aProduct.ExpiryDate = Convert.ToDateTime(collection["ExpiryDate"]);
-            var products = new List<Product> {aProduct};
-            model.ClientId = clientId;
-            model.Products = products.ToList();
-            model.BranchId = branchId;
-            model.UserId = user.UserId;
-            model.CompanyId = companyId;
-            var  result = _iProductReplaceManager.SaveReplacementInfo(model);
-            if (result)
+            try
             {
-                ModelState.Clear();
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var clientId = Convert.ToInt32(collection["clientId"]);
+                var user = (ViewUser)Session["user"];
+                var productId = Convert.ToInt32(collection["ProductId"]);
+                var qty = Convert.ToInt32(collection["Quantity"]);
+                var aProduct = _iProductManager.GetProductByProductId(productId);
+                aProduct.Quantity = qty;
+                aProduct.ExpiryDate = Convert.ToDateTime(collection["ExpiryDate"]);
+                var products = new List<Product> { aProduct };
+                model.ClientId = clientId;
+                model.Products = products.ToList();
+                model.BranchId = branchId;
+                model.UserId = user.UserId;
+                model.CompanyId = companyId;
+                var result = _iProductReplaceManager.SaveReplacementInfo(model);
+                if (result)
+                {
+                    ModelState.Clear();
+                    ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", branchId);
+                    return View();
+
+                }
+                // AddProductToTempReplaceProductXmlFile(aProduct);
                 ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", branchId);
                 return View();
-
             }
-           // AddProductToTempReplaceProductXmlFile(aProduct);
-            ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", branchId);
-            return View();
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
             //return View();
         }
 
         public ActionResult SaveReplacementInfo(FormCollection collection)
         {
-            var products = GetProductFromXmalFile(GetTempReplaceProductXmlFilePath());
-            var r= collection["clientId1"];
-            bool result = false;
-            if (products.Any() && r!="")
+            try
             {
-                int branchId = Convert.ToInt32(Session["BranchId"]);
-                int companyId = Convert.ToInt32(Session["CompanyId"]);
-                var clientId = Convert.ToInt32(collection["clientId1"]);
-                var user = (ViewUser)Session["user"];
-                var model = new ReplaceModel
+                var products = GetProductFromXmalFile(GetTempReplaceProductXmlFilePath());
+                var r = collection["clientId1"];
+                bool result = false;
+                if (products.Any() && r != "")
                 {
-                    ClientId = clientId,
-                    Products = products.ToList(),
-                    BranchId = branchId,
-                    UserId = user.UserId,
-                    CompanyId = companyId
+                    int branchId = Convert.ToInt32(Session["BranchId"]);
+                    int companyId = Convert.ToInt32(Session["CompanyId"]);
+                    var clientId = Convert.ToInt32(collection["clientId1"]);
+                    var user = (ViewUser)Session["user"];
+                    var model = new ReplaceModel
+                    {
+                        ClientId = clientId,
+                        Products = products.ToList(),
+                        BranchId = branchId,
+                        UserId = user.UserId,
+                        CompanyId = companyId
 
-                };
-                result = _iProductReplaceManager.SaveReplacementInfo(model);
+                    };
+                    result = _iProductReplaceManager.SaveReplacementInfo(model);
+                }
+
+
+
+                if (result)
+                {
+                    TempData["SaveReplaceMessage"] = "<p style='color:green'>Saved Successfully!</p>";
+                    RemoveAll();
+                }
+                return RedirectToAction("Entry");
             }
-
-            
-           
-            if (result)
+            catch (Exception exception)
             {
-                TempData["SaveReplaceMessage"] = "<p style='color:green'>Saved Successfully!</p>";
-                RemoveAll();
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
-            return RedirectToAction("Entry");
         }
         private void AddProductToTempReplaceProductXmlFile(Product aProduct)
         {
@@ -147,20 +175,29 @@ namespace NBL.Areas.Services.Controllers
         [HttpPost]
         public PartialViewResult LoadAllTempReplaceProduct()
         {
-            // var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
 
-            var filePath = GetTempReplaceProductXmlFilePath();
-            List<Product> list = new List<Product>();
-            if (!System.IO.File.Exists(filePath))
+            try
             {
-                //if the file does not exists create the file
-                System.IO.File.Create(filePath).Close();
+
+                var filePath = GetTempReplaceProductXmlFilePath();
+                List<Product> list = new List<Product>();
+                if (!System.IO.File.Exists(filePath))
+                {
+                    //if the file does not exists create the file
+                    System.IO.File.Create(filePath).Close();
+                }
+                else
+                {
+                    list = GetProductFromXmalFile(filePath).ToList();
+                }
+                return PartialView("_ViewLoadAllTempReplaceProductPartialPage", list);
             }
-            else
+            catch (Exception exception)
             {
-                list = GetProductFromXmalFile(filePath).ToList();
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
-            return PartialView("_ViewLoadAllTempReplaceProductPartialPage", list);
         }
 
 
@@ -205,11 +242,20 @@ namespace NBL.Areas.Services.Controllers
 
         public ActionResult ViewAll()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            //-------------Status=0 means pending.-------------
-            var replace = _iProductReplaceManager.GetAllPendingReplaceListByBranchAndCompany(branchId,companyId).ToList();
-            return View(replace);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                //-------------Status=0 means pending.-------------
+                var replace = _iProductReplaceManager.GetAllPendingReplaceListByBranchAndCompany(branchId, companyId).ToList();
+                return View(replace);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
     }
 }

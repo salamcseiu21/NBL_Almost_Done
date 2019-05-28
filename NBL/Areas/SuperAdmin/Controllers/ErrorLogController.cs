@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
-using NBL.Models.EntityModels.Requisitions;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels.Logs;
 
@@ -62,6 +60,8 @@ namespace NBL.Areas.SuperAdmin.Controllers
             try
             {
                 int[] intArray2 = new int[5] { 1, 2, 3, 4, 5 };
+                var t = 0;
+                var x = 5 / t;
                 var r = intArray2[80];
             }
             catch(Exception exception)

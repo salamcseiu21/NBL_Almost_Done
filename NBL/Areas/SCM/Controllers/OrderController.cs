@@ -10,6 +10,7 @@ using NBL.Models.EntityModels.Approval;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Invoices;
 using NBL.Models.Enums;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Requisitions;
 using NBL.Models.ViewModels.Summaries;
@@ -47,46 +48,91 @@ namespace NBL.Areas.SCM.Controllers
         }
         public PartialViewResult All()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId, companyId).ToList();
-            ViewBag.Heading = "All Orders";
-            return PartialView("_ViewOrdersPartialPage", orders);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId, companyId).ToList();
+                ViewBag.Heading = "All Orders";
+                return PartialView("_ViewOrdersPartialPage", orders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public PartialViewResult LatestOrders()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetLatestOrdersByBranchAndCompanyId(branchId, companyId).ToList();
-            ViewBag.Heading = "Latest Orders";
-            return PartialView("_ViewOrdersPartialPage", orders);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var orders = _iOrderManager.GetLatestOrdersByBranchAndCompanyId(branchId, companyId).ToList();
+                ViewBag.Heading = "Latest Orders";
+                return PartialView("_ViewOrdersPartialPage", orders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public ActionResult PendingOrder()
         {
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            //var orders = _iInvoiceManager.GetAllInvoicedOrdersByCompanyIdAndStatus(companyId, 0);
-            var orders = _iOrderManager.GetOrdersByCompanyIdAndStatus(companyId, Convert.ToInt32(OrderStatus.InvoicedOrApprovedbyAdmin)).ToList();
-            return View(orders);
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+
+                var orders = _iOrderManager.GetOrdersByCompanyIdAndStatus(companyId, Convert.ToInt32(OrderStatus.InvoicedOrApprovedbyAdmin)).ToList();
+                return View(orders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
 
         public ActionResult ViewAllDeliveredOrders()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var orders = _iDeliveryManager.GetAllDeliveredOrders().ToList().FindAll(n => n.ToBranchId == branchId).ToList().DistinctBy(n => n.TransactionRef).ToList();
-            foreach (Delivery order in orders)
+            try
             {
-                var ord = _iOrderManager.GetOrderInfoByTransactionRef(order.TransactionRef);
-                order.Client = _iClientManager.GetById(ord.ClientId);
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var orders = _iDeliveryManager.GetAllDeliveredOrders().ToList().FindAll(n => n.ToBranchId == branchId).ToList().DistinctBy(n => n.TransactionRef).ToList();
+                foreach (Delivery order in orders)
+                {
+                    var ord = _iOrderManager.GetOrderInfoByTransactionRef(order.TransactionRef);
+                    order.Client = _iClientManager.GetById(ord.ClientId);
+                }
+                return View(orders);
             }
-            return View(orders);
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public ActionResult Approve(int id)
         {
-            var order = _iOrderManager.GetOrderByOrderId(id);
-            order.Client = _iClientManager.GetById(order.ClientId);
-            ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", order.DistributionPointId);
-            return View(order);
+            try
+            {
+                var order = _iOrderManager.GetOrderByOrderId(id);
+                order.Client = _iClientManager.GetById(order.ClientId);
+                ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", order.DistributionPointId);
+                return View(order);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
         [HttpPost]
@@ -126,8 +172,8 @@ namespace NBL.Areas.SCM.Controllers
             }
             catch (Exception exception)
             {
-                string messge = exception.Message;
-                return View();
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
 
         }
@@ -156,8 +202,8 @@ namespace NBL.Areas.SCM.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                Log.WriteErrorLog(e);
+                return PartialView("_ErrorPartial", e);
             }
         }
         [HttpPost]
@@ -171,10 +217,10 @@ namespace NBL.Areas.SCM.Controllers
                 var requisitions = _iProductManager.GetAllGeneralRequisitions().ToList().FindAll(n => n.Status.Equals(0) && n.IsFinalApproved.Equals("Y"));
                 return PartialView("_ViewGeneralRequisitionListPartialPage", requisitions);
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                Console.WriteLine(e);
-                throw;
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
         }
     }

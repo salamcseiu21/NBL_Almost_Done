@@ -5,6 +5,7 @@ using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Securities;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Summaries;
@@ -28,39 +29,75 @@ namespace NBL.Areas.Production.Controllers
         // GET: Factory/Home
         public ActionResult Home()
         {
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var totalProduction = _iReportManager.GetTotalProductionCompanyIdAndYear(companyId, DateTime.Now.Year);
-            var totalDispatch = _iReportManager.GetTotalDispatchCompanyIdAndYear(companyId, DateTime.Now.Year); 
-            var model=new FactorySummaryModel
+            try
             {
-                StockQuantity = _iInventoryManager.GetStockProductInFactory().Count,
-                IssuedQuantity = 0,
-                ReturnedQuantity = 0 ,
-                Production = totalProduction,
-                Dispatch = totalDispatch
-                
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var totalProduction = _iReportManager.GetTotalProductionCompanyIdAndYear(companyId, DateTime.Now.Year);
+                var totalDispatch = _iReportManager.GetTotalDispatchCompanyIdAndYear(companyId, DateTime.Now.Year);
+                var model = new FactorySummaryModel
+                {
+                    StockQuantity = _iInventoryManager.GetStockProductInFactory().Count,
+                    IssuedQuantity = 0,
+                    ReturnedQuantity = 0,
+                    Production = totalProduction,
+                    Dispatch = totalDispatch
 
-            };
-            return View(model);
+
+                };
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         [HttpGet]
         public ActionResult Stock()
         {
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var stock = _iInventoryManager.GetStockProductByCompanyId(companyId);
-            return PartialView("_RptFactoryStockPartialPage",stock);
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var stock = _iInventoryManager.GetStockProductByCompanyId(companyId);
+                return PartialView("_RptFactoryStockPartialPage", stock);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult ProductionSummary()
         {
-            var summaries = _iInventoryManager.GetProductionSummaries().ToList();
-            return PartialView("_RptProductionSummaryPartialPage",summaries);
+            try
+            {
+                var summaries = _iInventoryManager.GetProductionSummaries().ToList();
+                return PartialView("_RptProductionSummaryPartialPage", summaries);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public ActionResult ProductionSummaryByMonth()
         {
-            var summaries = _iInventoryManager.GetProductionSummaryByMonth(DateTime.Now).ToList();
-            return View(summaries);
+            try
+            {
+                var summaries = _iInventoryManager.GetProductionSummaryByMonth(DateTime.Now).ToList();
+                return View(summaries);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
     }
 }

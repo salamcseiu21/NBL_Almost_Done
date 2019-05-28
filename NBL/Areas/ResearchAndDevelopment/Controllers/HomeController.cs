@@ -9,6 +9,7 @@ using NBL.Models;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Requisitions;
 using NBL.Models.EntityModels.Securities;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Requisitions;
 
@@ -35,24 +36,51 @@ namespace NBL.Areas.ResearchAndDevelopment.Controllers
 
         public PartialViewResult GeneralRequisitionList()
         {
-            ICollection<ViewGeneralRequisitionModel> requisitions = _iProductManager.GetAllGeneralRequisitions();
-            return PartialView("_ViewGeneralRequisitionListPartialPage",requisitions);
+            try
+            {
+                ICollection<ViewGeneralRequisitionModel> requisitions = _iProductManager.GetAllGeneralRequisitions();
+                return PartialView("_ViewGeneralRequisitionListPartialPage", requisitions);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public PartialViewResult GeneralRequisitionDetails(long id)
         {
-            var details = _iProductManager.GetGeneralRequisitionDetailsById(id);
-            return PartialView("_ViewGeneralRequisitionDetailsPartialPage",details);
+            try
+            {
+                var details = _iProductManager.GetGeneralRequisitionDetailsById(id);
+                return PartialView("_ViewGeneralRequisitionDetailsPartialPage", details);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public ActionResult GeneralRequisition()
         {
-            var user = (ViewUser)Session["user"];
-            ViewCreateGeneralRequsitionModel model =
-                new ViewCreateGeneralRequsitionModel {RequisitionByUserId = user.UserId};
-            CreateTempRequisitionXmlFile();
-            List<RequisitionFor> requisitionFors = _iCommonManager.GetAllRequisitionForList().ToList();
-            ViewBag.RequisitionForId = new SelectList(requisitionFors, "RequisitionForId", "Description");
-            return View(model);
+            try
+            {
+                var user = (ViewUser)Session["user"];
+                ViewCreateGeneralRequsitionModel model =
+                    new ViewCreateGeneralRequsitionModel { RequisitionByUserId = user.UserId };
+                CreateTempRequisitionXmlFile();
+                List<RequisitionFor> requisitionFors = _iCommonManager.GetAllRequisitionForList().ToList();
+                ViewBag.RequisitionForId = new SelectList(requisitionFors, "RequisitionForId", "Description");
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public ActionResult GeneralRequisition(FormCollection collection)
@@ -100,6 +128,7 @@ namespace NBL.Areas.ResearchAndDevelopment.Controllers
             {
                 List<RequisitionFor> requisitionFors = _iCommonManager.GetAllRequisitionForList().ToList();
                 ViewBag.RequisitionForId = new SelectList(requisitionFors, "RequisitionForId", "Description");
+                Log.WriteErrorLog(exception);
                 return View(model);
                 
             }
@@ -151,7 +180,8 @@ namespace NBL.Areas.ResearchAndDevelopment.Controllers
             }
             catch (Exception e)
             {
-
+                Log.WriteErrorLog(e);
+               
                 if (e.InnerException != null)
                     ViewBag.Error = e.Message + " <br /> System Error:" + e.InnerException?.Message;
 
@@ -179,9 +209,18 @@ namespace NBL.Areas.ResearchAndDevelopment.Controllers
 
         public PartialViewResult LoadTempRequisitionProductList(int RequisitionByUserId)
         {
-            string filePath= GetGeneralRequisitionXmlFilePathByUserId(RequisitionByUserId);
-            var products = GetProductFromXmalFile(filePath);
-            return PartialView("_ViewGeneralRequsitionPartialPage",products);
+            try
+            {
+                string filePath = GetGeneralRequisitionXmlFilePathByUserId(RequisitionByUserId);
+                var products = GetProductFromXmalFile(filePath);
+                return PartialView("_ViewGeneralRequsitionPartialPage", products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         private string GetGeneralRequisitionXmlFilePathByUserId(int requisitionByUserId)

@@ -49,27 +49,45 @@ namespace NBL.Areas.Production.Controllers
         }
         public ActionResult DeliverableTransferIssueList() 
         {
-            IEnumerable<TransferIssue> issueList = _iProductManager.GetDeliverableTransferIssueList();
-            var model=new ViewTransferIssueModel();
-            var transferIssues = issueList as TransferIssue[] ?? issueList.ToArray();
-            foreach (var issue in transferIssues)
+            try
             {
-                model.FromBranch = _iBranchManager.GetById(issue.FromBranchId);
-                model.ToBranch = _iBranchManager.GetById(issue.ToBranchId);
-                model.TransferIssues = transferIssues.ToList();
+                IEnumerable<TransferIssue> issueList = _iProductManager.GetDeliverableTransferIssueList();
+                var model = new ViewTransferIssueModel();
+                var transferIssues = issueList as TransferIssue[] ?? issueList.ToArray();
+                foreach (var issue in transferIssues)
+                {
+                    model.FromBranch = _iBranchManager.GetById(issue.FromBranchId);
+                    model.ToBranch = _iBranchManager.GetById(issue.ToBranchId);
+                    model.TransferIssues = transferIssues.ToList();
+                }
+                return View(model);
             }
-            return View(model);
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         [HttpGet]
         public ActionResult Delivery(long id)
         {
-             
-            var trip = _iInventoryManager.GetAllTrip().ToList().Find(n=>n.TripId==id);
-            var stock=_iInventoryManager.GetStockProductInFactory();
-            Session["Factory_Stock"] = stock;
-             
-            return View(trip);
+
+            try
+            {
+                var trip = _iInventoryManager.GetAllTrip().ToList().Find(n => n.TripId == id);
+                var stock = _iInventoryManager.GetStockProductInFactory();
+                Session["Factory_Stock"] = stock;
+
+                return View(trip);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         [HttpPost]
@@ -127,11 +145,7 @@ namespace NBL.Areas.Production.Controllers
                    //return Json(model, JsonRequestBehavior.AllowGet);
                 }
 
-                //if (oldestProducts.Count > 0)
-                //{
-                //    model.Message = "<p style='color:red'>There are total "+oldestProducts.Count+" Old product of this type .Please deliver those first .. </p>";
-                //    return Json(model, JsonRequestBehavior.AllowGet);
-                //}
+               
                 else if (isValied && !isDeliveredBefore && isInfactory && !isComplete)
                 {
                    var result= _iProductManager.AddProductToTextFile(scannedBarCode, filePath);
@@ -145,17 +159,15 @@ namespace NBL.Areas.Production.Controllers
             }
             catch (FormatException exception)
             {
-                log.Heading = exception.GetType().ToString();
-                log.LogMessage = exception.StackTrace;
-                Log.WriteErrorLog(log);
+               
+                Log.WriteErrorLog(exception);
                 model.Message = "<p style='color:red'>Invalid Barcode</p>";
              // return  Json(model, JsonRequestBehavior.AllowGet);
             }
             catch (Exception exception)
             {
-                log.Heading = exception.GetType().ToString();
-                log.LogMessage = exception.StackTrace;
-                Log.WriteErrorLog(log);
+               
+                Log.WriteErrorLog(exception);
                 model.Message = "<p style='color:red'>" + exception.Message + "</p>";
               //return  Json(model, JsonRequestBehavior.AllowGet);
             }
@@ -165,128 +177,210 @@ namespace NBL.Areas.Production.Controllers
         [HttpPost]
         public ActionResult SaveDispatchInformation(long tripId) 
         {
-            var products = _iProductManager.GetDeliverableProductListByTripId(tripId);
-            string fileName = "Deliverable_Product_For_" + tripId;
-            var filePath = Server.MapPath("~/Files/" + fileName);
-            var scannedProducts = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
-            int dispatchByUserId = ((ViewUser)Session["user"]).UserId;
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var viewTrip=_iInventoryManager.GetAllTrip().ToList().Find(n => n.TripId == tripId);
-
-            DispatchModel model=new DispatchModel
+            try
             {
-                DispatchByUserId = dispatchByUserId,
-                CompanyId = companyId,
-                TripModel = viewTrip,
-                DispatchDate = DateTime.Now,
-                ScannedProducts = scannedProducts,
-                DispatchModels = products
-            };
+                var products = _iProductManager.GetDeliverableProductListByTripId(tripId);
+                string fileName = "Deliverable_Product_For_" + tripId;
+                var filePath = Server.MapPath("~/Files/" + fileName);
+                var scannedProducts = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                int dispatchByUserId = ((ViewUser)Session["user"]).UserId;
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var viewTrip = _iInventoryManager.GetAllTrip().ToList().Find(n => n.TripId == tripId);
 
-
-            if (scannedProducts.Count>0)
-            {
-                string result = _iFactoryDeliveryManager.SaveDispatchInformation(model);
-                if (result.StartsWith("Sa"))
+                DispatchModel model = new DispatchModel
                 {
-                    System.IO.File.Create(filePath).Close();
-                    //---------------Send mail to branch before redirect--------------
-                    TempData["Dispatched"] = result;
-                    return RedirectToAction("DeliverableTransferIssueList");
+                    DispatchByUserId = dispatchByUserId,
+                    CompanyId = companyId,
+                    TripModel = viewTrip,
+                    DispatchDate = DateTime.Now,
+                    ScannedProducts = scannedProducts,
+                    DispatchModels = products
+                };
+
+
+                if (scannedProducts.Count > 0)
+                {
+                    string result = _iFactoryDeliveryManager.SaveDispatchInformation(model);
+                    if (result.StartsWith("Sa"))
+                    {
+                        System.IO.File.Create(filePath).Close();
+                        //---------------Send mail to branch before redirect--------------
+                        TempData["Dispatched"] = result;
+                        return RedirectToAction("DeliverableTransferIssueList");
+                    }
+                    return RedirectToAction("Delivery", new { id = tripId });
                 }
+
                 return RedirectToAction("Delivery", new { id = tripId });
             }
-           
-            return RedirectToAction("Delivery",new {id= tripId });
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
 
         public ActionResult Chalan(long dispatchId)
         {
-            ViewDispatchChalan chalan = _iFactoryDeliveryManager.GetDispatchChalanByDispatchId(dispatchId);
-            return View(chalan);
+            try
+            {
+                ViewDispatchChalan chalan = _iFactoryDeliveryManager.GetDispatchChalanByDispatchId(dispatchId);
+                return View(chalan);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
         public PartialViewResult ViewOrderDetails(int transferIssueId) 
         {
 
-            TransferIssue model = _iProductManager.GetDeliverableTransferIssueById(transferIssueId);
-            return PartialView("_ViewDeliveryModalPartialPage", model);
+
+            try
+            {
+                TransferIssue model = _iProductManager.GetDeliverableTransferIssueById(transferIssueId);
+                return PartialView("_ViewDeliveryModalPartialPage", model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+          
         }
 
         [HttpPost]
         public PartialViewResult LoadDeliverableProduct(long tripId)
         {
-           
-            var products = _iProductManager.GetDeliverableProductListByTripId(tripId).ToList();
-           
-            return PartialView("_ViewRequiredTripProductsPartialPage",products);
+
+            try
+            {
+                var products = _iProductManager.GetDeliverableProductListByTripId(tripId).ToList();
+
+                return PartialView("_ViewRequiredTripProductsPartialPage", products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         [HttpPost]
         public PartialViewResult LoadScannecdProduct(long tripId) 
         {
-            List<ScannedProduct> products = new List<ScannedProduct>();
-            string fileName = "Deliverable_Product_For_" + tripId;
-            var filePath = Server.MapPath("~/Files/" + fileName);
-            if (System.IO.File.Exists(filePath))
+            try
             {
-                //if the file is exists read the file
-                products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                List<ScannedProduct> products = new List<ScannedProduct>();
+                string fileName = "Deliverable_Product_For_" + tripId;
+                var filePath = Server.MapPath("~/Files/" + fileName);
+                if (System.IO.File.Exists(filePath))
+                {
+                    //if the file is exists read the file
+                    products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                }
+                else
+                {
+                    //if the file does not exists create the file
+                    System.IO.File.Create(filePath).Close();
+                }
+                return PartialView("_ViewScannedProductPartialPage", products);
             }
-            else
+            catch (Exception exception)
             {
-                //if the file does not exists create the file
-                System.IO.File.Create(filePath).Close();
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
-            return PartialView("_ViewScannedProductPartialPage", products);
         }
         //---------------For dispatch----------
         public ActionResult ViewScannedBarcodeList(long id)
         {
-            string fileName = "Deliverable_Product_For_" + id;
-            var filePath = Server.MapPath("~/Files/" + fileName);
-            var products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
-            return PartialView("_ViewScannedBarCodePartialPage", products);
+            try
+            {
+                string fileName = "Deliverable_Product_For_" + id;
+                var filePath = Server.MapPath("~/Files/" + fileName);
+                var products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                return PartialView("_ViewScannedBarCodePartialPage", products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult TripList()
         {
-            IEnumerable<ViewTripModel> tripModels = _iInventoryManager.GetAllTrip().ToList().FindAll(n=>n.Status.Equals(0));
-            return View(tripModels);
+            try
+            {
+                IEnumerable<ViewTripModel> tripModels = _iInventoryManager.GetAllTrip().ToList().FindAll(n => n.Status.Equals(0));
+                return View(tripModels);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         //----------------------------Delivery to Client ---------------------
         public ActionResult DeliverableOrderList()
         {
-            SummaryModel model = new SummaryModel();
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByDistributionPoint(branchId).ToList();
-            foreach (var invoice in invoicedOrders)
+            try
             {
-                invoice.Client = _iClientManager.GetById(invoice.ClientId);
+                SummaryModel model = new SummaryModel();
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByDistributionPoint(branchId).ToList();
+                foreach (var invoice in invoicedOrders)
+                {
+                    invoice.Client = _iClientManager.GetById(invoice.ClientId);
+                }
+                model.InvoicedOrderList = invoicedOrders;
+                return View(model);
             }
-            model.InvoicedOrderList = invoicedOrders;
-            return View(model);
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult OrderDelivery(int id)
         {
 
 
-            //int branchId = Convert.ToInt32(Session["BranchId"]);
-            //int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(id);
-            var invoicedOrders = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceRef(invoice.InvoiceRef).ToList();
-            var stock = _iInventoryManager.GetStockProductInFactory();
-            Session["Factory_stock1"] = stock;
-            var model = new ViewDeliveryModel
+
+            try
             {
-                Client = _iClientManager.GetById(invoice.ClientId),
-                InvoiceDetailses = invoicedOrders,
-                Invoice = invoice
-            };
-            return View(model);
+                var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(id);
+                var invoicedOrders = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceRef(invoice.InvoiceRef).ToList();
+                var stock = _iInventoryManager.GetStockProductInFactory();
+                Session["Factory_stock1"] = stock;
+                var model = new ViewDeliveryModel
+                {
+                    Client = _iClientManager.GetById(invoice.ClientId),
+                    InvoiceDetailses = invoicedOrders,
+                    Invoice = invoice
+                };
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
 
@@ -398,8 +492,8 @@ namespace NBL.Areas.Production.Controllers
             catch (Exception exception)
             {
                 TempData["Error"] = exception.Message;
-                //return View("Delivery");
-                throw new Exception();
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
         }
 
@@ -481,11 +575,14 @@ namespace NBL.Areas.Production.Controllers
             catch (FormatException exception)
             {
                 model.Message = "<p style='color:red'>" + exception.GetType() + "</p>";
+                Log.WriteErrorLog(exception);
+              
                 // return Json(model, JsonRequestBehavior.AllowGet);
             }
             catch (Exception exception)
             {
-
+                Log.WriteErrorLog(exception);
+             
                 model.Message = "<p style='color:red'>" + exception.Message + "</p>";
                 //return Json(model, JsonRequestBehavior.AllowGet);
             }
@@ -494,95 +591,158 @@ namespace NBL.Areas.Production.Controllers
 
         public ActionResult ScannedBarcodeList(long id)
         {
-            string fileName = "Scanned_Ordered_Product_List_For_" + id;
-            var filePath = Server.MapPath("~/Files/" + fileName);
-            var products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
-            return PartialView("_ViewScannedBarCodePartialPage", products);
+            try
+            {
+                string fileName = "Scanned_Ordered_Product_List_For_" + id;
+                var filePath = Server.MapPath("~/Files/" + fileName);
+                var products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                return PartialView("_ViewScannedBarCodePartialPage", products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public ActionResult ViewInvoiceIdOrderDetails(int invoiceId)
         {
-            var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
-            return PartialView("_ModalOrderDeliveryFromFactoryPartialPage", invoice);
+            try
+            {
+                var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
+                return PartialView("_ModalOrderDeliveryFromFactoryPartialPage", invoice);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         [HttpPost]
         public PartialViewResult LoadDeliverableProductToFactory(int invoiceId)
         {
-            var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
-            string fileName = "Ordered_Product_List_For_" + invoiceId;
-            var filePath = Server.MapPath("~/Files/" + fileName);
-            if (!System.IO.File.Exists(filePath))
+            try
             {
-                //if the file does not exists create the file
-                System.IO.File.Create(filePath).Close();
-            }
-            var invoicedOrders = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceRef(invoice.InvoiceRef).ToList();
-            List<InvoiceDetails> list = new List<InvoiceDetails>();
-
-            var deliveredProducts = _iInvoiceManager.GetDeliveredProductsByInvoiceRef(invoice.InvoiceRef);
-
-            foreach (InvoiceDetails invoiceDetailse in invoicedOrders)
-            {
-                var invoiceQty = invoiceDetailse.Quantity;
-                var deliveredQty = 0;
-                var viewProduct = deliveredProducts.ToList().Find(n => n.ProductId == invoiceDetailse.ProductId);
-                if (viewProduct != null)
+                var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
+                string fileName = "Ordered_Product_List_For_" + invoiceId;
+                var filePath = Server.MapPath("~/Files/" + fileName);
+                if (!System.IO.File.Exists(filePath))
                 {
-                    deliveredQty = deliveredProducts.ToList().FindAll(n => n.ProductId == invoiceDetailse.ProductId).Sum(n => n.Quantity);
+                    //if the file does not exists create the file
+                    System.IO.File.Create(filePath).Close();
+                }
+                var invoicedOrders = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceRef(invoice.InvoiceRef).ToList();
+                List<InvoiceDetails> list = new List<InvoiceDetails>();
+
+                var deliveredProducts = _iInvoiceManager.GetDeliveredProductsByInvoiceRef(invoice.InvoiceRef);
+
+                foreach (InvoiceDetails invoiceDetailse in invoicedOrders)
+                {
+                    var invoiceQty = invoiceDetailse.Quantity;
+                    var deliveredQty = 0;
+                    var viewProduct = deliveredProducts.ToList().Find(n => n.ProductId == invoiceDetailse.ProductId);
+                    if (viewProduct != null)
+                    {
+                        deliveredQty = deliveredProducts.ToList().FindAll(n => n.ProductId == invoiceDetailse.ProductId).Sum(n => n.Quantity);
+                    }
+
+                    if (invoiceQty != deliveredQty)
+                    {
+                        invoiceDetailse.Quantity = invoiceQty - deliveredQty;
+                        list.Add(invoiceDetailse);
+                    }
                 }
 
-                if (invoiceQty != deliveredQty)
-                {
-                    invoiceDetailse.Quantity = invoiceQty - deliveredQty;
-                    list.Add(invoiceDetailse);
-                }
+                return PartialView("_ViewLoadDeliverableProductPartialPage", list);
             }
+            catch (Exception exception)
+            {
 
-            return PartialView("_ViewLoadDeliverableProductPartialPage", list);
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
 
         [HttpPost]
         public PartialViewResult LoadScannedProduct(int invoiceId)
         {
-            // var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
-            string fileName = "Scanned_Ordered_Product_List_For_" + invoiceId;
-            var filePath = Server.MapPath("~/Files/" + fileName);
-            List<ScannedProduct> list = new List<ScannedProduct>();
-            if (!System.IO.File.Exists(filePath))
+
+            try
             {
-                //if the file does not exists create the file
-                System.IO.File.Create(filePath).Close();
+                string fileName = "Scanned_Ordered_Product_List_For_" + invoiceId;
+                var filePath = Server.MapPath("~/Files/" + fileName);
+                List<ScannedProduct> list = new List<ScannedProduct>();
+                if (!System.IO.File.Exists(filePath))
+                {
+                    //if the file does not exists create the file
+                    System.IO.File.Create(filePath).Close();
+                }
+                else
+                {
+                    list = _iProductManager.ScannedProducts(filePath);
+                }
+                return PartialView("_ViewLoadScannedProductPartialPage", list);
             }
-            else
+            catch (Exception exception)
             {
-                list = _iProductManager.ScannedProducts(filePath);
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
-            return PartialView("_ViewLoadScannedProductPartialPage", list);
         }
 
         public ActionResult DeliveredOrderList()
         {
 
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var user = (ViewUser)Session["user"];
-            var orders = _iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyAndUserId(branchId, companyId, user.UserId).ToList(); 
-            return View(orders);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var user = (ViewUser)Session["user"];
+                var orders = _iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyAndUserId(branchId, companyId, user.UserId).ToList();
+                return View(orders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult DeliveredBarCodeList(int deliveryId)
         {
-            var chalan = _iDeliveryManager.GetChalanByDeliveryIdFromFactory(deliveryId);
-            return View(chalan);
+            try
+            {
+                var chalan = _iDeliveryManager.GetChalanByDeliveryIdFromFactory(deliveryId);
+                return View(chalan);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
 
         public ActionResult OrderChalan(int deliveryId)
         {
-            var chalan = _iDeliveryManager.GetChalanByDeliveryIdFromFactory(deliveryId);
-            return View(chalan);
+            try
+            {
+                var chalan = _iDeliveryManager.GetChalanByDeliveryIdFromFactory(deliveryId);
+                return View(chalan);
 
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
     }
 }
