@@ -33,6 +33,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
                 aLogModel.Heading = xElements[0].Value;
                 aLogModel.LogMessage = xElements[1].Value;
                 aLogModel.LogDateTime = Convert.ToDateTime(xElements[2].Value);
+                aLogModel.CustomeMessage = xElements[3].Value;
                 list.Add(aLogModel);
             }
 

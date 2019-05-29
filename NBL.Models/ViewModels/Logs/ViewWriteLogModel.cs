@@ -8,6 +8,7 @@ namespace NBL.Models.ViewModels.Logs
         public string LogId { get; set; }   
         public string Heading { get; set; }
         public string LogMessage { get; set; }
-        public DateTime LogDateTime { get; set; }   
+        public DateTime LogDateTime { get; set; }
+        public string CustomeMessage { get; set; }
     }
 }

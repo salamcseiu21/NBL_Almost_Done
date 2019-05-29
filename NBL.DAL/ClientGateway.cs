@@ -8,6 +8,7 @@ using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Locations;
 using NBL.Models.EntityModels.Masters;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 
 namespace NBL.DAL
@@ -62,10 +63,12 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not Save", sqlException);
             }
             catch(Exception e)
             {
+                Log.WriteErrorLog(e);
                 throw new Exception("Clould not Save Client",e);
             }
             finally
@@ -114,10 +117,12 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Unable to collect pending Clients due to sql exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Unable to collect pending Clients", exception);
             }
             finally
@@ -156,10 +161,12 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Unable to collect Clients attachment by Client Id due to sql exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Unable to collect Client attachment by Client Id", exception);
             }
             finally
@@ -196,10 +203,12 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Unable to collect Clients attachment due to sql exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Unable to collect Client attachment", exception);
             }
             finally
@@ -250,11 +259,12 @@ namespace NBL.DAL
             }
             catch(SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Unable to Get Client By Email", sqlException);
             }
             catch (Exception e)
             {
-
+                Log.WriteErrorLog(e);
                 throw new Exception("Unable to Get Client By Email",e);
             }
             finally
@@ -307,10 +317,12 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Unable to update  client info due to sql exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Unable to update  client info", exception);
             }
             finally
@@ -372,10 +384,12 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Unable to collect Client Information by client Id due to Sql Exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
 
                 throw new Exception("Unable to collect Client Information by client Id", exception);
             }
@@ -470,11 +484,12 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Unable to collect Client Information due to Sql Exception", sqlException);
             }
             catch (Exception exception)
             {
-
+                Log.WriteErrorLog(exception);
                 throw new Exception("Unable to collect Client Information", exception);
             }
             finally
@@ -547,11 +562,12 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Unable to collect Client Information due to Sql Exception", sqlException);
             }
             catch (Exception e)
             {
-
+                Log.WriteErrorLog(e);
                 throw new Exception("Unable to collect Client Information", e);
             }
             finally
@@ -583,6 +599,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Colud not get  Client max serial", exception);
             }
             finally
@@ -621,8 +638,9 @@ namespace NBL.DAL
             }
             catch (Exception e)
             {
-
+                Log.WriteErrorLog(e);
                 throw new Exception("Unable to collect Client Information for auto complete by Branch and Serach term", e);
+
             }
             finally
             {
@@ -691,7 +709,7 @@ namespace NBL.DAL
             }
             catch (Exception e)
             {
-
+                Log.WriteErrorLog(e);
                 throw new Exception("Unable to collect Client Information", e);
             }
             finally
@@ -749,10 +767,13 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Unable to collect Clients by Branch Id due to sql exception", sqlException);
             }
             catch (Exception exception)
+
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Unable to collect Clients by Branch Id", exception);
             }
             finally
@@ -782,10 +803,12 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not approve new client due to Sql Exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not approve new client", exception);
             }
             finally
@@ -817,10 +840,12 @@ namespace NBL.DAL
             
             catch (SqlException sqlException)
             {
+                 Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not collect outstanding balance of client by Account code due to Sql Exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect outstanding balance of client by Account code", exception);
             }
             finally
@@ -851,10 +876,12 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not upload client document due to sql Exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not upload client document", exception);
             }
             finally
@@ -892,10 +919,12 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not upload client summary due to sql Exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not upload client summary", exception);
             }
             finally
@@ -959,10 +988,12 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Unable to collect Clients due to Sql Exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Unable to collect Clients", exception);
             }
             finally

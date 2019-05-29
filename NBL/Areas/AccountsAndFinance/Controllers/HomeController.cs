@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Microsoft.Office.Interop.Excel;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.FinanceModels;
-using NBL.Models.EntityModels.Identities;
-using NBL.Models.EntityModels.Securities;
-using NBL.Models.ViewModels.FinanceModels;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Summaries;
 
@@ -39,80 +35,62 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         public ActionResult Home()
         {
 
-            var companyId = Convert.ToInt32(Session["CompanyId"]);
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var clients = _iReportManager.GetTopClients().ToList();
-            var batteries = _iReportManager.GetPopularBatteries().ToList();
-            ViewTotalOrder totalOrder = _iReportManager.GetTotalOrderByBranchIdCompanyIdAndYear(branchId, companyId, DateTime.Now.Year);
-            var accountSummary =_iAccountsManager.GetAccountSummaryofCurrentMonthByBranchAndCompanyId(branchId, companyId);
-            var branches = _iBranchManager.GetAllBranches();
-            SummaryModel aModel = new SummaryModel
+            try
             {
-                Branches = branches.ToList(),
-                BranchId = branchId,
-                CompanyId = companyId,
-                TotalOrder = totalOrder,
-                AccountSummary = accountSummary,
-                Clients = clients,
-                Products = batteries
+                var companyId = Convert.ToInt32(Session["CompanyId"]);
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var clients = _iReportManager.GetTopClients().ToList();
+                var batteries = _iReportManager.GetPopularBatteries().ToList();
+                ViewTotalOrder totalOrder = _iReportManager.GetTotalOrderByBranchIdCompanyIdAndYear(branchId, companyId, DateTime.Now.Year);
+                var accountSummary = _iAccountsManager.GetAccountSummaryofCurrentMonthByBranchAndCompanyId(branchId, companyId);
+                var branches = _iBranchManager.GetAllBranches();
+                SummaryModel aModel = new SummaryModel
+                {
+                    Branches = branches.ToList(),
+                    BranchId = branchId,
+                    CompanyId = companyId,
+                    TotalOrder = totalOrder,
+                    AccountSummary = accountSummary,
+                    Clients = clients,
+                    Products = batteries
 
-            };
+                };
 
-            return View(aModel);
+                return View(aModel);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
 
-        public PartialViewResult ViewClient()
-        {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var clients = _iClientManager.GetClientByBranchId(branchId).ToList();
-            return PartialView("_ViewClientPartialPage",clients);
+       
 
-        }
-
-        public PartialViewResult ViewClientProfile(int id)
-        {
-            var client = _iClientManager.GetClientDeailsById(id);
-            return PartialView("_ViewClientProfilePartialPage",client);
-
-        }
+    
 
         public ActionResult ClientLedger(int id)
         {
-            var client = _iClientManager.GetById(id);
-            var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
-            LedgerModel model = new LedgerModel
+            try
             {
-                Client = client,
-                LedgerModels = ledgers
-            };
-            return View(model);
+                var client = _iClientManager.GetById(id);
+                var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+                LedgerModel model = new LedgerModel
+                {
+                    Client = client,
+                    LedgerModels = ledgers
+                };
+                return View(model);
+            }
+            catch (Exception exception)
+            {
 
-        }
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
-
-        public PartialViewResult ViewEmployee()
-        {
-            var employees = _iEmployeeManager.GetAllEmployeeWithFullInfo().ToList();
-            return PartialView("_ViewEmployeePartialPage",employees);
-
-        }
-
-        public PartialViewResult ViewEmployeeProfile(int id)
-        {
-            var employee = _iEmployeeManager.GetEmployeeById(id);
-            return PartialView("_ViewEmployeeProfilePartialPage",employee);
-        }
-        public PartialViewResult ViewProduct()
-        {
-            var products = _iProductManager.GetAll().ToList();
-            return PartialView("_ViewProductPartialPage", products);
-
-        }
-        public PartialViewResult ViewBranch()
-        {
-            var branches = _iBranchManager.GetAllBranches().ToList();
-            return PartialView("_ViewBranchPartialPage", branches);
         }
 
     }

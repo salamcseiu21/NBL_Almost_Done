@@ -10,6 +10,7 @@ using NBL.BLL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.VatDiscounts;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 
 namespace NBL.Areas.AccountsAndFinance.Controllers
@@ -35,21 +36,39 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         [HttpGet]
         public ActionResult ActiveReceivable()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var receivableCheques = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId);
-            foreach (ChequeDetails cheque in receivableCheques)
+            try
             {
-                cheque.Client = _iClientManager.GetById(cheque.ClientId);
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var receivableCheques = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId);
+                foreach (ChequeDetails cheque in receivableCheques)
+                {
+                    cheque.Client = _iClientManager.GetById(cheque.ClientId);
+                }
+                return View(receivableCheques);
             }
-            return View(receivableCheques);
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpGet]
         public ActionResult ReceivableDetails(int id)
         {
-            var receivableCheques = _iAccountsManager.GetReceivableChequeByDetailsId(id);
-            receivableCheques.Client = _iClientManager.GetById(receivableCheques.ClientId);
-            return View(receivableCheques);
+            try
+            {
+                var receivableCheques = _iAccountsManager.GetReceivableChequeByDetailsId(id);
+                receivableCheques.Client = _iClientManager.GetById(receivableCheques.ClientId);
+                return View(receivableCheques);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public ActionResult ReceivableDetails(FormCollection collection, int id)
@@ -100,9 +119,9 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             }
             catch (Exception exception)
             {
-                var chequeDetails = _iAccountsManager.GetReceivableChequeByDetailsId(id);
                 TempData["Error"] = exception.Message;
-                return View(chequeDetails);
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
         }
 
@@ -155,6 +174,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             {
                 string message = exception.Message;
                 aModel.Message = " <p style='color:red'>" + message + "</p>";
+                Log.WriteErrorLog(exception);
 
             }
             return Json(aModel, JsonRequestBehavior.AllowGet);
@@ -163,93 +183,174 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
 
         public PartialViewResult Vouchers()
         {
-            var vouchers = _iAccountsManager.GetPendingVoucherList().ToList();
-            return PartialView("_VoucherPartialPage", vouchers);
+            try
+            {
+                var vouchers = _iAccountsManager.GetPendingVoucherList().ToList();
+                return PartialView("_VoucherPartialPage", vouchers);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public ActionResult VoucherDetails(int id)
         {
-            var voucher = _iAccountsManager.GetVoucherByVoucherId(id);
-            var details = _iAccountsManager.GetVoucherDetailsByVoucherId(voucher.VoucherId);
-            ViewVoucherModel model = new ViewVoucherModel
+            try
             {
-                Voucher = voucher,
-                VoucherDetails = details.ToList()
-            };
-            return View(model);
+                var voucher = _iAccountsManager.GetVoucherByVoucherId(id);
+                var details = _iAccountsManager.GetVoucherDetailsByVoucherId(voucher.VoucherId);
+                var model = new ViewVoucherModel
+                {
+                    Voucher = voucher,
+                    VoucherDetails = details.ToList()
+                };
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         [HttpPost]
         public ActionResult Cancel(FormCollection collection)
         {
-            int voucherId = Convert.ToInt32(collection["VoucherId"]);
-            string reason = collection["Reason"];
-            var anUser = (ViewUser)Session["user"];
-            bool result = _iAccountsManager.CancelVoucher(voucherId, reason, anUser.UserId);
-            if (result)
+            try
             {
-                return RedirectToAction("Vouchers");
+                int voucherId = Convert.ToInt32(collection["VoucherId"]);
+                string reason = collection["Reason"];
+                var anUser = (ViewUser)Session["user"];
+                bool result = _iAccountsManager.CancelVoucher(voucherId, reason, anUser.UserId);
+                if (result)
+                {
+                    return RedirectToAction("Vouchers");
+                }
+                var voucher = _iAccountsManager.GetVoucherByVoucherId(voucherId);
+                return RedirectToAction("VoucherDetails", "Voucher", voucher);
             }
-            var voucher = _iAccountsManager.GetVoucherByVoucherId(voucherId);
-            return RedirectToAction("VoucherDetails", "Voucher", voucher);
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult Approve(FormCollection collection)
         {
-            int voucherId = Convert.ToInt32(collection["VoucherIdToApprove"]);
-            Voucher aVoucher = _iAccountsManager.GetVoucherByVoucherId(voucherId);
-            var anUser = (ViewUser)Session["user"];
-            var voucherDetails = _iAccountsManager.GetVoucherDetailsByVoucherId(voucherId).ToList();
-            bool result = _iAccountsManager.ApproveVoucher(aVoucher, voucherDetails, anUser.UserId);
-            return result ? RedirectToAction("Vouchers") : RedirectToAction("VoucherDetails", "AccountManager", aVoucher);
+            try
+            {
+                int voucherId = Convert.ToInt32(collection["VoucherIdToApprove"]);
+                Voucher aVoucher = _iAccountsManager.GetVoucherByVoucherId(voucherId);
+                var anUser = (ViewUser)Session["user"];
+                var voucherDetails = _iAccountsManager.GetVoucherDetailsByVoucherId(voucherId).ToList();
+                bool result = _iAccountsManager.ApproveVoucher(aVoucher, voucherDetails, anUser.UserId);
+                return result ? RedirectToAction("Vouchers") : RedirectToAction("VoucherDetails", "AccountManager", aVoucher);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
 
         public ActionResult ViewJournal()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            List<JournalVoucher> journals = _iAccountsManager.GetAllPendingJournalVoucherByBranchAndCompanyId(branchId, companyId);
-            return View(journals);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                List<JournalVoucher> journals = _iAccountsManager.GetAllPendingJournalVoucherByBranchAndCompanyId(branchId, companyId);
+                return View(journals);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult JournalDetails(int id)
         {
-            JournalVoucher journal = _iAccountsManager.GetJournalVoucherById(id);
-            List<JournalDetails> vouchers = _iAccountsManager.GetJournalVoucherDetailsById(id);
-            ViewBag.JournalDetails = vouchers;
-            return View(journal);
+            try
+            {
+                JournalVoucher journal = _iAccountsManager.GetJournalVoucherById(id);
+                List<JournalDetails> vouchers = _iAccountsManager.GetJournalVoucherDetailsById(id);
+                ViewBag.JournalDetails = vouchers;
+                return View(journal);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
         [HttpPost]
         public ActionResult CancelJournalVoucher(FormCollection collection)
         {
-            int voucherId = Convert.ToInt32(collection["VoucherId"]);
-            string reason = collection["Reason"];
-            var anUser = (ViewUser)Session["user"];
-            bool result = _iAccountsManager.CancelJournalVoucher(voucherId, reason, anUser.UserId);
-            if (result)
+            try
             {
-                return RedirectToAction("ViewJournal");
+                int voucherId = Convert.ToInt32(collection["VoucherId"]);
+                string reason = collection["Reason"];
+                var anUser = (ViewUser)Session["user"];
+                bool result = _iAccountsManager.CancelJournalVoucher(voucherId, reason, anUser.UserId);
+                if (result)
+                {
+                    return RedirectToAction("ViewJournal");
+                }
+                var voucher = _iAccountsManager.GetJournalVoucherById(voucherId);
+                return RedirectToAction("JournalDetails", "Voucher", voucher);
             }
-            var voucher = _iAccountsManager.GetJournalVoucherById(voucherId);
-            return RedirectToAction("JournalDetails", "Voucher", voucher);
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         [HttpPost]
         public ActionResult ApproveJournalVoucher(FormCollection collection)
         {
-            int voucherId = Convert.ToInt32(collection["JournalVoucherIdToApprove"]);
-            JournalVoucher aVoucher = _iAccountsManager.GetJournalVoucherById(voucherId);
-            var anUser = (ViewUser)Session["user"];
-            var voucherDetails = _iAccountsManager.GetJournalVoucherDetailsById(voucherId).ToList();
-            bool result = _iAccountsManager.ApproveJournalVoucher(aVoucher, voucherDetails, anUser.UserId);
-            return result ? RedirectToAction("ViewJournal") : RedirectToAction("JournalDetails", "AccountManager", aVoucher);
+            try
+            {
+                int voucherId = Convert.ToInt32(collection["JournalVoucherIdToApprove"]);
+                JournalVoucher aVoucher = _iAccountsManager.GetJournalVoucherById(voucherId);
+                var anUser = (ViewUser)Session["user"];
+                var voucherDetails = _iAccountsManager.GetJournalVoucherDetailsById(voucherId).ToList();
+                bool result = _iAccountsManager.ApproveJournalVoucher(aVoucher, voucherDetails, anUser.UserId);
+                return result ? RedirectToAction("ViewJournal") : RedirectToAction("JournalDetails", "AccountManager", aVoucher);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult Vats()
         {
-            var vats = _iVatManager.GetAllPendingVats();
-            return View(vats);
+            try
+            {
+                var vats = _iVatManager.GetAllPendingVats();
+                return View(vats);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public JsonResult ApproveVat(FormCollection collection)
@@ -268,6 +369,8 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             {
                 if (e.InnerException != null)
                     aModel.Message = "<p style='color:red'>" + e.InnerException.Message + "</p>";
+                Log.WriteErrorLog(e);
+               
             }
 
             return Json(aModel, JsonRequestBehavior.AllowGet);
@@ -276,8 +379,17 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
 
         public ActionResult Discounts()
         {
-            IEnumerable<Discount> discounts = _iDiscountManager.GetAllPendingDiscounts();
-            return View(discounts);
+            try
+            {
+                IEnumerable<Discount> discounts = _iDiscountManager.GetAllPendingDiscounts();
+                return View(discounts);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         [HttpPost]
@@ -297,6 +409,8 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             {
                 if (e.InnerException != null)
                     aModel.Message = "<p style='color:red'>" + e.InnerException.Message + "</p>";
+                Log.WriteErrorLog(e);
+               
             }
 
             return Json(aModel, JsonRequestBehavior.AllowGet);

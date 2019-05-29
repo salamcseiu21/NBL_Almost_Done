@@ -13,6 +13,7 @@ using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.EntityModels.VatDiscounts;
+using NBL.Models.Logs;
 using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
@@ -68,100 +69,97 @@ namespace NBL.Areas.Corporate.Controllers
         // GET: Corporate/Home
         public ActionResult Home()
         {
-            Session.Remove("BranchId");
-            Session.Remove("Branch");
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-
-            var branches = _iBranchManager.GetAllBranches().ToList().FindAll(n => n.BranchId != 13).ToList();
-            foreach (ViewBranch branch in branches)
+            try
             {
-                branch.Orders = _iOrderManager.GetOrdersByBranchId(branch.BranchId).ToList();
-                branch.Products= _iInventoryManager.GetStockProductByBranchAndCompanyId(branch.BranchId, companyId).ToList();
+                Session.Remove("BranchId");
+                Session.Remove("Branch");
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+
+                var branches = _iBranchManager.GetAllBranches().ToList().FindAll(n => n.BranchId != 13).ToList();
+                foreach (ViewBranch branch in branches)
+                {
+                    branch.Orders = _iOrderManager.GetOrdersByBranchId(branch.BranchId).ToList();
+                    branch.Products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branch.BranchId, companyId).ToList();
+                }
+
+
+                var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByCompanyId(companyId).ToList();
+                // var todaysInvoceOrders= _iInvoiceManager.GetInvoicedOrdersByCompanyIdAndDate(companyId,DateTime.Now).ToList();
+                SummaryModel model = new SummaryModel
+                {
+                    Branches = branches,
+                    InvoicedOrderList = invoicedOrders
+                    //OrderListByDate = todaysInvoceOrders
+                };
+                return View(model);
             }
-        
-       
-            var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByCompanyId(companyId).ToList();
-           // var todaysInvoceOrders= _iInvoiceManager.GetInvoicedOrdersByCompanyIdAndDate(companyId,DateTime.Now).ToList();
-            SummaryModel model = new SummaryModel
+            catch (Exception exception)
             {
-                Branches = branches,
-                InvoicedOrderList = invoicedOrders
-                //OrderListByDate = todaysInvoceOrders
-            };
-            return View(model);
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
        
-        /// <summary>
-        /// Get All Client 
-        /// </summary>
-        /// <returns></returns>
-        public PartialViewResult ViewClient()
-        {
-            var clients = _iClientManager.GetAllClientDetails().ToList();
-            return PartialView("_ViewClientPartialPage",clients);
-
-        }
-        /// <summary>
-        /// Get client by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public PartialViewResult ViewClientProfile(int id)
-        {
-            var viewClient = _iClientManager.GetClientDeailsById(id); 
-            return PartialView("_ViewClientProfilePartialPage", viewClient); 
-
-        }
-        public PartialViewResult ViewEmployee()
-        {
-            var employees = _iEmployeeManager.GetAllEmployeeWithFullInfo().ToList();
-            return PartialView("_ViewEmployeePartialPage",employees);
-
-        }
-        /// <summary>
-        /// Get client by Id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public PartialViewResult ViewEmployeeProfile(int id)
-        {
-            var employee = _iEmployeeManager.GetEmployeeById(id);
-            return PartialView("_ViewEmployeeProfilePartialPage",employee);
-
-        }
         public PartialViewResult AllOrders()
         {
-            var companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetOrdersByCompanyId(companyId).ToList();
-            foreach (ViewOrder order in orders)
+            try
             {
-                order.Client = _iClientManager.GetById(order.ClientId);
+                var companyId = Convert.ToInt32(Session["CompanyId"]);
+                var orders = _iOrderManager.GetOrdersByCompanyId(companyId).ToList();
+                foreach (ViewOrder order in orders)
+                {
+                    order.Client = _iClientManager.GetById(order.ClientId);
+                }
+                ViewBag.Heading = "All Orders";
+                return PartialView("_ViewOrdersPartialPage", orders);
             }
-            ViewBag.Heading = "All Orders";
-            return PartialView("_ViewOrdersPartialPage",orders);
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public PartialViewResult LatestOrders()
         {
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetLatestOrdersByCompanyId(companyId).ToList().OrderByDescending(n => n.OrderId).ToList();
-            foreach (ViewOrder order in orders)
+            try
             {
-                order.Client = _iClientManager.GetById(order.ClientId);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var orders = _iOrderManager.GetLatestOrdersByCompanyId(companyId).ToList().OrderByDescending(n => n.OrderId).ToList();
+                foreach (ViewOrder order in orders)
+                {
+                    order.Client = _iClientManager.GetById(order.ClientId);
+                }
+                ViewBag.Heading = "Latest Orders";
+                return PartialView("_ViewOrdersPartialPage", orders);
             }
-            ViewBag.Heading = "Latest Orders";
-            return PartialView("_ViewOrdersPartialPage", orders);
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public PartialViewResult CurrentMonthOrders()
         {
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetAllOrderWithClientInformationByCompanyId(companyId).OrderByDescending(n => n.OrderId).DistinctBy(n => n.OrderId).ToList().FindAll(n => n.Status == 4).FindAll(n => n.OrderDate.Month.Equals(DateTime.Now.Month));
-            foreach (ViewOrder order in orders)
+            try
             {
-                order.Client = _iClientManager.GetById(order.ClientId);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var orders = _iOrderManager.GetAllOrderWithClientInformationByCompanyId(companyId).OrderByDescending(n => n.OrderId).DistinctBy(n => n.OrderId).ToList().FindAll(n => n.Status == 4).FindAll(n => n.OrderDate.Month.Equals(DateTime.Now.Month));
+                foreach (ViewOrder order in orders)
+                {
+                    order.Client = _iClientManager.GetById(order.ClientId);
+                }
+                ViewBag.Heading = $"Current Month Orders ({DateTime.Now:MMMM})";
+                return PartialView("_ViewOrdersPartialPage", orders);
             }
-            ViewBag.Heading = $"Current Month Orders ({DateTime.Now:MMMM})";
-            return PartialView("_ViewOrdersPartialPage", orders);
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         /// <summary>
         /// Get order Details by id
@@ -174,11 +172,7 @@ namespace NBL.Areas.Corporate.Controllers
             order.Client = _iClientManager.GetById(order.ClientId);
             return View(order);
         }
-        public PartialViewResult ViewBranch()
-        {
-            var branches = _iBranchManager.GetAllBranches().ToList();
-            return PartialView("_ViewBranchPartialPage", branches);
-        }
+        
         public PartialViewResult ViewDivision()
         {
             var divisions = _iDivisionGateway.GetAll().ToList();
@@ -196,12 +190,7 @@ namespace NBL.Areas.Corporate.Controllers
             return PartialView("_ViewTerritoryPartialPage",territories);
 
         }
-        public PartialViewResult Supplier()
-        {
-            var suppliers = _iCommonManager.GetAllSupplier().ToList();
-            return PartialView("_ViewSupplierPartialPage",suppliers);
-        }
-
+       
     
 
         public ActionResult ViewDepartment()
@@ -308,50 +297,104 @@ namespace NBL.Areas.Corporate.Controllers
         [HttpGet]
         public PartialViewResult Stock()
         {
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var stock = _iInventoryManager.GetStockProductByCompanyId(companyId);
-            return PartialView("_RptFactoryStockPartialPage",stock);
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var stock = _iInventoryManager.GetStockProductByCompanyId(companyId);
+                return PartialView("_RptFactoryStockPartialPage", stock);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public PartialViewResult ProductionSummary()
         {
-            var summaries = _iInventoryManager.GetProductionSummaries().ToList();
-            return PartialView("_RptProductionSummaryPartialPage", summaries);
+            try
+            {
+                var summaries = _iInventoryManager.GetProductionSummaries().ToList();
+                return PartialView("_RptProductionSummaryPartialPage", summaries);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public PartialViewResult StockByBranch(int id)
         {
-           
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(id, companyId).ToList();
-            var branch = _iBranchManager.GetAllBranches().ToList().Find(n => n.BranchId == id);
-            SummaryModel model = new SummaryModel
-            {
-                Products = products,
-                Branch = branch
-            };
 
-            return PartialView("_ViewStockProductInBranchPartialPage", model);
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(id, companyId).ToList();
+                var branch = _iBranchManager.GetAllBranches().ToList().Find(n => n.BranchId == id);
+                SummaryModel model = new SummaryModel
+                {
+                    Products = products,
+                    Branch = branch
+                };
+
+                return PartialView("_ViewStockProductInBranchPartialPage", model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public ActionResult DispatchList()
         {
-            List<ViewDispatchModel> dispatch = _iProductManager.GetAllDispatchList().ToList();
-            return View(dispatch);
+            try
+            {
+                List<ViewDispatchModel> dispatch = _iProductManager.GetAllDispatchList().ToList();
+                return View(dispatch);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public PartialViewResult Chalan(long dispatchId)
         {
-            ViewDispatchChalan chalan = _iFactoryDeliveryManager.GetDispatchChalanByDispatchId(dispatchId);
-            return PartialView("_ViewDispatchChalanPartialPage",chalan);
+            try
+            {
+                ViewDispatchChalan chalan = _iFactoryDeliveryManager.GetDispatchChalanByDispatchId(dispatchId);
+                return PartialView("_ViewDispatchChalanPartialPage", chalan);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
 
         public ActionResult OrderListByBranch(int id)
         {
 
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(id, companyId).OrderByDescending(n => n.OrderId).DistinctBy(n => n.OrderId).ToList();
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(id, companyId).OrderByDescending(n => n.OrderId).DistinctBy(n => n.OrderId).ToList();
 
-            return PartialView("_ViewOrdersPartialPage", orders);
+                return PartialView("_ViewOrdersPartialPage", orders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         
     }

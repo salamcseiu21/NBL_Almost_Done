@@ -8,6 +8,7 @@ using NBL.Areas.Sales.BLL.Contracts;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Orders;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Summaries;
@@ -171,9 +172,18 @@ namespace NBL.Areas.Corporate.Controllers
 
         public PartialViewResult ViewJournal()
         {
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var journals = _iAccountsManager.GetAllJournalVouchersByCompanyId(companyId).ToList();
-            return PartialView("_ViewJournalPartialPage", journals);
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var journals = _iAccountsManager.GetAllJournalVouchersByCompanyId(companyId).ToList();
+                return PartialView("_ViewJournalPartialPage", journals);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+               return PartialView("_ErrorPartial", exception);
+            }
         }
     }
 }

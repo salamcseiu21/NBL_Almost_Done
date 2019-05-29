@@ -8,6 +8,7 @@ using NBL.Areas.AccountsAndFinance.Models;
 using NBL.BLL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Payments;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Returns;
 
@@ -31,16 +32,25 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         [HttpGet]
         public ActionResult Receivable()
         {
-            RemoveAll();
-            CreateTempReceivableXmlFile();
-            var model =
-                new ViewReceivableCreateModel
-                {
-                    PaymentTypes = _iCommonManager.GetAllPaymentTypes(),
-                    TransactionTypes = _iCommonManager.GetAllTransactionTypes()
-                };
+            try
+            {
+                RemoveAll();
+                CreateTempReceivableXmlFile();
+                var model =
+                    new ViewReceivableCreateModel
+                    {
+                        PaymentTypes = _iCommonManager.GetAllPaymentTypes(),
+                        TransactionTypes = _iCommonManager.GetAllTransactionTypes()
+                    };
 
-            return View(model);
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public ActionResult Receivable(FormCollection collection)
@@ -90,7 +100,8 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             catch (Exception exception)
             {
                 TempData["Error"] = $"{exception.Message} <br>System Error : {exception.InnerException?.Message}";
-                return View(model);
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
   
         }
@@ -155,7 +166,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             }
             catch (Exception exception)
             {
-
+                Log.WriteErrorLog(exception);
                 var ex = exception.Message;
                 aModel.Message = "<p style='color:red'>" + ex+"</p>";
                
@@ -184,50 +195,86 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         [HttpGet]
         public ActionResult Payable()
         {
-            var paymentTypes = _iCommonManager.GetAllPaymentTypes().ToList();
-            ViewBag.PaymentTypes = paymentTypes;
-            return View();
+            try
+            {
+                var paymentTypes = _iCommonManager.GetAllPaymentTypes().ToList();
+                ViewBag.PaymentTypes = paymentTypes;
+                return View();
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public PartialViewResult GetTempChequeInformation()
         {
-            var payments = GetPaymentsFromXmlFile();
-            return PartialView("_ViewTempReceivalbePartialPage", payments);
+            try
+            {
+                var payments = GetPaymentsFromXmlFile();
+                return PartialView("_ViewTempReceivalbePartialPage", payments);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
          
         }
 
         private List<Payment> GetPaymentsFromXmlFile()
         {
-            var filePath = GetTempReceivableXmlFilePath();
-            List<Payment> payments = new List<Payment>();
-            var xmlData = XDocument.Load(filePath).Element("Payments")?.Elements();
-            if (xmlData != null)
+            try
             {
-                foreach (XElement element in xmlData)
+                var filePath = GetTempReceivableXmlFilePath();
+                List<Payment> payments = new List<Payment>();
+                var xmlData = XDocument.Load(filePath).Element("Payments")?.Elements();
+                if (xmlData != null)
                 {
-                    Payment aPayment = new Payment();
-                    var elementFirstAttribute = element.FirstAttribute.Value;
-                    aPayment.Serial = elementFirstAttribute;
-                    var elementValue = element.Elements();
-                    var xElements = elementValue as XElement[] ?? elementValue.ToArray();
-                    aPayment.ChequeAmount = Convert.ToDecimal(xElements[0].Value);
-                    aPayment.BankBranchName = xElements[1].Value;
-                    aPayment.BankAccountNo = xElements[2].Value;
-                    aPayment.SourceBankName = xElements[3].Value;
-                    aPayment.ChequeNo = xElements[4].Value;
-                    aPayment.ChequeDate = Convert.ToDateTime(xElements[5].Value);
-                    aPayment.PaymentTypeId = Convert.ToInt32(xElements[6].Value);
-                    payments.Add(aPayment);
+                    foreach (XElement element in xmlData)
+                    {
+                        Payment aPayment = new Payment();
+                        var elementFirstAttribute = element.FirstAttribute.Value;
+                        aPayment.Serial = elementFirstAttribute;
+                        var elementValue = element.Elements();
+                        var xElements = elementValue as XElement[] ?? elementValue.ToArray();
+                        aPayment.ChequeAmount = Convert.ToDecimal(xElements[0].Value);
+                        aPayment.BankBranchName = xElements[1].Value;
+                        aPayment.BankAccountNo = xElements[2].Value;
+                        aPayment.SourceBankName = xElements[3].Value;
+                        aPayment.ChequeNo = xElements[4].Value;
+                        aPayment.ChequeDate = Convert.ToDateTime(xElements[5].Value);
+                        aPayment.PaymentTypeId = Convert.ToInt32(xElements[6].Value);
+                        payments.Add(aPayment);
+                    }
                 }
+                return payments;
             }
-            return payments;
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return new List<Payment>();
+            }
         }
 
         //------------------View Sales return ----------------
         public ActionResult ViewAllSalesReturn()
         {
-            List<ViewReturnProductModel> products = _iProductReturnManager.GetAllVerifiedSalesReturnProducts().ToList();
-            return View(products);
+            try
+            {
+                List<ViewReturnProductModel> products = _iProductReturnManager.GetAllVerifiedSalesReturnProducts().ToList();
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
 

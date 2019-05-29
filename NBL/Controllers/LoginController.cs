@@ -64,7 +64,8 @@ namespace NBL.Controllers
                 user.Password = password;
                 user.UserName = userName;
 
-                var userLocation = GetUserLocation();
+               var userLocation = GetUserLocation();
+               // var userLocation=new UserLocation();
                 bool validUser = _userManager.ValidateUser(user);
 
                 if (validUser)
@@ -130,7 +131,7 @@ namespace NBL.Controllers
                     LogMessage = exception.StackTrace
                 };
                 Log.WriteErrorLog(model);
-                return null;
+                return PartialView("_ErrorPartial", exception);
             }
         }
         public ActionResult GoTo()
@@ -198,8 +199,8 @@ namespace NBL.Controllers
         }
         public ActionResult Logout()
         {
-            var userLocation = GetUserLocation();
-            userLocation.IsValidLogin = 1;
+              var userLocation = GetUserLocation();
+            //var userLocation = new UserLocation {IsValidLogin = 1};
             FormsAuthentication.SignOut();
             var user = (ViewUser)Session["user"];
             user.LogOutDateTime = DateTime.Now;

@@ -20,8 +20,11 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.Heading</td>
-                    <td>@item.LogMessage</td>
+                    <td class="text-red">@item.Heading</td>
+                    <td>
+                        <h3  class="text-red">@item.CustomeMessage</h3>
+                        @Html.Raw(item.LogMessage)
+                    </td>
                     <td>@item.LogDateTime.ToString("F")</td>
                     <td class="text-center"><button id="@item.LogId" type='button' onclick='RemoveErrorById(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color: red;'></i></button></td>
                 </tr>

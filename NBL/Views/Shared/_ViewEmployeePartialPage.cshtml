@@ -32,7 +32,7 @@
                     <td>@Html.Raw(item.GetContactInformation())</td>
 
                     <td class="text-center">
-                        @Html.ActionLink(" Profile", "ViewEmployeeProfile", "Home", new { id = item.EmployeeId }, new { @class = "fa fa-eye" })
+                        @Html.ActionLink(" Profile", "ViewEmployeeProfile", "ShowInfo", new { id = item.EmployeeId }, new { @class = "fa fa-eye" })
                     </td>
                 </tr>
             }

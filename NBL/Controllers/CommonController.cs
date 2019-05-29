@@ -13,6 +13,7 @@ using NBL.Models;
 using NBL.Models.EntityModels.Banks;
 using NBL.Models.EntityModels.Designations;
 using NBL.Models.EntityModels.Locations;
+using NBL.Models.Logs;
 using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
@@ -121,7 +122,7 @@ namespace NBL.Controllers
         {
 
             var branchId = Convert.ToInt32(Session["BranchId"]);
-            ICollection<object> clients = _iClientManager.GetClientByBranchIdAndSearchTerm(branchId,prefix);
+            ICollection<object> clients = _iClientManager.GetClientByBranchIdAndSearchTerm(branchId, prefix);
             return Json(clients);
         }
 

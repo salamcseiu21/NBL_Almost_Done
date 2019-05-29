@@ -317,6 +317,7 @@
     <Compile Include="Areas\Administrative\Controllers\HomeController.cs" />
     <Compile Include="Areas\CommonArea\CommonAreaAreaRegistration.cs" />
     <Compile Include="Areas\CommonArea\Controllers\HomeController.cs" />
+    <Compile Include="Areas\CommonArea\Controllers\ShowInfoController.cs" />
     <Compile Include="Areas\Corporate\Controllers\HomeController.cs" />
     <Compile Include="Areas\Corporate\Controllers\OperationHeadController.cs" />
     <Compile Include="Areas\Corporate\Controllers\SalesAdminController.cs" />
@@ -8228,6 +8229,7 @@
     <Folder Include="Areas\Administrative\Models\" />
     <Folder Include="Areas\Administrative\Views\Shared\" />
     <Folder Include="Areas\CommonArea\Models\" />
+    <Folder Include="Areas\CommonArea\Views\ShowInfo\" />
     <Folder Include="Areas\Corporate\Files\" />
     <Folder Include="Areas\Corporate\Models\" />
     <Folder Include="Areas\CRM\Models\" />

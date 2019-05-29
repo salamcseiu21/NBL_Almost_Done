@@ -122,39 +122,9 @@ namespace NBL.Areas.Management.Controllers
             Response.Flush();
             Response.End();
         }
-        public PartialViewResult ViewBranch()
-        {
-            var branches = _iBranchManager.GetAllBranches().ToList();
-            return PartialView("_ViewBranchPartialPage", branches);
-
-
-        }
-        public PartialViewResult ViewClient()
-        {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var clients = _iClientManager.GetClientByBranchId(branchId).ToList();
-            return PartialView("_ViewClientPartialPage",clients);
-        }
-        public PartialViewResult ViewClientProfile(int id)
-        {
-            var client = _iClientManager.GetClientDeailsById(id);
-            return PartialView("_ViewClientProfilePartialPage",client);
-
-        }
-
-        public PartialViewResult ViewEmployee()
-        {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var employees = _iEmployeeManager.GetAllEmployeeWithFullInfoByBranchId(branchId).ToList();
-            return PartialView("_ViewEmployeePartialPage",employees);
-
-        }
-        public PartialViewResult ViewEmployeeProfile(int id)
-        {
-            var employee = _iEmployeeManager.GetEmployeeById(id);
-            return PartialView("_ViewEmployeeProfilePartialPage",employee);
-
-        }
+      
+       
+       
         public PartialViewResult AllOrders()
         {
             var companyId = Convert.ToInt32(Session["CompanyId"]);

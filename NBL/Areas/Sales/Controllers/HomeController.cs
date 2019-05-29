@@ -164,20 +164,6 @@ namespace NBL.Areas.Sales.Controllers
             return Json(clients, JsonRequestBehavior.AllowGet);
 
         }
-        public PartialViewResult ViewBranch()
-        {
-            try
-            {
-                var branches = _iBranchManager.GetAllBranches().ToList();
-                return PartialView("_ViewBranchPartialPage", branches);
-            }
-            catch (Exception exception)
-            {
-
-                Log.WriteErrorLog(exception);
-                return PartialView("_ErrorPartial", exception);
-            }
-        }
         public ActionResult ViewEmployeeProfile(int id)
         {
             try

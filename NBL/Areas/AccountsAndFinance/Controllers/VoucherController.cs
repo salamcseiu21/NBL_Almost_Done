@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
-using NBL.Areas.Accounts.Models;
 using NBL.Areas.Accounts.Models.ViewModels;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.Areas.AccountsAndFinance.Models;
 using NBL.BLL.Contracts;
 using NBL.Models;
-using NBL.Models.EntityModels.Payments;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 
 namespace NBL.Areas.AccountsAndFinance.Controllers
@@ -28,9 +27,17 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         [HttpGet]
         public ActionResult CreditVoucher()
         {
-           
-            CreateCreditVoucherXmlFile();
-            return View();
+            try
+            {
+
+                CreateCreditVoucherXmlFile();
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         private void CreateCreditVoucherXmlFile()
@@ -93,7 +100,8 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             catch (Exception exception)
             {
                 TempData["Error"] = exception.Message;
-                return View();
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
         }
         [HttpPost]
@@ -167,8 +175,10 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             catch (Exception exception)
             {
 
-                var ex = exception?.Message;
+                var ex = exception.Message;
                 aModel.Message = "<p style='color:red'>" + ex + "</p>";
+                Log.WriteErrorLog(exception);
+              
 
             }
             return Json(aModel, JsonRequestBehavior.AllowGet);
@@ -178,8 +188,17 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         [HttpGet]
         public ActionResult DebitVoucher()
         {
-            CreateDebittVoucherXmlFile();
-            return View();
+            try
+            {
+                CreateDebittVoucherXmlFile();
+                return View();
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         private void CreateDebittVoucherXmlFile()
@@ -238,7 +257,8 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             catch (Exception exception)
             {
                 TempData["Error"] = exception.Message;
-                return View();
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
         }
 
@@ -310,6 +330,8 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
 
                 var ex = exception.Message;
                 aModel.Message = "<p style='color:red'>" + ex + "</p>";
+                Log.WriteErrorLog(exception);
+              
 
             }
             return Json(aModel, JsonRequestBehavior.AllowGet);
@@ -317,7 +339,16 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         [HttpGet]
         public ActionResult ChequePaymentVoucher()
         {
-            return View();
+           
+            try
+            {
+                return View();
+            }
+            catch (Exception exception) 
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         } 
         [HttpPost]
         public JsonResult ChequePaymentVoucher(FormCollection collection)
@@ -378,6 +409,8 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
 
                 var ex = exception.Message;
                 aModel.Message = "<p style='color:red'>" + ex + "</p>";
+                Log.WriteErrorLog(exception);
+               
 
             }
             return Json(aModel, JsonRequestBehavior.AllowGet);
@@ -386,8 +419,17 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         [HttpGet]
         public ActionResult ChequeReceiveVoucher()
         {
-            ViewBag.PaymentTypes = _iCommonManager.GetAllPaymentTypes().ToList();
-            return View();
+            try
+            {
+                ViewBag.PaymentTypes = _iCommonManager.GetAllPaymentTypes().ToList();
+                return View();
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public JsonResult ChequeReceiveVoucher(FormCollection collection)
@@ -446,6 +488,8 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
 
                 var ex = exception.Message;
                 aModel.Message = "<p style='color:red'>" + ex + "</p>";
+                Log.WriteErrorLog(exception);
+              
 
             }
             return Json(aModel, JsonRequestBehavior.AllowGet);
@@ -454,9 +498,18 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         public ActionResult JournalVoucher()
         {
 
-            CreateJournalVoucherXmlFile();
-            ViewBag.PaymentTypes = _iCommonManager.GetAllPaymentTypes().ToList();
-            return View();
+            try
+            {
+                CreateJournalVoucherXmlFile();
+                ViewBag.PaymentTypes = _iCommonManager.GetAllPaymentTypes().ToList();
+                return View();
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         private void CreateJournalVoucherXmlFile()
@@ -483,12 +536,12 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         [HttpPost]
         public ActionResult JournalVoucher(FormCollection collection) 
         {
-            var paymentTypes = _iCommonManager.GetAllPaymentTypes().ToList();
+           
             try
             {
 
                
-                JournalVoucher aJournal = new JournalVoucher();
+                var aJournal = new JournalVoucher();
                 var purposeName = collection["PurposeName"];
                 var purposeCode = collection["PurposeCode"];
                 var remarks = collection["Remarks"];
@@ -529,8 +582,8 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             catch (Exception exception)
             {
                 TempData["Error"] = exception.Message + "<br>System Error :" + exception?.InnerException?.Message;
-                ViewBag.PaymentTypes = paymentTypes;
-                return View();
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
         }
         [HttpPost]
@@ -589,6 +642,8 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
 
                 var ex = exception.Message;
                 aModel.Message = "<p style='color:red'>" + ex + "</p>";
+                Log.WriteErrorLog(exception);
+               
 
             }
             return Json(aModel, JsonRequestBehavior.AllowGet);
@@ -596,9 +651,18 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         //----------------Get temp Journal Information ------------------
         public PartialViewResult GetTempJournalInformation()
         {
-            IEnumerable < JournalVoucher > journals = GetJournalPurposesFromXmlFile().ToList();
-         
-            return PartialView("_ViewTempJournalPurposePartialPage", journals);
+            try
+            {
+                var journals = GetJournalPurposesFromXmlFile().ToList();
+
+                return PartialView("_ViewTempJournalPurposePartialPage", journals);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         private IEnumerable<JournalVoucher> GetJournalPurposesFromXmlFile() 
         {
@@ -627,80 +691,134 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         }
         public ActionResult ViewJournal()
         {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var journals = _iAccountsManager.GetAllJournalVouchersByBranchAndCompanyId(branchId,companyId);
-            return View(journals);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var journals = _iAccountsManager.GetAllJournalVouchersByBranchAndCompanyId(branchId, companyId);
+                return View(journals);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult JournalDetails(int id)
         {
-            JournalVoucher journal = _iAccountsManager.GetJournalVoucherById(id);
-            List<JournalDetails> vouchers = _iAccountsManager.GetJournalVoucherDetailsById(id);
-            ViewBag.JournalDetails = vouchers;
-            return View(journal);
+            try
+            {
+                var journal = _iAccountsManager.GetJournalVoucherById(id);
+                var vouchers = _iAccountsManager.GetJournalVoucherDetailsById(id);
+                ViewBag.JournalDetails = vouchers;
+                return View(journal);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
         [HttpPost]
         public ActionResult CancelJournalVoucher(FormCollection collection)
         {
-            int voucherId = Convert.ToInt32(collection["VoucherId"]);
-            string reason = collection["Reason"];
-            var anUser = (ViewUser)Session["user"];
-            bool result = _iAccountsManager.CancelJournalVoucher(voucherId, reason, anUser.UserId);
-            if (result)
+            try
             {
-                return RedirectToAction("ViewJournal");
+                int voucherId = Convert.ToInt32(collection["VoucherId"]);
+                string reason = collection["Reason"];
+                var anUser = (ViewUser)Session["user"];
+                bool result = _iAccountsManager.CancelJournalVoucher(voucherId, reason, anUser.UserId);
+                if (result)
+                {
+                    return RedirectToAction("ViewJournal");
+                }
+                var voucher = _iAccountsManager.GetJournalVoucherById(voucherId);
+                return RedirectToAction("JournalDetails", "Voucher", voucher);
             }
-            var voucher = _iAccountsManager.GetJournalVoucherById(voucherId);
-            return RedirectToAction("JournalDetails", "Voucher", voucher);
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
 
         public ActionResult EditJournalVoucher(int id) 
         {
-            var voucher = _iAccountsManager.GetJournalVoucherById(id);
-            var voucherDetails = _iAccountsManager.GetJournalVoucherDetailsById(id);
-            ViewBag.JournalDetails = voucherDetails;
-            return View(voucher);
+            try
+            {
+                var voucher = _iAccountsManager.GetJournalVoucherById(id);
+                var voucherDetails = _iAccountsManager.GetJournalVoucherDetailsById(id);
+                ViewBag.JournalDetails = voucherDetails;
+                return View(voucher);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public ActionResult EditJournalVoucher(int id, FormCollection collection)
         {
-            var user = (ViewUser)Session["user"];
-            var voucher = _iAccountsManager.GetJournalVoucherById(id);
-            voucher.UpdatedByUserId = user.UserId;
-            var voucherDetails = _iAccountsManager.GetJournalVoucherDetailsById(id);
-          
-            foreach (JournalDetails detail in voucherDetails)
+            try
             {
-                detail.Amount = Convert.ToDecimal(collection["amount_of_" + detail.JournalDetailsId]);
-            }
-           var cr= voucherDetails.ToList().FindAll(n => n.DebitOrCredit.Equals("Cr")).Sum(n => n.Amount);
-           var dr = voucherDetails.ToList().FindAll(n => n.DebitOrCredit.Equals("Dr")).Sum(n => n.Amount);
-            if (dr == cr)
-            {
-                voucher.Amounts = voucherDetails.ToList().FindAll(n => n.DebitOrCredit.Equals("Cr")).Sum(n => n.Amount);
-                bool result = _iAccountsManager.UpdateJournalVoucher(voucher, voucherDetails.ToList());
-                if (result)
+                var user = (ViewUser)Session["user"];
+                var voucher = _iAccountsManager.GetJournalVoucherById(id);
+                voucher.UpdatedByUserId = user.UserId;
+                var voucherDetails = _iAccountsManager.GetJournalVoucherDetailsById(id);
+
+                foreach (JournalDetails detail in voucherDetails)
                 {
-                    return RedirectToAction("ViewJournal");
+                    detail.Amount = Convert.ToDecimal(collection["amount_of_" + detail.JournalDetailsId]);
                 }
+                var cr = voucherDetails.ToList().FindAll(n => n.DebitOrCredit.Equals("Cr")).Sum(n => n.Amount);
+                var dr = voucherDetails.ToList().FindAll(n => n.DebitOrCredit.Equals("Dr")).Sum(n => n.Amount);
+                if (dr == cr)
+                {
+                    voucher.Amounts = voucherDetails.ToList().FindAll(n => n.DebitOrCredit.Equals("Cr")).Sum(n => n.Amount);
+                    bool result = _iAccountsManager.UpdateJournalVoucher(voucher, voucherDetails.ToList());
+                    if (result)
+                    {
+                        return RedirectToAction("ViewJournal");
+                    }
+                    ViewBag.JournalDetails = voucherDetails;
+                    return View(voucher);
+                }
+                ViewBag.ErrorMssage = "Debit and Credit amount not same !!";
                 ViewBag.JournalDetails = voucherDetails;
                 return View(voucher);
-            }
-            ViewBag.ErrorMssage = "Debit and Credit amount not same !!";
-            ViewBag.JournalDetails = voucherDetails;
-            return View(voucher);
 
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         //----------------Get temp credit Purpose Information ------------------
         public PartialViewResult GetTempCreditPurposeInformation()
         {
 
-            var purposes = GetCreditPurposesFromXmlFile();
-            return PartialView("_ViewTempCreditPurposePartialPage", purposes);
+            try
+            {
+                var purposes = GetCreditPurposesFromXmlFile();
+                return PartialView("_ViewTempCreditPurposePartialPage", purposes);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
           
         }
 
@@ -734,8 +852,17 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         //----------------Get temp debit Purpose Information ------------------
         public PartialViewResult GetTempDebitPurposeInformation()
         {
-            var purposes = GetDebitPurposesFromXmlFile();
-            return PartialView("_ViewTempDebitPurposePartialPage", purposes);
+            try
+            {
+                var purposes = GetDebitPurposesFromXmlFile();
+                return PartialView("_ViewTempDebitPurposePartialPage", purposes);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         private IEnumerable<Purpose> GetDebitPurposesFromXmlFile()
         {
@@ -765,131 +892,247 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         public ActionResult ViewCreditVoucher()
         {
 
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var vouchers = _iAccountsManager.GetAllVouchersByBranchCompanyIdVoucherType(branchId, companyId, 1);
-            return View(vouchers);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var vouchers = _iAccountsManager.GetAllVouchersByBranchCompanyIdVoucherType(branchId, companyId, 1);
+                return View(vouchers);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
 
         }
         public ActionResult ViewDebitVoucher()
         {
 
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var vouchers = _iAccountsManager.GetAllVouchersByBranchCompanyIdVoucherType(branchId, companyId, 2);
-            return View(vouchers);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var vouchers = _iAccountsManager.GetAllVouchersByBranchCompanyIdVoucherType(branchId, companyId, 2);
+                return View(vouchers);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult ViewChequePaymentVoucher() 
         {
 
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var vouchers = _iAccountsManager.GetAllVouchersByBranchCompanyIdVoucherType(branchId, companyId, 3);
-            return View(vouchers);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var vouchers = _iAccountsManager.GetAllVouchersByBranchCompanyIdVoucherType(branchId, companyId, 3);
+                return View(vouchers);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public ActionResult ViewChequeReceiveVoucher()
         {
 
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var vouchers = _iAccountsManager.GetAllVouchersByBranchCompanyIdVoucherType(branchId, companyId, 4);
-            return View(vouchers);
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var vouchers = _iAccountsManager.GetAllVouchersByBranchCompanyIdVoucherType(branchId, companyId, 4);
+                return View(vouchers);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public PartialViewResult Vouchers()
         {
-             var vouchers = _iAccountsManager.GetVoucherList();
-            ViewBag.VoucherName = "All Vouchers";
-            return PartialView("_VoucherPartialPage",vouchers);
+            try
+            {
+                var vouchers = _iAccountsManager.GetVoucherList();
+                ViewBag.VoucherName = "All Vouchers";
+                return PartialView("_VoucherPartialPage", vouchers);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public PartialViewResult PendingVouchers()
         {
-            ViewBag.VoucherName = "Pending Vouchers";
-            var vouchers = _iAccountsManager.GetPendingVoucherList();
-            return PartialView("_VoucherPartialPage", vouchers);
+            try
+            {
+                ViewBag.VoucherName = "Pending Vouchers";
+                var vouchers = _iAccountsManager.GetPendingVoucherList();
+                return PartialView("_VoucherPartialPage", vouchers);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public ActionResult VoucherDetails(int id)
         {
-            var voucher = _iAccountsManager.GetVoucherByVoucherId(id);
-            var model=new ViewVoucherModel
-             {
-                Voucher = voucher,
-                VoucherDetails = _iAccountsManager.GetVoucherDetailsByVoucherId(voucher.VoucherId).ToList()
-             };
+            try
+            {
+                var voucher = _iAccountsManager.GetVoucherByVoucherId(id);
+                var model = new ViewVoucherModel
+                {
+                    Voucher = voucher,
+                    VoucherDetails = _iAccountsManager.GetVoucherDetailsByVoucherId(voucher.VoucherId).ToList()
+                };
 
-           
-            return View(model);
+
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         //----------------Edit Voucher-----------------
         public ActionResult EditVoucher(int id)
         {
-            var voucher = _iAccountsManager.GetVoucherByVoucherId(id);
-            var voucherDetails = _iAccountsManager.GetVoucherDetailsByVoucherId(id);
-            ViewBag.VoucherDetails = voucherDetails;
-            return View(voucher);
+            try
+            {
+                var voucher = _iAccountsManager.GetVoucherByVoucherId(id);
+                var voucherDetails = _iAccountsManager.GetVoucherDetailsByVoucherId(id);
+                ViewBag.VoucherDetails = voucherDetails;
+                return View(voucher);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         [HttpPost]
         public ActionResult EditVoucher(int id,FormCollection collection)
         {
-            var user = (ViewUser) Session["user"];
+            try
+            {
+                var user = (ViewUser)Session["user"];
+                var voucher = _iAccountsManager.GetVoucherByVoucherId(id);
+                voucher.UpdatedByUserId = user.UserId;
+                var voucherDetails = _iAccountsManager.GetVoucherDetailsByVoucherId(id);
+                foreach (var detail in voucherDetails)
+                {
+                    detail.Amounts = Convert.ToDecimal(collection["amount_of_" + detail.VoucherDetailsId]);
+                }
+                voucher.Amounts = Convert.ToDecimal(collection["Amount"]);
+                bool result = _iAccountsManager.UpdateVoucher(voucher, voucherDetails.ToList());
+                if (result)
+                {
+                    return RedirectToAction("Vouchers");
+                }
+                ViewBag.VoucherDetails = voucherDetails;
+                return View(voucher);
+            }
+            catch (Exception exception)
+            {
 
-            var voucher = _iAccountsManager.GetVoucherByVoucherId(id);
-            voucher.UpdatedByUserId = user.UserId;
-            var voucherDetails = _iAccountsManager.GetVoucherDetailsByVoucherId(id);
-            foreach (var detail in voucherDetails)
-            {
-                detail.Amounts = Convert.ToDecimal(collection["amount_of_" + detail.VoucherDetailsId]);
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
-            voucher.Amounts = Convert.ToDecimal(collection["Amount"]);
-            bool result = _iAccountsManager.UpdateVoucher(voucher,voucherDetails.ToList());
-            if (result)
-            {
-                return RedirectToAction("Vouchers");
-            }
-            ViewBag.VoucherDetails = voucherDetails;
-            return View(voucher);
         }
 
         [HttpPost]
         public ActionResult Cancel(FormCollection collection)
         {
-            int voucherId = Convert.ToInt32(collection["VoucherId"]);
-            string reason = collection["Reason"];
-            var anUser = (ViewUser)Session["user"];
-            bool result= _iAccountsManager.CancelVoucher(voucherId,reason,anUser.UserId);
-            if (result)
+            try
             {
-                return RedirectToAction("Vouchers");
+                int voucherId = Convert.ToInt32(collection["VoucherId"]);
+                string reason = collection["Reason"];
+                var anUser = (ViewUser)Session["user"];
+                bool result = _iAccountsManager.CancelVoucher(voucherId, reason, anUser.UserId);
+                if (result)
+                {
+                    return RedirectToAction("Vouchers");
+                }
+                var voucher = _iAccountsManager.GetVoucherByVoucherId(voucherId);
+                return RedirectToAction("VoucherDetails", "Voucher", voucher);
             }
-            var voucher = _iAccountsManager.GetVoucherByVoucherId(voucherId);
-            return RedirectToAction("VoucherDetails","Voucher", voucher);
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult Approve(FormCollection collection)
         {
-            int voucherId = Convert.ToInt32(collection["VoucherIdToApprove"]);
-            Voucher aVoucher= _iAccountsManager.GetVoucherByVoucherId(voucherId);
-            var anUser = (ViewUser)Session["user"];
-            var voucherDetails= _iAccountsManager.GetVoucherDetailsByVoucherId(voucherId).ToList();
-            bool result = _iAccountsManager.ApproveVoucher(aVoucher,voucherDetails,anUser.UserId);
-            return result ? RedirectToAction("Vouchers") : RedirectToAction("VoucherDetails", "Voucher", aVoucher);
+            try
+            {
+                int voucherId = Convert.ToInt32(collection["VoucherIdToApprove"]);
+                Voucher aVoucher = _iAccountsManager.GetVoucherByVoucherId(voucherId);
+                var anUser = (ViewUser)Session["user"];
+                var voucherDetails = _iAccountsManager.GetVoucherDetailsByVoucherId(voucherId).ToList();
+                bool result = _iAccountsManager.ApproveVoucher(aVoucher, voucherDetails, anUser.UserId);
+                return result ? RedirectToAction("Vouchers") : RedirectToAction("VoucherDetails", "Voucher", aVoucher);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
 
         public ActionResult VoucherPreview(int id)
         {
-            var voucher = _iAccountsManager.GetVoucherByVoucherId(id);
-            var voucherDetails = _iAccountsManager.GetVoucherDetailsByVoucherId(id);
-            ViewBag.VoucherDetails = voucherDetails;
-            return View(voucher);
+            try
+            {
+                var voucher = _iAccountsManager.GetVoucherByVoucherId(id);
+                var voucherDetails = _iAccountsManager.GetVoucherDetailsByVoucherId(id);
+                ViewBag.VoucherDetails = voucherDetails;
+                return View(voucher);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public ActionResult JournalPreview(int id)
         {
-            var voucher = _iAccountsManager.GetJournalVoucherById(id);
-            var voucherDetails = _iAccountsManager.GetJournalVoucherDetailsById(id);
-            ViewBag.VoucherDetails = voucherDetails;
-            return View(voucher);
+            try
+            {
+                var voucher = _iAccountsManager.GetJournalVoucherById(id);
+                var voucherDetails = _iAccountsManager.GetJournalVoucherDetailsById(id);
+                ViewBag.VoucherDetails = voucherDetails;
+                return View(voucher);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
     }
 }

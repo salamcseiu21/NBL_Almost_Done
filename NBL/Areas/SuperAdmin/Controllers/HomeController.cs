@@ -80,41 +80,10 @@ namespace NBL.Areas.SuperAdmin.Controllers
             return View(summary); 
 
         }
-        public PartialViewResult ViewClient() 
-        {
-            var clients = _iClientManager.GetAllClientDetails().ToList();
-            return PartialView("_ViewClientPartialPage",clients);
-
-        }
-        public PartialViewResult ViewClientProfile(int id)
-        {
-            var client = _iClientManager.GetClientDeailsById(id);
-            return PartialView("_ViewClientProfilePartialPage",client);
-
-        }
-        public PartialViewResult ViewEmployee()
-        {
-            var employees = _iEmployeeManager.GetAllEmployeeWithFullInfo().ToList();
-            return PartialView("_ViewEmployeePartialPage",employees);
-
-        }
-        public PartialViewResult ViewEmployeeProfile(int id)
-        {
-            var employee = _iEmployeeManager.GetEmployeeById(id);
-            return PartialView("_ViewEmployeeProfilePartialPage",employee);
-
-        }
-        public PartialViewResult ViewProduct() 
-        {
-            var products = _iProductManager.GetAll().ToList();
-            return PartialView("_ViewProductPartialPage", products);
-
-        }
-        public PartialViewResult ViewBranch()
-        {
-            var branches = _iBranchManager.GetAllBranches().ToList();
-            return PartialView("_ViewBranchPartialPage", branches);
-        }
+     
+     
+       
+      
         public ActionResult ViewUserDetails(int userId)
         {
             var userById = _userManager.GetAll.ToList().Find(n => n.UserId == userId);
@@ -153,12 +122,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
             return PartialView("_ViewTerritoryPartialPage",territories);
 
         }
-        public PartialViewResult Supplier()
-        {
-            var suppliers = _iCommonManager.GetAllSupplier().ToList();
-            return PartialView("_ViewSupplierPartialPage",suppliers);
-        }
-
+       
         [HttpGet]
         public ActionResult AddUser()
         {

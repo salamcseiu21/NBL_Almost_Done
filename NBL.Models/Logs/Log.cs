@@ -90,7 +90,9 @@ namespace NBL.Models.Logs
                 new XElement("Error", new XAttribute("LogId", DateTime.Now.ToString("yy-MMM-dd") + Guid.NewGuid()),
                     new XElement("Heading", model.GetType().ToString()),
                     new XElement("LogMessage", model.StackTrace),
-                    new XElement("LogDateTime", DateTime.Now)
+                    new XElement("LogDateTime", DateTime.Now),
+                    new XElement("CustomeMessage", model.Message)
+
                 ));
             xmlDocument.Save(filePath);
         }
