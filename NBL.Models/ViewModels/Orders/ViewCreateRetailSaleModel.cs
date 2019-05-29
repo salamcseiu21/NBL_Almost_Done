@@ -6,5 +6,6 @@ namespace NBL.Models.ViewModels.Orders
     {
         [Required]
         public string BarCode { get; set; }
+       
     }
 }

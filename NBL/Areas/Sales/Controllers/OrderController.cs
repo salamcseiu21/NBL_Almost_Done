@@ -9,6 +9,7 @@ using AutoMapper;
 using NBL.BLL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Clients;
+using NBL.Models.EntityModels.Invoices;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.Enums;
@@ -16,6 +17,8 @@ using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Logs;
 using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Productions;
+using NBL.Models.ViewModels.Sales;
 
 namespace NBL.Areas.Sales.Controllers
 {
@@ -620,8 +623,7 @@ namespace NBL.Areas.Sales.Controllers
 
         private void CreateTempSoldProductXmlFile(int branchId, int userId)
         {
-            string fileName = "Temp_Sold_Product_By_" + branchId + userId + ".xml";
-            var filePath = Server.MapPath("~/Areas/Sales/Files/" + fileName);
+            var filePath = SoldProductXmlFilePath(branchId, userId);
             if (!System.IO.File.Exists(filePath))
             {
                 XDocument xmlDocument = new XDocument(
@@ -629,8 +631,13 @@ namespace NBL.Areas.Sales.Controllers
                     new XElement("BarCodes"));
                 xmlDocument.Save(filePath);
             }
+        }
 
-
+        private string SoldProductXmlFilePath(int branchId, int userId)
+        {
+            string fileName = "Temp_Sold_Product_By_" + branchId + "_" + userId + ".xml";
+            var filePath = Server.MapPath("~/Areas/Sales/Files/" + fileName);
+            return filePath;
         }
 
         private IEnumerable<Product> GetTempOrderedProducts(string filePath)
@@ -671,102 +678,140 @@ namespace NBL.Areas.Sales.Controllers
 
         public ActionResult RetailSale()
         {
+            try
+            {
+                var user = (ViewUser)Session["user"];
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                CreateTempSoldProductXmlFile(branchId,user.UserId);
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
            
-            return View();
         }
         [HttpPost]
-        public JsonResult RetailSale(ViewCreateRetailSaleModel model) 
+        public ActionResult RetailSale(ViewCreateRetailSaleModel model) 
         {
             SuccessErrorModel successErrorModel=new SuccessErrorModel();
 
             try
             {
-                var retail= Mapper.Map<ViewCreateRetailSaleModel, RetailSale>(model);
+
                 int branchId = Convert.ToInt32(Session["BranchId"]);
-                var user = (ViewUser) Session["user"];
+                var user = (ViewUser)Session["user"];
+                var filePath = SoldProductXmlFilePath(branchId, user.UserId);
+                var products = _iProductManager.GetTempSoldBarcodesFromXmlFile(filePath);
+                var retail= Mapper.Map<ViewCreateRetailSaleModel, RetailSale>(model);
                 retail.UserId = user.UserId;
                 retail.BranchId = branchId;
+                retail.Products = products.ToList();
+
                 var result = _iOrderManager.SaveSoldProductBarCode(retail);
                 if (result)
                 {
-                    ModelState.Clear();
-                    successErrorModel.Message = "Save Successfull!";
-                    
+
+                  
+                    var xmlData = XDocument.Load(filePath);
+                    xmlData.Root?.Elements().Remove();
+                    xmlData.Save(filePath);
+
                 }
                 else
                 {
                     successErrorModel.Error = "Invalid";
                 }
-                return Json(successErrorModel);
+                return View();
             }
             catch (Exception exception)
             {
 
                 
                 Log.WriteErrorLog(exception);
-                successErrorModel.Message = "Invalid! ";
-                return Json(successErrorModel);
+                return PartialView("_ErrorPartial", exception);
             }
         }
 
-        private void AddBarCodeToTempSoldProductXmlFile(ViewCreateRetailSaleModel model)
+
+        [HttpPost]
+        public JsonResult SaveScannedBarcodeToXmlFile(string barcode, int userId,DateTime saleDate)  
         {
-            var user = (ViewUser)Session["user"];
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            string fileName = "Temp_Sold_Product_By_" + branchId + user.UserId + ".xml";
-            var filePath = Server.MapPath("~/Areas/Sales/Files/" + fileName);
-
-            var xmlDocument = XDocument.Load(filePath);
-            xmlDocument.Root?.Elements().Where(n => n.Attribute("Id")?.Value == model.BarCode).Remove();
-            xmlDocument.Save(filePath);
-
-            xmlDocument.Element("BarCodes")?.Add(
-                new XElement("BarCode", new XAttribute("Id", model.BarCode),
-                    new XElement("Code", model.BarCode)
-
-                ));
-            xmlDocument.Save(filePath);
-
-        }
-
-
-        public JsonResult GetTempSoldBarCodes()
-        {
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var user = (ViewUser)Session["user"];
-            string fileName = "Temp_Sold_Product_By_" + branchId + user.UserId + ".xml";
-            var filePath = Server.MapPath("~/Areas/Sales/Files/" + fileName);
-            IEnumerable<ViewCreateRetailSaleModel> codes = GetTempSoldBarcodesFromXmlFile(filePath);
-            var result = "";
-            if (codes.Count() != 0)
+            SuccessErrorModel model = new SuccessErrorModel();
+            try
             {
-                foreach (var item in codes)
+
+
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var filePath =SoldProductXmlFilePath(branchId,userId);
+                string scannedBarCode = barcode.ToUpper();
+                var productId = Convert.ToInt32(barcode.Substring(2, 3));
+                var product = _iProductManager.GetProductByProductId(productId);
+                product.SaleDate = Convert.ToDateTime(saleDate);
+                var barcodeList = _iProductManager.GetTempSoldBarcodesFromXmlFile(filePath).Select(n=>n.BarCode);
+                bool isScannedBefore = barcodeList.Contains(scannedBarCode);
+
+                bool isSold = _iInventoryManager.IsThisProductSold(scannedBarCode);
+
+                if (isScannedBefore)
                 {
-                    result += item.BarCode + ",";
+                    model.Message = "<p style='color:red'> Already Added!</p>";
+                    //return Json(model, JsonRequestBehavior.AllowGet);
                 }
-                return Json(result.TrimEnd(','), JsonRequestBehavior.AllowGet);
+                else if (isSold)
+                {
+                   
+                   _iProductManager.AddBarCodeToTempSoldProductXmlFile(product,barcode,filePath);
+                }
             }
-
-            return Json("Empty", JsonRequestBehavior.AllowGet);
-        }
-
-
-        private IEnumerable<ViewCreateRetailSaleModel> GetTempSoldBarcodesFromXmlFile(string filePath)
-        {
-            List<ViewCreateRetailSaleModel> Codes = new List<ViewCreateRetailSaleModel>();
-            var xmlData = XDocument.Load(filePath).Element("BarCodes")?.Elements();
-            foreach (XElement element in xmlData)
+            catch (FormatException exception)
             {
-                ViewCreateRetailSaleModel code = new ViewCreateRetailSaleModel();   
-            
-                var elementValue = element.Elements();
-                var xElements = elementValue as XElement[] ?? elementValue.ToArray();
-                code.BarCode = xElements[0].Value;
-                
-                Codes.Add(code);
+                Log.WriteErrorLog(exception);
+                model.Message = "<p style='color:red'>" + exception.GetType() + "</p>";
+               
             }
-            return Codes;
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                model.Message = "<p style='color:red'>" + exception.Message + "</p>";
+               
+            }
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
+
+       
+
+        public PartialViewResult GetTempSoldProducts()
+        {
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var user = (ViewUser)Session["user"];
+                var filePath = SoldProductXmlFilePath(branchId, user.UserId);
+                IEnumerable<ViewSoldProduct> products = _iProductManager.GetTempSoldBarcodesFromXmlFile(filePath);
+                return PartialView("_ViewSoldProductsPartialPage", products);
+            }
+            catch (Exception exception)
+            {
+
+               Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        [HttpPost]
+        public void RemoveProductByBarcode(string id)
+        {
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            var user = (ViewUser)Session["user"];
+            var filePath = SoldProductXmlFilePath(branchId,user.UserId);
+            var xmlData = XDocument.Load(filePath);
+            xmlData.Root?.Elements().Where(n => n.Attribute("Id")?.Value == id).Remove();
+            xmlData.Save(filePath);
+
+        }
+
         //-------------------Working here(2nd appril)--------------
         public JsonResult GetDeliveredOrderByClientId(int clientId)
         {

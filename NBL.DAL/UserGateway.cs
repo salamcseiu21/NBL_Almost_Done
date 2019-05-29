@@ -7,6 +7,7 @@ using NBL.Models;
 using NBL.Models.EntityModels.Departments;
 using NBL.Models.EntityModels.Designations;
 using NBL.Models.EntityModels.Identities;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 
 namespace NBL.DAL
@@ -257,15 +258,15 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@LogOutDateTime", user.LogOutDateTime);
                 CommandObj.Parameters.AddWithValue("@ActiveStatus", status);
 
-                CommandObj.Parameters.AddWithValue("@CountryName", userLocaiton.CountryName ?? (object)DBNull.Value);
-                CommandObj.Parameters.AddWithValue("@CountryCode", userLocaiton.CountryCode ?? (object)DBNull.Value);
-                CommandObj.Parameters.AddWithValue("@CityName", userLocaiton.CityName ?? (object)DBNull.Value);
-                CommandObj.Parameters.AddWithValue("@RegionName", userLocaiton.RegionName ?? (object)DBNull.Value);
-                CommandObj.Parameters.AddWithValue("@ZipCode", userLocaiton.ZipCode ?? (object)DBNull.Value);
-                CommandObj.Parameters.AddWithValue("@Latitude", userLocaiton.Latitude ?? (object)DBNull.Value);
-                CommandObj.Parameters.AddWithValue("@Longitude", userLocaiton.Longitude ?? (object)DBNull.Value);
-                CommandObj.Parameters.AddWithValue("@TimeZone", userLocaiton.TimeZone ?? (object)DBNull.Value);
-                CommandObj.Parameters.AddWithValue("@IsValidLogin", userLocaiton.IsValidLogin);
+                //CommandObj.Parameters.AddWithValue("@CountryName", userLocaiton.CountryName ?? (object)DBNull.Value);
+                //CommandObj.Parameters.AddWithValue("@CountryCode", userLocaiton.CountryCode ?? (object)DBNull.Value);
+                //CommandObj.Parameters.AddWithValue("@CityName", userLocaiton.CityName ?? (object)DBNull.Value);
+                //CommandObj.Parameters.AddWithValue("@RegionName", userLocaiton.RegionName ?? (object)DBNull.Value);
+                //CommandObj.Parameters.AddWithValue("@ZipCode", userLocaiton.ZipCode ?? (object)DBNull.Value);
+                //CommandObj.Parameters.AddWithValue("@Latitude", userLocaiton.Latitude ?? (object)DBNull.Value);
+                //CommandObj.Parameters.AddWithValue("@Longitude", userLocaiton.Longitude ?? (object)DBNull.Value);
+                //CommandObj.Parameters.AddWithValue("@TimeZone", userLocaiton.TimeZone ?? (object)DBNull.Value);
+                //CommandObj.Parameters.AddWithValue("@IsValidLogin", userLocaiton.IsValidLogin);
 
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
@@ -281,6 +282,7 @@ namespace NBL.DAL
 
             catch (Exception e)
             {
+                Log.WriteErrorLog(e);
                 throw new Exception("Could not change login status", e);
             }
             finally

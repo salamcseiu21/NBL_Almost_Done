@@ -28,6 +28,7 @@ namespace NBL.Models.EntityModels.Products
         [Display(Name = "Product Added Date")]
         public DateTime ProductAddedDate { get; set; }
 
+        public DateTime SaleDate { get; set; }  
         public DateTime ExpiryDate { get; set; }
         public string ProductImage { get; set; } 
         public int Quantity { get; set; }

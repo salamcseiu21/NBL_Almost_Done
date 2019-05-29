@@ -10,6 +10,7 @@ using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.EntityModels.Products;
+using NBL.Models.Logs;
 using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
@@ -2459,11 +2460,13 @@ ConnectionObj.Close();
             catch (SqlException sqlException)
             {
                 sqlTransaction.Rollback();
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not save due to Sql Exception", sqlException);
             }
             catch (Exception exception)
             {
                 sqlTransaction.Rollback();
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not save status", exception);
             }
             finally

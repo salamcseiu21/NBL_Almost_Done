@@ -1,0 +1,108 @@
+﻿
+@model IEnumerable<NBL.Models.ViewModels.Orders.ViewSoldProduct> 
+<div class="table-responsive">
+    <table id="table_scanned_product_List" class="display" style="border:1px solid black">
+        <caption class="text-center text-green" style="font-weight:bolder;font-size:20px">Scanned Barcode List</caption>
+
+        <thead>
+        
+
+            <tr>
+
+                <th colspan="5">
+                    @using (Html.BeginForm("RetailSale", "Order", FormMethod.Post, new { id = "saveSoldBarcodesForm" }))
+                    {
+                        <div class="form-horizontal">
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                   
+
+                                </div>
+                                <div class="col-md-4">
+
+                                    
+                                </div>
+                                <div class="col-md-4">
+
+
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-3"></div>
+                                            <div class="col-md-9 col-md-offset-3">
+                                                <div class="btn-toolbar">
+                                                    @Html.ActionLink(" Back", "Home", "Home", null, new { @class = "btn btn-danger" })
+                                                    <input type="button" value="Save" onclick="ConfirmToSave(this)" class="btn btn-success" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </th>
+
+            </tr>
+        <tr>
+            <th>Product Name</th>
+            <th>Barcode
+
+            </th>
+            <th>
+                Category
+
+            </th>
+            <th>
+                Sale Date
+
+            </th>
+            <th class="text-center">
+                Action
+
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td class="text-center">@item.BarCode</td>
+                <td class="text-center">@item.CategoryName</td>
+                <td class="text-center">@item.SaleDate.ToString("dd-MMMM-yyyy")</td>
+                <td class="text-center">
+                    <button id="@item.BarCode" type='button' onclick='RemoveProductByBarcode(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color: red;'></i></button>
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Product Name</th>
+            <th>
+                Barcode
+
+            </th>
+            <th>
+                Category
+
+            </th>
+            <th>
+                Sale Date
+
+            </th>
+            <th class="text-center">
+                Action
+
+            </th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<script>
+    $("#table_scanned_product_List").DataTable();
+</script>

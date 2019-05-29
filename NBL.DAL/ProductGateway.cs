@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Xml.Linq;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Approval;
 using NBL.Models.EntityModels.Branches;
@@ -13,8 +15,10 @@ using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Requisitions;
 using NBL.Models.EntityModels.TransferProducts;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
+using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Requisitions;
@@ -1428,6 +1432,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Colud not collect product list by search term", exception);
             }
             finally
@@ -1437,6 +1442,58 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public IEnumerable<ViewSoldProduct> GetTempSoldBarcodesFromXmlFile(string filePath)
+        {
+            try
+            {
+                List<ViewSoldProduct> products = new List<ViewSoldProduct>();
+                var xmlData = XDocument.Load(filePath).Element("BarCodes")?.Elements();
+                foreach (XElement element in xmlData)
+                {
+                    var product = new ViewSoldProduct();
+                    var elementValue = element.Elements();
+                    var xElements = elementValue as XElement[] ?? elementValue.ToArray();
+                    product.BarCode = xElements[0].Value;
+                    product.ProductId = Convert.ToInt32(xElements[1].Value);
+                    product.ProductName = xElements[2].Value;
+                    product.CategoryName = xElements[3].Value;
+                    product.SaleDate = Convert.ToDateTime(xElements[4].Value);
+                    products.Add(product);
+                }
+                return products;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Colud not collect sold product list", exception);
+            }
+        }
+
+        public int AddBarCodeToTempSoldProductXmlFile(Product product, string barcode, string filePath)
+        {
+            try
+            {
+                var xmlDocument = XDocument.Load(filePath);
+                xmlDocument.Element("BarCodes")?.Add(
+                    new XElement("BarCode", new XAttribute("Id", barcode),
+                        new XElement("Code", barcode),
+                        new XElement("ProductId", product.ProductId),
+                        new XElement("ProductName", product.ProductName),
+                        new XElement("ProductCategoryName", product.ProductCategory.ProductCategoryName),
+                        new XElement("SaleDate", product.SaleDate)
+
+
+                    ));
+                xmlDocument.Save(filePath);
+                return 1;
+            }
+        catch (Exception exception)
+        {
+            Log.WriteErrorLog(exception);
+            throw new Exception("Colud not collect sold product list", exception);
+        }
+}
 
         public int GetMaxRequisitionNoOfCurrentYear()
         {

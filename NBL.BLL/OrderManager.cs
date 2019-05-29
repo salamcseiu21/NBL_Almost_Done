@@ -329,7 +329,11 @@ namespace NBL.BLL
 
         public bool SaveSoldProductBarCode(RetailSale retail)
         {
-            int rowAffected = _iOrderGateway.SaveSoldProductBarCode(retail); 
+            int rowAffected = 0;
+            foreach (var item in retail.Products) { 
+                rowAffected += _iOrderGateway.SaveSoldProductBarCode(retail);
+            }
+           
             return rowAffected > 0;
         }
 

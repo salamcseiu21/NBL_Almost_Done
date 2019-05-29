@@ -6,6 +6,7 @@ using NBL.Models.EntityModels.Requisitions;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
+using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Requisitions;
@@ -72,5 +73,7 @@ namespace NBL.BLL.Contracts
         bool ApproveGeneralRequisition(GeneralRequisitionModel model, int nextApproverUser, int nextApprovalLevel,ApprovalDetails approval);
         bool ApproveGeneralRequisitionByScm(int userId, int distributionPoint, long requisitiionId);
         ICollection<object> GetAllProductBySearchTerm(string searchTerm);
+        IEnumerable<ViewSoldProduct> GetTempSoldBarcodesFromXmlFile(string filePath);
+        bool AddBarCodeToTempSoldProductXmlFile(Product product, string barcode, string filePath);
     }
 }

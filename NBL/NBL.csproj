@@ -8220,6 +8220,7 @@
     <Content Include="Views\Shared\_ModalRequisitionDeliveryPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewRequisitionToFactoryProductList.cshtml" />
     <Content Include="Views\Demo\Index.cshtml" />
+    <Content Include="Views\Shared\_ViewSoldProductsPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,6 +13,7 @@ using NBL.Models.Enums;
 using NBL.Models.Validators;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
+using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Requisitions;
@@ -453,6 +454,17 @@ namespace NBL.BLL
         public ICollection<object> GetAllProductBySearchTerm(string searchTerm)
         {
             return _iProductGateway.GetAllProductBySearchTerm(searchTerm);
+        }
+
+        public IEnumerable<ViewSoldProduct> GetTempSoldBarcodesFromXmlFile(string filePath)
+        {
+           return _iProductGateway.GetTempSoldBarcodesFromXmlFile(filePath);
+        }
+
+        public bool AddBarCodeToTempSoldProductXmlFile(Product product, string barcode, string filePath)
+        {
+            int rowAffected =_iProductGateway.AddBarCodeToTempSoldProductXmlFile(product,barcode, filePath);
+            return rowAffected > 0;
         }
 
         private string GenerateTransferRequisitionRef(int maxTrNo)

@@ -1,2 +1,94 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Errors />
+<Errors>
+  <Error LogId="19-May-29ae14debf-7db3-4de3-9d9e-335e5616fc74">
+    <Heading>System.Xml.XmlException</Heading>
+    <LogMessage>   at System.Xml.XmlTextReaderImpl.Throw(Exception e)
+   at System.Xml.XmlTextReaderImpl.ParseDocumentContent()
+   at System.Xml.XmlTextReaderImpl.Read()
+   at System.Xml.Linq.XDocument.Load(XmlReader reader, LoadOptions options)
+   at System.Xml.Linq.XDocument.Load(String uri, LoadOptions options)
+   at System.Xml.Linq.XDocument.Load(String uri)
+   at NBL.Areas.Sales.Controllers.OrderController.AddBarCodeToTempSoldProductXmlFile(Product product, String barcode, Int32 userId) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 779
+   at NBL.Areas.Sales.Controllers.OrderController.SaveScannedBarcodeToTextFile(String barcode, Int32 userId) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 755</LogMessage>
+    <LogDateTime>2019-05-29T13:37:33.946882+06:00</LogDateTime>
+    <CustomeMessage>Root element is missing.</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-29e7fc5717-68da-4760-91b8-53d377610d00">
+    <Heading>System.Xml.XmlException</Heading>
+    <LogMessage>   at System.Xml.XmlTextReaderImpl.Throw(Exception e)
+   at System.Xml.XmlTextReaderImpl.ParseDocumentContent()
+   at System.Xml.XmlTextReaderImpl.Read()
+   at System.Xml.Linq.XDocument.Load(XmlReader reader, LoadOptions options)
+   at System.Xml.Linq.XDocument.Load(String uri, LoadOptions options)
+   at System.Xml.Linq.XDocument.Load(String uri)
+   at NBL.Areas.Sales.Controllers.OrderController.AddBarCodeToTempSoldProductXmlFile(Product product, String barcode, Int32 userId) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 779
+   at NBL.Areas.Sales.Controllers.OrderController.SaveScannedBarcodeToTextFile(String barcode, Int32 userId) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 755</LogMessage>
+    <LogDateTime>2019-05-29T13:40:12.2460599+06:00</LogDateTime>
+    <CustomeMessage>Root element is missing.</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-29270fcc40-c0e1-4b56-aed9-6a60785a4f58">
+    <Heading>System.Xml.XmlException</Heading>
+    <LogMessage>   at System.Xml.XmlTextReaderImpl.Throw(Exception e)
+   at System.Xml.XmlTextReaderImpl.ParseDocumentContent()
+   at System.Xml.XmlTextReaderImpl.Read()
+   at System.Xml.Linq.XDocument.Load(XmlReader reader, LoadOptions options)
+   at System.Xml.Linq.XDocument.Load(String uri, LoadOptions options)
+   at System.Xml.Linq.XDocument.Load(String uri)
+   at NBL.Areas.Sales.Controllers.OrderController.AddBarCodeToTempSoldProductXmlFile(Product product, String barcode, Int32 userId) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 790
+   at NBL.Areas.Sales.Controllers.OrderController.SaveScannedBarcodeToTextFile(String barcode, Int32 userId) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 755</LogMessage>
+    <LogDateTime>2019-05-29T13:46:50.7208492+06:00</LogDateTime>
+    <CustomeMessage>Root element is missing.</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-29a677152c-51ee-4c0a-93a7-c339db224b13">
+    <Heading>System.Xml.XmlException</Heading>
+    <LogMessage>   at System.Xml.XmlTextReaderImpl.Throw(Exception e)
+   at System.Xml.XmlTextReaderImpl.ParseDocumentContent()
+   at System.Xml.XmlTextReaderImpl.Read()
+   at System.Xml.Linq.XDocument.Load(XmlReader reader, LoadOptions options)
+   at System.Xml.Linq.XDocument.Load(String uri, LoadOptions options)
+   at System.Xml.Linq.XDocument.Load(String uri)
+   at NBL.Areas.Sales.Controllers.OrderController.AddBarCodeToTempSoldProductXmlFile(Product product, String barcode, Int32 userId) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 790
+   at NBL.Areas.Sales.Controllers.OrderController.SaveScannedBarcodeToTextFile(String barcode, Int32 userId) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 755</LogMessage>
+    <LogDateTime>2019-05-29T13:49:41.0902844+06:00</LogDateTime>
+    <CustomeMessage>Root element is missing.</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-2932ec55c6-992c-4799-a56e-2a97609191f8">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductGateway.GetScannedProductListFromTextFile(String filePath) in E:\API\NBL\NBL.DAL\ProductGateway.cs:line 874
+   at NBL.BLL.ProductManager.GetScannedProductListFromTextFile(String filePath) in E:\API\NBL\NBL.BLL\ProductManager.cs:line 162
+   at NBL.BLL.ProductManager.ScannedProducts(String filePath) in E:\API\NBL\NBL.BLL\ProductManager.cs:line 257
+   at NBL.Areas.Sales.Controllers.OrderController.SaveScannedBarcodeToTextFile(String barcode, Int32 userId) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 744</LogMessage>
+    <LogDateTime>2019-05-29T14:06:35.3414309+06:00</LogDateTime>
+    <CustomeMessage>Unable to read product text file</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-292da74276-efa9-4c83-83d5-f7f2288ffb43">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductGateway.GetScannedProductListFromTextFile(String filePath) in E:\API\NBL\NBL.DAL\ProductGateway.cs:line 874
+   at NBL.BLL.ProductManager.GetScannedProductListFromTextFile(String filePath) in E:\API\NBL\NBL.BLL\ProductManager.cs:line 162
+   at NBL.BLL.ProductManager.ScannedProducts(String filePath) in E:\API\NBL\NBL.BLL\ProductManager.cs:line 257
+   at NBL.Areas.Sales.Controllers.OrderController.SaveScannedBarcodeToTextFile(String barcode, Int32 userId) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 744</LogMessage>
+    <LogDateTime>2019-05-29T14:06:41.9415076+06:00</LogDateTime>
+    <CustomeMessage>Unable to read product text file</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-2989446646-4dca-4cb2-99b1-4c846db5e6eb">
+    <Heading>System.Net.WebException</Heading>
+    <LogMessage>   at System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest&amp; request)
+   at System.Net.WebClient.DownloadString(Uri address)
+   at System.Net.WebClient.DownloadString(String address)
+   at NBL.Controllers.LoginController.GetUserLocation() in E:\API\NBL\NBL\Controllers\LoginController.cs:line 278
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 67</LogMessage>
+    <LogDateTime>2019-05-29T14:11:44.5317567+06:00</LogDateTime>
+  </Error>
+  <Error LogId="19-May-29c9920dff-693e-4a45-9d80-6c7b94ad7bf5">
+    <Heading>System.NullReferenceException</Heading>
+    <LogMessage>   at NBL.Areas.Sales.Controllers.OrderController.RetailSale() in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 685</LogMessage>
+    <LogDateTime>2019-05-29T14:17:39.039365+06:00</LogDateTime>
+    <CustomeMessage>Object reference not set to an instance of an object.</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-2988d124d9-2c7f-4ad8-8bbd-2979d8336632">
+    <Heading>System.NullReferenceException</Heading>
+    <LogMessage>   at NBL.Areas.Sales.Controllers.OrderController.RetailSale() in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 685</LogMessage>
+    <LogDateTime>2019-05-29T14:18:04.9829497+06:00</LogDateTime>
+    <CustomeMessage>Object reference not set to an instance of an object.</CustomeMessage>
+  </Error>
+</Errors>

@@ -6,26 +6,26 @@ namespace NBL.DAL
 {
     public class DbGateway
     {
-        private SqlConnection connectionObj;
+        private readonly SqlConnection _connectionObj; 
 
-        private SqlCommand commandObj;
+        private readonly SqlCommand _commandObj;
 
         public DbGateway()
         {
             string connectionString =
                 WebConfigurationManager.ConnectionStrings["UniversalBusinessSolutionDbConnectionString"]
                     .ConnectionString;
-            //var str = StringCipher.Decrypt(connectionString, "salam_cse_10_R");
-            //connectionObj = new SqlConnection(str);
-            connectionObj = new SqlConnection(connectionString);
-            commandObj = new SqlCommand();
+            var str = StringCipher.Decrypt(connectionString, "salam_cse_10_R");
+            _connectionObj = new SqlConnection(str);
+            //connectionObj = new SqlConnection(connectionString);
+            _commandObj = new SqlCommand();
         }
 
         public SqlConnection ConnectionObj
         {
             get
             {
-                return connectionObj;
+                return _connectionObj;
             }
 
 
@@ -35,8 +35,8 @@ namespace NBL.DAL
         {
             get
             {
-                commandObj.Connection = connectionObj;
-                return commandObj;
+                _commandObj.Connection = _connectionObj;
+                return _commandObj;
             }
 
         }
