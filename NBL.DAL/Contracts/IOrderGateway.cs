@@ -54,5 +54,7 @@ namespace NBL.DAL.Contracts
        ICollection<ViewOrder> GetCancelledOrdersToSalesPersonByBranchCompanyUserId(int branchId, int companyId, int userId);
        int ApproveOrderByScmManager(ViewOrder order);
        ICollection<ViewOrder> GetOrdersByCompanyIdAndStatus(int companyId, int status);
+       int UpdateSoldProductSaleDateInFactory(RetailSale retail, ViewSoldProduct item,ViewDisributedProduct product);
+       int UpdateSoldProductSaleDateInBranch(RetailSale retail, ViewSoldProduct item, ViewDisributedProduct product);
    }
 }

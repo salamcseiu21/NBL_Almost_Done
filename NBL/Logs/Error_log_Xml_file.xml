@@ -91,4 +91,97 @@
     <LogDateTime>2019-05-29T14:18:04.9829497+06:00</LogDateTime>
     <CustomeMessage>Object reference not set to an instance of an object.</CustomeMessage>
   </Error>
+  <Error LogId="19-May-3082d793a2-f32d-4eed-95df-1354b30be446">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ReportGateway.GetDistributedProductFromFactory(String barcode) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 430</LogMessage>
+    <LogDateTime>2019-05-30T10:53:49.7645376+06:00</LogDateTime>
+    <CustomeMessage>InventoryDetailsId</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-30801f97b3-d510-4ffd-afae-32db1425ebea">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ReportGateway.GetDistributedProductFromFactory(String barcode) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 461
+   at NBL.BLL.ReportManager.GetDistributedProductFromFactory(String barcode) in E:\API\NBL\NBL.BLL\ReportManager.cs:line 224
+   at NBL.BLL.ReportManager.IsDistributedFromFactory(String barcode) in E:\API\NBL\NBL.BLL\ReportManager.cs:line 214
+   at NBL.Areas.Sales.Controllers.OrderController.SaveScannedBarcodeToXmlFile(String barcode, Int32 userId, DateTime saleDate) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 757</LogMessage>
+    <LogDateTime>2019-05-30T10:53:49.8268855+06:00</LogDateTime>
+    <CustomeMessage>Could not collect distributed product from factory</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-3011b5c3b9-2e24-46d9-a72e-9cc20aee2cea">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ReportGateway.GetDistributedProductFromFactory(String barcode) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 430</LogMessage>
+    <LogDateTime>2019-05-30T10:56:28.9854397+06:00</LogDateTime>
+    <CustomeMessage>DistributionPointId</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-30d8d15326-788f-412d-af3f-7fa4aff8a1e8">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ReportGateway.GetDistributedProductFromFactory(String barcode) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 461
+   at NBL.BLL.ReportManager.GetDistributedProductFromFactory(String barcode) in E:\API\NBL\NBL.BLL\ReportManager.cs:line 224
+   at NBL.BLL.ReportManager.IsDistributedFromFactory(String barcode) in E:\API\NBL\NBL.BLL\ReportManager.cs:line 214
+   at NBL.Areas.Sales.Controllers.OrderController.SaveScannedBarcodeToXmlFile(String barcode, Int32 userId, DateTime saleDate) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 757</LogMessage>
+    <LogDateTime>2019-05-30T10:56:29.0382947+06:00</LogDateTime>
+    <CustomeMessage>Could not collect distributed product from factory</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-30014d5433-64f1-4744-a58e-130d704b03d9">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at NBL.DAL.ReportGateway.GetDistributedProductFromBranch() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 378</LogMessage>
+    <LogDateTime>2019-05-30T11:37:56.0195677+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-30dbb9f2cd-dd5d-4da8-975a-bec85ddfeeca">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at NBL.DAL.ReportGateway.GetDistributedProductFromBranch() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 378</LogMessage>
+    <LogDateTime>2019-05-30T11:38:24.5135754+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-30e10f2022-126d-41ee-84b0-a735c4327700">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at NBL.DAL.ReportGateway.GetDistributedProductFromBranch() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 378</LogMessage>
+    <LogDateTime>2019-05-30T11:39:13.5736606+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-301e877fb9-c2ff-45bf-852b-1d340ed0eb48">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ReportGateway.GetDistributedProductFromBranch() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 410
+   at NBL.BLL.ReportManager.GetDistributedProductFromBranch() in E:\API\NBL\NBL.BLL\ReportManager.cs:line 209
+   at NBL.BLL.ReportManager.IsAllreadyUpdatedSaleDateInFactory(String barcode) in E:\API\NBL\NBL.BLL\ReportManager.cs:line 224
+   at NBL.Areas.Sales.Controllers.OrderController.SaveScannedBarcodeToXmlFile(String barcode, Int32 userId, DateTime saleDate) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 758</LogMessage>
+    <LogDateTime>2019-05-30T11:39:13.6361454+06:00</LogDateTime>
+    <CustomeMessage>Could not collect distributed product from branch</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-308437cc96-9fdb-4d6e-a282-412a5fa18e9a">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at NBL.DAL.ReportGateway.GetDistributedProductFromBranch() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 377</LogMessage>
+    <LogDateTime>2019-05-30T11:50:03.3257785+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-30152626b4-1bd1-4673-b776-3f4903f93879">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at NBL.DAL.ReportGateway.GetDistributedProductFromBranch() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 377</LogMessage>
+    <LogDateTime>2019-05-30T11:52:05.3679368+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-May-30b348558e-ffc7-430c-a4a6-39c4c3524b6a">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at NBL.DAL.ReportGateway.GetDistributedProductFromBranch() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 377</LogMessage>
+    <LogDateTime>2019-05-30T11:52:14.5996019+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
 </Errors>

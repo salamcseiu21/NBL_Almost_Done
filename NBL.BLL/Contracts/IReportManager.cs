@@ -26,6 +26,14 @@ namespace NBL.BLL.Contracts
         ViewTotalProduction GetTotalProductionCompanyIdAndYear(int companyId, int year);
         ViewTotalDispatch GetTotalDispatchCompanyIdAndYear(int companyId, int year);
         ViewTotalOrder GetTotalOrdersByBranchCompanyAndYear(int branchid,int companyId, int year);
-        bool IsValiedBarcode(string barcode); 
+        bool IsValiedBarcode(string barcode);
+        ICollection<ViewDisributedProduct> GetDistributedProductFromFactory(); 
+        ICollection<ViewDisributedProduct> GetDistributedProductFromBranch();
+        bool IsDistributedFromFactory(string barcode);
+        bool IsDistributedFromBranch(string barcode);
+        bool IsAllreadyUpdatedSaleDateInFactory(string barcode);
+        bool IsAllreadyUpdatedSaleDateInBranch(string barcode); 
+        ViewDisributedProduct GetDistributedProductFromFactory(string barcode);
+        ViewDisributedProduct GetDistributedProductFromBranch(string barcode);
     }
 }

@@ -83,7 +83,7 @@
             } else {
                 $.ajax({
                     type: "POST",
-                    url: RootUrl + 'sales/order/SaveScannedBarcodeToXmlFile',
+                    url: RootUrl + 'commonarea/order/SaveScannedBarcodeToXmlFile',
                     data: { barcode: code, userId: userId, saleDate:saleDate},
                     error: function (xhr, status, error) {
                         alert(error);
@@ -111,7 +111,7 @@
         var json = { invoiceId: invoiceId };
         $.ajax({
             type: 'Post',
-            url: RootUrl + "sales/order/GetTempSoldProducts",
+            url: RootUrl + "commonarea/order/GetTempSoldProducts",
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(json),
             success: function (data) {
@@ -128,7 +128,7 @@
             var json = { id: id };
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("RemoveProductByBarcode", "Order",new {area="Sales"})',
+                url: '@Url.Action("RemoveProductByBarcode", "Order",new {area="CommonArea"})',
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(json),
                 success: function (data) {

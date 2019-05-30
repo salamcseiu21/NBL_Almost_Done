@@ -18,11 +18,13 @@ namespace NBL.BLL
 
        private readonly IOrderGateway _iOrderGateway;
        private readonly ICommonGateway _iCommonGateway;
+        private readonly IReportGateway _iReportGateway;
 
-        public OrderManager(IOrderGateway iOrderGateway,ICommonGateway iCommonGateway)
+        public OrderManager(IOrderGateway iOrderGateway,ICommonGateway iCommonGateway,IReportGateway iReportGateway)
         {
             _iCommonGateway = iCommonGateway;
             _iOrderGateway = iOrderGateway;
+            _iReportGateway = iReportGateway;
         }
 
         public IEnumerable<Order> GetAll()
@@ -330,8 +332,18 @@ namespace NBL.BLL
         public bool SaveSoldProductBarCode(RetailSale retail)
         {
             int rowAffected = 0;
-            foreach (var item in retail.Products) { 
-                rowAffected += _iOrderGateway.SaveSoldProductBarCode(retail);
+            foreach (var item in retail.Products)
+            {
+                var fromBranch = _iReportGateway.GetDistributedProductFromBranch(item.BarCode);
+                var fromFactory= _iReportGateway.GetDistributedProductFromFactory(item.BarCode);
+                if (fromBranch!=null)
+                {
+                    rowAffected += _iOrderGateway.UpdateSoldProductSaleDateInBranch(retail,item, fromBranch);
+                }
+                if(fromFactory != null)
+                {
+                    rowAffected += _iOrderGateway.UpdateSoldProductSaleDateInFactory(retail,item, fromFactory);  
+                }
             }
            
             return rowAffected > 0;

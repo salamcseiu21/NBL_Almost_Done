@@ -162,7 +162,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/tabletools/2.2.4/css/dataTables.tableTools.css">
     <link rel="stylesheet" href="~/Assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
+    <!-- Morris charts -->
+    <link rel="stylesheet" href="~/Assets/bower_components/morris.js/morris.css">
     <script>
         $( function() {
             $("#accordion").accordion({
@@ -455,9 +456,15 @@
     <script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js")"></script>
     <script src="@Url.Content("https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js")"></script>
     <script src="@Url.Content("https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js")"></script>
-   <script src="@Url.Content("~/Assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js")"></script>
+<script src="@Url.Content("~/Assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js")"></script>
+    
+    
 
-    <script src="~/Scripts/underscore.js"></script>
+<!-- Morris.js charts -->
+<script src="@Url.Content("~/Assets/bower_components/raphael/raphael.min.js")"></script>
+<script src="@Url.Content("~/Assets/bower_components/morris.js/morris.min.js")"></script>
+
+<script src="~/Scripts/underscore.js"></script>
 <script type="text/javascript">
     var RootUrl = '@Url.Content("~/")';
 </script>

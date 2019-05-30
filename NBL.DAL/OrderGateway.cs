@@ -78,11 +78,13 @@ namespace NBL.DAL
                 return orders;
             }
                 catch (SqlException exception)
-                {
+            {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders due to Db Exception", exception);
             }
                 catch (Exception exception)
-                {
+            {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders", exception);
             }
                 finally
@@ -143,10 +145,12 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not Collect Orders due to sql Exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders", exception);
             }
             finally
@@ -202,10 +206,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect lastest order by company id", exception);
             }
             finally
@@ -277,10 +283,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders", exception);
             }
             finally
@@ -342,10 +350,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders", exception);
             }
             finally
@@ -400,10 +410,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders", exception);
             }
             finally
@@ -484,10 +496,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect pending Orders", exception);
             }
             finally
@@ -568,10 +582,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect pending Orders", exception);
             }
             finally
@@ -627,11 +643,13 @@ namespace NBL.DAL
                 return orders;
             }
                 catch (SqlException exception)
-                {
+            {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders due to Db Exception", exception);
             }
                 catch (Exception exception)
-                {
+            {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders", exception);
             }
                 finally
@@ -678,10 +696,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Order items due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Order items", exception);
             }
             finally
@@ -754,12 +774,14 @@ namespace NBL.DAL
                     return orders;
                 }
                 catch (SqlException sqlException)
-                {
-                    throw new Exception("Could not Collect Orders due to sql Exception", sqlException);
+            {
+                Log.WriteErrorLog(sqlException);
+                throw new Exception("Could not Collect Orders due to sql Exception", sqlException);
                 }
                 catch (Exception exception)
-                {
-                    throw new Exception("Could not Collect Orders", exception);
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Orders", exception);
                 }
                 finally
                 {
@@ -830,10 +852,12 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not Collect Orders by NSM user Id due to Db Exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders by NSM user Id", exception);
             }
             finally
@@ -901,10 +925,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders by NSM user Id", exception);
             }
             finally
@@ -979,10 +1005,12 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not Collect lastest order by branch and company id due to Db Exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect lastest order by branch and company id", exception);
             }
             finally
@@ -1021,11 +1049,13 @@ namespace NBL.DAL
         }
     catch (SqlException exception)
     {
-    throw new Exception("Could not Collect Order details due to Db Exception", exception);
+        Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Order details due to Db Exception", exception);
 }
 catch (Exception exception)
 {
-throw new Exception("Could not Collect Orders details", exception);
+    Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Orders details", exception);
 }
 finally
 {
@@ -1074,12 +1104,14 @@ ConnectionObj.Close();
 
                 }
                 catch (SqlException exception)
-                {
-                    throw new Exception("Could not Collect Order details due to Db Exception", exception);
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Order details due to Db Exception", exception);
                 }
                 catch (Exception exception)
-                {
-                    throw new Exception("Could not Collect Orders details", exception);
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Orders details", exception);
                 }
                 finally
                 {
@@ -1145,10 +1177,12 @@ ConnectionObj.Close();
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not Collect Order due to Db Exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Order", exception);
             }
             finally
@@ -1177,6 +1211,7 @@ ConnectionObj.Close();
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect max serial no of order of current Year",exception);
             }
             finally
@@ -1225,10 +1260,12 @@ ConnectionObj.Close();
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Order due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Order by transaction reference", exception);
             }
             finally
@@ -1263,10 +1300,12 @@ ConnectionObj.Close();
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect total Orders by Company Id", exception);
             }
             finally
@@ -1303,10 +1342,12 @@ ConnectionObj.Close();
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect total Orders", exception);
             }
             finally
@@ -1342,10 +1383,12 @@ ConnectionObj.Close();
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect total Orders by company id and year", exception);
             }
             finally
@@ -1380,10 +1423,12 @@ ConnectionObj.Close();
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect total Orders by year", exception);
             }
             finally
@@ -1428,12 +1473,14 @@ ConnectionObj.Close();
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not Save Order due to sql exception", sqlException);
 
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not Save Order", exception);
             }
@@ -1487,10 +1534,12 @@ ConnectionObj.Close();
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not update discount amount due to sql Exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not update discount amount", exception);
             }
             finally
@@ -1524,10 +1573,12 @@ ConnectionObj.Close();
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not add new item to exiting order due to Sql Exception",sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Add New item to existing Order", exception);
             }
             finally
@@ -1554,10 +1605,12 @@ ConnectionObj.Close();
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not delete product due to sql Exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not delete product", exception);
             }
             finally
@@ -1586,10 +1639,12 @@ ConnectionObj.Close();
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not cancel order due to Sql Exception",sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not cancel  Order", exception);
             }
             finally
@@ -1624,10 +1679,12 @@ ConnectionObj.Close();
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not Update Order Status due to Sql Exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Update Order Status", exception);
             }
             finally
@@ -1662,10 +1719,12 @@ ConnectionObj.Close();
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not approve order by Admin due to Sql Exception",sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not approve order by Admin", exception);
             }
             finally
@@ -1701,10 +1760,12 @@ ConnectionObj.Close();
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not update Order items due to sql exception", sqlException);
             }
             catch (Exception e)
             {
+                Log.WriteErrorLog(e);
                 throw new Exception("Could not update Order items", e);
             }
             finally
@@ -1765,10 +1826,12 @@ ConnectionObj.Close();
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders", exception);
             }
             finally
@@ -1810,10 +1873,12 @@ ConnectionObj.Close();
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Order details due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect product lsit by order Id", exception);
             }
             finally
@@ -1888,10 +1953,12 @@ ConnectionObj.Close();
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect delayed Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect delayed Orders", exception);
             }
             finally
@@ -1966,10 +2033,12 @@ ConnectionObj.Close();
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect cancelled Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect cancelled Orders", exception);
             }
             finally
@@ -1999,10 +2068,12 @@ ConnectionObj.Close();
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not update Distribution Point due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not update Distribution Point", exception);
             }
             finally
@@ -2091,11 +2162,85 @@ ConnectionObj.Close();
             }
             catch (SqlException exception)
             {
-                throw new Exception("Could not Collect Orders due to Db Exception", exception);
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect pending Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect pending Orders", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public int UpdateSoldProductSaleDateInFactory(RetailSale retail, ViewSoldProduct item,ViewDisributedProduct product)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_UpdateSoldProductSaleDateInFactory";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Barcode", item.BarCode);
+                CommandObj.Parameters.AddWithValue("@SaleDate", item.SaleDate);
+                CommandObj.Parameters.AddWithValue("@UpdatedByUserId", retail.UserId);
+                CommandObj.Parameters.AddWithValue("@InventoryDetailsId", product.InventoryDetailsId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not update Sale Date due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not update Sale Date", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public int UpdateSoldProductSaleDateInBranch(RetailSale retail, ViewSoldProduct item, ViewDisributedProduct product)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_UpdateSoldProductSaleDateInBranch";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Barcode", item.BarCode);
+                CommandObj.Parameters.AddWithValue("@SaleDate", item.SaleDate);
+                CommandObj.Parameters.AddWithValue("@UpdatedByUserId", retail.UserId);
+                CommandObj.Parameters.AddWithValue("@InventoryDetailsId", product.InventoryDetailsId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not update Sale Date due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not update Sale Date", exception);
             }
             finally
             {

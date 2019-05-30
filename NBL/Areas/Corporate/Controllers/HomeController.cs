@@ -71,10 +71,14 @@ namespace NBL.Areas.Corporate.Controllers
         {
             try
             {
-                Session.Remove("BranchId");
-                Session.Remove("Branch");
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
 
+                var totalProduction = _iReportManager.GetTotalProductionCompanyIdAndYear(companyId, DateTime.Now.Year);
+                var totalDispatch = _iReportManager.GetTotalDispatchCompanyIdAndYear(companyId, DateTime.Now.Year);
+                Session.Remove("BranchId");
+                Session.Remove("Branch");
+               var torders= _iReportManager.GetTotalOrdersByYear(DateTime.Now.Year);
+                var accountSummary = _iAccountsManager.GetAccountSummaryofCurrentMonthByCompanyId(companyId);
                 var branches = _iBranchManager.GetAllBranches().ToList().FindAll(n => n.BranchId != 13).ToList();
                 foreach (ViewBranch branch in branches)
                 {
@@ -88,7 +92,11 @@ namespace NBL.Areas.Corporate.Controllers
                 SummaryModel model = new SummaryModel
                 {
                     Branches = branches,
-                    InvoicedOrderList = invoicedOrders
+                    InvoicedOrderList = invoicedOrders,
+                    Production = totalProduction,
+                    Dispatch = totalDispatch,
+                    TotalOrder = torders,
+                    AccountSummary = accountSummary
                     //OrderListByDate = todaysInvoceOrders
                 };
                 return View(model);
@@ -396,6 +404,10 @@ namespace NBL.Areas.Corporate.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
-        
+
+        public ActionResult SalesChart()
+        {
+            return View();
+        }
     }
 }

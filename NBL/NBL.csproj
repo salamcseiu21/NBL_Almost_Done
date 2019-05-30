@@ -317,6 +317,7 @@
     <Compile Include="Areas\Administrative\Controllers\HomeController.cs" />
     <Compile Include="Areas\CommonArea\CommonAreaAreaRegistration.cs" />
     <Compile Include="Areas\CommonArea\Controllers\HomeController.cs" />
+    <Compile Include="Areas\CommonArea\Controllers\OrderController.cs" />
     <Compile Include="Areas\CommonArea\Controllers\ShowInfoController.cs" />
     <Compile Include="Areas\Corporate\Controllers\HomeController.cs" />
     <Compile Include="Areas\Corporate\Controllers\OperationHeadController.cs" />
@@ -7907,7 +7908,7 @@
     <Content Include="Areas\ResearchAndDevelopment\Views\Home\Home.cshtml" />
     <Content Include="Areas\Services\Views\web.config" />
     <Content Include="Areas\Services\Views\Home\Home.cshtml" />
-    <Content Include="Areas\Sales\Views\Order\RetailSale.cshtml" />
+    <Content Include="Areas\CommonArea\Views\Order\RetailSale.cshtml" />
     <Content Include="Areas\Sales\Views\Shared\_NsmMenuPartialPage.cshtml" />
     <Content Include="Areas\Sales\Views\Nsm\Home.cshtml" />
     <Content Include="Areas\Sales\Views\SalesPerson\Home.cshtml" />
@@ -8076,6 +8077,7 @@
     <Content Include="Areas\AccountsAndFinance\Views\Shared\_ViewTempDebitPurposePartialPage.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Shared\_ViewTempJournalPurposePartialPage.cshtml" />
     <Content Include="Areas\SuperAdmin\Views\ErrorLog\ErrorList.cshtml" />
+    <Content Include="Areas\Corporate\Views\Home\SalesChart.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />

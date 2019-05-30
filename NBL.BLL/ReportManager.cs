@@ -198,5 +198,46 @@ namespace NBL.BLL
             var model = _iBarCodeManager.GetAll().ToList().Select(n=>n.Barcode).ToList().Contains(barcode);
             return model;
         }
+
+        public ICollection<ViewDisributedProduct> GetDistributedProductFromFactory()
+        {
+            return _iReportGateway.GetDistributedProductFromFactory();
+        }
+
+        public ICollection<ViewDisributedProduct> GetDistributedProductFromBranch()
+        {
+            return _iReportGateway.GetDistributedProductFromBranch();
+        }
+
+        public bool IsDistributedFromFactory(string barcode)
+        {
+          return  GetDistributedProductFromFactory(barcode)!=null;
+        }
+
+        public bool IsDistributedFromBranch(string barcode)
+        {
+            return GetDistributedProductFromBranch(barcode) != null;
+        }
+
+        public bool IsAllreadyUpdatedSaleDateInFactory(string barcode)
+        {
+            
+            return GetDistributedProductFromFactory().ToList().Find(n => n.BarCode == barcode && n.IsSaleDateUpdated)!=null;
+        }
+
+        public bool IsAllreadyUpdatedSaleDateInBranch(string barcode)
+        {
+            return GetDistributedProductFromBranch().ToList().Find(n => n.BarCode == barcode && n.IsSaleDateUpdated) != null;
+        }
+
+        public ViewDisributedProduct GetDistributedProductFromFactory(string barcode)
+        {
+            return _iReportGateway.GetDistributedProductFromFactory(barcode); 
+        }
+
+        public ViewDisributedProduct GetDistributedProductFromBranch(string barcode)
+        {
+            return _iReportGateway.GetDistributedProductFromBranch(barcode); 
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Orders;
 
 namespace NBL.DAL.Contracts
 {
@@ -13,5 +14,9 @@ namespace NBL.DAL.Contracts
        IEnumerable<ViewProduct> GetPopularBatteriesByYear(int year);
        IEnumerable<ViewProduct> GetPopularBatteriesByBranchAndCompanyId(int branchId, int companyId);
        IEnumerable<ViewProduct> GetPopularBatteriesByBranchIdCompanyIdAndYear(int branchId, int companyId, int year);
-   }
+       ICollection<ViewDisributedProduct> GetDistributedProductFromFactory();
+       ICollection<ViewDisributedProduct> GetDistributedProductFromBranch();
+        ViewDisributedProduct GetDistributedProductFromFactory(string barcode);
+        ViewDisributedProduct GetDistributedProductFromBranch(string barcode);
+    }
 }
