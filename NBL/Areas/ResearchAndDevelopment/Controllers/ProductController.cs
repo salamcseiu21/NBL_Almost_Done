@@ -43,6 +43,28 @@ namespace NBL.Areas.ResearchAndDevelopment.Controllers
 
             var product = _iInventoryManager.GetProductLifeCycleByBarcode(barcode);
 
+            bool isSoldFromFactory = _iReportManager.IsDistributedFromFactory(barcode);
+            var updatedInFactory = _iReportManager.IsAllreadyUpdatedSaleDateInFactory(barcode);
+            var updatedInBranch = _iReportManager.IsAllreadyUpdatedSaleDateInBranch(barcode);
+            bool isSoldFromBranch = _iReportManager.IsDistributedFromBranch(barcode);
+            if (isSoldFromBranch)
+            {
+                var prod=_iReportManager.GetDistributedProductFromBranch(barcode);
+                product.DispatchDate = prod.DeliveryDate;
+            }
+            else if (isSoldFromFactory)
+            {
+                var prod = _iReportManager.GetDistributedProductFromFactory(barcode);
+                product.DispatchDate = prod.DeliveryDate;
+            }
+            if (updatedInFactory)
+            {
+               product.SaleDate= _iReportManager.GetDistributedProductFromFactory(barcode).SaleDate;
+            }
+            else if (updatedInBranch)
+            {
+                product.SaleDate = _iReportManager.GetDistributedProductFromBranch(barcode).SaleDate;
+            }
             //var result = _iReportManager.IsValiedBarcode(barcode);
             //ProductStatusModel model = new ProductStatusModel
             //{

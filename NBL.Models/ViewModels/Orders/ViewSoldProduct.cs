@@ -16,6 +16,9 @@ namespace NBL.Models.ViewModels.Orders
         public string DeliveryRef { get; set; }
         public int ClientId { get; set; }
         public string ClientName { get; set; }
+        public string ClientAccountCode { get; set; }
+        public string ClientCommercialName { get; set; }
+        public DateTime DeliveryDate { get; set; } 
         public DateTime SaleDate { get; set; }
     }
 }

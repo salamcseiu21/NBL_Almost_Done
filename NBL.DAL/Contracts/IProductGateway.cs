@@ -84,6 +84,6 @@ namespace NBL.DAL.Contracts
         int ApproveGeneralRequisitionByScm(int userId, int distributionPoint,long requisitiionId);
         ICollection<object> GetAllProductBySearchTerm(string searchTerm);
         IEnumerable<ViewSoldProduct> GetTempSoldBarcodesFromXmlFile(string filePath);
-        int AddBarCodeToTempSoldProductXmlFile(Product product, string barcode, string filePath);
+        int AddBarCodeToTempSoldProductXmlFile(ViewDisributedProduct product, string barcode, string filePath);
     }
 }

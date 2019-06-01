@@ -74,6 +74,6 @@ namespace NBL.BLL.Contracts
         bool ApproveGeneralRequisitionByScm(int userId, int distributionPoint, long requisitiionId);
         ICollection<object> GetAllProductBySearchTerm(string searchTerm);
         IEnumerable<ViewSoldProduct> GetTempSoldBarcodesFromXmlFile(string filePath);
-        bool AddBarCodeToTempSoldProductXmlFile(Product product, string barcode, string filePath);
+        bool AddBarCodeToTempSoldProductXmlFile(ViewDisributedProduct product, string barcode, string filePath);
     }
 }

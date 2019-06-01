@@ -9,7 +9,7 @@
 
             <tr>
 
-                <th colspan="5">
+                <th colspan="6">
                     @using (Html.BeginForm("RetailSale", "Order", FormMethod.Post, new { id = "saveSoldBarcodesForm" }))
                     {
                         <div class="form-horizontal">
@@ -48,16 +48,20 @@
 
             </tr>
         <tr>
-            <th>Product Name</th>
-            <th>Barcode
+            <th class="text-center">Product</th>
+            <th class="text-center">Barcode
 
             </th>
-            <th>
-                Category
-
+          
+            <th class="text-center">
+                Delivery Date
             </th>
-            <th>
+            <th class="text-center">
                 Sale Date
+
+            </th>
+            <th class="text-center">
+               Client
 
             </th>
             <th class="text-center">
@@ -70,10 +74,15 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.ProductName</td>
+                <td>@item.ProductName (@item.CategoryName)</td>
                 <td class="text-center">@item.BarCode</td>
-                <td class="text-center">@item.CategoryName</td>
+               
+                <td class="text-center">@item.DeliveryDate.ToString("dd-MMMM-yyyy")</td>
                 <td class="text-center">@item.SaleDate.ToString("dd-MMMM-yyyy")</td>
+                <td class="text-center">
+                    @item.ClientName<br/>
+                    @item.ClientAccountCode
+                </td>
                 <td class="text-center">
                     <button id="@item.BarCode" type='button' onclick='RemoveProductByBarcode(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color: red;'></i></button>
                 </td>
@@ -82,17 +91,20 @@
         </tbody>
         <tfoot>
         <tr>
-            <th>Product Name</th>
+            <th class="text-center">Product</th>
             <th>
                 Barcode
 
             </th>
-            <th>
-                Category
+            <th class="text-center">
+                Sale Date
 
             </th>
-            <th>
-                Sale Date
+            <th class="text-center">
+                Delivery Date
+            </th>
+            <th class="text-center">
+                Client
 
             </th>
             <th class="text-center">

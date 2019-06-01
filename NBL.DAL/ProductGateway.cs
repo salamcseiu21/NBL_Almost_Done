@@ -1459,6 +1459,10 @@ namespace NBL.DAL
                     product.ProductName = xElements[2].Value;
                     product.CategoryName = xElements[3].Value;
                     product.SaleDate = Convert.ToDateTime(xElements[4].Value);
+                    product.ClientName = xElements[5].Value;
+                    product.ClientAccountCode = xElements[6].Value;
+                    product.ClientCommercialName = xElements[7].Value;
+                    product.DeliveryDate = Convert.ToDateTime(xElements[8].Value);
                     products.Add(product);
                 }
                 return products;
@@ -1470,7 +1474,7 @@ namespace NBL.DAL
             }
         }
 
-        public int AddBarCodeToTempSoldProductXmlFile(Product product, string barcode, string filePath)
+        public int AddBarCodeToTempSoldProductXmlFile(ViewDisributedProduct product, string barcode, string filePath)
         {
             try
             {
@@ -1480,8 +1484,12 @@ namespace NBL.DAL
                         new XElement("Code", barcode),
                         new XElement("ProductId", product.ProductId),
                         new XElement("ProductName", product.ProductName),
-                        new XElement("ProductCategoryName", product.ProductCategory.ProductCategoryName),
-                        new XElement("SaleDate", product.SaleDate)
+                        new XElement("ProductCategoryName", product.ProductCategoryName),
+                        new XElement("SaleDate", product.SaleDate),
+                        new XElement("ClientName", product.ClientName),
+                        new XElement("ClientCode", product.ClientAccountCode),
+                        new XElement("ClientCommercialName", product.ClientCommercialName),
+                        new XElement("DeliveryDate", product.DeliveryDate)
 
 
                     ));

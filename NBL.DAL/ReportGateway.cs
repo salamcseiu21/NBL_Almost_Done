@@ -450,8 +450,11 @@ namespace NBL.DAL
                         ClientId = Convert.ToInt32(reader["ClientId"]),
                         ClientCommercialName = DBNull.Value.Equals(reader["CommercialName"]) ? null : reader["CommercialName"].ToString(),
                         ClientName = DBNull.Value.Equals(reader["ClientName"]) ? null : reader["ClientName"].ToString(),
-                        ClientAccountCode = reader["SubSubSubAccountCode"].ToString()
-                        
+                        ClientAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        ProductCategoryId = Convert.ToInt32(reader["CategoryId"]),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        SaleDate = DBNull.Value.Equals(reader["SaleDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["SaleDate"])
+
 
                    };
                 }
@@ -505,6 +508,9 @@ namespace NBL.DAL
                         ClientCommercialName = DBNull.Value.Equals(reader["CommercialName"]) ? null : reader["CommercialName"].ToString(),
                         ClientName = DBNull.Value.Equals(reader["ClientName"]) ? null : reader["ClientName"].ToString(),
                         ClientAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        ProductCategoryId = Convert.ToInt32(reader["CategoryId"]),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        SaleDate =DBNull.Value.Equals(reader["SaleDate"])? (DateTime?)null: Convert.ToDateTime(reader["SaleDate"])
 
                     };
                 }

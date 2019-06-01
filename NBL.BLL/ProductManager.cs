@@ -461,7 +461,7 @@ namespace NBL.BLL
            return _iProductGateway.GetTempSoldBarcodesFromXmlFile(filePath);
         }
 
-        public bool AddBarCodeToTempSoldProductXmlFile(Product product, string barcode, string filePath)
+        public bool AddBarCodeToTempSoldProductXmlFile(ViewDisributedProduct product, string barcode, string filePath)
         {
             int rowAffected =_iProductGateway.AddBarCodeToTempSoldProductXmlFile(product,barcode, filePath);
             return rowAffected > 0;

@@ -60,7 +60,7 @@
                                 <label for="ProductionDate" class="control-label">Production Date :</label>
                             </div>
                             <div class="col-md-7">
-                                <label id="ProductionDate">@m.ProductionDate</label>
+                                <label id="ProductionDate">@m.ProductionDate.ToString("D")</label>
                             </div>
                         </div>
                     </div>
@@ -70,10 +70,46 @@
                                 <label for="ComeTofactoryInventory" class="control-label">Come to Store :</label>
                             </div>
                             <div class="col-md-7">
-                                <label id="ComeTofactoryInventory">@m.ComeIntoInventory</label>
+                                <label id="ComeTofactoryInventory">@m.ComeIntoInventory.ToString("D")</label>
                             </div>
                         </div>
                     </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-5 text-right">
+                                <label for="LifeTime" class="control-label">Dispatch Date :</label>
+                            </div>
+                            <div class="col-md-7">
+                                <label id="LifeTime">@m.DispatchDate.ToString("D")</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-5 text-right">
+                                <label for="RemainingLife" class="control-label">Receive date :</label>
+                            </div>
+                            <div class="col-md-7">
+                                <label id="RemainingLife">@m.ReceiveDate</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-5 text-right">
+                                <label for="Age" class="control-label">Sale Date :</label>
+                            </div>
+                            <div class="col-md-7">
+                                <label id="Age">@m.SaleDate.ToString()</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+
                 </div>
                 <hr />
                 <div class="row">
@@ -109,6 +145,8 @@
                     </div>
 
                 </div>
+            
+
             </div>
             <div class="panel-footer">
                 <label>Product Status Heilight...</label>

@@ -8,7 +8,9 @@ namespace NBL.Models.ViewModels.Orders
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public string BarCode { get; set; }
+        public DateTime? SaleDate { get; set; }  
         public int ProductCategoryId { get; set; }
+        public string ProductCategoryName { get; set; }    
         public string DeliveryRef { get; set; }
         public long DeliveryId { get; set; }
         public DateTime DeliveryDate { get; set; }

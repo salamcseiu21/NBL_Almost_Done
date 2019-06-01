@@ -98,18 +98,17 @@ namespace NBL.Areas.CommonArea.Controllers
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 var filePath = SoldProductXmlFilePath(branchId, userId);
                 string scannedBarCode = barcode.ToUpper();
-                var productId = Convert.ToInt32(barcode.Substring(2, 3));
-                var product = _iProductManager.GetProductByProductId(productId);
-                product.SaleDate = Convert.ToDateTime(saleDate);
+                //var productId = Convert.ToInt32(barcode.Substring(2, 3));
+                //var product = _iProductManager.GetProductByProductId(productId);
+                //product.SaleDate = Convert.ToDateTime(saleDate);
                 var barcodeList = _iProductManager.GetTempSoldBarcodesFromXmlFile(filePath).Select(n => n.BarCode);
                 bool isScannedBefore = barcodeList.Contains(scannedBarCode);
-
+                ViewDisributedProduct product;
                 //bool isSold = _iInventoryManager.IsThisProductSold(scannedBarCode);
                 bool isSoldFromFactory = _iReportManager.IsDistributedFromFactory(scannedBarCode);
                 var updatedInFactory = _iReportManager.IsAllreadyUpdatedSaleDateInFactory(scannedBarCode);
                 var updatedInBranch = _iReportManager.IsAllreadyUpdatedSaleDateInBranch(scannedBarCode);
                 bool isSoldFromBranch = _iReportManager.IsDistributedFromBranch(barcode);
-
                 if (isScannedBefore)
                 {
                     model.Message = "<p style='color:red'> Already Added!</p>";
@@ -120,9 +119,17 @@ namespace NBL.Areas.CommonArea.Controllers
                     model.Message = "<p style='color:red'>Sale date Already Updated!</p>";
                     //return Json(model, JsonRequestBehavior.AllowGet);
                 }
-                else if (isSoldFromBranch || isSoldFromFactory)
+                else if (isSoldFromBranch)
                 {
 
+                    product = _iReportManager.GetDistributedProductFromBranch(barcode);
+                    product.SaleDate = saleDate;
+                    _iProductManager.AddBarCodeToTempSoldProductXmlFile(product, barcode, filePath);
+                }
+                else if (isSoldFromFactory)
+                {
+                    product = _iReportManager.GetDistributedProductFromFactory(barcode);
+                    product.SaleDate = saleDate;
                     _iProductManager.AddBarCodeToTempSoldProductXmlFile(product, barcode, filePath);
                 }
             }

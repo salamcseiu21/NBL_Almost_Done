@@ -4,48 +4,24 @@
         var dispatch = Model.Dispatch;
     }
 <div class="col-md-12">
-    <div class="box">
+    <!-- BAR CHART -->
+    <div class="box box-success">
         <div class="box-header with-border">
-            <h3 class="box-title">Production & Dispatch</h3>
+            <h3 class="box-title">Production VS Dispatch (@DateTime.Now.Year)</h3>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse">
                     <i class="fa fa-minus"></i>
                 </button>
-
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
             </div>
         </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="text-center">
-                        <strong>Production: 1 Jan, @DateTime.Now.Year - 31 Dec, @DateTime.Now.Year</strong>
-                    </p>
-                    <div style="width: 100%">
-                        <canvas id="barchart" height="250" width="600"></canvas>
-                    </div>
-                    <!-- /.chart-responsive -->
-                </div>
-                <!-- /.col -->
-                <div class="col-md-6 text-center">
-                    <p class="text-center">
-                        <strong>Dispatch: 1 Jan, @DateTime.Now.Year - 31 Dec, @DateTime.Now.Year</strong>
-                    </p>
-                    <div>
-                        @*<canvas id="line_chart" height="120"></canvas>*@
-                        <canvas id="Dispatch_barchart" height="120"></canvas>
-                    </div>
-                    <!-- /.progress-group -->
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
+        <div class="box-body chart-responsive">
+            <div class="chart" id="bar-chart" style="height: 300px;"></div>
         </div>
-        <!-- ./box-body -->
-        <!-- /.box-footer -->
+        <!-- /.box-body -->
     </div>
     <!-- /.box -->
+    <!-- /.col -->
 </div>
 <script>
 
@@ -110,4 +86,35 @@
             responsive: true
         });
     };
+</script>
+<script>
+    $(function () {
+        "use strict";
+
+        //BAR CHART
+        var bar = new Morris.Bar({
+            element: 'bar-chart',
+            resize: true,
+            data: [
+                {y: 'January', a: @production.January, b: @dispatch.January},
+                {y: 'February', a: @production.February, b: @dispatch.February},
+                {y: 'March', a: @production.March, b: @dispatch.March},
+                {y: 'April', a: @production.April, b: @dispatch.April},
+                {y: 'May', a: @production.May, b: @dispatch.May},
+                {y: 'June', a: @production.June, b: @dispatch.June},
+                { y: 'July', a: @production.July, b: @dispatch.July },
+                {y: 'August', a: @production.August, b: @dispatch.August},
+                { y: 'September', a: @production.September, b: @dispatch.September },
+                { y: 'October', a: @production.October, b: @dispatch.October },
+                { y: 'November', a: @production.November, b: @dispatch.November },
+                { y: 'December', a: @production.December, b: @dispatch.December }
+            ],
+            barColors: ['#00a65a', '#f56954'],
+            xkey: 'y',
+            ykeys: ['a', 'b'],
+            labels: ['Production', 'Dispatch'],
+            hideHover: 'auto'
+        });
+    });
+
 </script>

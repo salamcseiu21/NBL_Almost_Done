@@ -184,4 +184,26 @@
     <LogDateTime>2019-05-30T11:52:14.5996019+06:00</LogDateTime>
     <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
   </Error>
+  <Error LogId="19-Jun-0178d1029c-1828-46c3-adc9-303e15cd28ea">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at NBL.DAL.ProductGateway.GetTempSoldBarcodesFromXmlFile(String filePath) in E:\API\NBL\NBL.DAL\ProductGateway.cs:line 1465</LogMessage>
+    <LogDateTime>2019-06-01T10:15:03.2434915+06:00</LogDateTime>
+    <CustomeMessage>Index was outside the bounds of the array.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-0138995488-fccf-4a3a-bd78-6ad30fcefb9b">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductGateway.GetTempSoldBarcodesFromXmlFile(String filePath) in E:\API\NBL\NBL.DAL\ProductGateway.cs:line 1473
+   at NBL.BLL.ProductManager.GetTempSoldBarcodesFromXmlFile(String filePath) in E:\API\NBL\NBL.BLL\ProductManager.cs:line 461
+   at NBL.Areas.CommonArea.Controllers.OrderController.GetTempSoldProducts() in E:\API\NBL\NBL\Areas\CommonArea\Controllers\OrderController.cs:line 160</LogMessage>
+    <LogDateTime>2019-06-01T10:15:03.2780908+06:00</LogDateTime>
+    <CustomeMessage>Colud not collect sold product list</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-01eedf57ea-05eb-4eb7-89ac-feb35a735379">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   at System.Convert.ToDateTime(Object value)
+   at NBL.DAL.ReportGateway.GetDistributedProductFromBranch(String barcode) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 489</LogMessage>
+    <LogDateTime>2019-06-01T12:02:07.1413278+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
 </Errors>

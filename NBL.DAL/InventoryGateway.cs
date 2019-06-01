@@ -808,7 +808,7 @@ namespace NBL.DAL
                         ComeIntoStore = Convert.ToDateTime(reader["ComeIntoStore"]),
                         CategoryName = reader["ProductCategoryName"].ToString(),
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
-                       // Age = Convert.ToInt32(reader["Age"])
+                       // Age =DBNull.Value.Equals(reader["Age"])? default(int): Convert.ToInt32(reader["Age"])
                     });
                 }
                 reader.Close();
