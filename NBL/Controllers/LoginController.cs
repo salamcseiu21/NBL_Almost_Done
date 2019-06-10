@@ -123,14 +123,8 @@ namespace NBL.Controllers
             }
             catch(Exception exception)
             {
-
-
-                ViewWriteLogModel model = new ViewWriteLogModel
-                {
-                    Heading = exception.GetType().ToString(),
-                    LogMessage = exception.StackTrace
-                };
-                Log.WriteErrorLog(model);
+               
+                Log.WriteErrorLog(exception);
                 return PartialView("_ErrorPartial", exception);
             }
         }

@@ -7,7 +7,6 @@ using System.Web.Mvc;
 using AutoMapper;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
-using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Locations;
 using NBL.Models.ViewModels;

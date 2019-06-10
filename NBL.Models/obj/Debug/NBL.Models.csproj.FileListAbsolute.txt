@@ -37,6 +37,7 @@ E:\API\NBL\NBL.Models\bin\Debug\NBL.Models.dll
 E:\API\NBL\NBL.Models\bin\Debug\NBL.Models.pdb
 E:\API\NBL\NBL.Models\bin\Debug\AutoMapper.dll
 E:\API\NBL\NBL.Models\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\API\NBL\NBL.Models\bin\Debug\Newtonsoft.Json.dll
 E:\API\NBL\NBL.Models\bin\Debug\System.ValueTuple.dll
 E:\API\NBL\NBL.Models\bin\Debug\System.Web.Helpers.dll
 E:\API\NBL\NBL.Models\bin\Debug\System.Web.Mvc.dll
@@ -46,6 +47,7 @@ E:\API\NBL\NBL.Models\bin\Debug\System.Web.WebPages.dll
 E:\API\NBL\NBL.Models\bin\Debug\System.Web.WebPages.Razor.dll
 E:\API\NBL\NBL.Models\bin\Debug\AutoMapper.pdb
 E:\API\NBL\NBL.Models\bin\Debug\AutoMapper.xml
+E:\API\NBL\NBL.Models\bin\Debug\Newtonsoft.Json.xml
 E:\API\NBL\NBL.Models\bin\Debug\System.ValueTuple.xml
 E:\API\NBL\NBL.Models\bin\Debug\System.Web.Helpers.xml
 E:\API\NBL\NBL.Models\bin\Debug\System.Web.Mvc.xml
@@ -55,6 +57,4 @@ E:\API\NBL\NBL.Models\bin\Debug\System.Web.WebPages.Deployment.xml
 E:\API\NBL\NBL.Models\bin\Debug\System.Web.WebPages.Razor.xml
 E:\API\NBL\NBL.Models\obj\Debug\NBL.Models.dll
 E:\API\NBL\NBL.Models\obj\Debug\NBL.Models.pdb
-E:\API\NBL\NBL.Models\bin\Debug\Newtonsoft.Json.dll
-E:\API\NBL\NBL.Models\bin\Debug\Newtonsoft.Json.xml
 E:\API\NBL\NBL.Models\obj\Debug\NBL.Models.csprojResolveAssemblyReference.cache
