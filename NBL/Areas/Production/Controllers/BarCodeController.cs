@@ -112,9 +112,9 @@ namespace NBL.Areas.Production.Controllers
                 }
 
 
-                //for (int i = 1049; i <= 1098; i++)
+                //for (int i = 3001; i <= 3158; i++)
                 //{
-                //    var barcode = "1A16504KE" + i.ToString("D4");
+                //    var barcode = "3B07428FN" + i.ToString("D4");
                 //    BarCodeModel aBarCodeModel = new BarCodeModel
                 //    {
                 //        Barcode = barcode,

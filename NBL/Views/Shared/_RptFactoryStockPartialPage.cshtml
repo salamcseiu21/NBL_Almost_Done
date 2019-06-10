@@ -48,12 +48,34 @@
 </section>
 @section Scripts
 {
+    
+
     <script>
+        $(document).ready(function () {
+            $('#table_product_list_in_stock').DataTable({
+                "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+                dom: 'Bfrtip',
+                buttons: [
+                    'excel',
+                    {
+                        extend: 'pdf'
 
-        $('#table_product_list_in_stock').DataTable({
-            "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]]
+
+                    },
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body)
+                                .css('font-size', '10pt');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+            });
         });
-
     </script>
 
     

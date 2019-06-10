@@ -94,4 +94,34 @@
     <LogDateTime>2019-06-10T11:45:32.9334822+06:00</LogDateTime>
     <CustomeMessage>Could not change login status</CustomeMessage>
   </Error>
+  <Error LogId="19-Jun-1091bb8aef-061d-430c-a2f6-c93e9fb3bac8">
+    <Heading>System.Net.WebException</Heading>
+    <LogMessage>   at System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest&amp; request)
+   at System.Net.WebClient.DownloadString(Uri address)
+   at System.Net.WebClient.DownloadString(String address)
+   at NBL.Controllers.LoginController.GetUserLocation() in E:\API\NBL\NBL\Controllers\LoginController.cs:line 272
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 67</LogMessage>
+    <LogDateTime>2019-06-10T14:58:45.5682901+06:00</LogDateTime>
+    <CustomeMessage>Unable to connect to the remote server</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-1000322e2a-ef70-45cb-a6d1-ec8f69a0d4e9">
+    <Heading>System.Net.WebException</Heading>
+    <LogMessage>   at System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest&amp; request)
+   at System.Net.WebClient.DownloadString(Uri address)
+   at System.Net.WebClient.DownloadString(String address)
+   at NBL.Controllers.LoginController.GetUserLocation() in E:\API\NBL\NBL\Controllers\LoginController.cs:line 272
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 67</LogMessage>
+    <LogDateTime>2019-06-10T15:14:51.4813468+06:00</LogDateTime>
+    <CustomeMessage>Unable to connect to the remote server</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-1023f80f0c-bade-4c24-a194-6332138fb590">
+    <Heading>System.Net.WebException</Heading>
+    <LogMessage>   at System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest&amp; request)
+   at System.Net.WebClient.DownloadString(Uri address)
+   at System.Net.WebClient.DownloadString(String address)
+   at NBL.Controllers.LoginController.GetUserLocation() in E:\API\NBL\NBL\Controllers\LoginController.cs:line 272
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 67</LogMessage>
+    <LogDateTime>2019-06-10T15:37:26.0807688+06:00</LogDateTime>
+    <CustomeMessage>Unable to connect to the remote server</CustomeMessage>
+  </Error>
 </Errors>

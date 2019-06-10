@@ -4,10 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NBL.BLL.Contracts;
-using NBL.Models;
-using NBL.Models.EntityModels.MobileBankings;
 using NBL.Models.EntityModels.Products;
-using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Products;
 

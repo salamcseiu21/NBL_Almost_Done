@@ -12,7 +12,11 @@ namespace NBL.Models.ViewModels.Products
     {
         [Required]
         [Display(Name = "Product Name")]
+
         public int ProductId { get; set; }
+        [Required]
+        [Display(Name = "Product Name")]
+        public string ProductName { get; set; } 
         public ICollection<Product> Products { get; set; }
         [Display(Name = "Unit Price")]
         [Required]

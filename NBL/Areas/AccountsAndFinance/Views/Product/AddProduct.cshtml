@@ -1,0 +1,121 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Masters.ProductCategory>
+@{
+    ViewBag.Title = "Add New Product";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+}
+
+<section class="content">
+    <h2 class="text-center text-success" style="margin-top: 0">Add New Product</h2>
+    
+    @using (Html.BeginForm("AddProduct", "Product", FormMethod.Post, new {id = "AddNewProductForm", enctype = "multipart/form-data" }))
+    {
+        <div class="form-horizontal">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="CompanyId" class="control-label col-md-3">Company/Brand</label>
+                    <div class="col-md-9">
+                        <select class="form-control" id="CompanyId" name="CompanyId" required>
+                            <option value="">--Select--</option>
+                            @foreach (var item in ViewBag.Companies)
+                            {
+                                <option value="@item.CompanyId">@item.CompanyName</option>
+                            }
+
+                        </select>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ProductCategoryId" class="control-label col-md-3">Product Category</label>
+                    <div class="col-md-9">
+                        <select class="form-control" id="ProductCategoryId" name="ProductCategoryId" required>
+                            <option value="">--Select--</option>
+                            @foreach (var item in Model)
+                            {
+                                <option value="@item.ProductCategoryId">@item.ProductCategoryName</option>
+                            }
+
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ProductTypeId" class="control-label col-md-3">Product Type</label>
+                    <div class="col-md-9">
+                        <select class="form-control" id="ProductTypeId" name="ProductTypeId" required>
+                            <option value="">--Select--</option>
+                            @foreach (var item in ViewBag.Types)
+                            {
+                                <option value="@item.ProductTypeId">@item.ProductTypeName</option>
+                            }
+
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ProductName" class="control-label col-md-3">Product Name</label>
+                    <div class="col-md-9">
+                        
+                        <input type="text" name="ProductName" id="ProductName" placeholder="Product name" class="form-control" required/>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Unit" class="control-label col-md-3">Unit</label>
+                    <div class="col-md-9">
+                        
+                        <input type="text" name="Unit" id="Unit" placeholder="Product Unit" class="form-control" required/>
+
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ProductImage" class="control-label col-md-3">Image</label>
+                   
+                    <div class="col-md-9">
+                        <input type="file" name="ProductImage" id="ProductImage" style="width: 100%;"/>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="ProductAddedDate" class="control-label col-md-3">Date</label>
+                    <div class="col-md-9">
+
+                        <input type="text" id="ProductAddedDate" name="ProductAddedDate" value="@date" class="form-control" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <div class="col-md-9 col-md-offset-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="button" value="Cancel" class="btn btn-danger btn-block"/>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="submit" value="Save" class="btn btn-primary btn-block" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+ 
+
+</section>
+
+@section Scripts{
+    <script>
+        $(function () {
+
+            $("#ProductAddedDate").datepicker({ dateFormat: 'dd-MM-yy' });
+
+        } );
+    </script>
+}

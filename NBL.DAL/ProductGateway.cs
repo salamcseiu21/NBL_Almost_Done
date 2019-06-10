@@ -1852,6 +1852,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect monthly requisition items by id", exception);
             }
             finally
@@ -1888,6 +1889,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Colud not collect product list", exception);
             }
             finally
@@ -1918,6 +1920,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Colud not save product details", exception);
             }
             finally

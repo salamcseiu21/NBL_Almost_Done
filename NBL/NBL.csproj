@@ -303,6 +303,7 @@
     <Compile Include="Areas\AccountsAndFinance\Controllers\AccountManagerController.cs" />
     <Compile Include="Areas\AccountsAndFinance\Controllers\ChartOfAccountController.cs" />
     <Compile Include="Areas\AccountsAndFinance\Controllers\HomeController.cs" />
+    <Compile Include="Areas\AccountsAndFinance\Controllers\ProductController.cs" />
     <Compile Include="Areas\AccountsAndFinance\Controllers\VoucherController.cs" />
     <Compile Include="Areas\AccountsAndFinance\DAL\AccountsGateway.cs" />
     <Compile Include="Areas\AccountsAndFinance\DAL\Contracts\IAccountGateway.cs" />
@@ -330,7 +331,7 @@
     <Compile Include="Areas\Editor\Controllers\ClientController.cs" />
     <Compile Include="Areas\Editor\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\Editor\Controllers\DesignationController.cs" />
-    <Compile Include="Areas\Editor\Controllers\DiscountsController.cs" />
+    <Compile Include="Areas\AccountsAndFinance\Controllers\DiscountsController.cs" />
     <Compile Include="Areas\Editor\Controllers\DivisionController.cs" />
     <Compile Include="Areas\Editor\Controllers\EmployeeController.cs" />
     <Compile Include="Areas\Editor\Controllers\EmployeeTypeController.cs" />
@@ -338,7 +339,7 @@
     <Compile Include="Areas\Editor\Controllers\ProductController.cs" />
     <Compile Include="Areas\Editor\Controllers\RegionController.cs" />
     <Compile Include="Areas\Editor\Controllers\TerritoryController.cs" />
-    <Compile Include="Areas\Editor\Controllers\VatsController.cs" />
+    <Compile Include="Areas\AccountsAndFinance\Controllers\VatsController.cs" />
     <Compile Include="Areas\Editor\EditorAreaRegistration.cs" />
     <Compile Include="Areas\Production\Controllers\ApproveController.cs" />
     <Compile Include="Areas\Production\Controllers\BarCodeController.cs" />
@@ -7784,7 +7785,7 @@
     <Content Include="Areas\Editor\Views\Designation\AddNewDesignation.cshtml" />
     <Content Include="Areas\Editor\Views\Designation\DesignationList.cshtml" />
     <Content Include="Areas\Editor\Views\Designation\Edit.cshtml" />
-    <Content Include="Areas\Editor\Views\Discounts\AddDiscount.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Discounts\AddDiscount.cshtml" />
     <Content Include="Areas\Editor\Views\Division\All.cshtml" />
     <Content Include="Areas\Editor\Views\EmployeeType\EmployeeTypeList.cshtml" />
     <Content Include="Areas\Editor\Views\Employee\AddEmployee.cshtml" />
@@ -7802,7 +7803,7 @@
     <Content Include="Areas\Editor\Views\Shared\_MenuPartialPage.cshtml" />
     <Content Include="Areas\Editor\Views\Territory\AddNewTerritory.cshtml" />
     <Content Include="Areas\Editor\Views\Territory\All.cshtml" />
-    <Content Include="Areas\Editor\Views\Vats\AddVat.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Vats\AddVat.cshtml" />
     <Content Include="Areas\Editor\Views\web.config" />
     <Content Include="Areas\Editor\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Production\Views\Approve\ApproveTransferIssue.cshtml" />
@@ -8078,6 +8079,8 @@
     <Content Include="Areas\AccountsAndFinance\Views\Shared\_ViewTempJournalPurposePartialPage.cshtml" />
     <Content Include="Areas\SuperAdmin\Views\ErrorLog\ErrorList.cshtml" />
     <Content Include="Areas\Corporate\Views\Home\SalesChart.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Product\AddProduct.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Product\AddProductDetails.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
