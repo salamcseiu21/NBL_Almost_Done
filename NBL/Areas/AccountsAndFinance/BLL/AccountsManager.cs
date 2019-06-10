@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.Areas.AccountsAndFinance.DAL.Contracts;
 using NBL.Areas.AccountsAndFinance.Models;
@@ -73,6 +74,31 @@ namespace NBL.Areas.AccountsAndFinance.BLL
         public ICollection<ViewLedgerModel> GetClientLedgerBySubSubSubAccountCode(string clientSubSubSubAccountCode)
         {
             return _iAccountGateway.GetClientLedgerBySubSubSubAccountCode(clientSubSubSubAccountCode);
+        }
+
+        public ICollection<Purpose> GetCreditPurposesFromXmlFile(string filePath)
+        {
+            List<Purpose> purposes = new List<Purpose>();
+            var xmlData = XDocument.Load(filePath).Element("PurposeList")?.Elements();
+            if (xmlData != null)
+            {
+                foreach (XElement element in xmlData)
+                {
+                    Purpose aPurpose = new Purpose();
+                    var elementFirstAttribute = element.FirstAttribute.Value;
+                    aPurpose.Serial = elementFirstAttribute;
+                    var elementValue = element.Elements();
+                    var xElements = elementValue as XElement[] ?? elementValue.ToArray();
+                    aPurpose.PurposeCode = xElements[0].Value;
+                    aPurpose.Amounts = Convert.ToDecimal(xElements[1].Value);
+                    aPurpose.PurposeName = xElements[2].Value;
+                    aPurpose.Remarks = xElements[3].Value;
+                    aPurpose.DebitOrCredit = xElements[4].Value;
+
+                    purposes.Add(aPurpose);
+                }
+            }
+            return purposes;
         }
 
         private int GetMaxVoucherNoByTransactionInfix(string infix)

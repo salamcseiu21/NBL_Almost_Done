@@ -134,7 +134,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             try
             {
 
-                List<Purpose> purposeList = GetCreditPurposesFromXmlFile().ToList();
+                List<Purpose> purposeList = _iAccountsManager.GetCreditPurposesFromXmlFile(GetTempCreditVoucherXmlFilePath()).ToList();
                 Voucher voucher = new Voucher();
                 var transacitonTypeId = Convert.ToInt32(collection["TransactionTypeId"]);
                 var amount = purposeList.Sum(n=>n.Amounts);
@@ -810,8 +810,9 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
 
             try
             {
-                var purposes = GetCreditPurposesFromXmlFile();
-                return PartialView("_ViewTempCreditPurposePartialPage", purposes);
+                var filePath = GetTempCreditVoucherXmlFilePath();
+                var purposeList = _iAccountsManager.GetCreditPurposesFromXmlFile(filePath);
+                return PartialView("_ViewTempCreditPurposePartialPage", purposeList);
             }
             catch (Exception exception)
             {
@@ -820,32 +821,6 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
           
-        }
-
-        private IEnumerable<Purpose> GetCreditPurposesFromXmlFile()
-        {
-            var filePath = GetTempCreditVoucherXmlFilePath();
-            List<Purpose> purposes = new List<Purpose>();
-            var xmlData = XDocument.Load(filePath).Element("PurposeList")?.Elements();
-            if (xmlData != null)
-            {
-                foreach (XElement element in xmlData)
-                {
-                    Purpose aPurpose = new Purpose();
-                    var elementFirstAttribute = element.FirstAttribute.Value;
-                    aPurpose.Serial = elementFirstAttribute;
-                    var elementValue = element.Elements();
-                    var xElements = elementValue as XElement[] ?? elementValue.ToArray();
-                    aPurpose.PurposeCode = xElements[0].Value;
-                    aPurpose.Amounts = Convert.ToDecimal(xElements[1].Value);
-                    aPurpose.PurposeName = xElements[2].Value;
-                    aPurpose.Remarks = xElements[3].Value;
-                    aPurpose.DebitOrCredit = xElements[4].Value;
-                 
-                    purposes.Add(aPurpose);
-                }
-            }
-            return purposes;
         }
 
 

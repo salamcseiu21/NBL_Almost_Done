@@ -4,20 +4,22 @@
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
 }
 <section class="content">
-    <h3 class="text-center text-green headingStyle">Prodcut List</h3>
-    <table id="table_product_list" class="display table table-bordered" style="border:1px solid black">
-      
-
-        <thead>
+    <h3 class="text-center text-green headingStyle">Product List</h3>
+    <div class="table-responsive">
+        <table id="table_product_list" class="display table table-bordered" style="border:1px solid black">
+            <thead>
+           
             <tr>
                 <th>Product Name</th>
-                <th>Sub Sub Account Code</th>
-                <th class="text-right">Unit Price (&#2547;) </th>
-                <th class="text-right">Vat (&#2547;) </th>
+                <th>Account Code</th>
+                <th class="text-right">Unit Price</th>
+                <th class="text-center">Last Price Update </th>
+                <th class="text-right">Vat</th>
+                <th class="text-center">Last Vat Update </th>
             </tr>
-        </thead>
+            </thead>
 
-        <tbody>
+            <tbody>
 
             @foreach (var item in Model)
             {
@@ -25,29 +27,59 @@
                     <td>@item.ProductName</td>
                     <td>@item.SubSubSubAccountCode</td>
                     <td class="text-right">@item.UnitPrice</td>
+                    <td class="text-center">@item.LastPriceUpdateDate.ToString("dd-MMMM-yyyy")</td>
                     <td class="text-right">@item.Vat</td>
+                    <td class="text-center">@item.LastVatUpdateDate.ToString("dd-MMMM-yyyy")</td>
                 </tr>
             }
 
-        </tbody>
-        <tfoot>
+            </tbody>
+            <tfoot>
             <tr>
                 <th>Product Name</th>
-                <th>Sub Sub Account Code</th>
-                <th class="text-right">Unit Price (&#2547;) </th>
-                <th class="text-right">Vat (&#2547;) </th>
+                <th>Account Code</th>
+                <th class="text-right">Unit Price</th>
+                <th class="text-center">Last Price Update </th>
+                <th class="text-right">Vat</th>
+                <th class="text-center">Last Vat Update </th>
             </tr>
-        </tfoot>
-    </table>
+            </tfoot>
+        </table>
+    </div>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
 
 
     <script>
 
-    $('#table_product_list').DataTable({
-        "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]]
-    });
+    //$('#table_product_list').DataTable({
+    //    "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]]
+    //});
 
+    $(document).ready(function () {
+        $('#table_product_list').DataTable({
+            "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+            dom: 'Bfrtip',
+            buttons: [
+                'excel',
+                {
+                    extend: 'pdf'
+                  
+                   
+                },
+                {
+                    extend: 'print',
+                    customize: function (win) {
+                        $(win.document.body)
+                            .css('font-size', '10pt');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ]
+        });
+    });
     </script>
 </section>
 

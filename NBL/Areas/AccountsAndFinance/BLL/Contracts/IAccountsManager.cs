@@ -44,5 +44,6 @@ namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
 
        bool ActiveReceivableCheque(ChequeDetails chequeDetails, Receivable aReceivable, Client aClient);
        ICollection<ViewLedgerModel> GetClientLedgerBySubSubSubAccountCode(string clientSubSubSubAccountCode);
+       ICollection<Purpose> GetCreditPurposesFromXmlFile(string filePath);
    }
 }

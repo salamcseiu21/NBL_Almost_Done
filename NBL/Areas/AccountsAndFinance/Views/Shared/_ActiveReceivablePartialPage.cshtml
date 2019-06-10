@@ -33,7 +33,7 @@
                 <td class="text-center">
                     @if (item.PaymentTypeId == 4)
                     {
-                        using (Html.BeginForm("ApproveCashAmount", "Account", FormMethod.Post, new { id = item.ChequeDetailsId }))
+                        using (Html.BeginForm("ApproveCashAmount", "AccountManager", FormMethod.Post, new { id = item.ChequeDetailsId }))
                         {
                             <input type="hidden" value="@item.ChequeDetailsId" id="ChequeDetailsId" name="ChequeDetailsId" />
                                 <a href="#" class="btn btn-info" id="@item.ChequeDetailsId" onclick="Approve(this)">Approve</a>
@@ -43,7 +43,7 @@
                     }
                     else
                     {
-                        @Html.ActionLink(" View Details", "ReceivableDetails", "Account", new { area = "AccountExecutive", id = item.ChequeDetailsId }, new { @class = "fa fa-eye" })
+                        @Html.ActionLink(" View Details", "ReceivableDetails", "AccountManager", new { area = "AccountsAndFinance", id = item.ChequeDetailsId }, new { @class = "fa fa-eye" })
                     }
 
                 </td>
@@ -90,7 +90,7 @@
                 var $form = $(id).parents('form');
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("ApproveCashAmount","Account", new { area = "AccountExecutive" })',
+                    url: '@Url.Action("ApproveCashAmount","AccountManager", new { area = "AccountsAndFinance" })',
                     data: $form.serialize(),
                     error: function (xhr, status, error) {
                         //do something about the error

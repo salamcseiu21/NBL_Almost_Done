@@ -36,6 +36,8 @@ namespace NBL.Models.EntityModels.Products
         public decimal UnitPrice { get; set; }
         public decimal DealerPrice { get; set; }
         public decimal SalePrice { get; set; }
+        public DateTime LastPriceUpdateDate { get; set; }     
+        public DateTime LastVatUpdateDate { get; set; }     
         public int VatId { get; set; }
         public decimal Vat { get; set; }
         public int DiscountId { get; set; }

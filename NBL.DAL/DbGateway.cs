@@ -17,7 +17,7 @@ namespace NBL.DAL
                     .ConnectionString;
             var str = StringCipher.Decrypt(connectionString, "salam_cse_10_R");
             _connectionObj = new SqlConnection(str);
-            //connectionObj = new SqlConnection(connectionString);
+            //_connectionObj = new SqlConnection(connectionString);
             _commandObj = new SqlCommand();
         }
 

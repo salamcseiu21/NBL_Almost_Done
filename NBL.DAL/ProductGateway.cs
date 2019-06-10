@@ -46,7 +46,9 @@ namespace NBL.DAL
                         SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
                         UnitPrice = Convert.ToDecimal(reader["UnitPrice"]),
                         Vat = Convert.ToDecimal(reader["VatAmount"]),
-                        CompanyId = Convert.ToInt32(reader["CompanyId"])
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        LastPriceUpdateDate = Convert.ToDateTime(reader["PriceUpdateDate"]),
+                        LastVatUpdateDate = Convert.ToDateTime(reader["VatUpdateDate"])
                     });
                 }
 
