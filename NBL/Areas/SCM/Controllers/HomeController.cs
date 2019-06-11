@@ -37,8 +37,8 @@ namespace NBL.Areas.SCM.Controllers
         {
             try
             {
-                Session.Remove("BranchId");
-                Session.Remove("Branch");
+                //Session.Remove("BranchId");
+                //Session.Remove("Branch");
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
 
                 var branches = _iBranchManager.GetAllBranches().ToList().FindAll(n => n.BranchId != 13).ToList();

@@ -25,6 +25,8 @@ namespace NBL.Models.ViewModels.Deliveries
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public int Quantity { set; get; }
+        public int SentQuantity { get; set; }
+        public int ReceiveQuantity { get; set; }    
         public string ProductBarcode { get; set; }  
         public string Remarks { get; set; }
         public int CategoryId { get; set; }

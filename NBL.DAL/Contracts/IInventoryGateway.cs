@@ -25,7 +25,7 @@ namespace NBL.DAL.Contracts
        int GetStockQtyByBranchAndProductId(int branchId, int productId);
        int SaveDeliveredOrder(List<ScannedProduct> scannedProducts, Delivery aDelivery, int invoiceStatus, int orderStatus); 
        int SaveDeliveredOrderDetails(List<ScannedProduct> scannedProducts,Delivery aDelivery, int inventoryId, int deliveryId);
-       ICollection<ViewDispatchModel> GetAllReceiveableProductToBranchByTripId(long tripId,int branchId);
+       ICollection<ViewDispatchModel> GetAllReceiveableProductToBranchByDispatchId(long dispatchId, int branchId);
        TransactionModel GetTransactionModelById(long id);
        int SaveScannedProduct(ProductionModel model);
        ScannedProduct IsThisProductSold(string scannedBarCode);
@@ -40,8 +40,8 @@ namespace NBL.DAL.Contracts
        int CreateTrip(ViewCreateTripModel model);
        long GetMaxTripRefNoOfCurrentYear();
        IEnumerable<ViewTripModel> GetAllTrip();
-       ViewDispatchModel GetDispatchByTripId(long tripId);
-       ICollection<ViewDispatchModel> GetAllReceiveableItemsByTripAndBranchId(long tripId, int branchId);
+       ViewDispatchModel GetDispatchByDispatchId(long dispatchId);
+       ICollection<ViewDispatchModel> GetAllReceiveableItemsByDispatchAndBranchId(long dispatchId, int branchId);
        long GetMaxVoucherNoByTransactionInfix(string infix);
        ICollection<ProductionSummary> GetProductionSummaries();
        ICollection<ProductionSummary> GetProductionSummaryByMonth(DateTime dateTime);

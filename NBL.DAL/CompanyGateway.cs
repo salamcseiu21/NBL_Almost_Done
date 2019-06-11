@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Companies;
+using NBL.Models.Logs;
 
 namespace NBL.DAL
 {
@@ -33,6 +34,7 @@ namespace NBL.DAL
         }
     catch (Exception exception)
     {
+                Log.WriteErrorLog(exception);
     throw new Exception("Could not collect companies", exception);
 }
 finally
@@ -84,6 +86,7 @@ CommandObj.Parameters.Clear();
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect company", exception);
             }
             finally

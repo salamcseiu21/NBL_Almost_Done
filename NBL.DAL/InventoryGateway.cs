@@ -12,6 +12,7 @@ using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.Enums;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Productions;
@@ -54,6 +55,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Colud not collect product list", exception);
             }
             finally
@@ -95,6 +97,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Colud not collect product list", exception);
             }
             finally
@@ -135,6 +138,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Colud not collect product list", exception);
             }
             finally
@@ -170,10 +174,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect production due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect total production by company id and year", exception);
             }
             finally
@@ -209,10 +215,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect dispatch due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect total dispatch by company id and year", exception);
             }
             finally
@@ -242,10 +250,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not get barcode status due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not get total barcode status by company id and year", exception);
             }
             finally
@@ -274,10 +284,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not get barcode status due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not get total barcode status by company id and year", exception);
             }
             finally
@@ -309,10 +321,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not get max Producton ref due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not get max Producton ref by year", exception);
             }
             finally
@@ -354,6 +368,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Colud not collect product list", exception);
             }
             finally
@@ -381,6 +396,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect max delivery ref of current Year", exception);
             }
             finally
@@ -408,6 +424,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect max dispatch ref of current Year", exception);
             }
             finally
@@ -454,7 +471,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
-
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Get receivable product list", exception);
             }
             finally
@@ -464,13 +481,13 @@ namespace NBL.DAL
                 ConnectionObj.Close();
             }
         }
-        public ICollection<ViewDispatchModel> GetAllReceiveableProductToBranchByTripId(long tripId,int branchId) 
+        public ICollection<ViewDispatchModel> GetAllReceiveableProductToBranchByDispatchId(long dispatchId, int branchId) 
         {
             try
             {
-                CommandObj.CommandText = "spGetReceiveableProductToBranchByTripId";
+                CommandObj.CommandText = "spGetReceiveableProductToBranchByDispatchId";
                 CommandObj.CommandType = CommandType.StoredProcedure;
-                CommandObj.Parameters.AddWithValue("@TripId", tripId);
+                CommandObj.Parameters.AddWithValue("@DispatchId", dispatchId);
                 CommandObj.Parameters.AddWithValue("@ToBranchId", branchId);
                 ConnectionObj.Open();
                 SqlDataReader reader = CommandObj.ExecuteReader();
@@ -481,6 +498,7 @@ namespace NBL.DAL
                     {
                        
                         ToBranchId = branchId,
+                        DispatchId = dispatchId,
                         DispatchByUserId = Convert.ToInt32(reader["DispatchByUserId"]),
                         DispatchItemId = Convert.ToInt64(reader["DispatchItemsId"]),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
@@ -493,7 +511,9 @@ namespace NBL.DAL
                         },
                         DispatchRef = reader["DispatchRef"].ToString(),
                         Remarks = reader["Remarks"].ToString(),
-                        TripId = tripId,
+                        TripId = Convert.ToInt64(reader["TripId"]),
+                        SentQuantity = Convert.ToInt32(reader["SentQty"]),
+                        ReceiveQuantity = Convert.ToInt32(reader["ReceiveQuantity"]),
                         Quantity = Convert.ToInt32(reader["Quantity"]),
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
                        // ProductBarcode = reader["ProductBarCode"].ToString()
@@ -507,6 +527,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect receivable product to barnch by delivery id", exception);
             }
             finally
@@ -561,6 +582,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect transaction  to barnch by delivery id", exception);
             }
             finally
@@ -597,7 +619,8 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
-               sqlTransaction.Rollback();
+                Log.WriteErrorLog(exception);
+                sqlTransaction.Rollback();
                throw new Exception("Could not saved scanned products",exception);
             }
         }
@@ -671,7 +694,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
-
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Get  product by barcode", exception);
             }
             finally
@@ -706,6 +729,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Get  Oldest product qty by barcode", exception);
             }
             finally
@@ -739,6 +763,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
 
                 throw new Exception("Could not Get  product by barcode", exception);
             }
@@ -773,7 +798,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
-
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Get  product by barcode", exception);
             }
             finally
@@ -817,6 +842,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect stock product in facotry store", exception);
             }
             finally
@@ -863,6 +889,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect stock product in branch store", exception);
             }
             finally
@@ -912,6 +939,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect Production transaction info",exception);
             }
             finally
@@ -964,6 +992,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
 
                 throw new Exception("Could not Get receivable product", exception);
             }
@@ -1008,6 +1037,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not receive product", exception);
             }
@@ -1054,12 +1084,14 @@ namespace NBL.DAL
                 {
                     status = 0;
                 }
+                var totalReceiveQty = qty2 + item.ReceiveQuantity;
                 CommandObj.CommandText = "spSaveInventoryItem";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.Clear();
                 CommandObj.Parameters.AddWithValue("@DispatchItemId", item.DispatchItemId);
                 CommandObj.Parameters.AddWithValue("@ProductId", item.ProductId);
                 CommandObj.Parameters.AddWithValue("@Quantity", qty2);
+                CommandObj.Parameters.AddWithValue("@ReceiveQuantity", totalReceiveQty);
                 CommandObj.Parameters.AddWithValue("@ReceiveByUserId", model.ReceiveByUserId);
                 CommandObj.Parameters.AddWithValue("@Status", status);
                 CommandObj.Parameters.AddWithValue("@InventoryId", inventoryId);
@@ -1091,6 +1123,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Colud not collect Stock Qty", exception);
             }
             finally
@@ -1225,6 +1258,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not Save Order", exception);
             }
@@ -1334,6 +1368,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not get product life cycle by barcode",exception);
             }
             finally
@@ -1367,6 +1402,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect products barcode",exception);
             }
             finally
@@ -1397,7 +1433,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
-
+                Log.WriteErrorLog(exception);
                 throw new Exception("Unable to collect max trip ref", exception);
             }
             finally
@@ -1452,6 +1488,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect trip info",exception);
             }
             finally
@@ -1501,6 +1538,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Unable to create trip", exception);
             }
@@ -1575,25 +1613,25 @@ namespace NBL.DAL
             return i;
         }
 
-        public ViewDispatchModel GetDispatchByTripId(long tripId)
+        public ViewDispatchModel GetDispatchByDispatchId(long dispatchId)
         {
             try
             {
                 ViewDispatchModel model = null;
                 CommandObj.CommandText = "UDSP_GetDispatchById";
                 CommandObj.CommandType = CommandType.StoredProcedure;
-                CommandObj.Parameters.AddWithValue("@TripId", tripId);
+                CommandObj.Parameters.AddWithValue("@DispatchId", dispatchId);
                 ConnectionObj.Open();
                 SqlDataReader reader = CommandObj.ExecuteReader();
                 if(reader.Read())
                 {
                     model=new ViewDispatchModel
                     {
-                        TripId = tripId,
+                        TripId = Convert.ToInt64(reader["TripId"]),
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
                         DispatchRef = reader["DispatchRef"].ToString(),
                         DispatchByUserId = Convert.ToInt32(reader["DispatchByUserId"]),
-                        DispatchId = Convert.ToInt64(reader["DispatchId"]),
+                        DispatchId = dispatchId,
                         DispatchDate = Convert.ToDateTime(reader["SystemDatetime"]),
                         TransactionRef = reader["TransactionRef"].ToString()
                     };
@@ -1603,6 +1641,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not get dispatch by trip id",exception);
             }
             finally
@@ -1613,13 +1652,13 @@ namespace NBL.DAL
             }
         }
 
-        public ICollection<ViewDispatchModel> GetAllReceiveableItemsByTripAndBranchId(long tripId, int branchId)
+        public ICollection<ViewDispatchModel> GetAllReceiveableItemsByDispatchAndBranchId(long dispatchId, int branchId)
         {
             try
             {
-                CommandObj.CommandText = "UDSP_GetAllReceiveableItemsByTripAndBranchId";
+                CommandObj.CommandText = "UDSP_GetAllReceiveableItemsByDispatchAndBranchId";
                 CommandObj.CommandType = CommandType.StoredProcedure;
-                CommandObj.Parameters.AddWithValue("@TripId", tripId);
+                CommandObj.Parameters.AddWithValue("@DispatchId", dispatchId);
                 CommandObj.Parameters.AddWithValue("@ToBranchId", branchId);
                 List<ViewDispatchModel> products=new List<ViewDispatchModel>();
                 ConnectionObj.Open();
@@ -1631,7 +1670,8 @@ namespace NBL.DAL
                         ProductId = Convert.ToInt32(reader["ProductId"]),
                         ProductBarcode = reader["ProductBarcode"].ToString(),
                         ToBranchId = branchId,
-                        TripId = tripId,
+                        TripId = Convert.ToInt64(reader["TripId"]),
+                        DispatchId = dispatchId,
                         TransactionRef = reader["TransactionRef"].ToString()
 
                     });
@@ -1641,6 +1681,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Coluld not collect receivable product list by trip and product id", exception);
             }
             finally
@@ -1671,6 +1712,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect max voucher no", exception);
             }
             finally
@@ -1709,6 +1751,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect prduction summary", exception);
             }
             finally
@@ -1749,6 +1792,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect prduction summary by month", exception);
             }
             finally
@@ -1809,6 +1853,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not Save replace products", exception);
             }
@@ -1866,6 +1911,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not Save dispatch Info", exception);
             }
@@ -1959,7 +2005,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
-
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Get receivable product", exception);
             }
             finally
@@ -1991,7 +2037,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
-
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Get transfer receivable product code by transferid", exception);
             }
             finally
@@ -2035,6 +2081,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not receive product", exception);
             }
@@ -2227,6 +2274,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not Save Order", exception);
             }
@@ -2364,6 +2412,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not Save general Requisition", exception);
             }
@@ -2402,6 +2451,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Colud not collect product list", exception);
             }
             finally
@@ -2437,6 +2487,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Colud not collect factory stock  product list by Search Term", exception);
             }
             finally
@@ -2469,6 +2520,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Colud not collect factory stock qty by   product id", exception);
             }
             finally

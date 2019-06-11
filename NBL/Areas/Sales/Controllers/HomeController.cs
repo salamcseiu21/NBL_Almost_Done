@@ -52,27 +52,27 @@ namespace NBL.Areas.Sales.Controllers
             {
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
                 int branchId = Convert.ToInt32(Session["BranchId"]);
-                var branches = _iBranchManager.GetAllBranches();
+              //  var branches = _iBranchManager.GetAllBranches();
                 ViewTotalOrder totalOrder = _iReportManager.GetTotalOrdersByBranchCompanyAndYear(branchId, companyId, DateTime.Now.Year);
-                var accountSummary = _iAccountsManager.GetAccountSummaryofCurrentMonthByCompanyId(companyId);
-                var products = _iInventoryManager.GetStockProductByCompanyId(companyId);
-                var orders = _iOrderManager.GetOrdersByCompanyId(companyId).ToList();
-                var topClients = _iReportManager.GetTopClientsByYear(DateTime.Now.Year).ToList();
-                var clients = _iClientManager.GetAllClientDetails();
-                var topProducts = _iReportManager.GetPopularBatteriesByYear(DateTime.Now.Year).ToList();
-                var employees = _iEmployeeManager.GetAllEmployeeWithFullInfo().ToList();
+                //var accountSummary = _iAccountsManager.GetAccountSummaryofCurrentMonthByCompanyId(companyId);
+                //var products = _iInventoryManager.GetStockProductByCompanyId(companyId);
+                //var orders = _iOrderManager.GetOrdersByCompanyId(companyId).ToList();
+                //var topClients = _iReportManager.GetTopClientsByYear(DateTime.Now.Year).ToList();
+                //var clients = _iClientManager.GetAllClientDetails();
+                //var topProducts = _iReportManager.GetPopularBatteriesByYear(DateTime.Now.Year).ToList();
+                //var employees = _iEmployeeManager.GetAllEmployeeWithFullInfo().ToList();
                 SummaryModel summary = new SummaryModel
                 {
-                    Branches = branches.ToList(),
-                    CompanyId = companyId,
+                   // Branches = branches.ToList(),
+                   // CompanyId = companyId,
                     TotalOrder = totalOrder,
-                    TopClients = topClients,
-                    Orders = orders,
-                    TopProducts = topProducts,
-                    Clients = clients,
-                    Employees = employees,
-                    Products = products,
-                    AccountSummary = accountSummary
+                    //TopClients = topClients,
+                    //Orders = orders,
+                   // TopProducts = topProducts,
+                   // Clients = clients,
+                   // Employees = employees,
+                   // Products = products,
+                   // AccountSummary = accountSummary
 
                 };
                 return View(summary);

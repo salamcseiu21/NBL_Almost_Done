@@ -258,6 +258,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@LogOutDateTime", user.LogOutDateTime);
                 CommandObj.Parameters.AddWithValue("@ActiveStatus", status);
 
+                //----------------These line shuld be comment out during working in real server "192.168.2.62"-----------------
                 //CommandObj.Parameters.AddWithValue("@CountryName", userLocaiton.CountryName ?? (object)DBNull.Value);
                 //CommandObj.Parameters.AddWithValue("@CountryCode", userLocaiton.CountryCode ?? (object)DBNull.Value);
                 //CommandObj.Parameters.AddWithValue("@CityName", userLocaiton.CityName ?? (object)DBNull.Value);
@@ -268,6 +269,7 @@ namespace NBL.DAL
                 //CommandObj.Parameters.AddWithValue("@TimeZone", userLocaiton.TimeZone ?? (object)DBNull.Value);
                 //CommandObj.Parameters.AddWithValue("@IsValidLogin", userLocaiton.IsValidLogin);
 
+                //---------------------End -------------------------------------
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();

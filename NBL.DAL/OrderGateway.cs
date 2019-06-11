@@ -166,7 +166,9 @@ namespace NBL.DAL
             {
                 CommandObj.CommandText = "UDSP_GetLastestOrdersByCompanyId";
                 CommandObj.CommandType = CommandType.StoredProcedure;
+
                 CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+              
                 ConnectionObj.Open();
                 SqlDataReader reader = CommandObj.ExecuteReader();
                 List<ViewOrder> orders = new List<ViewOrder>();
@@ -180,6 +182,19 @@ namespace NBL.DAL
                         OrderSlipNo = reader["OrderSlipNo"].ToString(),
                         UserId = Convert.ToInt32(reader["UserId"]),
                         BranchName = reader["BranchName"].ToString(),
+                        Client = new Client
+                        {
+                            ClientName = reader["Name"].ToString(),
+                            ClientId = Convert.ToInt32(reader["ClientId"]),
+                            Email = reader["Email"].ToString(),
+                            CommercialName = reader["Name"].ToString(),
+                            ClientType = new ClientType
+                            {
+                                ClientTypeId = Convert.ToInt32(reader["ClientTypeId"]),
+                                ClientTypeName = reader["ClientTypeName"].ToString()
+                            }
+
+                        },
                         ClientName = reader["Name"].ToString(),
                         Status = Convert.ToInt32(reader["OrderStatus"]),
                         ClientEmail = reader["Email"].ToString(),
@@ -617,6 +632,18 @@ namespace NBL.DAL
                         OrderSlipNo = reader["OrderSlipNo"].ToString(),
                         UserId = Convert.ToInt32(reader["UserId"]),
                         BranchName = reader["BranchName"].ToString(),
+                        Client = new Client
+                        {
+                            ClientName = reader["Name"].ToString(),
+                            CommercialName = reader["Name"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            ClientType = new ClientType
+                            {
+                                ClientTypeId = Convert.ToInt32(reader["ClientTypeId"]),
+                                ClientTypeName =DBNull.Value.Equals(reader["ClientTypeName"])?null: reader["ClientTypeName"].ToString()
+                            }
+                        },
+
                         ClientName = reader["Name"].ToString(),
                         ClientEmail = reader["Email"].ToString(),
                         ApprovedByNsmDateTime = Convert.ToDateTime(reader["ApprovedByNsmDateTime"]),

@@ -98,10 +98,10 @@ namespace NBL.BLL
         public IEnumerable<ViewClient> GetClientByBranchId(int branchId)
         {
             var clients = _iClientGateway.GetClientByBranchId(branchId);
-            foreach (var client in clients)
-            {
-                client.Orders = _iOrderManager.GetOrdersByClientId(client.ClientId).ToList();
-            }
+            //foreach (var client in clients)
+            //{
+            //    client.Orders = _iOrderManager.GetOrdersByClientId(client.ClientId).ToList();
+            //}
             return clients;
         }
 

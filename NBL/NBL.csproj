@@ -8253,6 +8253,7 @@
     <Folder Include="Areas\QC\Files\" />
     <Folder Include="Areas\QC\Models\" />
     <Folder Include="Areas\ResearchAndDevelopment\Models\" />
+    <Folder Include="Areas\Sales\Files\ReceiveProducts\" />
     <Folder Include="Areas\Sales\Files\Replaces\" />
     <Folder Include="Areas\Sales\Files\Requisitions\" />
     <Folder Include="Areas\Sales\Files\Returns\" />

@@ -256,7 +256,7 @@ namespace NBL.Areas.Sales.Controllers
                 var receivableProductList = GetReceivesProductList(id);
                 ReceiveProductViewModel aModel = new ReceiveProductViewModel
                 {
-                    TripId = id,
+                    DispatchId = id,
                     DispatchModels = receivableProductList
                 };
 
@@ -271,7 +271,7 @@ namespace NBL.Areas.Sales.Controllers
         }
 
         [HttpPost]
-        public void SaveScannedBarcodeToTextFile(string barcode,long tripId)
+        public void SaveScannedBarcodeToTextFile(string barcode,long dispatchId)
         {
             SuccessErrorModel model=new SuccessErrorModel();
             ViewWriteLogModel log = new ViewWriteLogModel();
@@ -280,14 +280,14 @@ namespace NBL.Areas.Sales.Controllers
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 var scannedBarCode = barcode.ToUpper();
                 int productId = Convert.ToInt32(scannedBarCode.Substring(2, 3));
-                string fileName = "Received_Product_For_" + tripId+branchId;
-                var filePath = Server.MapPath("~/Files/" + fileName);
+
+                var filePath = GetReceiveProductFilePath(dispatchId, branchId);
 
                 //------------read Scanned barcode form text file---------
                 var barcodeList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
                 //------------Load receiveable product---------
-                var receivesProductList = _iInventoryManager.GetAllReceiveableProductToBranchByTripId(tripId,branchId);
-                var receivesProductCodeList = _iInventoryManager.GetAllReceiveableItemsByTripAndBranchId(tripId,branchId).Select(n => n.ProductBarcode).ToList();
+                var receivesProductList = _iInventoryManager.GetAllReceiveableProductToBranchByDispatchId(dispatchId,branchId);
+                var receivesProductCodeList = _iInventoryManager.GetAllReceiveableItemsByDispatchAndBranchId(dispatchId,branchId).Select(n => n.ProductBarcode).ToList();
                 var isvalid = Validator.ValidateProductBarCode(scannedBarCode);
 
                 int requistionQtyByProductId =receivesProductList.ToList().FindAll(n=>n.ProductId==productId).Sum(n => n.Quantity);
@@ -329,20 +329,26 @@ namespace NBL.Areas.Sales.Controllers
            // return Json(model, JsonRequestBehavior.AllowGet);
         }
 
+        private string GetReceiveProductFilePath(long dispatchId, int branchId)
+        {
+            string fileName = "Received_Product_For_" + dispatchId + "_" + branchId;
+            var filePath = Server.MapPath("~/Areas/Sales/Files/ReceiveProducts/" + fileName);
+            return filePath;
+        }
+
         [HttpPost]
-        public ActionResult ReceiveProduct(long tripId)
+        public ActionResult ReceiveProduct(long dispatchId)
         {
 
             try
             {
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 var user = (ViewUser)Session["user"];
-                ViewDispatchModel dispatchModel = _iInventoryManager.GetDispatchByTripId(tripId);
+                ViewDispatchModel dispatchModel = _iInventoryManager.GetDispatchByDispatchId(dispatchId);
                 dispatchModel.ReceiveByUserId = user.UserId;
-                var receivesProductList = _iInventoryManager.GetAllReceiveableProductToBranchByTripId(tripId, branchId);
+                var receivesProductList = _iInventoryManager.GetAllReceiveableProductToBranchByDispatchId(dispatchId, branchId);
                 dispatchModel.DispatchModels = receivesProductList;
-                string fileName = "Received_Product_For_" + tripId + branchId;
-                var filePath = Server.MapPath("~/Files/" + fileName);
+                var filePath =GetReceiveProductFilePath(dispatchId,branchId);
                 var receiveProductList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
                 dispatchModel.Quantity = receiveProductList.Count;
                 dispatchModel.ToBranchId = Convert.ToInt32(Session["BranchId"]);
@@ -383,11 +389,11 @@ namespace NBL.Areas.Sales.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult LoadReceiveableProduct(long tripId)
+        public PartialViewResult LoadReceiveableProduct(long dispatchId)
         {
             try
             {
-                var products = GetReceivesProductList(tripId);
+                var products = GetReceivesProductList(dispatchId);
                 return PartialView("_ViewReceivalbeProductPartialPage", products);
             }
             catch (Exception exception)
@@ -400,14 +406,15 @@ namespace NBL.Areas.Sales.Controllers
 
 
         [HttpPost]
-        public PartialViewResult LoadScannecdProduct(long tripId)
+        public PartialViewResult LoadScannecdProduct(long dispatchId)
         {
             try
             {
                 int branchId = Convert.ToInt32(Session["BranchId"]);
+                var filePath = GetReceiveProductFilePath(dispatchId, branchId);
+
                 List<ScannedProduct> products = new List<ScannedProduct>();
-                string fileName = "Received_Product_For_" + tripId + branchId;
-                var filePath = Server.MapPath("~/Files/" + fileName);
+               
                 if (System.IO.File.Exists(filePath))
                 {
                     //if the file is exists read the file
@@ -427,15 +434,15 @@ namespace NBL.Areas.Sales.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
-        private List<ViewDispatchModel> GetReceivesProductList(long tripId)
+        //------------ change tripId to dispatchId--------------------
+        private List<ViewDispatchModel> GetReceivesProductList(long dispatchId)
         {
             try
             {
                 int branchId = Convert.ToInt32(Session["BranchId"]);
-                var receivesProductList = _iInventoryManager.GetAllReceiveableProductToBranchByTripId(tripId, branchId).ToList()
+                var receivesProductList = _iInventoryManager.GetAllReceiveableProductToBranchByDispatchId(dispatchId, branchId).ToList()
                     .DistinctBy(n => n.ProductName).ToList();
-                string fileName = "Received_Product_For_" + tripId;
-                var filePath = Server.MapPath("~/Files/" + fileName);
+                var filePath = GetReceiveProductFilePath(dispatchId, branchId);
                 if (!System.IO.File.Exists(filePath))
                 {
                     //if the file does not exists create the file

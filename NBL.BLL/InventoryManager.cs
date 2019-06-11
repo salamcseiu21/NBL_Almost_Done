@@ -116,9 +116,9 @@ namespace NBL.BLL
             return reference;
         }
 
-        public ICollection<ViewDispatchModel> GetAllReceiveableProductToBranchByTripId(long tripId,int branchId)
+        public ICollection<ViewDispatchModel> GetAllReceiveableProductToBranchByDispatchId(long dispatchId, int branchId)
         {
-            return _iInventoryGateway.GetAllReceiveableProductToBranchByTripId(tripId,branchId);
+            return _iInventoryGateway.GetAllReceiveableProductToBranchByDispatchId(dispatchId,branchId);
         }
 
         public TransactionModel GetTransactionModelById(long id)
@@ -218,14 +218,14 @@ namespace NBL.BLL
             return _iInventoryGateway.GetAllTrip();
         }
 
-        public ViewDispatchModel GetDispatchByTripId(long tripId)
+        public ViewDispatchModel GetDispatchByDispatchId(long dispatchId)
         {
-            return _iInventoryGateway.GetDispatchByTripId(tripId); 
+            return _iInventoryGateway.GetDispatchByDispatchId(dispatchId); 
         }
 
-        public ICollection<ViewDispatchModel> GetAllReceiveableItemsByTripAndBranchId(long tripId, int branchId)
+        public ICollection<ViewDispatchModel> GetAllReceiveableItemsByDispatchAndBranchId(long dispatchId, int branchId)
         {
-            return _iInventoryGateway.GetAllReceiveableItemsByTripAndBranchId(tripId,branchId);
+            return _iInventoryGateway.GetAllReceiveableItemsByDispatchAndBranchId(dispatchId, branchId);
         }
 
         public ICollection<ProductionSummary> GetProductionSummaries()

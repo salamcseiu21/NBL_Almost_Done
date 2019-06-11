@@ -50,9 +50,9 @@ namespace NBL.Areas.SCM.Controllers
         {
             try
             {
-                int branchId = Convert.ToInt32(Session["BranchId"]);
+               
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
-                var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId, companyId).ToList();
+                var orders = _iOrderManager.GetAllOrderWithClientInformationByCompanyId(companyId).ToList();
                 ViewBag.Heading = "All Orders";
                 return PartialView("_ViewOrdersPartialPage", orders);
             }
@@ -67,9 +67,8 @@ namespace NBL.Areas.SCM.Controllers
         {
             try
             {
-                int branchId = Convert.ToInt32(Session["BranchId"]);
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
-                var orders = _iOrderManager.GetLatestOrdersByBranchAndCompanyId(branchId, companyId).ToList();
+                var orders = _iOrderManager.GetLatestOrdersByCompanyId(companyId).ToList();
                 ViewBag.Heading = "Latest Orders";
                 return PartialView("_ViewOrdersPartialPage", orders);
             }

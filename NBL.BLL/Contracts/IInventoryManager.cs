@@ -22,7 +22,7 @@ namespace NBL.BLL.Contracts
        int GetStockQtyByBranchAndProductId(int branchId, int productId);
        string GenerateDeliveryReference(int maxRefNo);
        IEnumerable<TransactionModel> GetAllReceiveableProductToBranchByDeliveryRef(string deliveryRef);
-       ICollection<ViewDispatchModel> GetAllReceiveableProductToBranchByTripId(long tripId,int branchId);
+       ICollection<ViewDispatchModel> GetAllReceiveableProductToBranchByDispatchId(long dispatchId, int branchId);
        TransactionModel GetTransactionModelById(long id);
        int SaveScannedProduct(ProductionModel model);
        bool IsThisProductSold(string scannedBarCode);
@@ -36,8 +36,8 @@ namespace NBL.BLL.Contracts
        IEnumerable<ViewProduct> GetAllProductsBarcode();
        bool CreateTrip(ViewCreateTripModel model);
        IEnumerable<ViewTripModel> GetAllTrip();
-        ViewDispatchModel GetDispatchByTripId(long tripId);
-       ICollection<ViewDispatchModel> GetAllReceiveableItemsByTripAndBranchId(long tripId, int branchId);
+        ViewDispatchModel GetDispatchByDispatchId(long dispatchId);
+       ICollection<ViewDispatchModel> GetAllReceiveableItemsByDispatchAndBranchId(long dispatchId, int branchId);
        ICollection<ProductionSummary> GetProductionSummaries();
        ICollection<ProductionSummary> GetProductionSummaryByMonth(DateTime dateTime);
        string SaveReplaceDeliveryInfo(List<ScannedProduct> barcodeList, Delivery aDelivery, int replaceStatus);

@@ -6,6 +6,7 @@ using System.Linq;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Masters;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels.Deliveries;
 
 namespace NBL.DAL
@@ -24,6 +25,11 @@ namespace NBL.DAL
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@DispatchDate", dispatchModel.DispatchDate);
                 CommandObj.Parameters.AddWithValue("@TripId", dispatchModel.TripModel.TripId);
+
+                //CommandObj.Parameters.AddWithValue("@RequisitionId", dispatchModel.TripModel.RequisitionId);
+                //CommandObj.Parameters.AddWithValue("@ToBranchId", dispatchModel.TripModel.ToBranchId);
+                //CommandObj.Parameters.AddWithValue("@ProductId", dispatchModel.TripModel.ProuctId);
+
                 CommandObj.Parameters.AddWithValue("@TransactionRef", dispatchModel.TripModel.TripRef);
                 CommandObj.Parameters.AddWithValue("@Quantity", dispatchModel.ScannedProducts.ToList().Count);
                 CommandObj.Parameters.AddWithValue("@DispatchRef", dispatchModel.DispatchRef);
@@ -51,6 +57,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not Save dispatch Info", exception);
             }
@@ -86,22 +93,23 @@ namespace NBL.DAL
             }
             if (i > 0)
             {
-                n = SaveDispatchItems(model.DispatchModels,dispatchId,inventoryMasterId);
+                n = SaveDispatchItems(model,dispatchId,inventoryMasterId);
             }
             return n;
         }
 
-        private int SaveDispatchItems(IEnumerable<ViewDispatchModel> products, long dispatchId,long inventoryMasterId)  
+        private int SaveDispatchItems(DispatchModel model, long dispatchId,long inventoryMasterId)  
         {
             int i = 0;
-            foreach (var item in products)
+            var scannProducts = model.ScannedProducts;
+            foreach (var item in model.DispatchModels)
             {
+                var qty= scannProducts.Count(n => n.ProductId.Equals(item.ProductId));
                 CommandObj.Parameters.Clear();
                 CommandObj.CommandText = "UDSP_SaveDispatchItems";
                 CommandObj.CommandType = CommandType.StoredProcedure;
-             
                 CommandObj.Parameters.AddWithValue("@ProductId", item.ProductId);
-                CommandObj.Parameters.AddWithValue("@Quantity", item.Quantity);
+                CommandObj.Parameters.AddWithValue("@Quantity", qty);
                 CommandObj.Parameters.AddWithValue("@ToBranchId", item.ToBranchId);
                 CommandObj.Parameters.AddWithValue("@DispatchId", dispatchId);
                 CommandObj.Parameters.AddWithValue("@InventoryMasterId", inventoryMasterId);

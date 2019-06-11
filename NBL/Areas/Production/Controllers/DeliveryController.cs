@@ -15,7 +15,6 @@ using NBL.Models.Logs;
 using NBL.Models.Validators;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
-using NBL.Models.ViewModels.Logs;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Summaries;
 using NBL.Models.ViewModels.TransferProducts;
@@ -94,7 +93,7 @@ namespace NBL.Areas.Production.Controllers
         public void SaveScannedBarcodeToTextFile(string barcode,long tripId)
         {
             SuccessErrorModel model = new SuccessErrorModel();
-            ViewWriteLogModel log=new ViewWriteLogModel();
+          
             try
             {
                
