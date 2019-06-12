@@ -11,6 +11,7 @@ using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.Enums;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
+using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Sales;
@@ -306,6 +307,11 @@ namespace NBL.BLL
         public int GetStockProductQuantityInFactoryById(int productId)
         {
             return _iInventoryGateway.GetStockProductQuantityInFactoryById(productId);
+        }
+
+        public ICollection<ViewProduct> GetRequsitionVeStockProductQtyByDistributionCenter(int distributionCenterId, int companyId)
+        {
+            return _iInventoryGateway.GetRequsitionVeStockProductQtyByDistributionCenter(distributionCenterId,companyId);
         }
     }
 }

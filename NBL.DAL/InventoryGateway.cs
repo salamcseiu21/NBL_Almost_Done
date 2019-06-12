@@ -15,6 +15,7 @@ using NBL.Models.Enums;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
+using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Sales;
@@ -2522,6 +2523,48 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Colud not collect factory stock qty by   product id", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<ViewProduct> GetRequsitionVeStockProductQtyByDistributionCenter(int distributionCenterId, int companyId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptRequsitionVeStockProductQtyByDistributionCenter";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DistributionCenterId", distributionCenterId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<ViewProduct> products = new List<ViewProduct>();
+                while (reader.Read())
+                {
+                    products.Add(new ViewProduct
+                    {
+
+                        StockQuantity = Convert.ToInt32(reader["Stock"]),
+                        RequisitionQty = Convert.ToInt32(reader["RequisitionQty"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        CategoryId = Convert.ToInt32(reader["CategoryId"]),
+                        SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString()
+                    });
+                }
+
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Colud not collect product list", exception);
             }
             finally
             {

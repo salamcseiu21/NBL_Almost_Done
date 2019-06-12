@@ -6,6 +6,7 @@ using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
+using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Sales;
@@ -58,5 +59,6 @@ namespace NBL.BLL.Contracts
        ICollection<object> GetStockProductByBranchCompanyIdAndSerachTerm(int branchId, int companyId, string searchTerm);
        ICollection<object> GetFactoryStockProductBySearchTerm(string prefix);
        int GetStockProductQuantityInFactoryById(int productId);
+       ICollection<ViewProduct> GetRequsitionVeStockProductQtyByDistributionCenter(int distributionCenterId, int companyId);
    }
 }

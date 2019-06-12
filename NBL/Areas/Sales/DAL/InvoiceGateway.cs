@@ -10,6 +10,7 @@ using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Invoices;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Orders;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 
 namespace NBL.Areas.Sales.DAL
@@ -876,6 +877,7 @@ namespace NBL.Areas.Sales.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not get Delivered Qty by  invoice ref", exception);
             }
             finally
@@ -925,10 +927,12 @@ namespace NBL.Areas.Sales.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not get Invoiced orders by company id and date due to Sql Exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not get Invoiced orders by company id and date", exception);
             }
             finally

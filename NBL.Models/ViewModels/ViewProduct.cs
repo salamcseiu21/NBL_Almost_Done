@@ -20,6 +20,7 @@ namespace NBL.Models.ViewModels
         public int TotalTr { get; set; }
         public decimal CostPrice { get; set; }
         public int StockQuantity { get; set; }
+        public int RequisitionQty { get; set; } 
         public int ProductId { get; set; }
         [Display(Name = "Product Name")]
         public string ProductName { get; set; }
