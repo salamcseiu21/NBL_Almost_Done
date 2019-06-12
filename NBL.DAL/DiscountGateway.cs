@@ -6,6 +6,7 @@ using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.VatDiscounts;
+using NBL.Models.Logs;
 
 namespace NBL.DAL
 {
@@ -88,6 +89,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect pending Discounts", exception);
             }
             finally

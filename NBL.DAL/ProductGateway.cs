@@ -635,11 +635,24 @@ namespace NBL.DAL
         {
             try
             {
-                CommandObj.CommandText = "spAddNewProduct";
-                throw new NotImplementedException();
+                CommandObj.CommandText = "UDSP_AddNewProduct";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@CompanyId", aProduct.CompanyId);
+                CommandObj.Parameters.AddWithValue("@ProductTypeId", aProduct.ProductTypeId);
+                CommandObj.Parameters.AddWithValue("@CategoryId", aProduct.CategoryId);
+                CommandObj.Parameters.AddWithValue("@SubSubSubAccountCode", aProduct.SubSubSubAccountCode);
+                CommandObj.Parameters.AddWithValue("@ProductName", aProduct.ProductName);
+                CommandObj.Parameters.AddWithValue("@Unit", aProduct.Unit);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected= Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw  new Exception("Could not Save product info",exception);
             }
             finally

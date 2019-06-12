@@ -80,7 +80,7 @@ namespace NBL.BLL
         public string Save(Product aProduct)
         {
             int lastSlNo = GetProductMaxSerialNo();
-            string subSubSubAccountCode = Generator.GenerateAccountCode("2201",lastSlNo);
+            string subSubSubAccountCode = Generator.GenerateAccountCode("310103", lastSlNo);
             aProduct.SubSubSubAccountCode = subSubSubAccountCode;
             int rowAffected = _iProductGateway.Save(aProduct);
             if (rowAffected > 0)

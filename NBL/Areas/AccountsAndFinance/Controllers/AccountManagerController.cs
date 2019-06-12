@@ -407,6 +407,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             }
             catch (Exception e)
             {
+
                 if (e.InnerException != null)
                     aModel.Message = "<p style='color:red'>" + e.InnerException.Message + "</p>";
                 Log.WriteErrorLog(e);

@@ -40,8 +40,9 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li>@Html.ActionLink(" Add Product Details", "AddProductDetails", "Product", new { area = "AccountsAndFinance" }, new { @class = "fa fa-plus" })</li>
-            <li>@Html.ActionLink(" Products", "ViewProduct", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
+            <li>@Html.ActionLink(" Add Product", "AddProduct", "Product", new { area = "AccountsAndFinance" }, new { @class = "fa fa-plus" })</li>
+            <li>@Html.ActionLink(" Add Product Details", "AddProductDetails", "Product", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
+            <li>@Html.ActionLink(" Products", "ViewProduct", "ShowInfo", new {area = "CommonArea"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
         </ul>
     </li>
 
