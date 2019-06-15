@@ -179,7 +179,7 @@ namespace NBL.Areas.SCM.Controllers
 
         public ActionResult PendingGeneralRequisitions()
         {
-            var requisitions=_iProductManager.GetAllGeneralRequisitions().ToList().FindAll(n=>n.Status.Equals(0) && n.IsFinalApproved.Equals("Y"));
+            var requisitions=_iProductManager.GetAllGeneralRequisitions().ToList().FindAll(n=>n.Status.Equals(1) && n.IsFinalApproved.Equals("Y"));
            return PartialView("_ViewGeneralRequisitionListPartialPage", requisitions);
         }
 
@@ -213,7 +213,7 @@ namespace NBL.Areas.SCM.Controllers
                 var user = (ViewUser) Session["user"];
                var distributionPoint=Convert.ToInt32(collection["DistributionPointId"]);
                 bool result = _iProductManager.ApproveGeneralRequisitionByScm(user.UserId,distributionPoint,id);
-                var requisitions = _iProductManager.GetAllGeneralRequisitions().ToList().FindAll(n => n.Status.Equals(0) && n.IsFinalApproved.Equals("Y"));
+                var requisitions = _iProductManager.GetAllGeneralRequisitions().ToList().FindAll(n => n.Status.Equals(1) && n.IsFinalApproved.Equals("Y"));
                 return PartialView("_ViewGeneralRequisitionListPartialPage", requisitions);
             }
             catch (Exception exception)

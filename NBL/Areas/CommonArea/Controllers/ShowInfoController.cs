@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using NBL.BLL.Contracts;
 using NBL.Models.Logs;
+using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.CommonArea.Controllers
 {
@@ -16,13 +17,18 @@ namespace NBL.Areas.CommonArea.Controllers
         private readonly IProductManager _iProductManager;
         private readonly IClientManager _iClientManager;
         private readonly IEmployeeManager _iEmployeeManager;
-        public ShowInfoController(IBranchManager iBranchManager,ICommonManager iCommonManager,IProductManager iProductManager,IClientManager iClientManager,IEmployeeManager iEmployeeManager)
+        private readonly IReportManager _iReportManager;
+        private readonly IInventoryManager _iInventoryManager;
+        public ShowInfoController(IBranchManager iBranchManager,ICommonManager iCommonManager,IProductManager iProductManager,IClientManager iClientManager,IEmployeeManager iEmployeeManager, IReportManager iReportManager, IInventoryManager iInventoryManager)
         {
             _iBranchManager = iBranchManager;
             _iCommonManager = iCommonManager;
             _iProductManager = iProductManager;
             _iClientManager = iClientManager;
             _iEmployeeManager = iEmployeeManager;
+            _iReportManager = iReportManager;
+            _iInventoryManager = iInventoryManager;
+
         }
         // GET: CommonArea/ShowInfo
         public PartialViewResult ViewBranch()
@@ -127,6 +133,78 @@ namespace NBL.Areas.CommonArea.Controllers
             {
                 var employee = _iEmployeeManager.GetEmployeeById(id);
                 return PartialView("_ViewEmployeeProfilePartialPage", employee);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        //--------------Stock-----------------------
+
+        [HttpGet]
+        public PartialViewResult Stock()
+        {
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var stock = _iInventoryManager.GetStockProductByCompanyId(companyId);
+                return PartialView("_RptFactoryStockPartialPage", stock);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        [HttpGet]
+        public PartialViewResult TotalStock()
+        {
+            try
+            {
+                var stock = _iReportManager.GetTotalStock();
+                return PartialView("_RptOveralStockPartialPage", stock);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        public PartialViewResult ProductionSummary()
+        {
+            try
+            {
+                var summaries = _iInventoryManager.GetProductionSummaries().ToList();
+                return PartialView("_RptProductionSummaryPartialPage", summaries);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        public PartialViewResult StockByBranch(int id)
+        {
+
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(id, companyId).ToList();
+                var branch = _iBranchManager.GetAllBranches().ToList().Find(n => n.BranchId == id);
+                SummaryModel model = new SummaryModel
+                {
+                    Products = products,
+                    Branch = branch
+                };
+
+                return PartialView("_ViewStockProductInBranchPartialPage", model);
             }
             catch (Exception exception)
             {

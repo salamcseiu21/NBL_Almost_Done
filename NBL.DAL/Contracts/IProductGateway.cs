@@ -82,8 +82,10 @@ namespace NBL.DAL.Contracts
         GeneralRequisitionModel GetGeneralRequisitionById(long requisitiionId);
         int ApproveGeneralRequisition(GeneralRequisitionModel model, int nextApproverUser, int nextApprovalLevel,ApprovalDetails approval);
         int ApproveGeneralRequisitionByScm(int userId, int distributionPoint,long requisitiionId);
+        int ApproveGeneralRequisitionBySalesAdmin(int userId, long requisitiionId);
         ICollection<object> GetAllProductBySearchTerm(string searchTerm);
         IEnumerable<ViewSoldProduct> GetTempSoldBarcodesFromXmlFile(string filePath);
         int AddBarCodeToTempSoldProductXmlFile(ViewDisributedProduct product, string barcode, string filePath);
+      
     }
 }

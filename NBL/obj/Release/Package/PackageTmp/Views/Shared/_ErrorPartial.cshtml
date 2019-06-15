@@ -1,7 +1,23 @@
 ﻿
-@model NBL.Models.ErrorModel
-<section>
-    @Model.Heading
-    @Model.Description
-    @Model.ErrorType
+@model Exception
+@{
+    ViewBag.Title = "Custom Error";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <div class="error-page">
+        <h3 class="text-center">
+            <i class="fa fa-warning text-red"></i> Oops! Something went wrong.
+        </h3>
+            <div class="text-center">
+                <h2 class="text-red">@Model.GetType().ToString()</h2>
+            <p>
+
+                @Model.Message
+
+            </p>
+
+        </div>
+    </div>
+    <!-- /.error-page -->
 </section>

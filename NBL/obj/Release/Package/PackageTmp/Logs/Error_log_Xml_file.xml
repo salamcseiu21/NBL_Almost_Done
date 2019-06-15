@@ -1,62 +1,507 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Errors>
-  <Error LogId="3/2/2019 12:55:43 PM">
-    <Heading>System.FormatException</Heading>
-    <LogMessage>   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
-   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
-   at System.Convert.ToInt32(String value)
-   at NBL.Areas.Sales.Controllers.ProductController.SaveScannedBarcodeToTextFile(FormCollection collection) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 211</LogMessage>
-    <LogDateTime>2019-03-02T12:55:43.40386+06:00</LogDateTime>
+  <Error LogId="19-Jun-12774573e6-0967-44d5-b696-c66572e483b8">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.UserGateway.ChangeLoginStatus(ViewUser user, Int32 status, UserLocation userLocaiton) in E:\API\NBL\NBL.DAL\UserGateway.cs:line 275</LogMessage>
+    <LogDateTime>2019-06-12T17:22:47.8884967+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'spChangeLoginStatus' expects parameter '@CountryName', which was not supplied.</CustomeMessage>
   </Error>
-  <Error LogId="19-Mar-02bca557be-ec40-4707-bc9a-20c87da2b76c">
-    <Heading>System.FormatException</Heading>
-    <LogMessage>   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
-   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
-   at System.Convert.ToInt32(String value)
-   at NBL.Areas.Sales.Controllers.ProductController.SaveScannedBarcodeToTextFile(FormCollection collection) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 211</LogMessage>
-    <LogDateTime>2019-03-02T12:58:46.4363205+06:00</LogDateTime>
-  </Error>
-  <Error LogId="19-Mar-0238d3bb3c-5042-4325-bf46-6ac15845744a">
-    <Heading>System.ArgumentOutOfRangeException</Heading>
-    <LogMessage>   at System.String.Substring(Int32 startIndex, Int32 length)
-   at NBL.Areas.Factory.Controllers.DeliveryController.SaveScannedBarcodeToTextFile(FormCollection collection) in E:\API\NBL\NBL\Areas\Factory\Controllers\DeliveryController.cs:line 72</LogMessage>
-    <LogDateTime>2019-03-02T13:02:13.6478091+06:00</LogDateTime>
-  </Error>
-  <Error LogId="19-Mar-0210af7a53-45f8-45b9-b38b-b78096dae7ad">
-    <Heading>System.FormatException</Heading>
-    <LogMessage>   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
-   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
-   at System.Convert.ToInt32(String value)
-   at NBL.Areas.Factory.Controllers.DeliveryController.SaveScannedBarcodeToTextFile(FormCollection collection) in E:\API\NBL\NBL\Areas\Factory\Controllers\DeliveryController.cs:line 72</LogMessage>
-    <LogDateTime>2019-03-02T13:02:52.6780374+06:00</LogDateTime>
-  </Error>
-  <Error LogId="19-Mar-050095b6da-f97d-47fd-b568-23ed52436e8d">
+  <Error LogId="19-Jun-12944513e3-a0a7-469c-98fe-205b057d894f">
     <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.DAL.InventoryGateway.GetAllReceiveableItemsByTripAndBranchId(Int64 tripId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1214
-   at NBL.BLL.InventoryManager.GetAllReceiveableItemsByTripAndBranchId(Int64 tripId, Int32 branchId) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 169
-   at NBL.Areas.Sales.Controllers.ProductController.SaveScannedBarcodeToTextFile(String barcode, Int64 tripId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 218</LogMessage>
-    <LogDateTime>2019-03-05T12:27:49.4249572+06:00</LogDateTime>
+    <LogMessage>   at NBL.DAL.UserGateway.ChangeLoginStatus(ViewUser user, Int32 status, UserLocation userLocaiton) in E:\API\NBL\NBL.DAL\UserGateway.cs:line 288
+   at NBL.BLL.UserManager.ChangeLoginStatus(ViewUser user, Int32 status, UserLocation userLocaiton) in E:\API\NBL\NBL.BLL\UserManager.cs:line 34
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 102</LogMessage>
+    <LogDateTime>2019-06-12T17:22:47.9332527+06:00</LogDateTime>
+    <CustomeMessage>Could not change login status</CustomeMessage>
   </Error>
-  <Error LogId="19-Apr-177531c5cf-6cfe-4755-910c-b628606d9bf9">
-    <Heading>System.FormatException</Heading>
-    <LogMessage>   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
-   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
-   at System.Convert.ToInt32(String value)
-   at NBL.Areas.Production.Controllers.DeliveryController.SaveScannedBarcodeToTextFile(String barcode, Int64 tripId) in E:\API\NBL\NBL\Areas\Production\Controllers\DeliveryController.cs:line 71</LogMessage>
-    <LogDateTime>2019-04-17T16:16:35.1305807+06:00</LogDateTime>
+  <Error LogId="19-Jun-12477d0f0c-8cdb-4630-8bd9-001d14e376f6">
+    <Heading>System.Net.WebException</Heading>
+    <LogMessage>   at System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest&amp; request)
+   at System.Net.WebClient.DownloadString(Uri address)
+   at System.Net.WebClient.DownloadString(String address)
+   at NBL.Controllers.LoginController.GetUserLocation() in E:\API\NBL\NBL\Controllers\LoginController.cs:line 272
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 67</LogMessage>
+    <LogDateTime>2019-06-12T17:25:12.7132564+06:00</LogDateTime>
+    <CustomeMessage>Unable to connect to the remote server</CustomeMessage>
   </Error>
-  <Error LogId="19-Apr-174979fa20-7270-4189-88e1-d86a42f8b31a">
-    <Heading>System.FormatException</Heading>
-    <LogMessage>   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
-   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
-   at System.Convert.ToInt32(String value)
-   at NBL.Areas.Production.Controllers.DeliveryController.SaveScannedBarcodeToTextFile(String barcode, Int64 tripId) in E:\API\NBL\NBL\Areas\Production\Controllers\DeliveryController.cs:line 71</LogMessage>
-    <LogDateTime>2019-04-17T16:16:35.7780472+06:00</LogDateTime>
+  <Error LogId="19-Jun-1327112811-405b-4295-afac-5d44f7432019">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetAllReceiveableProductToBranchByDispatchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 494</LogMessage>
+    <LogDateTime>2019-06-13T10:32:33.8211026+06:00</LogDateTime>
+    <CustomeMessage>Could not find stored procedure 'spGetReceiveableProductToBranchByDispatchId'.</CustomeMessage>
   </Error>
-  <Error LogId="19-Apr-25b9437d3d-9f54-46d6-953c-faa2534f10f0">
-    <Heading>System.ArgumentOutOfRangeException</Heading>
-    <LogMessage>   at System.String.Substring(Int32 startIndex, Int32 length)
-   at NBL.Areas.Production.Controllers.DeliveryController.SaveScannedBarcodeToTextFile(String barcode, Int64 tripId) in E:\API\NBL\NBL\Areas\Production\Controllers\DeliveryController.cs:line 71</LogMessage>
-    <LogDateTime>2019-04-25T16:24:28.0945081+06:00</LogDateTime>
+  <Error LogId="19-Jun-132060990e-cd65-493d-94a1-d29d92356236">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.InventoryGateway.GetAllReceiveableProductToBranchByDispatchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 532
+   at NBL.BLL.InventoryManager.GetAllReceiveableProductToBranchByDispatchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 122
+   at NBL.Areas.Sales.Controllers.ProductController.GetReceivesProductList(Int64 dispatchId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 443</LogMessage>
+    <LogDateTime>2019-06-13T10:32:33.8719659+06:00</LogDateTime>
+    <CustomeMessage>Could not collect receivable product to barnch by delivery id</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-135e9fb6dc-3f17-4ab1-a4af-c6eb9139a1c4">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetAllReceiveableProductToBranchByDispatchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 494</LogMessage>
+    <LogDateTime>2019-06-13T10:32:34.5193508+06:00</LogDateTime>
+    <CustomeMessage>Could not find stored procedure 'spGetReceiveableProductToBranchByDispatchId'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-135dc8d6e2-70cc-4af9-8b38-ce19cbf3bbd5">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.InventoryGateway.GetAllReceiveableProductToBranchByDispatchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 532
+   at NBL.BLL.InventoryManager.GetAllReceiveableProductToBranchByDispatchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 122
+   at NBL.Areas.Sales.Controllers.ProductController.GetReceivesProductList(Int64 dispatchId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 443</LogMessage>
+    <LogDateTime>2019-06-13T10:32:34.5562795+06:00</LogDateTime>
+    <CustomeMessage>Could not collect receivable product to barnch by delivery id</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-133b139e83-0d72-4b6a-893e-a8e6b99e3ba5">
+    <Heading>System.Net.WebException</Heading>
+    <LogMessage>   at System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest&amp; request)
+   at System.Net.WebClient.DownloadString(Uri address)
+   at System.Net.WebClient.DownloadString(String address)
+   at NBL.Controllers.LoginController.GetUserLocation() in E:\API\NBL\NBL\Controllers\LoginController.cs:line 272
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 67</LogMessage>
+    <LogDateTime>2019-06-13T11:57:51.0036294+06:00</LogDateTime>
+    <CustomeMessage>Unable to connect to the remote server</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-1385c9b464-8a43-4935-94e3-30e163583b53">
+    <Heading>System.Net.WebException</Heading>
+    <LogMessage>   at System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest&amp; request)
+   at System.Net.WebClient.DownloadString(Uri address)
+   at System.Net.WebClient.DownloadString(String address)
+   at NBL.Controllers.LoginController.GetUserLocation() in E:\API\NBL\NBL\Controllers\LoginController.cs:line 272
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 67</LogMessage>
+    <LogDateTime>2019-06-13T11:58:37.4765301+06:00</LogDateTime>
+    <CustomeMessage>The remote server returned an error: (502) Bad Gateway.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-13a1f2d1e3-48f4-486b-b610-c16a7ff8fa12">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.UserGateway.ChangeLoginStatus(ViewUser user, Int32 status, UserLocation userLocaiton) in E:\API\NBL\NBL.DAL\UserGateway.cs:line 275</LogMessage>
+    <LogDateTime>2019-06-13T14:38:04.3593693+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function spChangeLoginStatus has too many arguments specified.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-13953bedd2-7eb4-42ee-a3b1-0d3c0ac6074d">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.UserGateway.ChangeLoginStatus(ViewUser user, Int32 status, UserLocation userLocaiton) in E:\API\NBL\NBL.DAL\UserGateway.cs:line 288
+   at NBL.BLL.UserManager.ChangeLoginStatus(ViewUser user, Int32 status, UserLocation userLocaiton) in E:\API\NBL\NBL.BLL\UserManager.cs:line 34
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 102</LogMessage>
+    <LogDateTime>2019-06-13T14:38:04.4678067+06:00</LogDateTime>
+    <CustomeMessage>Could not change login status</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-136fed66fe-cb20-49e6-81a6-afc2ec6c8fbd">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal&amp; connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal&amp; connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal&amp; connection)
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at NBL.DAL.CompanyGateway.GetAll() in E:\API\NBL\NBL.DAL\CompanyGateway.cs:line 19</LogMessage>
+    <LogDateTime>2019-06-13T15:09:29.1468503+06:00</LogDateTime>
+    <CustomeMessage>Login failed for user 'sa'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-139d769f39-c297-46fd-b0c2-e1d2368e6814">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.UserGateway.ChangeLoginStatus(ViewUser user, Int32 status, UserLocation userLocaiton) in E:\API\NBL\NBL.DAL\UserGateway.cs:line 275</LogMessage>
+    <LogDateTime>2019-06-13T15:20:56.7521014+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function spChangeLoginStatus has too many arguments specified.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-13b8c75ec8-29bb-4e0b-a7f1-7aa6ba5bc988">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.UserGateway.ChangeLoginStatus(ViewUser user, Int32 status, UserLocation userLocaiton) in E:\API\NBL\NBL.DAL\UserGateway.cs:line 288
+   at NBL.BLL.UserManager.ChangeLoginStatus(ViewUser user, Int32 status, UserLocation userLocaiton) in E:\API\NBL\NBL.BLL\UserManager.cs:line 34
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 102</LogMessage>
+    <LogDateTime>2019-06-13T15:20:56.7870357+06:00</LogDateTime>
+    <CustomeMessage>Could not change login status</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-13a3cee933-4933-4c93-b48b-b5c322a77dcd">
+    <Heading>System.Net.WebException</Heading>
+    <LogMessage>   at System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest&amp; request)
+   at System.Net.WebClient.DownloadString(Uri address)
+   at System.Net.WebClient.DownloadString(String address)
+   at NBL.Controllers.LoginController.GetUserLocation() in E:\API\NBL\NBL\Controllers\LoginController.cs:line 272
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 67</LogMessage>
+    <LogDateTime>2019-06-13T16:40:37.3828345+06:00</LogDateTime>
+    <CustomeMessage>Unable to connect to the remote server</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-135c6816e5-48f2-4476-92a8-cf8b5ffcaede">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.ClientGateway.GetClientByBranchIdAndSearchTerm(Int32 branchId, String searchTerm) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 625</LogMessage>
+    <LogDateTime>2019-06-13T16:45:20.8196219+06:00</LogDateTime>
+    <CustomeMessage>Could not find stored procedure 'UDSP_GetClientByBranchIdAndSearchTerm'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-13d18a76ca-7af9-49c1-bd33-fc34197b94f6">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at NBL.DAL.InventoryGateway.GetAllReceiveableProductToBranchByDispatchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 498</LogMessage>
+    <LogDateTime>2019-06-13T16:54:47.0780756+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-133407aea3-e5c9-43f1-8132-769dc4818514">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.InventoryGateway.GetAllReceiveableProductToBranchByDispatchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 532
+   at NBL.BLL.InventoryManager.GetAllReceiveableProductToBranchByDispatchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 122
+   at NBL.Areas.Sales.Controllers.ProductController.GetReceivesProductList(Int64 dispatchId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 443</LogMessage>
+    <LogDateTime>2019-06-13T16:54:47.1269734+06:00</LogDateTime>
+    <CustomeMessage>Could not collect receivable product to barnch by delivery id</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-13f1cec537-92f7-4c1d-a7a9-eca51da9c1cf">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at NBL.DAL.InventoryGateway.GetAllReceiveableProductToBranchByDispatchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 498</LogMessage>
+    <LogDateTime>2019-06-13T16:54:47.7546966+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-13fa32b5fe-a08e-4ca1-bf16-cc0d96624adc">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.InventoryGateway.GetAllReceiveableProductToBranchByDispatchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 532
+   at NBL.BLL.InventoryManager.GetAllReceiveableProductToBranchByDispatchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 122
+   at NBL.Areas.Sales.Controllers.ProductController.GetReceivesProductList(Int64 dispatchId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 443</LogMessage>
+    <LogDateTime>2019-06-13T16:54:47.7956217+06:00</LogDateTime>
+    <CustomeMessage>Could not collect receivable product to barnch by delivery id</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-13490e0166-3f69-43bb-8eba-b3cfccedbf8c">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at NBL.DAL.InventoryGateway.GetAllReceiveableProductToBranchByDispatchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 498</LogMessage>
+    <LogDateTime>2019-06-13T17:09:01.6184333+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-13c59c71f2-ae4c-4dfa-9608-5f91b046c2bc">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.InventoryGateway.GetAllReceiveableProductToBranchByDispatchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 532
+   at NBL.BLL.InventoryManager.GetAllReceiveableProductToBranchByDispatchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 122
+   at NBL.Areas.Sales.Controllers.ProductController.GetReceivesProductList(Int64 dispatchId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 443</LogMessage>
+    <LogDateTime>2019-06-13T17:09:01.6702665+06:00</LogDateTime>
+    <CustomeMessage>Could not collect receivable product to barnch by delivery id</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-135255bc0a-76de-46be-b334-2f0075ec60b2">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductGateway.GetDeliverableTransferIssueList() in E:\API\NBL\NBL.DAL\ProductGateway.cs:line 218
+   at NBL.BLL.ProductManager.GetDeliverableTransferIssueList() in E:\API\NBL\NBL.BLL\ProductManager.cs:line 57
+   at NBL.Areas.Production.Controllers.DeliveryController.DeliverableTransferIssueList() in E:\API\NBL\NBL\Areas\Production\Controllers\DeliveryController.cs:line 53</LogMessage>
+    <LogDateTime>2019-06-13T17:24:38.4403665+06:00</LogDateTime>
+    <CustomeMessage>Colud not collect transfer issued list</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-13e9ba8833-0289-4e86-9e6a-4a52743c91e8">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetAllReceiveableItemsByDispatchAndBranchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1666</LogMessage>
+    <LogDateTime>2019-06-13T17:28:32.7981471+06:00</LogDateTime>
+    <CustomeMessage>Could not find stored procedure 'UDSP_GetAllReceiveableItemsByDispatchAndBranchId'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-13cb84acb5-040d-4fcd-a4ca-d7384fb077d6">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.InventoryGateway.GetAllReceiveableItemsByDispatchAndBranchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1686
+   at NBL.BLL.InventoryManager.GetAllReceiveableItemsByDispatchAndBranchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 229
+   at NBL.Areas.Sales.Controllers.ProductController.SaveScannedBarcodeToTextFile(String barcode, Int64 dispatchId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 290</LogMessage>
+    <LogDateTime>2019-06-13T17:28:32.840035+06:00</LogDateTime>
+    <CustomeMessage>Coluld not collect receivable product list by trip and product id</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-1303127305-2cf9-41e2-ab88-c4dee88bd62c">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetAllReceiveableItemsByDispatchAndBranchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1666</LogMessage>
+    <LogDateTime>2019-06-13T17:28:42.9649375+06:00</LogDateTime>
+    <CustomeMessage>Could not find stored procedure 'UDSP_GetAllReceiveableItemsByDispatchAndBranchId'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-135d205ace-b18c-48d1-a7d4-f33d98ca3a99">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.InventoryGateway.GetAllReceiveableItemsByDispatchAndBranchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1686
+   at NBL.BLL.InventoryManager.GetAllReceiveableItemsByDispatchAndBranchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 229
+   at NBL.Areas.Sales.Controllers.ProductController.SaveScannedBarcodeToTextFile(String barcode, Int64 dispatchId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 290</LogMessage>
+    <LogDateTime>2019-06-13T17:28:43.0008416+06:00</LogDateTime>
+    <CustomeMessage>Coluld not collect receivable product list by trip and product id</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-130578b7ca-78b7-4b17-ad29-9ba0bba1ff84">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetAllReceiveableItemsByDispatchAndBranchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1666</LogMessage>
+    <LogDateTime>2019-06-13T17:28:49.527959+06:00</LogDateTime>
+    <CustomeMessage>Could not find stored procedure 'UDSP_GetAllReceiveableItemsByDispatchAndBranchId'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-1361644764-d78d-4c8c-bd8a-8bfee8b74f68">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.InventoryGateway.GetAllReceiveableItemsByDispatchAndBranchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1686
+   at NBL.BLL.InventoryManager.GetAllReceiveableItemsByDispatchAndBranchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 229
+   at NBL.Areas.Sales.Controllers.ProductController.SaveScannedBarcodeToTextFile(String barcode, Int64 dispatchId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 290</LogMessage>
+    <LogDateTime>2019-06-13T17:28:49.572839+06:00</LogDateTime>
+    <CustomeMessage>Coluld not collect receivable product list by trip and product id</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-13f95ce4b6-9fc1-4dbd-a0fb-52fb08bdffe8">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetAllReceiveableItemsByDispatchAndBranchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1666</LogMessage>
+    <LogDateTime>2019-06-13T17:29:24.8800295+06:00</LogDateTime>
+    <CustomeMessage>Could not find stored procedure 'UDSP_GetAllReceiveableItemsByDispatchAndBranchId'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-137b2e8b60-f8b6-40f3-ba0a-59adccd555ba">
+    <Heading>System.Net.WebException</Heading>
+    <LogMessage>   at System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest&amp; request)
+   at System.Net.WebClient.DownloadString(Uri address)
+   at System.Net.WebClient.DownloadString(String address)
+   at NBL.Controllers.LoginController.GetUserLocation() in E:\API\NBL\NBL\Controllers\LoginController.cs:line 272
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 67</LogMessage>
+    <LogDateTime>2019-06-13T17:32:26.8554409+06:00</LogDateTime>
+    <CustomeMessage>Unable to connect to the remote server</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-13c33c4228-0cd7-4ea5-8a79-b45802c2c1cb">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetAllReceiveableItemsByDispatchAndBranchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1666</LogMessage>
+    <LogDateTime>2019-06-13T17:33:36.1564321+06:00</LogDateTime>
+    <CustomeMessage>Could not find stored procedure 'UDSP_GetAllReceiveableItemsByDispatchAndBranchId'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-131d9be05d-de9b-423f-abdb-f2c3c7a2dee1">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.InventoryGateway.GetAllReceiveableItemsByDispatchAndBranchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1686
+   at NBL.BLL.InventoryManager.GetAllReceiveableItemsByDispatchAndBranchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 229
+   at NBL.Areas.Sales.Controllers.ProductController.SaveScannedBarcodeToTextFile(String barcode, Int64 dispatchId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 290</LogMessage>
+    <LogDateTime>2019-06-13T17:33:36.1943914+06:00</LogDateTime>
+    <CustomeMessage>Coluld not collect receivable product list by trip and product id</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-13a3dd814d-0e73-4de8-bebd-5cfe6e001b7d">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetAllReceiveableItemsByDispatchAndBranchId(Int64 dispatchId, Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1666</LogMessage>
+    <LogDateTime>2019-06-13T17:34:12.5939551+06:00</LogDateTime>
+    <CustomeMessage>Could not find stored procedure 'UDSP_GetAllReceiveableItemsByDispatchAndBranchId'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-15e97cb42c-0ace-435a-9f4d-5ba5b41237b5">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetDispatchByDispatchId(Int64 dispatchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1626</LogMessage>
+    <LogDateTime>2019-06-15T09:36:07.1115244+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'UDSP_GetDispatchById' expects parameter '@TripId', which was not supplied.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-15ba979b63-83e9-4bbb-a36e-aca70fd5f7b8">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.InventoryGateway.GetDispatchByDispatchId(Int64 dispatchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1646
+   at NBL.BLL.InventoryManager.GetDispatchByDispatchId(Int64 dispatchId) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 224
+   at NBL.Areas.Sales.Controllers.ProductController.ReceiveProduct(Int64 dispatchId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 347</LogMessage>
+    <LogDateTime>2019-06-15T09:36:07.1564342+06:00</LogDateTime>
+    <CustomeMessage>Could not get dispatch by trip id</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-15b4d76498-9df2-4ff6-abd0-1fd5a8a69d95">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetDispatchByDispatchId(Int64 dispatchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1626</LogMessage>
+    <LogDateTime>2019-06-15T09:36:44.7716618+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'UDSP_GetDispatchById' expects parameter '@TripId', which was not supplied.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-1572f75b14-ebbc-4039-b3ba-ea8f7fe4169d">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetDispatchByDispatchId(Int64 dispatchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1626</LogMessage>
+    <LogDateTime>2019-06-15T09:37:13.3659316+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'UDSP_GetDispatchById' expects parameter '@TripId', which was not supplied.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-1520ad17d2-a700-47b6-9045-9c87ba6ce9e5">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.UserGateway.ChangeLoginStatus(ViewUser user, Int32 status, UserLocation userLocaiton) in E:\API\NBL\NBL.DAL\UserGateway.cs:line 275</LogMessage>
+    <LogDateTime>2019-06-15T09:54:49.1443132+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function spChangeLoginStatus has too many arguments specified.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-150a9d7a47-f2a8-4b07-be4d-80139ea25282">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.UserGateway.ChangeLoginStatus(ViewUser user, Int32 status, UserLocation userLocaiton) in E:\API\NBL\NBL.DAL\UserGateway.cs:line 288
+   at NBL.BLL.UserManager.ChangeLoginStatus(ViewUser user, Int32 status, UserLocation userLocaiton) in E:\API\NBL\NBL.BLL\UserManager.cs:line 34
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 102</LogMessage>
+    <LogDateTime>2019-06-15T09:54:49.1852041+06:00</LogDateTime>
+    <CustomeMessage>Could not change login status</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-15f2bb54c4-c185-422a-9509-f33bc06fdd71">
+    <Heading>System.Net.WebException</Heading>
+    <LogMessage>   at System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest&amp; request)
+   at System.Net.WebClient.DownloadString(Uri address)
+   at System.Net.WebClient.DownloadString(String address)
+   at NBL.Controllers.LoginController.GetUserLocation() in E:\API\NBL\NBL\Controllers\LoginController.cs:line 272
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 67</LogMessage>
+    <LogDateTime>2019-06-15T11:56:44.0523944+06:00</LogDateTime>
+    <CustomeMessage>Unable to connect to the remote server</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-15f306ef56-4237-475e-8cad-19a4fa6e5278">
+    <Heading>System.Net.WebException</Heading>
+    <LogMessage>   at System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest&amp; request)
+   at System.Net.WebClient.DownloadString(Uri address)
+   at System.Net.WebClient.DownloadString(String address)
+   at NBL.Controllers.LoginController.GetUserLocation() in E:\API\NBL\NBL\Controllers\LoginController.cs:line 272
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 67</LogMessage>
+    <LogDateTime>2019-06-15T12:26:14.223196+06:00</LogDateTime>
+    <CustomeMessage>Unable to connect to the remote server</CustomeMessage>
   </Error>
 </Errors>

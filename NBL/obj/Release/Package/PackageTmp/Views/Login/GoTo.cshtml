@@ -70,7 +70,7 @@
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script>
     function LoadUserRoleByBranchId(id) {
-       // alert(id.value);
+       //alert(id.value);
         var branchId = id.value;
         $("#RoleId").empty();
         $("#RoleId").append('<option value="">--Select--</option>');
@@ -79,7 +79,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("GetAssignedRolesByBranchId", "Common", new { area = "" })',
+            url: '@Url.Action("GetAssignedRolesByBranchId", "Common",new { area = "" },null)',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(json),
             success: function (data) {

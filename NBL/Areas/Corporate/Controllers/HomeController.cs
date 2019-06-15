@@ -318,6 +318,22 @@ namespace NBL.Areas.Corporate.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+
+        [HttpGet]
+        public PartialViewResult TotalStock()
+        {
+            try
+            {
+                var stock = _iReportManager.GetTotalStock();
+                return PartialView("_RptOveralStockPartialPage", stock);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         public PartialViewResult ProductionSummary()
         {
             try

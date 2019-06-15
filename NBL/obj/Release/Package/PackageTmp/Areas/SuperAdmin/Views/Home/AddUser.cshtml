@@ -15,11 +15,11 @@
     @using (Html.BeginForm())
     {
         <div class="form-horizontal">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-6">
                 <div class="text-center">
                     @if(TempData["Message"]!=null)
                     {
-                       <p style="color:forestgreen">@Html.Raw(TempData["Message"])</p>
+                        <p style="color:forestgreen">@Html.Raw(TempData["Message"])</p>
                     }
                     @if (TempData["Error"] != null)
                     {
@@ -29,14 +29,36 @@
                 <div class="form-group">
                     <label class="control-label col-md-3">Employee Name</label>
                     <div class="col-md-9">
-                        <input type="text"  class="form-control" placeholder="Enter employee name" id="EmployeeName" name="EmployeeName" required/>
+                        <input type="text"  class="form-control" placeholder="Type employee name...." id="EmployeeName" name="EmployeeName" required/>
                         <input  type="hidden" id="EmployeeId" name="EmployeeId"/>
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="control-label col-md-3">Department</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" placeholder="Employee Department" id="Department" name="Department" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Designation</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" placeholder="Employee Designation" id="Designation" name="Designation" readonly="readonly" />
+                       
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Branch</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" placeholder="Employee Branch" id="Branch" name="Branch" readonly="readonly" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
                     <label class="control-label col-md-3">User Name</label>
                     <div class="col-md-9">
-                        <input type="text" id="UserName" name="UserName" class="form-control" placeholder="Enter User Name" required/>
+                        <input type="text" id="UserName" name="UserName" class="form-control" placeholder="Enter User Name" required />
                         <div id="divOutput"></div>
                     </div>
                 </div>
@@ -53,7 +75,6 @@
                         <span id='message'></span>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label for="RoleId" class="control-label col-md-3">Role Name</label>
                     <div class="col-md-9">
@@ -69,8 +90,8 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-3 col-md-9">
-                        @Html.ActionLink("Cancel", "ViewUser", "Assign", new { area="SuperAdmin"},new { @class = "btn btn-danger" })
-                        <input type="submit" value="Add User" class="btn btn-success" id="AddButton"/>
+                        @Html.ActionLink("Back", "ViewUser", "Assign", new { area = "SuperAdmin" }, new { @class = "btn btn-danger" })
+                        <input type="submit" value="Add User" class="btn btn-success" id="AddButton" />
                     </div>
                 </div>
             </div>
@@ -97,7 +118,7 @@
         $("#EmployeeName").autocomplete({
             source: function (request, response) {
                 $.ajax({
-                    url :'@Url.Action("EmployeeAutoComplete","Home",new {area="SuperAdmin"})',
+                    url :'@Url.Action("EmployeeAutoComplete","Common",new {area=""})',
                     data: "{ 'prefix': '" + request.term + "'}",
                     dataType: "json",
                     type: "POST",
@@ -118,6 +139,32 @@
             },
             select: function (e, i) {
                 $("#EmployeeId").val(i.item.val);
+                var json = { employeeId: i.item.val };
+                $("#Designation").val('');
+                $("#Department").val('');
+                $("#Branch").val('');
+                $.ajax({
+
+                    type: "POST",
+                   url:'@Url.Action("GetEmployeeById", "Common", new { area = "" })',
+                   // url: RootUrl + 'sales/Order/GetClientById/',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+
+                        var dept = data.DepartmentName;
+                        var designation = data.DesignationName;
+                        var branch = data.BranchName;
+
+                        $("#Department").val(dept);
+                        $("#Designation").val(designation);
+                        $("#Branch").val(branch);
+                       
+                        //alert(email);
+
+                    }
+                });
+
             },
             minLength: 1
         });

@@ -23,7 +23,7 @@
         <thead>
         <tr>
             <th>
-              Trip  Reference
+              Dispatch  Reference
             </th>
             <th class="text-center">
                 Quantity
@@ -43,7 +43,7 @@
         </tr>
         </thead>
         <tbody>
-      @foreach (IGrouping<string,ReceiveProductViewModel> item in Model.GroupBy(n=>n.TripRef))
+      @foreach (IGrouping<string,ReceiveProductViewModel> item in Model.GroupBy(n=>n.DispatchRef))
       {
           <tr>
               
@@ -53,7 +53,7 @@
               <td class="text-center">@(item.Sum(n => n.Quantity)-item.Sum(n=>n.ReceiveQty))</td>
               <td class="text-center">@item.First().SystemDateTime.ToString("dd-MMMM-yyyy")</td>
               <td class="text-center">
-                  @Html.ActionLink("Details","ReceiveableDetails",new {id=item.First().TripId},new {@class="btn btn-info"})
+                  @Html.ActionLink("Details","ReceiveableDetails",new {id=item.First().DispatchId},new {@class="btn btn-info"})
               </td>
           </tr>
       }
@@ -62,7 +62,7 @@
         <tfoot>
         <tr>
             <th>
-                Trip  Reference
+                Dispatch  Reference
             </th>
             <th class="text-center">
                 Quantity

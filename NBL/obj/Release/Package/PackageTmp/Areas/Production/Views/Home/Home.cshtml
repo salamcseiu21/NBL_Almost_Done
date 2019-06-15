@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var dispatch = Model.Dispatch;
+    var production = Model.Production;
 }
 
 <section class="content">
@@ -25,10 +27,24 @@
         <!-- /.box-body -->
        
     </div>
-    <div class="row">
-        @Html.Partial("_ViewProductionChartPartialPage", Model)
-        <!-- /.col -->
+    <!-- BAR CHART -->
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Production VS Dispatch (@DateTime.Now.Year)</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body chart-responsive">
+            <div class="chart" id="bar-chart" style="height: 300px;"></div>
+        </div>
+        <!-- /.box-body -->
     </div>
+    <!-- /.box -->
+    <!-- /.col -->
    
 </section>
 
@@ -42,6 +58,36 @@
             timeout = setTimeout("location.reload(true);", 60000);
         }
     </script>
+<script>
+    $(function () {
+        "use strict";
 
+        //BAR CHART
+        var bar = new Morris.Bar({
+            element: 'bar-chart',
+            resize: true,
+            data: [
+                {y: 'January', a: @production.January, b: @dispatch.January},
+                {y: 'February', a: @production.February, b: @dispatch.February},
+                {y: 'March', a: @production.March, b: @dispatch.March},
+                {y: 'April', a: @production.April, b: @dispatch.April},
+                {y: 'May', a: @production.May, b: @dispatch.May},
+                {y: 'June', a: @production.June, b: @dispatch.June},
+                { y: 'July', a: @production.July, b: @dispatch.July },
+                {y: 'August', a: @production.August, b: @dispatch.August},
+                { y: 'September', a: @production.September, b: @dispatch.September },
+                { y: 'October', a: @production.October, b: @dispatch.October },
+                { y: 'November', a: @production.November, b: @dispatch.November },
+                { y: 'December', a: @production.December, b: @dispatch.December }
+            ],
+            barColors: ['#00a65a', '#f56954'],
+            xkey: 'y',
+            ykeys: ['a', 'b'],
+            labels: ['Production', 'Dispatch'],
+            hideHover: 'auto'
+        });
+    });
+
+</script>
 
 }

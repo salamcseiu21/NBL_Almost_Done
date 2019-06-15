@@ -1,0 +1,15 @@
+﻿@* Stock Menu *@
+<li class="treeview">
+    <a href="#">
+        <i class="fa fa-product-hunt"></i>
+        <span>Store</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li>@Html.ActionLink(" Production Summary", "ProductionSummary", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-eye" })</li>
+        <li>@Html.ActionLink(" Factory Stock", "Stock", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-eye" })</li>
+        <li>@Html.ActionLink(" Overall Stock", "TotalStock", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-eye" })</li>
+    </ul>
+</li>

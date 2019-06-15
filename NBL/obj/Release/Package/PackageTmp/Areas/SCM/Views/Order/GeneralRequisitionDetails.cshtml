@@ -1,0 +1,140 @@
+﻿@model NBL.Models.ViewModels.Requisitions.ViewGeneralRequisitionModel
+@{
+    ViewBag.Title = "General Requisition Details";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
+}
+
+<section class="content">
+    
+    <div class="table-responsive">
+        <table id="tbl_approval_details" class="display table-responsive table-bordered" style="border: 1px solid">
+            <caption class="text-center text-green"><strong>Approval Details</strong></caption>
+            <thead>
+            <tr>
+                <th hidden>Id</th>
+                <th class="text-right">SN</th>
+              
+                <th>Approve by</th>
+                <th>Approve Action</th>
+                <th>Remarks</th>
+                <th class="text-center">Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.ApprovalDetails)
+            {
+                i = i + 1;
+                <tr>
+                    <td hidden>@item.ApprovalDetailsId</td>
+                    <td class="text-right">@i</td>
+                    <td>@item.ApproverName</td>
+                    <td>@item.ApproverActionType</td>
+                    <td>@item.Remarks</td>
+                    <td class="text-center">@item.ApproveDateTime.ToString("F")</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    <hr/>
+    @using (Html.BeginForm("GeneralRequisitionDetails", "Order", FormMethod.Post, new { area = "SCM", id = "ApproveGeneralRequisitionForm" }))
+    {
+
+        <div class="row">
+            <div class="form-horizontal">
+
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Quantity</label>
+                        <div class="col-md-8">
+                            <input type="number" name="Qty" id="Qty" class="form-control text-right" value="@Model.GeneralRequistionDetails.Sum(n => n.Quantity)" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Distribution Point</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.DistributionPointId, null, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2"></label>
+                        <div class="col-md-10 text-right">
+                            @Html.ActionLink("Back", "PendingGeneralRequisitions", "Order", new { area = "SCM" }, new { @class = "btn btn-info" })
+                            <input type="button" value="Approve" class="btn btn-success" onclick="ApproveGeneralRequisition(this)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+    <hr />
+    <p style="font-weight: bolder;font-size: 20px" class="text-center text-green">Product List</p>
+    <div class="table-responsive">
+        <table id="table_product_list" class="table table-bordered" style="border:1px solid black;font-size:14px">
+
+            <thead>
+
+            <tr>
+
+                <th class="text-center">Product Name</th>
+               
+                <th style="width: 10%" class="text-center">Quantity</th>
+                <th class="text-center">Requisition For</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.GeneralRequistionDetails)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                 
+                    <td class="text-right">@item.Quantity</td>
+                    <td class="text-center">@item.Description</td>
+                </tr>
+            }
+
+
+            </tbody>
+        </table>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+
+        $('#table_product_list').DataTable({
+            bFilter: false,
+            bInfo: false,
+            "bPaginate": false
+
+        });
+        $("#tbl_approval_details").DataTable(
+                {
+                    bFilter: false,
+                    bInfo: false,
+                    "bPaginate": false
+                })
+        ;
+
+
+        function ApproveGeneralRequisition(id) {
+
+            if (confirm("Are you confirm to approve this General Requisition ?")) {
+
+                $("#ApproveGeneralRequisitionForm").submit();
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+
+        }
+    </script>
+}

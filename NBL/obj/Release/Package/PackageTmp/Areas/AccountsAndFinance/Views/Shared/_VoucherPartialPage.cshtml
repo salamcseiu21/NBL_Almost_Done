@@ -1,9 +1,11 @@
 ﻿
 @using NBL.Areas.Accounts.Models
+@using NBL.Models.ViewModels
 @model IEnumerable<NBL.Areas.AccountsAndFinance.Models.Voucher>
 @{
     ViewBag.Title = "Vouchers";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var user = (ViewUser) Session["user"];
 }
 
 <section class="content">
@@ -59,16 +61,25 @@
                     }
                 </td>
 
-
-                <td class="text-center">
-                    @if (item.Status == 0 && item.Cancel.Equals("N"))
-                    {
-                        @Html.ActionLink(" Edit ", "EditVoucher", "Voucher", new {area = "Accounts", id = item.VoucherId}, new {@class = "fa fa-edit"})
-                        <span> &nbsp;|</span>
-                        @Html.ActionLink(" Details ", "VoucherDetails", "Voucher", new {area = "Accounts", id = item.VoucherId}, new {@class = "fa fa-eye"})<span>&nbsp;| </span>
-                    }
-                    @Html.ActionLink(" Preview & Print", "VoucherPreview", "Voucher", new {area = "Accounts", id = item.VoucherId}, new {target = "_blank", @class = "fa fa-eye"})
-                </td>
+                @if (user.Roles.Equals("AccountManager"))
+                {
+                    <td class="text-center">
+                        @Html.ActionLink(" Details ", "VoucherDetails", "AccountManager", new {area = "AccountsAndFinance", id = item.VoucherId}, new {@class = "fa fa-eye"})
+                    </td>
+                }
+                else
+                {
+                    <td class="text-center">
+                        @if (item.Status == 0 && item.Cancel.Equals("N"))
+                        {
+                            @Html.ActionLink(" Edit ", "EditVoucher", "Voucher", new {area = "AccountsAndFinance", id = item.VoucherId}, new {@class = "fa fa-edit"})
+                            <span> &nbsp;|</span>
+                            @Html.ActionLink(" Details ", "VoucherDetails", "Voucher", new {area = "AccountsAndFinance", id = item.VoucherId}, new {@class = "fa fa-eye"})<span>&nbsp;| </span>
+                        }
+                        @Html.ActionLink(" Preview & Print", "VoucherPreview", "Voucher", new {area = "AccountsAndFinance", id = item.VoucherId}, new {target = "_blank", @class = "fa fa-eye"})
+                    </td>
+                }
+               
             </tr>
         }
 

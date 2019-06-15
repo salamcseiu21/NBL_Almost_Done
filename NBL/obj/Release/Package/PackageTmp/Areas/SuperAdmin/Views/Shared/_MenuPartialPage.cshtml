@@ -159,31 +159,19 @@
         </a>
         <ul class="treeview-menu">
             <li>@Html.ActionLink(" Sales", "AllOrders", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-            <li>@Html.ActionLink("  Employee List", "ViewEmployee", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-            <li>@Html.ActionLink(" Client List", "ViewClient", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-            <li>@Html.ActionLink(" Product List", "ViewProduct", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink("  Employee List", "ViewEmployee", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Client List", "ViewClient", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Product List", "ViewProduct", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
             <li>@Html.ActionLink(" User List", "ViewUser", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-            <li>@Html.ActionLink(" Branch List", "ViewBranch", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Branch List", "ViewBranch", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
             <li>@Html.ActionLink(" Division List", "ViewDivision", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
             <li>@Html.ActionLink(" Region List", "ViewRegion", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
             <li>@Html.ActionLink(" Territory List", "ViewTerritory", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-            <li>@Html.ActionLink(" Supplier List", "Supplier", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" Supplier List", "Supplier", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
             <li>@Html.ActionLink(" Product Wish Vat", "ProductWishVat", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
         </ul>
     </li>
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-eye"></i>
-            <span>Vouchers</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li>@Html.ActionLink(" Journal", "ViewJournal", "Voucher", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-            <li>@Html.ActionLink(" Vouchers", "Vouchers", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-        </ul>
-    </li>
+    
   
     <li class="treeview">
         <a href="#">
@@ -199,5 +187,19 @@
            
         </ul>
     </li>
+    
+<li class="treeview">
+    <a href="#">
+        <i class="fa fa-warning"></i>
+        <span>Error Logs</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li>@Html.ActionLink(" Error List", "ErrorList", "ErrorLog", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        <li>@Html.ActionLink(" Generate Error", "GenerateError", "ErrorLog", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+    </ul>
+</li>
 
 </ul>

@@ -3,106 +3,116 @@
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var production = Model.Production;
+    var dispatch = Model.Dispatch;
+    var branches = Model.Branches;
+    var dhaka = branches.ToList().Find(n => n.BranchId == 9).Orders.Count;
+    var ctg = branches.ToList().Find(n => n.BranchId == 12).Orders.Count;
+    var bogura = branches.ToList().Find(n => n.BranchId == 10).Orders.Count;
+    var barisal = branches.ToList().Find(n => n.BranchId == 8).Orders.Count;
+    var jessore = branches.ToList().Find(n => n.BranchId == 4).Orders.Count;
+    var totalOrder=Model.TotalOrder;
+    var accountSummary = Model.AccountSummary;
+    var q1 = totalOrder.January + totalOrder.February + totalOrder.March;
+    var q2 = totalOrder.April + totalOrder.May + totalOrder.June;
+    var q3 = totalOrder.July + totalOrder.August + totalOrder.September;
+    var q4 = totalOrder.October + totalOrder.November + totalOrder.December;
 }
 
 <section class="content">
-  
     <div class="row">
         <div class="col-md-6">
-            <h3 class="text-center text-green">Total Sales</h3>
-            <table id="tbl_Sales_summary" class="display table-bordered" style="border: 1px solid">
-      
-                <thead>
-                <tr>
-                    <th>Branch Name</th>
-                    <th class="text-right">Total Order</th>
-
-                </tr>
-                </thead>
-                <tbody>
-                @{
-                    foreach (ViewBranch branch in Model.Branches)
-                    {
-
-
-                        <tr>
-                            <td>@branch.BranchName</td>
-                            <td class="text-right">@branch.Orders.Count</td>
-
-                        </tr>
-
-                    }
-                }
-                </tbody>
-                <tfoot>
-                <tr>
-                    <th class="text-right">Total</th>
-                    <th class="text-right">
-                        @{
-                            var total = 0;
-                            foreach (var item in Model.Branches)
-                             {
-                                total+=item.Orders.Count;
-                             }
-                            @total
-                        }
-                       
-                    </th>
-
-                </tr>
-                </tfoot>
-            </table>
+            <!-- BAR CHART -->
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Production VS Dispatch (@DateTime.Now.Year)</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body chart-responsive">
+                    <div class="chart" id="bar-chart" style="height: 300px;"></div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+           
         </div>
+        <!-- /.col (LEFT) -->
         <div class="col-md-6">
-            <h3 class="text-center text-green">Total Stock Qty</h3>
-            <table id="tbl_Stock_summary" class="display table-bordered" style="border: 1px solid">
-      
-                <thead>
-                <tr>
-                    <th>Branch Name</th>
-                    <th class="text-right">Total Quantity</th>
-
-                </tr>
-                </thead>
-                <tbody>
-                @{
-                    foreach (ViewBranch branch in Model.Branches)
-                    {
-
-
-                        <tr>
-                            <td>@branch.BranchName</td>
-                            <td class="text-right">@branch.Products.Sum(n=>n.Quantity)</td>
-
-                        </tr>
-
-                    }
-                }
-                </tbody>
-                <tfoot>
-                <tr>
-                    <th  class="text-right">Total Quantity</th>
-                    <th class="text-right">
-                        @{
-                            var t = 0;
-                            foreach (ViewBranch branch in Model.Branches)
-                            {
-
-                                t += branch.Products.Sum(n => n.Quantity);
-                            }
-                        }
-                        @t
-                    </th>
+            <!-- AREA CHART -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Orders </h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body chart-responsive">
+                   <div class="chart" id="revenue-chart" style="height: 300px;"></div>
                    
-                   
-
-                </tr>
-                </tfoot>
-            </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+            
+            
         </div>
+        <!-- /.col (RIGHT) -->
     </div>
-  
-
+ 
+    <div class="row">
+        <div class="col-md-6">
+            <!-- /.box -->
+            <!-- LINE CHART -->
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Sales (@DateTime.Now.Year)</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body chart-responsive">
+                    <div class="chart" id="line-chart" style="height: 300px;"></div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+           
+        </div>
+        <!-- /.col (LEFT) -->
+        <div class="col-md-6">
+            <!-- DONUT CHART -->
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Branch Wise Sale (@DateTime.Now.Year)</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body chart-responsive">
+                    <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+            
+           
+        </div>
+        <!-- /.col (RIGHT) -->
+    </div>
 </section>
 
 @section Scripts
@@ -118,4 +128,102 @@
             timeout = setTimeout("location.reload(true);", 60000);
         }
     </script>
+    
+    <script>
+        $(function () {
+            "use strict";
+
+            // AREA CHART
+            var area = new Morris.Area({
+                element: 'revenue-chart',
+                resize: true,
+                data: [
+                    {y: '2019 Q1', Order: @q1},
+                    {y: '2019 Q2', Order: @q2},
+                    {y: '2019 Q3', Order: @q3},
+                    {y: '2019 Q4', Order: @q4},
+                    {y: '2020 Q1', Order: 0},
+                    {y: '2020 Q2', Order: 0},
+                    {y: '2020 Q3', Order: 0},
+                    {y: '2020 Q4', Order: 0},
+                    {y: '2021 Q1', Order: 0},
+                    {y: '2021 Q2', Order: 0},
+                    {y: '2021 Q3', Order: 0},
+                    {y: '2021 Q4', Order: 0}
+                ],
+                xkey: 'y',
+                ykeys: ['Order'],
+                labels: ['Order'],
+                lineColors: ['#a0d0e0'],
+                hideHover: 'auto'
+            });
+
+            // LINE CHART
+            var line = new Morris.Area({
+                element: 'line-chart',
+                resize: true,
+                data: [
+                    {y: '01 January', Order: @totalOrder.January},
+                    {y: '02 February', Order: @totalOrder.February},
+                    {y: '03 March', Order: @totalOrder.March},
+                    {y: '04 April', Order: @totalOrder.April},
+                    {y: '05 May', Order: @totalOrder.May},
+                    {y: '06 June', Order: @totalOrder.June},
+                    {y: '07 July', Order: @totalOrder.July},
+                    {y: '08 August', Order: @totalOrder.August},
+                    {y: '09 September', Order: @totalOrder.September},
+                    {y: '10 November', Order: @totalOrder.October},
+                    {y: '11 September', Order: @totalOrder.November},
+                    {y: '12 December', Order: @totalOrder.December}
+                ],
+                xkey: 'y',
+                ykeys: ['Order'],
+                labels: ['Order'],
+                lineColors: ['#a0d0e0'],
+                hideHover: 'auto'
+            });
+
+            //DONUT CHART
+            var donut = new Morris.Donut({
+                element: 'sales-chart',
+                resize: true,
+                colors: ["#3c8dbc", "#f56954", "#00a65a","#39CCCC","#ff851b"],
+                data: [
+                    {label: "Dhaka", value: @dhaka},
+                    {label: "Bogura", value: @bogura},
+                    {label: "Chittagong", value: @ctg},
+                    {label: "Barisal", value: @barisal},
+                    {label: "Jessore", value: @jessore}
+          
+                ],
+                hideHover: 'auto'
+            });
+            //BAR CHART
+            var bar = new Morris.Bar({
+                element: 'bar-chart',
+                resize: true,
+                data: [
+                    {y: 'January', a: @production.January, b: @dispatch.January},
+                    {y: 'February', a: @production.February, b: @dispatch.February},
+                    {y: 'March', a: @production.March, b: @dispatch.March},
+                    {y: 'April', a: @production.April, b: @dispatch.April},
+                    {y: 'May', a: @production.May, b: @dispatch.May},
+                    {y: 'June', a: @production.June, b: @dispatch.June},
+                    { y: 'July', a: @production.July, b: @dispatch.July },
+                    {y: 'August', a: @production.August, b: @dispatch.August},
+                    { y: 'September', a: @production.September, b: @dispatch.September },
+                    { y: 'October', a: @production.October, b: @dispatch.October },
+                    { y: 'November', a: @production.November, b: @dispatch.November },
+                    { y: 'December', a: @production.December, b: @dispatch.December }
+                ],
+                barColors: ['#00a65a', '#f56954'],
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['Production', 'Dispatch'],
+                hideHover: 'auto'
+            });
+        });
+
+    </script>
+
 }

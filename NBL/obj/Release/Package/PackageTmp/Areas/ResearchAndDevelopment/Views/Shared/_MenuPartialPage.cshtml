@@ -16,6 +16,8 @@
             </li>
         </ul>
     </li>
+   @Html.Partial("_CommonMenuPartialPage")
+
     <li class="treeview">
         <a href="#">
             <i class="fa fa-product-hunt"></i>
@@ -27,6 +29,7 @@
         <ul class="treeview-menu">
           
             <li>@Html.ActionLink(" Product Life Cycle ", "ProductLifeCycle", "Product", new {area = "ResearchAndDevelopment" }, new {@class = "fa fa-eye"})</li>
+            <li>@Html.ActionLink(" Product Status ", "ProductStatus", "Product", new {area = "ResearchAndDevelopment" }, new {@class = "fa fa-eye"})</li>
         </ul>
     </li>
 

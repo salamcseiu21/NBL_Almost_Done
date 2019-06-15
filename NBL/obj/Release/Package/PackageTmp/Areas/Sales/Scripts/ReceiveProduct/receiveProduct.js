@@ -6,11 +6,11 @@
 function SaveScannedBarcodeToTextFile(btnClicked) {
     // var $form = $(btnClicked).parents('form');
     var code = $("#ProductCode").val();
-    var tripId = $("#TripId").val();
+    var dispatchId = $("#DispatchId").val();
     $.ajax({
         type: "POST",
         url: RootUrl + 'Sales/Product/SaveScannedBarcodeToTextFile',
-        data: { barcode: code, tripId: tripId },
+        data: { barcode: code, dispatchId: dispatchId },
         error: function (xhr, status, error) {
             alert(error);
         },
@@ -27,8 +27,8 @@ function SaveScannedBarcodeToTextFile(btnClicked) {
 }
 
 function loadAllReceivableProducts() {
-    var tripId = $("#TripId").val();
-    var json = { tripId: tripId };
+    var dispatchId = $("#DispatchId").val();
+    var json = { dispatchId: dispatchId };
 
     $.ajax({
         type: 'POST',
@@ -42,13 +42,13 @@ function loadAllReceivableProducts() {
 }
 
 function ReceiveProductToBranch(btnClick) {
-    var tripId = $("#TripId").val();
+    var dispatchId = $("#DispatchId").val();
     if (confirm("Are you sure to Save?")) {
         //$("#scanProductBarcodeForm").submit();
         $.ajax({
             type: "Post",
             url: RootUrl + 'Sales/Product/ReceiveProduct',
-            data: { tripId: tripId },
+            data: { dispatchId: dispatchId },
             error: function (xhr, status, error) {
                 alert(error);
             },
@@ -65,8 +65,8 @@ function ReceiveProductToBranch(btnClick) {
 }
 
 function loadScannedProducts() {
-    var tripId = $("#TripId").val();
-    var json = { tripId: tripId };
+    var dispatchId = $("#DispatchId").val();
+    var json = { dispatchId: dispatchId };
     $.ajax({
         type: 'POST',
         url: RootUrl + "sales/product/LoadScannecdProduct",

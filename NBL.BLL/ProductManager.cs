@@ -451,6 +451,12 @@ namespace NBL.BLL
             return rowAffected > 0;
         }
 
+        public bool ApproveGeneralRequisitionBySalesAdmin(int userId, long requisitiionId)
+        {
+            int rowAffected = _iProductGateway.ApproveGeneralRequisitionBySalesAdmin(userId,requisitiionId);
+            return rowAffected > 0;
+        }
+
         public ICollection<object> GetAllProductBySearchTerm(string searchTerm)
         {
             return _iProductGateway.GetAllProductBySearchTerm(searchTerm);

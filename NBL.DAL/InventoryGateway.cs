@@ -7,15 +7,12 @@ using NBL.DAL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Deliveries;
-using NBL.Models.EntityModels.Invoices;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.TransferProducts;
-using NBL.Models.Enums;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
-using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Sales;
@@ -1619,7 +1616,7 @@ namespace NBL.DAL
             try
             {
                 ViewDispatchModel model = null;
-                CommandObj.CommandText = "UDSP_GetDispatchById";
+                CommandObj.CommandText = "UDSP_GetDispatchByDispatchId";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@DispatchId", dispatchId);
                 ConnectionObj.Open();

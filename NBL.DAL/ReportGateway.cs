@@ -529,5 +529,45 @@ namespace NBL.DAL
                 ConnectionObj.Close();
             }
         }
+
+        public ICollection<ViewProduct> GetTotalStock()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetTotalStock";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<ViewProduct> products=new List<ViewProduct>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    products.Add(new ViewProduct
+                    {
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        StockQuantity = Convert.ToInt32(reader["StockQty"]),
+                        Quantity = Convert.ToInt32(reader["StockQty"]),
+                        SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        CategoryId = Convert.ToInt32(reader["CategoryId"]),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        ProductTypeId = Convert.ToInt32(reader["ProductTypeId"])
+                    });
+                }
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect total Stock  from branch & factory", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
     }
 }

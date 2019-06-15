@@ -1,4 +1,5 @@
-﻿@using NBL.Models.EntityModels.Branches
+﻿@using System.Web.UI.WebControls
+@using NBL.Models.EntityModels.Branches
 @using NBL.Models.EntityModels.Companies
 @using NBL.Models.ViewModels
 @{
@@ -73,7 +74,7 @@
     else if (User.IsInRole("AccountManager"))
     {
         roleName = "Account Manager";
-        areas = "accountexecutive";
+        areas = "accountsandfinance";
     }
     else if(User.IsInRole("SystemAdmin"))
     {
@@ -99,6 +100,11 @@
     {
         roleName = "R & D";
         areas = "researchanddevelopment";
+    }
+    else if (User.IsInRole("SCMManager"))
+    {
+        roleName = "SCM Manager";
+        areas = "SCM";
     }
     else if (User.IsInRole("ServiceExecutive"))
     {
@@ -157,7 +163,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/tabletools/2.2.4/css/dataTables.tableTools.css">
     <link rel="stylesheet" href="~/Assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
+    <!-- Morris charts -->
+    <link rel="stylesheet" href="~/Assets/bower_components/morris.js/morris.css">
     <script>
         $( function() {
             $("#accordion").accordion({
@@ -209,7 +216,7 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        @Html.ActionLink(" Change Password", "ChangePassword", "Home", new {id = user.UserId }, new { @class = "btn btn-info btn-flat" })
+                                        @Html.ActionLink(" Change Password", "ChangePassword", "Home", new {area="CommonArea",id = user.UserId }, new { @class = "btn btn-info btn-flat" })
                                         @*@Html.ActionLink(" Profile", "ViewEmployeeProfile", "Home", new { id = user.EmployeeId }, new { @class = "btn btn-info btn-flat" })*@
                                     </div>
                                     <div class="pull-right">
@@ -256,6 +263,9 @@
                     case "R&D":
                         Html.RenderPartial("~/Areas/ResearchAndDevelopment/Views/Shared/_MenuPartialPage.cshtml");
                         break;
+                    case "SCMManager":
+                        Html.RenderPartial("~/Areas/SCM/Views/Shared/_MenuScmManagerPartialPage.cshtml");
+                        break;
                     case "ServiceExecutive":
                         Html.RenderPartial("~/Areas/Services/Views/Shared/_ServiceExecutiveMenuPartialPage.cshtml");
                         break;
@@ -290,7 +300,7 @@
                         Html.RenderPartial("~/Areas/AccountsAndFinance/Views/Shared/_MenuPartialPage.cshtml");
                         break;
                     case "AccountManager":
-                        Html.RenderPartial("~/Areas/AccountExecutive/Views/Shared/_MenuPartialPage.cshtml");
+                        Html.RenderPartial("~/Areas/AccountsAndFinance/Views/Shared/_MenuAccountManagerPartialPage.cshtml");
                         break;
                     case "SystemAdmin":
                         Html.RenderPartial("~/Areas/Editor/Views/Shared/_MenuPartialPage.cshtml");
@@ -298,8 +308,7 @@
                     case "Management":
                         Html.RenderPartial("~/Areas/Management/Views/Shared/_MenuPartialPage.cshtml");
                         break;
-                   
-
+                  
                 }
 
             </section>
@@ -448,9 +457,15 @@
     <script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js")"></script>
     <script src="@Url.Content("https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js")"></script>
     <script src="@Url.Content("https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js")"></script>
-   <script src="@Url.Content("~/Assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js")"></script>
+<script src="@Url.Content("~/Assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js")"></script>
+    
+    
 
-    <script src="~/Scripts/underscore.js"></script>
+<!-- Morris.js charts -->
+<script src="@Url.Content("~/Assets/bower_components/raphael/raphael.min.js")"></script>
+<script src="@Url.Content("~/Assets/bower_components/morris.js/morris.min.js")"></script>
+
+<script src="~/Scripts/underscore.js"></script>
 <script type="text/javascript">
     var RootUrl = '@Url.Content("~/")';
 </script>

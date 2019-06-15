@@ -6,5 +6,18 @@
 }
 <section class="content">
     <h3 class="text-center text-green" style="font-weight:bold;font-size:20px;margin:0;padding:0;">Stock Product</h3>
-    @Html.Partial("_ViewStockProductInBranchPartialPage", Model)
+  @Html.Partial("_ViewProductSummaryPartialPage",Model)
 </section>
+
+@section Scripts
+{
+    <script>
+
+        $('#table_product_list_in_stock').DataTable({
+            "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]]
+        });
+
+    </script>
+
+    
+}

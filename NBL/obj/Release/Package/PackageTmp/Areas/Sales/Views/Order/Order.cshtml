@@ -40,7 +40,8 @@
                         <label for="Quantity" class="control-label col-md-3">Quantity</label>
                         <div class="col-md-9">
 
-                            <input type="number" id="Quantity" name="Quantity" class="form-control text-right" min="1" value="1" />
+                            <input type="number" id="Quantity" name="Quantity" class="form-control text-right" min="1" value="1" onkeyup="ValidateMaxQuantity(this)" OnChange="ValidateMaxQuantity(this)"/>
+                          
                             <div id="divQuantityLimitOutput"></div>
                         </div>
                     </div>
@@ -81,6 +82,9 @@
         </div>
     }
     <hr style="padding: 0; margin: 0;" />
+    <div id="dialog" title="Warning">
+       <p> Delivery qty must be less than or equal stock qty </p>
+    </div>
 </section>
 
 
@@ -149,9 +153,10 @@
     {
         <input type="hidden" id="productIdToRemove" name="productIdToRemove" />
 
-        <table class="table table-bordered" style="margin: 0; padding: 0;">
+        <div class="table-responsive">
+            <table class="table table-bordered" style="margin: 0; padding: 0;">
 
-            <thead>
+                <thead>
 
                 <tr>
                     <th style="border: 1px solid black;" class="text-center">Product Name</th>
@@ -159,13 +164,16 @@
                     <th style="border: 1px solid black;" class="text-center">Vat (&#2547;)</th>
                     <th style="border: 1px solid black;" class="text-center">Discount (&#2547;)</th>
                     <th style="border: 1px solid black;" class="text-center">Sale Price(&#2547;)</th>
-                    <th style="border: 1px solid black; width: 10%" class="text-center">Quantity</th>
+                    <th style="border: 1px solid black; min-width: 100px" class="text-center">Quantity</th>
                     <th style="border: 1px solid black;" class="text-center">Sub Total (&#2547;)</th>
                     <th style="border: 1px solid black;" class="text-center">Action</th>
                 </tr>
-            </thead>
-            <tbody id="orders"></tbody>
-        </table>
+                </thead>
+                <tbody id="orders"></tbody>
+            </table>
+        </div>
+
+
     }
    
 </section>
@@ -254,29 +262,29 @@
             location.reload();
         }
 
-        function doCheck() {
-            var allFilled = true;
+        //function doCheck() {
+        //    var allFilled = true;
 
-            var inputs = document.getElementsByTagName('input');
-            for (var i = 0; i < inputs.length; i++) {
-                if (inputs[i].type === "text" && inputs[i].value === '') {
-                    allFilled = false;
-                    break;
-                }
-            }
+        //    var inputs = document.getElementsByTagName('input');
+        //    for (var i = 0; i < inputs.length; i++) {
+        //        if (inputs[i].type === "text" && inputs[i].value === '') {
+        //            allFilled = false;
+        //            break;
+        //        }
+        //    }
 
-            document.getElementById("addItemButton").disabled = !allFilled;
-        }
+        //    document.getElementById("addItemButton").disabled = !allFilled;
+        //}
 
-        window.onload = function () {
-            var inputs = document.getElementsByTagName('input');
-            for (var i = 0; i < inputs.length; i++) {
-                if (inputs[i].type === "text") {
-                    inputs[i].onkeyup = doCheck;
-                    inputs[i].onblur = doCheck;
-                }
-            }
-        };
+        //window.onload = function () {
+        //    var inputs = document.getElementsByTagName('input');
+        //    for (var i = 0; i < inputs.length; i++) {
+        //        if (inputs[i].type === "text") {
+        //            inputs[i].onkeyup = doCheck;
+        //            inputs[i].onblur = doCheck;
+        //        }
+        //    }
+        //};
 
 
         function Update(btnClicked) {
@@ -414,5 +422,50 @@
             });
         });
     </script>
+    
+    
+    @*Validate Max Quantity*@
+    <script>
 
+        function ValidateMaxQuantity(event) {
+            var id = event.id;
+            var deliverqty = $("#" + id).val();
+            if (deliverqty === '') {
+                deliverqty = 0;
+            } else {
+                deliverqty = parseInt($("#" + id).val(),10);
+            }
+            //alert(deliverqty);
+
+            var quantity = parseInt($("#StockQty").val(), 10);
+            if (deliverqty > quantity || deliverqty<0) {
+                ShowWarningDialog();
+                $("#" + id).val('1');
+            }
+
+        }
+
+        function  ShowWarningDialog(){
+            $("#dialog").dialog("open").parent().addClass("ui-state-error");
+        }
+    </script>
+
+
+    <script>
+        $( function() {
+            $( "#dialog" ).dialog({
+                autoOpen: false,
+                show: {
+                    effect: "blind"
+               
+                },
+                hide: {
+                    effect: "explode"
+               
+                }
+            });
+ 
+        
+        } );
+    </script>
 }

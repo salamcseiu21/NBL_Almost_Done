@@ -1,7 +1,9 @@
-﻿@model NBL.Models.ViewModels.ViewReceivableCreateModel
+﻿@using NBL.Models.ViewModels
+@model NBL.Models.ViewModels.ViewReceivableCreateModel
 @{
     ViewBag.Title = "Receiveable";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var user = (ViewUser) Session["user"];
     var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
     
 }
@@ -160,79 +162,46 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-9 col-md-offset-3">
-                                    <div class="row">
-                                        <div class="col-md-6">
-
-                                        </div>
-                                        <div class="col-md-6 text-right">
-
-                                            <input type="button" value="Add to List" onclick="AddChequeInfoToList(this)" class="btn btn-info" id="addItemButton" />
-                                        </div>
-                                        <br />
+                                    <div class="btn-toolbar">
+                                        <input type="button" id="removeAllButton" value="Remove All" onclick="RemoveAll(this)" class="btn btn-danger " />
+                                        <input type="button" value="Add to List" onclick="AddChequeInfoToList(this)" class="btn btn-info" id="addItemButton" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "updateQuantiyForm" }))
-                    {
-                        <input type="hidden" id="chequeNoToRemove" name="chequeNoToRemove" />
-
-                        <table class="table table-bordered bankInfo" style="margin: 0; padding: 0;">
-
-                            <thead>
-
-                                <tr>
-                                    <th style="border: .5px solid gray;" class="text-center">Bank Name</th>
-                                    <th style="border: .5px solid gray; width: 10%" class="text-center">Cheque No</th>
-                                    <th style="border: .5px solid gray;" class="text-center">Cheque date</th>
-                                    <th style="border: 1px solid gray;" class="text-center">Amount (&#2547;)</th>
-                                    <th style="border: 1px solid gray;" class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="chequeInfo"></tbody>
-                        </table>
-                    }
+                   
                 </div>
             </div>
-            <div class="row">
-
-                <div class="form-group">
-
-                    <div class="col-md-9 col-md-offset-3">
-                        <div class="row">
-                            <div class="col-md-10">
-                             
-                            </div>
-                            <div class="col-md-2">
-                                @Html.ActionLink("Cancel", "Home", "Home", new { area = "Accounts" }, new { @class = "btn btn-danger" })
-                                <input type="button" value="Save" id="submitButton" onclick="SaveReceivable(this)" class="btn btn-success" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
 
         </div>
+        <div id="divTempReceivableList"></div>
     }
+  
 </section>
 @section Scripts
 {
-    @* Date picker*@
+    
     <script>
-    $(function () {
 
-        $("#ReceiveDate").datepicker({
-            dateFormat: 'dd-MM-yy',
-            minDate: 0
+        $(document).ready(function() {
+           
+            ViewTempChequeInformation();
+            @* Date picker*@
+            $("#ReceiveDate").datepicker({
+                dateFormat: 'dd-MM-yy',
+                minDate: 0
+            });
+            $("#Date").datepicker({
+                dateFormat: 'dd-MM-yy',
+                minDate: 0
+                //maxDate:15
+            });
+            
         });
-        $("#Date").datepicker({
-            dateFormat: 'dd-MM-yy',
-            minDate: -15
-            //maxDate:15
-        });
-    });
+     
     </script>
 
     @*Client Name Auto Complete*@
@@ -416,31 +385,7 @@
 
     }
 
-    function ViewTempChequeInformation() {
-        $("#chequeInfo").html("");
-        //alert("Hi");
-
-        $.ajax({
-            type: "GET",
-            url: '@Url.Action("GetTempChequeInformation", "Account")',
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                var total = 0;
-                for (var i = 0; i < data.length; i++) {
-                    total = total + data[i].SubTotal;
-                }
-                $.each(data, function (key, value) {
-
-                    var row = $("<tr><td style='border: 1px solid black; padding: 5px 10px;'>" + value.BankBranchName + "</td><td style='border: 1px solid black; padding: 5px 10px;'>" + value.ChequeNo + "</td><td style='border: 1px solid black; padding: 5px 10px;'>" + formatDate(value.ChequeDate) + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-right'><input type='hidden' name='product_Id_" + value.BankBranchId + "' value='" + value.BankBranchId + "'> " + value.ChequeAmount + "</td><td style='border: 1px solid black; padding: 5px 10px;' class='text-center'><button id='" + value.ChequeNo + "' type='button' onclick='RemoveChequeInfo(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color:red;'></i></button>" + "</td></tr>");
-                    $("#chequeInfo").append(row);
-                });
-                $("#Total").val(total.toFixed(2));
-                var discount = $("#SpecialDiscount").val();
-                var net = total - discount;
-                $("#Net").val(net.toFixed(2));
-            }
-        });
-    }
+  
 
 
     function formatDate(chequedate) {
@@ -541,43 +486,124 @@
     </script>
 
     <script>
-    $("#PaymentTypeId").change(function () {
-        var ptId = parseInt($("#PaymentTypeId").val());
-        //alert(ptId);
-        if (ptId === 4) {
-            $("#SourceBankName").val('Cash');
-            $("#BankAccountNo").val('Cash');
-            $("#ChequeNo").val('Cash');
-            $('#ChequeNo').prop('readonly', true);
-            $('#BankAccountNo').prop('readonly', true);
-            $('#SourceBankName').prop('readonly', true);
-        }
-        else if (ptId === 3) {
-            $("#SourceBankName").val('DBBL Mobile Banking (Rocket)');
-            $("#BankAccountNo").val('');
-            $("#ChequeNo").val('');
-            $('#SourceBankName').prop('readonly', true);
-            $('#ChequeNo').prop('readonly', false);
-            $('#BankAccountNo').prop('readonly', false);
+        $("#PaymentTypeId").change(function () {
+            var ptId = parseInt($("#PaymentTypeId").val());
+            //alert(ptId);
+            if (ptId === 4) {
+                $("#SourceBankName").val('Cash');
+                $("#BankAccountNo").val('Cash');
+                $("#ChequeNo").val('Cash');
+                $('#ChequeNo').prop('readonly', true);
+                $('#BankAccountNo').prop('readonly', true);
+                $('#SourceBankName').prop('readonly', true);
+            }
+            else if (ptId === 3) {
+                $("#SourceBankName").val('DBBL Mobile Banking (Rocket)');
+                $("#BankAccountNo").val('');
+                $("#ChequeNo").val('');
+                $('#SourceBankName').prop('readonly', true);
+                $('#ChequeNo').prop('readonly', false);
+                $('#BankAccountNo').prop('readonly', false);
 
-        }
-        else if(ptId===2){
-            $("#SourceBankName").val('bKash');
-            $("#BankAccountNo").val('');
-            $("#ChequeNo").val('');
-            $('#SourceBankName').prop('readonly', true);
-            $('#ChequeNo').prop('readonly', false);
-            $('#BankAccountNo').prop('readonly', false);
-        }
-        else {
-            $("#SourceBankName").val('');
-            $("#BankAccountNo").val('');
-            $("#ChequeNo").val('');
-            $('#SourceBankName').prop('readonly', false);
-            $('#ChequeNo').prop('readonly', false);
-            $('#BankAccountNo').prop('readonly', false);
-        }
+            }
+            else if(ptId===2){
+                $("#SourceBankName").val('bKash');
+                $("#BankAccountNo").val('');
+                $("#ChequeNo").val('');
+                $('#SourceBankName').prop('readonly', true);
+                $('#ChequeNo').prop('readonly', false);
+                $('#BankAccountNo').prop('readonly', false);
+            }
+            else {
+                $("#SourceBankName").val('');
+                $("#BankAccountNo").val('');
+                $("#ChequeNo").val('');
+                $('#SourceBankName').prop('readonly', false);
+                $('#ChequeNo').prop('readonly', false);
+                $('#BankAccountNo').prop('readonly', false);
+            }
 
-    });
+        });
     </script>
+
+    
+
+<script>
+
+
+    function ViewTempChequeInformation() {
+       
+        //alert("Hi");
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetTempChequeInformation", "Account")',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("#divTempReceivableList").html(data);
+            }
+        });
+    }
+
+        function Update(btnClicked) {
+            ValidateMaxQuantity(btnClicked);
+            var id = btnClicked.id;
+            var qty = parseInt(btnClicked.value);
+            var json = { id: id,quantity:qty };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Update", "Requisition",new {area="Corporate"})',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    ViewTempChequeInformation();
+                }
+            });
+        }
+
+        function RemoveProductById(btnClicked) {
+
+            //alert(btnClicked.id);
+            if (confirm("Are you sure to remove this product ??")) {
+                var id = btnClicked.id;
+                var json = { id: id };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Remove", "Account",new {area="AccountsAndFinance"})',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        ViewTempChequeInformation();
+                        for (var i = productIdlist.length - 1; i >= 0; i--) {
+                            if (productIdlist[i] === btnClicked.id) {
+                                productIdlist.splice(i, 1);
+                            }
+                        }
+                      
+                    }
+                });
+            }
+
+
+        }
+
+
+        function RemoveAll(btnClick) {
+            var result = confirm('Are you sure to remove all item ?');
+            if (result) {
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("RemoveAll","Account",new {area="AccountsAndFinance"})',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        location.reload();
+                    }
+
+                });
+
+            }
+        }
+
+
+</script>
 }

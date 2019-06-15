@@ -1,0 +1,112 @@
+﻿@using NBL.BLL
+@model IEnumerable<NBL.Models.EntityModels.VatDiscounts.Vat>
+@{
+    ViewBag.Title = "Vats";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+   
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Pending Vats to Approve</h3>
+    <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
+    </div>
+    <hr/>
+    <table id="table_pending_vats_to_approve" class="table table-bordered" style="border:1px solid black">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Vat Amount (&#2547;)</th>
+            <th>Update Date</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+           @foreach (var item in Model)
+           {
+               <tr>
+                   <td>@Html.Raw(item.Product.GetBasicInformation())</td>
+                   <td>@item.VatAmount</td>
+                   <td>@item.UpdateDate</td>
+                   <td style="width: 10%">
+                       <div class="row">
+                           <div class="col-md-6 text-center">
+                               @using (Html.BeginForm("ApproveCashAmount", "Account", FormMethod.Post, new { id = item.VatId }))
+                               {
+                                   <input type="hidden" value="@item.VatId" id="VatIdToCancel" name="VatIdToCancel" />
+                                   <input type="button" value="Cancel" class="btn btn-danger btn-sm" />
+                               }
+                           </div>
+                           <div class="col-md-6 text-center">
+                               @using (Html.BeginForm("ApproveVat", "Account", FormMethod.Post, new {id = item.VatId}))
+                               {
+                                   <input type="hidden" value="@item.VatId" id="VatIdToApprove" name="VatIdToApprove"/>
+                                   <input type="button" value="Approve" class="btn btn-info btn-sm" id="@item.VatId" onclick="Approve(this)"/>
+                               }
+                           </div>
+                       </div>
+                   </td>
+               </tr>
+           }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Product Name</th>
+            <th>Vat Amount (&#2547;)</th>
+            <th>Update Date</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+@section Scripts
+{
+    
+    <script>
+
+        $('#table_pending_vats_to_approve').DataTable({
+            "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+            "oLanguage": {
+                "sEmptyTable": "<h4 style='color:green;font-weight:bolder;'>There is no pendings vats  to approve/active right now !</h4>"
+            }
+        });
+
+    </script>
+
+    <script>
+        function Approve(id) {
+
+            if (confirm("Are you sure to Approve  this vat Amount ?")) {
+                //$("#" + id.id).submit();
+
+                var $form = $(id).parents('form');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ApproveVat","AccountManager", new { area = "AccountsAndFinance" })',
+                    data: $form.serialize(),
+                    error: function (xhr, status, error) {
+                        //do something about the error
+                    },
+                    success: function (response) {
+                        var result = response.Message;
+                        $('#message').html(response).fadeIn('slow');
+                        $('#message').html(result).fadeIn('slow') //also show a success message
+                        $('#message').delay(5000).fadeOut('slow');
+                        setTimeout(function () { ReloadPage(); }, 6000);
+
+                    }
+                });
+
+
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+
+        }
+        function ReloadPage() {
+            location.reload();
+        }
+    </script>
+}

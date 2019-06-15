@@ -262,29 +262,29 @@
             location.reload();
         }
 
-        function doCheck() {
-            var allFilled = true;
+        //function doCheck() {
+        //    var allFilled = true;
 
-            var inputs = document.getElementsByTagName('input');
-            for (var i = 0; i < inputs.length; i++) {
-                if (inputs[i].type === "text" && inputs[i].value === '') {
-                    allFilled = false;
-                    break;
-                }
-            }
+        //    var inputs = document.getElementsByTagName('input');
+        //    for (var i = 0; i < inputs.length; i++) {
+        //        if (inputs[i].type === "text" && inputs[i].value === '') {
+        //            allFilled = false;
+        //            break;
+        //        }
+        //    }
 
-            document.getElementById("addItemButton").disabled = !allFilled;
-        }
+        //    document.getElementById("addItemButton").disabled = !allFilled;
+        //}
 
-        window.onload = function () {
-            var inputs = document.getElementsByTagName('input');
-            for (var i = 0; i < inputs.length; i++) {
-                if (inputs[i].type === "text") {
-                    inputs[i].onkeyup = doCheck;
-                    inputs[i].onblur = doCheck;
-                }
-            }
-        };
+        //window.onload = function () {
+        //    var inputs = document.getElementsByTagName('input');
+        //    for (var i = 0; i < inputs.length; i++) {
+        //        if (inputs[i].type === "text") {
+        //            inputs[i].onkeyup = doCheck;
+        //            inputs[i].onblur = doCheck;
+        //        }
+        //    }
+        //};
 
 
         function Update(btnClicked) {

@@ -248,7 +248,7 @@ namespace NBL.DAL
             try
             {
                 ConnectionObj.Open();
-                CommandObj.CommandText = "spChangeLoginStatus";
+                CommandObj.CommandText = "UDSP_ChangeLoginStatus";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@UserId", user.UserId);
                 CommandObj.Parameters.AddWithValue("@IpAddress", userLocaiton.IPAddress ?? (object)DBNull.Value);
@@ -259,15 +259,15 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@ActiveStatus", status);
 
                 //----------------These line shuld be comment out during working in real server "192.168.2.62"-----------------
-                //CommandObj.Parameters.AddWithValue("@CountryName", userLocaiton.CountryName ?? (object)DBNull.Value);
-                //CommandObj.Parameters.AddWithValue("@CountryCode", userLocaiton.CountryCode ?? (object)DBNull.Value);
-                //CommandObj.Parameters.AddWithValue("@CityName", userLocaiton.CityName ?? (object)DBNull.Value);
-                //CommandObj.Parameters.AddWithValue("@RegionName", userLocaiton.RegionName ?? (object)DBNull.Value);
-                //CommandObj.Parameters.AddWithValue("@ZipCode", userLocaiton.ZipCode ?? (object)DBNull.Value);
-                //CommandObj.Parameters.AddWithValue("@Latitude", userLocaiton.Latitude ?? (object)DBNull.Value);
-                //CommandObj.Parameters.AddWithValue("@Longitude", userLocaiton.Longitude ?? (object)DBNull.Value);
-                //CommandObj.Parameters.AddWithValue("@TimeZone", userLocaiton.TimeZone ?? (object)DBNull.Value);
-                //CommandObj.Parameters.AddWithValue("@IsValidLogin", userLocaiton.IsValidLogin);
+                CommandObj.Parameters.AddWithValue("@CountryName", userLocaiton.CountryName ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@CountryCode", userLocaiton.CountryCode ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@CityName", userLocaiton.CityName ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@RegionName", userLocaiton.RegionName ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@ZipCode", userLocaiton.ZipCode ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@Latitude", userLocaiton.Latitude ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@Longitude", userLocaiton.Longitude ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@TimeZone", userLocaiton.TimeZone ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@IsValidLogin", userLocaiton.IsValidLogin);
 
                 //---------------------End -------------------------------------
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);

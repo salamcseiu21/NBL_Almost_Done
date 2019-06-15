@@ -81,3 +81,9 @@ G:\Salam\NBL\NBL.BLL\bin\Release\System.Web.WebPages.Razor.xml
 G:\Salam\NBL\NBL.BLL\obj\Release\NBL.BLL.csprojResolveAssemblyReference.cache
 G:\Salam\NBL\NBL.BLL\obj\Release\NBL.BLL.dll
 G:\Salam\NBL\NBL.BLL\obj\Release\NBL.BLL.pdb
+E:\API\NBL\NBL.BLL\bin\Release\NBL.BLL.dll.config
+E:\API\NBL\NBL.BLL\bin\Release\Antlr3.Runtime.dll
+E:\API\NBL\NBL.BLL\bin\Release\Newtonsoft.Json.dll
+E:\API\NBL\NBL.BLL\bin\Release\WebGrease.dll
+E:\API\NBL\NBL.BLL\bin\Release\Antlr3.Runtime.pdb
+E:\API\NBL\NBL.BLL\bin\Release\Newtonsoft.Json.xml

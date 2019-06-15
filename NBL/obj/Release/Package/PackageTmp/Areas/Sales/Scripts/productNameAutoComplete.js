@@ -3,7 +3,8 @@ $(function () {
     $("#ProductName").autocomplete({
         source: function (request, response) {
             $.ajax({
-                url: RootUrl + 'common/ProductNameAutoComplete/',
+                //url: RootUrl + 'common/ProductNameAutoComplete/',
+                url: RootUrl + 'common/ProductAutoComplete/',
                 data: "{ 'prefix': '" + request.term + "'}",
                 dataType: "json",
                 type: "POST",
@@ -51,7 +52,8 @@ $(function () {
                 success: function (data) {
                     var qty = data.StockQty;
                     $("#StockQty").val(qty);
-                    //$("#Quantity").attr("max", qty);
+                    //$("#Quantity").SetAttr("max", qty);
+                    //document.getElementById("Quantity").max = qty;
                 }
             });
         },

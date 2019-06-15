@@ -24,13 +24,15 @@ namespace NBL.Areas.SCM.Controllers
         private readonly IBranchManager _iBranchManager;
         private readonly IInvoiceManager _iInvoiceManager;
         private readonly IOrderManager _iOrderManager;
+        private readonly IReportManager _iReportManager;
 
-        public HomeController(IInventoryManager iInventoryManager,IOrderManager iOrderManager,IInvoiceManager iInvoiceManager,IBranchManager iBranchManager)
+        public HomeController(IInventoryManager iInventoryManager,IOrderManager iOrderManager,IInvoiceManager iInvoiceManager,IBranchManager iBranchManager,IReportManager iReportManager)
         {
             _iInventoryManager = iInventoryManager;
             _iBranchManager = iBranchManager;
             _iInvoiceManager = iInvoiceManager;
             _iOrderManager = iOrderManager;
+            _iReportManager = iReportManager;
         }
         // GET: SCM/Home
         public ActionResult Home() 
@@ -77,6 +79,21 @@ namespace NBL.Areas.SCM.Controllers
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
                 var stock = _iInventoryManager.GetStockProductByCompanyId(companyId);
                 return PartialView("_RptFactoryStockPartialPage", stock);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpGet]
+        public PartialViewResult TotalStock()
+        {
+            try
+            {
+                var stock = _iReportManager.GetTotalStock();
+                return PartialView("_RptOveralStockPartialPage", stock);
             }
             catch (Exception exception)
             {

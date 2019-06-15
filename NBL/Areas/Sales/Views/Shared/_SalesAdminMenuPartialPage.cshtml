@@ -37,6 +37,19 @@
     <li class="treeview">
         <a href="#">
             <i class="fa fa-shopping-cart"></i>
+            <span>General Requisitions</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Pending Requisitions", "PendingGeneralRequisitions", "SalesAdmin", new { area = "Sales" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+        </ul>
+    </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-shopping-cart"></i>
             <span>Invoice</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>

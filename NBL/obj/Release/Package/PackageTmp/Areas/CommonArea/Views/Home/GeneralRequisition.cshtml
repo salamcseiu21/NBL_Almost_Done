@@ -1,0 +1,267 @@
+﻿@model NBL.Models.ViewModels.Requisitions.ViewCreateGeneralRequsitionModel
+@{
+    ViewBag.Title = "Requisition";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Create Requisiton</h3>
+    @using (Html.BeginForm("AddRequisitionProductToXmlFile", "Home", FormMethod.Post))
+    {
+
+        <div class="form-horizontal">
+           
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.RequisitionForId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                          
+                            @Html.DropDownListFor(model => model.RequisitionForId, null, "--Select--", new {@class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.RequisitionForId, "", new {@class = "text-danger"})
+                            @Html.HiddenFor(n => n.RequisitionByUserId)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProductName, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control", placeholder = "Type Product Name" } })
+                            @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                          @Html.HiddenFor(n=>n.ProductId)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Quantity, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", placeholder = "Quantity" } })
+                            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-9 text-right">
+                                <div class="btn toolbar">
+                                   
+                                    @Html.ActionLink("Back", "Home", "Home",null, new {@class = "btn btn-danger"})
+                                    <input type="button" value="Add Item" class="btn btn-info" onclick="AddRequisitionItem(this)"/>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    }
+    <hr />
+    @using (Html.BeginForm("GeneralRequisition", "Home", FormMethod.Post, new { id = "saveRequisitionForm" }))
+    {
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Remarks</label>
+                        <div class="col-md-9">
+                           
+                            <textarea rows="2" id="RequisitionRemarks" name="RequisitionRemarks" class="form-control" style="resize: none"></textarea>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="RequisitionDate" class="control-label col-md-3">Date</label>
+                        <div class="col-md-9">
+                            <input type="text" id="RequisitionDate" name="RequisitionDate" value="@date" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    
+                   
+                    <div class="form-group">
+                        <label class="control-label col-md-3"></label>
+                        <div class="col-md-9">
+                            <input type="button" value="Confirm To Submit" class="btn btn-primary" onclick="ConfirmRequisition(this)" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+    <div id="divGeneralRequisiontProducts"></div>
+</section>
+@section Scripts
+{
+    
+    
+    <script>
+
+        $(document).ready(function() {
+            $("#RequisitionDate").datepicker({ dateFormat: 'dd-MM-yy' });
+            ViewTempRequisitionList();
+        });
+     
+    </script>
+    <script>
+        $(function() {
+            $("#ProductName").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: RootUrl + 'common/ProductNameAutoComplete/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function(data) {
+                            response($.map(data,
+                                function(item) {
+                                    return item;
+                                }));
+                        },
+                        error: function(response) {
+                            alert(response.responseText);
+                        },
+                        failure: function(response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function(e, i) {
+                    $("#ProductId").val(i.item.val);
+                },
+                minLength: 1
+            });
+        });
+    </script>
+
+
+    <script>
+
+        var productIdlist = [];
+
+        function AddRequisitionItem(btnClicked) {
+            var id = $("#ProductId").val();
+            var rfId = $("#RequisitionForId").val();
+            var v = rfId > 9 ? "" + rfId : "0" + rfId;
+            var str = v.concat(id);
+            var a = $.inArray(str, productIdlist);
+            if (a < 0) {
+                productIdlist.push(str);
+                //alert(str);
+                var $form = $(btnClicked).parents('form');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddRequisitionProductToXmlFile","Home",new {area="CommonArea"})',
+                    data: $form.serialize(),
+                    error: function(xhr, status, error) {
+                        //do something about the error
+                    },
+                    success: function(response) {
+                        //alert("Saved Successfully");
+                        ViewTempRequisitionList();
+                        $('#ProductName').val("");
+                        $('#ProductId').val("");
+                        $('#Quantity').val(1);
+                    }
+                });
+                return false; // if it's a link to prevent post
+
+
+            } else {
+                alert("This Product already exits in the list");
+            }
+        }
+        function Update(btnClicked) {
+            var id = btnClicked.id;
+            var qty = parseInt(btnClicked.value);
+            var json = { id: id, quantity: qty };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Update", "Home",new {area="CommonArea"})',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    ViewTempRequisitionList();
+                }
+            });
+        }
+        function RemoveProductById(btnClicked) {
+
+            //alert(btnClicked.id);
+            if (confirm("Are you sure to remove this product ??")) {
+                var id = btnClicked.id;
+                var json = { id: id };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("RemoveProductById", "Home",new {area="CommonArea"})',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+
+                        for (var i = productIdlist.length - 1; i >= 0; i--) {
+                            if (productIdlist[i] === btnClicked.id) {
+                                productIdlist.splice(i, 1);
+                            }
+                        }
+                        ViewTempRequisitionList();
+                    }
+                });
+            }
+
+
+        }
+
+        function RemoveAll(btnClick) {
+            var result = confirm('Are you sure to remove all item ?');
+            if (result) {
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("RemoveAll","Home",new {area="CommonArea"})',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        ViewTempRequisitionList();
+                        productIdlist = [];
+                    }
+
+                });
+
+            }
+        }
+        function ConfirmRequisition(id) {
+
+            if (confirm("Are you sure to Save  this requisition?")) {
+
+                $("#saveRequisitionForm").submit();
+               // alert("Requisition submited Successfully!");
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+
+        }
+        function ViewTempRequisitionList() {
+            var reqByUserId = $("#RequisitionByUserId").val();
+            var json = { RequisitionByUserId: reqByUserId };
+            $.ajax({
+                type: 'Post',
+                url: RootUrl + "commonarea/home/LoadTempRequisitionProductList",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
+                success: function(data) {
+                    $("#divGeneralRequisiontProducts").html(data);
+                }
+            });
+        }
+    </script>
+}

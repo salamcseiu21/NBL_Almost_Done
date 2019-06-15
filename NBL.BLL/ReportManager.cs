@@ -239,5 +239,10 @@ namespace NBL.BLL
         {
             return _iReportGateway.GetDistributedProductFromBranch(barcode); 
         }
+
+        public ICollection<ViewProduct> GetTotalStock()
+        {
+            return _iReportGateway.GetTotalStock();
+        }
     }
 }

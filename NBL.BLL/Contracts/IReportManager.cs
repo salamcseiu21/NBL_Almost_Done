@@ -35,5 +35,6 @@ namespace NBL.BLL.Contracts
         bool IsAllreadyUpdatedSaleDateInBranch(string barcode); 
         ViewDisributedProduct GetDistributedProductFromFactory(string barcode);
         ViewDisributedProduct GetDistributedProductFromBranch(string barcode);
+        ICollection<ViewProduct> GetTotalStock();
     }
 }

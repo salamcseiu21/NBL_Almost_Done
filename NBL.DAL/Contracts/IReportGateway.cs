@@ -18,5 +18,6 @@ namespace NBL.DAL.Contracts
        ICollection<ViewDisributedProduct> GetDistributedProductFromBranch();
         ViewDisributedProduct GetDistributedProductFromFactory(string barcode);
         ViewDisributedProduct GetDistributedProductFromBranch(string barcode);
-    }
+       ICollection<ViewProduct> GetTotalStock();    
+   }
 }

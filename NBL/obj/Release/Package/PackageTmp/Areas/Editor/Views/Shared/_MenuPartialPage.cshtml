@@ -18,7 +18,7 @@
             <li>@Html.ActionLink(" Employee", "AddEmployee", "Employee", new {area = "Editor"}, new {@class = "fa fa-plus"})</li>
             <li>@Html.ActionLink(" Branch", "AddBranch", "Branch", new {area = "Editor"}, new {@class = "fa fa-plus"})</li>
             @*<li>@Html.ActionLink(" Product", "AddProduct", "Product", new {area = "Editor"}, new {@class = "fa fa-plus"})</li>*@
-            <li>@Html.ActionLink(" Add Product Details", "AddProductDetails", "Product", new {area = "Editor"}, new {@class = "fa fa-plus"})</li>
+          
             <li>@Html.ActionLink(" Region", "AddNewRegion", "Region", new {area = "Editor"}, new {@class = "fa fa-plus"})</li>
             <li>@Html.ActionLink(" Territory", "AddNewTerritory", "Territory", new {area = "Editor"}, new {@class = "fa fa-plus"})</li>
 
@@ -51,19 +51,7 @@
         </ul>
     </li>
 
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-plus"></i> <span>Vats-Discounts</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li>@Html.ActionLink(" Add New Vat", "AddVat", "Vats", new { area = "Editor" }, new { @class = "fa fa-plus" })</li>
-            <li>@Html.ActionLink(" Add New Discount", "AddDiscount", "Discounts", new { area = "Editor" }, new { @class = "fa fa-plus" })</li>
-        </ul>
-    </li>
-
+   
 
     <li class="treeview">
         <a href="#">
@@ -76,7 +64,7 @@
         <ul class="treeview-menu">
             <li>@Html.ActionLink("  Employee List", "ViewEmployee", "Home", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
             <li>@Html.ActionLink(" Client List", "ViewClient", "Home", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
-            <li>@Html.ActionLink(" Product List", "ViewProduct", "Home", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
+            <li>@Html.ActionLink(" Product List", "ViewProduct", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-list" })</li>
             <li>@Html.ActionLink(" Branch List", "ViewBranch", "Branch", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
             <li>@Html.ActionLink(" Department List", "DepartmentList", "Department", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
             <li>@Html.ActionLink(" Designation List", "DesignationList", "Designation", new { area = "Editor" }, new { @class = "fa fa-list" })</li>

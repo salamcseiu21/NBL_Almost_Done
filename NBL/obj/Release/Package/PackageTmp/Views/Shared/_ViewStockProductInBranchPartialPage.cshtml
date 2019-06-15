@@ -1,5 +1,13 @@
-﻿@model IEnumerable<NBL.Models.ViewModels.ViewProduct>
-<div style="padding: 10px; margin: 10px; font-weight: bolder; height: 50px;border: 1px solid green"> Total Quantity : @Model.Sum(n => n.Quantity)</div>
+﻿@model NBL.Models.ViewModels.Summaries.SummaryModel
+@{
+    ViewBag.Title = "Stock";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    @Html.ActionLink(" Back To List", "Home","Home",null,new {@class="btn btn-info btn-sm"})
+    <h2 class="text-center text-green">Stock In <strong>@Model.Branch.BranchName</strong> : @Model.Products.Sum(n => n.StockQuantity)</h2>
+
 <table id="table_product_list_in_stock" class="display table table-striped table-bordered" style="border:1px solid black">
 
     <thead>
@@ -7,19 +15,38 @@
         <th class="text-center">Product Name</th>
         <th class="text-center">Category </th>
         <th class="text-center">Account Code  </th>
+       
         <th class="text-center" style="width: 60px">Stock Qty</th>
+        <th class="text-center" style="width: 100px">Requisition Qty</th>
+        <th class="text-center" style="width: 100px">Available Qty</th>
     </tr>
     </thead>
 
     <tbody>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.Products)
     {
+        var avail = item.StockQuantity - item.RequisitionQty;
         <tr>
             <td>@item.ProductName</td>
             <td class="text-center">@item.ProductCategoryName</td>
             <td class="text-center">@item.SubSubSubAccountCode</td>
-            <td class="text-center">@item.Quantity</td>
+           
+            <td class="text-center">@item.StockQuantity</td>
+            <td class="text-center">@item.RequisitionQty</td>
+            <td class="text-center">@if (avail > 0)
+                                    {
+                                        <b style="color: green">@avail</b>
+            }
+            else if (avail < 0)
+            {
+                <b style="color: red">@avail</b>
+            }
+            else
+            {
+                <b>@avail</b>
+            }
+            </td>
         </tr>
     }
 
@@ -30,17 +57,25 @@
 
         <th class="text-center">Category </th>
         <th class="text-center">Account Code  </th>
+      
         <th class="text-center">Stock Qty</th>
+       <th class="text-center">Requisition Qty</th>
+       <th class="text-center">Available Qty</th>
     </tr>
     </tfoot>
 </table>
 
+</section>
+@section Scripts
+{
+    <script>
 
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
-<script>
+        $('#table_product_list_in_stock').DataTable({
+            "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]]
+        });
 
-    $('#table_product_list_in_stock').DataTable({
-        "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]]
-    });
+    </script>
 
-</script>
+    
+}
+

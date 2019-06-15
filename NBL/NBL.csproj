@@ -8081,6 +8081,9 @@
     <Content Include="Areas\Corporate\Views\Home\SalesChart.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Product\AddProduct.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Product\AddProductDetails.cshtml" />
+    <Content Include="Areas\Sales\Views\SalesAdmin\GeneralRequisitionDetails.cshtml" />
+    <Content Include="Areas\Sales\Views\SalesAdmin\PendingGeneralRequisitions.cshtml" />
+    <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -8226,6 +8229,8 @@
     <Content Include="Views\Shared\_ViewRequisitionToFactoryProductList.cshtml" />
     <Content Include="Views\Demo\Index.cshtml" />
     <Content Include="Views\Shared\_ViewSoldProductsPartialPage.cshtml" />
+    <Content Include="Views\Shared\_RptOveralStockPartialPage.cshtml" />
+    <Content Include="Views\Shared\_MenuStockPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

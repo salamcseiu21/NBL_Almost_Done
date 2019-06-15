@@ -1,0 +1,94 @@
+﻿
+
+
+@model IEnumerable<NBL.Areas.AccountsAndFinance.Models.JournalVoucher>
+@{
+    var tdate = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+}
+
+<div class="table-responsive">
+    <table id="tbl_journals" class="table table-bordered" style="border: 1px solid">
+        <thead>
+
+            <tr>
+
+                <th colspan="5">
+                    <div class="form-horizontal">
+                        <div class="row">
+
+                           
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label for="Date" class="control-label col-md-3">Date</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="Date" name="Date" value="@tdate" class="form-control" />
+                                        <input  id="SummationOfDebitAndCredit" type="hidden" value="@Model.Sum(n=>n.Amounts)"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-9 col-md-offset-3">
+                                            <div class="btn-toolbar">
+                                                @Html.ActionLink("Cancel", "Home", "Home", new { area = "AccountsAndFinance" }, new { @class = "btn btn-danger" })
+                                                <input type="button" value="Save" id="submitButton" onclick="SaveJournalVoucher(this)" class="btn btn-success" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </th>
+
+            </tr>
+            <tr>
+                <th>Account Name</th>
+                <th>Account Code</th>
+                <th>Cr/Dr</th>
+
+                <th>Amount</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@(item.PurposeName)</td>
+                    <td>@item.PurposeCode</td>
+                    <td>@item.DebitOrCredit</td>
+                    <td>
+                        @item.Amounts
+
+                    </td>
+                    <th class="text-center"><button id="@item.Serial" type='button' onclick='RemoveDebitPurposeById(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color: red;'></i></button></th>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Account Name</th>
+                <th>Account Code</th>
+                <th>Cr/Dr</th>
+                <th>Amount</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<script>
+    $("#tbl_journals").DataTable();
+    $(document).ready(function () {
+        $("#Date").datepicker({ dateFormat: 'dd-MM-yy' });
+    });
+
+</script>

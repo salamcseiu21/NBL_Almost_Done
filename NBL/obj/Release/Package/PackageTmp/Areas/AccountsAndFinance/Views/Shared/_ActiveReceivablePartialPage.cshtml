@@ -1,0 +1,120 @@
+﻿
+@model IEnumerable<NBL.Models.ChequeDetails>
+<h3 class="text-center text-green headingStyle">Active Receivable</h3>
+<div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
+</div>
+<hr />
+<table id="table_receivable_list" class="table table-bordered" style="border:1px solid black">
+
+    <thead>
+        <tr>
+            <th>Client Name</th>
+            <th>Source Bank Name</th>
+            <th>Account No</th>
+            <th>Cheque No</th>
+            <th>Cheque Date</th>
+            <th class="text-right">Amount (&#2547;) </th>
+            <th class="text-center">Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+            {
+                
+            <tr>
+                <td>@item.Client.ClientName</td>
+                <td>@item.SourceBankName</td>
+                <td>@item.BankAccountNo</td>
+                <td>@item.ChequeNo</td>
+                <td>@item.ChequeDate.Date.ToString("dd-MMMM-yyyy")</td>
+                <td class="text-right">@item.ChequeAmount</td>
+                <td class="text-center">
+                    @if (item.PaymentTypeId == 4)
+                    {
+                        using (Html.BeginForm("ApproveCashAmount", "AccountManager", FormMethod.Post, new { id = item.ChequeDetailsId }))
+                        {
+                            <input type="hidden" value="@item.ChequeDetailsId" id="ChequeDetailsId" name="ChequeDetailsId" />
+                                <a href="#" class="btn btn-info" id="@item.ChequeDetailsId" onclick="Approve(this)">Approve</a>
+                        }
+
+
+                    }
+                    else
+                    {
+                        @Html.ActionLink(" View Details", "ReceivableDetails", "AccountManager", new { area = "AccountsAndFinance", id = item.ChequeDetailsId }, new { @class = "fa fa-eye" })
+                    }
+
+                </td>
+            </tr>
+        }
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Client Name</th>
+            <th>Source Bank Name</th>
+            <th>Account No</th>
+            <th>Cheque No</th>
+            <th>Cheque Date</th>
+            <th class="text-right">Amount (&#2547;) </th>
+            <th class="text-center">Action</th>
+
+        </tr>
+    </tfoot>
+</table>
+
+
+
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+
+
+<script>
+
+    $('#table_receivable_list').DataTable({
+        "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+        "oLanguage": {
+            "sEmptyTable": "<h4 style='color:green;font-weight:bolder;'>There is no receivable cheque or cash to active right now !</h4>"
+        }
+    });
+
+</script>
+<script>
+        function Approve(id) {
+
+            if (confirm("Are you sure to Approve  this cash Amount ?")) {
+                //$("#" + id.id).submit();
+
+                var $form = $(id).parents('form');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ApproveCashAmount","AccountManager", new { area = "AccountsAndFinance" })',
+                    data: $form.serialize(),
+                    error: function (xhr, status, error) {
+                        //do something about the error
+                    },
+                    success: function (response) {
+                        var result = response.Message;
+                        $('#message').html(response).fadeIn('slow');
+                        $('#message').html(result).fadeIn('slow') //also show a success message
+                        $('#message').delay(5000).fadeOut('slow');
+                        setTimeout(function () { ReloadPage(); }, 6000);
+
+                    }
+                });
+
+
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+
+        }
+    function ReloadPage() {
+        location.reload();
+    }
+</script>

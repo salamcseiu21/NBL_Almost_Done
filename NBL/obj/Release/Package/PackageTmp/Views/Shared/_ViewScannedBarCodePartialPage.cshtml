@@ -1,0 +1,17 @@
+﻿@model List<NBL.Models.ViewModels.Productions.ScannedProduct>
+@{
+    ViewBag.Title = "Scanned Barcode List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Scanned Barcode List</h3>
+    <div style="border: 1px solid">
+
+        @foreach (var item in Model)
+        {
+            @item.ProductCode<span>,</span>
+        }
+    </div>
+</section>
+
