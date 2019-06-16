@@ -504,4 +504,14 @@
     <LogDateTime>2019-06-15T12:26:14.223196+06:00</LogDateTime>
     <CustomeMessage>Unable to connect to the remote server</CustomeMessage>
   </Error>
+  <Error LogId="19-Jun-1510b90d7b-f3d1-4d51-a2c3-540acea452fa">
+    <Heading>System.Net.WebException</Heading>
+    <LogMessage>   at System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest&amp; request)
+   at System.Net.WebClient.DownloadString(Uri address)
+   at System.Net.WebClient.DownloadString(String address)
+   at NBL.Controllers.LoginController.GetUserLocation() in E:\API\NBL\NBL\Controllers\LoginController.cs:line 272
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 67</LogMessage>
+    <LogDateTime>2019-06-15T12:52:58.7807305+06:00</LogDateTime>
+    <CustomeMessage>Unable to connect to the remote server</CustomeMessage>
+  </Error>
 </Errors>

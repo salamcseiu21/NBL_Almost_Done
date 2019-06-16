@@ -1,0 +1,60 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Securities.ViewLoginInfo>
+@{
+    ViewBag.Title = "LogInHistory";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <h3 class="text-center text-green">Login History</h3>
+    <table id="tbl_login_history" class="display table-bordered" style="border:1px solid">
+        <thead>
+        <tr>
+            <th>IpAddress</th>
+            <th>Mac Address</th>
+            <th>Employee Name</th>
+            <th>Designation</th>
+            <th>UserName</th>
+            <th>Login From</th>
+            <th>City Name</th>
+            <th>Region Name</th>
+            <th>Zip Code</th>
+           
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.IpAddress</td>
+                    <td>@item.MacAddress</td>
+                    <td>@item.EmployeeName</td>
+                    <td>@item.DesignationName</td>
+                    <td>@item.UserName</td>
+                    <td>@item.CountryName</td>
+                    <td>@item.CityName</td>
+                    <td>@item.RegionName</td>
+                    <td>@item.ZipCode</td>
+                   
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>IpAddress</th>
+                <th>Mac Address</th>
+                <th>Employee Name</th>
+                <th>Designation</th>
+                <th>UserName</th>
+                <th>Login From</th>
+                <th>City Name</th>
+                <th>Region Name</th>
+                <th>Zip Code</th>
+            </tr>
+        </>
+    </table>
+</section>
+
+@section Scripts{
+    <script>
+        $("#tbl_login_history").DataTable();
+    </script>
+}

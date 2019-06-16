@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using NBL.DAL.Contracts;
+using NBL.Models.EntityModels.Securities;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
@@ -561,6 +562,54 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect total Stock  from branch & factory", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<ViewLoginInfo> GetLoginHistoryByDate(DateTime date)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptLoginHistoryByDate";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@LoginDate", date);
+                List<ViewLoginInfo> loginHistory = new List<ViewLoginInfo>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    loginHistory.Add(new ViewLoginInfo
+                    {
+                       LoginDateTime = Convert.ToDateTime(reader["LoginDatetime"]),
+                       UserId = Convert.ToInt32(reader["UserId"]),
+                       UserName = reader["UserName"].ToString(),
+                       CityName =DBNull.Value.Equals(reader["CityName"])? null: reader["CityName"].ToString(),
+                       CountryName = DBNull.Value.Equals(reader["CountryName"])? null: reader["CountryName"].ToString(),
+                       CountryCode = DBNull.Value.Equals(reader["CountryCode"])? null: reader["CountryCode"].ToString(),
+                       ZipCode = DBNull.Value.Equals(reader["ZipCode"])? null: reader["ZipCode"].ToString(),
+                       IpAddress = DBNull.Value.Equals(reader["IpAddress"])? null: reader["IpAddress"].ToString(),
+                        MacAddress = DBNull.Value.Equals(reader["MacAddress"])? null: reader["MacAddress"].ToString(),
+                        DesignationName = DBNull.Value.Equals(reader["DesignationName"])? null: reader["DesignationName"].ToString(),
+                        Latitude = DBNull.Value.Equals(reader["Latitude"])? null: reader["Latitude"].ToString(),
+                        Longitude = DBNull.Value.Equals(reader["Longitude"])? null: reader["Longitude"].ToString(),
+                        RegionName = DBNull.Value.Equals(reader["RegionName"])? null: reader["RegionName"].ToString(),
+                        TimeZone = DBNull.Value.Equals(reader["TimeZone"])? null: reader["TimeZone"].ToString(),
+                        EmployeeName = DBNull.Value.Equals(reader["EmployeeName"])? null: reader["EmployeeName"].ToString()
+                        
+                    });
+                }
+                reader.Close();
+                return loginHistory;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect Login History by Date", exception);
             }
             finally
             {

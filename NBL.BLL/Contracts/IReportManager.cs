@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
@@ -36,5 +37,6 @@ namespace NBL.BLL.Contracts
         ViewDisributedProduct GetDistributedProductFromFactory(string barcode);
         ViewDisributedProduct GetDistributedProductFromBranch(string barcode);
         ICollection<ViewProduct> GetTotalStock();
+        ICollection<ViewLoginInfo> GetLoginHistoryByDate(DateTime date);
     }
 }

@@ -201,5 +201,18 @@
         <li>@Html.ActionLink(" Generate Error", "GenerateError", "ErrorLog", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
     </ul>
 </li>
-
+    
+<li class="treeview">
+    <a href="#">
+        <i class="fa fa-warning"></i>
+        <span>LogIn History</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li>@Html.ActionLink(" Today's List", "LogInHistory", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+      
+    </ul>
+</li>
 </ul>

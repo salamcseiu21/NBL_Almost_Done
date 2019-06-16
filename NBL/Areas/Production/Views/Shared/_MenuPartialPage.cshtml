@@ -60,7 +60,21 @@
             <li>@Html.ActionLink(" Delivered List", "DeliveredOrderList", "Delivery", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
         </ul>
     </li>
-   
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-product-hunt"></i>
+            <span>Requisitions</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+
+            <li>@Html.ActionLink(" Requisition Lsit", "GeneralRequisitionList", "Requisition", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
+            
+        </ul>
+    </li>
+
     
     
     <li class="treeview">

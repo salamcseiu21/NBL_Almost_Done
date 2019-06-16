@@ -5,6 +5,7 @@ using NBL.BLL.Contracts;
 using NBL.DAL;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.BarCodes;
+using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
@@ -243,6 +244,11 @@ namespace NBL.BLL
         public ICollection<ViewProduct> GetTotalStock()
         {
             return _iReportGateway.GetTotalStock();
+        }
+
+        public ICollection<ViewLoginInfo> GetLoginHistoryByDate(DateTime date)
+        {
+            return _iReportGateway.GetLoginHistoryByDate(date);
         }
     }
 }

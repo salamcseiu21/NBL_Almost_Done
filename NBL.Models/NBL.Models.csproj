@@ -135,6 +135,7 @@
     <Compile Include="EntityModels\Returns\ReturnModel.cs" />
     <Compile Include="EntityModels\Returns\ReturnProduct.cs" />
     <Compile Include="EntityModels\Securities\StringCipher.cs" />
+    <Compile Include="EntityModels\Securities\ViewLoginInfo.cs" />
     <Compile Include="EntityModels\TransferProducts\TransferRequisition.cs" />
     <Compile Include="EntityModels\TransferProducts\Trip.cs" />
     <Compile Include="EntityModels\TransferProducts\TripDetails.cs" />

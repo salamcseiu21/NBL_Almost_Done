@@ -262,6 +262,12 @@ namespace NBL.Areas.SuperAdmin.Controllers
         {
             return View(_iCommonManager.GetAllSubReferenceAccounts());
         }
+
+        public ActionResult LogInHistory()
+        {
+            var histories= _iReportManager.GetLoginHistoryByDate(DateTime.Now);
+            return View(histories);
+        }
     }
 
 }

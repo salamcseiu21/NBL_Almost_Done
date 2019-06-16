@@ -351,6 +351,7 @@
     <Compile Include="Areas\Production\Controllers\ProductionHeadController.cs" />
     <Compile Include="Areas\Production\Controllers\ProductionManagerController.cs" />
     <Compile Include="Areas\Production\Controllers\QcController.cs" />
+    <Compile Include="Areas\Production\Controllers\RequisitionController.cs" />
     <Compile Include="Areas\Production\Controllers\TransferController.cs" />
     <Compile Include="Areas\HR\Controllers\HomeController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
@@ -8083,6 +8084,10 @@
     <Content Include="Areas\AccountsAndFinance\Views\Product\AddProductDetails.cshtml" />
     <Content Include="Areas\Sales\Views\SalesAdmin\GeneralRequisitionDetails.cshtml" />
     <Content Include="Areas\Sales\Views\SalesAdmin\PendingGeneralRequisitions.cshtml" />
+    <Content Include="Areas\Production\Views\Requisition\Delivery.cshtml" />
+    <Content Include="Areas\Production\Views\Requisition\GeneralRequisitionList.cshtml" />
+    <Content Include="Areas\Production\Views\Shared\_ViewGeneralRequisitionDetailsPartialPage.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Home\LogInHistory.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
