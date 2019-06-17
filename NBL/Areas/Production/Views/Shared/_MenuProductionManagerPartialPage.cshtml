@@ -1,62 +1,69 @@
-﻿@*Factory Menu*@
-<ul class="sidebar-menu" data-widget="tree">
+﻿@using NBL.Models.ViewModels
+@*Factory Menu*@
+@{
+    var user = (ViewUser)Session["user"];
+}
+@if (!user.IsPasswordChangeRequired)
+{
+    <ul class="sidebar-menu" data-widget="tree">
 
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-product-hunt"></i>
-            <span>BarCode</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li>@Html.ActionLink(" Generate", "Generate", "BarCode", new { area = "Production" }, new { @class = "fa fa-list" })</li>
-            <li>@Html.ActionLink(" Print", "Print", "BarCode", new { area = "Production" }, new { @class = "fa fa-list" })</li>
-            @*<li>@Html.ActionLink(" Munual", "ManualGenerateBarcode", "BarCode", new { area = "Production" }, new { @class = "fa fa-list" })</li>*@
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>BarCode</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Generate", "Generate", "BarCode", new {area = "Production"}, new {@class = "fa fa-list"})</li>
+                <li>@Html.ActionLink(" Print", "Print", "BarCode", new {area = "Production"}, new {@class = "fa fa-list"})</li>
+                @*<li>@Html.ActionLink(" Munual", "ManualGenerateBarcode", "BarCode", new { area = "Production" }, new { @class = "fa fa-list" })</li>*@
 
-        </ul>
-    </li>
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-product-hunt"></i>
-            <span>Production</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            @*<li>@Html.ActionLink(" Production Note", "ProductionNote", "Product", new { area = "Factory" }, new { @class = "fa fa-plus" })</li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>Production</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                @*<li>@Html.ActionLink(" Production Note", "ProductionNote", "Product", new { area = "Factory" }, new { @class = "fa fa-plus" })</li>
             <li>@Html.ActionLink(" Pending Production Note", "ViewPendingProductionNote", "Product", new { area = "Factory" }, new { @class = "fa fa-plus" })</li>*@
-           
-            <li>@Html.ActionLink(" Scan Product", "AddProductToTempFile", "Product", new {area = "Production" }, new {@class = "fa fa-plus"})</li>
-        </ul>
-    </li>
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-product-hunt"></i>
-            <span>Store</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li>@Html.ActionLink(" Production Summary", "ProductionSummary", "Home", new {area = "Production" }, new {@class = "fa fa-eye"})</li>
-            <li>@Html.ActionLink(" Production of Current Month", "ProductionSummaryByMonth", "Home", new {area = "Production" }, new {@class = "fa fa-eye"})</li>
-            <li>@Html.ActionLink(" Stock", "Stock", "Home", new {area = "Production"}, new {@class = "fa fa-eye"})</li>
-        </ul>
-    </li>
-  
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-list"></i>
-            <span>View/Show</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li>@Html.ActionLink("  Branch List", "ViewBranch", "Branch", new { area = "Production" }, new { @class = "fa fa-list" })</li>
-        </ul>
-    </li>
-</ul>
 
+                <li>@Html.ActionLink(" Scan Product", "AddProductToTempFile", "Product", new {area = "Production"}, new {@class = "fa fa-plus"})</li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>Store</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Production Summary", "ProductionSummary", "Home", new {area = "Production"}, new {@class = "fa fa-eye"})</li>
+                <li>@Html.ActionLink(" Production of Current Month", "ProductionSummaryByMonth", "Home", new {area = "Production"}, new {@class = "fa fa-eye"})</li>
+                <li>@Html.ActionLink(" Stock", "Stock", "Home", new {area = "Production"}, new {@class = "fa fa-eye"})</li>
+            </ul>
+        </li>
+
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-list"></i>
+                <span>View/Show</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink("  Branch List", "ViewBranch", "Branch", new {area = "Production"}, new {@class = "fa fa-list"})</li>
+            </ul>
+        </li>
+    </ul>
+
+}

@@ -10,6 +10,7 @@ namespace NBL.DAL.Contracts
     {
         int SaveDispatchInformation(DispatchModel dispatchModel);
         DispatchModel GetDispatchByDispatchId(long dispatchId);
-        ICollection<ViewDispatchModel> GetDispatchDetailsByDispatchId(long dispatchId); 
+        ICollection<ViewDispatchModel> GetDispatchDetailsByDispatchId(long dispatchId);
+        int SaveDeliveredGeneralRequisition(List<ScannedProduct> scannedProducts, Delivery aDelivery);
     }
 }

@@ -1,183 +1,189 @@
-﻿@*Factory Menu*@
+﻿@using NBL.Models.ViewModels
+@*Factory Menu*@
+@{
+    var user = (ViewUser)Session["user"];
+}
+@if (!user.IsPasswordChangeRequired)
+{
+    <ul class="sidebar-menu" data-widget="tree">
 
-<ul class="sidebar-menu" data-widget="tree">
-   
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-product-hunt"></i>
-            <span>Store</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li>@Html.ActionLink(" Production Summary", "ProductionSummary", "Home", new {area = "Production" }, new {@class = "fa fa-eye"})</li>
-            <li>@Html.ActionLink(" Stock", "Stock", "Home", new {area = "Production" }, new {@class = "fa fa-eye"})</li>
-        </ul>
-    </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>Store</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Production Summary", "ProductionSummary", "Home", new {area = "Production"}, new {@class = "fa fa-eye"})</li>
+                <li>@Html.ActionLink(" Stock", "Stock", "Home", new {area = "Production"}, new {@class = "fa fa-eye"})</li>
+            </ul>
+        </li>
 
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-product-hunt"></i>
-            <span>Requisitions</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li>@Html.ActionLink(" Latest List", "LatestRequisitions", "Product", new {area = "Production" }, new {@class = "fa fa-list"})</li>
-            <li>@Html.ActionLink(" Pending List", "PendingRequisitions", "Product", new {area = "Production" }, new {@class = "fa fa-list"})</li>
-            <li>@Html.ActionLink(" All", "Requisitions", "Product", new {area = "Production" }, new {@class = "fa fa-list"})</li>
-            @*<li>@Html.ActionLink(" Monthly Requisition List", "MonthlyRequisitions", "Product", new {area = "Production" }, new {@class = "fa fa-list"})</li>*@
-            <li>@Html.ActionLink(" Create Trip", "CreateTrip", "Transfer", new {area = "Production" }, new {@class = "fa fa-plus"})</li>
-        </ul>
-    </li>
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-product-hunt"></i>
-            <span>Dispatch</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li>@Html.ActionLink(" Deliverable Trip Lsit", "TripList", "Delivery", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
-            <li>@Html.ActionLink(" Dispatch List", "DispatchList", "Product", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
-         
-        </ul>
-    </li>
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-product-hunt"></i>
-            <span>Delivery</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-          
-            <li>@Html.ActionLink(" Order Lsit", "DeliverableOrderList", "Delivery", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
-            <li>@Html.ActionLink(" Delivered List", "DeliveredOrderList", "Delivery", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
-        </ul>
-    </li>
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-product-hunt"></i>
-            <span>Requisitions</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>Requisitions</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Latest List", "LatestRequisitions", "Product", new {area = "Production"}, new {@class = "fa fa-list"})</li>
+                <li>@Html.ActionLink(" Pending List", "PendingRequisitions", "Product", new {area = "Production"}, new {@class = "fa fa-list"})</li>
+                <li>@Html.ActionLink(" All", "Requisitions", "Product", new {area = "Production"}, new {@class = "fa fa-list"})</li>
+                @*<li>@Html.ActionLink(" Monthly Requisition List", "MonthlyRequisitions", "Product", new {area = "Production" }, new {@class = "fa fa-list"})</li>*@
+                <li>@Html.ActionLink(" Create Trip", "CreateTrip", "Transfer", new {area = "Production"}, new {@class = "fa fa-plus"})</li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>Dispatch</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Deliverable Trip Lsit", "TripList", "Delivery", new {area = "Production"}, new {@class = "fa fa-pencil"})</li>
+                <li>@Html.ActionLink(" Dispatch List", "DispatchList", "Product", new {area = "Production"}, new {@class = "fa fa-pencil"})</li>
 
-            <li>@Html.ActionLink(" Requisition Lsit", "GeneralRequisitionList", "Requisition", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
-            
-        </ul>
-    </li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>Delivery</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
 
-    
-    
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-product-hunt"></i>
-            <span>Chalan</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-           
-            <li>@Html.ActionLink(" Dispatch List", "DispatchList", "Product", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
-            <li>@Html.ActionLink(" Delivered List", "DeliveredOrderList", "Delivery", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
-        </ul>
-    </li>
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-product-hunt"></i>
-            <span>Trip List</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-           
-            <li>@Html.ActionLink(" Trip List", "TripList", "Transfer", new { area = "Production" }, new { @class = "fa fa-pencil" })</li>
-         
-        </ul>
-    </li>
+                <li>@Html.ActionLink(" Order Lsit", "DeliverableOrderList", "Delivery", new {area = "Production"}, new {@class = "fa fa-pencil"})</li>
+                <li>@Html.ActionLink(" Delivered List", "DeliveredOrderList", "Delivery", new {area = "Production"}, new {@class = "fa fa-pencil"})</li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>Requisitions</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
 
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-share"></i> <span>Reports</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Requisition Lsit", "GeneralRequisitionList", "Requisition", new {area = "Production"}, new {@class = "fa fa-pencil"})</li>
 
-           
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-circle-o"></i> Trips
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-circle-o"></i> Level Two
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-circle-o"></i> Stocks
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-circle-o"></i> Level Two
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-list"></i>
-            <span>View/Show</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li>@Html.ActionLink("  Branch List", "ViewBranch", "Branch", new {area = "Production" }, new {@class = "fa fa-list"})</li>
-
-        </ul>
-    </li>
-</ul>
+            </ul>
+        </li>
 
 
+
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>Chalan</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+
+                <li>@Html.ActionLink(" Dispatch List", "DispatchList", "Product", new {area = "Production"}, new {@class = "fa fa-pencil"})</li>
+                <li>@Html.ActionLink(" Delivered List", "DeliveredOrderList", "Delivery", new {area = "Production"}, new {@class = "fa fa-pencil"})</li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>Trip List</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+
+                <li>@Html.ActionLink(" Trip List", "TripList", "Transfer", new {area = "Production"}, new {@class = "fa fa-pencil"})</li>
+
+            </ul>
+        </li>
+
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-share"></i> <span>Reports</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-circle-o"></i> Trips
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-circle-o"></i> Level Two
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-circle-o"></i> Stocks
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-circle-o"></i> Level Two
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-list"></i>
+                <span>View/Show</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink("  Branch List", "ViewBranch", "Branch", new {area = "Production"}, new {@class = "fa fa-list"})</li>
+
+            </ul>
+        </li>
+    </ul>
+
+
+}

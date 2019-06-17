@@ -17,103 +17,105 @@
     var q2 = totalOrder.April + totalOrder.May + totalOrder.June;
     var q3 = totalOrder.July + totalOrder.August + totalOrder.September;
     var q4 = totalOrder.October + totalOrder.November + totalOrder.December;
+    var user = (ViewUser)Session["user"];
 }
+@if (!user.IsPasswordChangeRequired)
+{
+    <section class="content">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- BAR CHART -->
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Production VS Dispatch (@DateTime.Now.Year)</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body chart-responsive">
+                        <div class="chart" id="bar-chart" style="height: 300px;"></div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
 
-<section class="content">
-    <div class="row">
-        <div class="col-md-6">
-            <!-- BAR CHART -->
-            <div class="box box-success">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Production VS Dispatch (@DateTime.Now.Year)</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                </div>
-                <div class="box-body chart-responsive">
-                    <div class="chart" id="bar-chart" style="height: 300px;"></div>
-                </div>
-                <!-- /.box-body -->
             </div>
-            <!-- /.box -->
-           
-        </div>
-        <!-- /.col (LEFT) -->
-        <div class="col-md-6">
-            <!-- AREA CHART -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Orders </h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            <!-- /.col (LEFT) -->
+            <div class="col-md-6">
+                <!-- AREA CHART -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Orders </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
                     </div>
-                </div>
-                <div class="box-body chart-responsive">
-                   <div class="chart" id="revenue-chart" style="height: 300px;"></div>
-                   
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
-            
-            
-        </div>
-        <!-- /.col (RIGHT) -->
-    </div>
- 
-    <div class="row">
-        <div class="col-md-6">
-            <!-- /.box -->
-            <!-- LINE CHART -->
-            <div class="box box-info">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Sales (@DateTime.Now.Year)</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    <div class="box-body chart-responsive">
+                        <div class="chart" id="revenue-chart" style="height: 300px;"></div>
+
                     </div>
+                    <!-- /.box-body -->
                 </div>
-                <div class="box-body chart-responsive">
-                    <div class="chart" id="line-chart" style="height: 300px;"></div>
-                </div>
-                <!-- /.box-body -->
+                <!-- /.box -->
+
+
             </div>
-            <!-- /.box -->
-           
+            <!-- /.col (RIGHT) -->
         </div>
-        <!-- /.col (LEFT) -->
-        <div class="col-md-6">
-            <!-- DONUT CHART -->
-            <div class="box box-danger">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Branch Wise Sale (@DateTime.Now.Year)</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+
+        <div class="row">
+            <div class="col-md-6">
+                <!-- /.box -->
+                <!-- LINE CHART -->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Sales (@DateTime.Now.Year)</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
                     </div>
+                    <div class="box-body chart-responsive">
+                        <div class="chart" id="line-chart" style="height: 300px;"></div>
+                    </div>
+                    <!-- /.box-body -->
                 </div>
-                <div class="box-body chart-responsive">
-                    <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
-                </div>
-                <!-- /.box-body -->
+                <!-- /.box -->
+
             </div>
-            <!-- /.box -->
-            
-           
+            <!-- /.col (LEFT) -->
+            <div class="col-md-6">
+                <!-- DONUT CHART -->
+                <div class="box box-danger">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Branch Wise Sale (@DateTime.Now.Year)</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body chart-responsive">
+                        <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+
+
+            </div>
+            <!-- /.col (RIGHT) -->
         </div>
-        <!-- /.col (RIGHT) -->
-    </div>
-</section>
+    </section>
 
 @section Scripts
 {
@@ -123,14 +125,15 @@
     </script>
     <script type="text/javascript">
         var timeout = setTimeout("location.reload(true);", 60000);
+
         function resetTimeout() {
             clearTimeout(timeout);
             timeout = setTimeout("location.reload(true);", 60000);
         }
     </script>
-    
+
     <script>
-        $(function () {
+        $(function() {
             "use strict";
 
             // AREA CHART
@@ -138,18 +141,18 @@
                 element: 'revenue-chart',
                 resize: true,
                 data: [
-                    {y: '2019 Q1', Order: @q1},
-                    {y: '2019 Q2', Order: @q2},
-                    {y: '2019 Q3', Order: @q3},
-                    {y: '2019 Q4', Order: @q4},
-                    {y: '2020 Q1', Order: 0},
-                    {y: '2020 Q2', Order: 0},
-                    {y: '2020 Q3', Order: 0},
-                    {y: '2020 Q4', Order: 0},
-                    {y: '2021 Q1', Order: 0},
-                    {y: '2021 Q2', Order: 0},
-                    {y: '2021 Q3', Order: 0},
-                    {y: '2021 Q4', Order: 0}
+                    { y: '2019 Q1', Order: @q1 },
+                    { y: '2019 Q2', Order: @q2 },
+                    { y: '2019 Q3', Order: @q3 },
+                    { y: '2019 Q4', Order: @q4 },
+                    { y: '2020 Q1', Order: 0 },
+                    { y: '2020 Q2', Order: 0 },
+                    { y: '2020 Q3', Order: 0 },
+                    { y: '2020 Q4', Order: 0 },
+                    { y: '2021 Q1', Order: 0 },
+                    { y: '2021 Q2', Order: 0 },
+                    { y: '2021 Q3', Order: 0 },
+                    { y: '2021 Q4', Order: 0 }
                 ],
                 xkey: 'y',
                 ykeys: ['Order'],
@@ -163,18 +166,18 @@
                 element: 'line-chart',
                 resize: true,
                 data: [
-                    {y: '01 January', Order: @totalOrder.January},
-                    {y: '02 February', Order: @totalOrder.February},
-                    {y: '03 March', Order: @totalOrder.March},
-                    {y: '04 April', Order: @totalOrder.April},
-                    {y: '05 May', Order: @totalOrder.May},
-                    {y: '06 June', Order: @totalOrder.June},
-                    {y: '07 July', Order: @totalOrder.July},
-                    {y: '08 August', Order: @totalOrder.August},
-                    {y: '09 September', Order: @totalOrder.September},
-                    {y: '10 November', Order: @totalOrder.October},
-                    {y: '11 September', Order: @totalOrder.November},
-                    {y: '12 December', Order: @totalOrder.December}
+                    { y: '01 January', Order: @totalOrder.January },
+                    { y: '02 February', Order: @totalOrder.February },
+                    { y: '03 March', Order: @totalOrder.March },
+                    { y: '04 April', Order: @totalOrder.April },
+                    { y: '05 May', Order: @totalOrder.May },
+                    { y: '06 June', Order: @totalOrder.June },
+                    { y: '07 July', Order: @totalOrder.July },
+                    { y: '08 August', Order: @totalOrder.August },
+                    { y: '09 September', Order: @totalOrder.September },
+                    { y: '10 November', Order: @totalOrder.October },
+                    { y: '11 September', Order: @totalOrder.November },
+                    { y: '12 December', Order: @totalOrder.December }
                 ],
                 xkey: 'y',
                 ykeys: ['Order'],
@@ -187,14 +190,13 @@
             var donut = new Morris.Donut({
                 element: 'sales-chart',
                 resize: true,
-                colors: ["#3c8dbc", "#f56954", "#00a65a","#39CCCC","#ff851b"],
+                colors: ["#3c8dbc", "#f56954", "#00a65a", "#39CCCC", "#ff851b"],
                 data: [
-                    {label: "Dhaka", value: @dhaka},
-                    {label: "Bogura", value: @bogura},
-                    {label: "Chittagong", value: @ctg},
-                    {label: "Barisal", value: @barisal},
-                    {label: "Jessore", value: @jessore}
-          
+                    { label: "Dhaka", value: @dhaka },
+                    { label: "Bogura", value: @bogura },
+                    { label: "Chittagong", value: @ctg },
+                    { label: "Barisal", value: @barisal },
+                    { label: "Jessore", value: @jessore }
                 ],
                 hideHover: 'auto'
             });
@@ -203,14 +205,14 @@
                 element: 'bar-chart',
                 resize: true,
                 data: [
-                    {y: 'January', a: @production.January, b: @dispatch.January},
-                    {y: 'February', a: @production.February, b: @dispatch.February},
-                    {y: 'March', a: @production.March, b: @dispatch.March},
-                    {y: 'April', a: @production.April, b: @dispatch.April},
-                    {y: 'May', a: @production.May, b: @dispatch.May},
-                    {y: 'June', a: @production.June, b: @dispatch.June},
+                    { y: 'January', a: @production.January, b: @dispatch.January },
+                    { y: 'February', a: @production.February, b: @dispatch.February },
+                    { y: 'March', a: @production.March, b: @dispatch.March },
+                    { y: 'April', a: @production.April, b: @dispatch.April },
+                    { y: 'May', a: @production.May, b: @dispatch.May },
+                    { y: 'June', a: @production.June, b: @dispatch.June },
                     { y: 'July', a: @production.July, b: @dispatch.July },
-                    {y: 'August', a: @production.August, b: @dispatch.August},
+                    { y: 'August', a: @production.August, b: @dispatch.August },
                     { y: 'September', a: @production.September, b: @dispatch.September },
                     { y: 'October', a: @production.October, b: @dispatch.October },
                     { y: 'November', a: @production.November, b: @dispatch.November },
@@ -226,4 +228,5 @@
 
     </script>
 
+}
 }

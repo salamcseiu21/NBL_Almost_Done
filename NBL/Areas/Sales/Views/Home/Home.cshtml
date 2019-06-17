@@ -1,10 +1,13 @@
-﻿@model NBL.Models.ViewModels.Summaries.SummaryModel
+﻿@using NBL.Models.ViewModels
+@model NBL.Models.ViewModels.Summaries.SummaryModel
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var user = (ViewUser)Session["user"];
 
 }
-
+@if(user.IsPasswordChangeRequired)
+{ 
 <!-- Info boxes -->
 <section class="content">
   
@@ -23,4 +26,5 @@
         }
     </script>
 
+}
 }

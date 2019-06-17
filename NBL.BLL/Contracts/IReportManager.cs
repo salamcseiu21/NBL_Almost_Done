@@ -7,6 +7,7 @@ using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
+using NBL.Models.ViewModels.Reports;
 
 namespace NBL.BLL.Contracts
 {
@@ -38,5 +39,6 @@ namespace NBL.BLL.Contracts
         ViewDisributedProduct GetDistributedProductFromBranch(string barcode);
         ICollection<ViewProduct> GetTotalStock();
         ICollection<ViewLoginInfo> GetLoginHistoryByDate(DateTime date);
+        ICollection<OrderHistory> GetDistributionSetOrders();
     }
 }

@@ -9,6 +9,7 @@ using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
+using NBL.Models.ViewModels.Reports;
 
 namespace NBL.BLL
 {
@@ -249,6 +250,11 @@ namespace NBL.BLL
         public ICollection<ViewLoginInfo> GetLoginHistoryByDate(DateTime date)
         {
             return _iReportGateway.GetLoginHistoryByDate(date);
+        }
+
+        public ICollection<OrderHistory> GetDistributionSetOrders()
+        {
+            return _iReportGateway.GetDistributionSetOrders();
         }
     }
 }

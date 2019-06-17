@@ -1,45 +1,52 @@
-﻿
+﻿@using NBL.Models.ViewModels
+
 @*QC Menu*@
-<ul class="sidebar-menu" data-widget="tree">
+@{
+    var user = (ViewUser)Session["user"];
+}
+@if (!user.IsPasswordChangeRequired)
+{
+    <ul class="sidebar-menu" data-widget="tree">
 
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-tachometer"></i>
-            <span>Dashboard</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li>
-                @Html.ActionLink(" Dashboard-1 ", "Home", "Home", new { area = "QC" }, new { @class = "fa fa-eye", style = "font-weight: bolder" })
-            </li>
-        </ul>
-    </li>
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-product-hunt"></i>
-            <span>Return</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-tachometer"></i>
+                <span>Dashboard</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    @Html.ActionLink(" Dashboard-1 ", "Home", "Home", new {area = "QC"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})
+                </li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>Return</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
 
-            <li>@Html.ActionLink(" View All ", "ViewAllReturns", "Product", new { area = "QC" }, new { @class = "fa fa-eye" })</li>
-        </ul>
-    </li>
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-tachometer"></i>
-            <span>Test Return Products</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
+                <li>@Html.ActionLink(" View All ", "ViewAllReturns", "Product", new {area = "QC"}, new {@class = "fa fa-eye"})</li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-tachometer"></i>
+                <span>Test Return Products</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
 
-            <li>@Html.ActionLink(" View All ", "ProductListToTest", "Product", new { area = "QC" }, new { @class = "fa fa-eye" })</li>
-        </ul>
-    </li>
-</ul>
+                <li>@Html.ActionLink(" View All ", "ProductListToTest", "Product", new {area = "QC"}, new {@class = "fa fa-eye"})</li>
+            </ul>
+        </li>
+    </ul>
+}

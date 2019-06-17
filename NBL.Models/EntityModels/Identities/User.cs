@@ -32,7 +32,8 @@ namespace NBL.Models.EntityModels.Identities
         public string IpAddress { get; set; }
         public string MacAddress { get; set; }
         public DateTime LogInDateTime { get; set; }
-        public DateTime LogOutDateTime { get; set; }
-
+        public DateTime LogOutDateTime { get; set; } 
+        public DateTime PasswordUpdateDate { get; set; }
+        public int PasswordChangeRequiredWithin { get; set; }   
     }
 }

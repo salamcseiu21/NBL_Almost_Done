@@ -1,4 +1,10 @@
-﻿@*Sales Menu*@
+﻿@using NBL.Models.ViewModels
+@*Sales Menu*@
+@{
+    var user = (ViewUser)Session["user"];
+}
+@if (!user.IsPasswordChangeRequired)
+{
 <ul class="sidebar-menu" data-widget="tree" style="font-size: 16px; font-weight: bolder;">
     <li class="treeview">
         <a href="#">
@@ -145,3 +151,4 @@
     @Html.Partial("_MenuPartialPage")
 </ul>
 
+}

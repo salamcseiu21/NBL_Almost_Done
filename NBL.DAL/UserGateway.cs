@@ -50,6 +50,7 @@ namespace NBL.DAL
                 }
                 catch (Exception exception)
                 {
+                    Log.WriteErrorLog(exception);
                     throw new Exception("Could not collect User informations", exception);
                 }
                 finally
@@ -107,6 +108,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect User informations by user id", exception);
             }
             finally
@@ -139,6 +141,7 @@ namespace NBL.DAL
             }
             catch (Exception e)
             {
+                Log.WriteErrorLog(e);
                 throw new Exception("Could not add user", e);
             }
             finally
@@ -174,7 +177,10 @@ namespace NBL.DAL
                         IpAddress =DBNull.Value.Equals(reader["IpAddress"])?null: reader["IpAddress"].ToString(),
                         MacAddress = DBNull.Value.Equals(reader["MacAddress"]) ? null : reader["MacAddress"].ToString(),
                         LogInDateTime = DBNull.Value.Equals(reader["LogInDateTime"]) ? default(DateTime) : Convert.ToDateTime(reader["LogInDateTime"]),
-                        LogOutDateTime = DBNull.Value.Equals(reader["LogOutDateTime"]) ? default(DateTime) : Convert.ToDateTime(reader["LogOutDateTime"])
+                        LogOutDateTime = DBNull.Value.Equals(reader["LogOutDateTime"]) ? default(DateTime) : Convert.ToDateTime(reader["LogOutDateTime"]),
+                        PasswordUpdateDate = DBNull.Value.Equals(reader["UpdatedAt"]) ? default(DateTime) : Convert.ToDateTime(reader["UpdatedAt"]),
+                        PasswordChangeRequiredWithin=Convert.ToInt32(reader["PasswordChangeRequiredWithin"])
+
                     };
 
                 }
@@ -183,6 +189,7 @@ namespace NBL.DAL
             }
             catch (Exception e)
             {
+                Log.WriteErrorLog(e);
                 throw new Exception("Unable to find user by User Name", e);
             }
             finally
@@ -228,11 +235,13 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Log in failed due to sql exception",sqlException);
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                throw new Exception("Invalid login", e);
+                Log.WriteErrorLog(exception);
+                throw new Exception("Invalid login", exception);
             }
             finally
             {
@@ -317,6 +326,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect User names", exception);
             }
             finally
@@ -344,6 +354,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not update User password", exception);
             }
             finally
@@ -382,6 +393,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collecd assigned role by username", exception);
             }
             finally

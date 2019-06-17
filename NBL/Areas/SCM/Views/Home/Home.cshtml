@@ -1,15 +1,18 @@
 ﻿
+@using NBL.Models.ViewModels
 @model NBL.Models.ViewModels.Summaries.SummaryModel
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var user = (ViewUser)Session["user"];
 }
+@if (!user.IsPasswordChangeRequired)
+{
+    <section class="content">
 
-<section class="content">
+        @Html.Partial("_RptOrderStockSummaryPartialPage", Model)
 
-    @Html.Partial("_RptOrderStockSummaryPartialPage",Model)
-
-</section>
+    </section>
 
 @section Scripts
 {
@@ -19,9 +22,11 @@
     </script>
     <script type="text/javascript">
         var timeout = setTimeout("location.reload(true);", 60000);
+
         function resetTimeout() {
             clearTimeout(timeout);
             timeout = setTimeout("location.reload(true);", 60000);
         }
     </script>
+}
 }

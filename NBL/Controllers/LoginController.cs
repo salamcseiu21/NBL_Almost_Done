@@ -72,7 +72,9 @@ namespace NBL.Controllers
                 {
                     userLocation.IsValidLogin = 1;
                     var model = _userManager.GetUserByUserName(user.UserName);
+                    var difference = (DateTime.Now - model.PasswordUpdateDate).TotalDays;
                     var anUser = Mapper.Map<User, ViewUser>(model);
+                    anUser.IsPasswordChangeRequired = difference > anUser.PasswordChangeRequiredWithin;
                     Session["Branches"] = _iCommonManager.GetAssignedBranchesToUserByUserId(anUser.UserId).ToList();
                     Session["Roles"] = _userManager.GetAssignedUserRolesByUserId(anUser.UserId);
                     anUser.IsGeneralRequisitionRight = _iCommonManager.GetFirstApprovalPathByUserId(anUser.UserId);
@@ -101,6 +103,10 @@ namespace NBL.Controllers
 
                     bool result = _userManager.ChangeLoginStatus(anUser, 1, userLocation);
                     Session.Timeout = 180;
+                    if (anUser.IsPasswordChangeRequired)
+                    {
+                        return RedirectToAction("ChangePassword", "Home", new { area = "CommonArea", id = anUser.UserId });
+                    }
                     switch (anUser.Roles)
                     {
 
@@ -114,8 +120,6 @@ namespace NBL.Controllers
                         default:
                             return RedirectToAction("Goto", "LogIn", new { area = "" });
                     }
-
-
                 }
                 ViewBag.Message = "Invalid Login";
                 ViewBag.Companies = _iCompanyManager.GetAll().ToList().OrderBy(n => n.CompanyId).ToList();
@@ -152,8 +156,11 @@ namespace NBL.Controllers
             var branch= _iBranchManager.GetById(branchId);
             Session["BranchId"] = branchId;
             Session["Branch"] = branch;
-           
-           
+
+            if (user.IsPasswordChangeRequired)
+            {
+                return RedirectToAction("ChangePassword", "Home", new { area = "CommonArea",id=user.UserId });
+            }
             switch (user.Roles)
             {
                 case "Admin":

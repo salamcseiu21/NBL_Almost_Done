@@ -1,2 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Errors />
+<Errors>
+  <Error LogId="19-Jun-17927e1527-334d-414c-a422-4f61596f2ec9">
+    <Heading>System.Net.WebException</Heading>
+    <LogMessage>   at System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest&amp; request)
+   at System.Net.WebClient.DownloadString(Uri address)
+   at System.Net.WebClient.DownloadString(String address)
+   at NBL.Controllers.LoginController.GetUserLocation() in E:\API\NBL\NBL\Controllers\LoginController.cs:line 279
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 67</LogMessage>
+    <LogDateTime>2019-06-17T14:57:43.1933254+06:00</LogDateTime>
+    <CustomeMessage>Unable to connect to the remote server</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jun-176fe79a4a-b2a8-4802-a482-365d5f1743bc">
+    <Heading>System.Net.WebException</Heading>
+    <LogMessage>   at System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest&amp; request)
+   at System.Net.WebClient.DownloadString(Uri address)
+   at System.Net.WebClient.DownloadString(String address)
+   at NBL.Controllers.LoginController.GetUserLocation() in E:\API\NBL\NBL\Controllers\LoginController.cs:line 279
+   at NBL.Controllers.LoginController.LogIn(FormCollection collection, String ReturnUrl) in E:\API\NBL\NBL\Controllers\LoginController.cs:line 67</LogMessage>
+    <LogDateTime>2019-06-17T15:21:50.7215008+06:00</LogDateTime>
+    <CustomeMessage>Unable to connect to the remote server</CustomeMessage>
+  </Error>
+</Errors>

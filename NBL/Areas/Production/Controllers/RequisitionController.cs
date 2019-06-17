@@ -32,8 +32,8 @@ namespace NBL.Areas.Production.Controllers
         private readonly IOrderManager _iOrderManager;
         private readonly IBranchManager _iBranchManager;
         private readonly IEmployeeManager _iEmployeeManager;
-
-        public RequisitionController(IDeliveryManager iDeliveryManager, IInventoryManager iInventoryManager, IProductManager iProductManager, IClientManager iClientManager, IInvoiceManager iInvoiceManager, ICommonManager iCommonManager, IOrderManager iOrderManager, IBranchManager iBranchManager,IEmployeeManager iEmployeeManager)
+        private readonly IFactoryDeliveryManager _iFactoryDeliveryManager;
+        public RequisitionController(IDeliveryManager iDeliveryManager, IInventoryManager iInventoryManager, IProductManager iProductManager, IClientManager iClientManager, IInvoiceManager iInvoiceManager, ICommonManager iCommonManager, IOrderManager iOrderManager, IBranchManager iBranchManager,IEmployeeManager iEmployeeManager,IFactoryDeliveryManager iFactoryDeliveryManager)
         {
             _iDeliveryManager = iDeliveryManager;
             _iInventoryManager = iInventoryManager;
@@ -44,6 +44,7 @@ namespace NBL.Areas.Production.Controllers
             _iOrderManager = iOrderManager;
             _iBranchManager = iBranchManager;
             _iEmployeeManager = iEmployeeManager;
+            _iFactoryDeliveryManager = iFactoryDeliveryManager;
         }
         // GET: Sales/Requisition
         public ActionResult GeneralRequisitionList()
@@ -68,10 +69,9 @@ namespace NBL.Areas.Production.Controllers
 
             try
             {
-                int branchId = Convert.ToInt32(Session["BranchId"]);
-                int companyId = Convert.ToInt32(Session["CompanyId"]);
-                var stock = _iInventoryManager.GetStockProductInBranchByBranchAndCompanyId(branchId, companyId);
-                Session["Branch_stock"] = stock;
+
+                var stock = _iInventoryManager.GetStockProductInFactory();
+                Session["Factory_Stock"] = stock;
                 ICollection<ApprovalDetails> approval = _iCommonManager.GetAllApprovalDetailsByRequistionId(id);
                 var model = new ViewGeneralRequisitionModel
                 {
@@ -157,8 +157,8 @@ namespace NBL.Areas.Production.Controllers
                     FromBranchId = branchId,
                     FinancialTransactionModel = financialModel
                 };
-                string result = _iInventoryManager.SaveDeliveredGeneralRequisition(barcodeList, aDelivery);
-                if (result.StartsWith("S"))
+                var result = _iFactoryDeliveryManager.SaveDeliveredGeneralRequisition(barcodeList, aDelivery);
+                if (result)
                 {
                     System.IO.File.Create(filePath).Close();
                     return RedirectToAction("GeneralRequisitionList");
@@ -193,7 +193,7 @@ namespace NBL.Areas.Production.Controllers
                     {
                         var p = products.Find(n => n.ProductBarCode.Equals(scannedProduct.ProductCode));
                         products.Remove(p);
-                        Session["Branch_stock"] = products;
+                        Session["Factory_Stock"] = products;
                     }
                 }
 

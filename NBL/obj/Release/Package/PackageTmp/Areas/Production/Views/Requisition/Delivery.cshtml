@@ -1,0 +1,201 @@
+﻿@model NBL.Models.ViewModels.Requisitions.ViewGeneralRequisitionModel
+@{
+    ViewBag.Title = "Delivery";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var requisitionBy =Model.GeneralRequisitionModel.RequisitionByEmployee;
+   
+}
+
+<section class="content">
+    <div class="row text-center text-danger">
+        @if (TempData["Error"] != null)
+        {
+            @TempData["Error"]
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h3 class="text-center text-green headingStyle">Delivery</h3>
+            <br />
+            <div class="row" style="border: 1px dotted; padding: 10px; font-size: 18px">
+
+                <div class="col-md-6" style="margin:0;padding:0;">
+                    <section>
+                      
+                        <address>
+                         <strong> Requisition By:</strong>  @requisitionBy.EmployeeName<br />
+                         <strong> E-mail:</strong>  @requisitionBy.Email
+                        </address>
+
+                    </section>
+                </div>
+                <div class="col-md-6" style="margin:0;padding:0;">
+                    <section>
+                        <strong> Requisition Ref:</strong>
+                        @Model.GeneralRequisitionModel.RequisitionRef<br/>
+                        <strong> Date :</strong> @Model.GeneralRequisitionModel.LastApproveDateTime.ToString("D")<br/>
+
+
+                    </section>
+                </div>
+            </div>
+      
+      
+
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4" style="border: 1px solid;">
+            <div class="form-horizontal">
+                <h3 class="text-center">Scan Product</h3>
+                <div id="message" style="display: none; font-weight: bold; font-size: 20px" class="text-center">
+                </div>
+                <div class="form-group">
+                    <label for="ProductCode" class="control-label col-md-3">Product Code</label>
+                    <input type="hidden" id="RequisitionId" name="RequisitionId" value="@Model.GeneralRequisitionModel.RequisitionId"/>
+                    <input type="hidden" id="Rqty" name="Rqty" value="@Model.GeneralRequistionDetails.Sum(n=>n.Quantity)"/>
+                    <div class="col-md-9">
+
+                        <input type="text" name="ProductCode" id="ProductCode" class="form-control" placeholder="Always keep pointer here.." autofocus onchange="SaveScannedBarcodeToTextFile(this)"/>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9">
+                            <div class="btn toolbar">
+                                <button type="button" id="btnDelivery" value="@Model.GeneralRequisitionModel.RequisitionId" class="btn btn-success" onclick="Delivery(this)"> Delivery</button>
+                                @Html.ActionLink("Back", "GeneralRequisitionList", "Requisition", null, new {@class = "btn btn-danger"})
+                                @Html.ActionLink("View Scanned Barcodes", "ViewScannedBarcodeList", "Requisition", new {id = Model.GeneralRequisitionModel.RequisitionId}, new {@class = "btn btn-info", target = "_blank"})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <hr/>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="divDeliverableProducts"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="divScannedProducts"></div>
+        </div>
+    </div>
+
+    @Html.Partial("_ModalDeliveryPartialPage")
+</section>
+
+@section Scripts
+{
+    <script>
+
+        function SaveDeliveryInfo(id) {
+
+            if (confirm("Are you sure to Save  this delivery info?")) {
+                // var invoiceId = $("#InvoiceId").val();
+                $("#saveRequisitionDeliveryInfoForm").submit();
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+
+        }
+    </script>
+    <script>
+
+        function Delivery(reqisition) {
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ViewGeneralRequisitionDetails", "Requisition", new { area = "Production" })",
+                data: { reqisitionId: reqisition.value },
+                success: function (response) {
+                    $('#modalBody').html(response);
+                    $('#showDeliveryModal').modal('show');
+                }
+            });
+        }
+
+    </script>
+
+    <script>
+        function SaveScannedBarcodeToTextFile(btnClicked) {
+            //var $form = $(btnClicked).parents('form');
+            var code = $("#ProductCode").val();
+            var requisitionId = $("#RequisitionId").val();
+            $.ajax({
+                type: "POST",
+                url: RootUrl + 'production/Requisition/SaveScannedBarcodeToTextFile',
+                data: { barcode: code, requisitionId: requisitionId },
+                error: function (xhr, status, error) {
+                    alert(error);
+                },
+                success: function (response) {
+                    var result = response.Message;
+                    //alert("Saved Successfully");
+                    $('#message').html(response).fadeIn('slow');
+                    $('#message').html(result).fadeIn('slow'); //also show a success message
+                    $('#message').delay(700).fadeOut('slow');
+                    loadAllScannedProducts();
+                    $('#ProductCode').val("");
+                }
+            });
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#DeliveryDate").datepicker({ dateFormat: 'dd-MM-yy' });
+            loadAllDeliverableProducts();
+            loadAllScannedProducts();
+        });
+
+       
+
+        function loadAllDeliverableProducts() {
+            var requisitionId = $("#RequisitionId").val();
+            var json = { requisitionId: requisitionId };
+            $.ajax({
+                type: 'Post',
+                url: RootUrl + "production/Requisition/LoadDeliverableProduct",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("#divDeliverableProducts").html(data);
+                }
+            });
+        }
+
+        function loadAllScannedProducts() {
+            var requisitionId = $("#RequisitionId").val();
+            var json = { requisitionId: requisitionId };
+            $.ajax({
+                type: 'Post',
+                url: RootUrl + "production/Requisition/LoadScannedProduct",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("#divScannedProducts").html(data);
+                    var qty = $("#total_Scanned_qty").val();
+                    var rqty = $("#Rqty").val();
+                    if (qty === rqty) {
+                        $("#btnDelivery").removeAttr('disabled');
+                    } else {
+                        $("#btnDelivery").attr('disabled', true);
+                    }
+
+                }
+            });
+        }
+    </script>
+}

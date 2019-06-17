@@ -1,8 +1,12 @@
-﻿
+﻿@using NBL.Models.ViewModels
+
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var user = (ViewUser)Session["user"];
 }
-
-<h2>Home</h2>
+@if (!user.IsPasswordChangeRequired)
+{
+    <h2>Home</h2>
+}
 

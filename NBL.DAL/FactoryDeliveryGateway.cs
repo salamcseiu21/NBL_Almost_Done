@@ -8,6 +8,7 @@ using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels.Deliveries;
+using NBL.Models.ViewModels.Productions;
 
 namespace NBL.DAL
 {
@@ -197,6 +198,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not get dispatch deatils Info by dispatchId", exception);
             }
             finally
@@ -206,7 +208,163 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+        //-------------Save General Requisition  From Factory--------------------------------
+        public int SaveDeliveredGeneralRequisition(List<ScannedProduct> scannedProducts, Delivery aDelivery)
+        {
 
+            ConnectionObj.Open();
+            SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
+            try
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Transaction = sqlTransaction;
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.CommandText = "UDSP_SaveDeliveredRequisitionFromFactory";
+                CommandObj.Parameters.AddWithValue("@TransactionDate", aDelivery.DeliveryDate);
+                CommandObj.Parameters.AddWithValue("@TransactionRef", aDelivery.TransactionRef);
+                CommandObj.Parameters.AddWithValue("@DeliveryRef", aDelivery.DeliveryRef);
+                CommandObj.Parameters.AddWithValue("@IsOwnTransporatoion", aDelivery.IsOwnTransport);
+                CommandObj.Parameters.AddWithValue("@Transportation", aDelivery.Transportation ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@DriverName", aDelivery.DriverName ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@DriverPhone", aDelivery.DriverPhone ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@TransportationCost", aDelivery.TransportationCost);
+                CommandObj.Parameters.AddWithValue("@VehicleNo", aDelivery.VehicleNo ?? "N/A");
+                CommandObj.Parameters.AddWithValue("@ToBranchId", aDelivery.ToBranchId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", aDelivery.CompanyId);
+                CommandObj.Parameters.AddWithValue("@UserId", aDelivery.DeliveredByUserId);
+                CommandObj.Parameters.AddWithValue("@Quantity", scannedProducts.Count);
+                CommandObj.Parameters.Add("@AccountMasterId", SqlDbType.BigInt);
+                CommandObj.Parameters.Add("@InventoryMasterId", SqlDbType.BigInt);
+                CommandObj.Parameters["@AccountMasterId"].Direction = ParameterDirection.Output;
+                CommandObj.Parameters["@InventoryMasterId"].Direction = ParameterDirection.Output;
+                CommandObj.Parameters.Add("@DeliveryId", SqlDbType.Int);
+                CommandObj.Parameters["@DeliveryId"].Direction = ParameterDirection.Output;
+
+                CommandObj.ExecuteNonQuery();
+                int deliveryId = Convert.ToInt32(CommandObj.Parameters["@DeliveryId"].Value);
+                var accountMasterId = Convert.ToInt32(CommandObj.Parameters["@AccountMasterId"].Value);
+                var inventoryMasterId = Convert.ToInt32(CommandObj.Parameters["@InventoryMasterId"].Value);
+                int rowAffected = SaveDeliveredRequisitionDetails(scannedProducts, aDelivery, inventoryMasterId, deliveryId);
+
+                int accountAffected = 0;
+                if (rowAffected > 0)
+                {
+
+                    var financial = aDelivery.FinancialTransactionModel;
+
+                    for (int i = 1; i <= 2; i++)
+                    {
+                        if (i == 1)
+                        {
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.ExpenceCode, financial.ExpenceAmount, accountMasterId, "Expence code Debit..");
+                        }
+                        else if (i == 2)
+                        {
+
+
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.InventoryCode, financial.InventoryAmount * (-1), accountMasterId, "Inventory code Credit..");
+                        }
+
+
+                    }
+                }
+
+
+                if (accountAffected > 0)
+                {
+                    sqlTransaction.Commit();
+                }
+                else
+                {
+                    sqlTransaction.Rollback();
+                }
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not save delivered General Requisition", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        } 
+
+        public int SaveDeliveredRequisitionDetails(List<ScannedProduct> scannedProducts, Delivery aDelivery, int inventoryId, int deliveryId)
+        {
+            int n = 0;
+            int i = 0;
+            foreach (var item in scannedProducts)
+            {
+
+                CommandObj.CommandText = "UDSP_SaveDeliveredRequisitionDetailsFromFactory";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@ProductId", Convert.ToInt32(item.ProductCode.Substring(2, 3)));
+                CommandObj.Parameters.AddWithValue("@ProductBarcode", item.ProductCode);
+                CommandObj.Parameters.AddWithValue("@TransactionRef", aDelivery.DeliveryRef);
+                CommandObj.Parameters.AddWithValue("@InventoryMasterId", inventoryId);
+                CommandObj.Parameters.AddWithValue("@Status", 2);
+                CommandObj.Parameters.AddWithValue("@DeliveryId", deliveryId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                n += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            }
+
+            if (n > 0)
+            {
+                i = SaveDeliveredItemWithQuantityToFactory(scannedProducts, inventoryId,aDelivery);
+            }
+
+            return i;
+        }
+
+        private int SaveDeliveredItemWithQuantityToFactory(List<ScannedProduct> deliveredProducts, long inventoryId, Delivery aDelivery)
+        {
+            int i = 0;
+            var groupBy = deliveredProducts.GroupBy(n => n.ProductId);
+            foreach (IGrouping<int, ScannedProduct> scannedProducts in groupBy)
+            {
+                CommandObj.CommandText = "UDSP_SaveDeliveredItemWithQuantityToFactory";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@ProductId", scannedProducts.Key);
+                CommandObj.Parameters.AddWithValue("@Quantity", scannedProducts.Count());
+                CommandObj.Parameters.AddWithValue("@InventoryMasterId", inventoryId);
+                CommandObj.Parameters.AddWithValue("@InvoiceRef", aDelivery.InvoiceRef);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+
+            }
+            return i;
+        }
+
+
+        private int SaveFinancialTransactionToAccountsDetails(string transactionType, string accountCode, decimal amounts, int accountMasterId, string explanation)
+        {
+
+            var i = 0;
+            CommandObj.CommandText = "UDSP_SaveFinancialTransactionToAccountsDetails";
+            CommandObj.CommandType = CommandType.StoredProcedure;
+            CommandObj.Parameters.Clear();
+            CommandObj.Parameters.AddWithValue("@AccountMasterId", accountMasterId);
+            CommandObj.Parameters.AddWithValue("@SubSubSubAccountCode", accountCode);
+            CommandObj.Parameters.AddWithValue("@TransactionType", transactionType);
+            CommandObj.Parameters.AddWithValue("@Amount", amounts);
+            CommandObj.Parameters.AddWithValue("@Explanation", explanation);
+            CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+            CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+            CommandObj.ExecuteNonQuery();
+            i = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            return i;
+
+        }
         public int Add(Delivery model)
         {
             throw new NotImplementedException();

@@ -19,7 +19,7 @@
                                 <div class="form-group">
                                     <label for="TotalQty" class="control-label col-md-3"> Quantity :</label>
                                     <div class="col-md-9">
-                                        <input type="number" id="TotalQty" name="TotalQty" class="form-control" value="0" readonly="readonly" />
+                                        <input type="number" id="TotalQty" name="TotalQty" class="form-control" value="@Model.Sum(n=>n.Quantity)" readonly="readonly" />
 
                                     </div>
                                 </div>

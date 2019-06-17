@@ -1,0 +1,97 @@
+﻿
+
+@model IEnumerable<NBL.Models.ViewModels.Reports.OrderHistory>
+@{
+    ViewBag.Title = "Approved Order";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">@if (TempData["ApproveMsg"] != null)
+                                                    {
+                                                        @TempData["ApproveMsg"]
+                                                    }</h3>
+   
+
+    <div class="table-responsive">
+        <table id="table_Approved_order_list" class="display  table-bordered" style="border:1px solid black">
+            <thead>
+                <tr>
+                    <th>Client Info</th>
+                    <th>Order Ref</th>
+                    <th>Invoice Ref</th>
+                    <th class="text-right">Qty</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Approved By</th>
+                    <th class="text-center">Approved At</th>
+                    <th class="text-center">Distribution Center</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            <strong>@Html.Raw(item.ClientName)</strong>-(@item.ClientTypeName)<br />
+                            <b class="text-green">@item.BranchName</b>
+                        </td>
+                        <td>@item.OrderRef</td>
+                        <td>@item.InvoiceRef</td>
+                        <td class="text-right">@item.Quantity</td>
+                        <td class="text-center">
+                            @{
+                                switch (item.Status)
+                                {
+                                    case 3:<p class="text-danger"> Partially Delivered</p>
+                                        break;
+                                    case 4:<p class="text-green">Delivered</p>
+                                        break;
+                                    case 8:<p>Approved By SCM</p>
+                                        break;
+                                }
+                            }
+                        </td>
+
+                        <td class="text-center">@item.DistributionPointSetBy</td>
+                        <td class="text-center">
+                            @item.DistributionPointSetDateTime.ToShortTimeString(), @item.DistributionPointSetDateTime.ToString("dd-MMM-yyyy")
+                        </td>
+                        <td class="text-center">@item.DistributionCenter</td>
+                        <td class="text-center">
+                            @Html.ActionLink(" Details", "Approve", "Order", new { area = "SCM", id = item.OrderId }, new { @class = "fa fa-eye" })
+                        </td>
+                    </tr>
+                                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Client Info</th>
+                    <th>Order Ref</th>
+                    <th>Invoice Ref</th>
+                    <th class="text-right">Qty</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Approved By</th>
+                    <th class="text-center">Approved At</th>
+                    <th class="text-center">Distribution Center</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</section>
+@section Scripts{
+    <script>
+
+        $('#table_Approved_order_list').DataTable({
+            "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+            "order": [[ 1, "desc" ]],
+            "oLanguage": {
+                "sEmptyTable": "<h4 style='color:green;font-weight:bolder;'>There is no orders to <i>Approved Order</i> right now !</h4>"
+            }
+        });
+
+    </script>
+}
+
+

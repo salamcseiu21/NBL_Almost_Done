@@ -11,6 +11,7 @@ using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Productions;
 using Microsoft.Ajax.Utilities;
+using ReferenceType = NBL.Models.Enums.ReferenceType;
 
 namespace NBL.BLL
 {
@@ -20,8 +21,8 @@ namespace NBL.BLL
         private readonly InventoryGateway _inventoryGateway = new InventoryGateway();
         private readonly CommonGateway _commonGateway = new CommonGateway();
         private readonly IBranchGateway _iBranchGateway;
-
-        public FactoryDeliveryManager(IFactoryDeliveryGateway iFactoryDeliveryGateway,IBranchGateway iBranchGateway)
+        private readonly ICommonGateway _iCommonGateway;
+        public FactoryDeliveryManager(IFactoryDeliveryGateway iFactoryDeliveryGateway,IBranchGateway iBranchGateway,ICommonGateway iCommonGateway)
         {
             _iFactoryDeliveryGateway = iFactoryDeliveryGateway;
             _iBranchGateway = iBranchGateway;
@@ -83,6 +84,33 @@ namespace NBL.BLL
             string reference = DateTime.Now.Year.ToString().Substring(2, 2) + refCode + temp;
             return reference;
         }
+
+
+
+        public bool SaveDeliveredGeneralRequisition(List<ScannedProduct> scannedProducts, Delivery aDelivery)
+        {
+            string refCode = _iCommonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(ReferenceType.Distribution)).Code;
+            aDelivery.VoucherNo = GetMaxVoucherNoByTransactionInfix(refCode);
+            int maxRefNo = _inventoryGateway.GetMaxDeliveryRefNoOfCurrentYear();
+            aDelivery.DeliveryRef = GenerateDeliveryReference(maxRefNo);
+            int rowAffected = _iFactoryDeliveryGateway.SaveDeliveredGeneralRequisition(scannedProducts, aDelivery);
+            return rowAffected > 0;
+        }
+
+        private string GenerateDeliveryReference(int maxRefNo)
+        {
+            string refCode = _commonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id.Equals(Convert.ToInt32(ReferenceType.Distribution))).Code;
+            string temp = (maxRefNo + 1).ToString();
+            string reference = DateTime.Now.Year.ToString().Substring(2, 2) + refCode + temp;
+            return reference;
+        }
+
+        private long GetMaxVoucherNoByTransactionInfix(string infix)
+        {
+            var temp = _inventoryGateway.GetMaxVoucherNoByTransactionInfix(infix);
+            return temp + 1;
+        }
+
         public bool Add(Delivery model)
         {
             throw new NotImplementedException();

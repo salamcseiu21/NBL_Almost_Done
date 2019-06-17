@@ -11,5 +11,7 @@ namespace NBL.BLL.Contracts
         DispatchModel GetDispatchByDispatchId(long dispatchId);
         ViewDispatchChalan GetDispatchChalanByDispatchId(long dispatchId);
         ICollection<ViewDispatchModel> GetDispatchDetailsByDispatchId(long dispatchId);
+
+        bool SaveDeliveredGeneralRequisition(List<ScannedProduct> scannedProducts, Delivery aDelivery);
     }
 }

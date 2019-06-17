@@ -29,8 +29,8 @@ namespace NBL.Areas.SCM.Controllers
         private readonly ICommonManager _iCommonManager;
         private readonly IOrderManager _iOrderManager;
         private readonly IBranchManager _iBranchManager;
-
-        public OrderController(IDeliveryManager iDeliveryManager, IInventoryManager iInventoryManager, IProductManager iProductManager, IClientManager iClientManager, IInvoiceManager iInvoiceManager, ICommonManager iCommonManager, IOrderManager iOrderManager, IBranchManager iBranchManager)
+        private readonly IReportManager _iReportManager;
+        public OrderController(IDeliveryManager iDeliveryManager, IInventoryManager iInventoryManager, IProductManager iProductManager, IClientManager iClientManager, IInvoiceManager iInvoiceManager, ICommonManager iCommonManager, IOrderManager iOrderManager, IBranchManager iBranchManager,IReportManager iReportManager)
         {
             _iDeliveryManager = iDeliveryManager;
             _iInventoryManager = iInventoryManager;
@@ -40,6 +40,7 @@ namespace NBL.Areas.SCM.Controllers
             _iCommonManager = iCommonManager;
             _iOrderManager = iOrderManager;
             _iBranchManager = iBranchManager;
+            _iReportManager = iReportManager;
         }
         // GET: SCM/Order
         public ActionResult Home() 
@@ -96,6 +97,42 @@ namespace NBL.Areas.SCM.Controllers
             }
 
         }
+        public ActionResult ApprovedOrder()
+        {
+            try
+            {
+
+                TempData["ApproveMsg"] = "All Approved Orders";
+                var orders = _iReportManager.GetDistributionSetOrders();
+                return PartialView("_ViewApprovedOrdersByScm",orders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
+
+        public ActionResult TodaysApprovedOrder()
+        {
+            try
+            {
+                TempData["ApproveMsg"] = "Today's Approved Orders";
+
+                var orders = _iReportManager.GetDistributionSetOrders().ToList().FindAll(n=>n.DistributionPointSetDateTime.Date.Equals(DateTime.Now.Date));
+                return PartialView("_ViewApprovedOrdersByScm", orders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
+
 
         public ActionResult ViewAllDeliveredOrders()
         {

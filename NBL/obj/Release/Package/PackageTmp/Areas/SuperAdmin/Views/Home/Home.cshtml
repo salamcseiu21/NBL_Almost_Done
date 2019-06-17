@@ -1,73 +1,76 @@
 ﻿
+@using NBL.Models.ViewModels
 @model NBL.Models.ViewModels.Summaries.SummaryModel
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
-   
+    var user = (ViewUser)Session["user"];
 }
 
-<section class="content">
-    <div class="row">
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-aqua">
-                <div class="inner">
-                    <h3 style="font-size: 20px">&#2547; @Model.AccountSummary.TotalSaleValue.ToString("N")</h3>
-                    <p>TOTAL SALE AMOUNT</p>
+@if (!user.IsPasswordChangeRequired)
+{
+    <section class="content">
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3 style="font-size: 20px">&#2547; @Model.AccountSummary.TotalSaleValue.ToString("N")</h3>
+                        <p>TOTAL SALE AMOUNT</p>
+                    </div>
+                    <div class="icon">
+                        &#2547;
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-                <div class="icon">
-                    &#2547;
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-green">
-                <div class="inner">
-                    <h3 style="font-size: 20px">&#2547; @Model.AccountSummary.TotalCollection.ToString("N")</h3>
-                    <p>TOTAL COLLECTION AMOUNT</p>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3 style="font-size: 20px">&#2547; @Model.AccountSummary.TotalCollection.ToString("N")</h3>
+                        <p>TOTAL COLLECTION AMOUNT</p>
+                    </div>
+                    <div class="icon">
+                        &#2547;
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-                <div class="icon">
-                    &#2547;
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-aqua">
-                <div class="inner">
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
 
-                    <h3 style="font-size: 20px">&#2547; @Model.AccountSummary.TotalOrderedAmount.ToString("N")</h3>
-                    <p>TOTAL ORDERED AMOUNT</p>
+                        <h3 style="font-size: 20px">&#2547; @Model.AccountSummary.TotalOrderedAmount.ToString("N")</h3>
+                        <p>TOTAL ORDERED AMOUNT</p>
+                    </div>
+                    <div class="icon">
+                        &#2547;
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-                <div class="icon">
-                    &#2547;
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-green">
-                <div class="inner">
-                    <h3 style="font-size: 20px">@Model.AccountSummary.CollectionPercentageOfSale.ToString("N") (%)</h3>
-                    <p>COLLECTION</p>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3 style="font-size: 20px">@Model.AccountSummary.CollectionPercentageOfSale.ToString("N") (%)</h3>
+                        <p>COLLECTION</p>
+                    </div>
+                    <div class="icon">
+                        &#2547;
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-                <div class="icon">
-                    &#2547;
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
+            <!-- ./col -->
         </div>
-        <!-- ./col -->
-    </div>
-    <!-- Info boxes -->
-    @*<div class="row">
+        <!-- Info boxes -->
+        @*<div class="row">
 
 
         <div class="col-md-3 col-sm-6 col-xs-12">
@@ -98,43 +101,47 @@
             }
         }
     </div>*@
-    @*<div class="row">
+        @*<div class="row">
         <marquee behavior="scroll" direction="left"><h4 class="text-green" style="margin:0;padding-bottom:10px;">Today's (@DateTime.Now.ToString("dd-MMM-yyyy")) total sales: 4,00000&#2547;&nbsp; ,Collection:50,00000&#2547;&nbsp;, Expence:3,50000&#2547;</h4></marquee>
     </div>*@
-    <div class="row">
-        @Html.Partial("_ViewSalesReportChartPartialPage",Model.TotalOrder)
-        <!-- /.col -->
-    </div>
-    <!-- /.row -->
-    @*<img src="@Url.Action("MyChart")" alt="Simple Chart"/>*@
-    <div class="row">
-        <div class="col-md-6">
-            <!-- TABLE: Top clients -->
-            @Html.Partial("_ViewTopClientsPartialPage",Model.Clients)
-            <!-- /.box -->
+        <div class="row">
+            @Html.Partial("_ViewSalesReportChartPartialPage", Model.TotalOrder)
+            <!-- /.col -->
         </div>
-        <div class="col-md-6">
-            <!-- TABLE: Popular batteries -->
-            @Html.Partial("_ViewPopularBatteriesPartialPage",Model.Products)
-            <!-- /.box -->
+        <!-- /.row -->
+        @*<img src="@Url.Action("MyChart")" alt="Simple Chart"/>*@
+        <div class="row">
+            <div class="col-md-6">
+                <!-- TABLE: Top clients -->
+                @Html.Partial("_ViewTopClientsPartialPage", Model.Clients)
+                <!-- /.box -->
+            </div>
+            <div class="col-md-6">
+                <!-- TABLE: Popular batteries -->
+                @Html.Partial("_ViewPopularBatteriesPartialPage", Model.Products)
+                <!-- /.box -->
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+
 @section Scripts
 {
     @*Reload page after 1 minute *@
     <script type="text/javascript">
         var timeout = setTimeout("location.reload(true);", 60000);
+
         function resetTimeout() {
             clearTimeout(timeout);
             timeout = setTimeout("location.reload(true);", 60000);
         }
     </script>
     <script>
-        $(function () {
+        $(function() {
             //Initialize Select2 Elements
             $('.select2').select2();
 
         })
     </script>
+}
+
 }

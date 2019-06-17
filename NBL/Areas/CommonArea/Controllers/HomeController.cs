@@ -361,7 +361,7 @@ namespace NBL.Areas.CommonArea.Controllers
             model.Password = StringCipher.Encrypt(model.Password, "salam_cse_10_R");
             bool result = _userManager.UpdatePassword(model);
             if (result)
-                return RedirectToAction("Home");
+                return RedirectToAction("LogIn","Login",new {area=""});
             return RedirectToAction("ChangePassword");
         }
     }

@@ -7,6 +7,7 @@ using NBL.Models.EntityModels.Securities;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Reports;
 
 namespace NBL.DAL
 {
@@ -610,6 +611,56 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect Login History by Date", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<OrderHistory> GetDistributionSetOrders()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetDistributionSetOrders";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<OrderHistory> orders=new List<OrderHistory>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    orders.Add(new OrderHistory
+                    {
+                        OrderId = Convert.ToInt64(reader["OrderId"]),
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        BranchName =reader["BranchName"].ToString(),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        ClientName = reader["ClientName"].ToString(),
+                        SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        Status = Convert.ToInt32(reader["OrderStatus"]),
+                        StatusDescription = reader["StatusDescription"].ToString(),
+                        DistributionPointId = Convert.ToInt32(reader["DistributionCenterId"]),
+                        DistributionCenter = reader["DistributionCenter"].ToString(),
+                        OrderSlipNo = reader["OrderSlipNo"].ToString(),
+                        OrderRef = reader["OrderRef"].ToString(),
+                        DistributionPointSetByUserId = Convert.ToInt32(reader["DistributionPointSetByUserId"]),
+                        DistributionPointSetDateTime = Convert.ToDateTime(reader["DistributionPointSetDateTime"]),
+                        DistributionPointSetBy = reader["DistributionPointSetBy"].ToString(),
+                        InvoiceRef = reader["InvoiceRef"].ToString(),
+                        ClientTypeName = reader["ClientTypeName"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"])
+                    });
+                }
+                reader.Close();
+                return orders;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect Distribution Set Orders  History", exception);
             }
             finally
             {

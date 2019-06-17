@@ -6962,6 +6962,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\ok.png" />
     <Content Include="Images\sign.png" />
     <Content Include="Images\a_battery_logo.png" />
     <Content Include="Images\banner1.jpg" />
@@ -7112,6 +7113,7 @@
     <Content Include="Images\Signatures\ed93c2be58.png" />
     <Content Include="Images\Signatures\fdc58ea570.png" />
     <Content Include="Images\User.jpg" />
+    <Content Include="Images\wrong.png" />
     <Content Include="Logs\Error_log_Xml_file.xml" />
     <Content Include="ReportViewerWebForm.aspx" />
     <Content Include="Scripts\angular.min.js" />
@@ -8088,6 +8090,8 @@
     <Content Include="Areas\Production\Views\Requisition\GeneralRequisitionList.cshtml" />
     <Content Include="Areas\Production\Views\Shared\_ViewGeneralRequisitionDetailsPartialPage.cshtml" />
     <Content Include="Areas\SuperAdmin\Views\Home\LogInHistory.cshtml" />
+    <Content Include="Areas\SCM\Views\Order\ApprovedOrder.cshtml" />
+    <Content Include="Areas\SCM\Views\Shared\_ViewApprovedOrdersByScm.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
