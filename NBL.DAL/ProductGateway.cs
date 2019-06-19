@@ -1194,7 +1194,8 @@ namespace NBL.DAL
                         RequisitionRef = reader["RequisitionRef"].ToString(),
                         LastApproverUserId = DBNull.Value.Equals(reader["LastApproverUserId"])?default(int):Convert.ToInt32(reader["LastApproverUserId"]),
                         LastApproveDateTime = DBNull.Value.Equals(reader["LastApproveDateTime"])?default(DateTime):Convert.ToDateTime(reader["LastApproveDateTime"]),
-                        LastApproverEmp = DBNull.Value.Equals(reader["LastApproverEmpName"])?null:reader["LastApproverEmpName"].ToString()
+                        LastApproverEmp = DBNull.Value.Equals(reader["LastApproverEmpName"])?null:reader["LastApproverEmpName"].ToString(),
+                        DeliveryStatus = Convert.ToInt32(reader["DeliveryStatus"])
 
                     });
                 }

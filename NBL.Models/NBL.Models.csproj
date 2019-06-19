@@ -196,6 +196,7 @@
     <Compile Include="ViewModels\Replaces\ViewReplaceDetailsModel.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceModel.cs" />
     <Compile Include="ViewModels\Reports\OrderHistory.cs" />
+    <Compile Include="ViewModels\Reports\UserWiseOrder.cs" />
     <Compile Include="ViewModels\Requisitions\ViewCreateGeneralRequsitionModel.cs" />
     <Compile Include="ViewModels\Requisitions\ViewGeneralRequisitionModel.cs" />
     <Compile Include="ViewModels\Requisitions\ViewGeneralRequistionDetailsModel.cs" />

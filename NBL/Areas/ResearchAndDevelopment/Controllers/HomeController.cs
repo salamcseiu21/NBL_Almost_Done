@@ -6,9 +6,7 @@ using System.Xml.Linq;
 using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.Models;
-using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Requisitions;
-using NBL.Models.EntityModels.Securities;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Requisitions;
@@ -155,6 +153,7 @@ namespace NBL.Areas.ResearchAndDevelopment.Controllers
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 msgSuccessErrorModel.Message = "<p style='colore:red'>" + exception.Message + "</p>";
             }
             return Json(msgSuccessErrorModel, JsonRequestBehavior.AllowGet);

@@ -40,5 +40,6 @@ namespace NBL.BLL.Contracts
         ICollection<ViewProduct> GetTotalStock();
         ICollection<ViewLoginInfo> GetLoginHistoryByDate(DateTime date);
         ICollection<OrderHistory> GetDistributionSetOrders();
+        ICollection<UserWiseOrder> UserWiseOrders();
     }
 }

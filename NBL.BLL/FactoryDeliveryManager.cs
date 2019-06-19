@@ -79,7 +79,7 @@ namespace NBL.BLL
 
         private string GenerateDispatchReference(int maxDispatchNo)
         {
-            string refCode = _commonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(Models.Enums.ReferenceType.Dispatch)).Code;
+            string refCode = _commonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(ReferenceType.Dispatch)).Code;
             string temp = (maxDispatchNo + 1).ToString();
             string reference = DateTime.Now.Year.ToString().Substring(2, 2) + refCode + temp;
             return reference;
@@ -89,7 +89,7 @@ namespace NBL.BLL
 
         public bool SaveDeliveredGeneralRequisition(List<ScannedProduct> scannedProducts, Delivery aDelivery)
         {
-            string refCode = _iCommonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(ReferenceType.Distribution)).Code;
+            string refCode = _commonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(ReferenceType.Distribution)).Code;
             aDelivery.VoucherNo = GetMaxVoucherNoByTransactionInfix(refCode);
             int maxRefNo = _inventoryGateway.GetMaxDeliveryRefNoOfCurrentYear();
             aDelivery.DeliveryRef = GenerateDeliveryReference(maxRefNo);

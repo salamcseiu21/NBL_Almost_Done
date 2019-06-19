@@ -25,6 +25,7 @@ namespace NBL.Models.ViewModels.Requisitions
         public int Status { get; set; } 
         public string EntryStatus { get; set; }
         public string IsCancelled { get; set; }
+        public int DeliveryStatus { get; set; } 
         public DateTime SystemDateTime { get; set; }
         public ICollection<ViewGeneralRequistionDetailsModel> GeneralRequistionDetails { get; set; }
         public ICollection<ApprovalDetails> ApprovalDetails { get; set; } 

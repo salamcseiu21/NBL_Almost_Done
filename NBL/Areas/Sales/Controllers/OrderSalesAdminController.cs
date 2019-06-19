@@ -254,6 +254,31 @@ namespace NBL.Areas.Sales.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+        public ActionResult ApprovedOrderList() 
+        {
+            try
+            {
+                SummaryModel model = new SummaryModel();
+                var user = (ViewUser)Session["user"];
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var orders = _iInvoiceManager.GetAllInvoicedOrdersByBranchCompanyAndUserId(branchId, companyId, user.UserId).ToList();
+                foreach (Invoice invoice in orders)
+                {
+                    var order = _iOrderManager.GetOrderInfoByTransactionRef(invoice.TransactionRef);
+                    invoice.Client = _iClientManager.GetById(order.ClientId);
+                }
+                model.InvoicedOrderList = orders;
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
 
         public ActionResult Cancel(int id)
         {

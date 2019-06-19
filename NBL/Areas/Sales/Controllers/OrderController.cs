@@ -64,9 +64,10 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
+                var user = (ViewUser)Session["user"];
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
-                var orders = _iOrderManager.GetLatestOrdersByBranchAndCompanyId(branchId, companyId).OrderByDescending(n => n.OrderId).ToList();
+                var orders = _iOrderManager.GetLatestOrdersByBranchAndCompanyId(branchId, companyId).OrderByDescending(n => n.OrderId).ToList().FindAll(n=>n.UserId==user.UserId);
                 ViewBag.Heading = "Latest Orders";
                 return PartialView("_ViewOrdersPartialPage", orders);
             }

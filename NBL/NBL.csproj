@@ -8092,6 +8092,7 @@
     <Content Include="Areas\SuperAdmin\Views\Home\LogInHistory.cshtml" />
     <Content Include="Areas\SCM\Views\Order\ApprovedOrder.cshtml" />
     <Content Include="Areas\SCM\Views\Shared\_ViewApprovedOrdersByScm.cshtml" />
+    <Content Include="Areas\Sales\Views\OrderSalesAdmin\ApprovedOrderList.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />

@@ -41,21 +41,40 @@ namespace NBL.Areas.ResearchAndDevelopment.Controllers
         {
             var barcode = collection["BarCode"];
 
+            int status = _iInventoryManager.GetProductStatusInFactoryByBarCode(barcode);
+            int bStatus = _iInventoryManager.GetProductStatusInBranchInventoryByBarCode(barcode);
+
+
             var product = _iInventoryManager.GetProductLifeCycleByBarcode(barcode);
 
             bool isSoldFromFactory = _iReportManager.IsDistributedFromFactory(barcode);
             var updatedInFactory = _iReportManager.IsAllreadyUpdatedSaleDateInFactory(barcode);
             var updatedInBranch = _iReportManager.IsAllreadyUpdatedSaleDateInBranch(barcode);
             bool isSoldFromBranch = _iReportManager.IsDistributedFromBranch(barcode);
+
             if (isSoldFromBranch)
             {
                 var prod=_iReportManager.GetDistributedProductFromBranch(barcode);
-                product.DispatchDate = prod.DeliveryDate;
+                product.DistributioDate = prod.DeliveryDate;
+                product.Client.ClientName = prod.ClientCommercialName;
+                product.Client.SubSubSubAccountCode = prod.ClientAccountCode;
+
+                product.Order.OrderId = Convert.ToInt32(prod.OrderId);
+                product.Order.OrederRef = prod.OrderRef;
+                product.Order.InvoiceRef = prod.InvoiceRef;
+
+
             }
             else if (isSoldFromFactory)
             {
                 var prod = _iReportManager.GetDistributedProductFromFactory(barcode);
-                product.DispatchDate = prod.DeliveryDate;
+                product.DistributioDate = prod.DeliveryDate;
+                product.Client.ClientName = prod.ClientCommercialName;
+                product.Client.SubSubSubAccountCode = prod.ClientAccountCode;
+
+                product.Order.OrderId = Convert.ToInt32(prod.OrderId);
+                product.Order.OrederRef = prod.OrderRef;
+                product.Order.InvoiceRef = prod.InvoiceRef;
             }
             if (updatedInFactory)
             {

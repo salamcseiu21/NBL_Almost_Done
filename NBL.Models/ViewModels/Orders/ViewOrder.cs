@@ -56,6 +56,7 @@ namespace NBL.Models.ViewModels.Orders
         public DateTime DeliveryDateTime { get; set; }
         public int DeliveredByUserId { get; set; }
         public string OrederRef { get; set; }
+        public string InvoiceRef { get; set; }
         public char Cancel { get; set; }
         public int VerificationStatus { get; set; } 
         public string ResonOfCancel { get; set; }

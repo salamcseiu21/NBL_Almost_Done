@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Branches;
+using NBL.Models.Logs;
 
 namespace NBL.Areas.Editor.Controllers
 {
@@ -48,7 +49,8 @@ namespace NBL.Areas.Editor.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.Error = e?.Message;
+                Log.WriteErrorLog(e);
+                ViewBag.Error = e.Message;
                 return View();
             }
 

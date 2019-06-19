@@ -9,6 +9,7 @@ using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Locations;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Clients;
 
@@ -56,6 +57,7 @@ namespace NBL.Areas.Editor.Controllers
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 TempData["Error"] = exception.Message;
                 throw;
             }
@@ -136,6 +138,7 @@ namespace NBL.Areas.Editor.Controllers
             }
             catch (Exception e)
             {
+                Log.WriteErrorLog(e);
                 if (e.InnerException != null)
                     ViewBag.Error = e.Message + " <br /> System Error:" + e.InnerException.Message;
                 ViewBag.ClientTypes = _iCommonManager.GetAllClientType().ToList();
@@ -203,6 +206,7 @@ namespace NBL.Areas.Editor.Controllers
             }
             catch (Exception e)
             {
+                Log.WriteErrorLog(e);
                 if (e.InnerException != null)
                     ViewBag.Msg = e.InnerException.Message;
                 return View();
@@ -264,6 +268,7 @@ namespace NBL.Areas.Editor.Controllers
             }
             catch(Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 Client client = _iClientManager.GetById(id);
                 ViewBag.BranchId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName");
                 ViewBag.TerritoryId = new SelectList(_iTerritoryManager.GetAll().ToList().FindAll(n => n.RegionId == client.RegionId), "TerritoryId", "TerritoryName");

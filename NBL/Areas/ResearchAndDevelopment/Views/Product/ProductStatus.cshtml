@@ -43,109 +43,29 @@
                 <h3 class="panel-title text-center">Product Life Cycle</h3>
             </div>
             <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-5 text-right">
-                                <label for="ProductName" class="control-label">Product Name :</label>
-                            </div>
-                            <div class="col-md-7">
-                                <label id="ProductName">@m.ProductName</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-5 text-right">
-                                <label for="ProductionDate" class="control-label">Production Date :</label>
-                            </div>
-                            <div class="col-md-7">
-                                <label id="ProductionDate">@m.ProductionDate.ToString("D")</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-5 text-right">
-                                <label for="ComeTofactoryInventory" class="control-label">Come to Store :</label>
-                            </div>
-                            <div class="col-md-7">
-                                <label id="ComeTofactoryInventory">@m.ComeIntoInventory.ToString("D")</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-5 text-right">
-                                <label for="LifeTime" class="control-label">Dispatch Date :</label>
-                            </div>
-                            <div class="col-md-7">
-                                <label id="LifeTime">@m.DispatchDate.ToString("D")</label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-5 text-right">
-                                <label for="RemainingLife" class="control-label">Receive date :</label>
-                            </div>
-                            <div class="col-md-7">
-                                <label id="RemainingLife">@m.ReceiveDate</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-5 text-right">
-                                <label for="Age" class="control-label">Sale Date :</label>
-                            </div>
-                            <div class="col-md-7">
-                                <label id="Age">@m.SaleDate.ToString()</label>
-                            </div>
-                        </div>
-                    </div>
-                    
-
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-5 text-right">
-                                <label for="LifeTime" class="control-label">Life Time :</label>
-                            </div>
-                            <div class="col-md-7">
-                                <label id="LifeTime">@m.LifeTime</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-5 text-right">
-                                <label for="Age" class="control-label">Product Age :</label>
-                            </div>
-                            <div class="col-md-7">
-                                <label id="Age">@m.Age</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-5 text-right">
-                                <label for="RemainingLife" class="control-label">Remaining Life :</label>
-                            </div>
-                            <div class="col-md-7">
-                                <label id="RemainingLife">@m.RemainingLifeTime</label>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            
+                
+                <table class="table table-responsive table-bordered">
+                    <tr>
+                        <td>Product Name :</td>
+                        <td>@m.ProductName</td>
+                    </tr>
+                    <tr>
+                        <td>Production Date :</td>
+                        <td>@m.ProductionDate.ToString("D")</td>
+                    </tr>
+                    <tr>
+                        <td>Come to Store :</td>
+                        <td>@m.ComeIntoInventory.ToString("D")</td>
+                    </tr>
+                    <tr>
+                        <td>Dispatch Date :</td>
+                        <td>@m.DispatchDate.ToString("D")</td>
+                    </tr>
+                    <tr>
+                        <td>Age :</td>
+                        <td>@m.Age</td>
+                    </tr>
+                </table>
 
             </div>
             <div class="panel-footer">

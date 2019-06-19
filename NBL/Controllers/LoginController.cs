@@ -11,12 +11,10 @@ using System.Web.Security;
 using AutoMapper;
 using NBL.BLL;
 using NBL.BLL.Contracts;
-using NBL.Models;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
-using NBL.Models.ViewModels.Logs;
 
 namespace NBL.Controllers
 {
@@ -57,6 +55,7 @@ namespace NBL.Controllers
 
             try
             {
+                //GetRealIpAddress();
                 //int roleId = Convert.ToInt32(collection["RoleId"]);
                 User user = new User();
                 string userName = collection["userName"];
@@ -64,8 +63,11 @@ namespace NBL.Controllers
                 user.Password = password;
                 user.UserName = userName;
 
-               var userLocation = GetUserLocation();
-               // var userLocation=new UserLocation();
+               //var userLocation = GetUserLocation();
+                var userLocation=new UserLocation
+                {
+                    IPAddress = GetRealIpAddress()
+                };
                 bool validUser = _userManager.ValidateUser(user);
 
                 if (validUser)
@@ -200,8 +202,8 @@ namespace NBL.Controllers
         }
         public ActionResult Logout()
         {
-              var userLocation = GetUserLocation();
-            //var userLocation = new UserLocation {IsValidLogin = 1};
+             // var userLocation = GetUserLocation();
+            var userLocation = new UserLocation {IsValidLogin = 1,IPAddress = GetRealIpAddress()};
             FormsAuthentication.SignOut();
             var user = (ViewUser)Session["user"];
             user.LogOutDateTime = DateTime.Now;
@@ -258,11 +260,12 @@ namespace NBL.Controllers
 
         public string GetRealIpAddress()
         {
-            var strIpAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? Request.ServerVariables["REMOTE_ADDR"];
+           var strIpAddress = Request.UserHostAddress;
+           //var strIpAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? Request.ServerVariables["REMOTE_ADDR"];
             return strIpAddress;
         }
 
-
+        //---- not used..---------------
 
         public UserLocation GetUserLocation()
         {
@@ -286,6 +289,27 @@ namespace NBL.Controllers
                 //gvLocation.DataBind();
                 return location;
             }
+        }
+        //---- not used..---------------
+        public UserLocation UserLocation()
+        {
+            string ipAddress = Request.UserHostAddress;
+            var name = Request.UserHostName;
+            //if (string.IsNullOrEmpty(ipAddress))
+            //{
+            //    ipAddress = Request.ServerVariables["REMOTE_ADDR"];
+            //}
+            //Request.UseDefaultCredentials = true;
+            UserLocation location = new UserLocation();
+            string url = string.Format("http://freegeoip.net/json/{0}", "203.190.34.90");
+            using (WebClient client = new WebClient())
+            {
+                client.Headers.Add("user-agent", "ASP.NET WebClient");
+                string json = client.DownloadString(url);
+                location = new JavaScriptSerializer().Deserialize<UserLocation>(json);
+            }
+
+            return location;
         }
     }
 }

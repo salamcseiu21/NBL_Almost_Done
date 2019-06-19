@@ -5,6 +5,7 @@ using NBL.Models.EntityModels.Locations;
 using NBL.Models.SummaryModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
+using NBL.Models.ViewModels.Reports;
 
 namespace NBL.Models.ViewModels.Summaries
 {
@@ -42,6 +43,7 @@ namespace NBL.Models.ViewModels.Summaries
         public IEnumerable<Department> Departments { get; set; }
         public IEnumerable<Territory> Territories { get; set; }
         public IEnumerable<Region> Regions { get; set; }
+        public ICollection<UserWiseOrder> UserWiseOrders { get; set; }  
 
         public ViewTotalProduction Production { get; set; }
         public ViewTotalDispatch Dispatch { get; set; }

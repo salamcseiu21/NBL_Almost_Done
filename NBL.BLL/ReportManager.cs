@@ -256,5 +256,10 @@ namespace NBL.BLL
         {
             return _iReportGateway.GetDistributionSetOrders();
         }
+
+        public ICollection<UserWiseOrder> UserWiseOrders()
+        {
+            return _iReportGateway.UserWiseOrders();
+        }
     }
 }

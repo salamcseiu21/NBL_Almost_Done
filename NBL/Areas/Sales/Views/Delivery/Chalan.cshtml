@@ -1,6 +1,9 @@
 ﻿
 @using NBL.Models.EntityModels.Deliveries
 @model NBL.Models.ViewModels.ViewChalanModel
+    @{
+        var delivery = Model.DeliveryDetailses.ToList().First();
+    }
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,8 +40,8 @@
             <div class="row">
                 <div class="col-xs-12">
                     <h2 class="page-header">
-                        Ref No : @Model.DeliveryDetailses.ToList().First().DeliveryRef
-                        <small class="pull-right">Date: @DateTime.Now.Date.ToString("D")</small>
+                        Delivery Ref : @delivery.DeliveryRef
+                        <small class="pull-right">Date: @delivery.DeliveryDate.ToString("D")</small>
                     </h2>
                 </div>
                 <!-- /.col -->

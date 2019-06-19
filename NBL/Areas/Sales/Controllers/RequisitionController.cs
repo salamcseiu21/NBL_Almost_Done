@@ -51,7 +51,7 @@ namespace NBL.Areas.Sales.Controllers
             try
             {
                 var branchId = Convert.ToInt32(Session["BranchId"]);
-                var requisitions = _iProductManager.GetAllGeneralRequisitions().ToList().FindAll(n => n.DistributionPointId == branchId).FindAll(n => n.Status.Equals(2));
+                var requisitions = _iProductManager.GetAllGeneralRequisitions().ToList().FindAll(n => n.DistributionPointId == branchId).FindAll(n => n.Status.Equals(2)).ToList().FindAll(n => n.DeliveryStatus.Equals(0));
                 return PartialView("_ViewGeneralRequisitionList", requisitions);
             }
             catch (Exception exception)

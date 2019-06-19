@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Web.UI.WebControls;
+using NBL.Models.EntityModels.Clients;
+using NBL.Models.EntityModels.Orders;
+using NBL.Models.ViewModels.Orders;
+
 namespace NBL.Models.ViewModels.Products
 {
     public class ViewProductLifeCycleModel
@@ -15,6 +20,14 @@ namespace NBL.Models.ViewModels.Products
         public int Age { get; set; }
         public int LifeTime { get; set; }
         public int RemainingLifeTime => LifeTime - Age;
-        public int Status { get; set; }  
+        public int Status { get; set; }
+        public Client Client { get; set; }
+        public ViewOrder Order { get; set; }
+
+        public ViewProductLifeCycleModel()
+        {
+            Client=new Client();
+            Order=new ViewOrder();
+        }
     }
 }

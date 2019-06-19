@@ -333,20 +333,20 @@ namespace NBL.DAL
                         BarCode = reader["ProductBarCode"].ToString(),
                         DeliveryDate = Convert.ToDateTime(reader["TransactionDate"]),
                         DeliveryId = Convert.ToInt64(reader["DeliveryId"]),
-                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        DeliveryRef = DBNull.Value.Equals(reader["DeliveryRef"]) ? null : reader["DeliveryRef"].ToString(),
                         DeliveredByUserId = DBNull.Value.Equals(reader["DeliveredByUserId"]) ? default(int) : Convert.ToInt32(reader["DeliveredByUserId"]),
                         DistributionPointId = DBNull.Value.Equals(reader["DistributionCenterId"]) ? default(int) : Convert.ToInt32(reader["DistributionCenterId"]),
                         OrderId = DBNull.Value.Equals(reader["OrderId"]) ? default(long) : Convert.ToInt64(reader["OrderId"]),
                         BranchId = Convert.ToInt32(reader["BranchId"]),
-                        OrderRef = reader["OrderRef"].ToString(),
+                        OrderRef = DBNull.Value.Equals(reader["OrderRef"]) ? null : reader["OrderRef"].ToString(),
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
-                        InvoiceRef = reader["InvoiceRef"].ToString(),
-                        InvoiceId = Convert.ToInt64(reader["InvoiceId"]),
-                        ClientId = Convert.ToInt32(reader["ClientId"]),
-                        ClientCommercialName = DBNull.Value.Equals(reader["CommercialName"])?null:reader["CommercialName"].ToString(),
+                        InvoiceRef = DBNull.Value.Equals(reader["InvoiceRef"]) ? null: reader["InvoiceRef"].ToString(),
+                        InvoiceId = DBNull.Value.Equals(reader["InvoiceId"]) ? default(long) : Convert.ToInt64(reader["InvoiceId"]),
+                        ClientId = DBNull.Value.Equals(reader["ClientId"]) ? default(int): Convert.ToInt32(reader["ClientId"]),
+                        ClientCommercialName = DBNull.Value.Equals(reader["CommercialName"])? null:reader["CommercialName"].ToString(),
                         ClientName = DBNull.Value.Equals(reader["ClientName"]) ? null : reader["ClientName"].ToString(),
                         ClientAccountCode = reader["SubSubSubAccountCode"].ToString(),
-                        IsSaleDateUpdated = !DBNull.Value.Equals(reader["SaleDateUpdateByUserId"])
+                        IsSaleDateUpdated =!DBNull.Value.Equals(reader["SaleDateUpdateByUserId"])
 
                     });
                 }
@@ -391,11 +391,11 @@ namespace NBL.DAL
                         DeliveredByUserId = DBNull.Value.Equals(reader["DeliveredByUserId"]) ? default(int) : Convert.ToInt32(reader["DeliveredByUserId"]),
                         DistributionPointId = DBNull.Value.Equals(reader["DistributionCenterId"]) ? default(int) : Convert.ToInt32(reader["DistributionCenterId"]),
                         OrderId = DBNull.Value.Equals(reader["OrderId"]) ? default(long): Convert.ToInt64(reader["OrderId"]),
-                        OrderRef = reader["OrderRef"].ToString(),
+                        OrderRef = DBNull.Value.Equals(reader["OrderRef"]) ? null : reader["OrderRef"].ToString(),
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
-                        InvoiceRef = reader["InvoiceRef"].ToString(),
-                        InvoiceId = Convert.ToInt64(reader["InvoiceId"]),
-                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        InvoiceRef = DBNull.Value.Equals(reader["InvoiceRef"])? null: reader["InvoiceRef"].ToString(),
+                        InvoiceId = DBNull.Value.Equals(reader["InvoiceId"]) ? default(int) : Convert.ToInt64(reader["InvoiceId"]),
+                        ClientId = DBNull.Value.Equals(reader["ClientId"])? default(int): Convert.ToInt32(reader["ClientId"]),
                         ClientCommercialName = DBNull.Value.Equals(reader["CommercialName"]) ? null : reader["CommercialName"].ToString(),
                         ClientName = DBNull.Value.Equals(reader["ClientName"]) ? null : reader["ClientName"].ToString(),
                         ClientAccountCode = reader["SubSubSubAccountCode"].ToString(),
@@ -661,6 +661,53 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect Distribution Set Orders  History", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<UserWiseOrder> UserWiseOrders()
+        {
+            try
+            {
+
+                CommandObj.CommandText = "UDSP_RptGetUserWiseTotalOrder";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<UserWiseOrder> orders=new List<UserWiseOrder>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    orders.Add(new UserWiseOrder
+                    {
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        UserName = reader["UserName"].ToString(),
+                        EmployeeName = DBNull.Value.Equals(reader["EmployeeName"]) ? null : reader["EmployeeName"].ToString(),
+                        Email = DBNull.Value.Equals(reader["EmailAddress"])?null: reader["EmailAddress"].ToString(),
+                        AlternatePhone = DBNull.Value.Equals(reader["AlternatePhone"]) ? null : reader["AlternatePhone"].ToString(),
+                        Phone = DBNull.Value.Equals(reader["Phone"]) ? null : reader["Phone"].ToString(),
+                        EmployeeImage = DBNull.Value.Equals(reader["EmployeeImage"]) ? null : reader["EmployeeImage"].ToString(),
+                        EmployeeSignature = DBNull.Value.Equals(reader["EmployeeSignature"]) ? null : reader["EmployeeSignature"].ToString(),
+                        SubSubSubAccountCode = DBNull.Value.Equals(reader["SubSubSubAccountCode"]) ? null : reader["SubSubSubAccountCode"].ToString(),
+                        Designation = DBNull.Value.Equals(reader["DesignationName"]) ? null : reader["DesignationName"].ToString(),
+                        Department = DBNull.Value.Equals(reader["DepartmentName"]) ? null : reader["DepartmentName"].ToString(),
+                        Branch = DBNull.Value.Equals(reader["BranchName"]) ? null : reader["BranchName"].ToString(),
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        TotalOrder = Convert.ToInt32(reader["TotalOrder"])
+                    });
+                }
+                reader.Close();
+                return orders;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect user wise Orders ", exception);
             }
             finally
             {
