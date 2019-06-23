@@ -1,0 +1,84 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.TransferProducts.ViewTripDetailsModel>
+@{
+    ViewBag.Title = "Trip Details";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+   var branch= Model.ToList().First().ToBranch;
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Trip Details
+    </h3>
+    
+    <div class="table-responsive">
+        <table class="display table-bordered" id="tbl_Trip_Details" style="border:1px solid black">
+            <thead>
+            <tr>
+                <td colspan="2">
+                    @Html.ActionLink(" Back To List", "TripList", "Transfer",new { area="Production"}, new {  @class = "fa fa-arrow-left btn btn-info btn-sm" }) 
+                </td>
+                <td colspan="2">
+                    <strong>Dispatched To:</strong> @branch.BranchName,@branch.BranchAddress<br/>
+                    <strong> Total Quantity : @Model.Sum(n => n.Quantity)</strong>
+                </td>
+            </tr>
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th class="text-right">Quantity</th>
+                <th class="text-center">Action</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.ProductCategoryName</td>
+                    @if (item.TripStatus == 0)
+                    {
+                        <td  class="text-right"><input type="number" id="@item.TripItemId" value="@item.Quantity" class="form-control text-right" onchange='UpdateQuantity(this)'/></td>
+                        <td class="text-center"> <i class="fa fa-spinner"> Pending</i></td>               
+                    }
+                    else
+                    {
+                        <td  class="text-right">@item.Quantity</td>
+                        <td class="text-center">
+                            <i class="fa fa-check-circle text-green"> Dispatched</i>
+                        </td>    
+                    }
+                   
+                </tr>
+            }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th  class="text-right">Quantity</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</section>
+@section Scripts
+{
+    <script>
+        $("#tbl_Trip_Details").DataTable();
+        function UpdateQuantity(btnClicked) {
+            var id = btnClicked.id;
+            var qty = parseInt(btnClicked.value);
+            var json = { id: id, quantity: qty };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdateTripItemQuantity", "Transfer",new {area="Production"})',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    window.location.reload();
+                }
+            });
+        }
+    </script>
+}

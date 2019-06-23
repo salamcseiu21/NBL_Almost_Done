@@ -1,15 +1,19 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using NBL.BLL.Contracts;
 using NBL.DAL;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Clients;
+using NBL.Models.EntityModels.Locations;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Clients;
 using NBL.Models.ViewModels.Logs;
 
 namespace NBL.Areas.Sales.Controllers
@@ -24,13 +28,17 @@ namespace NBL.Areas.Sales.Controllers
         private readonly IClientManager _iClientManager;
         private readonly IRegionManager _iRegionManager;
         private readonly ITerritoryGateway _iTerritoryGateway;
+        private readonly IDistrictManager _iDistrictManager;
+        private readonly IBranchManager _iBranchManager;
         // GET: Sales/Client
-        public ClientController(IClientManager iClientManager,ICommonManager iCommonManager,IRegionManager iRegionManager,ITerritoryGateway iTerritoryGateway)
+        public ClientController(IClientManager iClientManager,ICommonManager iCommonManager,IRegionManager iRegionManager,ITerritoryGateway iTerritoryGateway,IDistrictManager iDistrictManager,IBranchManager iBranchManager)
         {
             _iClientManager = iClientManager;
             _iCommonManager = iCommonManager;
             _iRegionManager = iRegionManager;
             _iTerritoryGateway = iTerritoryGateway;
+            _iDistrictManager = iDistrictManager;
+            _iBranchManager = iBranchManager;
         }
         public ActionResult All()
         {
@@ -58,8 +66,14 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
-                ViewBag.Regions = _iRegionManager.GetAll().ToList();
-                ViewBag.ClientTypes = _iCommonManager.GetAllClientType().ToList();
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                ViewBag.BranchId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName",branchId);
+                ViewBag.RegionId = new SelectList(_iRegionManager.GetAll(), "RegionId", "RegionName");
+                ViewBag.ClientTypeId = new SelectList(_iCommonManager.GetAllClientType(), "ClientTypeId", "ClientTypeName");
+                ViewBag.DistrictId = new SelectList(_iDistrictManager.GetAll().ToList(), "DistrictId", "DistrictName");
+                ViewBag.UpazillaId = new SelectList(new List<Upazilla>(), "UpazillaId", "UpzillaName");
+                ViewBag.PostOfficeId = new SelectList(new List<PostOffice>(), "PostOfficeId", "PostOfficeName");
+                ViewBag.TerritoryId = new SelectList(new List<Territory>(), "TerritoryId", "TerritoryName");
                 return View();
             }
             catch (Exception exception)
@@ -72,74 +86,71 @@ namespace NBL.Areas.Sales.Controllers
 
         // POST: Sales/Client/AddNewClient
         [HttpPost]
-        public ActionResult AddNewClient(FormCollection collection, HttpPostedFileBase file, HttpPostedFileBase ClientSignature)
+        public ActionResult AddNewClient(ViewCreateClientModel model, HttpPostedFileBase ClientImage, HttpPostedFileBase clientSignature)
         {
             int branchId = Convert.ToInt32(Session["BranchId"]);
             int companyId = Convert.ToInt32(Session["CompanyId"]);
             try
             {
-
                 var user = (ViewUser)Session["user"];
-                Client client = new Client
+                var client = Mapper.Map<ViewCreateClientModel, Client>(model);
+                client.UserId = user.UserId;
+                if (ClientImage != null)
                 {
-                    ClientName = collection["ClientName"],
-                    Address = collection["Address"],
-                    PostOfficeId = Convert.ToInt32(collection["PostOfficeId"]),
-                    ClientTypeId = Convert.ToInt32(collection["ClientTypeId"]),
-                    Phone = collection["phone"],
-                    AlternatePhone = collection["AlternatePhone"],
-                    Gender = collection["Gender"],
-                    Fax = collection["Fax"],
-                    Email = collection["Email"],
-                    Website = collection["Website"],
-                    UserId = user.UserId,
-                    BranchId = branchId,
-                    NationalIdNo = collection["NationalIdNo"],
-                    TinNo = collection["TinNo"],
-                    TerritoryId = Convert.ToInt32(collection["TerritoryId"]),
-                    RegionId = Convert.ToInt32(collection["RegionId"]),
-                    CompanyId = companyId
 
-                };
-                if (file != null)
-                {
-                    string ext = Path.GetExtension(file.FileName);
-                    string image = Guid.NewGuid().ToString().Replace("-", "").ToLower().Substring(2, 8) + ext;
-                    string path = Path.Combine(
-                        Server.MapPath("~/Images/Client/Photos"), image);
-                    // file is uploaded
-                    file.SaveAs(path);
-                    client.ClientImage = "Images/Client/Photos/" + image;
+
+                    var ext = Path.GetExtension(ClientImage.FileName)?.ToLower();
+                    if (ext == ".jpeg" || ext == ".jpg" || ext == ".png")
+                    {
+                        string image = Guid.NewGuid().ToString().Replace("-", "").ToLower().Substring(2, 8) + ext;
+
+                        string path = Path.Combine(
+                            Server.MapPath("~/Images/Client/Photos"), image);
+                        // file is uploaded
+                        ClientImage.SaveAs(path);
+                        client.ClientImage = "Images/Client/Photos/" + image;
+                    }
+
                 }
-                else
+
+                if (clientSignature != null)
                 {
-                    client.ClientImage = "";
-                }
-                if (ClientSignature != null)
-                {
-                    string ext = Path.GetExtension(ClientSignature.FileName);
-                    string sign = Guid.NewGuid().ToString().Replace("-", "").ToLower().Substring(2, 8) + ext;
-                    string path = Path.Combine(
-                        Server.MapPath("~/Images/Client/Signatures"), sign);
-                    // file is uploaded
-                    ClientSignature.SaveAs(path);
-                    client.ClientSignature = "Images/Client/Signatures/" + sign;
-                }
-                else
-                {
-                    client.ClientSignature = "";
+                    string ext = Path.GetExtension(clientSignature.FileName)?.ToLower();
+                    if (ext == ".jpeg" || ext == ".jpg" || ext == ".png")
+                    {
+                        string sign = Guid.NewGuid().ToString().Replace("-", "").ToLower().Substring(2, 8) + ext;
+                        string path = Path.Combine(
+                            Server.MapPath("~/Images/Client/Signatures"), sign);
+                        // file is uploaded
+                        clientSignature.SaveAs(path);
+                        client.ClientSignature = "Images/Client/Signatures/" + sign;
+                    }
+
                 }
                 bool result = _iClientManager.Add(client);
-                ViewBag.ClientTypes = _iCommonManager.GetAllClientType().ToList();
-                ViewBag.Regions = _iRegionManager.GetAll().ToList();
-                ViewBag.Message = result;
+                if (result)
+                {
+                    ViewBag.Message = "Saved Successfully!";
+                }
+
+                ViewBag.BranchId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName",branchId);
+                ViewBag.RegionId = new SelectList(_iRegionManager.GetAll(), "RegionId", "RegionName");
+                ViewBag.ClientTypeId = new SelectList(_iCommonManager.GetAllClientType(), "ClientTypeId", "ClientTypeName");
+                ViewBag.DistrictId = new SelectList(_iDistrictManager.GetAll().ToList(), "DistrictId", "DistrictName");
+                ViewBag.UpazillaId = new SelectList(new List<Upazilla>(), "UpazillaId", "UpzillaName");
+                ViewBag.PostOfficeId = new SelectList(new List<PostOffice>(), "PostOfficeId", "PostOfficeName");
+                ViewBag.TerritoryId = new SelectList(new List<Territory>(), "TerritoryId", "TerritoryName");
                 return View();
 
             }
-            catch (Exception exception)
+            catch (Exception e)
             {
-                Log.WriteErrorLog(exception);
-                return PartialView("_ErrorPartial", exception);
+                Log.WriteErrorLog(e);
+                if (e.InnerException != null)
+                    ViewBag.Error = e.Message + " <br /> System Error:" + e.InnerException.Message;
+                ViewBag.ClientTypes = _iCommonManager.GetAllClientType().ToList();
+                ViewBag.Regions = _iRegionManager.GetAll().ToList();
+                return View();
             }
         }
 
@@ -237,6 +248,20 @@ namespace NBL.Areas.Sales.Controllers
             }
             return Json(client);
         }
-       
+        public ActionResult ViewClientProfile(int id)
+        {
+            try
+            {
+                var client = _iClientManager.GetClientDeailsById(id);
+                return View(client);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
     }
 }

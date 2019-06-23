@@ -113,6 +113,7 @@
     <Compile Include="Contracts\IMasterEntity.cs" />
     <Compile Include="EntityModels\Deliveries\DispatchModel.cs" />
     <Compile Include="EntityModels\Deliveries\ReceiveProductViewModel.cs" />
+    <Compile Include="EntityModels\FinanceModels\CollectionModel.cs" />
     <Compile Include="EntityModels\FinanceModels\FinancialTransactionModel.cs" />
     <Compile Include="EntityModels\FinanceModels\LedgerModel.cs" />
     <Compile Include="EntityModels\Identities\UserLocation.cs" />
@@ -243,6 +244,7 @@
     <Compile Include="ViewModels\TransferProducts\ViewTransferProductDetails.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewTransferProductModel.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewTransferRequisition.cs" />
+    <Compile Include="ViewModels\TransferProducts\ViewTripDetailsModel.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewTripModel.cs" />
     <Compile Include="ViewModels\ViewAssignedRegion.cs" />
     <Compile Include="ViewModels\ViewAssignedUpazilla.cs" />

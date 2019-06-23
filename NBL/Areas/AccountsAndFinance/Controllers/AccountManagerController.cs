@@ -9,6 +9,7 @@ using NBL.Areas.AccountsAndFinance.Models;
 using NBL.BLL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Clients;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
@@ -416,6 +417,22 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
 
             return Json(aModel, JsonRequestBehavior.AllowGet);
 
+        }
+        //--------------------------Collection List------------
+        public ActionResult CollectionList()
+        {
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                List<CollectionModel> collection= _iAccountsManager.GetTotalCollectionByBranch(branchId).ToList();
+                return View();
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
     }
 }

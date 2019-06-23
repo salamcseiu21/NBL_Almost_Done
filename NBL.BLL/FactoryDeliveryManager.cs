@@ -46,6 +46,7 @@ namespace NBL.BLL
         {
             var destination = "";
             DispatchModel dispatch = GetDispatchByDispatchId(dispatchId);
+            var viewTrip = _inventoryGateway.GetAllTrip().ToList().Find(n => n.TripId == dispatch.TripId);
             var details = GetDispatchDetailsByDispatchId(dispatchId);
             foreach (var model in details.ToList().OrderByDescending(n => n.ToBranchId).DistinctBy(n => n.ToBranchId))
             {
@@ -59,7 +60,8 @@ namespace NBL.BLL
             {
                 DispatchModel = dispatch,
                 DispatchDetails = details,
-                Destination = destination
+                Destination = destination,
+                ViewTripModel = viewTrip
             };
             return chalan;
 

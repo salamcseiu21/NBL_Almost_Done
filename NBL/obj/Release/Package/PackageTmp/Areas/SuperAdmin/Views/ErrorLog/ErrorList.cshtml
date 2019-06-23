@@ -1,11 +1,13 @@
 ﻿@model IEnumerable<NBL.Models.ViewModels.Logs.ViewWriteLogModel>
 @{
-    ViewBag.Title = "ErrorList";
+    ViewBag.Title = "Error List";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
 }
 
 <section class="content">
     <h3 class="text-center text-green">Error List</h3>
+    <div><button type='button' onclick='RemoveAll()' class='btn btn-info'><i class='fa fa-trash' style='color: red;'></i> Remove All</button><br/></div>
+    <br/>
     <div class="table-responsive">
         <table id="tbl_error_list" class="display table-bordered" style="border: 1px solid">
             <thead>
@@ -50,6 +52,25 @@
                     url: '@Url.Action("RemoveErrorById", "ErrorLog",new {area="SuperAdmin"})',
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(json),
+                    success: function (data) {
+
+                        location.reload();
+                    }
+                });
+            }
+
+
+        }
+
+        function RemoveAll() {
+
+            //alert(btnClicked.id);
+            if (confirm("Are you sure to remove All exception ??")) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("RemoveAll", "ErrorLog",new {area="SuperAdmin"})',
+                    contentType: "application/json; charset=utf-8",
+                   // data: JSON.stringify(json),
                     success: function (data) {
 
                         location.reload();

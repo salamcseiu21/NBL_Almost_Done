@@ -37,6 +37,22 @@
             @*<li>@Html.ActionLink(" Delivered Sales", "ViewDeliveredOrderList", "Sales", new { area = "Sales" }, new { @class = "fa fa-list" })</li>*@
         </ul>
     </li>
+    
+    
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-users"></i>
+            <span>Clients</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Add New", "AddNewClient", "Client", new { area = "Sales" }, new { @class = "fa fa-plus", style = "font-weight: bolder" })</li>
+            <li>@Html.ActionLink(" All", "All", "Client", new {area = "Sales"}, new {@class = "fa fa-file", style = "font-weight: bolder"})</li>
+        </ul>
+    </li>
+
     <li class="treeview">
         <a href="#">
             <i class="fa fa-shopping-cart"></i>

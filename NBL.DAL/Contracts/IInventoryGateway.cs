@@ -63,6 +63,8 @@ namespace NBL.DAL.Contracts
        ICollection<object> GetStockProductByBranchCompanyIdAndSerachTerm(int branchId, int companyId, string searchTerm);
        ICollection<object> GetFactoryStockProductBySearchTerm(string searchTerm);
        int GetStockProductQuantityInFactoryById(int productId);
-       ICollection<ViewProduct> GetRequsitionVeStockProductQtyByDistributionCenter(int distributionCenterId, int companyId); 
+       ICollection<ViewProduct> GetRequsitionVeStockProductQtyByDistributionCenter(int distributionCenterId, int companyId);
+       ICollection<ViewTripDetailsModel> GetTripItemsByTripId(long tripId);
+       int UpdateTripItemQuantity(long tripItemId, int quantity);
    }
 }

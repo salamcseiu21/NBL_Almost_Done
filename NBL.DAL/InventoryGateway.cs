@@ -2570,5 +2570,84 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public ICollection<ViewTripDetailsModel> GetTripItemsByTripId(long tripId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetTripItemsByTripId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@TripId", tripId);
+                ConnectionObj.Open();
+                List<ViewTripDetailsModel> models=new List<ViewTripDetailsModel>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ViewTripDetailsModel
+                    {
+                        TripItemId = Convert.ToInt64(reader["TripItemsId"]),
+                        TripId = tripId,
+                        CategoryId = Convert.ToInt32(reader["CategoryId"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        SystemDateTime = Convert.ToDateTime(reader["SystemDateTime"]),
+                        IsCancelled = reader["IsCancelled"].ToString(),
+                        SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        TripStatus = Convert.ToInt32(reader["Status"]),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        ToBranch = new ViewBranch
+                        {
+                            BranchName = reader["BranchName"].ToString(),
+                            BranchAddress = reader["BranchAddress"].ToString(),
+                            BranchId = Convert.ToInt32(reader["ToBranchId"])
+                           
+                        }
+                    });
+                }
+                reader.Close();
+                return models;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Colud not collect trip item list", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int UpdateTripItemQuantity(long tripItemId, int quantity)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_UpdateTripItemQuantity";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@TripItemId", tripItemId);
+                CommandObj.Parameters.AddWithValue("@Quantity", quantity);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Colud not update trip item quantity", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }

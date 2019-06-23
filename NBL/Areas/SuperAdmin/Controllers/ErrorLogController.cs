@@ -49,7 +49,25 @@ namespace NBL.Areas.SuperAdmin.Controllers
             xmlData.Save(filePath);
 
         }
+        [HttpPost]
+        public void RemoveAll()
+        {
 
+            try
+            {
+                var filePath = GetErrorLogFileXmlFilePath();
+                var xmlData = XDocument.Load(filePath);
+                xmlData.Root?.Elements().Remove();
+                xmlData.Save(filePath);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+
+
+            }
+        }
         private string GetErrorLogFileXmlFilePath()
         {
             var filePath = System.Web.HttpContext.Current.Server.MapPath("~/Logs/" + "Error_log_Xml_file.xml");

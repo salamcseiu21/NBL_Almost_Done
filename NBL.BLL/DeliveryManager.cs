@@ -84,7 +84,8 @@ namespace NBL.BLL
             var chalan = new ViewChalanModel
             {
                 DeliveryDetailses = details,
-                ViewClient = client
+                ViewClient = client,
+                DeliveryInfo = delivery
             };
             return chalan;
         }
@@ -125,7 +126,9 @@ namespace NBL.BLL
             var chalan = new ViewChalanModel
             {
                 DeliveryDetailses = details,
-                ViewClient = client
+                ViewClient = client,
+                DeliveryInfo = delivery
+                
             };
             return chalan;
         }

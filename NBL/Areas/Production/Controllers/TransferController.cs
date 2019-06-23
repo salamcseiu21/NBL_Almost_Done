@@ -221,6 +221,19 @@ namespace NBL.Areas.Production.Controllers
             return View(tripModels);
         }
 
+        public ActionResult TripDetails(long id)
+        {
+            var tripDetails = _iInventoryManager.GetTripItemsByTripId(id).ToList();
+           
+            return View(tripDetails);
+        }
+        [HttpPost]
+        public void UpdateTripItemQuantity(string id,int quantity)
+        {
+            var tripItemId = Convert.ToInt64(id);
+            bool result = _iInventoryManager.UpdateTripItemQuantity(tripItemId,quantity);
+        }
+
         public JsonResult AddRequistionToTripXmlFile(FormCollection collection)
         {
            SuccessErrorModel model=new SuccessErrorModel();

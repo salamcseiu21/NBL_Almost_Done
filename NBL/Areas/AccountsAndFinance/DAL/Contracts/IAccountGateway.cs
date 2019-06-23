@@ -3,6 +3,7 @@ using NBL.Areas.Accounts.Models;
 using NBL.Areas.AccountsAndFinance.Models;
 using NBL.Models;
 using NBL.Models.EntityModels.Clients;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.SummaryModels;
 using NBL.Models.ViewModels.FinanceModels;
@@ -80,6 +81,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL.Contracts
         AccountSummary GetAccountSummaryOfCurrentMonth(); 
         AccountSummary GetAccountSummaryofCurrentMonthByCompanyId(int companyId);
         AccountSummary GetAccountSummaryofCurrentMonthByBranchAndCompanyId(int branchId, int companyId);
-       ICollection<ViewLedgerModel> GetClientLedgerBySubSubSubAccountCode(string clientSubSubSubAccountCode);   
+       ICollection<ViewLedgerModel> GetClientLedgerBySubSubSubAccountCode(string clientSubSubSubAccountCode);
+       ICollection<CollectionModel> GetTotalCollectionByBranch(int branchId);
    }
 }

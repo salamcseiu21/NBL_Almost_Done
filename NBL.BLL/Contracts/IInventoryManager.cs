@@ -60,5 +60,7 @@ namespace NBL.BLL.Contracts
        ICollection<object> GetFactoryStockProductBySearchTerm(string prefix);
        int GetStockProductQuantityInFactoryById(int productId);
        ICollection<ViewProduct> GetRequsitionVeStockProductQtyByDistributionCenter(int distributionCenterId, int companyId);
+       ICollection<ViewTripDetailsModel> GetTripItemsByTripId(long tripId);
+       bool UpdateTripItemQuantity(long tripItemId, int quantity);
    }
 }

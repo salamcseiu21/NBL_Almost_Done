@@ -169,7 +169,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/10/2019 11:57:04</publishTime>
     </File>
     <File Include="Areas/AccountsAndFinance/Views/Shared/_MenuAccountManagerPartialPage.cshtml">
-      <publishTime>06/17/2019 11:21:37</publishTime>
+      <publishTime>06/22/2019 11:44:25</publishTime>
     </File>
     <File Include="Areas/AccountsAndFinance/Views/Shared/_MenuPartialPage.cshtml">
       <publishTime>06/17/2019 11:22:05</publishTime>
@@ -712,7 +712,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/10/2019 10:34:28</publishTime>
     </File>
     <File Include="Areas/Editor/Views/Client/Edit.cshtml">
-      <publishTime>04/01/2019 10:12:17</publishTime>
+      <publishTime>06/23/2019 11:30:55</publishTime>
     </File>
     <File Include="Areas/Editor/Views/Client/UploadClientDocument.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -1084,7 +1084,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/Production/Views/Delivery/Chalan.cshtml">
-      <publishTime>06/10/2019 10:42:29</publishTime>
+      <publishTime>06/23/2019 10:54:01</publishTime>
     </File>
     <File Include="Areas/Production/Views/Delivery/DeliverableOrderList.cshtml">
       <publishTime>05/15/2019 09:33:06</publishTime>
@@ -1102,7 +1102,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/20/2019 13:51:39</publishTime>
     </File>
     <File Include="Areas/Production/Views/Delivery/OrderChalan.cshtml">
-      <publishTime>05/20/2019 15:17:49</publishTime>
+      <publishTime>06/23/2019 11:02:56</publishTime>
     </File>
     <File Include="Areas/Production/Views/Delivery/OrderDelivery.cshtml">
       <publishTime>05/20/2019 13:50:41</publishTime>
@@ -1189,7 +1189,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/17/2019 11:24:48</publishTime>
     </File>
     <File Include="Areas/Production/Views/Shared/_MenuPartialPage.cshtml">
-      <publishTime>06/18/2019 10:46:44</publishTime>
+      <publishTime>06/23/2019 12:13:31</publishTime>
     </File>
     <File Include="Areas/Production/Views/Shared/_MenuProductionHeadPartialPage.cshtml">
       <publishTime>06/17/2019 11:25:25</publishTime>
@@ -1245,8 +1245,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Areas/Production/Views/Transfer/Transactions.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
+    <File Include="Areas/Production/Views/Transfer/TripDetails.cshtml">
+      <publishTime>06/23/2019 14:57:08</publishTime>
+    </File>
     <File Include="Areas/Production/Views/Transfer/TripList.cshtml">
-      <publishTime>05/15/2019 09:34:15</publishTime>
+      <publishTime>06/23/2019 14:40:56</publishTime>
     </File>
     <File Include="Areas/Production/Views/web.config">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -1357,10 +1360,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Client/AddNewClient.cshtml">
-      <publishTime>03/25/2019 17:37:04</publishTime>
+      <publishTime>06/23/2019 11:54:58</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Client/All.cshtml">
-      <publishTime>05/08/2019 13:52:27</publishTime>
+      <publishTime>06/23/2019 11:54:28</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Client/ClientProfile.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -1368,8 +1371,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Areas/Sales/Views/Client/Edit.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
+    <File Include="Areas/Sales/Views/Client/ViewClientProfile.cshtml">
+      <publishTime>06/23/2019 11:59:34</publishTime>
+    </File>
     <File Include="Areas/Sales/Views/Delivery/Chalan.cshtml">
-      <publishTime>06/19/2019 10:34:09</publishTime>
+      <publishTime>06/23/2019 11:10:28</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Delivery/DeleveredOrders.cshtml">
       <publishTime>06/19/2019 11:01:44</publishTime>
@@ -1618,7 +1624,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/19/2019 11:17:38</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Shared/_SalesPersonMenuPartialPage.cshtml">
-      <publishTime>06/17/2019 11:27:28</publishTime>
+      <publishTime>06/23/2019 11:26:19</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Shared/_ViewDeliveredOrdersPartialPage.cshtml">
       <publishTime>05/21/2019 09:16:55</publishTime>
@@ -1756,7 +1762,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/11/2019 11:33:16</publishTime>
     </File>
     <File Include="Areas/SuperAdmin/Views/ErrorLog/ErrorList.cshtml">
-      <publishTime>05/29/2019 10:58:18</publishTime>
+      <publishTime>06/22/2019 10:04:30</publishTime>
     </File>
     <File Include="Areas/SuperAdmin/Views/Home/AddUser.cshtml">
       <publishTime>06/16/2019 15:47:32</publishTime>
@@ -23068,16 +23074,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="bin/NBL.BLL.dll">
-      <publishTime>06/19/2019 16:26:59</publishTime>
+      <publishTime>06/23/2019 15:14:27</publishTime>
     </File>
     <File Include="bin/NBL.DAL.dll">
-      <publishTime>06/19/2019 16:26:58</publishTime>
+      <publishTime>06/23/2019 15:14:27</publishTime>
     </File>
     <File Include="bin/NBL.dll">
-      <publishTime>06/19/2019 16:27:04</publishTime>
+      <publishTime>06/23/2019 15:14:32</publishTime>
     </File>
     <File Include="bin/NBL.Models.dll">
-      <publishTime>06/19/2019 16:26:57</publishTime>
+      <publishTime>06/23/2019 15:14:26</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>04/22/2019 01:06:16</publishTime>
@@ -23272,7 +23278,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Files/Create_Trip_File.xml">
-      <publishTime>06/13/2019 17:23:27</publishTime>
+      <publishTime>06/23/2019 14:37:08</publishTime>
     </File>
     <File Include="Files/Deliverable_Product_For_130">
       <publishTime>05/14/2019 12:43:16</publishTime>
@@ -23764,7 +23770,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/17/2019 10:05:07</publishTime>
     </File>
     <File Include="Logs/Error_log_Xml_file.xml">
-      <publishTime>06/19/2019 12:14:56</publishTime>
+      <publishTime>06/23/2019 12:47:35</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>05/26/2019 10:27:13</publishTime>
@@ -24028,7 +24034,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Views/Shared/_PrintHeaderPartialPage.cshtml">
-      <publishTime>03/25/2019 17:37:04</publishTime>
+      <publishTime>06/22/2019 13:07:19</publishTime>
     </File>
     <File Include="Views/Shared/_PrintLayoutPage.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -24061,7 +24067,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Views/Shared/_ViewClientPartialPage.cshtml">
-      <publishTime>06/11/2019 12:37:27</publishTime>
+      <publishTime>06/23/2019 11:29:21</publishTime>
     </File>
     <File Include="Views/Shared/_ViewClientProfilePartialPage.cshtml">
       <publishTime>05/29/2019 09:49:31</publishTime>

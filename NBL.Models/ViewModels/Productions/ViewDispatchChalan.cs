@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.ViewModels.Deliveries;
+using NBL.Models.ViewModels.TransferProducts;
 
 namespace NBL.Models.ViewModels.Productions
 {
@@ -9,5 +10,6 @@ namespace NBL.Models.ViewModels.Productions
         public IEnumerable<ViewDispatchModel> DispatchDetails { get; set; }
         public DispatchModel DispatchModel { get; set; }
         public string Destination { get; set; }
+        public ViewTripModel ViewTripModel { get; set; }
     }
 }

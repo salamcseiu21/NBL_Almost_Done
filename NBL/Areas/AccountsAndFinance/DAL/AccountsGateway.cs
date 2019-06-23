@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using NBL.Areas.Accounts.Models;
 using NBL.Areas.AccountsAndFinance.DAL.Contracts;
 using NBL.Areas.AccountsAndFinance.Models;
 using NBL.DAL;
 using NBL.Models;
 using NBL.Models.EntityModels.Clients;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Payments;
 using NBL.Models.EntityModels.VatDiscounts;
+using NBL.Models.Logs;
 using NBL.Models.SummaryModels;
 using NBL.Models.ViewModels.FinanceModels;
 
@@ -58,6 +59,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not Save receivable informaiton", exception);
             }
@@ -68,7 +70,44 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                 ConnectionObj.Close();
             } 
         }
+        private int SaveReceivableDetails(List<Payment> payments, int receivableId)
+        {
+            int i = 0;
+            CommandObj.CommandText = "spSaveReceivableDetails";
+            CommandObj.CommandType = CommandType.StoredProcedure;
+            CommandObj.Parameters.Clear();
+            CommandObj.Parameters.AddWithValue("@ReceivableId", receivableId);
+            CommandObj.Parameters.AddWithValue("@Amount", payments.Sum(n => n.ChequeAmount));
+            CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+            CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+            CommandObj.ExecuteNonQuery();
+            i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            return i;
+        }
 
+        private int SaveChequeDetails(IEnumerable<Payment> payments, int receivableId)
+        {
+            int i = 0;
+            foreach (var item in payments)
+            {
+                CommandObj.CommandText = "spSaveChequeDetails";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@ReceivableId", receivableId);
+                CommandObj.Parameters.AddWithValue("@SourceBankName", item.SourceBankName);
+                CommandObj.Parameters.AddWithValue("@BankAccountNo", item.BankAccountNo);
+                CommandObj.Parameters.AddWithValue("@ChequeDate", item.ChequeDate);
+                CommandObj.Parameters.AddWithValue("@ChequeNo", item.ChequeNo);
+                CommandObj.Parameters.AddWithValue("@ChequeAmount", item.ChequeAmount);
+                CommandObj.Parameters.AddWithValue("@PaymentTypeId", item.PaymentTypeId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            }
+
+            return i;
+        }
         public ChequeDetails GetReceivableChequeByDetailsId(int chequeDetailsId)
         {
             try
@@ -102,6 +141,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect receivable cheques", exception);
             }
             finally
@@ -149,6 +189,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch(Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collected voucher details by Voucher id",exception);
             }
             finally
@@ -180,6 +221,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect max serial no of credit voucher of current Year", exception);
             }
             finally
@@ -225,6 +267,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect receivable cheques", exception);
             }
             finally
@@ -235,44 +278,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
         }
 
-        private int SaveReceivableDetails(List<Payment> payments, int receivableId)
-        {
-            int i = 0;
-            CommandObj.CommandText = "spSaveReceivableDetails";
-            CommandObj.CommandType = CommandType.StoredProcedure;
-            CommandObj.Parameters.Clear();
-            CommandObj.Parameters.AddWithValue("@ReceivableId", receivableId);
-            CommandObj.Parameters.AddWithValue("@Amount", payments.Sum(n=>n.ChequeAmount));
-            CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
-            CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
-            CommandObj.ExecuteNonQuery();
-            i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
-            return i;
-        }
-
-        private int SaveChequeDetails(IEnumerable<Payment> payments, int receivableId)
-        {
-            int i = 0;
-            foreach (var item in payments) 
-            {
-                CommandObj.CommandText = "spSaveChequeDetails";
-                CommandObj.CommandType = CommandType.StoredProcedure;
-                CommandObj.Parameters.Clear();
-                CommandObj.Parameters.AddWithValue("@ReceivableId", receivableId);
-                CommandObj.Parameters.AddWithValue("@SourceBankName", item.SourceBankName);
-                CommandObj.Parameters.AddWithValue("@BankAccountNo", item.BankAccountNo);
-                CommandObj.Parameters.AddWithValue("@ChequeDate", item.ChequeDate);
-                CommandObj.Parameters.AddWithValue("@ChequeNo", item.ChequeNo);
-                CommandObj.Parameters.AddWithValue("@ChequeAmount", item.ChequeAmount);
-                CommandObj.Parameters.AddWithValue("@PaymentTypeId", item.PaymentTypeId);
-                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
-                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
-                CommandObj.ExecuteNonQuery();
-                i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
-            }
-
-            return i;
-        }
+     
 
         public int GetMaxReceivableSerialNoOfCurrentYear()
         {
@@ -292,6 +298,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect max serial no of receivable of current Year", exception);
             }
             finally
@@ -356,6 +363,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not Save Invoiced order info", exception);
             }
@@ -433,6 +441,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch(Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not save journal voucher information", exception);
             }
@@ -504,6 +513,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect journal informaiton by branch and Company Id", exception);
             }
             finally
@@ -545,6 +555,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect journal informaiton by Company Id", exception);
             }
             finally
@@ -587,6 +598,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not save voucher information", exception);
             }
@@ -655,6 +667,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect voucher informaiton by branch and Company Id and voucher type", exception);
             }
             finally
@@ -700,6 +713,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect voucher lsit", exception);
             }
             finally
@@ -745,6 +759,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect pending voucher lsit ", exception);
             }
             finally
@@ -791,6 +806,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect voucher lsit ", exception);
             }
             finally
@@ -837,6 +853,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect voucher lsit ", exception);
             }
             finally
@@ -881,6 +898,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect voucher informaiton  voucher id", exception);
             }
             finally
@@ -909,6 +927,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not cancel the voucher",exception);
             }
             finally
@@ -948,6 +967,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not approve the voucher", exception);
             }
             finally
@@ -1004,6 +1024,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not update voucher information", exception);
             }
@@ -1052,6 +1073,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect max serial no of journal voucher of current Year", exception);
             }
             finally
@@ -1093,6 +1115,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect journal details by journal Id", exception);
             }
             finally
@@ -1134,6 +1157,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect journal voucher by Id", exception);
             }
             finally
@@ -1162,6 +1186,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not cancel journal voucher", exception);
             }
             finally
@@ -1194,6 +1219,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not update journal voucher information", exception);
             }
@@ -1258,6 +1284,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect pending journal Vouchers by branch and Company Id", exception);
             }
             finally
@@ -1297,6 +1324,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not approve journal voucher", exception);
             }
             finally
@@ -1350,6 +1378,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Unable to approve vat info",exception);
             }
             finally
@@ -1380,6 +1409,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Unable to approve Discount info", exception);
             }
             finally
@@ -1411,6 +1441,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not account summary", exception);
             }
             finally
@@ -1443,6 +1474,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not account summary of Current Month by Company Id", exception);
             }
             finally
@@ -1475,6 +1507,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not account summary of Current Month by branch & Company Id", exception);
             }
             finally
@@ -1512,7 +1545,44 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Get Client Ledger by account code", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<CollectionModel> GetTotalCollectionByBranch(int branchId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetTotalCollectionByBranch";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                ConnectionObj.Open();
+                List<CollectionModel> collection=new List<CollectionModel>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    collection.Add(new CollectionModel
+                    {
+                        AccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        Amount = Convert.ToDecimal(reader["Amount"]),
+                        CollectionDate = Convert.ToDateTime(reader["SysDateTime"])
+                    });
+                }
+                reader.Close();
+                return collection;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Get Collection  by Branch", exception);
             }
             finally
             {

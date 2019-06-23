@@ -68,6 +68,11 @@ namespace NBL.DAL
                         Status = Convert.ToInt32(reader["Status"]),
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
                         SysDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        TransportationCost = Convert.ToDecimal(reader["TransportationCost"]),
+                        DriverName = reader["DriverName"].ToString(),
+                        DriverPhone = reader["DriverPhone"].ToString(),
+                        Transportation = reader["Transportation"].ToString(),
+                        VehicleNo = reader["VehicleNo"].ToString(),
                         Client = new Client
                         {
                             ClientId = Convert.ToInt32(reader["ClientId"])

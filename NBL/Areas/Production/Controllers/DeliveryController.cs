@@ -226,6 +226,7 @@ namespace NBL.Areas.Production.Controllers
             try
             {
                 ViewDispatchChalan chalan = _iFactoryDeliveryManager.GetDispatchChalanByDispatchId(dispatchId);
+               
                 return View(chalan);
             }
             catch (Exception exception)

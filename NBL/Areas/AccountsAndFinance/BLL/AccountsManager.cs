@@ -9,6 +9,7 @@ using NBL.Areas.Sales.DAL;
 using NBL.BLL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Clients;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Enums;
 using NBL.Models.SummaryModels;
@@ -99,6 +100,11 @@ namespace NBL.Areas.AccountsAndFinance.BLL
                 }
             }
             return purposes;
+        }
+
+        public ICollection<CollectionModel> GetTotalCollectionByBranch(int branchId)
+        {
+            return _iAccountGateway.GetTotalCollectionByBranch(branchId);
         }
 
         private int GetMaxVoucherNoByTransactionInfix(string infix)

@@ -2,6 +2,9 @@
 @using NBL.Models.EntityModels.Deliveries
 @using NBL.Models.ViewModels.Deliveries
 @model NBL.Models.ViewModels.Productions.ViewDispatchChalan
+    @{
+        var trip = Model.ViewTripModel;
+    }
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,84 +37,133 @@
         <section class="invoice">
             <!-- title row -->
             @Html.Partial("_PrintHeaderPartialPage")
-            <h3 class="text-center text-green headingStyle" style="margin: 0;padding: 5px">Chalan</h3>
+            <h3 class="text-center text-green headingStyle" style="margin: 0;padding: 5px">DESPATCH NOTE</h3>
             <div class="row">
                 <div class="col-xs-12">
                     <h2 class="page-header">
-                        Ref No : @Model.DispatchModel.DispatchRef
-                        <small class="pull-right">Date: @DateTime.Now.Date.ToString("D")</small>
+                        Ref :<span>NBL/DES/CH.No:</span> @Model.DispatchModel.DispatchRef
+                        <small class="pull-right">Date: @Model.DispatchModel.DispatchDate.ToString("D")</small>
                     </h2>
                 </div>
                 <!-- /.col -->
             </div>
             <!-- info row -->
-            <div class="row invoice-info">
-                <!-- /.col -->
-                <div class="col-md-12">
-                    <address>
-                       <strong> Delivered To :</strong>
-                        @Model.Destination
-                    </address>
+            <div class="row">
+                <div class="col-xs-12 table-responsive">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <td style="width: 50%"><strong>From:</strong><br/>
+                                <b>Navana Batteries Ltd.</b><br/>
+                                <span>
+                                    C.D.A Flot No 3(P) & 4(P),Fouzdarhat I/A, Chittagong
+                                    Phone: 031-751259,E-mail: factory@navana-battery.com
+                                </span>
+                            </td>
+                            <td style="width: 50%"><strong>To:</strong><br />
+                                @Model.Destination</td>
+                       
+                        </tr>
+                      
+                        </tbody>
+                    </table>
                 </div>
-                <!-- /.col -->
-                @*<div class="col-md-3 invoice-col">
-                </div>*@
-                <!-- /.col -->
+                <div class="col-xs-12 table-responsive">
+                    <table class="table table-bordered">
+                        <tbody>
+                      
+                        <tr>
+                            <td style="width: 30%">Despached By:<br/>
+                                Date :
+                            </td>
+                            <td>
+                                Received for Transportation By:<br />
+                                Date :
+                            </td>
+                            <td style="width: 30%">
+                                Received By:<br />
+                                Date :
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+           
             <!-- /.row -->
             <!-- Table row -->
             <div class="row">
                 <div class="col-xs-12 table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>
-                            <tr>
-                                <th>Sl No</th>
-                                <th>Product Name </th>
-                                <th class="text-right">Quantity</th>
-
-                            </tr>
+                        <tr>
+                            <th style="width: 50px">Sl.No.</th>
+                            <th>Description </th>
+                            <th class="text-right" style="width: 50px">Quantity(pcs)</th>
+                            <th class="text-center">Remarks </th>
+                        </tr>
                         </thead>
                         <tbody>
 
-                            @{
-                                int rowNo = 0;
+                        @{
+                            int rowNo = 0;
                                
 
-                                foreach (IGrouping<string, ViewDispatchModel> details in Model.DispatchDetails.ToList().GroupBy(n => n.ProductCategory.ProductCategoryName))
+                            foreach (IGrouping<string, ViewDispatchModel> details in Model.DispatchDetails.ToList().GroupBy(n => n.ProductCategory.ProductCategoryName))
+                            {
+                                foreach (var item in details)
                                 {
-                                    foreach (var item in details)
-                                    {
 
                                        
-                                        <tr>
-                                            <td>  @(rowNo += 1)</td>
-                                            <td>@item.ProductName</td>
-                                            <td class="text-right">@item.Quantity</td>
-
-                                        </tr>
-                                    }
-
+                                    <tr>
+                                        <td>  @(rowNo += 1)</td>
+                                        <td>@item.ProductName</td>
+                                        <td class="text-right">@item.Quantity</td>
+                                        <td class="text-right">@item.Remarks</td>
+                                    </tr>
                                 }
 
-
                             }
+
+
+                        }
                         </tbody>
                         <tfoot>
-                            <tr>
-                                <th></th>
+                        <tr>
+                            <th></th>
 
-                                <th class="text-right">
-                                    Total
-                                </th>
-                                <th class="text-right">
-                                    @Model.DispatchDetails.Sum(n=>n.Quantity)
-                                </th>
-
-                            </tr>
+                            <th class="text-right">
+                                Total
+                            </th>
+                            <th class="text-right">
+                                @Model.DispatchDetails.Sum(n=>n.Quantity)
+                            </th>
+                            <th></th>
+                        </tr>
                         </tfoot>
                     </table>
                 </div>
                 <!-- /.col -->
+            </div>
+            <div class="row">
+                <div class="col-xs-12 table-responsive">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <td style="width: 50%">
+                                Transporation :@trip.Transportation <br/>
+                                By Courier Name :<br />
+                                Veichle No :@trip.VehicleNo<br />
+                                Driver :@trip.DriverName <br />
+                            </td>
+                            <td style="width: 50%">
+                            Transportation Cost : To Pay/Paid<br/>
+                            Amount :@trip.TransportationCost (Tk)
+                        </tr>
+                      
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
         <!-- /.content -->

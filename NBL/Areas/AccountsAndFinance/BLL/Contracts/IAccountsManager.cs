@@ -3,6 +3,7 @@ using NBL.Areas.Accounts.Models;
 using NBL.Areas.AccountsAndFinance.Models;
 using NBL.Models;
 using NBL.Models.EntityModels.Clients;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.SummaryModels;
 using NBL.Models.ViewModels.FinanceModels;
@@ -45,5 +46,6 @@ namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
        bool ActiveReceivableCheque(ChequeDetails chequeDetails, Receivable aReceivable, Client aClient);
        ICollection<ViewLedgerModel> GetClientLedgerBySubSubSubAccountCode(string clientSubSubSubAccountCode);
        ICollection<Purpose> GetCreditPurposesFromXmlFile(string filePath);
+       ICollection<CollectionModel> GetTotalCollectionByBranch(int branchId);
    }
 }

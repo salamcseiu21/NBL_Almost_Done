@@ -313,5 +313,15 @@ namespace NBL.BLL
         {
             return _iInventoryGateway.GetRequsitionVeStockProductQtyByDistributionCenter(distributionCenterId,companyId);
         }
+
+        public ICollection<ViewTripDetailsModel> GetTripItemsByTripId(long tripId)
+        {
+            return _iInventoryGateway.GetTripItemsByTripId(tripId);
+        }
+
+        public bool UpdateTripItemQuantity(long tripItemId,int quantity)
+        {
+            return _iInventoryGateway.UpdateTripItemQuantity(tripItemId,quantity)>0;
+        }
     }
 }

@@ -1,6 +1,9 @@
 ﻿
 @using NBL.Models.EntityModels.Deliveries
 @model NBL.Models.ViewModels.ViewChalanModel
+    @{
+        var delivery = Model.DeliveryInfo;
+    }
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +36,7 @@
         <section class="invoice">
             <!-- title row -->
             @Html.Partial("_PrintHeaderPartialPage")
-            <h3 class="text-center text-green headingStyle" style="margin: 0;padding: 5px">Chalan</h3>
+            <h3 class="text-center text-green headingStyle" style="margin: 0;padding: 5px">Challan</h3>
             <div class="row">
                 <div class="col-xs-12">
                     <h2 class="page-header">
@@ -62,54 +65,74 @@
                 <div class="col-xs-12 table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>
-                            <tr>
-                                <th>Sl No</th>
-                                <th>Product Name </th>
-                                <th class="text-right">Quantity</th>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>Product Name </th>
+                            <th class="text-right">Quantity</th>
 
-                            </tr>
+                        </tr>
                         </thead>
                         <tbody>
 
-                            @{
-                                int rowNo = 0;
-                                int totalQty = 0;
+                        @{
+                            int rowNo = 0;
+                            int totalQty = 0;
 
-                                foreach (IGrouping<string, DeliveryDetails> orderDetailses in Model.DeliveryDetailses.ToList().GroupBy(n => n.CategoryName))
+                            foreach (IGrouping<string, DeliveryDetails> orderDetailses in Model.DeliveryDetailses.ToList().GroupBy(n => n.CategoryName))
+                            {
+                                foreach (DeliveryDetails item in orderDetailses)
                                 {
-                                    foreach (DeliveryDetails item in orderDetailses)
-                                    {
 
-                                        totalQty += item.DeliveredProducts.Count;
-                                        <tr>
-                                            <td>  @(rowNo += 1)</td>
-                                            <td>@item.ProductName</td>
-                                            <td class="text-right">@item.DeliveredProducts.Count</td>
+                                    totalQty += item.DeliveredProducts.Count;
+                                    <tr>
+                                        <td>  @(rowNo += 1)</td>
+                                        <td>@item.ProductName</td>
+                                        <td class="text-right">@item.DeliveredProducts.Count</td>
 
-                                        </tr>
-                                    }
-
+                                    </tr>
                                 }
 
-
                             }
+
+
+                        }
                         </tbody>
                         <tfoot>
-                            <tr>
-                                <th></th>
+                        <tr>
+                            <th></th>
 
-                                <th class="text-right">
-                                    Total
-                                </th>
-                                <th class="text-right">
-                                    @totalQty
-                                </th>
+                            <th class="text-right">
+                                Total
+                            </th>
+                            <th class="text-right">
+                                @totalQty
+                            </th>
 
-                            </tr>
+                        </tr>
                         </tfoot>
                     </table>
                 </div>
                 <!-- /.col -->
+            </div>
+            <div class="row">
+                <div class="col-xs-12 table-responsive">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <td style="width: 50%">
+                                Transporation :@delivery.Transportation <br/>
+                                By Courier Name :<br />
+                                Veichle No :@delivery.VehicleNo<br />
+                                Driver :@delivery.DriverName <br />
+                            </td>
+                            <td style="width: 50%">
+                            Transportation Cost : To Pay/Paid<br/>
+                            Amount :@delivery.TransportationCost (Tk)
+                        </tr>
+                      
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
         <!-- /.content -->

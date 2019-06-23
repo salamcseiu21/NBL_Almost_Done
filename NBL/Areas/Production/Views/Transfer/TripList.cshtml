@@ -15,6 +15,7 @@
             <th>Remarks</th>
             <th class="text-center">Created By</th>
             <th class="text-center">Date</th>
+            <th class="text-center">Status</th>
             <th class="text-center">Action</th>
         </tr>
         </thead>
@@ -28,8 +29,17 @@
                 <td>@item.Remarks</td>
                 <td class="text-center">@(item.TripCreatedBy.EmployeeName?? "Demo User")</td>
                 <td class="text-center">@item.SystemDateTime.ToString("dd-MMMM-yyyy")</td>
+                <td class="text-center">@if (item.Status == 0)
+                                        {
+                                            <i class="fa fa-spinner text-danger"> Pending</i>
+                                        }
+                                        else if(item.Status==2)
+                                        {
+                                            <i class="fa fa-check-circle text-green"> Dispatched</i>
+                                        }
+                </td>
                 <td class="text-center">
-                    @Html.ActionLink("View Details", "ViewScannedBarcodeList", "Transfer", new { id = item.TripId}, new {@class="btn-sm btn btn-info"})
+                    @Html.ActionLink(" View Details", "TripDetails", "Transfer", new { id = item.TripId}, new {@class="fa fa-eye btn-sm btn btn-info"})
                 </td>
             </tr>
         }
@@ -41,6 +51,7 @@
                 <th>Remarks</th>
                 <th class="text-center">Created By</th>
                 <th class="text-center">Date</th>
+                <th class="text-center">Status</th>
                 <th class="text-center">Action</th>
             </tr>
         </tfoot>
