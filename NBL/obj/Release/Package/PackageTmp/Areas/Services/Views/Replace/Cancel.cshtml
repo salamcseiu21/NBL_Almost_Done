@@ -1,0 +1,104 @@
+﻿@model NBL.Models.ViewModels.Replaces.ViewReplaceModel
+@{
+    ViewBag.Title = "Cancel";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <div class="row">
+        <h3 class="text-center text-danger">Cancel</h3>
+        <div class="form-horizontal">
+            <div id="message" style="display: none; font-weight: bold; font-size: 20px" class="text-center">
+            </div>
+            <br/>
+         @using (Html.BeginForm())
+         {
+            <div class="col-md-6">
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-3">Client Name</label>
+                    <div class="col-md-9">
+                        <input type="text" readonly="readonly" class="form-control" value="@Model.ClientName" />
+                        <input type="hidden" id="ReplaceId" name="ReplaceId" value="@Model.ReplaceId" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Client Code</label>
+                    <div class="col-md-9">
+                        <input type="text" readonly="readonly" class="form-control" value="@Model.ClientCode" />
+
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-md-3">Client Address</label>
+                    <div class="col-md-9">
+
+                        <textarea readonly="readonly" class="form-control" rows="2" style="resize: none; width: 100%">@Model.ClientAddress</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="CancelRemarks" class="control-label col-md-3">Remarks</label>
+                    <div class="col-md-9">
+                        <input type="text" name="CancelRemarks" id="CancelRemarks" autofocus class="form-control" placeholder="Cancel remarks here.." required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9">
+                            <div class="btn toolbar">
+
+                                <input type="submit" value="Cancel" class="btn btn-danger" />
+                                @Html.ActionLink("Back", "ViewAll", "Replace", null, new { @class = "btn btn-info" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         }
+        </div>
+    </div>
+    
+    <table id="tbl_replace_product_list" class="display table-bordered" style="border: 1px solid">
+        <caption class="text-center text-green" style="font-weight:bolder;font-size:20px">Replace Product List</caption>
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th class="text-right">Quantity</th>
+            <th class="text-center">Expiry Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td class="text-right">@item.Quantity</td>
+                <td class="text-center">@item.ExpiryDate.ToString("dd-MMMM-yyyy")</td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Product Name</th>
+            <th class="text-right">Quantity</th>
+            <th class="text-center">Expiry Date</th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+
+
+@section Scripts
+{
+    <script>
+        $("#tbl_replace_product_list").DataTable();
+    </script>
+}

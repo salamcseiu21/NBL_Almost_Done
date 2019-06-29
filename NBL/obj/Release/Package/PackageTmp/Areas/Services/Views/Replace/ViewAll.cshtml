@@ -13,6 +13,7 @@
             <th>Client Info</th>
             <th class="text-right">Quantity</th>
             <th class="text-center">Entry Date</th>
+            <th class="text-center">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -24,6 +25,9 @@
                     @item.ClientCode</td>
                 <td class="text-right">@item.Quantity</td>
                 <td class="text-center">@item.EntryDate.ToString("dd-MMMM-yyyy")</td>
+                <td class="text-center">
+                    @Html.ActionLink(" Cancel", "Cancel", "Replace",new {id=item.ReplaceId, area="services"},new {@class="btn btn-danger fa fa-times"})
+                </td>
             </tr>
         }
         </tbody>
@@ -33,6 +37,7 @@
                 <th>Client Info</th>
                 <th class="text-right">Quantity</th>
                 <th class="text-center">Entry Date</th>
+                <th class="text-center">Action</th>
             </tr>
         </tfoot>
     </table>

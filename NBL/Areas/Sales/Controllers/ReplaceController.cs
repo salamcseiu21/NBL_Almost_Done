@@ -22,12 +22,14 @@ namespace NBL.Areas.Sales.Controllers
          private readonly IProductManager _iProductManager;
          private readonly IProductReplaceManager _iProductReplaceManager;
         private readonly IInventoryManager _iInventoryManager;
-        
-        public ReplaceController(IProductManager iProductManager,IProductReplaceManager iProductReplaceManager,IInventoryManager iInventoryManager)
+        private readonly IDeliveryManager _iDeliveryManager;
+
+        public ReplaceController(IProductManager iProductManager,IProductReplaceManager iProductReplaceManager,IInventoryManager iInventoryManager,IDeliveryManager iDeliveryManager)
         {
             _iProductManager = iProductManager;
             _iProductReplaceManager = iProductReplaceManager;
             _iInventoryManager = iInventoryManager;
+            _iDeliveryManager = iDeliveryManager;
         }
 
 
@@ -123,6 +125,23 @@ namespace NBL.Areas.Sales.Controllers
             }
         }
 
+        public ActionResult DeliveredList()
+        {
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                //-------------Status=2 means Delivered.-------------
+                ICollection<ViewReplaceModel> replace = _iProductReplaceManager.GetAllDeliveredReplaceListByBranchAndCompany(branchId, companyId).ToList();
+                return View(replace);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         public ActionResult ViewAll()
         {
             try
@@ -140,7 +159,6 @@ namespace NBL.Areas.Sales.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
-
         [HttpPost]
         public void SaveScannedBarcodeToTextFile(string barcode, long replaceId)
         {
@@ -281,5 +299,12 @@ namespace NBL.Areas.Sales.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+
+        //public ActionResult DeliveredBarCodeList(int deliveryId)
+        //{
+        //    var challan = _iDeliveryManager.GetDeliveredReplaceBarcodeListbyDeliveryId(deliveryId); 
+        //    return View(challan);
+
+        //}
     }
 }

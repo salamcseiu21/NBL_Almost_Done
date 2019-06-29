@@ -8,6 +8,7 @@ using NBL.Models.EntityModels;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Replaces;
 
 namespace NBL.Areas.Services.Controllers
 {
@@ -248,11 +249,44 @@ namespace NBL.Areas.Services.Controllers
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
                 //-------------Status=0 means pending.-------------
                 var replace = _iProductReplaceManager.GetAllPendingReplaceListByBranchAndCompany(branchId, companyId).ToList();
+
                 return View(replace);
             }
             catch (Exception exception)
             {
 
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        public ActionResult Cancel(long id)
+        {
+            ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(id);
+            List<ViewReplaceDetailsModel> products = _iProductReplaceManager.GetReplaceProductListById(id).ToList();
+            model.Products = products;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Cancel(ViewReplaceModel replaceModel)
+        {
+            try
+            {
+                ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(replaceModel.ReplaceId);
+                var user = (ViewUser)Session["user"];
+                
+                int rowAffected= _iProductReplaceManager.Cancel(replaceModel,user.UserId);
+                if (rowAffected > 0)
+                {
+                    return RedirectToAction("ViewAll");
+                }
+                List<ViewReplaceDetailsModel> products = _iProductReplaceManager.GetReplaceProductListById(replaceModel.ReplaceId).ToList();
+                model.Products = products;
+                return View(model);
+            }
+            catch (Exception exception)
+            {
                 Log.WriteErrorLog(exception);
                 return PartialView("_ErrorPartial", exception);
             }

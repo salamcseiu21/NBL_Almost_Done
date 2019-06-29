@@ -90,6 +90,25 @@ namespace NBL.BLL
             return chalan;
         }
 
+        public ViewChalanModel GetDeliveredReplaceBarcodeListbyDeliveryId(int deliveryId)
+        {
+            Delivery delivery = GetOrderByDeliveryId(deliveryId);
+            var details =_iDeliveryGateway.GetDeliveredReplaceDetailsByDeliveryId(deliveryId); 
+            //foreach (DeliveryDetails deliveryDetailse in details)
+            //{
+            //    deliveryDetailse.DeliveredProducts = GetDeliveredProductsByDeliveryIdAndProductId(deliveryId, deliveryDetailse.ProductId).ToList();
+            //}
+            Order order = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
+            var client = _iClientManager.GetClientDeailsById(order.ClientId);
+            var chalan = new ViewChalanModel
+            {
+               // DeliveryDetailses = details,
+                ViewClient = client,
+                DeliveryInfo = delivery
+            };
+            return chalan;
+        }
+
         public ICollection<ViewDeliveredOrderModel> GetDeliveredOrderByClientId(int clientId)
         {
             return _iDeliveryGateway.GetDeliveredOrderByClientId(clientId);
@@ -132,6 +151,8 @@ namespace NBL.BLL
             };
             return chalan;
         }
+
+       
 
         private IEnumerable<ViewProduct> GetDeliveredProductsByDeliveryIdAndProductIdFromFactory(int deliveryId, int productId)
         {

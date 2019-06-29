@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels;
 using NBL.Models.EntityModels.Products;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Replaces;
 
@@ -46,6 +47,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 sqlTransaction.Rollback();
                 throw new Exception("Could not save Replace Info",exception);
             }
@@ -76,6 +78,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not get max  Replace serial no by year", exception);
             }
             finally
@@ -120,6 +123,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect Replace list", exception);
             }
             finally
@@ -163,6 +167,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect pending Replace list", exception);
             }
             finally
@@ -173,6 +178,49 @@ namespace NBL.DAL
             }
         }
 
+        public ICollection<ViewReplaceModel> GetAllDeliveredReplaceListByBranchAndCompany(int branchId, int companyId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllDeliveredReplaceListByBranchAndCompany";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                List<ViewReplaceModel> models = new List<ViewReplaceModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ViewReplaceModel
+                    {
+                        ReplaceId = Convert.ToInt64(reader["ReplaceId"]),
+                        ClientCode = reader["ClientCode"].ToString(),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        ClientName = reader["ClientName"].ToString(),
+                        ClientAddress = reader["ClientAddress"].ToString(),
+                        EntryDate = Convert.ToDateTime(reader["SysDateTime"]),
+                        Quantity = Convert.ToInt32(reader["ReplaceQuantity"]),
+                        ReplaceRef = reader["ReplaceRef"].ToString(),
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        CompanyId = Convert.ToInt32(reader["CompanyId"])
+                    });
+                }
+                reader.Close();
+                return models;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect delivered Replace list by branch and Company Id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
         public ViewReplaceModel GetReplaceById(long id)
         {
             try
@@ -204,6 +252,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect Replace by Id", exception);
             }
             finally
@@ -240,6 +289,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect Replace product lsit by Id", exception);
             }
             finally
@@ -278,6 +328,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not get Delivered product by  replace ref", exception);
             }
             finally
@@ -287,6 +338,39 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public int Cancel(ViewReplaceModel replaceModel, int userId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_CancelReplaceEntry";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@UserId", userId);
+                CommandObj.Parameters.AddWithValue("@Remarks", replaceModel.CancelRemarks);
+                CommandObj.Parameters.AddWithValue("@ReplaceId", replaceModel.ReplaceId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not cancel the replace entry by id", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+       
 
         private int SaveReplacementDetails(ReplaceModel model, long masterId)
         {

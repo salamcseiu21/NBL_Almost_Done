@@ -15,6 +15,8 @@ namespace NBL.DAL.Contracts
         ViewReplaceModel GetReplaceById(long id);
         ICollection<ViewReplaceDetailsModel> GetReplaceProductListById(long id);
         ICollection<ViewProduct> GetDeliveredProductsByReplaceRef(string replaceRef);
-       
+
+        int Cancel(ViewReplaceModel replaceModel, int userId);
+        ICollection<ViewReplaceModel> GetAllDeliveredReplaceListByBranchAndCompany(int branchId, int companyId);
     }
 }

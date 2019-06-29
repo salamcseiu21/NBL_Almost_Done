@@ -4,6 +4,7 @@ using NBL.Models.EntityModels.Orders;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Replaces;
 
 namespace NBL.DAL.Contracts
 {
@@ -25,6 +26,7 @@ namespace NBL.DAL.Contracts
         ICollection<ViewDeliveredOrderModel> GetDeliveryDetailsInfoByDeliveryId(long deliveryId);
         IEnumerable<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyAndUserId(int distributionPointId, int companyId, int userId);
         IEnumerable<DeliveryDetails> GetDeliveredOrderDetailsByDeliveryIdFromFactory(int deliveryId);
-        IEnumerable<ViewProduct> GetDeliveredProductsByDeliveryIdAndProductIdFromFactory(int deliveryId, int productId); 
+        IEnumerable<ViewProduct> GetDeliveredProductsByDeliveryIdAndProductIdFromFactory(int deliveryId, int productId);
+        IEnumerable<ViewReplaceDetailsModel> GetDeliveredReplaceDetailsByDeliveryId(int deliveryId); 
     }
 }

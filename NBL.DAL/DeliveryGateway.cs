@@ -10,6 +10,7 @@ using NBL.Models.EntityModels.Transports;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Replaces;
 
 namespace NBL.DAL
 {
@@ -734,6 +735,11 @@ namespace NBL.DAL
                 CommandObj.Dispose();
                 ConnectionObj.Close();
             }
+        }
+
+        public IEnumerable<ViewReplaceDetailsModel> GetDeliveredReplaceDetailsByDeliveryId(int deliveryId)
+        {
+            throw new NotImplementedException();
         }
 
         public int Add(Delivery model)

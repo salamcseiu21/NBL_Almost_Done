@@ -17,6 +17,7 @@ namespace NBL.Models.ViewModels.Replaces
         public string ReplaceRef { get; set; }
         public DateTime ExpiryDate { get; set; }
         public DateTime EntryDate { get; set; }
+        public string CancelRemarks { get; set; }
         public ICollection<ViewReplaceDetailsModel> Products { set; get; }
     }
 }

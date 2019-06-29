@@ -41,7 +41,10 @@ namespace NBL.BLL
         {
             return _iProductReplaceGateway.GetAllPendingReplaceListByBranchAndCompany(branchId,companyId);
         }
-
+        public ICollection<ViewReplaceModel> GetAllDeliveredReplaceListByBranchAndCompany(int branchId, int companyId)
+        {
+            return _iProductReplaceGateway.GetAllDeliveredReplaceListByBranchAndCompany(branchId, companyId);
+        }
         public ViewReplaceModel GetReplaceById(long id)
         {
             return _iProductReplaceGateway.GetReplaceById(id);
@@ -56,6 +59,13 @@ namespace NBL.BLL
         {
             return _iProductReplaceGateway.GetDeliveredProductsByReplaceRef(replaceRef);
         }
+
+        public int Cancel(ViewReplaceModel replaceModel, int userId)
+        {
+            return _iProductReplaceGateway.Cancel(replaceModel,userId);
+        }
+
+      
 
         private string GenerateOrderRefNo(int maxsl)
         {
