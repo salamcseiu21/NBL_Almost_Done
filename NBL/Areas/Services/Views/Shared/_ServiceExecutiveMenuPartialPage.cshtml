@@ -52,8 +52,8 @@
                     </a>
                     <ul class="treeview-menu">
                         <li>@Html.ActionLink(" Entry", "Entry", "Replace", new {area = "Services"}, new {@class = "fa fa-plus", style = "font-weight: bolder"})</li>
-                        <li>@Html.ActionLink(" View All", "ViewAll", "Replace", new {area = "Services"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
-
+                        <li>@Html.ActionLink(" Pending List", "ViewAll", "Replace", new {area = "Services"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+                        <li>@Html.ActionLink(" Delivered List", "ReplaceList", "Replace", new {area = "Services"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
 
                     </ul>
                 </li>
@@ -71,6 +71,20 @@
             </a>
             <ul class="treeview-menu">
                 <li>@Html.ActionLink("  Barcode Entry", "RetailSale", "Order", new {area = "CommonArea"}, new {@class = "fa fa-plus"})</li>
+
+            </ul>
+        </li>
+        
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>Scrap Product</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink("  Entry", "SaveScrapProduct", "Scrap", new { area = "Services" }, new { @class = "fa fa-plus" })</li>
 
             </ul>
         </li>

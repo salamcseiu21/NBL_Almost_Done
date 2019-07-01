@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
@@ -107,6 +108,20 @@ namespace NBL.BLL
                 DeliveryInfo = delivery
             };
             return chalan;
+        }
+
+        public ICollection<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(int branchId, int companyId, DateTime date,
+            int userId)
+        {
+            var deliveredOrders =
+                _iDeliveryGateway.GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(branchId, companyId,date, userId);
+            foreach (Delivery delivery in deliveredOrders)
+            {
+                var order = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
+                delivery.Client = _iClientManager.GetById(order.ClientId);
+            }
+
+            return deliveredOrders.ToList();
         }
 
         public ICollection<ViewDeliveredOrderModel> GetDeliveredOrderByClientId(int clientId)

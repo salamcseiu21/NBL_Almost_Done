@@ -135,6 +135,9 @@
     <Compile Include="EntityModels\Returns\ReturnDetails.cs" />
     <Compile Include="EntityModels\Returns\ReturnModel.cs" />
     <Compile Include="EntityModels\Returns\ReturnProduct.cs" />
+    <Compile Include="EntityModels\Scraps\ScrapDetails.cs" />
+    <Compile Include="EntityModels\Scraps\ScrapItem.cs" />
+    <Compile Include="EntityModels\Scraps\ScrapModel.cs" />
     <Compile Include="EntityModels\Securities\StringCipher.cs" />
     <Compile Include="EntityModels\Securities\ViewLoginInfo.cs" />
     <Compile Include="EntityModels\TransferProducts\TransferRequisition.cs" />
@@ -194,6 +197,7 @@
     <Compile Include="ViewModels\Productions\ViewTotalProduction.cs" />
     <Compile Include="ViewModels\Products\ProductStatusModel.cs" />
     <Compile Include="ViewModels\Products\ViewCreateProductDetailsModel.cs" />
+    <Compile Include="ViewModels\Replaces\ReplaceReport.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceDetailsModel.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceModel.cs" />
     <Compile Include="ViewModels\Reports\OrderHistory.cs" />
@@ -207,6 +211,7 @@
     <Compile Include="ViewModels\Returns\ViewEntryReturnModel.cs" />
     <Compile Include="ViewModels\Returns\ViewReturnProductModel.cs" />
     <Compile Include="ViewModels\Returns\ViewReturnReceiveModel.cs" />
+    <Compile Include="ViewModels\Scraps\ViewCreateScrapModel.cs" />
     <Compile Include="ViewModels\Summaries\FactorySummaryModel.cs" />
     <Compile Include="ViewModels\Summaries\SummaryModel.cs" />
     <Compile Include="EntityModels\Suppliers\Supplier.cs" />

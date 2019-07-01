@@ -641,6 +641,8 @@ namespace NBL.DAL
             }
         }
 
+
+      
         public IEnumerable<DeliveryDetails> GetDeliveredOrderDetailsByDeliveryIdFromFactory(int deliveryId)
         {
             try
@@ -740,6 +742,65 @@ namespace NBL.DAL
         public IEnumerable<ViewReplaceDetailsModel> GetDeliveredReplaceDetailsByDeliveryId(int deliveryId)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(int distributionPointId, int companyId, DateTime date,
+            int userId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DistributionPointId", distributionPointId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                CommandObj.Parameters.AddWithValue("@DeliveryDate", date);
+                CommandObj.Parameters.AddWithValue("@DeliveredByUserId", userId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<Delivery> orders = new List<Delivery>();
+                while (reader.Read())
+                {
+                    Delivery aModel = new Delivery
+                    {
+                        DeliveryId = Convert.ToInt32(reader["DeliveryId"]),
+                        ToBranchId = Convert.ToInt32(reader["ToBranchId"]),
+                        FromBranchId = Convert.ToInt32(reader["ToBranchId"]),
+                        CompanyId = companyId,
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
+                        Status = Convert.ToInt32(reader["Status"]),
+                        SysDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        Transport = new Transport
+                        {
+                            DriverName = reader["DriverName"].ToString(),
+                            DriverPhone = reader["DriverPhone"].ToString(),
+                            Transportation = reader["Transportation"].ToString(),
+                            TransportationCost = Convert.ToDecimal(reader["TransportationCost"]),
+                            VehicleNo = reader["VehicleNo"].ToString()
+                        }
+                    };
+                    orders.Add(aModel);
+                }
+                reader.Close();
+                return orders;
+
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Could not Collect Delivered Orders due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Collect Delivered Orders by branch,Company and User Id", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
         }
 
         public int Add(Delivery model)

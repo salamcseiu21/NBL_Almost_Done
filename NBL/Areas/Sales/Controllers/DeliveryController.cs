@@ -53,7 +53,6 @@ namespace NBL.Areas.Sales.Controllers
                 SummaryModel model = new SummaryModel();
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByDistributionPoint(branchId).ToList();
-
                 foreach (var invoice in invoicedOrders)
                 {
                     invoice.Client = _iClientManager.GetById(invoice.ClientId);
@@ -107,6 +106,25 @@ namespace NBL.Areas.Sales.Controllers
 
         }
 
+        public ActionResult OrderListByDate()
+        {
+           
+            //int branchId = Convert.ToInt32(Session["BranchId"]);
+            //int companyId = Convert.ToInt32(Session["CompanyId"]);
+            //var user = (ViewUser)Session["user"];
+            //var orders =_iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(branchId,companyId,DateTime.Now.AddDays(-1),user.UserId);
+            return View();
+        }
+
+        public PartialViewResult LoadOrderListByDate(DateTime deliveryDate)
+        {
+
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            var user = (ViewUser)Session["user"];
+            var orders = _iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(branchId, companyId, deliveryDate, user.UserId);
+            return PartialView("_ViewDeliveredOrdersPartialPage", orders);
+        }
         [HttpGet]
         public ActionResult Delivery(int id)
         {

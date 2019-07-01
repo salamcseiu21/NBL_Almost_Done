@@ -46,7 +46,12 @@ namespace NBL.Models.EntityModels.Products
         public decimal SubTotal => Quantity * SalePrice;
 
         public ProductType ProductType { get; set; }
-        public ProductCategory ProductCategory { get; set; } 
+        public ProductCategory ProductCategory { get; set; }
+
+        public Product()
+        {
+            ProductCategory=new ProductCategory();
+        }
         public string GetBasicInformation()
         {
             return ProductName + "</br>" + SubSubSubAccountCode;

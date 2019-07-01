@@ -96,6 +96,9 @@ namespace NBL
             container.RegisterType<IProductionQcManager, ProductionQcManager>();
             container.RegisterType<IProductionQcGateway, ProductionQcGateway>();
 
+            container.RegisterType<IScrapManager, ScrapManager>();
+            container.RegisterType<IScrapGateway, ScrapGateway>();
+
             container.RegisterType<DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());
             container.RegisterType<UserManager<ApplicationUser>>(new HierarchicalLifetimeManager());
             container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(new HierarchicalLifetimeManager());

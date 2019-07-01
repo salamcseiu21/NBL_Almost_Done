@@ -391,6 +391,7 @@
     <Compile Include="Areas\SCM\SCMAreaRegistration.cs" />
     <Compile Include="Areas\Services\Controllers\HomeController.cs" />
     <Compile Include="Areas\Services\Controllers\ReplaceController.cs" />
+    <Compile Include="Areas\Services\Controllers\ScrapController.cs" />
     <Compile Include="Areas\Services\ServicesAreaRegistration.cs" />
     <Compile Include="Areas\SuperAdmin\BLL\SuperAdminUserManager.cs" />
     <Compile Include="Areas\SuperAdmin\Controllers\ApproveController.cs" />
@@ -8097,6 +8098,12 @@
     <Content Include="Areas\Production\Views\Transfer\TripDetails.cshtml" />
     <Content Include="Areas\Services\Views\Replace\Cancel.cshtml" />
     <Content Include="Areas\Sales\Views\Replace\DeliveredList.cshtml" />
+    <Content Include="Areas\Services\Views\Scrap\SaveScrapProduct.cshtml" />
+    <Content Include="Areas\Services\Views\Shared\_ViewScannedProductPartialPage.cshtml" />
+    <Content Include="Areas\Sales\Views\Replace\ReplaceList.cshtml" />
+    <Content Include="Areas\Services\Views\Replace\ReplaceList.cshtml" />
+    <Content Include="Areas\Sales\Views\Replace\AllReplaceLsit.cshtml" />
+    <Content Include="Areas\Sales\Views\Delivery\OrderListByDate.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
@@ -8279,6 +8286,7 @@
     <Folder Include="Areas\Sales\Models\" />
     <Folder Include="Areas\SCM\Models\" />
     <Folder Include="Areas\Services\Files\Replaces\" />
+    <Folder Include="Areas\Services\Files\Scraps\" />
     <Folder Include="Areas\Services\Models\" />
     <Folder Include="Assets\css\" />
     <Folder Include="Assets\documentation\build\" />

@@ -98,6 +98,7 @@
     <Compile Include="Contracts\IProductionQcManager.cs" />
     <Compile Include="Contracts\IProductReplaceManager.cs" />
     <Compile Include="Contracts\IProductReturnManager.cs" />
+    <Compile Include="Contracts\IScrapManager.cs" />
     <Compile Include="ProductReplaceManager.cs" />
     <Compile Include="DeliveryManager.cs" />
     <Compile Include="Contracts\IBarCodeManager.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionManager.cs" />
     <Compile Include="ReportManager.cs" />
+    <Compile Include="ScrapManager.cs" />
     <Compile Include="TerritoryManager.cs" />
     <Compile Include="UserManager.cs" />
     <Compile Include="VatManager.cs" />

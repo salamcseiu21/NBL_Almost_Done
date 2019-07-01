@@ -1,0 +1,47 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Replaces.ReplaceReport>
+@{
+    ViewBag.Title = "ReplaceList";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Today's Replace List</h3>
+    <table id="tbl_replace_list" class="display table-bordered" style="border: 1px solid">
+        <thead>
+            <tr>
+                <th>Reference</th>
+                <th>Delivery Date</th>
+                <th>Barcode</th>
+                <th>Product Name</th>
+                <th>Client Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.TransactionRef</td>
+                    <td>@item.SystemDateTime.ToString("F")</td>
+                    <td>@item.Barcode</td>
+                    <td>@item.ProductName</td>
+                    <td>@item.ClientName</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Reference</th>
+                <th>Delivery Date</th>
+                <th>Barcode</th>
+                <th>Product Name</th>
+                <th>Client Name</th>
+            </tr>
+        </tfoot>
+    </table>
+</section>
+@section Scripts
+{
+    <script>
+        $("#tbl_replace_list").DataTable();
+    </script>
+}

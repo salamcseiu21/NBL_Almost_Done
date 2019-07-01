@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Products>
+  <Product Id="0201709AE0001">
+    <ProductId>17</ProductId>
+    <ProductName>NKP 50</ProductName>
+    <Category>NG</Category>
+    <SubSubSubAccountCode>31010317</SubSubSubAccountCode>
+    <BarCode>0201709AE0001</BarCode>
+  </Product>
+  <Product Id="0201709AE0002">
+    <ProductId>17</ProductId>
+    <ProductName>NKP 50</ProductName>
+    <Category>NG</Category>
+    <SubSubSubAccountCode>31010317</SubSubSubAccountCode>
+    <BarCode>0201709AE0002</BarCode>
+  </Product>
+</Products>

@@ -46,9 +46,9 @@
                 <tr>
 
                     <td>@item.Key</td>
-                    <td class="text-center">@item.First().Quantity</td>
+                    <td class="text-center">@item.Sum(n=>n.Quantity)</td>
                     <td class="text-center">@item.Sum(n => n.ReceivedQuantity)</td>
-                    <td class="text-center">@(item.First().Quantity - item.Sum(n => n.ReceivedQuantity))</td>
+                    <td class="text-center">@(item.Sum(n=>n.Quantity) - item.Sum(n => n.ReceivedQuantity))</td>
                     <td class="text-center">@item.First().DeliveredAt.ToString("dd-MMMM-yyyy")</td>
                     <td class="text-center">
                         @Html.ActionLink("Details", "TransferReceiveableDetails", new { id = item.First().TransferId }, new { @class = "btn btn-info" })

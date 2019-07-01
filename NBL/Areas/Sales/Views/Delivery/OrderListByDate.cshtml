@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "Order List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+           
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="OrderDate" class="control-label col-md-3"> Select Date</label>
+                    <div class="col-md-9">
+
+                        <input type="text" id="OrderDate" name="OrderDate" value="@date" class="form-control" onchange="GetOrderListByDate(this)"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="divDeliveredList"></div>
+   
+</section>
+
+@section Scripts
+{
+  
+    
+    <script>
+        $(function () {
+
+            $("#OrderDate").datepicker({ dateFormat: 'dd-MM-yy' });
+            OrderListList(new Date());
+
+            $("form").bind("keypress", function (e) {
+                if (e.keyCode === 13) {
+                    return false;
+                }
+            });
+        });
+
+    </script>
+    
+    <script>
+        function GetOrderListByDate(event) {
+            OrderListList(event.value);
+        }
+
+
+        function OrderListList(value) {
+            var date =value;
+            var json = { deliveryDate: date };
+            $.ajax({
+                type: 'Post',
+                url: RootUrl + "sales/delivery/LoadOrderListByDate",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("#divDeliveredList").html(data);
+                }
+            });
+        }
+    </script>
+    
+    
+
+}

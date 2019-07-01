@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 
 using NBL.Models.EntityModels.Deliveries;
@@ -43,5 +44,6 @@ namespace NBL.BLL.Contracts
        ICollection<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyAndUserId(int branchId, int companyId, int userId);
        ViewChalanModel GetChalanByDeliveryIdFromFactory(int deliveryId);
        ViewChalanModel GetDeliveredReplaceBarcodeListbyDeliveryId(int deliveryId);
+       ICollection<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(int branchId, int companyId, DateTime now, int userId);   
    }
 }

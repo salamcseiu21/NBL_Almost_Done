@@ -221,6 +221,84 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public ICollection<ReplaceReport> GetTodaysReplaceListByBranchId(int branchId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetTodaysReplaceBatteriesByBranchId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                List<ReplaceReport> models = new List<ReplaceReport>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ReplaceReport
+                    {
+                       
+                        ClientName = reader["ClientName"].ToString(),
+                        Barcode = reader["ProductBarcode"].ToString(),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        ProductName = reader["ProductName"].ToString()
+                    });
+                }
+                reader.Close();
+                return models;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect delivered Replace list by branch Id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<ReplaceReport> GetAllReplaceListByBranchId(int branchId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetAllReplaceListByBranchId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                List<ReplaceReport> models = new List<ReplaceReport>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ReplaceReport
+                    {
+
+                        ClientName = reader["ClientName"].ToString(),
+                        Barcode = reader["ProductBarcode"].ToString(),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        ProductName = reader["ProductName"].ToString(),
+                        SystemDateTime = Convert.ToDateTime(reader["SysDateTime"])
+                    });
+                }
+                reader.Close();
+                return models;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect delivered Replace list by branch Id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         public ViewReplaceModel GetReplaceById(long id)
         {
             try

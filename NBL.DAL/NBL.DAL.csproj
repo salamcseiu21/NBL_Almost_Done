@@ -71,6 +71,7 @@
     <Compile Include="Contracts\IRegionGateway.cs" />
     <Compile Include="Contracts\IReportGateway.cs" />
     <Compile Include="Contracts\IProductReturnGateway.cs" />
+    <Compile Include="Contracts\IScrapGateway.cs" />
     <Compile Include="Contracts\ITerritoryGateway.cs" />
     <Compile Include="Contracts\IUpazillaGateway.cs" />
     <Compile Include="Contracts\IUserGateway.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="RegionGateway.cs" />
     <Compile Include="ReportGateway.cs" />
     <Compile Include="ProductReturnGateway.cs" />
+    <Compile Include="ScrapGateway.cs" />
     <Compile Include="TerritoryGateway.cs" />
     <Compile Include="UpazillaGateway.cs" />
     <Compile Include="UserGateway.cs" />

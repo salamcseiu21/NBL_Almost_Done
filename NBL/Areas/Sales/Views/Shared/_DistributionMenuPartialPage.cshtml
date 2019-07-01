@@ -48,6 +48,7 @@
                 <li>@Html.ActionLink(" Latest Order List", "LatestOrderList", "Delivery", new {area = "Sales"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
                 <li>@Html.ActionLink(" Partial Delivered List", "PartialDeliveredOrderList", "Delivery", new {area = "Sales"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
                 <li>@Html.ActionLink(" Order List", "OrderList", "Delivery", new {area = "Sales"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
+                <li>@Html.ActionLink(" Delivered Orders by Date", "OrderListByDate", "Delivery", new { area = "Sales" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
             </ul>
         </li>
         <li class="treeview">
@@ -86,7 +87,8 @@
             </a>
             <ul class="treeview-menu">
                 <li>@Html.ActionLink(" Pending List", "ViewAll", "Replace", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
-                <li>@Html.ActionLink(" Delivered List", "DeliveredList", "Replace", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+                <li>@Html.ActionLink("  Today's Replace List", "ReplaceList", "Replace", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+                <li>@Html.ActionLink(" All Replace List", "AllReplaceLsit", "Replace", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
             </ul>
         </li>
 

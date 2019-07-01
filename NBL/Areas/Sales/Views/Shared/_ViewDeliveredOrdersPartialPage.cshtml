@@ -1,60 +1,67 @@
 ﻿@model IEnumerable<NBL.Models.EntityModels.Deliveries.Delivery>
 @using NBL.BLL
-@{
-      
-}
 <div class="table-responsive">
-<table id="table_Order_list" class="display table-bordered" style="border:1px solid black">
-
-
-    <thead>
-        <tr>
-            <th>Client Info</th>
-            <th>Delivery Ref</th>
-            <th>Transaction Ref</th>
-            <th class="text-center">Delivery Date</th>
-            <th>Delivered By</th>
-         
-        </tr>
-    </thead>
-
-    <tbody>
-
-        @foreach (var item in Model)
-            {
-               
+    <p class="text-center text-green headingStyle">Delivered orders</p>
+    <div class="table-responsive">
+        <table id="table_Order_list" class="table table-bordered" style="border:1px solid black">
+            <thead>
             <tr>
-                <td>@Html.Raw(item.Client.GetBasicInformation())</td>
-                <td>@item.DeliveryRef</td>
-                <td>@item.TransactionRef</td>
-                <td class="text-center">
-
-                    @item.SysDateTime.ToShortTimeString(), @item.SysDateTime.ToString("dd-MMM-yyyy")
-                </td>
-                <td>
-                    @{
-                        UserManager userManager = new UserManager();
-                        int empId = userManager.GetAll.ToList().Find(n => n.UserId == item.DeliveredByUserId).EmployeeId;
-                        @*EmployeeManager employeeManger = new EmployeeManager();
-                        var emp = employeeManger.EmployeeById(empId);
-                        @emp.EmployeeName*@
-                        @empId
-                    }
-                </td>
-               
+                <th>Client Info</th>
+                <th>Transportation</th>
+                <th>Delivery Ref</th>
+                <th class="text-center">Delivery Date</th>
+                <th class="text-center">Action</th>
             </tr>
-                        }
+            </thead>
 
-    </tbody>
-    <tfoot>
-        <tr>
-            <th>Client Info</th>
-            <th>Delivery Ref</th>
-            <th>Transaction Ref</th>
-            <th class="text-center">Delivery Date</th>
-            <th>Delivered By</th>
-           
-        </tr>
-    </tfoot>
-</table>
+            <tbody>
+
+            @foreach (var item in Model)
+            {
+
+                var aClient = item.Client;
+                <tr>
+                    <td>
+                        @Html.Raw(aClient.GetBasicInformation())
+                    </td>
+                    <td>
+                        @Html.Raw(item.Transport.GetFullInformation())
+                    </td>
+                    <td>@item.DeliveryRef</td>
+
+                    <td class="text-center">
+
+                        @item.SysDateTime.ToString("F")
+                    </td> 
+                    
+                    <td class="text-center">
+                        @Html.ActionLink(" Barcode", "DeliveredBarCodeList", new { deliveryId = item.DeliveryId }, new { target = "_blank", @class="fa fa-print" }) |
+                        @Html.ActionLink(" Chalan", "Chalan", new {deliveryId = item.DeliveryId}, new {target = "_blank", @class = "fa fa-print"})|
+                        @Html.ActionLink(" Invoice", "Invoice", new {deliveryId = item.DeliveryId}, new {target = "_blank", @class = "fa fa-print" })
+                    </td>
+                </tr>
+            }
+
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>Client Info</th>
+                <th>Transportation</th>
+                <th>Delivery Ref</th>
+                <th class="text-center">Delivery Date</th>
+                <th class="text-center">Action</th>
+            </tr>
+            </tfoot>
+        </table>
+
+    </div>
+
 </div>
+<script>
+
+    $('#table_Order_list').DataTable({
+        "lengthMenu": [[5, 10, 30, -1], [5, 10, 30, "All"]],
+        "order": [[2, "desc"]]
+    });
+
+</script>

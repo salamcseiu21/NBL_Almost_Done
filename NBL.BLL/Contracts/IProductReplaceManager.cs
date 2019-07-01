@@ -20,5 +20,7 @@ namespace NBL.BLL.Contracts
         ICollection<ViewProduct> GetDeliveredProductsByReplaceRef(string replaceRef);
         int Cancel(ViewReplaceModel replaceModel, int userId);
         ICollection<ViewReplaceModel> GetAllDeliveredReplaceListByBranchAndCompany(int branchId, int companyId);
+        ICollection<ReplaceReport> GetTodaysReplaceListByBranchId(int branchId);
+        ICollection<ReplaceReport> GetAllReplaceListByBranchId(int branchId);
     }
 }

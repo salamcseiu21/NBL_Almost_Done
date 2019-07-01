@@ -142,6 +142,13 @@ namespace NBL.Areas.Sales.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+
+        public ActionResult AllReplaceLsit()
+        {
+            var branchId = Convert.ToInt32(Session["BranchId"]);
+            ICollection<ReplaceReport> mReplaceReports = _iProductReplaceManager.GetAllReplaceListByBranchId(branchId);
+            return View(mReplaceReports);
+        }
         public ActionResult ViewAll()
         {
             try
@@ -306,5 +313,14 @@ namespace NBL.Areas.Sales.Controllers
         //    return View(challan);
 
         //}
+
+        public ActionResult ReplaceList()
+        {
+            var branchId = Convert.ToInt32(Session["BranchId"]);
+            ICollection<ReplaceReport> mReplaceReports = _iProductReplaceManager.GetTodaysReplaceListByBranchId(branchId);
+            return View(mReplaceReports);
+
+        }
+
     }
 }

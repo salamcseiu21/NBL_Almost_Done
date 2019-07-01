@@ -45,6 +45,17 @@ namespace NBL.BLL
         {
             return _iProductReplaceGateway.GetAllDeliveredReplaceListByBranchAndCompany(branchId, companyId);
         }
+
+        public ICollection<ReplaceReport> GetTodaysReplaceListByBranchId(int branchId)
+        {
+            return _iProductReplaceGateway.GetTodaysReplaceListByBranchId(branchId);
+        }
+
+        public ICollection<ReplaceReport> GetAllReplaceListByBranchId(int branchId)
+        {
+            return _iProductReplaceGateway.GetAllReplaceListByBranchId(branchId);
+        }
+
         public ViewReplaceModel GetReplaceById(long id)
         {
             return _iProductReplaceGateway.GetReplaceById(id);

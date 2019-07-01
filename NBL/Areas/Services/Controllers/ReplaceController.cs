@@ -260,6 +260,13 @@ namespace NBL.Areas.Services.Controllers
             }
         }
 
+        public ActionResult ReplaceList()
+        {
+            var branchId = Convert.ToInt32(Session["BranchId"]);
+            ICollection<ReplaceReport> mReplaceReports = _iProductReplaceManager.GetAllReplaceListByBranchId(branchId); 
+            return View(mReplaceReports);
+
+        }
         public ActionResult Cancel(long id)
         {
             ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(id);
