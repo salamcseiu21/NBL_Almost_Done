@@ -331,6 +331,26 @@ namespace NBL.Areas.Corporate.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+
+
+        [HttpGet]
+        public ActionResult TotalReceiveByBranch() 
+        {
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var receiveList = _iInventoryManager.GetTotalReceiveProductByCompanyId(companyId).ToList(); 
+                return View(receiveList);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+
         public PartialViewResult ProductionSummary()
         {
             try

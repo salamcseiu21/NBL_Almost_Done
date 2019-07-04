@@ -66,5 +66,8 @@ namespace NBL.DAL.Contracts
        ICollection<ViewProduct> GetRequsitionVeStockProductQtyByDistributionCenter(int distributionCenterId, int companyId);
        ICollection<ViewTripDetailsModel> GetTripItemsByTripId(long tripId);
        int UpdateTripItemQuantity(long tripItemId, int quantity);
+       ViewProductLifeCycleModel GetProductLifeCycle(string barcode);
+       ViewProductHistory GetProductHistoryByBarcode(string barcode);
+       ICollection<ViewProduct> GetTotalReceiveProductByCompanyId(int companyId);
    }
 }

@@ -752,6 +752,10 @@ namespace NBL.Areas.Sales.Controllers
                     TtransferRequisitions = requisitions,
                     Branch = _iBranchManager.GetAllBranches().ToList()
                         .Find(n => n.BranchId == requisiton.RequisitionToBranchId),
+                    RequisitionFromBranch= _iBranchManager.GetAllBranches().ToList()
+                        .Find(n => n.BranchId == requisiton.RequisitionByBranchId),
+
+
                     TransferRequisition = requisiton
                 };
                 return View(model);

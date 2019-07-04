@@ -11,6 +11,7 @@ using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.MobileBankings;
 using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.Requisitions;
+using NBL.Models.EntityModels.Services;
 using NBL.Models.EntityModels.Suppliers;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.ViewModels;
@@ -50,6 +51,9 @@ namespace NBL.DAL.Contracts
        ApprovalPathModel GetFirstApprovalPathByApproverUserId(int approverUserId);
        ICollection<ApprovalAction> GetAllApprovalActionList();
        ICollection<ApprovalPathModel> GetAllApprovalPath();
-       ICollection<ApprovalDetails> GetAllApprovalDetailsByRequistionId(long requisitionId); 
-   }
+       ICollection<ApprovalDetails> GetAllApprovalDetailsByRequistionId(long requisitionId);
+       ICollection<ServicingModel> GetAllServicingStatus();
+       ICollection<PhysicalConditionModel> GetAllPhysicalConditions();
+       ICollection<ChargingStatusModel> GetAllCharginStatus();
+    }
 }

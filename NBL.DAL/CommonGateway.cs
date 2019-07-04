@@ -14,8 +14,10 @@ using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.MobileBankings;
 using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.Requisitions;
+using NBL.Models.EntityModels.Services;
 using NBL.Models.EntityModels.Suppliers;
 using NBL.Models.EntityModels.VatDiscounts;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 
 namespace NBL.DAL
@@ -1175,6 +1177,105 @@ CommandObj.Parameters.Clear();
             catch (Exception exception)
             {
                 throw new Exception("Could not collect approval details", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<ServicingModel> GetAllServicingStatus()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllServicingStatus";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<ServicingModel> models=new List<ServicingModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ServicingModel
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        ServicingStatus = reader["ServicingStatus"].ToString()
+                    });
+                }
+                reader.Close();
+                return models;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect Servicing status", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<PhysicalConditionModel> GetAllPhysicalConditions()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllPhysicalConditions";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<PhysicalConditionModel> models = new List<PhysicalConditionModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new PhysicalConditionModel
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        Condition = reader["Condition"].ToString()
+                    });
+                }
+                reader.Close();
+                return models;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect Physical Conditions", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<ChargingStatusModel> GetAllCharginStatus()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllCharginStatus";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<ChargingStatusModel> models = new List<ChargingStatusModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ChargingStatusModel
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        ChargingStatus = reader["Status"].ToString()
+                    });
+                }
+                reader.Close();
+                return models;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect Charging Status", exception);
             }
             finally
             {

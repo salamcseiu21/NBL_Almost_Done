@@ -10,6 +10,7 @@ namespace NBL.Models.ViewModels.Products
     {
         public int ProductId { get; set; }
         public string ProductName { get; set; }
+        public string ProductCategoryName { get; set; }
         public DateTime ProductionDate { get; set; }
         public DateTime ComeIntoInventory { get; set; }
         public DateTime DispatchDate { get; set; }

@@ -1,0 +1,340 @@
+﻿@model NBL.Models.EntityModels.Services.WarrantyBatteryModel
+
+@{
+    ViewBag.Title = "Receive";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+}
+
+<section class="content">
+    
+    <h3 class="text-center text-green">Receive Warranty Battery</h3>
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="form-group">
+                    <label for="ProductCode" class="col-md-3 control-label">BarCode</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="ProductCode" id="ProductCode" placeholder="Type or Scan barcode..." autofocus onchange="GetProductHistory(this)"/>
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+    </div>
+    @*<div id="divProductHistory"></div>*@
+    
+    <div style="border: 1px solid gray">
+        <table class="table-bordered" style="border: 1px solid;width: 100%">
+            <tbody>
+            <tr style="">
+                <td>
+                    <strong>Product Name : </strong><i><label id="ProductName"></label></i>
+                </td>
+                <td>
+                    <strong> Production Date : </strong> <i><label id="ProductionDate"></label></i>
+                </td>
+               
+                <td>
+                    <strong>Delivery Date : </strong><i><label id="DeliveryDate"></label></i>
+           
+                </td>
+                <td>
+                    <strong>Sale Date : </strong> <i><label id="SaleDate"></label></i>
+                </td>
+            </tr>
+            <tr style="">
+                <td>
+                    <strong>Product LifeTime : </strong><i><label id="LifeTime"></label></i>
+                   
+                </td>
+                <td>
+                   
+                    <strong>Product Age : </strong><i><label id="ProductAge"></label></i>
+                </td>
+                <td>
+                    <strong>Store Duration :</strong><i><label id="StoreDuration"></label></i>
+                </td>
+                <td>
+                    <strong>Sales Duration :</strong> <i><label id="SalesDuration"></label></i>
+                </td>
+               
+            </tr>
+            <tr>
+                <td colspan="4" class="text-center text-green"><strong>Client Information</strong></td>
+            </tr>
+            <tr >
+                <td>
+                    <strong>Client Name :</strong> <i><label id="ClientName"></label></i>
+                </td>
+                <td>
+                    <strong>Client Code :</strong> <i><label id="ClientCode"></label></i>
+                </td>
+                <td>
+                    <strong>Client Type :</strong> <i><label id="ClientType"></label></i>
+           
+                </td>
+                <td>
+                    <strong>Contact No :</strong> <i><label id="ClientPhone"></label></i>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Client Address :</strong><i><label id="ClientAddress"></label></i>
+                </td>
+                <td>
+                    <strong>Territory :</strong> <i><label id="Territory"></label></i>
+                </td>
+                <td>
+                    <strong>Order By : </strong> <i><label id="OrderByBranch"></label></i>
+                </td>
+                <td>
+                    <Strong> Distribution Point :</Strong> <i><label id="DistributionPoint"></label></i>
+           
+                </td>
+                
+            </tr>
+            </tbody>
+        </table>
+       
+    </div>
+   
+    <div style="border: 1px solid gray;margin-top: 5px">
+        <div class="row" style="margin: 10px">
+            <div class="col-md-4 col-md-offset-4">
+
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="DelearReceiveDate" class="control-label col-md-4"> Delear Receive Date</label>
+                        <div class="col-md-8">
+
+                            <input type="text" id="DelearReceiveDate" name="DelearReceiveDate" value="@date" class="form-control" onchange="GetDuraitionByDate(this)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table-bordered" style="border: 1px solid;width: 100%">
+            <tbody>
+            <tr>
+            
+                <td>
+                    <strong>Service Duration : </strong> <i><label id="ServiceDuration"></label></i>
+                </td>
+                <td>
+                    <Strong> Collection Duration :</Strong> <i><label id="CollectionDuration"></label></i>
+           
+                </td>
+                
+            </tr>
+            <tr>
+            
+                <td colspan="2">
+                    <strong>Remarks : </strong> <textarea  style="resize: none" class="form-control"></textarea>
+                </td>
+    
+            </tr>
+            </tbody>
+        </table>
+    </div>
+   
+    <div style="border: 1px solid gray;margin-top: 10px">
+       
+        <table class="table-bordered" style="border: 1px solid;width: 100%">
+            <tbody>
+            <tr>
+            
+                <td colspan="3" class="text-center">
+                    <strong class="text-green">Cell Information</strong> 
+                </td>
+                
+                
+            </tr>
+            <tr>
+            
+                <td> <strong>Cell 1 :</strong><input type="text"/><input type="text" placeholder="Cell 1 con..."/>  </td>
+                <td> <strong>Cell 2 :</strong><input type="text" /><input type="text" placeholder="Cell 2 con..."/>  </td>
+                <td> <strong>Cell 3 :</strong><input type="text" /><input type="text" placeholder="Cell 3 con..."/>  </td>
+              
+                
+                
+            </tr>
+            <tr>
+            
+                <td> <strong>Cell 4 :</strong><input type="text" /><input type="text" placeholder="Cell 4 con..."/>  </td>
+                <td> <strong>Cell 5 :</strong><input type="text" /><input type="text" placeholder="Cell 5 con..."/>  </td>
+                <td> <strong>Cell 6 :</strong><input type="text" /><input type="text" placeholder="Cell 6 con..."/>  </td>
+              
+                
+                
+            </tr>
+            <tr>
+                <td> <strong>Open Voltage :</strong><input type="text" /></td>
+                <td> <strong>Load Voltage :</strong><input type="text" /></td>
+                <td colspan="2">
+                    <strong>Remarks : </strong> <input  type="text"/>
+                </td>
+    
+            </tr>
+            </tbody>
+        </table>
+    </div>
+<div style="border: 1px solid gray;margin-top: 10px">
+       
+    <table class="table-bordered" style="border: 1px solid;width: 100%">
+        <tbody>
+        <tr>
+            
+            <td colspan="3" class="text-center">
+                <strong class="text-green">Other Information</strong> 
+            </td>
+                
+                
+        </tr>
+        <tr>
+            
+            <td> <strong>Cover :</strong><select>
+                <option value="">---Select--</option>
+                @foreach (var item in Model.PhysicalConditions)
+                {
+                    <option value="@item.Id">@item.Condition</option>
+                }
+            </select></td>
+            <td> <strong>Container :</strong><select>
+                                                 <option value="">---Select--</option>
+                                                 @foreach (var item in Model.PhysicalConditions)
+                                                 {
+                                                     <option value="@item.Id">@item.Condition</option>
+                                                 }
+            </select></td>
+            <td> <strong>Post :</strong><select><option value="">---Select--</option>
+@foreach (var item in Model.PhysicalConditions)
+{
+    <option value="@item.Id">@item.Condition</option>
+}</select></td>
+            <td> <strong>Servicing :</strong><select>
+                <option value="">---Select--</option>
+                @foreach (var item in Model.ServicingModels)
+                {
+                    <option value="@item.Id">@item.ServicingStatus</option>
+                }
+            </select></td>
+              
+                
+                
+        </tr>
+        <tr>
+            
+            <td> <strong>Used For :</strong><input type="text" /> </td>
+            <td> <strong>Capacity :</strong><input type="text" /></td>
+            <td> <strong>Charging System :</strong><select>
+                <option value="">---Select--</option>
+                @foreach (var item in Model.ChargingStatus)
+                {
+                    <option value="@item.Id">@item.ChargingStatus</option>
+                }
+            </select></td>
+            <td> <strong>Others :</strong><input type="text" /> </td> 
+                
+        </tr>
+        <tr>
+            <td colspan="2">Report By:<input type="text" style="width: 100%"/></td>
+            <td colspan="2">Comments :<input type="text"/></td>
+           
+           
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</section>
+
+@section Scripts
+{
+    <script>
+        $(function() {
+
+            $("#DelearReceiveDate").datepicker({
+                 dateFormat: 'dd-MM-yy',
+                 maxDate: '+0'
+            });
+        });
+
+    </script>
+
+
+    <script>
+        function GetProductHistory(btnClicked) {
+            //var $form = $(btnClicked).parents('form');
+            var code = $("#ProductCode").val();
+            var json = { barcode: code };
+            $.ajax({
+                type: "POST",
+                url: RootUrl + 'services/WarrantyBattery/GetProductHistoryByBarcode',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
+                error: function(xhr, status, error) {
+                    alert(error);
+                },
+                success: function(response) {
+                    //var result = response.Message;
+                    //alert(response.ProductAge);
+                    //$('#message').html(response).fadeIn('slow');
+                    //$('#message').html(result).fadeIn('slow'); //also show a success message
+                    //$('#message').delay(700).fadeOut('slow');
+                    $('#ProductName').html(response.ProductName);
+                    $('#ProductionDate').html(parseJsonDate(response.ProductionDate));
+                    $('#LifeTime').html(response.LifeTime);
+                    $('#ProductAge').html(response.ProductAge);
+                    $('#DeliveryDate').html(parseJsonDate(response.DeliveryDate));
+                    $('#SaleDate').html(parseJsonDate(response.SaleDate));
+
+                    $('#ClientName').html(response.ClientName);
+                    $('#ClientCode').html(response.ClientCode);
+                    $('#ClientType').html(response.ClientType);
+                    $('#ClientPhone').html(response.ClientPhone);
+
+
+                    $('#ClientAddress').html(response.ClientAddress);
+                    $('#Territory').html(response.TerritoryName);
+                    $('#OrderByBranch').html(response.OrderFromBranch);
+                    $('#DistributionPoint').html(response.DeliveryFromBranch);
+
+                    $('#StoreDuration').html(response.StoreDuration);
+                    $('#SalesDuration').html(response.SalesDuration);
+
+
+                    //$("#divProductHistory").html(response);
+                }
+            });
+        }
+
+        function GetDuraitionByDate(event) {
+            var date = event.value;
+            var code = $("#ProductCode").val();
+            var json = { dealerReceiveDate: date, barcode: code };
+       
+         $.ajax({
+            type: 'Post',
+            url: RootUrl + "services/WarrantyBattery/ServiceDurationByDate",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(json),
+            success: function(response) {
+                $('#ServiceDuration').html(response.ServiceDuration);
+                $('#CollectionDuration').html(response.CollectionDuration);
+            }
+        });
+    }
+
+        function parseJsonDate(jsonDate) {
+
+            var fullDate = new Date(parseInt(jsonDate.substr(6)));
+            var twoDigitMonth = (fullDate.getMonth() + 1) + ""; if (twoDigitMonth.length === 1) twoDigitMonth = "0" + twoDigitMonth;
+
+            var twoDigitDate = fullDate.getDate() + ""; if (twoDigitDate.length === 1) twoDigitDate = "0" + twoDigitDate;
+            var currentDate = twoDigitDate + "-" + twoDigitMonth + "-" + fullDate.getFullYear();
+
+            return currentDate;
+        };
+    </script>
+}

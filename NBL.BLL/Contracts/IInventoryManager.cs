@@ -48,7 +48,8 @@ namespace NBL.BLL.Contracts
        List<string> GetTransferReceiveableBarcodeList(long transferId);
        int ReceiveTransferedProduct(TransferModel aModel);
        ICollection<ViewProduct> GetTotalReceiveProductByBranchAndCompanyId(int branchId, int companyId);
-       ICollection<ViewProduct> GetDeliveredProductByBranchAndCompanyId(int branchId, int companyId);
+       ICollection<ViewProduct> GetTotalReceiveProductByCompanyId(int companyId);
+        ICollection<ViewProduct> GetDeliveredProductByBranchAndCompanyId(int branchId, int companyId);
        List<ChartModel> GetTotalProductionCompanyIdAndYear(int companyId, int year);
        ICollection<ChartModel> GetTotalDispatchCompanyIdAndYear(int companyId, int year);
        int GetProductStatusInFactoryByBarCode(string barcode);
@@ -62,5 +63,7 @@ namespace NBL.BLL.Contracts
        ICollection<ViewProduct> GetRequsitionVeStockProductQtyByDistributionCenter(int distributionCenterId, int companyId);
        ICollection<ViewTripDetailsModel> GetTripItemsByTripId(long tripId);
        bool UpdateTripItemQuantity(long tripItemId, int quantity);
+       ViewProductLifeCycleModel GetProductLifeCycle(string barcode);
+       ViewProductHistory GetProductHistoryByBarcode(string barcode);
    }
 }

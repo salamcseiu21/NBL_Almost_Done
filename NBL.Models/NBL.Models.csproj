@@ -140,6 +140,10 @@
     <Compile Include="EntityModels\Scraps\ScrapModel.cs" />
     <Compile Include="EntityModels\Securities\StringCipher.cs" />
     <Compile Include="EntityModels\Securities\ViewLoginInfo.cs" />
+    <Compile Include="EntityModels\Services\ChargingStatusModel.cs" />
+    <Compile Include="EntityModels\Services\PhysicalConditionModel.cs" />
+    <Compile Include="EntityModels\Services\ServicingModel.cs" />
+    <Compile Include="EntityModels\Services\WarrantyBatteryModel.cs" />
     <Compile Include="EntityModels\TransferProducts\TransferRequisition.cs" />
     <Compile Include="EntityModels\TransferProducts\Trip.cs" />
     <Compile Include="EntityModels\TransferProducts\TripDetails.cs" />
@@ -197,6 +201,7 @@
     <Compile Include="ViewModels\Productions\ViewTotalProduction.cs" />
     <Compile Include="ViewModels\Products\ProductStatusModel.cs" />
     <Compile Include="ViewModels\Products\ViewCreateProductDetailsModel.cs" />
+    <Compile Include="ViewModels\Products\ViewProductHistory.cs" />
     <Compile Include="ViewModels\Replaces\ReplaceReport.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceDetailsModel.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceModel.cs" />

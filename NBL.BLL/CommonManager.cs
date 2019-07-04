@@ -13,6 +13,7 @@ using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.MobileBankings;
 using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.Requisitions;
+using NBL.Models.EntityModels.Services;
 using NBL.Models.EntityModels.Suppliers;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.ViewModels;
@@ -195,6 +196,21 @@ namespace NBL.BLL
        public ICollection<ApprovalDetails> GetAllApprovalDetailsByRequistionId(long requisitionId)
        {
            return _iCommonGateway.GetAllApprovalDetailsByRequistionId(requisitionId);
+       }
+
+       public ICollection<PhysicalConditionModel> GetAllPhysicalConditions()
+       {
+           return _iCommonGateway.GetAllPhysicalConditions();
+       }
+
+       public ICollection<ServicingModel> GetAllServicingStatus()
+       {
+           return _iCommonGateway.GetAllServicingStatus();
+       }
+
+       public ICollection<ChargingStatusModel> GetAllCharginStatus()
+       {
+           return _iCommonGateway.GetAllCharginStatus();
        }
    }
 }

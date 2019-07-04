@@ -11,6 +11,7 @@ namespace NBL.Models.ViewModels.TransferProducts
     {
         public ICollection<TransferRequisitionDetails> TtransferRequisitions { set; get; }
         public ViewBranch Branch { get; set; }
+        public ViewBranch RequisitionFromBranch { get; set; } 
         public TransferRequisition TransferRequisition { get; set; }
     }
 }

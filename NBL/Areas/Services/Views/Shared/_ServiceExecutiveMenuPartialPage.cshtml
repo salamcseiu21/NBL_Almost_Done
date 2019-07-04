@@ -74,8 +74,21 @@
 
             </ul>
         </li>
-        
+
         <li class="treeview">
+            <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>Warranty Battery</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink("  Entry", "Receive", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-plus" })</li>
+
+            </ul>
+        </li>
+        @*<li class="treeview">
             <a href="#">
                 <i class="fa fa-product-hunt"></i>
                 <span>Scrap Product</span>
@@ -87,7 +100,7 @@
                 <li>@Html.ActionLink("  Entry", "SaveScrapProduct", "Scrap", new { area = "Services" }, new { @class = "fa fa-plus" })</li>
 
             </ul>
-        </li>
+        </li>*@
         <li class="treeview">
             <a href="#">
                 <i class="fa fa-book"></i> <span>Reports</span>

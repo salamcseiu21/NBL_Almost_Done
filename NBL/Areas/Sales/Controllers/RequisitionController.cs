@@ -196,7 +196,8 @@ namespace NBL.Areas.Sales.Controllers
                     }
                 }
 
-               
+
+               //var list1=  products.FindAll(n => n.ProductId == productId);
                 bool isInInventory = products.Select(n => n.ProductBarCode).Contains(scannedBarCode);
                 bool isScannedBefore = _iProductManager.IsScannedBefore(barcodeList, scannedBarCode);
 
@@ -319,5 +320,9 @@ namespace NBL.Areas.Sales.Controllers
             }
         }
 
+        public ActionResult DeliveredGRequsition()
+        {
+            return View();
+        }
     }
 }

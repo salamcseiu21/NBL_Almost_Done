@@ -105,6 +105,46 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+        public ICollection<ViewProduct> GetTotalReceiveProductByCompanyId(int companyId)
+        {
+
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetTotalReceiveProductByCompanyId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<ViewProduct> products = new List<ViewProduct>();
+                while (reader.Read())
+                {
+                    products.Add(new ViewProduct
+                    {
+
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        CategoryId = Convert.ToInt32(reader["CategoryId"]),
+                        SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString()
+                    });
+                }
+
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Colud not collect product list", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
         public ICollection<ViewProduct> GetDeliveredProductByBranchAndCompanyId(int branchId, int companyId)
         {
 
@@ -2641,6 +2681,102 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Colud not update trip item quantity", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+        //----------------------------Product Life Cicle/1-July-2019-------
+        public ViewProductLifeCycleModel GetProductLifeCycle(string barcode)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetProductLifeCycle";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BarCode", barcode);
+                ViewProductLifeCycleModel model = null;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    model = new ViewProductLifeCycleModel
+                    {
+                        Age = Convert.ToInt32(reader["Age"]),
+                        ComeIntoInventory = Convert.ToDateTime(reader["ScanDate"]),
+                        ProductionDate = Convert.ToDateTime(reader["ProductionDate"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        LifeTime = Convert.ToInt32(reader["LifeTime"]),
+                        ProductCategoryName=reader["ProductCategoryName"].ToString(),
+                        DispatchDate = DBNull.Value.Equals(reader["DespatchDate"])? default(DateTime):Convert.ToDateTime(reader["DespatchDate"])
+                        // Status = Convert.ToInt32(reader["Status"])
+                    };
+                }
+                reader.Close();
+                return model;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get product life cycle by barcode", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ViewProductHistory GetProductHistoryByBarcode(string barcode)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetProductHistoryByBarcode";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BarCode", barcode);
+                ViewProductHistory model = null;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    model = new ViewProductHistory
+                    {
+                        ProductAge = Convert.ToInt32(reader["ProductAge"]),
+                        ProductionDate = Convert.ToDateTime(reader["ProductionDate"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductBarCode = reader["ProductBarcode"].ToString(),
+                        LifeTime = Convert.ToInt32(reader["LifeTime"]),
+                        ClientName = reader["ClientName"].ToString(),
+                        ClientType = reader["ClientTypeName"].ToString(),
+                        ClientCode = reader["SubSubSubAccountCode"].ToString(),
+                        ClientPhone = reader["ClientPhone"].ToString(),
+                        ClientAddress = reader["ClientAddress"].ToString(),
+                        TerritoryName = reader["TerritoryName"].ToString(),
+                        RegionName = reader["RegionName"].ToString(),
+                        AssignedEmpName = reader["AssignedEmpName"].ToString(),
+                        AssignedEmpPhone = reader["AssignedEmpPhone"].ToString(),
+                        OrderRef = reader["OrderRef"].ToString(),
+                        InvoiceRef = reader["InvoiceRef"].ToString(),
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
+                        DeliveryFromBranch = reader["DistributionCenter"].ToString(),
+                        OrderFromBranch = reader["OrderByBranch"].ToString(),
+                        SaleDate = DBNull.Value.Equals(reader["SaleDate"])? DateTime.Now: Convert.ToDateTime(reader["SaleDate"])
+                      
+                    };
+                }
+                reader.Close();
+                return model;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get product history by barcode", exception);
             }
             finally
             {

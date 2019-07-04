@@ -2,18 +2,18 @@
 @{
     ViewBag.Title = "RequisitionDetails";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
-    var branch = Model.Branch;
+    var branch = Model.RequisitionFromBranch;
 }
 
 <section class="content">
-    <h3 class="text-center">Requisition Details</h3>
+    <h3 class="text-center text-green">Requisition Details</h3>
     
     <table class="display table-bordered" id="tbl_requisition_details_list" style="border:  1px solid">
         <thead>
         <tr>
             <td>
-                <strong>@branch.BranchName</strong><br/>
-                @branch.BranchAddress
+                <strong>Requisition From :<i> @branch.BranchName , @branch.BranchAddress</i></strong><br/>
+                
             </td>
             <td colspan="2">
                 <button type="button" value="@Model.TransferRequisition.TransferRequisitionId" id="@Model.TransferRequisition.TransferRequisitionId" onclick="ApproveRequisition(this)"  class="btn btn-info">Approve</button>

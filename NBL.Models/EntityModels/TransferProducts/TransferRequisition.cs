@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NBL.Models.EntityModels.Products;
+using NBL.Models.ViewModels;
 
 namespace NBL.Models.EntityModels.TransferProducts
 {
@@ -15,6 +16,7 @@ namespace NBL.Models.EntityModels.TransferProducts
         public DateTime TransferRequisitionDate { get; set; }
         public int RequisitionByUserId { get; set; }
         public int RequisitionByBranchId { get; set; }
+        public ViewBranch RequisitionByBranch { get; set; } 
         public int RequisitionToBranchId { get; set; }
         public int Quantity { get; set; }
         public int Status { get; set; }

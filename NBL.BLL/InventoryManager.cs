@@ -40,6 +40,11 @@ namespace NBL.BLL
         {
             return _iInventoryGateway.GetTotalReceiveProductByBranchAndCompanyId(branchId, companyId);
         }
+
+        public ICollection<ViewProduct> GetTotalReceiveProductByCompanyId(int companyId)
+        {
+            return _iInventoryGateway.GetTotalReceiveProductByCompanyId(companyId);
+        }
         public ICollection<ViewProduct> GetDeliveredProductByBranchAndCompanyId(int branchId, int companyId)
         {
             return _iInventoryGateway.GetDeliveredProductByBranchAndCompanyId(branchId, companyId);
@@ -322,6 +327,16 @@ namespace NBL.BLL
         public bool UpdateTripItemQuantity(long tripItemId,int quantity)
         {
             return _iInventoryGateway.UpdateTripItemQuantity(tripItemId,quantity)>0;
+        }
+
+        public ViewProductLifeCycleModel GetProductLifeCycle(string barcode)
+        {
+            return _iInventoryGateway.GetProductLifeCycle(barcode);
+        }
+
+        public ViewProductHistory GetProductHistoryByBarcode(string barcode)
+        {
+            return _iInventoryGateway.GetProductHistoryByBarcode(barcode);
         }
     }
 }

@@ -2193,7 +2193,13 @@ namespace NBL.DAL
                         TransferRequisitionRef = reader["TransferRequisitionRef"].ToString(),
                         TransferRequisitionDate = Convert.ToDateTime(reader["TransferRequisitionDate"]),
                         TransferRequisitionId = Convert.ToInt64(reader["TransferRequisitionId"]),
-                        RequisitionByUserId = Convert.ToInt32(reader["RequisitionByUserId"])
+                        RequisitionByUserId = Convert.ToInt32(reader["RequisitionByUserId"]),
+                        RequisitionByBranch = new ViewBranch
+                        {
+                            BranchName = reader["RequisitionByBranchName"].ToString(),
+                            Title = reader["RequisitionByBranchTitle"].ToString(),
+                            BranchId = Convert.ToInt32(reader["RequisitionByBranchId"])
+                        }
                     });
                 }
 
@@ -2202,6 +2208,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not get transfer requisition by status", exception);
             }
             finally
