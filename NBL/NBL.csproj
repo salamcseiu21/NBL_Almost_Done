@@ -8109,6 +8109,10 @@
     <Content Include="Areas\Services\Views\Shared\_ViewProductHistoryPartialPage.cshtml" />
     <Content Include="Areas\Sales\Views\Requisition\DeliveredGRequsition.cshtml" />
     <Content Include="Areas\Corporate\Views\Home\TotalReceiveByBranch.cshtml" />
+    <Content Include="Areas\Services\Views\WarrantyBattery\All.cshtml" />
+    <Content Include="Areas\Corporate\Views\Home\DeliveredOrderList.cshtml" />
+    <Content Include="Areas\Corporate\Views\Home\OrderChalan.cshtml" />
+    <Content Include="Areas\Corporate\Views\Home\Chalan.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />

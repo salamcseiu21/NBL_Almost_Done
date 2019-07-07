@@ -58,5 +58,10 @@ namespace NBL.BLL.Contracts
         ICollection<PhysicalConditionModel> GetAllPhysicalConditions();
         ICollection<ServicingModel> GetAllServicingStatus();
         ICollection<ChargingStatusModel> GetAllCharginStatus();
+        ICollection<CellCondition> GetAllCellConditions();
+
+        ICollection<ForwardToModel> GetAllForwardToModels();
+        ICollection<object> GetCellConditionBySearchTerm(string searchTerm);
+       
     }
 }

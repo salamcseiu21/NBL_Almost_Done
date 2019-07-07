@@ -1,4 +1,4 @@
-﻿@model NBL.Models.ViewModels.Products.ViewProductHistory
+﻿@model NBL.Models.EntityModels.Services.WarrantyBatteryModel
 
 @{
     ViewBag.Title = "Receive";
@@ -9,219 +9,353 @@
 <section class="content">
     
     <h3 class="text-center text-green">Receive Warranty Battery</h3>
-    <div class="form-horizontal">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
+<div class="form-horizontal">
+@using (Html.BeginForm())
+{
+    
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="form-group">
+            <label for="Barcode" class="col-md-3 control-label">BarCode</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="Barcode" id="Barcode" placeholder="Type or Scan barcode..." autofocus onchange="GetProductHistory(this)" required/>
+                @Html.HiddenFor(n=>n.DelivaryRef)
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div style="border: 1px solid gray">
+    <table class="table-bordered" style="border: 1px solid; width: 100%">
+        <tbody>
+        <tr style="">
+            <td>
+                <strong>Product Name : </strong><i><label id="ProductName"></label></i>
+            </td>
+            <td>
+                <strong> Production Date : </strong> <i><label id="ProductionDate"></label></i>
+            </td>
+
+            <td>
+                <strong>Delivery Date : </strong><i><label id="DeliveryDate"></label></i>
+
+            </td>
+            <td>
+                <strong>Sale Date : </strong> <i><label id="SaleDate"></label></i>
+            </td>
+        </tr>
+        <tr style="">
+            <td>
+                <strong>Product LifeTime : </strong><i><label id="LifeTime"></label></i>
+
+            </td>
+            <td>
+
+                <strong>Product Age : </strong><i><label id="ProductAge"></label></i>
+            </td>
+            <td>
+                <strong>Store Duration :</strong><i><label id="StoreDuration"></label></i>
+            </td>
+            <td>
+                <strong>Sales Duration :</strong> <i><label id="SalesDuration"></label></i>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="4" class="text-center text-green"><strong>Client Information</strong></td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Client Name :</strong> <i><label id="ClientName"></label></i>
+            </td>
+            <td>
+                <strong>Client Code :</strong> <i><label id="ClientCode"></label></i>
+            </td>
+            <td>
+                <strong>Client Type :</strong> <i><label id="ClientType"></label></i>
+
+            </td>
+            <td>
+                <strong>Contact No :</strong> <i><label id="ClientPhone"></label></i>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Client Address :</strong><i><label id="ClientAddress"></label></i>
+            </td>
+            <td>
+                <strong>Territory :</strong> <i><label id="Territory"></label></i>
+            </td>
+            <td>
+                <strong>Order By : </strong> <i><label id="OrderByBranch"></label></i>
+            </td>
+            <td>
+                <Strong> Distribution Point :</Strong> <i><label id="DistributionPoint"></label></i>
+
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div style="border: 1px solid gray; margin-top: 5px">
+    <div class="row" style="margin: 10px">
+        <div class="col-md-4 col-md-offset-4">
+
+            <div class="form-horizontal">
                 <div class="form-group">
-                    <label for="ProductCode" class="col-md-3 control-label">BarCode</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" name="ProductCode" id="ProductCode" placeholder="Type or Scan barcode..." autofocus onchange="GetProductHistory(this)"/>
-                    </div>
-                </div>
-            </div>
-          
-        </div>
-    </div>
-    @*<div id="divProductHistory"></div>*@
-    
-    <div style="border: 1px solid gray">
-        <table class="table-bordered" style="border: 1px solid;width: 100%">
-            <tbody>
-            <tr style="">
-                <td>
-                    <strong>Product Name : </strong><i><label id="ProductName"></label></i>
-                </td>
-                <td>
-                    <strong> Production Date : </strong> <i><label id="ProductionDate"></label></i>
-                </td>
-               
-                <td>
-                    <strong>Delivery Date : </strong><i><label id="DeliveryDate"></label></i>
-           
-                </td>
-                <td>
-                    <strong>Sale Date : </strong> <i><label id="SaleDate"></label></i>
-                </td>
-            </tr>
-            <tr style="">
-                <td>
-                    <strong>Product LifeTime : </strong><i><label id="LifeTime"></label></i>
-                   
-                </td>
-                <td>
-                   
-                    <strong>Product Age : </strong><i><label id="ProductAge"></label></i>
-                </td>
-                <td>
-                    <strong>Store Duration :</strong><i><label id="StoreDuration"></label></i>
-                </td>
-                <td>
-                    <strong>Sales Duration :</strong> <i><label id="SalesDuration"></label></i>
-                </td>
-               
-            </tr>
-            <tr>
-                <td colspan="4" class="text-center text-green"><strong>Client Information</strong></td>
-            </tr>
-            <tr >
-                <td>
-                    <strong>Client Name :</strong> <i><label id="ClientName"></label></i>
-                </td>
-                <td>
-                    <strong>Client Code :</strong> <i><label id="ClientCode"></label></i>
-                </td>
-                <td>
-                    <strong>Client Type :</strong> <i><label id="ClientType"></label></i>
-           
-                </td>
-                <td>
-                    <strong>Contact No :</strong> <i><label id="ClientPhone"></label></i>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <strong>Client Address :</strong><i><label id="ClientAddress"></label></i>
-                </td>
-                <td>
-                    <strong>Territory :</strong> <i><label id="Territory"></label></i>
-                </td>
-                <td>
-                    <strong>Order By : </strong> <i><label id="OrderByBranch"></label></i>
-                </td>
-                <td>
-                    <Strong> Distribution Point :</Strong> <i><label id="DistributionPoint"></label></i>
-           
-                </td>
-                
-            </tr>
-            </tbody>
-        </table>
-       
-    </div>
-   
-    <div style="border: 1px solid gray;margin-top: 5px">
-        <div class="row" style="margin: 10px">
-            <div class="col-md-4 col-md-offset-4">
+                    <label for="DelearReceiveDate" class="control-label col-md-4"> Delear Receive Date</label>
+                    <div class="col-md-8">
 
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        <label for="DelearReceiveDate" class="control-label col-md-4"> Delear Receive Date</label>
-                        <div class="col-md-8">
-
-                            <input type="text" id="DelearReceiveDate" name="DelearReceiveDate" value="@date" class="form-control" onchange="GetDuraitionByDate(this)" />
-                        </div>
+                        <input type="text" id="DelearReceiveDate" name="DelearReceiveDate" value="@date" class="form-control" onchange="GetDuraitionByDate(this)"/>
                     </div>
                 </div>
             </div>
         </div>
-        <table class="table-bordered" style="border: 1px solid;width: 100%">
-            <tbody>
-            <tr>
-            
-                <td>
-                    <strong>Service Duration : </strong> <i><label id="ServiceDuration"></label></i>
-                </td>
-                <td>
-                    <Strong> Collection Duration :</Strong> <i><label id="CollectionDuration"></label></i>
-           
-                </td>
-                
-            </tr>
-            <tr>
-            
-                <td colspan="2">
-                    <strong>Remarks : </strong> <textarea  style="resize: none" class="form-control"></textarea>
-                </td>
-    
-            </tr>
-            </tbody>
-        </table>
     </div>
-   
-    <div style="border: 1px solid gray;margin-top: 10px">
-       
-        <table class="table-bordered" style="border: 1px solid;width: 100%">
-            <tbody>
-            <tr>
-            
-                <td colspan="3" class="text-center">
-                    <strong>Cell Information</strong> 
-                </td>
-                
-                
-            </tr>
-            <tr>
-            
-                <td> <strong>Cell 1 :</strong><input type="text"/><input type="text" placeholder="Cell 1 con..."/>  </td>
-                <td> <strong>Cell 2 :</strong><input type="text" /><input type="text" placeholder="Cell 2 con..."/>  </td>
-                <td> <strong>Cell 3 :</strong><input type="text" /><input type="text" placeholder="Cell 3 con..."/>  </td>
-              
-                
-                
-            </tr>
-            <tr>
-            
-                <td> <strong>Cell 4 :</strong><input type="text" /><input type="text" placeholder="Cell 4 con..."/>  </td>
-                <td> <strong>Cell 5 :</strong><input type="text" /><input type="text" placeholder="Cell 5 con..."/>  </td>
-                <td> <strong>Cell 6 :</strong><input type="text" /><input type="text" placeholder="Cell 6 con..."/>  </td>
-              
-                
-                
-            </tr>
-            <tr>
-                <td> <strong>Open Voltage :</strong><input type="text" /></td>
-                <td> <strong>Load Voltage :</strong><input type="text" /></td>
-                <td colspan="2">
-                    <strong>Remarks : </strong> <input  type="text"/>
-                </td>
-    
-            </tr>
-            </tbody>
-        </table>
-    </div>
-<div style="border: 1px solid gray;margin-top: 10px">
-       
-    <table class="table-bordered" style="border: 1px solid;width: 100%">
+    <table class="table-bordered" style="border: 1px solid; width: 100%">
         <tbody>
         <tr>
-            
-            <td colspan="3" class="text-center">
-                <strong>Other Information</strong> 
+
+            <td>
+                <strong>Service Duration : </strong> <i><label id="ServiceDuration"></label></i>
             </td>
-                
-                
+            <td>
+                <Strong> Collection Duration :</Strong> <i><label id="CollectionDuration"></label></i>
+
+            </td>
+
         </tr>
         <tr>
-            
-            <td> <strong>Cell 1 :</strong><input type="text"/></td>
-            <td> <strong>Cell 2 :</strong><input type="text" /></td>
-            <td> <strong>Cell 3 :</strong><input type="text" /></td>
-            <td> <strong>Cell 3 :</strong><input type="text" /></td>
-              
-                
-                
-        </tr>
-        <tr>
-            
-            <td> <strong>Cell 4 :</strong><input type="text" /><input type="text" placeholder="Cell 4 con..."/>  </td>
-            <td> <strong>Cell 5 :</strong><input type="text" /><input type="text" placeholder="Cell 5 con..."/>  </td>
-            <td> <strong>Cell 6 :</strong><input type="text" /><input type="text" placeholder="Cell 6 con..."/>  </td>
-              
-                
-                
-        </tr>
-        <tr>
-            <td> <strong>Open Voltage :</strong><input type="text" /></td>
-            <td> <strong>Load Voltage :</strong><input type="text" /></td>
+
             <td colspan="2">
-                <strong>Remarks : </strong> <input  type="text"/>
+                <strong>Remarks : </strong> <textarea id="VerificationRemarks" name="VerificationRemarks" style="resize: none" class="form-control"  required></textarea>
             </td>
-    
+
         </tr>
         </tbody>
     </table>
 </div>
 
+<div style="border: 1px solid gray; margin-top: 10px">
+
+    <table class="table-bordered" style="border: 1px solid; width: 100%">
+        <tbody>
+        <tr>
+
+            <td colspan="3" class="text-center">
+                <strong class="text-green">Cell Information</strong>
+            </td>
+
+
+        </tr>
+        <tr>
+
+            <td> <strong>Cell 1 :</strong><input id="SpGrCellOne" name="SpGrCellOne" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="text-right" required/>
+                <input type="text" id="CellOneCondition" name="CellOneCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 1 con..."/> 
+                @Html.HiddenFor(n=>n.CellOneConditionId)
+            </td>
+            <td> <strong>Cell 2 :</strong><input  id="SpGrCellTwo" name="SpGrCellTwo" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="text-right" required/>
+                <input type="text" id="CellTwoCondition" name="CellTwoCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 2 con..."/>
+                @Html.HiddenFor(n=>n.CellTwoConditionId)
+             </td>
+            <td> <strong>Cell 3 :</strong><input  id="SpGrCellThree" name="SpGrCellThree" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="text-right"  required/>
+                <input type="text" id="CellThreeCondition" name="CellThreeCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 3 con..."/>
+                @Html.HiddenFor(n=>n.CellThreeConditionId)
+             </td>
+
+
+
+        </tr>
+        <tr>
+
+            <td> <strong>Cell 4 :</strong><input  id="SpGrCellFour" name="SpGrCellFour" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="text-right" required/>
+                <input type="text" id="CellFourCondition" onkeypress="CellConditionAutoComplete(this)" name="CellFourCondition" placeholder="Cell 4 con..."/> 
+                @Html.HiddenFor(n=>n.CellFourConditionId)
+            </td>
+            <td> <strong>Cell 5 :</strong><input  id="SpGrCellFive" name="SpGrCellFive" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="text-right" required/>
+                <input type="text" id="CellFiveCondition" name="CellFiveCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 5 con..."/> 
+                @Html.HiddenFor(n=>n.CellFiveConditionId)
+            </td>
+            <td> <strong>Cell 6 :</strong><input  id="SpGrCellSix" name="SpGrCellSix" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="text-right" required/>
+                <input type="text" id="CellSixCondition" name="CellSixCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 6 con..."/>
+                @Html.HiddenFor(n=>n.CellSixConditionId)
+            </td>
+
+
+
+        </tr>
+        <tr>
+            <td colspan="3">
+                <strong> SpGr Cell Value Difference :</strong> <input type="text" id="SpGrCellValueDifference"/>
+            </td>
+        </tr>
+        <tr>
+            <td> <strong>Open Voltage :</strong><input  id="OpenVoltage" name="OpenVoltage" type="number"  required style="width: 100%" /></td>
+            <td> <strong>Load Voltage :</strong><input id="LoadVoltage" name="LoadVoltage" type="number"  required style="width: 100%" /></td>
+            <td colspan="2">
+                <strong>Remarks : </strong> <input id="CellRemarks" name="CellRemarks" type="text" style="width: 100%"  required/>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+    <div style="border: 1px solid gray; margin-top: 10px">
+
+        <table class="table-bordered" style="border: 1px solid; width: 100%">
+            <tbody>
+            <tr>
+
+                <td colspan="3" class="text-center">
+                    <strong class="text-green">Other Information</strong>
+                </td>
+
+
+            </tr>
+            <tr>
+
+                <td>
+                    <strong>Cover :</strong><select name="CoverStatusId"  required>
+                        <option value="">---Select--</option>
+                        @foreach (var item in Model.PhysicalConditions)
+                        {
+                            <option value="@item.Id">@item.Condition</option>
+                        }
+                    </select>
+                </td>
+                <td>
+                    <strong>Container :</strong><select name="ContainerStatusId"  required>
+                        <option value="">---Select--</option>
+                        @foreach (var item in Model.PhysicalConditions)
+                        {
+                            <option value="@item.Id">@item.Condition</option>
+                        }
+                    </select>
+                </td>
+                <td>
+                    <strong>Post :</strong><select name="PostStatusId"  required>
+                        <option value="">---Select--</option>
+                        @foreach (var item in Model.PhysicalConditions)
+                        {
+                            <option value="@item.Id">@item.Condition</option>
+                        }
+                    </select>
+                </td>
+                <td>
+                    <strong>Servicing :</strong><select name="ServicingStatusId"  required>
+                        <option value="">---Select--</option>
+                        @foreach (var item in Model.ServicingModels)
+                        {
+                            <option value="@item.Id">@item.ServicingStatus</option>
+                        }
+                    </select>
+                </td>
+
+
+
+            </tr>
+            <tr>
+
+                <td> <strong>Used For :</strong><input type="text" name="AppUsedFor" style="width: 100%"/> </td>
+                <td> <strong>Capacity :</strong><input type="text" name="AppCapacity" style="width: 100%"/></td>
+                <td>
+                    <strong>Charging System :</strong><select name="ChargingSystemId"  required style="width: 100%">
+                        <option value="">---Select--</option>
+                        @foreach (var item in Model.ChargingStatus)
+                        {
+                            <option value="@item.Id">@item.ChargingStatus</option>
+                        }
+                    </select>
+                </td>
+                <td> <strong>Others :</strong><input type="text" name="OtherInformationRemarks" style="width: 100%"/> </td>
+
+            </tr>
+            <tr>
+                <td colspan="2"><strong>Report By:</strong><input type="text" id="EmployeeName" style="width: 100%"  required/>
+                    @Html.HiddenFor(n=>n.ReportByEmployeeId)
+                </td>
+                <td colspan="2"><strong>Comments :</strong><input type="text" style="width: 100%" name="ReceiveReport"  required/></td>
+
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div style="border: 1px solid gray; margin-top: 10px">
+
+        <table class="table-bordered" style="border: 1px solid; width: 100%">
+            <tbody>
+                <tr>
+
+                    <td colspan="3" class="text-center">
+                        <strong class="text-green">Service Information</strong>
+                    </td>
+
+
+                </tr>
+                <tr>
+
+                    <td>
+                        <strong>Delivery Date:</strong>
+                        
+                        <input type="text" id="DemoDeliveryDate" name="DemoDeliveryDate" value="@date"/>
+                       
+                    </td>
+                    <td>
+                        <strong>Barcode :</strong><input type="text" />
+                    </td>
+                    <td>
+                        <strong>Return On:</strong>
+                        <input type="text" id="DemoReturnDate" name="DemoReturnDate" value="@date"/>
+                    </td>
+                    <td>
+                        <strong>Remarks :</strong><input type="text" />
+                    </td>
+
+
+
+                </tr>
+                <tr>
+
+                    <td> <strong>Used For :</strong><input type="text" name="AppUsedFor" style="width: 100%" /> </td>
+                    <td> <strong>Capacity :</strong><input type="text" name="AppCapacity" style="width: 100%" /></td>
+                    <td>
+                        <strong>Charging System :</strong><select name="ChargingSystemId" required style="width: 100%">
+                            <option value="">---Select--</option>
+                            @foreach (var item in Model.ChargingStatus)
+                            {
+                                <option value="@item.Id">@item.ChargingStatus</option>
+                            }
+                        </select>
+                    </td>
+                    <td> <strong>Others :</strong><input type="text" name="OtherInformationRemarks" style="width: 100%" /> </td>
+
+                </tr>
+                
+                <tr>
+                    <td colspan="3"></td>
+                    <td>
+                        <button class="btn btn-danger">Cancel</button>
+                        <input type="submit" value="Save" class="btn btn-info" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+}
+</div>
+    @*<div id="divProductHistory"></div>*@
 </section>
 
 @section Scripts
@@ -230,9 +364,19 @@
         $(function() {
 
             $("#DelearReceiveDate").datepicker({
-                 dateFormat: 'dd-MM-yy',
-                 maxDate: '+0'
+                dateFormat: 'dd-MM-yy',
+                maxDate: '+0'
             });
+            $("#DemoDeliveryDate").datepicker({
+                dateFormat: 'dd-MM-yy',
+                maxDate: '+0'
+            });
+
+            $("#DemoReturnDate").datepicker({
+                dateFormat: 'dd-MM-yy',
+                minDate: '+0'
+            });
+            
         });
 
     </script>
@@ -241,7 +385,7 @@
     <script>
         function GetProductHistory(btnClicked) {
             //var $form = $(btnClicked).parents('form');
-            var code = $("#ProductCode").val();
+            var code = $("#Barcode").val();
             var json = { barcode: code };
             $.ajax({
                 type: "POST",
@@ -258,6 +402,7 @@
                     //$('#message').html(result).fadeIn('slow'); //also show a success message
                     //$('#message').delay(700).fadeOut('slow');
                     $('#ProductName').html(response.ProductName);
+                    $('#DelivaryRef').html(response.DeliveryRef);
                     $('#ProductionDate').html(parseJsonDate(response.ProductionDate));
                     $('#LifeTime').html(response.LifeTime);
                     $('#ProductAge').html(response.ProductAge);
@@ -286,20 +431,20 @@
 
         function GetDuraitionByDate(event) {
             var date = event.value;
-            var code = $("#ProductCode").val();
+            var code = $("#Barcode").val();
             var json = { dealerReceiveDate: date, barcode: code };
        
-         $.ajax({
-            type: 'Post',
-            url: RootUrl + "services/WarrantyBattery/ServiceDurationByDate",
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(json),
-            success: function(response) {
-                $('#ServiceDuration').html(response.ServiceDuration);
-                $('#CollectionDuration').html(response.CollectionDuration);
-            }
-        });
-    }
+            $.ajax({
+                type: 'Post',
+                url: RootUrl + "services/WarrantyBattery/ServiceDurationByDate",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
+                success: function(response) {
+                    $('#ServiceDuration').html(response.ServiceDuration);
+                    $('#CollectionDuration').html(response.CollectionDuration);
+                }
+            });
+        }
 
         function parseJsonDate(jsonDate) {
 
@@ -311,5 +456,98 @@
 
             return currentDate;
         };
+    </script>
+
+    @*Cell Condition Autocomplete*@
+    <script>
+
+        function CellConditionAutoComplete(event) {
+            // alert(event.id);
+            $("#"+event.id).autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: RootUrl + 'services/WarrantyBattery/CellConditionAutoComplete/',
+                        // url: RootUrl + 'common/ProductAutoComplete/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function (item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    //alert(i.item.val);
+                    //alert("#" + event.id + "Id");
+                    $("#" + event.id + "Id").val(i.item.val);
+                },
+                minLength: 1
+            });
+        }
+    </script>
+    
+    
+    <script type="text/javascript">
+        $(function () {
+            $("#EmployeeName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url :'@Url.Action("ServiceEmployeeAutoComplete", "Common",new {area=""})',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function(item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#ReportByEmployeeId").val(i.item.val);
+                },
+                minLength: 1
+            });
+        });
+    </script>
+
+    <script>
+        function CalculateSpGrCellValueDifference(event) {
+
+
+            var gr1 = isNaN(parseFloat($("#SpGrCellOne").val())) ? 0 : parseFloat($("#SpGrCellOne").val());
+            var gr2 = isNaN(parseFloat($("#SpGrCellTwo").val())) ? 0 : parseFloat($("#SpGrCellTwo").val());
+            var gr3 = isNaN(parseFloat($("#SpGrCellThree").val())) ? 0 : parseFloat($("#SpGrCellThree").val());
+            var gr4 = isNaN(parseFloat($("#SpGrCellFour").val())) ? 0 : parseFloat($("#SpGrCellFour").val());
+            var gr5 = isNaN(parseFloat($("#SpGrCellFive").val())) ? 0 : parseFloat($("#SpGrCellFive").val());
+            var gr6 = isNaN(parseFloat($("#SpGrCellSix").val())) ? 0 : parseFloat($("#SpGrCellSix").val());
+           
+            var cellGrValues = [gr1,gr2,gr3,gr4,gr5,gr6];
+
+
+            var minCellGr= Math.min.apply(Math, cellGrValues);
+            var maxCellGr = Math.max.apply(Math, cellGrValues);
+            var diff = maxCellGr - minCellGr;
+            //alert(diff);
+            $("#SpGrCellValueDifference").val(diff);
+        }
     </script>
 }

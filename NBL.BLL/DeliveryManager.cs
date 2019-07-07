@@ -147,6 +147,19 @@ namespace NBL.BLL
             return deliveredOrders.ToList();
         }
 
+        public ICollection<Delivery> GetAllDeliveredOrdersByDistributionPointAndCompanyId(int branchId, int companyId)
+        {
+            var deliveredOrders =
+                _iDeliveryGateway.GetAllDeliveredOrdersByDistributionPointAndCompanyId(branchId, companyId);
+            foreach (Delivery delivery in deliveredOrders)
+            {
+                var order = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
+                delivery.Client = _iClientManager.GetById(order.ClientId);
+            }
+
+            return deliveredOrders.ToList();
+        }
+
         public ViewChalanModel GetChalanByDeliveryIdFromFactory(int deliveryId)
         {
             Delivery delivery = GetOrderByDeliveryId(deliveryId);

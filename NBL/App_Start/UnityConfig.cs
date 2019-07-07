@@ -98,6 +98,8 @@ namespace NBL
 
             container.RegisterType<IScrapManager, ScrapManager>();
             container.RegisterType<IScrapGateway, ScrapGateway>();
+            container.RegisterType<IServiceManager, ServiceManager>();
+            container.RegisterType<IServiceGateway, ServiceGateway>();
 
             container.RegisterType<DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());
             container.RegisterType<UserManager<ApplicationUser>>(new HierarchicalLifetimeManager());

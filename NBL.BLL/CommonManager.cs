@@ -212,5 +212,20 @@ namespace NBL.BLL
        {
            return _iCommonGateway.GetAllCharginStatus();
        }
+
+       public ICollection<CellCondition> GetAllCellConditions()
+       {
+           return _iCommonGateway.GetAllCellConditions();
+       }
+
+       public ICollection<ForwardToModel> GetAllForwardToModels()
+       {
+           return _iCommonGateway.GetAllForwardToModels();
+       }
+
+       public ICollection<object> GetCellConditionBySearchTerm(string searchTerm)
+       {
+           return _iCommonGateway.GetCellConditionBySearchTerm(searchTerm);
+       }
    }
 }

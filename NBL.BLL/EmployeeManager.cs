@@ -109,5 +109,10 @@ namespace NBL.BLL
         {
             return _iEmployeeGateway.GetEmployeeListBySearchTerm(searchTerm);
         }
+
+        public ICollection<object> GetEmployeeListByDepartmentAndSearchTerm(int departmentId, string searchTerm)
+        {
+            return _iEmployeeGateway.GetEmployeeListByDepartmentAndSearchTerm(departmentId,searchTerm);
+        }
     }
 }

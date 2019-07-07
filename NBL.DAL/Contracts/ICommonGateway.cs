@@ -55,5 +55,8 @@ namespace NBL.DAL.Contracts
        ICollection<ServicingModel> GetAllServicingStatus();
        ICollection<PhysicalConditionModel> GetAllPhysicalConditions();
        ICollection<ChargingStatusModel> GetAllCharginStatus();
-    }
+       ICollection<CellCondition> GetAllCellConditions();
+       ICollection<object> GetCellConditionBySearchTerm(string searchTerm);
+       ICollection<ForwardToModel> GetAllForwardToModels();
+   }
 }

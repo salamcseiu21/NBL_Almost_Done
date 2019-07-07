@@ -1284,5 +1284,111 @@ CommandObj.Parameters.Clear();
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public ICollection<CellCondition> GetAllCellConditions()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllCellConditions";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<CellCondition> models = new List<CellCondition>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new CellCondition
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        Condition = reader["Condition"].ToString()
+                    });
+                }
+                reader.Close();
+                return models;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect Cell Conditions", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<object> GetCellConditionBySearchTerm(string searchTerm)
+        {
+
+            try
+            {
+                
+                CommandObj.CommandText = "UDSP_GetCellConditionBySearchTerm";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<object> products = new List<object>();
+                while (reader.Read())
+                {
+                    products.Add(new
+                    {
+
+                        label = reader["Condition"].ToString(),
+                        val = Convert.ToInt32(reader["Id"])
+                    });
+                }
+
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Colud not collect Cell conditions", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+
+        }
+
+        public ICollection<ForwardToModel> GetAllForwardToModels()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllForwardToModels";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<ForwardToModel> models = new List<ForwardToModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ForwardToModel
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        ForwardType = reader["ForwardType"].ToString()
+                    });
+                }
+                reader.Close();
+                return models;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Colud not collect forward to info", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }

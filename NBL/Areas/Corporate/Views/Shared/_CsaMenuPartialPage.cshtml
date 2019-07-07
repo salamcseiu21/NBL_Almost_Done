@@ -36,6 +36,21 @@
                 @*<li>@Html.ActionLink(" Monthly Requisition", "MonthlyRequisition", "Requisition", new {area = "Corporate"}, new {@class = "fa fa-plus", style = "font-weight: bolder"})</li>*@
             </ul>
         </li>
+        
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>Challan</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Despatch List", "DispatchList", "Home", new { area = "Corporate" }, new { @class = "fa fa-eye" })</li>
+                <li>@Html.ActionLink(" Delivered List", "DeliveredOrderList", "Home", new { area = "Corporate" }, new { @class = "fa fa-pencil" })</li>
+       
+            </ul>
+        </li>
         @Html.Partial("_MenuPartialPage")
     </ul>
 }

@@ -16,10 +16,20 @@ namespace NBL.Areas.Services.Controllers
     {
         private readonly IInventoryManager _iInventoryManager;
         private readonly ICommonManager _iCommonManager;
-        public WarrantyBatteryController(IInventoryManager iInventoryManager,ICommonManager iCommonManager)
+        private readonly IServiceManager _iServiceManager;
+        private readonly IBranchManager _iBranchManager;
+        public WarrantyBatteryController(IInventoryManager iInventoryManager,ICommonManager iCommonManager,IServiceManager iServiceManager,IBranchManager iBranchManager)
         {
             _iInventoryManager = iInventoryManager;
             _iCommonManager = iCommonManager;
+            _iServiceManager = iServiceManager;
+            _iBranchManager = iBranchManager;
+        }
+
+        public ActionResult All()
+        {
+            var products = _iServiceManager.GetReceivedServiceProducts();
+            return View(products);
         }
         // GET: Services/WarrantyBattery
         public ActionResult Receive()
@@ -30,7 +40,10 @@ namespace NBL.Areas.Services.Controllers
                 {
                     PhysicalConditions = _iCommonManager.GetAllPhysicalConditions().ToList(),
                     ServicingModels = _iCommonManager.GetAllServicingStatus().ToList(),
-                    ChargingStatus = _iCommonManager.GetAllCharginStatus().ToList()
+                    ChargingStatus = _iCommonManager.GetAllCharginStatus().ToList(),
+                    ForwardToModels = _iCommonManager.GetAllForwardToModels().ToList(),
+                    DistributionPoints = _iBranchManager.GetAllBranches().ToList()
+                    
                     
                 };
                 return View(model);
@@ -41,6 +54,38 @@ namespace NBL.Areas.Services.Controllers
                 throw;
             }
 
+        }
+        [HttpPost]
+        public ActionResult Receive(WarrantyBatteryModel model)
+        {
+            try
+            {
+
+                var product = _iInventoryManager.GetProductHistoryByBarcode(model.Barcode) ?? new ViewProductHistory();
+                var user = (ViewUser) Session["user"];
+                var branchId = Convert.ToInt32(Session["BranchId"]);
+                model.EntryByUserId = user.UserId;
+                model.BranchId = branchId;
+                model.ReceiveDatetime=DateTime.Now;
+                model.DelivaryRef = product.DeliveryRef;
+                model.TransactionRef = product.OrderRef;
+                model.Status = 0;
+                var result = _iServiceManager.ReceiveServiceProduct(model);
+                if (result)
+                {
+                    ModelState.Clear();
+                    return RedirectToAction("All");
+                }
+                model.PhysicalConditions = _iCommonManager.GetAllPhysicalConditions().ToList();
+                model.ServicingModels = _iCommonManager.GetAllServicingStatus().ToList();
+                model.ChargingStatus = _iCommonManager.GetAllCharginStatus().ToList();
+                return Receive(model);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return View(model);
+            }
         }
 
         //--------------Return Json----------------
@@ -78,5 +123,13 @@ namespace NBL.Areas.Services.Controllers
         //    //return PartialView("_ViewProductHistoryPartialPage", product);
         //    TempData["ProductHistory"] = product;
         //}
+
+        //----------------Cell Condition Auto Complete------------------
+        [HttpPost]
+        public JsonResult CellConditionAutoComplete(string prefix)
+        {
+            ICollection<object> conditionList = _iCommonManager.GetCellConditionBySearchTerm(prefix);
+            return Json(conditionList);
+        }
     }
 }

@@ -803,6 +803,63 @@ namespace NBL.DAL
             }
         }
 
+        public IEnumerable<Delivery> GetAllDeliveredOrdersByDistributionPointAndCompanyId(int branchId, int companyId)
+        {
+            try
+            {
+               // CommandObj.CommandText = "UDSP_GetAllDeliveredOrdersByBranchCompanyAndUserId";
+                CommandObj.CommandText = "UDSP_GetAllDeliveredOrdersByDistributionPointAndCompanyId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DistributionPointId", branchId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<Delivery> orders = new List<Delivery>();
+                while (reader.Read())
+                {
+                    Delivery aModel = new Delivery
+                    {
+                        DeliveryId = Convert.ToInt32(reader["DeliveryId"]),
+                        ToBranchId = branchId,
+                        FromBranchId = branchId,
+                        CompanyId = companyId,
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
+                        Status = Convert.ToInt32(reader["Status"]),
+                        SysDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        Transport = new Transport
+                        {
+                            DriverName = reader["DriverName"].ToString(),
+                            DriverPhone = reader["DriverPhone"].ToString(),
+                            Transportation = reader["Transportation"].ToString(),
+                            TransportationCost = Convert.ToDecimal(reader["TransportationCost"]),
+                            VehicleNo = reader["VehicleNo"].ToString()
+                        }
+                    };
+                    orders.Add(aModel);
+                }
+                reader.Close();
+                return orders;
+
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Could not Collect Delivered Orders due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Collect Delivered Orders by deistribution point and Company", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
         public int Add(Delivery model)
         {
             throw new NotImplementedException();

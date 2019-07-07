@@ -13,6 +13,7 @@ using NBL.Models;
 using NBL.Models.EntityModels.Banks;
 using NBL.Models.EntityModels.Designations;
 using NBL.Models.EntityModels.Locations;
+using NBL.Models.Enums;
 using NBL.Models.Logs;
 using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
@@ -620,6 +621,13 @@ namespace NBL.Controllers
             return Json(employees);
         }
 
+        //----------------Service Employee name Autocomplete---------------
+        public JsonResult ServiceEmployeeAutoComplete(string prefix)
+        {
+
+            ICollection<object> employees = _iEmployeeManager.GetEmployeeListByDepartmentAndSearchTerm(Convert.ToInt32(Department.ServiceSupport),prefix);
+            return Json(employees);
+        }
         public JsonResult GetEmployeeById(int employeeId)
         {
             var emp = _iEmployeeManager.GetEmployeeById(employeeId);

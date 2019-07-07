@@ -140,7 +140,9 @@
     <Compile Include="EntityModels\Scraps\ScrapModel.cs" />
     <Compile Include="EntityModels\Securities\StringCipher.cs" />
     <Compile Include="EntityModels\Securities\ViewLoginInfo.cs" />
+    <Compile Include="EntityModels\Services\CellCondition.cs" />
     <Compile Include="EntityModels\Services\ChargingStatusModel.cs" />
+    <Compile Include="EntityModels\Services\ForwardToModel.cs" />
     <Compile Include="EntityModels\Services\PhysicalConditionModel.cs" />
     <Compile Include="EntityModels\Services\ServicingModel.cs" />
     <Compile Include="EntityModels\Services\WarrantyBatteryModel.cs" />
@@ -152,6 +154,7 @@
     <Compile Include="EntityModels\Locations\Division.cs" />
     <Compile Include="EntityModels\Employees\Employee.cs" />
     <Compile Include="EntityModels\Masters\EmployeeType.cs" />
+    <Compile Include="Enums\Department.cs" />
     <Compile Include="Enums\InvoiceStatus.cs" />
     <Compile Include="Enums\ReferenceType.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
@@ -217,6 +220,7 @@
     <Compile Include="ViewModels\Returns\ViewReturnProductModel.cs" />
     <Compile Include="ViewModels\Returns\ViewReturnReceiveModel.cs" />
     <Compile Include="ViewModels\Scraps\ViewCreateScrapModel.cs" />
+    <Compile Include="ViewModels\Services\ViewReceivedServiceProduct.cs" />
     <Compile Include="ViewModels\Summaries\FactorySummaryModel.cs" />
     <Compile Include="ViewModels\Summaries\SummaryModel.cs" />
     <Compile Include="EntityModels\Suppliers\Supplier.cs" />

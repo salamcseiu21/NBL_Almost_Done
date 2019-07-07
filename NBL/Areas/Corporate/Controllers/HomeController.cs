@@ -42,7 +42,8 @@ namespace NBL.Areas.Corporate.Controllers
         private readonly IProductManager _iProductManager;
         private readonly UserManager _userManager=new UserManager();
         private readonly IFactoryDeliveryManager _iFactoryDeliveryManager;
-        public HomeController(IVatManager iVatManager,IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IReportManager iReportManager,IDepartmentManager iDepartmentManager,IEmployeeManager iEmployeeManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager,IDiscountManager iDiscountManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IAccountsManager iAccountsManager,IInvoiceManager iInvoiceManager,IDivisionGateway iDivisionGateway,IProductManager iProductManager,IFactoryDeliveryManager iFactoryDeliveryManager)
+        private readonly IDeliveryManager _iDeliveryManager;
+        public HomeController(IVatManager iVatManager,IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IReportManager iReportManager,IDepartmentManager iDepartmentManager,IEmployeeManager iEmployeeManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager,IDiscountManager iDiscountManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IAccountsManager iAccountsManager,IInvoiceManager iInvoiceManager,IDivisionGateway iDivisionGateway,IProductManager iProductManager,IFactoryDeliveryManager iFactoryDeliveryManager,IDeliveryManager iDeliveryManager)
         {
             _iVatManager = iVatManager;
             _iBranchManager = iBranchManager;
@@ -61,6 +62,7 @@ namespace NBL.Areas.Corporate.Controllers
             _iDivisionGateway = iDivisionGateway;
             _iProductManager = iProductManager;
             _iFactoryDeliveryManager = iFactoryDeliveryManager;
+            _iDeliveryManager = iDeliveryManager;
         }
 
         // GET: Corporate/Home
@@ -74,7 +76,7 @@ namespace NBL.Areas.Corporate.Controllers
                 var totalDispatch = _iReportManager.GetTotalDispatchCompanyIdAndYear(companyId, DateTime.Now.Year);
                 Session.Remove("BranchId");
                 Session.Remove("Branch");
-               var torders= _iReportManager.GetTotalOrdersByYear(DateTime.Now.Year);
+                var torders= _iReportManager.GetTotalOrdersByYear(DateTime.Now.Year);
                 var accountSummary = _iAccountsManager.GetAccountSummaryofCurrentMonthByCompanyId(companyId);
                 var branches = _iBranchManager.GetAllBranches().ToList().FindAll(n => n.BranchId != 13).ToList();
                 foreach (ViewBranch branch in branches)
@@ -404,12 +406,48 @@ namespace NBL.Areas.Corporate.Controllers
             }
         }
 
-        public PartialViewResult Chalan(long dispatchId)
+        public ActionResult DeliveredOrderList()
+        {
+
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                //---------------------------Distribution point=13= Factory
+                var orders = _iDeliveryManager.GetAllDeliveredOrdersByDistributionPointAndCompanyId(13, companyId).ToList();
+                return View(orders);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        public ActionResult OrderChalan(int deliveryId)
         {
             try
             {
+                Session["DeliveryFromBranch"] = _iBranchManager.GetAllBranches().FirstOrDefault(n => n.BranchId == 13);
+                var chalan = _iDeliveryManager.GetChalanByDeliveryIdFromFactory(deliveryId);
+                return View(chalan);
+
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        public ActionResult Chalan(long dispatchId)
+        {
+            try
+            {
+                Session["DeliveryFromBranch"] = _iBranchManager.GetAllBranches().FirstOrDefault(n => n.BranchId == 13);
                 ViewDispatchChalan chalan = _iFactoryDeliveryManager.GetDispatchChalanByDispatchId(dispatchId);
-                return PartialView("_ViewDispatchChalanPartialPage", chalan);
+                return View(chalan);
             }
             catch (Exception exception)
             {
