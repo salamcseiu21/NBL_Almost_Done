@@ -9,7 +9,8 @@ namespace NBL.Models.EntityModels.Services
         public long ReceiveId { get; set; }
         public DateTime ReceiveDatetime { get; set; }
         public string Barcode { get; set; }
-        public string ReceiveRef { get; set; } 
+        public string ReceiveRef { get; set; }
+        public int ReceiveByBranchId { get; set; }   
         public string DelivaryRef { get; set; }
         public string TransactionRef { get; set; }
         public string VerificationRemarks { get; set; }
@@ -48,9 +49,11 @@ namespace NBL.Models.EntityModels.Services
         public string ReceiveRemarks { get; set; }
         public int ReportByEmployeeId { get; set; }
         public int EntryByUserId { get; set; }
-        public int BranchId { get; set; }   
         public int Status { get; set; }
         public string IsActive { get; set; }
+        public int ForwardToId { get; set; }    
+        public string ForwardRemarks { get; set; }     
+        public int DistributionPointId { get; set; }      
         public DateTime SysDatetime { get; set; }
         public List<PhysicalConditionModel> PhysicalConditions { set; get; }
         public List<ServicingModel> ServicingModels { set; get; }   

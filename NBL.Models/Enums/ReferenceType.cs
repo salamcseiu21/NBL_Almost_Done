@@ -22,7 +22,8 @@ namespace NBL.Models.Enums
         SalesReturnReceive = 17,
         Replace=18,
         GeneralRequisition=19,
-        Scrap=20
+        Scrap=20,
+        WarrantyBatteryReceive=21
     }
 
   

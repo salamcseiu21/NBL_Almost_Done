@@ -480,5 +480,38 @@ namespace NBL.Areas.Corporate.Controllers
         {
             return View();
         }
+
+
+        public PartialViewResult ViewClient()
+        {
+            try
+            {
+                var clients = _iClientManager.GetAllClientDetails().ToList();
+                return PartialView("_ViewClientPartialPage", clients);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
+
+        public PartialViewResult ViewClientProfile(int id)
+        {
+            try
+            {
+                var client = _iClientManager.GetClientDeailsById(id);
+                return PartialView("_ViewClientProfilePartialPage", client);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
     }
 }

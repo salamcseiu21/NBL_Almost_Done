@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<NBL.Models.ViewModels.Deliveries.ViewDispatchModel>
 
 <section class="content">
-    <h3 class="text-center text-green">Dispatch List</h3>
+    <h3 class="text-center text-green">Despatch List</h3>
     <table id="tbl_dispatch_list" class="display table-bordered" style="border: 1px solid">
         <thead>
             <tr>
-                <th>Dispatch Ref</th>
+                <th>Despatch Ref</th>
                 <th class="text-right">Quantity</th>
                 <th class="text-center">Date</th>
-                <th class="text-center">Dispatch By</th>
+                <th class="text-center">Despatch By</th>
                 <th class="text-center">Print Chalan</th>
             </tr>
         </thead>
@@ -23,17 +23,18 @@
                   
                     <td class="text-center">
                         @*<button><i class="fa fa-print"></i> Chalan</button>*@
-                        @Html.ActionLink(" Chalan", "Chalan","Delivery", new { dispatchId = item.DispatchId}, new {target = "_blank", @class = "fa fa-print"})
+                        @Html.ActionLink(" Barcode", "DispatchedBarCodeList","Delivery", new { dispatchId = item.DispatchId }, new { target = "_blank", @class = "fa fa-print" }) |
+                        @Html.ActionLink(" Challan", "Chalan","Delivery", new { dispatchId = item.DispatchId}, new {target = "_blank", @class = "fa fa-print"})
                     </td>
                 </tr>
             }
         </tbody>
         <tfoot>
             <tr>
-                <th>Dispatch Ref</th>
+                <th>Despatch Ref</th>
                 <th class="text-right">Quantity</th>
                 <th class="text-center">Date</th>
-                <th class="text-center">Dispatch By</th>
+                <th class="text-center">Despatch By</th>
                 <th class="text-center">Print Chalan</th>
             </tr>
         </tfoot>

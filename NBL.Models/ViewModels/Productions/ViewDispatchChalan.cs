@@ -11,5 +11,6 @@ namespace NBL.Models.ViewModels.Productions
         public DispatchModel DispatchModel { get; set; }
         public string Destination { get; set; }
         public ViewTripModel ViewTripModel { get; set; }
+        public ICollection<ViewProduct> Products { get; set; }  
     }
 }

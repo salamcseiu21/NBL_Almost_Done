@@ -12,5 +12,7 @@ namespace NBL.DAL.Contracts
     {
         int ReceiveServiceProduct(WarrantyBatteryModel product);
         ICollection<ViewReceivedServiceProduct> GetReceivedServiceProducts();
+        long GetMaxWarrantyProductReceiveSlNoByYear(int year);
+        ViewReceivedServiceProduct GetReceivedServiceProductById(long receiveId);
     }
 }

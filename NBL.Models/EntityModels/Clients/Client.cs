@@ -112,7 +112,8 @@ namespace NBL.Models.EntityModels.Clients
         public District District { get; set; }
         public Division Division { get; set; }
         public Upazilla Upazilla { get; set; }
-
+        public string AddedBy { get; set; }
+        public DateTime SystemDateTime { get; set; }    
         public MailingAddress MailingAddress { get; set; }
         public Client()
         {

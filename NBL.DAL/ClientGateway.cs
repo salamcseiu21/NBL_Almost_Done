@@ -108,7 +108,9 @@ namespace NBL.DAL
                         CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
                         MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"]),
                         TerritoryId = Convert.ToInt32(reader["TerritoryId"]),
-                        SerialNo = Convert.ToInt32(reader["SlNo"])
+                        SerialNo = Convert.ToInt32(reader["SlNo"]),
+                        AddedBy = reader["AddedBy"].ToString(),
+                        SystemDateTime = Convert.ToDateTime(reader["EntryDate"])
 
                     });
                 }
@@ -551,7 +553,8 @@ namespace NBL.DAL
                         BranchId = Convert.ToInt32(reader["BranchId"]),
                         CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
                         MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"]),
-                        BranchName = DBNull.Value.Equals(reader["NBranchName"])?null:reader["NBranchName"].ToString()
+                        BranchName = DBNull.Value.Equals(reader["NBranchName"])?null:reader["NBranchName"].ToString(),
+                        TotalOrder = Convert.ToInt32(reader["TotalOrder"])
                         
                     });
 

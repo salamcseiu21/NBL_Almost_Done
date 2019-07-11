@@ -28,8 +28,32 @@ namespace NBL.Areas.Services.Controllers
 
         public ActionResult All()
         {
-            var products = _iServiceManager.GetReceivedServiceProducts();
-            return View(products);
+
+            try
+            {
+                var products = _iServiceManager.GetReceivedServiceProducts();
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+           
+        }
+
+        public ActionResult Details(long id)
+        {
+            try
+            {
+                var product= _iServiceManager.GetReceivedServiceProductById(id);
+                return View(product);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         // GET: Services/WarrantyBattery
         public ActionResult Receive()
@@ -65,7 +89,7 @@ namespace NBL.Areas.Services.Controllers
                 var user = (ViewUser) Session["user"];
                 var branchId = Convert.ToInt32(Session["BranchId"]);
                 model.EntryByUserId = user.UserId;
-                model.BranchId = branchId;
+                model.ReportByEmployeeId = branchId;
                 model.ReceiveDatetime=DateTime.Now;
                 model.DelivaryRef = product.DeliveryRef;
                 model.TransactionRef = product.OrderRef;

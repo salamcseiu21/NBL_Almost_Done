@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <h2 class="page-header">
-                        Ref No : @Model.DeliveryDetailses.ToList().First().DeliveryRef
+                        Delivery Ref : @Model.DeliveryDetailses.ToList().First().DeliveryRef
                         <small class="pull-right">Date: @DateTime.Now.Date.ToString("D")</small>
                     </h2>
                 </div>
@@ -76,6 +76,7 @@
                     {
 
                         code = "";
+                        <strong>Product Name:</strong> <i>@item.ProductName</i>
                         <div class="example" style="border: 1px solid gray;padding: 5px">
 
                             @foreach (var i in item.DeliveredProducts.OrderBy(n => n.ProductBarCode))

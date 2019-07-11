@@ -237,6 +237,22 @@ namespace NBL.Areas.Production.Controllers
             }
 
         }
+
+        public ActionResult DispatchedBarCodeList(long dispatchId)
+        {
+            try
+            {
+                ViewDispatchChalan chalan = _iFactoryDeliveryManager.GetDispatchChalanByDispatchId(dispatchId);
+
+                return View(chalan);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         public PartialViewResult ViewOrderDetails(int transferIssueId) 
         {
 

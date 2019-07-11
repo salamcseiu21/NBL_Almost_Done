@@ -7,6 +7,7 @@ using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.Logs;
+using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Productions;
 
@@ -291,7 +292,43 @@ namespace NBL.DAL
                 CommandObj.Dispose();
                 CommandObj.Parameters.Clear();
             }
-        } 
+        }
+
+        public ICollection<ViewProduct> GetDespatchedBarcodeByDespatchId(long dispatchId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetDespatchBarcodeByDespatchId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DispatchId", dispatchId);
+                List<ViewProduct> products=new List<ViewProduct>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    products.Add(new ViewProduct
+                    {
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductBarCode = reader["ProductBarCode"].ToString(),
+                        ProductName = reader["ProductName"].ToString()
+                    });
+                }
+                reader.Close();
+                return products;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get despatched barcode", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
 
         public int SaveDeliveredRequisitionDetails(List<ScannedProduct> scannedProducts, Delivery aDelivery, int inventoryId, int deliveryId)
         {

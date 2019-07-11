@@ -1,0 +1,379 @@
+﻿@model NBL.Models.ViewModels.Services.ViewReceivedServiceProduct
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ViewReceivedServiceProduct</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ReceiveId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReceiveId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReceiveDatetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReceiveDatetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Barcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Barcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReceiveRef)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReceiveRef)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DelivaryRef)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DelivaryRef)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionRef)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransactionRef)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VerificationRemarks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VerificationRemarks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpGrCellOne)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpGrCellOne)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpGrCellTwo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpGrCellTwo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpGrCellThree)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpGrCellThree)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpGrCellFour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpGrCellFour)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpGrCellFive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpGrCellFive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpGrCellSix)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpGrCellSix)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CellOneCondition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CellOneCondition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CellTwoCondition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CellTwoCondition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CellThreeCondition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CellThreeCondition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CellFourCondition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CellFourCondition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CellFiveCondition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CellFiveCondition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CellSixCondition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CellSixCondition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OpenVoltage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OpenVoltage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoadVoltage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoadVoltage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CellRemarks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CellRemarks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CoverStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CoverStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContainerStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContainerStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServicingStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServicingStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUsedFor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppUsedFor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AppCapacity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppCapacity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChargingSystem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChargingSystem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OtherInformationRemarks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OtherInformationRemarks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReceiveReport)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReceiveReport)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceBatteryDeliveryDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceBatteryDeliveryDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceBatteryBarcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceBatteryBarcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceBatteryReturnDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceBatteryReturnDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RbdDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RbdDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RbdBarcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RbdBarcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RbdRemarks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RbdRemarks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReceiveRemarks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReceiveRemarks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReportByEmployee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReportByEmployee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EntryByUser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EntryByUser)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BranchName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BranchName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SysDatetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SysDatetime)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "All")
+</p>

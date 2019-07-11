@@ -12,350 +12,386 @@
 <div class="form-horizontal">
 @using (Html.BeginForm())
 {
-    
-
-<div class="row">
-    <div class="col-md-4 col-md-offset-4">
-        <div class="form-group">
-            <label for="Barcode" class="col-md-3 control-label">BarCode</label>
-            <div class="col-md-9">
-                <input type="text" class="form-control" name="Barcode" id="Barcode" placeholder="Type or Scan barcode..." autofocus onchange="GetProductHistory(this)" required/>
-                @Html.HiddenFor(n=>n.DelivaryRef)
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
-
-<div style="border: 1px solid gray">
-    <table class="table-bordered" style="border: 1px solid; width: 100%">
-        <tbody>
-        <tr style="">
-            <td>
-                <strong>Product Name : </strong><i><label id="ProductName"></label></i>
-            </td>
-            <td>
-                <strong> Production Date : </strong> <i><label id="ProductionDate"></label></i>
-            </td>
-
-            <td>
-                <strong>Delivery Date : </strong><i><label id="DeliveryDate"></label></i>
-
-            </td>
-            <td>
-                <strong>Sale Date : </strong> <i><label id="SaleDate"></label></i>
-            </td>
-        </tr>
-        <tr style="">
-            <td>
-                <strong>Product LifeTime : </strong><i><label id="LifeTime"></label></i>
-
-            </td>
-            <td>
-
-                <strong>Product Age : </strong><i><label id="ProductAge"></label></i>
-            </td>
-            <td>
-                <strong>Store Duration :</strong><i><label id="StoreDuration"></label></i>
-            </td>
-            <td>
-                <strong>Sales Duration :</strong> <i><label id="SalesDuration"></label></i>
-            </td>
-
-        </tr>
-        <tr>
-            <td colspan="4" class="text-center text-green"><strong>Client Information</strong></td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Client Name :</strong> <i><label id="ClientName"></label></i>
-            </td>
-            <td>
-                <strong>Client Code :</strong> <i><label id="ClientCode"></label></i>
-            </td>
-            <td>
-                <strong>Client Type :</strong> <i><label id="ClientType"></label></i>
-
-            </td>
-            <td>
-                <strong>Contact No :</strong> <i><label id="ClientPhone"></label></i>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Client Address :</strong><i><label id="ClientAddress"></label></i>
-            </td>
-            <td>
-                <strong>Territory :</strong> <i><label id="Territory"></label></i>
-            </td>
-            <td>
-                <strong>Order By : </strong> <i><label id="OrderByBranch"></label></i>
-            </td>
-            <td>
-                <Strong> Distribution Point :</Strong> <i><label id="DistributionPoint"></label></i>
-
-            </td>
-
-        </tr>
-        </tbody>
-    </table>
-
-</div>
-
-<div style="border: 1px solid gray; margin-top: 5px">
-    <div class="row" style="margin: 10px">
+    <div class="row">
         <div class="col-md-4 col-md-offset-4">
-
-            <div class="form-horizontal">
-                <div class="form-group">
-                    <label for="DelearReceiveDate" class="control-label col-md-4"> Delear Receive Date</label>
-                    <div class="col-md-8">
-
-                        <input type="text" id="DelearReceiveDate" name="DelearReceiveDate" value="@date" class="form-control" onchange="GetDuraitionByDate(this)"/>
-                    </div>
+            <div class="form-group">
+                <label for="Barcode" class="col-md-3 control-label">BarCode</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="Barcode" id="Barcode" placeholder="Type or Scan barcode..." autofocus onchange="GetProductHistory(this)" required/>
+                    @Html.HiddenFor(n=>n.DelivaryRef)
                 </div>
             </div>
         </div>
-    </div>
-    <table class="table-bordered" style="border: 1px solid; width: 100%">
-        <tbody>
-        <tr>
-
-            <td>
-                <strong>Service Duration : </strong> <i><label id="ServiceDuration"></label></i>
-            </td>
-            <td>
-                <Strong> Collection Duration :</Strong> <i><label id="CollectionDuration"></label></i>
-
-            </td>
-
-        </tr>
-        <tr>
-
-            <td colspan="2">
-                <strong>Remarks : </strong> <textarea id="VerificationRemarks" name="VerificationRemarks" style="resize: none" class="form-control"  required></textarea>
-            </td>
-
-        </tr>
-        </tbody>
-    </table>
-</div>
-
-<div style="border: 1px solid gray; margin-top: 10px">
-
-    <table class="table-bordered" style="border: 1px solid; width: 100%">
-        <tbody>
-        <tr>
-
-            <td colspan="3" class="text-center">
-                <strong class="text-green">Cell Information</strong>
-            </td>
-
-
-        </tr>
-        <tr>
-
-            <td> <strong>Cell 1 :</strong><input id="SpGrCellOne" name="SpGrCellOne" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="text-right" required/>
-                <input type="text" id="CellOneCondition" name="CellOneCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 1 con..."/> 
-                @Html.HiddenFor(n=>n.CellOneConditionId)
-            </td>
-            <td> <strong>Cell 2 :</strong><input  id="SpGrCellTwo" name="SpGrCellTwo" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="text-right" required/>
-                <input type="text" id="CellTwoCondition" name="CellTwoCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 2 con..."/>
-                @Html.HiddenFor(n=>n.CellTwoConditionId)
-             </td>
-            <td> <strong>Cell 3 :</strong><input  id="SpGrCellThree" name="SpGrCellThree" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="text-right"  required/>
-                <input type="text" id="CellThreeCondition" name="CellThreeCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 3 con..."/>
-                @Html.HiddenFor(n=>n.CellThreeConditionId)
-             </td>
-
-
-
-        </tr>
-        <tr>
-
-            <td> <strong>Cell 4 :</strong><input  id="SpGrCellFour" name="SpGrCellFour" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="text-right" required/>
-                <input type="text" id="CellFourCondition" onkeypress="CellConditionAutoComplete(this)" name="CellFourCondition" placeholder="Cell 4 con..."/> 
-                @Html.HiddenFor(n=>n.CellFourConditionId)
-            </td>
-            <td> <strong>Cell 5 :</strong><input  id="SpGrCellFive" name="SpGrCellFive" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="text-right" required/>
-                <input type="text" id="CellFiveCondition" name="CellFiveCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 5 con..."/> 
-                @Html.HiddenFor(n=>n.CellFiveConditionId)
-            </td>
-            <td> <strong>Cell 6 :</strong><input  id="SpGrCellSix" name="SpGrCellSix" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="text-right" required/>
-                <input type="text" id="CellSixCondition" name="CellSixCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 6 con..."/>
-                @Html.HiddenFor(n=>n.CellSixConditionId)
-            </td>
-
-
-
-        </tr>
-        <tr>
-            <td colspan="3">
-                <strong> SpGr Cell Value Difference :</strong> <input type="text" id="SpGrCellValueDifference"/>
-            </td>
-        </tr>
-        <tr>
-            <td> <strong>Open Voltage :</strong><input  id="OpenVoltage" name="OpenVoltage" type="number"  required style="width: 100%" /></td>
-            <td> <strong>Load Voltage :</strong><input id="LoadVoltage" name="LoadVoltage" type="number"  required style="width: 100%" /></td>
-            <td colspan="2">
-                <strong>Remarks : </strong> <input id="CellRemarks" name="CellRemarks" type="text" style="width: 100%"  required/>
-            </td>
-
-        </tr>
-        </tbody>
-    </table>
-</div>
-    <div style="border: 1px solid gray; margin-top: 10px">
-
-        <table class="table-bordered" style="border: 1px solid; width: 100%">
-            <tbody>
-            <tr>
-
-                <td colspan="3" class="text-center">
-                    <strong class="text-green">Other Information</strong>
-                </td>
-
-
-            </tr>
-            <tr>
-
-                <td>
-                    <strong>Cover :</strong><select name="CoverStatusId"  required>
-                        <option value="">---Select--</option>
-                        @foreach (var item in Model.PhysicalConditions)
-                        {
-                            <option value="@item.Id">@item.Condition</option>
-                        }
-                    </select>
-                </td>
-                <td>
-                    <strong>Container :</strong><select name="ContainerStatusId"  required>
-                        <option value="">---Select--</option>
-                        @foreach (var item in Model.PhysicalConditions)
-                        {
-                            <option value="@item.Id">@item.Condition</option>
-                        }
-                    </select>
-                </td>
-                <td>
-                    <strong>Post :</strong><select name="PostStatusId"  required>
-                        <option value="">---Select--</option>
-                        @foreach (var item in Model.PhysicalConditions)
-                        {
-                            <option value="@item.Id">@item.Condition</option>
-                        }
-                    </select>
-                </td>
-                <td>
-                    <strong>Servicing :</strong><select name="ServicingStatusId"  required>
-                        <option value="">---Select--</option>
-                        @foreach (var item in Model.ServicingModels)
-                        {
-                            <option value="@item.Id">@item.ServicingStatus</option>
-                        }
-                    </select>
-                </td>
-
-
-
-            </tr>
-            <tr>
-
-                <td> <strong>Used For :</strong><input type="text" name="AppUsedFor" style="width: 100%"/> </td>
-                <td> <strong>Capacity :</strong><input type="text" name="AppCapacity" style="width: 100%"/></td>
-                <td>
-                    <strong>Charging System :</strong><select name="ChargingSystemId"  required style="width: 100%">
-                        <option value="">---Select--</option>
-                        @foreach (var item in Model.ChargingStatus)
-                        {
-                            <option value="@item.Id">@item.ChargingStatus</option>
-                        }
-                    </select>
-                </td>
-                <td> <strong>Others :</strong><input type="text" name="OtherInformationRemarks" style="width: 100%"/> </td>
-
-            </tr>
-            <tr>
-                <td colspan="2"><strong>Report By:</strong><input type="text" id="EmployeeName" style="width: 100%"  required/>
-                    @Html.HiddenFor(n=>n.ReportByEmployeeId)
-                </td>
-                <td colspan="2"><strong>Comments :</strong><input type="text" style="width: 100%" name="ReceiveReport"  required/></td>
-
-
-            </tr>
-            </tbody>
-        </table>
 
     </div>
 
-    <div style="border: 1px solid gray; margin-top: 10px">
+    <ul class="nav nav-pills">
+        <li class="active"><a data-toggle="pill" href="#home">Home</a></li>
+        <li><a data-toggle="pill" href="#menu3">Cell Information</a></li>
+        <li><a data-toggle="pill" href="#menu4">Service & Others</a></li>
+    </ul>
+  
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <div class="panel panel-success">
+                <div class="panel panel-heading"><span>Product Information</span></div>
+                <div class="panel panel-body">
+                    <table class="table table-bordered" style="width: 100%">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <strong>Product Name : </strong><i><label id="ProductName"></label></i>
+                            </td>
+                            <td>
+                                <strong> Production Date : </strong> <i><label id="ProductionDate"></label></i>
+                            </td>
 
-        <table class="table-bordered" style="border: 1px solid; width: 100%">
-            <tbody>
+                            <td>
+                                <strong>Delivery Date : </strong><i><label id="DeliveryDate"></label></i>
+
+                            </td>
+                            <td>
+                                <strong>Sale Date : </strong> <i><label id="SaleDate"></label></i>
+                            </td>
+                        </tr>
+                        <tr style="">
+                            <td>
+                                <strong>Product LifeTime : </strong><i><label id="LifeTime"></label></i>
+
+                            </td>
+                            <td>
+
+                                <strong>Product Age : </strong><i><label id="ProductAge"></label></i>
+                            </td>
+                            <td>
+                                <strong>Store Duration :</strong><i><label id="StoreDuration"></label></i>
+                            </td>
+                            <td>
+                                <strong>Sales Duration :</strong> <i><label id="SalesDuration"></label></i>
+                            </td>
+
+                        </tr>
+               
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel panel-heading"><span>Client Information</span></div>
+                <div class="panel panel-body">
+                    <table  class="table table-bordered" style="width: 100%">
+                        <tr>
+                            <td>
+                                <strong>Client Name :</strong> <i><label id="ClientName"></label></i>
+                            </td>
+                            <td>
+                                <strong>Client Code :</strong> <i><label id="ClientCode"></label></i>
+                            </td>
+                            <td>
+                                <strong>Client Type :</strong> <i><label id="ClientType"></label></i>
+
+                            </td>
+                            <td>
+                                <strong>Contact No :</strong> <i><label id="ClientPhone"></label></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Client Address :</strong><i><label id="ClientAddress"></label></i>
+                            </td>
+                            <td>
+                                <strong>Territory :</strong> <i><label id="Territory"></label></i>
+                            </td>
+                            <td>
+                                <strong>Order By : </strong> <i><label id="OrderByBranch"></label></i>
+                            </td>
+                            <td>
+                                <Strong> Distribution Point :</Strong> <i><label id="DistributionPoint"></label></i>
+
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel panel-heading"><span>Verification</span></div>
+                <div class="panel panel-body">
+                   
+                  
+                    <table class="table table-bordered" style="width: 100%">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <label for="DelearReceiveDate" class="control-label"> Delear Receive Date</label>
+                                <input type="text" id="DelearReceiveDate" name="DelearReceiveDate" value="@date" class="form-control" onchange="GetDuraitionByDate(this)"/>
+                            </td>
+                            <td>
+                                <label for="DelearReceiveDate" class="control-label"> Service Duration</label><br/>
+                                 <i><label id="ServiceDuration"></label></i>
+                            </td>
+                            <td>
+                                <label for="DelearReceiveDate" class="control-label"> Collection Duration</label><br />
+                                <i><label id="CollectionDuration"></label></i>
+
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <td colspan="3">
+                                <strong>Remarks : </strong> <textarea id="VerificationRemarks" name="VerificationRemarks" placeholder="verificaiton remarks.." style="resize: none" class="form-control"  required></textarea>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="menu3" class="tab-pane fade">
+
+            <div class="panel panel-success">
+                <div class="panel panel-heading"><span>Cell Information</span></div>
+                <div class="panel panel-body">
+                    <table class="table table-bordered" style="width: 100%">
+                        <tbody>
+
+                        <tr>
+
+                            <td>
+                                <strong>Cell 1 :</strong><input id="SpGrCellOne" name="SpGrCellOne" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 1 Sp Gr" required />
+                                <input type="text" id="CellOneCondition" name="CellOneCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 1 condition" class="form-control" />
+                                @Html.HiddenFor(n => n.CellOneConditionId)
+                            </td>
+                            <td>
+                                <strong>Cell 2 :</strong><input id="SpGrCellTwo" name="SpGrCellTwo" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 2 Sp Gr" required />
+                                <input type="text" id="CellTwoCondition" name="CellTwoCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 2 condition" class="form-control" />
+                                @Html.HiddenFor(n => n.CellTwoConditionId)
+                            </td>
+                            <td>
+                                <strong>Cell 3 :</strong><input id="SpGrCellThree" name="SpGrCellThree" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 3 Sp Gr" required />
+                                <input type="text" id="CellThreeCondition" name="CellThreeCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 3 condition" class="form-control" />
+                                @Html.HiddenFor(n => n.CellThreeConditionId)
+                            </td>
+
+
+
+                        </tr>
+                        <tr>
+
+                            <td>
+                                <strong>Cell 4 :</strong><input id="SpGrCellFour" name="SpGrCellFour" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 4 Sp Gr" required />
+                                <input type="text" id="CellFourCondition" onkeypress="CellConditionAutoComplete(this)" name="CellFourCondition" placeholder="Cell 4 condition" class="form-control" />
+                                @Html.HiddenFor(n => n.CellFourConditionId)
+                            </td>
+                            <td>
+                                <strong>Cell 5 :</strong><input id="SpGrCellFive" name="SpGrCellFive" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 5 Sp Gr" required />
+                                <input type="text" id="CellFiveCondition" name="CellFiveCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 5 condition" class="form-control" />
+                                @Html.HiddenFor(n => n.CellFiveConditionId)
+                            </td>
+                            <td>
+                                <strong>Cell 6 :</strong><input id="SpGrCellSix" name="SpGrCellSix" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 6 Sp Gr" required />
+                                <input type="text" id="CellSixCondition" name="CellSixCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 6 condition" class="form-control" />
+                                @Html.HiddenFor(n => n.CellSixConditionId)
+                            </td>
+
+
+
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <strong> SpGr Cell Value Difference :</strong> <input type="text" id="SpGrCellValueDifference" class="form-control"  readonly placeholder="SpGr Cell Value Difference...."/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> <strong>Open Voltage :</strong><input id="OpenVoltage" name="OpenVoltage" type="number" required style="width: 100%" class="form-control" placeholder="Open Voltage.."/></td>
+                            <td> <strong>Load Voltage :</strong><input id="LoadVoltage" name="LoadVoltage" type="number" required style="width: 100%" class="form-control" placeholder="Load Voltage.." /></td>
+                            <td colspan="2">
+                                <strong>Remarks : </strong> <input id="CellRemarks" name="CellRemarks" type="text" style="width: 100%" required class="form-control" placeholder="Cell Remarks..."/>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="menu4" class="tab-pane fade">
+
+            <div class="panel panel-success">
+                <div class="panel panel-heading"><span>Other Information</span></div>
+                <div class="panel panel-body">
+                    <table class="table table-bordered" style="width: 100%">
+                        <tbody>
+
+                            <tr>
+
+                                <td>
+                                    <strong>Cover :</strong><select name="CoverStatusId" required class="form-control">
+                                        <option value="">---Select--</option>
+                                        @foreach (var item in Model.PhysicalConditions)
+                                        {
+                                            <option value="@item.Id">@item.Condition</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <strong>Container :</strong><select name="ContainerStatusId" required class="form-control">
+                                        <option value="">---Select--</option>
+                                        @foreach (var item in Model.PhysicalConditions)
+                                        {
+                                            <option value="@item.Id">@item.Condition</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <strong>Post :</strong><select name="PostStatusId" required class="form-control">
+                                        <option value="">---Select--</option>
+                                        @foreach (var item in Model.PhysicalConditions)
+                                        {
+                                            <option value="@item.Id">@item.Condition</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <strong>Servicing :</strong><select name="ServicingStatusId" required class="form-control">
+                                        <option value="">---Select--</option>
+                                        @foreach (var item in Model.ServicingModels)
+                                        {
+                                            <option value="@item.Id">@item.ServicingStatus</option>
+                                        }
+                                    </select>
+                                </td>
+
+
+
+                            </tr>
+                            <tr>
+
+                                <td> <strong>Used For :</strong><input type="text" name="AppUsedFor" style="width: 100%" class="form-control" placeholder="Used For.." /> </td>
+                                <td> <strong>Capacity :</strong><input type="text" name="AppCapacity" style="width: 100%" class="form-control" placeholder="Capacity..." /></td>
+                                <td>
+                                    <strong>Charging System :</strong><select name="ChargingSystemId" required style="width: 100%" class="form-control">
+                                        <option value="">---Select--</option>
+                                        @foreach (var item in Model.ChargingStatus)
+                                        {
+                                            <option value="@item.Id">@item.ChargingStatus</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td> <strong>Others :</strong><input type="text" name="OtherInformationRemarks" style="width: 100%" class="form-control" placeholder="Others..." /> </td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <strong>Report By:</strong><input type="text" id="EmployeeName" style="width: 100%" required class="form-control" placeholder="type report by employee name.."/>
+                                    @Html.HiddenFor(n => n.ReportByEmployeeId)
+                                </td>
+                                <td colspan="2"><strong>Comments :</strong><input type="text" style="width: 100%" name="ReceiveReport" required class="form-control"  placeholder="Write comments..."/></td>
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel panel-success">
+                <div class="panel panel-heading"><span>Service Information</span></div>
+                <div class="panel panel-body">
+                    <table class="table table-bordered" style="width: 100%">
+                        <tbody>
+                            <tr>
+
+                                <td>
+                                    <strong>Delivery Date:</strong>
+
+                                    <input type="text" id="ServiceBatteryDeliveryDate" name="ServiceBatteryDeliveryDate" value="@date" style="width: 100%" class="form-control" />
+
+                                </td>
+                                <td>
+                                    <strong>Barcode :</strong><input type="text" style="width: 100%" name="ServiceBatteryBarcode" class="form-control" placeholder="type or scan barcode.."/>
+                                </td>
+                                <td>
+                                    <strong>Return On:</strong>
+                                    <input type="text" id="ServiceBatteryReturnDate" name="ServiceBatteryReturnDate" value="@date" style="width: 100%" class="form-control" />
+                                </td>
+                                <td>
+                                    <strong>Remarks :</strong><input type="text" style="width: 100%" name="RbdRemarks" class="form-control"  placeholder="Remarks..."/>
+                                </td>
+
+
+
+                            </tr>
+                            <tr>
+
+                                <td colspan="2"> <strong>Replace by Dealer:</strong><input type="text" id="RbdDate" name="RbdDate" value="@date" class="form-control" /> </td>
+                                <td colspan="2"> <strong>Barcode :</strong><input type="text" name="RbdBarcode" style="width: 100%" class="form-control" placeholder="Replace battery barcode .."/></td>
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="panel panel-success">
+    <div class="panel panel-heading"><span>Forward Informaiton</span></div>
+        <div class="panel panel-body">
+            <table class="table table-bordered" style="width: 100%">
                 <tr>
 
-                    <td colspan="3" class="text-center">
-                        <strong class="text-green">Service Information</strong>
-                    </td>
-
-
-                </tr>
-                <tr>
 
                     <td>
-                        <strong>Delivery Date:</strong>
-                        
-                        <input type="text" id="DemoDeliveryDate" name="DemoDeliveryDate" value="@date"/>
-                       
-                    </td>
-                    <td>
-                        <strong>Barcode :</strong><input type="text" />
-                    </td>
-                    <td>
-                        <strong>Return On:</strong>
-                        <input type="text" id="DemoReturnDate" name="DemoReturnDate" value="@date"/>
-                    </td>
-                    <td>
-                        <strong>Remarks :</strong><input type="text" />
-                    </td>
-
-
-
-                </tr>
-                <tr>
-
-                    <td> <strong>Used For :</strong><input type="text" name="AppUsedFor" style="width: 100%" /> </td>
-                    <td> <strong>Capacity :</strong><input type="text" name="AppCapacity" style="width: 100%" /></td>
-                    <td>
-                        <strong>Charging System :</strong><select name="ChargingSystemId" required style="width: 100%">
+                        <strong>Forward To :</strong><select name="ForwardToId" required style="width: 100%" class="form-control">
                             <option value="">---Select--</option>
-                            @foreach (var item in Model.ChargingStatus)
+                            @foreach (var item in Model.ForwardToModels)
                             {
-                                <option value="@item.Id">@item.ChargingStatus</option>
+                                <option value="@item.Id">@item.ForwardType</option>
                             }
                         </select>
                     </td>
-                    <td> <strong>Others :</strong><input type="text" name="OtherInformationRemarks" style="width: 100%" /> </td>
-
+                    <td> <strong>Remarks :</strong><input type="text" name="ForwardRemarks" style="width: 100%" class="form-control" placeholder="Forward remarks.." /> </td>
+                    <td>
+                        <strong>Distribution Point :</strong><select name="DistributionPointId" required style="width: 100%" class="form-control">
+                            <option value="">---Select--</option>
+                            @foreach (var item in Model.DistributionPoints)
+                            {
+                                <option value="@item.BranchId">@item.BranchName</option>
+                            }
+                        </select>
+                    </td>
                 </tr>
-                
                 <tr>
-                    <td colspan="3"></td>
+
                     <td>
                         <button class="btn btn-danger">Cancel</button>
                         <input type="submit" value="Save" class="btn btn-info" />
                     </td>
+                    <td colspan="3"></td>
                 </tr>
-            </tbody>
-        </table>
-
+            </table>
+        </div>
     </div>
 
-}
+
+  
+
+
+
+
+
+    }
 </div>
-    @*<div id="divProductHistory"></div>*@
+@*<div id="divProductHistory"></div>*@
+
 </section>
 
 @section Scripts
@@ -367,15 +403,20 @@
                 dateFormat: 'dd-MM-yy',
                 maxDate: '+0'
             });
-            $("#DemoDeliveryDate").datepicker({
+            $("#ServiceBatteryDeliveryDate").datepicker({
                 dateFormat: 'dd-MM-yy',
                 maxDate: '+0'
             });
 
-            $("#DemoReturnDate").datepicker({
+            $("#ServiceBatteryReturnDate").datepicker({
                 dateFormat: 'dd-MM-yy',
                 minDate: '+0'
             });
+            $("#RbdDate").datepicker({
+                dateFormat: 'dd-MM-yy',
+                maxDate: '+0'
+            });
+            
             
         });
 
@@ -550,4 +591,19 @@
             $("#SpGrCellValueDifference").val(diff);
         }
     </script>
+}
+@section Styles
+{
+    <style>
+        .panel-heading span {
+            color:black;font-weight: bolder;font-size: 18px;
+        }
+        .panel-body {
+            padding: 0;
+        }
+               
+        .form-control > input {
+            
+        }
+    </style>
 }

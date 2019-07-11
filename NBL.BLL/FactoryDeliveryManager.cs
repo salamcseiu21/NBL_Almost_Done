@@ -44,6 +44,8 @@ namespace NBL.BLL
 
         public ViewDispatchChalan GetDispatchChalanByDispatchId(long dispatchId)
         {
+
+            List<ViewProduct> products = _iFactoryDeliveryGateway.GetDespatchedBarcodeByDespatchId(dispatchId).ToList();
             var destination = "";
             DispatchModel dispatch = GetDispatchByDispatchId(dispatchId);
             var viewTrip = _inventoryGateway.GetAllTrip().ToList().Find(n => n.TripId == dispatch.TripId);
@@ -61,7 +63,8 @@ namespace NBL.BLL
                 DispatchModel = dispatch,
                 DispatchDetails = details,
                 Destination = destination,
-                ViewTripModel = viewTrip
+                ViewTripModel = viewTrip,
+                Products = products
             };
             return chalan;
 
