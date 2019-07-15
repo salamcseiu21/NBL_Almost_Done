@@ -624,8 +624,8 @@ namespace NBL.Controllers
         //----------------Service Employee name Autocomplete---------------
         public JsonResult ServiceEmployeeAutoComplete(string prefix)
         {
-
-            ICollection<object> employees = _iEmployeeManager.GetEmployeeListByDepartmentAndSearchTerm(Convert.ToInt32(Department.ServiceSupport),prefix);
+            var branchId = Convert.ToInt32(Session["BranchId"]);    
+            ICollection<object> employees = _iEmployeeManager.GetEmployeeListByDepartmentAndSearchTerm(Convert.ToInt32(Department.ServiceSupport),prefix, branchId);
             return Json(employees);
         }
         public JsonResult GetEmployeeById(int employeeId)

@@ -18,7 +18,7 @@ using NBL.Models.ViewModels.Logs;
 
 namespace NBL.Areas.Sales.Controllers
 {
-    [Authorize(Roles = "SalesExecutive")]
+    [Authorize]
     public class ClientController : Controller
     {
         private readonly ICommonManager _iCommonManager;
@@ -59,7 +59,7 @@ namespace NBL.Areas.Sales.Controllers
 
         // GET: Sales/Client/Profile/5
 
-
+        [Authorize(Roles = "SalesExecutive")]
 
         // GET: Sales/Client/AddNewClient
         public ActionResult AddNewClient()

@@ -379,4 +379,112 @@ The statement has been terminated.</CustomeMessage>
     <LogDateTime>2019-07-09T15:06:20.0052113+06:00</LogDateTime>
     <CustomeMessage>ProductName</CustomeMessage>
   </Error>
+  <Error LogId="19-Jul-11bb938b1b-2112-4456-9941-555cfc541c70">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.ClientGateway.Add(Client client) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 60</LogMessage>
+    <LogDateTime>2019-07-11T10:13:33.5257111+06:00</LogDateTime>
+    <CustomeMessage>Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, &lt;, &lt;= , &gt;, &gt;= or when the subquery is used as an expression.
+The statement has been terminated.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-1188eac1ba-8eeb-45fa-b6bb-5505559f5754">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ClientGateway.Add(Client client) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 67
+   at NBL.BLL.ClientManager.Add(Client client) in E:\API\NBL\NBL.BLL\ClientManager.cs:line 55
+   at NBL.Areas.Editor.Controllers.ClientController.AddNewClient(ViewCreateClientModel model, HttpPostedFileBase ClientImage, HttpPostedFileBase clientSignature) in E:\API\NBL\NBL\Areas\Editor\Controllers\ClientController.cs:line 123</LogMessage>
+    <LogDateTime>2019-07-11T10:13:33.5476832+06:00</LogDateTime>
+    <CustomeMessage>Could not Save</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-11bc8c8df8-89b1-4fca-9515-da32eca51e6c">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.ClientGateway.Add(Client client) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 60</LogMessage>
+    <LogDateTime>2019-07-11T10:16:18.619364+06:00</LogDateTime>
+    <CustomeMessage>Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, &lt;, &lt;= , &gt;, &gt;= or when the subquery is used as an expression.
+The statement has been terminated.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-11e9cb202c-c03b-43fe-bb98-fe5a29c08515">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ClientGateway.Add(Client client) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 67
+   at NBL.BLL.ClientManager.Add(Client client) in E:\API\NBL\NBL.BLL\ClientManager.cs:line 55
+   at NBL.Areas.Sales.Controllers.ClientController.AddNewClient(ViewCreateClientModel model, HttpPostedFileBase ClientImage, HttpPostedFileBase clientSignature) in E:\API\NBL\NBL\Areas\Sales\Controllers\ClientController.cs:line 130</LogMessage>
+    <LogDateTime>2019-07-11T10:16:18.6412777+06:00</LogDateTime>
+    <CustomeMessage>Could not Save</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-11c534acb7-33d5-457a-9c26-cd430338c7a8">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.ClientGateway.Add(Client client) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 60</LogMessage>
+    <LogDateTime>2019-07-11T10:20:37.1847502+06:00</LogDateTime>
+    <CustomeMessage>Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, &lt;, &lt;= , &gt;, &gt;= or when the subquery is used as an expression.
+The statement has been terminated.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-14906d14bc-ee5a-442e-949a-100f5346eff5">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.ClientGateway.GetStockProductToclient(Int32 clientId) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 664</LogMessage>
+    <LogDateTime>2019-07-14T16:08:00.7354627+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'UDSP_RptGetClientStockByClientId' expects parameter '@ClientId', which was not supplied.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-14ad0cce06-1f39-4589-86dd-3408e362f7da">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ClientGateway.GetStockProductToclient(Int32 clientId) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 681
+   at NBL.BLL.ClientManager.GetClientDeailsById(Int32 clientId) in E:\API\NBL\NBL.BLL\ClientManager.cs:line 125
+   at NBL.Areas.Sales.Controllers.ClientController.ViewClientProfile(Int32 id) in E:\API\NBL\NBL\Areas\Sales\Controllers\ClientController.cs:line 255</LogMessage>
+    <LogDateTime>2019-07-14T16:08:00.7713644+06:00</LogDateTime>
+    <CustomeMessage>Unable to collect Client stocks</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-1457819c59-68ce-4715-b357-2af3753618a8">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.ClientGateway.GetStockProductToclient(Int32 clientId) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 664</LogMessage>
+    <LogDateTime>2019-07-14T16:08:32.7172276+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'UDSP_RptGetClientStockByClientId' expects parameter '@ClientId', which was not supplied.</CustomeMessage>
+  </Error>
 </Errors>

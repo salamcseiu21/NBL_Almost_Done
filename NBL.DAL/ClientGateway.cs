@@ -653,6 +653,43 @@ namespace NBL.DAL
             }
         }
 
+        public List<ViewProduct> GetStockProductToclient(int clientId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetClientStockByClientId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ClientId", clientId);
+                List<ViewProduct> products=new List<ViewProduct>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    products.Add(new ViewProduct
+                    {
+                        ProductName = reader["ProductName"].ToString(),
+                        StockQuantity = Convert.ToInt32(reader["Quantity"]),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString()
+                    });
+                }
+                reader.Close();
+                return products;
+
+            }
+            catch (Exception e)
+            {
+                Log.WriteErrorLog(e);
+                throw new Exception("Unable to collect Client stocks", e);
+
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         public IEnumerable<ViewClient> GetAllClientDetailsByBranchId(int branchId)
         {
             try

@@ -21,6 +21,6 @@ namespace NBL.BLL.Contracts
        
         IEnumerable<Employee> GetEmpoyeeListByDepartmentId(int departmentId);
         ICollection<object> GetEmployeeListBySearchTerm(string searchTerm);
-        ICollection<object> GetEmployeeListByDepartmentAndSearchTerm(int departmentId,string searchTerm);
+        ICollection<object> GetEmployeeListByDepartmentAndSearchTerm(int departmentId,string searchTerm,int branchId);
     }
 }

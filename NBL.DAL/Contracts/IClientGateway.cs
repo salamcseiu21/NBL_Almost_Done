@@ -22,5 +22,6 @@ namespace NBL.DAL.Contracts
         IEnumerable<ViewClientSummaryModel> GetClientSummary();
         int GetMaxSerialNoOfClientByAccountPrefix(string acountPrefix);
         ICollection<object> GetClientByBranchIdAndSearchTerm(int branchId, string searchTerm);
+        List<ViewProduct> GetStockProductToclient(int clientId);
     }
 }

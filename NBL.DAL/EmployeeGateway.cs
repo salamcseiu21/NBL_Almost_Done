@@ -507,7 +507,7 @@ namespace NBL.DAL
             }
         }
 
-        public ICollection<object> GetEmployeeListByDepartmentAndSearchTerm(int departmentId, string searchTerm)
+        public ICollection<object> GetEmployeeListByDepartmentAndSearchTerm(int departmentId, string searchTerm,int branchId)
         {
             try
             {
@@ -515,6 +515,7 @@ namespace NBL.DAL
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@DepartmentId", departmentId);
                 CommandObj.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
                 ConnectionObj.Open();
                 SqlDataReader reader = CommandObj.ExecuteReader();
                 List<object> employees = new List<object>();

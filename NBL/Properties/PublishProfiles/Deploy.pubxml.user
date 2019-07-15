@@ -559,7 +559,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/30/2019 12:59:39</publishTime>
     </File>
     <File Include="Areas/Corporate/Views/Shared/_MenuPartialPage.cshtml">
-      <publishTime>07/07/2019 14:22:35</publishTime>
+      <publishTime>07/10/2019 15:29:11</publishTime>
     </File>
     <File Include="Areas/Corporate/Views/Shared/_OperationHeadMenuPartialPage.cshtml">
       <publishTime>06/17/2019 11:23:16</publishTime>
@@ -1378,7 +1378,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/23/2019 11:54:58</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Client/All.cshtml">
-      <publishTime>06/24/2019 09:53:34</publishTime>
+      <publishTime>07/14/2019 15:44:33</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Client/ClientProfile.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -1387,7 +1387,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Client/ViewClientProfile.cshtml">
-      <publishTime>06/23/2019 11:59:34</publishTime>
+      <publishTime>07/14/2019 16:23:36</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Delivery/Chalan.cshtml">
       <publishTime>06/23/2019 11:10:28</publishTime>
@@ -1789,7 +1789,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/SuperAdmin/Views/Approve/ApproveClient.cshtml">
-      <publishTime>03/25/2019 17:37:04</publishTime>
+      <publishTime>07/11/2019 10:01:32</publishTime>
     </File>
     <File Include="Areas/SuperAdmin/Views/Approve/Edit.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -1822,7 +1822,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/16/2019 15:47:32</publishTime>
     </File>
     <File Include="Areas/SuperAdmin/Views/Home/Home.cshtml">
-      <publishTime>06/17/2019 11:38:34</publishTime>
+      <publishTime>07/11/2019 17:30:47</publishTime>
     </File>
     <File Include="Areas/SuperAdmin/Views/Home/LogInHistory.cshtml">
       <publishTime>06/16/2019 16:46:36</publishTime>
@@ -23128,16 +23128,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="bin/NBL.BLL.dll">
-      <publishTime>07/10/2019 10:48:06</publishTime>
+      <publishTime>07/14/2019 16:35:18</publishTime>
     </File>
     <File Include="bin/NBL.DAL.dll">
-      <publishTime>07/10/2019 10:48:06</publishTime>
+      <publishTime>07/14/2019 16:35:18</publishTime>
     </File>
     <File Include="bin/NBL.dll">
-      <publishTime>07/10/2019 10:48:12</publishTime>
+      <publishTime>07/14/2019 16:35:23</publishTime>
     </File>
     <File Include="bin/NBL.Models.dll">
-      <publishTime>07/10/2019 10:48:05</publishTime>
+      <publishTime>07/14/2019 16:35:17</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>04/22/2019 01:06:16</publishTime>
@@ -23824,7 +23824,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/17/2019 10:05:07</publishTime>
     </File>
     <File Include="Logs/Error_log_Xml_file.xml">
-      <publishTime>07/09/2019 15:06:20</publishTime>
+      <publishTime>07/14/2019 16:08:32</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>05/26/2019 10:27:13</publishTime>
@@ -24121,10 +24121,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Views/Shared/_ViewClientPartialPage.cshtml">
-      <publishTime>07/02/2019 17:17:54</publishTime>
+      <publishTime>07/10/2019 15:29:34</publishTime>
     </File>
     <File Include="Views/Shared/_ViewClientProfilePartialPage.cshtml">
-      <publishTime>06/24/2019 09:55:06</publishTime>
+      <publishTime>07/14/2019 16:28:40</publishTime>
     </File>
     <File Include="Views/Shared/_ViewDeliveryModalPartialPage.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>

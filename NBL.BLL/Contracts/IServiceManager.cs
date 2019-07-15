@@ -13,5 +13,7 @@ namespace NBL.BLL.Contracts
         bool ReceiveServiceProduct(WarrantyBatteryModel product);
         ICollection<ViewReceivedServiceProduct> GetReceivedServiceProducts();
         ViewReceivedServiceProduct GetReceivedServiceProductById(long receiveId);
+        ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarId(int forwardId);
+        bool ForwardServiceBattery(ForwardDetails model);
     }
 }

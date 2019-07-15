@@ -100,6 +100,7 @@ namespace NBL.Models.ViewModels
         [Display(Name = "Territory")]
         public int TerritoryId { get; set; }
         public List<Order> Orders { get; set; }
+        public List<ViewProduct> StockProducts { get; set; }  
         public List<ClientAttachment> ClientAttachments { set; get; }
         public ICollection<ViewDeliveredOrderModel> DeliveredOrderModels { get; set; }  
         public ClientType ClientType { get; set; }

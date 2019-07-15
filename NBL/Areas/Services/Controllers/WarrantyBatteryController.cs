@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Services;
+using NBL.Models.Enums;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Products;
@@ -42,11 +43,85 @@ namespace NBL.Areas.Services.Controllers
            
         }
 
+        public ActionResult ProductInChargeSection()
+        {
+            try
+            {
+                var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.Charge));
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        public ActionResult ChargeReport(long id)
+        {
+
+            try
+            {
+                var product = _iServiceManager.GetReceivedServiceProductById(id);
+                product.ProductHistory = _iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();
+                product.ForwardToModels = _iCommonManager.GetAllForwardToModels().ToList();
+                return View(product);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
+
         public ActionResult Details(long id)
         {
             try
             {
                 var product= _iServiceManager.GetReceivedServiceProductById(id);
+                return View(product);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+
+        public ActionResult Forward(long id)
+        {
+            try
+            {
+                var product = _iServiceManager.GetReceivedServiceProductById(id);
+                product.ProductHistory =_iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();
+                product.ForwardToModels = _iCommonManager.GetAllForwardToModels().ToList();
+                return View(product);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public ActionResult Forward(ForwardDetails model,long id)
+        {
+            try
+            {
+                var user = (ViewUser) Session["user"];
+                model.ForwardDateTime=DateTime.Now;
+                model.UserId = user.UserId;
+                
+                bool result = _iServiceManager.ForwardServiceBattery(model);
+                if (result)
+                {
+                    return RedirectToAction("All");
+                }
+
+                var product = _iServiceManager.GetReceivedServiceProductById(id);
+                product.ProductHistory = _iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();
+                product.ForwardToModels = _iCommonManager.GetAllForwardToModels().ToList();
                 return View(product);
             }
             catch (Exception exception)
@@ -84,9 +159,32 @@ namespace NBL.Areas.Services.Controllers
         {
             try
             {
+                var user = (ViewUser)Session["user"];
+                if (model.ForwardToId != Convert.ToInt32(ForwardTo.Received))
+                {
+                    model.ForwardDetails = new ForwardDetails
+                    {
+                        ForwardToId = model.ForwardToId,
+                        ForwardFromId = Convert.ToInt32(ForwardTo.Received),
+                        ForwardDateTime = DateTime.Now,
+                        UserId = user.UserId,
+                        ForwardRemarks = model.ForwardRemarks
+                    };
+                }
+                else
+                {
+                    model.ForwardDetails = new ForwardDetails
+                    {
+                        ForwardToId = Convert.ToInt32(ForwardTo.Received),
+                        ForwardFromId = Convert.ToInt32(ForwardTo.Received),
+                        ForwardDateTime = DateTime.Now,
+                        UserId = user.UserId,
+                        ForwardRemarks = model.ForwardRemarks
+                    };
+                }
 
                 var product = _iInventoryManager.GetProductHistoryByBarcode(model.Barcode) ?? new ViewProductHistory();
-                var user = (ViewUser) Session["user"];
+               
                 var branchId = Convert.ToInt32(Session["BranchId"]);
                 model.EntryByUserId = user.UserId;
                 model.ReportByEmployeeId = branchId;

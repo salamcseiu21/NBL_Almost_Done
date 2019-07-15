@@ -122,6 +122,7 @@ namespace NBL.BLL
             var client = _iClientGateway.GetClientDeailsById(clientId);
              client.Orders = _iOrderManager.GetOrdersByClientId(clientId).ToList();
              client.DeliveredOrderModels = _iDeliveryGateway.GetDeliveredOrderByClientId(clientId);
+              client.StockProducts = _iClientGateway.GetStockProductToclient(clientId);
             return client;
 
         }

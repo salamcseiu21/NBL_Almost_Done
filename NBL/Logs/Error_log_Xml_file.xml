@@ -443,4 +443,350 @@ The statement has been terminated.</CustomeMessage>
     <CustomeMessage>Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, &lt;, &lt;= , &gt;, &gt;= or when the subquery is used as an expression.
 The statement has been terminated.</CustomeMessage>
   </Error>
+  <Error LogId="19-Jul-14906d14bc-ee5a-442e-949a-100f5346eff5">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.ClientGateway.GetStockProductToclient(Int32 clientId) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 664</LogMessage>
+    <LogDateTime>2019-07-14T16:08:00.7354627+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'UDSP_RptGetClientStockByClientId' expects parameter '@ClientId', which was not supplied.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-14ad0cce06-1f39-4589-86dd-3408e362f7da">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ClientGateway.GetStockProductToclient(Int32 clientId) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 681
+   at NBL.BLL.ClientManager.GetClientDeailsById(Int32 clientId) in E:\API\NBL\NBL.BLL\ClientManager.cs:line 125
+   at NBL.Areas.Sales.Controllers.ClientController.ViewClientProfile(Int32 id) in E:\API\NBL\NBL\Areas\Sales\Controllers\ClientController.cs:line 255</LogMessage>
+    <LogDateTime>2019-07-14T16:08:00.7713644+06:00</LogDateTime>
+    <CustomeMessage>Unable to collect Client stocks</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-1457819c59-68ce-4715-b357-2af3753618a8">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.ClientGateway.GetStockProductToclient(Int32 clientId) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 664</LogMessage>
+    <LogDateTime>2019-07-14T16:08:32.7172276+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'UDSP_RptGetClientStockByClientId' expects parameter '@ClientId', which was not supplied.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15779bd6e0-2996-4710-808d-17970c87a7f8">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlParameterCollection.GetParameter(String parameterName)
+   at System.Data.SqlClient.SqlParameterCollection.get_Item(String parameterName)
+   at NBL.DAL.ServiceGateway.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 75</LogMessage>
+    <LogDateTime>2019-07-15T11:13:10.8340012+06:00</LogDateTime>
+    <CustomeMessage>An SqlParameter with ParameterName '@RowAffected' is not contained by this SqlParameterCollection.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-153d527356-0ece-4b44-9ef4-3d367d637130">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ServiceGateway.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 88
+   at NBL.BLL.ServiceManager.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 55
+   at NBL.Areas.Services.Controllers.WarrantyBatteryController.Receive(WarrantyBatteryModel model) in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 116</LogMessage>
+    <LogDateTime>2019-07-15T11:13:10.8788791+06:00</LogDateTime>
+    <CustomeMessage>Could not Receive service product</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-1574a52598-79a0-46f8-9fa3-e493da0a5234">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.ServiceGateway.SaveForwardDetails(ForwardDetails item, Int64 receiveId) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 109
+   at NBL.DAL.ServiceGateway.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 76</LogMessage>
+    <LogDateTime>2019-07-15T11:22:18.9877153+06:00</LogDateTime>
+    <CustomeMessage>Could not find stored procedure 'UDSP_SaveForwardDetails'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-157fd30299-db6a-497f-93ca-48b8c8a478f6">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ServiceGateway.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 88
+   at NBL.BLL.ServiceManager.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 55
+   at NBL.Areas.Services.Controllers.WarrantyBatteryController.Receive(WarrantyBatteryModel model) in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 116</LogMessage>
+    <LogDateTime>2019-07-15T11:22:19.0096566+06:00</LogDateTime>
+    <CustomeMessage>Could not Receive service product</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-1544fff9dc-3814-420e-b69b-6c75aa25a640">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.ServiceGateway.SaveForwardDetails(ForwardDetails item, Int64 receiveId) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 109
+   at NBL.DAL.ServiceGateway.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 76</LogMessage>
+    <LogDateTime>2019-07-15T11:26:42.9325783+06:00</LogDateTime>
+    <CustomeMessage>Could not find stored procedure 'UDSP_SaveForwardDetails'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15e5ff1c93-4c9b-46bb-b62b-60d8611c29eb">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.ServiceGateway.SaveForwardDetails(ForwardDetails item, Int64 receiveId) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 109
+   at NBL.DAL.ServiceGateway.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 76</LogMessage>
+    <LogDateTime>2019-07-15T11:27:01.6654855+06:00</LogDateTime>
+    <CustomeMessage>Could not find stored procedure 'UDSP_SaveForwardDetails'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15eb04e7a7-2476-41c5-a1d0-921f787f0c50">
+    <Heading>System.InvalidOperationException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlTransaction.ZombieCheck()
+   at System.Data.SqlClient.SqlTransaction.Rollback()
+   at NBL.DAL.ServiceGateway.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 86
+   at NBL.BLL.ServiceManager.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 55
+   at NBL.Areas.Services.Controllers.WarrantyBatteryController.Receive(WarrantyBatteryModel model) in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 116</LogMessage>
+    <LogDateTime>2019-07-15T11:27:45.3901342+06:00</LogDateTime>
+    <CustomeMessage>This SqlTransaction has completed; it is no longer usable.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15447da112-02c2-4c11-be86-64e5c4cc09a5">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.ServiceGateway.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 74</LogMessage>
+    <LogDateTime>2019-07-15T11:29:52.8215116+06:00</LogDateTime>
+    <CustomeMessage>Cannot insert duplicate key row in object 'dbo.WarrantyBatteryReceive' with unique index 'IX_WarrantyBatteryReceive'. The duplicate key value is (2B02830KE2239).
+The statement has been terminated.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-1512717402-733d-4eba-ba4f-f176f033c9b2">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ServiceGateway.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 88
+   at NBL.BLL.ServiceManager.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 55
+   at NBL.Areas.Services.Controllers.WarrantyBatteryController.Receive(WarrantyBatteryModel model) in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 116</LogMessage>
+    <LogDateTime>2019-07-15T11:29:52.8554191+06:00</LogDateTime>
+    <CustomeMessage>Could not Receive service product</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15df1bc8dd-e8c5-461c-999b-81a12a7848ab">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.ServiceGateway.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 74</LogMessage>
+    <LogDateTime>2019-07-15T11:32:46.1872081+06:00</LogDateTime>
+    <CustomeMessage>Cannot insert duplicate key row in object 'dbo.WarrantyBatteryReceive' with unique index 'IX_WarrantyBatteryReceive'. The duplicate key value is (2B02830KE2239).
+The statement has been terminated.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15533ef979-0fc2-4f28-8b66-34831ec5089f">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ServiceGateway.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 88
+   at NBL.BLL.ServiceManager.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 55
+   at NBL.Areas.Services.Controllers.WarrantyBatteryController.Receive(WarrantyBatteryModel model) in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 116</LogMessage>
+    <LogDateTime>2019-07-15T11:32:49.2583583+06:00</LogDateTime>
+    <CustomeMessage>Could not Receive service product</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-1527b35bc9-183b-4c72-b214-b35ff4e49e23">
+    <Heading>System.InvalidOperationException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlTransaction.ZombieCheck()
+   at System.Data.SqlClient.SqlTransaction.Rollback()
+   at NBL.DAL.ServiceGateway.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 86
+   at NBL.BLL.ServiceManager.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 55
+   at NBL.Areas.Services.Controllers.WarrantyBatteryController.Receive(WarrantyBatteryModel model) in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 116</LogMessage>
+    <LogDateTime>2019-07-15T11:51:31.8816285+06:00</LogDateTime>
+    <CustomeMessage>This SqlTransaction has completed; it is no longer usable.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15672e2834-87ee-48fa-9750-76aa188ac6e5">
+    <Heading>System.InvalidOperationException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlTransaction.ZombieCheck()
+   at System.Data.SqlClient.SqlTransaction.Rollback()
+   at NBL.DAL.ServiceGateway.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 86
+   at NBL.BLL.ServiceManager.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 55
+   at NBL.Areas.Services.Controllers.WarrantyBatteryController.Receive(WarrantyBatteryModel model) in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 116</LogMessage>
+    <LogDateTime>2019-07-15T11:55:08.4410247+06:00</LogDateTime>
+    <CustomeMessage>This SqlTransaction has completed; it is no longer usable.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15ef8e3033-cfe8-44aa-9c58-d05e9a590fb9">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean&amp; moreRows)
+   at System.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean&amp; more)
+   at System.Data.SqlClient.SqlDataReader.Read()
+   at NBL.DAL.ServiceGateway.GetReceivedServiceProducts() in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 123</LogMessage>
+    <LogDateTime>2019-07-15T12:36:47.3818868+06:00</LogDateTime>
+    <CustomeMessage>Conversion failed when converting the nvarchar value 'Received' to data type int.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-1587960158-86b1-4b25-8d45-e5e83548423d">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ServiceGateway.GetReceivedServiceProducts() in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 146
+   at NBL.BLL.ServiceManager.GetReceivedServiceProducts() in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 65
+   at NBL.Areas.Services.Controllers.WarrantyBatteryController.All() in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 35</LogMessage>
+    <LogDateTime>2019-07-15T12:36:47.4317818+06:00</LogDateTime>
+    <CustomeMessage>Could not collect Receive service product</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-156503c72d-6fb4-4c5a-a75c-a183c29fe8d0">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean&amp; moreRows)
+   at System.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean&amp; more)
+   at System.Data.SqlClient.SqlDataReader.Read()
+   at NBL.DAL.ServiceGateway.GetReceivedServiceProducts() in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 123</LogMessage>
+    <LogDateTime>2019-07-15T12:37:27.9300173+06:00</LogDateTime>
+    <CustomeMessage>Conversion failed when converting the nvarchar value 'Received' to data type int.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15315c6684-8d04-435e-942c-fc227fedf46b">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ServiceGateway.GetReceivedServiceProducts() in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 146
+   at NBL.BLL.ServiceManager.GetReceivedServiceProducts() in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 65
+   at NBL.Areas.Services.Controllers.WarrantyBatteryController.All() in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 35</LogMessage>
+    <LogDateTime>2019-07-15T12:37:27.9728968+06:00</LogDateTime>
+    <CustomeMessage>Could not collect Receive service product</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15df07e972-ad03-4dd5-8f3c-ecc2c78ee595">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean&amp; moreRows)
+   at System.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean&amp; more)
+   at System.Data.SqlClient.SqlDataReader.Read()
+   at NBL.DAL.ServiceGateway.GetReceivedServiceProducts() in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 123</LogMessage>
+    <LogDateTime>2019-07-15T12:39:38.5555523+06:00</LogDateTime>
+    <CustomeMessage>Conversion failed when converting the nvarchar value 'Received' to data type int.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15f2e776a6-12d7-45d4-b03f-1151fd5fabd3">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ServiceGateway.GetReceivedServiceProducts() in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 146
+   at NBL.BLL.ServiceManager.GetReceivedServiceProducts() in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 65
+   at NBL.Areas.Services.Controllers.WarrantyBatteryController.All() in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 35</LogMessage>
+    <LogDateTime>2019-07-15T12:39:38.6273608+06:00</LogDateTime>
+    <CustomeMessage>Could not collect Receive service product</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15bbaba667-a90d-45b4-a8ff-b288e267045b">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ServiceGateway.GetReceivedServiceProductById(Int64 receiveId) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 198</LogMessage>
+    <LogDateTime>2019-07-15T14:41:09.0305459+06:00</LogDateTime>
+    <CustomeMessage>ForwardedToId</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-157948859f-fd7f-45d7-a579-d7a3ecec8eda">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ServiceGateway.GetReceivedServiceProductById(Int64 receiveId) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 234
+   at NBL.BLL.ServiceManager.GetReceivedServiceProductById(Int64 receiveId) in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 70
+   at NBL.Areas.Services.Controllers.WarrantyBatteryController.Forward(Int64 id) in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 81</LogMessage>
+    <LogDateTime>2019-07-15T14:41:09.06648+06:00</LogDateTime>
+    <CustomeMessage>Could not get Receive service product by Id</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15c9932e9c-f155-49b2-838b-f9dd28f467e7">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ServiceGateway.GetReceivedServiceProductById(Int64 receiveId) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 198</LogMessage>
+    <LogDateTime>2019-07-15T14:41:14.5954114+06:00</LogDateTime>
+    <CustomeMessage>ForwardedToId</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15d1746633-a71f-420b-aaf6-b9726a389d4c">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ServiceGateway.GetReceivedServiceProductById(Int64 receiveId) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 234
+   at NBL.BLL.ServiceManager.GetReceivedServiceProductById(Int64 receiveId) in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 70
+   at NBL.Areas.Services.Controllers.WarrantyBatteryController.Forward(Int64 id) in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 81</LogMessage>
+    <LogDateTime>2019-07-15T14:41:14.6283229+06:00</LogDateTime>
+    <CustomeMessage>Could not get Receive service product by Id</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15b1bedbfb-21e1-41f1-a915-40fa41b0f6bc">
+    <Heading>System.InvalidOperationException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlCommand.ValidateCommand(String method, Boolean async)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.ServiceGateway.ForwardServiceBattery(ForwardDetails model) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 301</LogMessage>
+    <LogDateTime>2019-07-15T15:12:24.3249073+06:00</LogDateTime>
+    <CustomeMessage>ExecuteNonQuery requires an open and available Connection. The connection's current state is closed.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15e1297bfa-109b-4700-aa66-288979bada87">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ServiceGateway.ForwardServiceBattery(ForwardDetails model) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 308
+   at NBL.BLL.ServiceManager.ForwardServiceBattery(ForwardDetails model) in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 80
+   at NBL.Areas.Services.Controllers.WarrantyBatteryController.Forward(ForwardDetails model, Int64 id) in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 101</LogMessage>
+    <LogDateTime>2019-07-15T15:12:24.3617806+06:00</LogDateTime>
+    <CustomeMessage>Could not save service product forward info</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-156f820c68-e8c4-4e00-a176-be4377e5c1db">
+    <Heading>System.ArgumentException</Heading>
+    <LogMessage>   at System.Data.SqlClient.MetaType.GetMetaTypeFromValue(Type dataType, Object value, Boolean inferLen, Boolean streamAllowed)
+   at System.Data.SqlClient.SqlParameter.GetMetaTypeOnly()
+   at System.Data.SqlClient.SqlParameter.Validate(Int32 index, Boolean isCommandProc)
+   at System.Data.SqlClient.SqlCommand.SetUpRPCParameters(_SqlRPC rpc, Int32 startCount, Boolean inSchema, SqlParameterCollection parameters)
+   at System.Data.SqlClient.SqlCommand.BuildRPC(Boolean inSchema, SqlParameterCollection parameters, _SqlRPC&amp; rpc)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.ServiceGateway.ForwardServiceBattery(ForwardDetails model) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 302</LogMessage>
+    <LogDateTime>2019-07-15T15:14:33.1007833+06:00</LogDateTime>
+    <CustomeMessage>No mapping exists from object type NBL.Models.EntityModels.Services.ForwardDetails to a known managed provider native type.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15d3cce27e-4536-4508-948f-4da60028dc63">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ServiceGateway.ForwardServiceBattery(ForwardDetails model) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 309
+   at NBL.BLL.ServiceManager.ForwardServiceBattery(ForwardDetails model) in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 80
+   at NBL.Areas.Services.Controllers.WarrantyBatteryController.Forward(ForwardDetails model, Int64 id) in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 101</LogMessage>
+    <LogDateTime>2019-07-15T15:14:33.1376852+06:00</LogDateTime>
+    <CustomeMessage>Could not save service product forward info</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-15162a79aa-8621-4cf7-8f15-652d7381601c">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.ServiceGateway.ForwardServiceBattery(ForwardDetails model) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 304</LogMessage>
+    <LogDateTime>2019-07-15T15:27:14.7274852+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'UDSP_SaveForwardDetailsAfterReceive' expects parameter '@UserId', which was not supplied.</CustomeMessage>
+  </Error>
 </Errors>

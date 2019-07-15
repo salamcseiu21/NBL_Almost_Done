@@ -18,8 +18,11 @@ namespace NBL.DAL
 
         public int ReceiveServiceProduct(WarrantyBatteryModel product)
         {
+            ConnectionObj.Open();
+            SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
             try
             {
+                CommandObj.Transaction = sqlTransaction;
                 CommandObj.CommandText = "UDSP_ReceiveServiceProduct";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@ReceiveDatetime", product.ReceiveDatetime);
@@ -64,15 +67,23 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@ForwardToId", product.ForwardToId);
                 CommandObj.Parameters.AddWithValue("@ForwardRemarks", product.ForwardRemarks);
                 CommandObj.Parameters.AddWithValue("@DistributionPointId", product.DistributionPointId);
-                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
-                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
-                ConnectionObj.Open();
+                CommandObj.Parameters.AddWithValue("@DistributionPoint", product.DistributionPoint);
+                CommandObj.Parameters.AddWithValue("@SpGrCellRemarks", product.SpGrCellRemarks);
+                CommandObj.Parameters.Add("@ReceiveId", SqlDbType.Int);
+                CommandObj.Parameters["@ReceiveId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
-                int rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                var receiveId = Convert.ToInt64(CommandObj.Parameters["@ReceiveId"].Value);
+                var rowAffected = SaveForwardDetails(product.ForwardDetails, receiveId);
+                if (rowAffected > 0)
+                {
+                    sqlTransaction.Commit();
+                }
+               
                 return rowAffected;
             }
             catch (Exception exception)
             {
+                sqlTransaction.Rollback();
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not Receive service product",exception);
             }
@@ -82,6 +93,24 @@ namespace NBL.DAL
                 ConnectionObj.Close();
                 CommandObj.Parameters.Clear();
             }
+        }
+
+        private int SaveForwardDetails(ForwardDetails item, long receiveId)
+        {
+            CommandObj.CommandText = "UDSP_SaveForwardDetails";
+            CommandObj.CommandType = CommandType.StoredProcedure;
+            CommandObj.Parameters.Clear();
+            CommandObj.Parameters.AddWithValue("@ReceiveId", receiveId);
+            CommandObj.Parameters.AddWithValue("@ForwardFromId", item.ForwardFromId);
+            CommandObj.Parameters.AddWithValue("@ForwardToId", item.ForwardToId);
+            CommandObj.Parameters.AddWithValue("@ForwardDateTime", item.ForwardDateTime);
+            CommandObj.Parameters.AddWithValue("@UserId", item.UserId);
+            CommandObj.Parameters.AddWithValue("@Remarks", item.ForwardRemarks);
+            CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+            CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+            CommandObj.ExecuteNonQuery();
+            var i = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            return i;
         }
 
         public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProducts()
@@ -103,8 +132,10 @@ namespace NBL.DAL
                         AppUsedFor = reader["AppUsedFor"].ToString(),
                         Barcode = reader["BarcodeNo"].ToString(),
                         ProductName = reader["ProductName"].ToString(),
+                        ProductCategoryName=reader["ProductCategoryName"].ToString(),
                         DelivaryRef = reader["DelivaryRef"].ToString(),
                         TransactionRef = reader["TransactionRef"].ToString(),
+                        ForwardedTo = reader["ForwardedTo"].ToString(),
                         ReceiveRef =DBNull.Value.Equals(reader["ReceiveRef"])? null:reader["ReceiveRef"].ToString()
                     });
                 }
@@ -177,12 +208,33 @@ namespace NBL.DAL
                         DelivaryRef = reader["DelivaryRef"].ToString(),
                         TransactionRef = reader["TransactionRef"].ToString(),
                         ReceiveRef = DBNull.Value.Equals(reader["ReceiveRef"]) ? null : reader["ReceiveRef"].ToString(),
-                        CellFiveCondition = reader["Condition5"].ToString(),
-                        CellFourCondition = reader["Condition4"].ToString(),
-                        CellOneCondition = reader["Condition1"].ToString(),
-                        CellSixCondition = reader["Condition6"].ToString(),
-                        CellThreeCondition = reader["Condition3"].ToString(),
-                        CellTwoCondition = reader["Condition2"].ToString()
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        CellOneConditionId = Convert.ToInt32(reader["CellOneConditionId"]),
+                        CellTwoConditionId = Convert.ToInt32(reader["CellTwoConditionId"]),
+                        CellThreeConditionId = Convert.ToInt32(reader["CellThreeConditionId"]),
+                        CellFourConditionId = Convert.ToInt32(reader["CellFourConditionId"]),
+                        CellFiveConditionId = Convert.ToInt32(reader["CellFiveConditionId"]),
+                        CellSixConditionId = Convert.ToInt32(reader["CellSixConditionId"]),
+                        SpGrCellOne = Convert.ToDecimal(reader["SpGrCellOne"]),
+                        SpGrCellTwo = Convert.ToDecimal(reader["SpGrCellTwo"]),
+                        SpGrCellThree = Convert.ToDecimal(reader["SpGrCellThree"]),
+                        SpGrCellFour = Convert.ToDecimal(reader["SpGrCellFour"]),
+                        SpGrCellFive = Convert.ToDecimal(reader["SpGrCellFive"]),
+                        SpGrCellSix = Convert.ToDecimal(reader["SpGrCellSix"]),
+                        ForwardedToId = Convert.ToInt32(reader["ForwardToId"]),
+                        OpenVoltage = Convert.ToDecimal(reader["OpenVoltage"]),
+                        LoadVoltage = Convert.ToDecimal(reader["LoadVoltage"]),
+                        CellRemarks = reader["CellRemarks"].ToString(),
+                        CoverStatusId = Convert.ToInt32(reader["CoverStatusId"]),
+                        ContainerStatusId = Convert.ToInt32(reader["ContainerStatusId"]),
+                        PostStatusId = Convert.ToInt32(reader["PostStatusId"]),
+                        ReceiveReport = reader["ReceiveReport"].ToString(),
+                        OtherInformationRemarks = reader["OtherInformationRemarks"].ToString(),
+                        ReportByEmployee = reader["EmployeeName"].ToString(),
+                        ChargingSystem = reader["ChargingSystem"].ToString(),
+                        ServicingStatus = reader["ServicingStatus"].ToString()
+
+                        
                     };
                 }
                 reader.Close();
@@ -192,6 +244,82 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not get Receive service product by Id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarId(int forwardId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetReceivedServiceProductsByForwarId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ForwardId", forwardId);
+                ConnectionObj.Open();
+                List<ViewReceivedServiceProduct> products = new List<ViewReceivedServiceProduct>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    products.Add(new ViewReceivedServiceProduct
+                    {
+                        ReceiveId = Convert.ToInt64(reader["ReceiveId"]),
+                        ReceiveDatetime = Convert.ToDateTime(reader["ReceiveDatetime"]),
+                        AppCapacity = reader["AppCapacity"].ToString(),
+                        AppUsedFor = reader["AppUsedFor"].ToString(),
+                        Barcode = reader["BarcodeNo"].ToString(),
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        ForwardedTo = reader["ForwardedTo"].ToString(),
+                        DelivaryRef = reader["DelivaryRef"].ToString(),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        ReceiveRef = DBNull.Value.Equals(reader["ReceiveRef"]) ? null : reader["ReceiveRef"].ToString()
+                    });
+                }
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect Receive service product by forwardid", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int ForwardServiceBattery(ForwardDetails model)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_SaveForwardDetailsAfterReceive";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@ReceiveId", model.ReceiveId);
+                CommandObj.Parameters.AddWithValue("@Remarks", model.ForwardRemarks);
+                CommandObj.Parameters.AddWithValue("@ForwardFromId", model.ForwardFromId);
+                CommandObj.Parameters.AddWithValue("@ForwardToId", model.ForwardToId);
+                CommandObj.Parameters.AddWithValue("@ForwardDateTime", model.ForwardDateTime);
+                CommandObj.Parameters.AddWithValue("@UserId", model.UserId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var i = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return i;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not save service product forward info", exception);
             }
             finally
             {

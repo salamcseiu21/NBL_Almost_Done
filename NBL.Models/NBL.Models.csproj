@@ -142,6 +142,7 @@
     <Compile Include="EntityModels\Securities\ViewLoginInfo.cs" />
     <Compile Include="EntityModels\Services\CellCondition.cs" />
     <Compile Include="EntityModels\Services\ChargingStatusModel.cs" />
+    <Compile Include="EntityModels\Services\ForwardDetails.cs" />
     <Compile Include="EntityModels\Services\ForwardToModel.cs" />
     <Compile Include="EntityModels\Services\PhysicalConditionModel.cs" />
     <Compile Include="EntityModels\Services\ServicingModel.cs" />
@@ -154,8 +155,11 @@
     <Compile Include="EntityModels\Locations\Division.cs" />
     <Compile Include="EntityModels\Employees\Employee.cs" />
     <Compile Include="EntityModels\Masters\EmployeeType.cs" />
+    <Compile Include="Enums\CellCondition.cs" />
     <Compile Include="Enums\Department.cs" />
+    <Compile Include="Enums\ForwardTo.cs" />
     <Compile Include="Enums\InvoiceStatus.cs" />
+    <Compile Include="Enums\PhysicalConditionEnum.cs" />
     <Compile Include="Enums\ReferenceType.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
     <Compile Include="Enums\RequisitionStatus.cs" />

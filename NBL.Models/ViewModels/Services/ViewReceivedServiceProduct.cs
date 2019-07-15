@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using NBL.Models.EntityModels.Services;
+using NBL.Models.ViewModels.Products;
+
 namespace NBL.Models.ViewModels.Services
 {
     public class ViewReceivedServiceProduct
@@ -8,6 +12,7 @@ namespace NBL.Models.ViewModels.Services
         public long ReceiveId { get; set; }
         public DateTime ReceiveDatetime { get; set; }
         public string ProductName { get; set; }
+        public string ProductCategoryName { get; set; }
         public string Barcode { get; set; }
         public string ReceiveRef { get; set; }
         public string DelivaryRef { get; set; }
@@ -25,6 +30,14 @@ namespace NBL.Models.ViewModels.Services
         public string CellFourCondition { get; set; }
         public string CellFiveCondition { get; set; }
         public string CellSixCondition { get; set; }
+
+        public int CellOneConditionId { get; set; }
+        public int CellTwoConditionId { get; set; }
+        public int CellThreeConditionId { get; set; }
+        public int CellFourConditionId { get; set; }
+        public int CellFiveConditionId { get; set; }
+        public int CellSixConditionId { get; set; }
+
         public decimal OpenVoltage { get; set; }
         public decimal LoadVoltage { get; set; }
         public string CellRemarks { get; set; }
@@ -40,6 +53,15 @@ namespace NBL.Models.ViewModels.Services
         public DateTime ServiceBatteryDeliveryDate { get; set; }
         public string ServiceBatteryBarcode { get; set; }
         public DateTime ServiceBatteryReturnDate { get; set; }
+
+
+
+        public int CoverStatusId { get; set; }
+        public int ContainerStatusId { get; set; }
+        public int PostStatusId { get; set; }
+        public int ServicingStatusId { get; set; }
+        public int ChargingSystemId { get; set; }
+      
         public DateTime RbdDate { get; set; }
         public string RbdBarcode { get; set; }
         public string RbdRemarks { get; set; }
@@ -50,7 +72,15 @@ namespace NBL.Models.ViewModels.Services
         public int Status { get; set; }
         public string IsActive { get; set; }
         public DateTime SysDatetime { get; set; }
-       
+        public string ForwardedTo { get; set; }
+        public int ForwardedToId { get; set; }
 
+        public ViewProductHistory ProductHistory { get; set; }
+        public List<ForwardToModel> ForwardToModels { set; get; }
+
+        public ViewReceivedServiceProduct()
+        {
+            ForwardToModels=new List<ForwardToModel>();
+        }
     }
 }

@@ -29,6 +29,7 @@ namespace NBL.Models.EntityModels.Services
         public decimal OpenVoltage { get; set; }
         public decimal LoadVoltage { get; set; }
         public string CellRemarks { get; set; }
+        public string SpGrCellRemarks { get; set; }
 
         public int CoverStatusId { get; set; }
         public int ContainerStatusId { get; set; }
@@ -53,14 +54,16 @@ namespace NBL.Models.EntityModels.Services
         public string IsActive { get; set; }
         public int ForwardToId { get; set; }    
         public string ForwardRemarks { get; set; }     
-        public int DistributionPointId { get; set; }      
+        public int DistributionPointId { get; set; }     
+        public string DistributionPoint { get; set; }      
+         
         public DateTime SysDatetime { get; set; }
         public List<PhysicalConditionModel> PhysicalConditions { set; get; }
         public List<ServicingModel> ServicingModels { set; get; }   
         public List<ChargingStatusModel> ChargingStatus { set; get; }
         public List<ForwardToModel> ForwardToModels { set; get; }
-        public List<ViewBranch> DistributionPoints { get; set; }    
-
+        public List<ViewBranch> DistributionPoints { get; set; }
+        public ForwardDetails ForwardDetails { get; set; }
 
         public WarrantyBatteryModel()
         {
@@ -69,6 +72,7 @@ namespace NBL.Models.EntityModels.Services
             ChargingStatus=new List<ChargingStatusModel>();
             ForwardToModels=new List<ForwardToModel>();
             DistributionPoints = new List<ViewBranch>();
+            ForwardToModels=new List<ForwardToModel>();
         }
     }
 }

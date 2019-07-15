@@ -69,5 +69,16 @@ namespace NBL.BLL
        {
            return _iServiceGateway.GetReceivedServiceProductById(receiveId);
        }
+
+       public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarId(int forwardId)
+       {
+           return _iServiceGateway.GetReceivedServiceProductsByForwarId(forwardId);
+        }
+
+       public bool ForwardServiceBattery(ForwardDetails model)
+       {
+           int rowAffected = _iServiceGateway.ForwardServiceBattery(model);
+           return rowAffected > 0;
+       }
    }
 }

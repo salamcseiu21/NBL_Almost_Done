@@ -177,11 +177,6 @@
                                 @Html.HiddenFor(n => n.CellThreeConditionId)
                             </td>
 
-
-
-                        </tr>
-                        <tr>
-
                             <td>
                                 <strong>Cell 4 :</strong><input id="SpGrCellFour" name="SpGrCellFour" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 4 Sp Gr" required />
                                 <input type="text" id="CellFourCondition" onkeypress="CellConditionAutoComplete(this)" name="CellFourCondition" placeholder="Cell 4 condition" class="form-control" />
@@ -197,23 +192,30 @@
                                 <input type="text" id="CellSixCondition" name="CellSixCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 6 condition" class="form-control" />
                                 @Html.HiddenFor(n => n.CellSixConditionId)
                             </td>
-
-
-
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <strong> SpGr Cell Value Difference :</strong> <input type="text" id="SpGrCellValueDifference" class="form-control"  readonly placeholder="SpGr Cell Value Difference...."/>
+                            <td>
+                                <strong> SpGr Cell Value Difference :</strong> <input type="text" id="SpGrCellValueDifference" class="form-control" readonly placeholder="SpGr Cell Value Difference...." />
                             </td>
+
                         </tr>
                         <tr>
+
+                           
+
+
+                        </tr>
+                        <tr>
+                            
+                            <td colspan="3">
+                                <strong>SpGr Remarks : </strong> <input id="SpGrCellRemarks" name="SpGrCellRemarks" type="text" style="width: 100%" required class="form-control" placeholder="SpGr Cell Remarks..."/>
+                            </td>
+                            
                             <td> <strong>Open Voltage :</strong><input id="OpenVoltage" name="OpenVoltage" type="number" required style="width: 100%" class="form-control" placeholder="Open Voltage.."/></td>
                             <td> <strong>Load Voltage :</strong><input id="LoadVoltage" name="LoadVoltage" type="number" required style="width: 100%" class="form-control" placeholder="Load Voltage.." /></td>
                             <td colspan="2">
-                                <strong>Remarks : </strong> <input id="CellRemarks" name="CellRemarks" type="text" style="width: 100%" required class="form-control" placeholder="Cell Remarks..."/>
+                                <strong>Voltage Remarks : </strong> <input id="CellRemarks" name="CellRemarks" type="text" style="width: 100%" required class="form-control" placeholder="Voltage Remarks..."/>
                             </td>
-
                         </tr>
+                       
                         </tbody>
                     </table>
                 </div>
@@ -307,7 +309,7 @@
                             <tr>
 
                                 <td>
-                                    <strong>Delivery Date:</strong>
+                                    <strong>Issue Date:</strong>
 
                                     <input type="text" id="ServiceBatteryDeliveryDate" name="ServiceBatteryDeliveryDate" value="@date" style="width: 100%" class="form-control" />
 
@@ -336,7 +338,21 @@
                     </table>
                 </div>
             </div>
+            <div class="panel panel-success">
+                <div class="panel panel-heading"><span>Replace Information</span></div>
+                <div class="panel panel-body">
+                    <table class="table table-bordered" style="width: 100%">
+                        <tbody>
+                            <tr>
 
+                                <td colspan="2"> <strong>Replace by Dealer:</strong><input type="text" id="RbdDate" name="RbdDate" value="@date" class="form-control" /> </td>
+                                <td colspan="2"> <strong>Barcode :</strong><input type="text" name="RbdBarcode" style="width: 100%" class="form-control" placeholder="Replace battery barcode .." /></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -360,13 +376,16 @@
                     </td>
                     <td> <strong>Remarks :</strong><input type="text" name="ForwardRemarks" style="width: 100%" class="form-control" placeholder="Forward remarks.." /> </td>
                     <td>
-                        <strong>Distribution Point :</strong><select name="DistributionPointId" required style="width: 100%" class="form-control">
+                        @*<strong>Distribution Point :</strong><select name="DistributionPointId" required style="width: 100%" class="form-control">
                             <option value="">---Select--</option>
                             @foreach (var item in Model.DistributionPoints)
                             {
                                 <option value="@item.BranchId">@item.BranchName</option>
                             }
-                        </select>
+                        </select>*@
+                        
+                        <strong>Distribution Point  :</strong><input type="text" name="DistributionPoint" style="width: 100%" class="form-control" placeholder="Distribution Point .." />
+                       
                     </td>
                 </tr>
                 <tr>

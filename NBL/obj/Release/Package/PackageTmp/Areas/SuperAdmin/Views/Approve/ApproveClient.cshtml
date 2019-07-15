@@ -14,11 +14,10 @@
         <thead>
             <tr>
                 <th class="text-center">S.N</th>
-                <th class="text-center">Client Name</th>
-                <th class="text-center">Phone</th>
-                <th class="text-center">Alt Phone</th>
-                <th class="text-center">E-Mail</th>
+                <th class="text-center">Basic Info</th>
                 <th class="text-center">Address</th>
+                <th class="text-center">Added By</th>
+                <th class="text-center">Date Time</th>
               
                 <th class="text-center">Action</th>
             </tr>
@@ -28,11 +27,13 @@
             {
                 <tr>
                     <td>@item.SerialNo</td>
-                    <td>@item.ClientName</td>
-                    <td>@item.Phone</td>
-                    <td>@(item.AlternatePhone?? "N/A")</td>
-                    <td>@(item.Email?? "N/A")</td>
+                    <td><b>Client Name :</b> @item.ClientName<br />
+                      <b> Phone :</b> @item.Phone<br/>
+                       <b>Email :</b> @(item.Email?? "N/A")
+                    </td>
                     <td>@item.Address</td>
+                    <td>@item.AddedBy</td>
+                    <td>@item.SystemDateTime.ToString("F")</td>
                    
                     <td class="text-center">
                         @using (Html.BeginForm("ApproveClient", "Approve", FormMethod.Post, new { id = item.ClientId }))
@@ -48,12 +49,10 @@
         <tfoot>
             <tr>
                 <th class="text-center">S.N</th>
-                <th class="text-center">Client Name</th>
-                <th class="text-center">Phone</th>
-                <th class="text-center">Alt Phone</th>
-                <th class="text-center">E-Mail</th>
+                <th class="text-center">Basic Info</th>
                 <th class="text-center">Address</th>
-              
+                <th class="text-center">Added By</th>
+                <th class="text-center">Date Time</th>
                 <th class="text-center">Action</th>
             </tr>
         </tfoot>
