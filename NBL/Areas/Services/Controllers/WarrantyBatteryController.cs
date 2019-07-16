@@ -56,6 +56,10 @@ namespace NBL.Areas.Services.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+
+
+    
+
         public ActionResult ChargeReport(long id)
         {
 
@@ -73,7 +77,127 @@ namespace NBL.Areas.Services.Controllers
             }
 
         }
+        [HttpPost]
+        public ActionResult ChargeReport(ChargeReportModel model,long id)
+        {
 
+            try
+            {
+
+                var user = (ViewUser)Session["user"];
+                var product = _iServiceManager.GetReceivedServiceProductById(id);
+                ForwardDetails forward=new ForwardDetails
+                {
+                    UserId = user.UserId,
+                    ForwardDateTime = DateTime.Now,
+                    ForwardFromId = product.ForwardedToId,
+                    ForwardToId = model.ForwardToId,
+                    ReceiveId = model.BatteryReceiveId,
+                    ForwardRemarks = model.ForwardRemarks
+                };
+
+                
+                if (model.ForwardToId == product.ForwardedToId)
+                {
+                    model.ParentId = model.ForwardToId;
+                }
+                model.EntryByUserId = user.UserId;
+                model.ForwardDetails = forward;
+
+
+                bool result = _iServiceManager.SaveCharegeReport(model);
+                if (result)
+                {
+                    return RedirectToAction("ProductInChargeSection");
+                }
+                product.ProductHistory = _iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();
+                product.ForwardToModels = _iCommonManager.GetAllForwardToModels().ToList();
+                return View(product);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
+
+
+        public ActionResult ProductInDisChargeSection()
+        {
+            try
+            {
+                var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.DischargeTest));
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        public ActionResult DisChargeReport(long id)
+        {
+
+            try
+            {
+                var product = _iServiceManager.GetReceivedServiceProductById(id);
+                product.ProductHistory = _iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();
+                product.ForwardToModels = _iCommonManager.GetAllForwardToModels().ToList();
+                return View(product);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult DisChargeReport(DischargeReportModel model, long id)
+        {
+
+            try
+            {
+
+                var user = (ViewUser)Session["user"];
+                var product = _iServiceManager.GetReceivedServiceProductById(id);
+                ForwardDetails forward = new ForwardDetails
+                {
+                    UserId = user.UserId,
+                    ForwardDateTime = DateTime.Now,
+                    ForwardFromId = product.ForwardedToId,
+                    ForwardToId = model.ForwardToId,
+                    ReceiveId = model.BatteryReceiveId,
+                    ForwardRemarks = model.ForwardRemarks
+                };
+
+
+                if (model.ForwardToId == product.ForwardedToId)
+                {
+                    model.ParentId = model.ForwardToId;
+                }
+                model.EntryByUserId = user.UserId;
+                model.ForwardDetails = forward;
+
+
+                bool result = _iServiceManager.SaveDischargeReport(model);
+                if (result)
+                {
+                    return RedirectToAction("ProductInDisChargeSection");
+                }
+                product.ProductHistory = _iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();
+                product.ForwardToModels = _iCommonManager.GetAllForwardToModels().ToList();
+                return View(product);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
         public ActionResult Details(long id)
         {
             try
@@ -160,6 +284,7 @@ namespace NBL.Areas.Services.Controllers
             try
             {
                 var user = (ViewUser)Session["user"];
+                
                 if (model.ForwardToId != Convert.ToInt32(ForwardTo.Received))
                 {
                     model.ForwardDetails = new ForwardDetails
@@ -187,7 +312,7 @@ namespace NBL.Areas.Services.Controllers
                
                 var branchId = Convert.ToInt32(Session["BranchId"]);
                 model.EntryByUserId = user.UserId;
-                model.ReportByEmployeeId = branchId;
+                model.ReceiveByBranchId = branchId;
                 model.ReceiveDatetime=DateTime.Now;
                 model.DelivaryRef = product.DeliveryRef;
                 model.TransactionRef = product.OrderRef;

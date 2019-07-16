@@ -21,31 +21,7 @@ namespace NBL.BLL
            _iServiceGateway = iServiceGateway;
            _iCommonGateway = iCommonGateway;
        }
-        public bool Add(WarrantyBatteryModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Update(WarrantyBatteryModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Delete(WarrantyBatteryModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public WarrantyBatteryModel GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICollection<WarrantyBatteryModel> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
+     
        public bool ReceiveServiceProduct(WarrantyBatteryModel product)
        {
           var maxSl= _iServiceGateway.GetMaxWarrantyProductReceiveSlNoByYear(DateTime.Now.Year);
@@ -80,5 +56,44 @@ namespace NBL.BLL
            int rowAffected = _iServiceGateway.ForwardServiceBattery(model);
            return rowAffected > 0;
        }
-   }
+
+       public bool SaveCharegeReport(ChargeReportModel model)
+       {
+           int rowAffected = _iServiceGateway.SaveCharegeReport(model);
+           return rowAffected > 0;
+        }
+
+       public bool SaveDischargeReport(DischargeReportModel model)
+       {
+           int rowAffected = _iServiceGateway.SaveDischargeReport(model);
+           return rowAffected > 0;
+        }
+
+
+       public bool Add(WarrantyBatteryModel model)
+       {
+           throw new NotImplementedException();
+       }
+
+       public bool Update(WarrantyBatteryModel model)
+       {
+           throw new NotImplementedException();
+       }
+
+       public bool Delete(WarrantyBatteryModel model)
+       {
+           throw new NotImplementedException();
+       }
+
+       public WarrantyBatteryModel GetById(int id)
+       {
+           throw new NotImplementedException();
+       }
+
+       public ICollection<WarrantyBatteryModel> GetAll()
+       {
+           throw new NotImplementedException();
+       }
+
+    }
 }

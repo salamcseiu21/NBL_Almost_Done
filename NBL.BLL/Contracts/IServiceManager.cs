@@ -15,5 +15,7 @@ namespace NBL.BLL.Contracts
         ViewReceivedServiceProduct GetReceivedServiceProductById(long receiveId);
         ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarId(int forwardId);
         bool ForwardServiceBattery(ForwardDetails model);
+        bool SaveCharegeReport(ChargeReportModel model);
+        bool SaveDischargeReport(DischargeReportModel model);
     }
 }

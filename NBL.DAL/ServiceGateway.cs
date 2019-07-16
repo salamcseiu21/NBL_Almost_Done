@@ -66,9 +66,9 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@RbdBarcode", product.RbdBarcode?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@ForwardToId", product.ForwardToId);
                 CommandObj.Parameters.AddWithValue("@ForwardRemarks", product.ForwardRemarks);
+                CommandObj.Parameters.AddWithValue("@SpGrCellRemarks", product.SpGrCellRemarks);
                 CommandObj.Parameters.AddWithValue("@DistributionPointId", product.DistributionPointId);
                 CommandObj.Parameters.AddWithValue("@DistributionPoint", product.DistributionPoint);
-                CommandObj.Parameters.AddWithValue("@SpGrCellRemarks", product.SpGrCellRemarks);
                 CommandObj.Parameters.Add("@ReceiveId", SqlDbType.Int);
                 CommandObj.Parameters["@ReceiveId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
@@ -136,7 +136,8 @@ namespace NBL.DAL
                         DelivaryRef = reader["DelivaryRef"].ToString(),
                         TransactionRef = reader["TransactionRef"].ToString(),
                         ForwardedTo = reader["ForwardedTo"].ToString(),
-                        ReceiveRef =DBNull.Value.Equals(reader["ReceiveRef"])? null:reader["ReceiveRef"].ToString()
+                        ReceiveRef =DBNull.Value.Equals(reader["ReceiveRef"])? null:reader["ReceiveRef"].ToString(),
+                        ReceiveByBranch = reader["ReceiveByBranch"].ToString()
                     });
                 }
                 reader.Close();
@@ -232,9 +233,10 @@ namespace NBL.DAL
                         OtherInformationRemarks = reader["OtherInformationRemarks"].ToString(),
                         ReportByEmployee = reader["EmployeeName"].ToString(),
                         ChargingSystem = reader["ChargingSystem"].ToString(),
-                        ServicingStatus = reader["ServicingStatus"].ToString()
+                        ServicingStatus = reader["ServicingStatus"].ToString(),
+                        EntryByUser = reader["EntryByUser"].ToString(),
+                        ReceiveByBranch = reader["ReceiveByBranch"].ToString()
 
-                        
                     };
                 }
                 reader.Close();
@@ -277,7 +279,8 @@ namespace NBL.DAL
                         ForwardedTo = reader["ForwardedTo"].ToString(),
                         DelivaryRef = reader["DelivaryRef"].ToString(),
                         TransactionRef = reader["TransactionRef"].ToString(),
-                        ReceiveRef = DBNull.Value.Equals(reader["ReceiveRef"]) ? null : reader["ReceiveRef"].ToString()
+                        ReceiveRef = DBNull.Value.Equals(reader["ReceiveRef"]) ? null : reader["ReceiveRef"].ToString(),
+                        ReceiveByBranch = reader["ReceiveByBranch"].ToString()
                     });
                 }
                 reader.Close();
@@ -320,6 +323,109 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not save service product forward info", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int SaveCharegeReport(ChargeReportModel product)
+        {
+            ConnectionObj.Open();
+            SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
+            try
+            {
+                CommandObj.Transaction = sqlTransaction;
+                CommandObj.CommandText = "UDSP_SaveCharegeReport";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ParentId", product.ParentId);
+                CommandObj.Parameters.AddWithValue("@BatteryReceiveId", product.BatteryReceiveId);
+                CommandObj.Parameters.AddWithValue("@SpGrCellOne", product.SpGrCellOne);
+                CommandObj.Parameters.AddWithValue("@SpGrCellTwo", product.SpGrCellTwo);
+                CommandObj.Parameters.AddWithValue("@SpGrCellThree", product.SpGrCellThree);
+                CommandObj.Parameters.AddWithValue("@SpGrCellFour", product.SpGrCellFour);
+                CommandObj.Parameters.AddWithValue("@SpGrCellFive", product.SpGrCellFive);
+                CommandObj.Parameters.AddWithValue("@SpGrCellSix", product.SpGrCellSix);
+                CommandObj.Parameters.AddWithValue("@CellOneConditionId", product.CellOneConditionId);
+                CommandObj.Parameters.AddWithValue("@CellTwoConditionId", product.CellTwoConditionId);
+                CommandObj.Parameters.AddWithValue("@CellThreeConditionId", product.CellThreeConditionId);
+                CommandObj.Parameters.AddWithValue("@CellFourConditionId", product.CellFourConditionId);
+                CommandObj.Parameters.AddWithValue("@CellFiveConditionId", product.CellFiveConditionId);
+                CommandObj.Parameters.AddWithValue("@CellSixConditionId", product.CellSixConditionId);
+                CommandObj.Parameters.AddWithValue("@OpenVoltage", product.OpenVoltage);
+                CommandObj.Parameters.AddWithValue("@LoadVoltage", product.LoadVoltage);
+                CommandObj.Parameters.AddWithValue("@CellRemarks", product.CellRemarks);
+                CommandObj.Parameters.AddWithValue("@ReportByEmployeeId", product.ReportByEmployeeId);
+                CommandObj.Parameters.AddWithValue("@EntryByUserId", product.EntryByUserId);
+                CommandObj.Parameters.AddWithValue("@ForwardToId", product.ForwardToId);
+                CommandObj.Parameters.AddWithValue("@ForwardRemarks", product.ForwardRemarks);
+                CommandObj.Parameters.AddWithValue("@SpGrCellRemarks", product.SpGrCellRemarks);
+                CommandObj.Parameters.Add("@ReportId", SqlDbType.Int);
+                CommandObj.Parameters["@ReportId"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                var reportId = Convert.ToInt64(CommandObj.Parameters["@ReportId"].Value); 
+                var rowAffected = SaveForwardDetails(product.ForwardDetails, product.BatteryReceiveId);
+                if (rowAffected > 0)
+                {
+                    sqlTransaction.Commit();
+                }
+
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not save charge report", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int SaveDischargeReport(DischargeReportModel product)
+        {
+            ConnectionObj.Open();
+            SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
+            try
+            {
+                CommandObj.Transaction = sqlTransaction;
+                CommandObj.CommandText = "UDSP_SaveDischargeReport";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ParentId", product.ParentId);
+                CommandObj.Parameters.AddWithValue("@BatteryReceiveId", product.BatteryReceiveId);
+                CommandObj.Parameters.AddWithValue("@ReportByEmployeeId", product.ReportByEmployeeId);
+                CommandObj.Parameters.AddWithValue("@EntryByUserId", product.EntryByUserId);
+                CommandObj.Parameters.AddWithValue("@ForwardToId", product.ForwardToId);
+                CommandObj.Parameters.AddWithValue("@ForwardRemarks", product.ForwardRemarks);
+                CommandObj.Parameters.AddWithValue("@DischargeReport", product.DischargeReport);
+                CommandObj.Parameters.AddWithValue("@DischargeRemarks", product.DischargeRemarks);
+                CommandObj.Parameters.AddWithValue("@DischargeAmp", product.DischargeAmp);
+                CommandObj.Parameters.AddWithValue("@BarckUpTime", product.BarckUpTime);
+                CommandObj.Parameters.AddWithValue("@RecommendedBarckUpTime", product.RecommendedBarckUpTime);
+                CommandObj.Parameters.AddWithValue("@Tv", product.Tv);
+                CommandObj.Parameters.AddWithValue("@Lv", product.Lv);
+                CommandObj.Parameters.Add("@ReportId", SqlDbType.Int);
+                CommandObj.Parameters["@ReportId"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                var reportId = Convert.ToInt64(CommandObj.Parameters["@ReportId"].Value);
+                var rowAffected = SaveForwardDetails(product.ForwardDetails, product.BatteryReceiveId);
+                if (rowAffected > 0)
+                {
+                    sqlTransaction.Commit();
+                }
+
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not save charge report", exception);
             }
             finally
             {

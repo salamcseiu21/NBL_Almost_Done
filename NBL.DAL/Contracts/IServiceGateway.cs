@@ -16,5 +16,7 @@ namespace NBL.DAL.Contracts
         ViewReceivedServiceProduct GetReceivedServiceProductById(long receiveId);
         ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarId(int forwardId);
         int ForwardServiceBattery(ForwardDetails model);
+        int SaveCharegeReport(ChargeReportModel model);
+        int SaveDischargeReport(DischargeReportModel model);
     }
 }

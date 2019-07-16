@@ -141,7 +141,9 @@
     <Compile Include="EntityModels\Securities\StringCipher.cs" />
     <Compile Include="EntityModels\Securities\ViewLoginInfo.cs" />
     <Compile Include="EntityModels\Services\CellCondition.cs" />
+    <Compile Include="EntityModels\Services\ChargeReportModel.cs" />
     <Compile Include="EntityModels\Services\ChargingStatusModel.cs" />
+    <Compile Include="EntityModels\Services\DischargeReportModel.cs" />
     <Compile Include="EntityModels\Services\ForwardDetails.cs" />
     <Compile Include="EntityModels\Services\ForwardToModel.cs" />
     <Compile Include="EntityModels\Services\PhysicalConditionModel.cs" />

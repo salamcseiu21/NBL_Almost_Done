@@ -74,10 +74,12 @@ namespace NBL.Models.ViewModels.Services
         public DateTime SysDatetime { get; set; }
         public string ForwardedTo { get; set; }
         public int ForwardedToId { get; set; }
-
+        public int ReportByEmployeeId { get; set; }
+        public int EntryByUserId { get; set; }
         public ViewProductHistory ProductHistory { get; set; }
         public List<ForwardToModel> ForwardToModels { set; get; }
 
+        public string ReceiveByBranch { get; set; } 
         public ViewReceivedServiceProduct()
         {
             ForwardToModels=new List<ForwardToModel>();
