@@ -25,7 +25,7 @@
                     <th class="text-center">Approved By</th>
                     <th class="text-center">Approved At</th>
                     <th class="text-center">Distribution Center</th>
-                  
+                    <th class="text-center">Details</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,6 +58,9 @@
                             @item.DistributionPointSetDateTime.ToShortTimeString(), @item.DistributionPointSetDateTime.ToString("dd-MMM-yyyy")
                         </td>
                         <td class="text-center">@item.DistributionCenter</td>
+                        <td class="text-center">
+                            @Html.ActionLink(" Details", "OrderDetails", "Order", new { id = item.InvoiceRef }, new { @class = "fa fa-eye btn btn-info" })
+                        </td>
                        
                     </tr>
                                 }
@@ -72,7 +75,7 @@
                     <th class="text-center">Approved By</th>
                     <th class="text-center">Approved At</th>
                     <th class="text-center">Distribution Center</th>
-                   
+                    <th class="text-center">Details</th>
                 </tr>
             </tfoot>
         </table>

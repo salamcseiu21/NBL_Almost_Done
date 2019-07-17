@@ -31,7 +31,8 @@ namespace NBL.Models.EntityModels.Services
         public int EntryByUserId { get; set; }
         public int ForwardToId { get; set; }
         public string ForwardRemarks { get; set; }
-        public string Report { get; set; }  
+        public string Report { get; set; }
+        public string ReportByEmp { get; set; }
         public ForwardDetails ForwardDetails { get; set; }
 
         public ChargeReportModel()

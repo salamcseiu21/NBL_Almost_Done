@@ -392,6 +392,7 @@
     <Compile Include="Areas\Services\Controllers\HomeController.cs" />
     <Compile Include="Areas\Services\Controllers\ReplaceController.cs" />
     <Compile Include="Areas\Services\Controllers\ScrapController.cs" />
+    <Compile Include="Areas\Services\Controllers\ServiceManagementController.cs" />
     <Compile Include="Areas\Services\Controllers\WarrantyBatteryController.cs" />
     <Compile Include="Areas\Services\ServicesAreaRegistration.cs" />
     <Compile Include="Areas\SuperAdmin\BLL\SuperAdminUserManager.cs" />
@@ -8120,6 +8121,10 @@
     <Content Include="Areas\Services\Views\WarrantyBattery\ProductInChargeSection.cshtml" />
     <Content Include="Areas\Services\Views\WarrantyBattery\ProductInDisChargeSection.cshtml" />
     <Content Include="Areas\Services\Views\WarrantyBattery\DisChargeReport.cshtml" />
+    <Content Include="Areas\Services\Views\ServiceManagement\PendingList.cshtml" />
+    <Content Include="Areas\Services\Views\Shared\_ServiceManagementMenuPartialPage.cshtml" />
+    <Content Include="Areas\Services\Views\ServiceManagement\Details.cshtml" />
+    <Content Include="Areas\SCM\Views\Order\OrderDetails.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />

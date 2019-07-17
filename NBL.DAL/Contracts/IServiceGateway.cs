@@ -18,5 +18,7 @@ namespace NBL.DAL.Contracts
         int ForwardServiceBattery(ForwardDetails model);
         int SaveCharegeReport(ChargeReportModel model);
         int SaveDischargeReport(DischargeReportModel model);
+        ChargeReportModel GetChargeReprortByReceiveId(long id);
+        DischargeReportModel GetDisChargeReprortByReceiveId(long id);
     }
 }

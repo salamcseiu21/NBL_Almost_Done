@@ -1,0 +1,96 @@
+﻿@model NBL.Models.ViewModels.ViewInvoiceModel
+@{
+    ViewBag.Title = "Order Details";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var details = Model.InvoiceDetailses;
+    var invoice = Model.Invoice;
+    var i = 0;
+}
+<section class="content">
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading"><span>Order Details</span></div>
+        <div class="panel panel-body">
+            <div class="row" style="padding: 0 20px">
+                <div class="col-md-6">
+                    <strong>Client : @invoice.Client.ClientName</strong>  - (@invoice.Client.ClientType.ClientTypeName)<br/>
+                   
+                </div>
+                <div class="col-md-6">
+                    <strong>Invoice Ref :</strong>  @invoice.InvoiceRef<br />
+                    <strong>Date :</strong> @invoice.InvoiceDateTime.ToString("D")
+                </div>
+            </div>
+            
+            <table id="tbl_Invoice_Details" class="display table-bordered" style="border: 1px solid">
+                <caption class="text-center text-green"><strong>Product List</strong></caption>
+                <thead>
+                <tr>
+                    <th>S.N</th>
+                    <th>Product Name</th>
+                    <th>Segment</th>
+                    <th class="text-center">Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in details)
+                {
+                    i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.ProductCategoryName</td>
+                        <td class="text-right">@item.Quantity</td>
+                    </tr>
+                }
+                
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-right"><strong>Total :</strong></td>
+                        <td class="text-right">@details.Sum(n => n.Quantity)</td>
+                    </tr>
+                <tr>
+                    <th>S.N</th>
+                    <th>Product Name</th>
+                    <th>Segment</th>
+                    <th class="text-center">Quantity</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="panel panel-footer">
+            @Html.ActionLink(" Back", "TodaysApprovedOrder", "Order", new {area="SCM"}, new { @class = "fa fa-arrow-left btn btn-info" })
+        </div>
+    </div>
+  
+</section>
+@section Scripts
+{
+    
+    <script>
+      
+
+        var t = $('#tbl_Invoice_Details').DataTable({
+            "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "All"]]
+        });
+        
+    </script>
+}
+@section Styles
+{
+    <style>
+        .panel-heading span {
+            color: black;
+            font-weight: bolder;
+            font-size: 18px;
+        }
+
+        .panel-body {
+            padding: 0;
+        }
+
+        .form-control > input {
+        }
+    </style>
+}

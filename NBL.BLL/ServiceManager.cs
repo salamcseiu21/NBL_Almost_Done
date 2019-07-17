@@ -69,6 +69,16 @@ namespace NBL.BLL
            return rowAffected > 0;
         }
 
+       public ChargeReportModel GetChargeReprortByReceiveId(long id)
+       {
+           return _iServiceGateway.GetChargeReprortByReceiveId(id);
+       }
+
+       public DischargeReportModel GetDisChargeReprortByReceiveId(long id)
+       {
+           return _iServiceGateway.GetDisChargeReprortByReceiveId(id);
+        }
+
 
        public bool Add(WarrantyBatteryModel model)
        {

@@ -10,9 +10,13 @@
         <thead>
         <tr>
             <th>  Receive Ref</th>
-            <th>  Receice Date</th>
+            <th>  Received At</th>
+            <th>  Receive Date</th>
             <th>  Product Name</th>
+            <th>  Segment</th>
             <th>  Barcode</th>
+            <th>  Forwarded To</th>
+            <th>  Status</th>
             <th class="text-center">Action</th>
         </tr>
         </thead>
@@ -20,20 +24,33 @@
         {
             <tr>
                 <td>@item.ReceiveRef</td>
+                <td>@item.ReceiveByBranch</td>
                 <td>@item.ReceiveDatetime</td>
                 <td>@item.ProductName</td>
+                <td>@item.ProductCategoryName</td>
                 <td>@item.Barcode</td>
+                <td>@item.ForwardedTo</td>
+                <td>@item.Status</td>
                 <td class="text-center">
-                    @Html.ActionLink(" Details","Details","WarrantyBattery",new {id=item.ReceiveId},new {@class="fa fa-eye btn btn-info"})
+                    
+                    @if (item.Status == 0)
+                    {
+                        @Html.ActionLink(" Forward", "Forward", "WarrantyBattery", new {id = item.ReceiveId}, new {@class = "fa fa-paper-plane btn btn-info" })
+                    }
+                   
                 </td>
             </tr>
         }
         <tfoot>
         <tr>
             <th>  Receive Ref</th>
-            <th>  Receice Date</th>
+            <th>  Received At</th>
+            <th>  Receive Date</th>
             <th>  Product Name</th>
+            <th>  Segment</th>
             <th>  Barcode</th>
+            <th>  Forwarded To</th>
+            <th>  Status</th>
             <th class="text-center">Action</th>
         </tr>
         </tfoot>

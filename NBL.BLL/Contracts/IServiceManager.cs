@@ -17,5 +17,7 @@ namespace NBL.BLL.Contracts
         bool ForwardServiceBattery(ForwardDetails model);
         bool SaveCharegeReport(ChargeReportModel model);
         bool SaveDischargeReport(DischargeReportModel model);
+        ChargeReportModel GetChargeReprortByReceiveId(long id);
+        DischargeReportModel GetDisChargeReprortByReceiveId(long id);
     }
 }

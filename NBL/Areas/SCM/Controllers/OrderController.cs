@@ -134,6 +134,25 @@ namespace NBL.Areas.SCM.Controllers
         }
 
 
+        public ActionResult OrderDetails(string id)
+        {
+            try
+            {
+               
+                ViewInvoiceModel anInvoicedOrder=new ViewInvoiceModel();
+              var invoicedOrders = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceRef(id).ToList();
+              var details= invoicedOrders.FirstOrDefault();
+              var invoice=  _iInvoiceManager.GetInvoicedOrderByInvoiceId(details.InvoiceId);
+                anInvoicedOrder.InvoiceDetailses = invoicedOrders;
+                anInvoicedOrder.Invoice = invoice;
+                return View(anInvoicedOrder);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         public ActionResult ViewAllDeliveredOrders()
         {
             try

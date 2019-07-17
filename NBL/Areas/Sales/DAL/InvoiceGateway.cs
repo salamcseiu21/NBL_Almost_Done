@@ -768,7 +768,8 @@ namespace NBL.Areas.Sales.DAL
                         ProductName = reader["ProductName"].ToString(),
                         Quantity = Convert.ToInt32(reader["Quantity"]),
                         ProductCategoryName = reader["ProductCategoryName"].ToString(),
-                        UnitPrice = Convert.ToDecimal(reader["UnitPrice"])
+                        UnitPrice = Convert.ToDecimal(reader["UnitPrice"]),
+                        InvoiceId = Convert.ToInt32(reader["InvoiceId"])
 
                     };
                     invoiceDetails.Add(invoice);

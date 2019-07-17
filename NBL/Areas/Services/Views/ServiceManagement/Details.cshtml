@@ -1,0 +1,575 @@
+﻿@using NBL.Models.Enums
+@model NBL.Models.ViewModels.Services.ViewReceivedServiceProduct
+@{
+    ViewBag.Title = "Charge Report";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var productHistory = Model.ProductHistory;
+    var chargeReportModel = Model.ChargeReportModel;
+    var dischargeReportModel = Model.DischargeReportModel;
+}
+
+<section>
+    <h3 class="text-center text-green">Charge Report Entry for Service Battery</h3>
+    <div style="padding: 0 5px">
+        <ul class="nav nav-pills">
+            <li><a data-toggle="pill" href="#ReceiveInformation">Battery Receive Information</a></li>
+            <li class="active"><a data-toggle="pill" href="#chargeReport">Test Report</a></li>
+        </ul>
+    </div>
+
+    <div class="tab-content">
+        <div id="ReceiveInformation" class="tab-pane fade">
+            <div class="panel panel-success">
+                <div class="panel panel-heading">
+                    <span>Product Information</span>
+                </div>
+                <div class="panel panel-body">
+                    <table class="table table-bordered" style="width: 100%">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>Receive Ref : </strong> @Model.ReceiveRef
+                                </td>
+                                <td>
+                                    <strong>Received By : </strong> @Model.EntryByUser
+                                </td>
+                                <td>
+                                    <strong>Reported By : </strong> @Model.ReportByEmployee
+                                </td>
+                                <td colspan="2">
+                                    <strong>Comments : </strong> @Model.ReceiveReport
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Product Name : </strong><i><label id="ProductName">@Model.ProductName</label></i>
+                                </td>
+
+
+                                <td>
+                                    <strong>Barcode : </strong><i><label>@productHistory.ProductBarCode</label></i>
+
+                                </td>
+                                <td>
+                                    <strong>Segment : </strong> <i><label>@productHistory.ProductCategoryName</label></i>
+                                </td>
+                                <td>
+                                    <strong> Production Date : </strong> <i><label id="ProductionDate">@productHistory.ProductionDate.ToString("dd-MMM-yyyy")</label></i>
+                                </td>
+                                <td>
+                                    <strong>Product LifeTime : </strong><i><label id="LifeTime">@productHistory.LifeTime</label></i>
+
+                                </td>
+                            </tr>
+                            <tr style="">
+
+                                <td>
+                                    <strong>Delivery Date : </strong><i><label id="DeliveryDate">@productHistory.DeliveryDate.ToString("dd-MMM-yyyy")</label></i>
+
+                                </td>
+                                <td>
+                                    <strong>Sale Date : </strong> <i><label id="SaleDate">@Convert.ToDateTime(productHistory.SaleDate).ToString("dd-MMM-yyyy")</label></i>
+                                </td>
+
+                                <td>
+
+                                    <strong>Product Age : </strong><i><label id="ProductAge">@productHistory.ProductAge</label></i>
+                                </td>
+                                <td>
+                                    <strong>Store Duration :</strong><i><label id="StoreDuration">@productHistory.StoreDuration</label></i>
+                                </td>
+                                <td>
+                                    <strong>Sales Duration :</strong> <i><label id="SalesDuration">@productHistory.SalesDuration</label></i>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel panel-heading"><span>Client Information</span></div>
+                <div class="panel panel-body">
+                    <table class="table table-bordered" style="width: 100%">
+                        <tr>
+                            <td>
+                                <strong>Client Name :</strong> <i><label id="ClientName">@productHistory.ClientName</label></i>
+                            </td>
+                            <td>
+                                <strong>Client Code :</strong> <i><label id="ClientCode">@productHistory.ClientCode</label></i>
+                            </td>
+                            <td>
+                                <strong>Client Type :</strong> <i><label id="ClientType">@productHistory.ClientType</label></i>
+
+                            </td>
+                            <td>
+                                <strong>Contact No :</strong> <i><label id="ClientPhone">@productHistory.ClientPhone</label></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Client Address :</strong><i><label id="ClientAddress">@productHistory.ClientAddress</label></i>
+                            </td>
+                            <td>
+                                <strong>Territory :</strong> <i><label id="Territory"></label>@productHistory.TerritoryName</i>
+                            </td>
+                            <td>
+                                <strong>Order By : </strong> <i><label id="OrderByBranch"></label>@productHistory.OrderFromBranch</i>
+                            </td>
+                            <td>
+                                <Strong> Distribution Point :</Strong> <i><label id="DistributionPoint">@productHistory.DeliveryFromBranch</label></i>
+
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel panel-heading">
+                    <span>Receive Cell Information</span>
+                </div>
+                <div class="panel panel-body">
+                    <table class="table table-bordered" style="width: 100%">
+                        <tbody>
+
+                            <tr>
+
+                                <td>
+                                    <strong>Cell 1 :</strong><input value="@Model.SpGrCellOne" type="number" class="form-control" readonly="readonly" />
+                                    <input type="text" value="@Enum.GetName(typeof(CellConditionEnum), Model.CellOneConditionId)" class="form-control" readonly="readonly" />
+
+                                </td>
+                                <td>
+                                    <strong>Cell 2 :</strong><input value="@Model.SpGrCellTwo" type="number" class="form-control" readonly="readonly" />
+                                    <input type="text" value="@Enum.GetName(typeof(CellConditionEnum), Model.CellTwoConditionId)" class="form-control" readonly="readonly" />
+
+                                </td>
+                                <td>
+                                    <strong>Cell 3 :</strong><input value="@Model.SpGrCellThree" type="number" class="form-control" readonly="readonly" />
+                                    <input type="text" value="@Enum.GetName(typeof(CellConditionEnum), Model.CellThreeConditionId)" class="form-control" readonly="readonly" />
+
+                                </td>
+
+                                <td>
+                                    <strong>Cell 4 :</strong><input value="@Model.SpGrCellFour" type="number" class="form-control" readonly="readonly" />
+                                    <input type="text" value="@Enum.GetName(typeof(CellConditionEnum), Model.CellFourConditionId)" class="form-control" readonly="readonly" />
+
+                                </td>
+                                <td>
+                                    <strong>Cell 5 :</strong><input value="@Model.SpGrCellFive" type="number" class="form-control" readonly="readonly" />
+                                    <input type="text" value="@Enum.GetName(typeof(CellConditionEnum), Model.CellFiveConditionId)" class="form-control" readonly="readonly" />
+
+                                </td>
+                                <td>
+                                    <strong>Cell 6 :</strong><input value="@Model.SpGrCellSix" type="number" class="form-control" readonly="readonly" />
+                                    <input type="text" value="@Enum.GetName(typeof(CellConditionEnum), Model.CellSixConditionId)" class="form-control" readonly="readonly" />
+
+                                </td>
+                                <td>
+                                    <strong>Cell Value Difference:</strong><input id="OldSpGrCellValueDifference" type="number" class="form-control" readonly="readonly" />
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td colspan="2">
+                                    <strong>SpGr Remarks : </strong> <input value="@Model.CellRemarks" type="text" style="width: 100%" required class="form-control" readonly="readonly" />
+                                </td>
+                                <td> <strong>Open Voltage :</strong><input type="number" readonly="readonly" style="width: 100%" class="form-control" value="@Model.OpenVoltage" /></td>
+                                <td> <strong>Load Voltage :</strong><input type="number" readonly="readonly" style="width: 100%" class="form-control" value="@Model.LoadVoltage" /></td>
+                                <td colspan="3">
+                                    <strong>Voltage Remarks : </strong> <input value="@Model.CellRemarks" type="text" style="width: 100%" readonly="readonly" class="form-control" />
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel panel-success">
+                <div class="panel panel-heading">
+                    <span>Other Information</span>
+                </div>
+                <div class="panel panel-body">
+                    <table class="table table-bordered" style="width: 100%">
+                        <tbody>
+
+                            <tr>
+
+                                <td>
+                                    <strong>Cover :</strong><input type="text" value="@Enum.GetName(typeof(PhysicalConditionEnum), Model.CoverStatusId)" style="width: 100%" class="form-control" readonly="readonly" />
+
+                                </td>
+                                <td>
+                                    <strong>Container :</strong><input type="text" value="@Enum.GetName(typeof(PhysicalConditionEnum), Model.ContainerStatusId)" style="width: 100%" class="form-control" readonly="readonly" />
+                                </td>
+                                <td>
+                                    <strong>Post :</strong>
+                                    <input type="text" value="@Enum.GetName(typeof(PhysicalConditionEnum), Model.PostStatusId)" style="width: 100%" class="form-control" readonly="readonly" />
+
+                                </td>
+                                <td>
+                                    <strong>Servicing :</strong><input type="text" value="@Model.ServicingStatus" style="width: 100%" class="form-control" readonly="readonly" />
+                                </td>
+
+
+
+                            </tr>
+                            <tr>
+
+                                <td> <strong>Used For :</strong><input type="text" value="@Model.AppUsedFor" style="width: 100%" class="form-control" readonly="readonly" /> </td>
+                                <td> <strong>Capacity :</strong><input type="text" value="@Model.AppCapacity" style="width: 100%" class="form-control" readonly="readonly" /></td>
+                                <td>
+                                    <strong>Charging System :</strong><input type="text" value="@Model.ChargingSystem" style="width: 100%" class="form-control" readonly="readonly" />
+                                </td>
+                                <td> <strong>Others :</strong><input type="text" style="width: 100%" class="form-control" value="@Model.OtherInformationRemarks" readonly="readonly" /> </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div id="chargeReport" class="tab-pane fade  in active">
+            @using (Html.BeginForm())
+            {
+                if (chargeReportModel != null)
+                {
+                    <div class="panel panel-success">
+                        <div class="panel panel-heading">
+                            <span>Charge Test Report</span>
+                        </div>
+                        <div class="panel panel-body">
+                            <table class="table table-bordered" style="width: 100%">
+                                <tbody>
+
+                                    <tr>
+
+                                        <td>
+                                            <strong>Cell 1 </strong><input type="number" class="form-control" placeholder="Cell 1 Sp Gr" readonly="readonly" value="@(chargeReportModel?.SpGrCellOne?? 0)" />
+                                            <input type="text" placeholder="Cell 1 condition" class="form-control" readonly="readonly" value="@Enum.GetName(typeof(CellConditionEnum), chargeReportModel.CellOneConditionId)" />
+
+                                        </td>
+                                        <td>
+                                            <strong>Cell 2 </strong><input type="number" class="form-control" placeholder="Cell 2 Sp Gr" value="@(chargeReportModel?.SpGrCellTwo?? 0 )" readonly="readonly" />
+                                            <input type="text" placeholder="Cell 2 condition" class="form-control" readonly="readonly" value="@Enum.GetName(typeof(CellConditionEnum), chargeReportModel.CellTwoConditionId)" />
+
+                                        </td>
+                                        <td>
+                                            <strong>Cell 3 </strong><input type="number" class="form-control" placeholder="Cell 3 Sp Gr" value="@(chargeReportModel?.SpGrCellThree?? 0)" readonly="readonly" />
+                                            <input type="text" placeholder="Cell 3 condition" class="form-control" readonly="readonly" value="@Enum.GetName(typeof(CellConditionEnum), chargeReportModel.CellThreeConditionId)" />
+
+                                        </td>
+
+                                        <td>
+                                            <strong>Cell 4 </strong><input type="number" class="form-control" value="@(chargeReportModel?.SpGrCellFour?? 0))" placeholder="Cell 4 Sp Gr" readonly="readonly" />
+                                            <input type="text" placeholder="Cell 4 condition" class="form-control" readonly="readonly" value="@Enum.GetName(typeof(CellConditionEnum), chargeReportModel.CellFourConditionId)" />
+
+                                        </td>
+                                        <td>
+                                            <strong>Cell 5 </strong><input type="number" value="@chargeReportModel.SpGrCellFive" class="form-control" placeholder="Cell 5 Sp Gr" readonly="readonly" />
+                                            <input type="text" placeholder="Cell 5 condition" class="form-control" readonly="readonly" value="@Enum.GetName(typeof(CellConditionEnum), chargeReportModel.CellFiveConditionId)" />
+
+                                        </td>
+                                        <td>
+                                            <strong>Cell 6 </strong><input type="number" value="@chargeReportModel.SpGrCellSix" class="form-control" placeholder="Cell 6 Sp Gr" readonly="readonly" />
+                                            <input type="text" placeholder="Cell 6 condition" class="form-control" readonly="readonly" value="@Enum.GetName(typeof(CellConditionEnum), chargeReportModel.CellSixConditionId)" />
+
+                                        </td>
+
+                                        <td>
+                                            <strong> Cell Value Difference </strong> <input type="text" id="SpGrCellValueDifference" class="form-control" readonly placeholder="SpGr Cell Value Difference...." />
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td colspan="3">
+                                            <strong>SpGr Remarks  </strong> <input id="SpGrCellRemarks" name="SpGrCellRemarks" type="text" style="width: 100%" readonly="readonly" class="form-control" placeholder="SpGr Cell Remarks..." />
+                                        </td>
+                                        <td> <strong>Open Voltage </strong><input value="@chargeReportModel.OpenVoltage" type="number" readonly="readonly" style="width: 100%" class="form-control" placeholder="Open Voltage.." /></td>
+                                        <td> <strong>Load Voltage </strong><input value="@chargeReportModel.LoadVoltage" type="number" readonly="readonly" style="width: 100%" class="form-control" placeholder="Load Voltage.." /></td>
+                                        <td colspan="2">
+                                            <strong>Voltage Remarks  </strong> <input value="@chargeReportModel.CellRemarks" type="text" style="width: 100%" readonly="readonly" class="form-control" placeholder="Cell Remarks..." />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <strong>Report By   </strong>
+                                            <input type="text" style="width: 100%" value="@chargeReportModel.ReportByEmp" readonly="readonly" class="form-control" />
+                                        </td>
+                                        <td colspan="5">
+                                            <strong>Remarks  </strong>
+                                            <input type="text" style="width: 100%" readonly="readonly" value="@(chargeReportModel.ForwardRemarks?? "N/A")" class="form-control" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+
+                if (dischargeReportModel != null)
+                {
+                    <div class="panel panel-success">
+                        <div class="panel panel-heading">
+                            <span>Discharge Test Report</span>
+                        </div>
+                        <div class="panel panel-body">
+                            <table class="table table-bordered" style="width: 100%">
+                                <tbody>
+
+                                    <tr>
+
+                                        <td>
+                                            <strong>T.V.</strong><input type="number" value="@dischargeReportModel.Tv" class="form-control" placeholder="T.V." readonly="readonly" />
+
+                                        </td>
+                                        <td>
+                                            <strong>L.V.</strong><input type="number" value="@dischargeReportModel.Lv" class="form-control" placeholder="L.V....." readonly="readonly" />
+
+                                        </td>
+                                        <td>
+                                            <strong>Discharge Amp</strong><input type="number" value="@dischargeReportModel.DischargeAmp" class="form-control" placeholder="Discharge Amp..." readonly="readonly" />
+
+                                        </td>
+                                        <td>
+                                            <strong>Backup Time</strong><input type="number" value="@dischargeReportModel.BackUpTime" class="form-control" placeholder="Backup Time.." readonly="readonly" />
+
+                                        </td>
+
+                                        <td>
+
+                                            <strong>Rec. Backup Time</strong><input type="number" class="form-control" value="@dischargeReportModel.RecommendedBackUpTime"   placeholder="Backup Time.." readonly="readonly" />
+
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+
+
+                                        <td colspan="2">
+                                            <strong>Report</strong><input type="text" value="@dischargeReportModel.DischargeReport" placeholder="Report..." readonly="readonly" style="width: 100%" class="form-control" />
+                                        </td>
+                                        <td colspan="3">
+                                            <strong>Remarks</strong><input type="text" value="@dischargeReportModel.DischargeRemarks" placeholder="Remarks..." style="width: 100%" readonly="readonly" class="form-control" />
+
+                                        </td>
+                                    </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <strong>Report By   </strong>
+                                        <input type="text" style="width: 100%" value="@dischargeReportModel.ReportByEmp" readonly="readonly" class="form-control" />
+                                    </td>
+                                    <td colspan="5">
+                                        <strong>Remarks  </strong>
+                                        <input type="text" style="width: 100%" readonly="readonly" value="@(dischargeReportModel.ForwardRemarks?? "N/A")" class="form-control" />
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+
+                <div class="panel panel-success">
+                    <div class="panel panel-heading">
+                        <span>Forward Informaiton</span>
+                    </div>
+                    <div class="panel panel-body">
+
+                        <table class="table table-bordered" style="width: 100%">
+                            <tr>
+
+
+                                <td>
+                                    <input type="hidden" name="BatteryReceiveId" value="@Model.ReceiveId" />
+                                    <input type="hidden" name="ForwardFromId" value="@Model.ForwardedToId" />
+                                    <strong>Forward To</strong><select name="ForwardToId" required style="width: 100%" class="form-control">
+                                        <option value="">---Select--</option>
+                                        @foreach (var item in Model.ForwardToModels)
+                                        {
+                                            if (item.Id == Model.ForwardedToId)
+                                            {
+                                                <option selected="selected" value="@item.Id">@item.ForwardType</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Id">@item.ForwardType</option>
+                                            }
+
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <strong>Report By</strong><input type="text" id="EmployeeName" style="width: 100%" required class="form-control" placeholder="type report by employee name.." />
+                                    @Html.HiddenFor(n => n.ReportByEmployeeId)
+                                </td>
+                                <td colspan="2"> <strong>Remarks</strong><input type="text" name="ForwardRemarks" style="width: 100%" class="form-control" placeholder="Forward remarks.." /> </td>
+                                <td>
+                                    @*<strong>Distribution Point :</strong><select name="DistributionPointId" required style="width: 100%" class="form-control">
+                                            <option value="">---Select--</option>
+                                            @foreach (var item in Model.DistributionPoints)
+                                            {
+                                                <option value="@item.BranchId">@item.BranchName</option>
+                                            }
+                                        </select>*@
+                                    <br />
+
+                                    @Html.ActionLink("Back", "PendingList", "ServiceManagement", null, new { @class = "fa fa-arrow-left btn btn-danger" })
+                                    <input type="submit" value="Save" class="btn btn-info" />
+
+
+                                </td>
+                            </tr>
+
+                        </table>
+
+
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</section>
+@section Scripts
+{
+    @*Cell Condition Autocomplete*@
+    <script>
+
+        function CellConditionAutoComplete(event) {
+            // alert(event.id);
+            $("#"+event.id).autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: RootUrl + 'services/WarrantyBattery/CellConditionAutoComplete/',
+                        // url: RootUrl + 'common/ProductAutoComplete/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function (item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    //alert(i.item.val);
+                    //alert("#" + event.id + "Id");
+                    $("#" + event.id + "Id").val(i.item.val);
+                },
+                minLength: 1
+            });
+        }
+    </script>
+
+    <script>
+
+        $(document).ready(function() {
+            var gr1 = @Model.SpGrCellOne;
+            var gr2 = @Model.SpGrCellTwo;
+            var gr3 = @Model.SpGrCellThree;
+            var gr4 = @Model.SpGrCellFour;
+            var gr5 =@Model.SpGrCellFive;
+            var gr6 = @Model.SpGrCellSix;
+
+            var cellGrValues = [gr1,gr2,gr3,gr4,gr5,gr6];
+
+
+            var minCellGr= Math.min.apply(Math, cellGrValues);
+            var maxCellGr = Math.max.apply(Math, cellGrValues);
+            var diff = maxCellGr - minCellGr;
+            //alert(diff);
+            $("#OldSpGrCellValueDifference").val(diff);
+        });
+        function CalculateSpGrCellValueDifference(event) {
+
+            var gr1 = isNaN(parseFloat($("#SpGrCellOne").val())) ? 0 : parseFloat($("#SpGrCellOne").val());
+            var gr2 = isNaN(parseFloat($("#SpGrCellTwo").val())) ? 0 : parseFloat($("#SpGrCellTwo").val());
+            var gr3 = isNaN(parseFloat($("#SpGrCellThree").val())) ? 0 : parseFloat($("#SpGrCellThree").val());
+            var gr4 = isNaN(parseFloat($("#SpGrCellFour").val())) ? 0 : parseFloat($("#SpGrCellFour").val());
+            var gr5 = isNaN(parseFloat($("#SpGrCellFive").val())) ? 0 : parseFloat($("#SpGrCellFive").val());
+            var gr6 = isNaN(parseFloat($("#SpGrCellSix").val())) ? 0 : parseFloat($("#SpGrCellSix").val());
+
+            var cellGrValues = [gr1,gr2,gr3,gr4,gr5,gr6];
+
+
+            var minCellGr= Math.min.apply(Math, cellGrValues);
+            var maxCellGr = Math.max.apply(Math, cellGrValues);
+            var diff = maxCellGr - minCellGr;
+            //alert(diff);
+            $("#SpGrCellValueDifference").val(diff);
+
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#EmployeeName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url :'@Url.Action("ServiceEmployeeAutoComplete", "Common",new {area=""})',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function(item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#ReportByEmployeeId").val(i.item.val);
+                },
+                minLength: 1
+            });
+        });
+    </script>
+}
+
+@section Styles
+{
+    <style>
+        .panel-heading span {
+            color: black;
+            font-weight: bolder;
+            font-size: 18px;
+        }
+
+        .panel-body {
+            padding: 0;
+        }
+
+        .form-control > input {
+        }
+    </style>
+}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Identities;
+using NBL.Models.EntityModels.Invoices;
 using NBL.Models.EntityModels.Products;
 
 namespace NBL.Models.ViewModels

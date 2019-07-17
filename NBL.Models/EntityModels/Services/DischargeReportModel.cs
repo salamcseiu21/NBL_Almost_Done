@@ -15,8 +15,8 @@ namespace NBL.Models.EntityModels.Services
         public decimal Tv { get; set; }
         public decimal Lv { get; set; }
         public decimal DischargeAmp { get; set; }
-        public decimal BarckUpTime { get; set; }
-        public decimal RecommendedBarckUpTime { get; set; }
+        public decimal BackUpTime { get; set; }
+        public decimal RecommendedBackUpTime { get; set; }
         public string DischargeReport { get; set; }
         public string DischargeRemarks { get; set; } 
         public int ReportByEmployeeId { get; set; }
@@ -24,6 +24,7 @@ namespace NBL.Models.EntityModels.Services
         public int ForwardToId { get; set; }
         public string ForwardRemarks { get; set; }
         public ForwardDetails ForwardDetails { get; set; }
+        public string ReportByEmp { get; set; } 
 
         public DischargeReportModel()
         {

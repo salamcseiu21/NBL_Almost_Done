@@ -56,31 +56,35 @@ namespace NBL.Areas.Management.Controllers
         {
            
             var companyId = Convert.ToInt32(Session["CompanyId"]);
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            var topClients = _iReportManager.GetTopClientsByBranchIdAndYear(branchId,DateTime.Now.Year).ToList();
-            var topProducts = _iReportManager.GetPopularBatteriesByBranchIdCompanyIdAndYear(branchId,companyId,DateTime.Now.Year).ToList();
-            ViewTotalOrder totalOrder = _iReportManager.GetTotalOrderByBranchIdCompanyIdAndYear(branchId,companyId,DateTime.Now.Year);
-            var accountSummary = _iAccountsManager.GetAccountSummaryofCurrentMonthByBranchAndCompanyId(branchId, companyId);
-            var clients = _iClientManager.GetAllClientDetailsByBranchId(branchId);
-            var orders = _iOrderManager.GetOrdersByBranchAndCompnayId(branchId, companyId);
-            var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId);
-            var pendingOrders = _iOrderManager.GetPendingOrdersByBranchAndCompanyId(branchId,companyId).ToList();
-            var employees = _iEmployeeManager.GetAllEmployeeWithFullInfoByBranchId(branchId);
-            var branches = _iBranchManager.GetAllBranches();
+            //int branchId = Convert.ToInt32(Session["BranchId"]);
+            var topClients = _iReportManager.GetTopClientsByYear(DateTime.Now.Year);
+            var topProducts = _iReportManager.GetPopularBatteriesByYear(DateTime.Now.Year).ToList();
+            ViewTotalOrder totalOrder = _iReportManager.GetTotalOrdersByCompanyIdAndYear(companyId,DateTime.Now.Year);
+            var accountSummary = _iAccountsManager.GetAccountSummaryofCurrentMonthByCompanyId(companyId);
+            //var clients = _iClientManager.GetAllClientDetailsByBranchId(branchId);
+            //var orders = _iOrderManager.GetTotalOrdersByCompanyIdAndYear(companyId,DateTime.Now.Year);
+            //var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId);
+            //var pendingOrders = _iOrderManager.GetPendingOrdersByBranchAndCompanyId(branchId,companyId).ToList();
+            //var employees = _iEmployeeManager.GetAllEmployeeWithFullInfo();
+            //var branches = _iBranchManager.GetAllBranches();
+            var totalProduction = _iReportManager.GetTotalProductionCompanyIdAndYear(companyId, DateTime.Now.Year);
+            var totalDispatch = _iReportManager.GetTotalDispatchCompanyIdAndYear(companyId, DateTime.Now.Year);
             SummaryModel aModel = new SummaryModel
             {
-                Branches = branches.ToList(),
-                BranchId = branchId,
+               // Branches = branches.ToList(),
+                //BranchId = branchId,
                 CompanyId = companyId,
                 TotalOrder = totalOrder,
                 TopClients = topClients,
                 TopProducts = topProducts,
-                Clients = clients,
-                Products = products,
-                Orders = orders,
-                PendingOrders = pendingOrders,
-                Employees = employees,
-                AccountSummary = accountSummary
+                //Clients = clients,
+               // Products = products,
+               // Orders = orders,
+                //PendingOrders = pendingOrders,
+                //Employees = employees,
+                AccountSummary = accountSummary,
+                Dispatch = totalDispatch,
+                Production = totalProduction
 
             };
             return View(aModel);

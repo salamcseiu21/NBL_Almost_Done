@@ -77,12 +77,16 @@ namespace NBL.Models.ViewModels.Services
         public int ReportByEmployeeId { get; set; }
         public int EntryByUserId { get; set; }
         public ViewProductHistory ProductHistory { get; set; }
+        public ChargeReportModel ChargeReportModel { get; set; }
+        public DischargeReportModel DischargeReportModel { get; set; }
         public List<ForwardToModel> ForwardToModels { set; get; }
 
         public string ReceiveByBranch { get; set; } 
         public ViewReceivedServiceProduct()
         {
             ForwardToModels=new List<ForwardToModel>();
+            ChargeReportModel=new ChargeReportModel();
+            DischargeReportModel=new DischargeReportModel();
         }
     }
 }

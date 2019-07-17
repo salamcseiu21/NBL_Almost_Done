@@ -111,6 +111,11 @@
         roleName = "Service Executive";
         areas = "services";
     }
+    else if (User.IsInRole("ServiceManagement"))
+    {
+        roleName = "Service Management";
+        areas = "services";
+    }
 }
 <!DOCTYPE html>
 <html>
@@ -269,12 +274,16 @@
                     case "ServiceExecutive":
                         Html.RenderPartial("~/Areas/Services/Views/Shared/_ServiceExecutiveMenuPartialPage.cshtml");
                         break;
+                    case "ServiceManagement":
+                        Html.RenderPartial("~/Areas/Services/Views/Shared/_ServiceManagementMenuPartialPage.cshtml");
+                        break;
                     case "SuperUser":
                         Html.RenderPartial("~/Areas/SuperAdmin/Views/Shared/_MenuPartialPage.cshtml");
                         break;
                     case "SalesExecutive":
                         Html.RenderPartial("~/Areas/Sales/Views/Shared/_SalesPersonMenuPartialPage.cshtml");
                         break;
+                   
                     case "SalesManager":
                         Html.RenderPartial("~/Areas/Sales/Views/Shared/_NsmMenuPartialPage.cshtml");
                         break;

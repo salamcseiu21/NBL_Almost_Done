@@ -406,8 +406,8 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@DischargeReport", product.DischargeReport);
                 CommandObj.Parameters.AddWithValue("@DischargeRemarks", product.DischargeRemarks);
                 CommandObj.Parameters.AddWithValue("@DischargeAmp", product.DischargeAmp);
-                CommandObj.Parameters.AddWithValue("@BarckUpTime", product.BarckUpTime);
-                CommandObj.Parameters.AddWithValue("@RecommendedBarckUpTime", product.RecommendedBarckUpTime);
+                CommandObj.Parameters.AddWithValue("@BarckUpTime", product.BackUpTime);
+                CommandObj.Parameters.AddWithValue("@RecommendedBarckUpTime", product.RecommendedBackUpTime);
                 CommandObj.Parameters.AddWithValue("@Tv", product.Tv);
                 CommandObj.Parameters.AddWithValue("@Lv", product.Lv);
                 CommandObj.Parameters.Add("@ReportId", SqlDbType.Int);
@@ -426,6 +426,99 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not save charge report", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ChargeReportModel GetChargeReprortByReceiveId(long id)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetChargeReprortByReceiveId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ReceiveId", id);
+                ChargeReportModel model=null;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    model=new ChargeReportModel
+                    {
+                        BatteryReceiveId = id,
+                        CellOneConditionId = Convert.ToInt32(reader["CellOneConditionId"]),
+                        CellTwoConditionId = Convert.ToInt32(reader["CellTwoConditionId"]),
+                        CellThreeConditionId = Convert.ToInt32(reader["CellThreeConditionId"]),
+                        CellFourConditionId = Convert.ToInt32(reader["CellFourConditionId"]),
+                        CellFiveConditionId = Convert.ToInt32(reader["CellFiveConditionId"]),
+                        CellSixConditionId = Convert.ToInt32(reader["CellSixConditionId"]),
+                        SpGrCellOne = Convert.ToDecimal(reader["SpGrCellOne"]),
+                        SpGrCellTwo = Convert.ToDecimal(reader["SpGrCellTwo"]),
+                        SpGrCellThree = Convert.ToDecimal(reader["SpGrCellThree"]),
+                        SpGrCellFour = Convert.ToDecimal(reader["SpGrCellFour"]),
+                        SpGrCellFive = Convert.ToDecimal(reader["SpGrCellFive"]),
+                        SpGrCellSix = Convert.ToDecimal(reader["SpGrCellSix"]),
+                        OpenVoltage = Convert.ToDecimal(reader["OpenVoltage"]),
+                        LoadVoltage = Convert.ToDecimal(reader["LoadVoltage"]),
+                        CellRemarks = DBNull.Value.Equals(reader["Report"])? null: reader["Report"].ToString(),
+                        ForwardRemarks = DBNull.Value.Equals(reader["Remarks"]) ? null : reader["Remarks"].ToString(),
+                        ReportByEmp=reader["ReportBy"].ToString()
+
+                    };
+                }
+                reader.Close();
+                return model;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get charge report by receive Id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public DischargeReportModel GetDisChargeReprortByReceiveId(long id)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetDisChargeReprortByReceiveId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ReceiveId", id);
+                DischargeReportModel model = null;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    model = new DischargeReportModel
+                    {
+                        BatteryReceiveId = id,
+                        Lv = Convert.ToDecimal(reader["Lv"]),
+                        Tv = Convert.ToDecimal(reader["Tv"]),
+                        BackUpTime = Convert.ToDecimal(reader["BackUpTime"]),
+                        RecommendedBackUpTime = Convert.ToDecimal(reader["RecommendedBackUpTime"]),
+                        DischargeAmp =DBNull.Value.Equals(reader["DischargeAmp"])? default(decimal): Convert.ToDecimal(reader["DischargeAmp"]),
+                        DischargeReport = DBNull.Value.Equals(reader["Report"]) ? null : reader["Report"].ToString(),
+                        DischargeRemarks = DBNull.Value.Equals(reader["Remarks"]) ? null : reader["Remarks"].ToString(),
+                        ReportByEmp = reader["ReportBy"].ToString()
+
+                    };
+                }
+                reader.Close();
+                return model;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get discharge report by receive Id", exception);
             }
             finally
             {

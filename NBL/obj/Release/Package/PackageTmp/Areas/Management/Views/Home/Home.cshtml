@@ -5,6 +5,10 @@
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
     var user = (ViewUser)Session["user"];
+    var dispatch = Model.Dispatch;
+    var production = Model.Production;
+    var tOrder = Model.TotalOrder;
+
 }
 @if (!user.IsPasswordChangeRequired)
 {
@@ -78,7 +82,7 @@
                 </div>
             </div>
         </div>*@
-        <div class="box">
+        @*<div class="box">
 
             <div class="box-body">
                 <a class="btn btn-app" href="@Url.Action("Stock", "Home", new {area = "Management"}, null)">
@@ -111,10 +115,47 @@
                     <i class="fa fa-users"></i> Employee
                 </a>
             </div>
-            <!-- /.box-body -->
-        </div>
+             /.box-body 
+        </div>*@
         <div class="row">
-            @Html.Partial("_ViewSalesReportChartPartialPage", Model.TotalOrder)
+            <div class="col-md-6">
+                @*@Html.Partial("_ViewSalesReportChartPartialPage", Model.TotalOrder)*@
+                
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Total Order (@DateTime.Now.Year)</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body chart-responsive">
+                        <canvas id="barchart" height="255" width="600"></canvas>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Production VS Dispatch (@DateTime.Now.Year)</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body chart-responsive">
+                        <div class="chart" id="bar-chart" style="height: 350px;"></div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+           
             <!-- /.col -->
         </div>
         <!-- /.row -->
@@ -151,5 +192,67 @@
 
         })
     </script>
+    
+    <script>
+        $(function() {
+            "use strict";
+
+            //BAR CHART
+            var bar = new Morris.Bar({
+                element: 'bar-chart',
+                resize: true,
+                data: [
+                    { y: 'January', a: @production.January, b: @dispatch.January },
+                    { y: 'February', a: @production.February, b: @dispatch.February },
+                    { y: 'March', a: @production.March, b: @dispatch.March },
+                    { y: 'April', a: @production.April, b: @dispatch.April },
+                    { y: 'May', a: @production.May, b: @dispatch.May },
+                    { y: 'June', a: @production.June, b: @dispatch.June },
+                    { y: 'July', a: @production.July, b: @dispatch.July },
+                    { y: 'August', a: @production.August, b: @dispatch.August },
+                    { y: 'September', a: @production.September, b: @dispatch.September },
+                    { y: 'October', a: @production.October, b: @dispatch.October },
+                    { y: 'November', a: @production.November, b: @dispatch.November },
+                    { y: 'December', a: @production.December, b: @dispatch.December }
+                ],
+                barColors: ['#00a65a', '#f56954'],
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['Production', 'Dispatch'],
+                hideHover: 'auto'
+            });
+        });
+       
+    </script>
+    
+    <script>
+
+        var barChartData = {
+            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            datasets: [
+                {
+                    fillColor: "rgba(151,187,205,0.5)",
+                    strokeColor: "rgba(151,187,205,0.8)",
+                    highlightFill: "rgba(151,187,205,0.75)",
+                    highlightStroke: "rgba(151,187,205,1)",
+                    data: [@tOrder.January, @tOrder.February, @tOrder.March, @tOrder.April, @tOrder.May, @tOrder.June, @tOrder.July, @tOrder.August, @tOrder.September, @tOrder.October, @tOrder.November, @tOrder.December]
+                }
+
+            ]
+
+        }
+        window.onload = function () {
+            //var ctx = document.getElementById("chart-area").getContext("2d");
+            //window.myPie = new Chart(ctx).Pie(pieData);
+
+
+            var ctx1 = document.getElementById("barchart").getContext("2d");
+            window.myBar = new Chart(ctx1).Bar(barChartData, {
+                responsive: true
+            });
+
+        };
+    </script>
+
 }
 }
