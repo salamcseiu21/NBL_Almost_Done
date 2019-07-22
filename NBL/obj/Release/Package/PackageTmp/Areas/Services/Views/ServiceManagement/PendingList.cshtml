@@ -5,13 +5,15 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-green"> Service Battery Lsit For Approval</h3>
+    <h3 class="text-center text-green"> Service Battery List For Approval</h3>
     <table id="tbl_Service_Products" class="display table-bordered" style="border: 1px solid">
         <thead>
             <tr>
                 <th>  Receive Ref</th>
                 <th>  Receive At</th>
                 <th>  Receive Date</th>
+                <th>  Forward Date</th>
+                <th>  Forward Duration</th>
                 <th>  Product Name</th>
                 <th>  Segment</th>
                 <th>  Barcode</th>
@@ -25,6 +27,8 @@
                 <td>@item.ReceiveRef</td>
                 <td>@item.ReceiveByBranch</td>
                 <td>@item.ReceiveDatetime</td>
+                <td>@item.ForwardDatetime</td>
+                <td class="text-center"><strong>@((item.ForwardDatetime.Date - item.ReceiveDatetime.Date).Days) (Days)</strong></td>
                 <td>@item.ProductName</td>
                 <td>@item.ProductCategoryName</td>
                 <td>@item.Barcode</td>
@@ -39,6 +43,8 @@
                 <th>  Receive Ref</th>
                 <th>  Receive At</th>
                 <th>  Receive Date</th>
+                <th>  Forward Date</th>
+                <th>  Forward Duration</th>
                 <th>  Product Name</th>
                 <th>  Segment</th>
                 <th>  Barcode</th>

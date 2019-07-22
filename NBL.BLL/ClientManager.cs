@@ -176,5 +176,10 @@ namespace NBL.BLL
         {
             return _iClientGateway.GetClientByBranchIdAndSearchTerm(branchId,searchTerm);
         }
+
+        public ICollection<object> GetAllClientBySearchTerm(string searchTerm)
+        {
+            return _iClientGateway.GetAllClientBySearchTerm(searchTerm);
+        }
     }
 }

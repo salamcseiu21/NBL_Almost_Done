@@ -71,6 +71,13 @@
                             </td>
 
                         </tr>
+                            
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                <strong style="color: red"><label id="WarrantyPeriod"></label></strong>
+
+                            </td>
+                        </tr>
                
                         </tbody>
                     </table>
@@ -193,7 +200,8 @@
                                 @Html.HiddenFor(n => n.CellSixConditionId)
                             </td>
                             <td>
-                                <strong> SpGr Cell Value Difference :</strong> <input type="text" id="SpGrCellValueDifference" class="form-control" readonly placeholder="SpGr Cell Value Difference...." />
+                                <strong> SpGr Cell Value Difference :</strong> <input type="text" id="ViewSpGrCellValueDifference" class="form-control" readonly placeholder="SpGr Cell Value Difference...." />
+                                <input type="hidden" id="SpGrCellValueDifference" name="SpGrCellValueDifference"/>
                             </td>
 
                         </tr>
@@ -212,7 +220,7 @@
                             <td> <strong>Open Voltage :</strong><input id="OpenVoltage" name="OpenVoltage" type="number" required style="width: 100%" class="form-control" placeholder="Open Voltage.."/></td>
                             <td> <strong>Load Voltage :</strong><input id="LoadVoltage" name="LoadVoltage" type="number" required style="width: 100%" class="form-control" placeholder="Load Voltage.." /></td>
                             <td colspan="2">
-                                <strong>Voltage Remarks : </strong> <input id="CellRemarks" name="CellRemarks" type="text" style="width: 100%" required class="form-control" placeholder="Voltage Remarks..."/>
+                                <strong>Voltage Remarks : </strong> <input id="VoltageRemarks" name="VoltageRemarks" type="text" style="width: 100%" required class="form-control" placeholder="Voltage Remarks..."/>
                             </td>
                         </tr>
                        
@@ -392,7 +400,7 @@
 
                     <td>
                         <button class="btn btn-danger">Cancel</button>
-                        <input type="submit" value="Save" class="btn btn-info" />
+                        <input type="submit" value="Save" class="btn btn-info" id="btnSubmit"/>
                     </td>
                     <td colspan="3"></td>
                 </tr>
@@ -418,6 +426,7 @@
     <script>
         $(function() {
 
+            $("#btnSubmit").attr("disabled", true);
             $("#DelearReceiveDate").datepicker({
                 dateFormat: 'dd-MM-yy',
                 maxDate: '+0'
@@ -483,8 +492,18 @@
                     $('#StoreDuration').html(response.StoreDuration);
                     $('#SalesDuration').html(response.SalesDuration);
 
+                    if (response.ProductAge >= response.LifeTime) {
 
-                    //$("#divProductHistory").html(response);
+                        $("#WarrantyPeriod")
+                            .html(
+                                "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Warranty period was expired!!!");
+                        $("#btnSubmit").attr("disabled", true);
+                    } else if (response.ProductAge < response.LifeTime) {
+                        $('#btnSubmit').attr("disabled", false);
+                        $("#WarrantyPeriod")
+                            .html("");
+                    }
+                    
                 }
             });
         }
@@ -608,6 +627,8 @@
             var diff = maxCellGr - minCellGr;
             //alert(diff);
             $("#SpGrCellValueDifference").val(diff);
+            $("#ViewSpGrCellValueDifference").val(diff);
+            
         }
     </script>
 }

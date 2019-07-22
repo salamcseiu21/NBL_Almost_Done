@@ -24,8 +24,8 @@ namespace NBL.Models.EntityModels.Services
         public int ForwardToId { get; set; }
         public string ForwardRemarks { get; set; }
         public ForwardDetails ForwardDetails { get; set; }
-        public string ReportByEmp { get; set; } 
-
+        public string ReportByEmp { get; set; }
+        public DateTime ForwardDatetime { get; set; }
         public DischargeReportModel()
         {
             ForwardDetails = new ForwardDetails();

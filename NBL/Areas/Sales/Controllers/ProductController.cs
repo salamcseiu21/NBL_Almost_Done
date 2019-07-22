@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using Microsoft.Ajax.Utilities;
@@ -17,6 +18,7 @@ using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Logs;
 using NBL.Models.ViewModels.Productions;
+using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Summaries;
 using NBL.Models.ViewModels.TransferProducts;
 
@@ -28,12 +30,14 @@ namespace NBL.Areas.Sales.Controllers
         private readonly IProductManager _iProductManager;
         private readonly IInventoryManager _iInventoryManager;
         private readonly IBranchManager _iBranchManager;
+        private readonly IReportManager _iReportManager;
 
-        public ProductController(IInventoryManager iInventoryManager,IProductManager iProductManager,IBranchManager iBranchManager)
+        public ProductController(IInventoryManager iInventoryManager,IProductManager iProductManager,IBranchManager iBranchManager,IReportManager iReportManager)
         {
             _iInventoryManager = iInventoryManager;
             _iProductManager = iProductManager;
             _iBranchManager = iBranchManager;
+            _iReportManager = iReportManager;
         }
         public ActionResult Stock()
         {
@@ -999,6 +1003,18 @@ namespace NBL.Areas.Sales.Controllers
                 Log.WriteErrorLog(exception);
                 return PartialView("_ErrorPartial", exception);
             }
+        }
+
+        public ActionResult ProductHistory()
+        {
+            ViewProductHistory product=new ViewProductHistory();
+            return View(product);
+        }
+        [HttpPost]
+        public ActionResult ProductHistory(ViewProductHistory model)
+        {
+            ViewProductHistory product = _iReportManager.GetProductHistoryByBarCode(model.ProductBarCode) ?? new ViewProductHistory {Remarks = "Not Receive by branch..."};
+            return View(product);
         }
     }
 }

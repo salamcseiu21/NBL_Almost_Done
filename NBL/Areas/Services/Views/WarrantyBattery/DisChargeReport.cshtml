@@ -220,18 +220,18 @@
 
                             </td>
                             <td>
-                                <strong>Cell Value Difference:</strong><input id="OldSpGrCellValueDifference" type="number" class="form-control" readonly="readonly" />
+                                <strong>Cell Value Difference:</strong><input value="@Model.SpGrCellValueDifference" type="number" class="form-control" readonly="readonly" />
                             </td>
                         </tr>
                         <tr>
 
                             <td colspan="2">
-                                <strong>SpGr Remarks : </strong> <input value="@Model.CellRemarks" type="text" style="width: 100%" required class="form-control" readonly="readonly" />
+                                <strong>SpGr Remarks : </strong> <input value="@Model.SpGrRemarks" type="text" style="width: 100%" required class="form-control" readonly="readonly" />
                             </td>
                             <td> <strong>Open Voltage :</strong><input type="number" readonly="readonly" style="width: 100%" class="form-control" value="@Model.OpenVoltage" /></td>
                             <td> <strong>Load Voltage :</strong><input type="number" readonly="readonly" style="width: 100%" class="form-control" value="@Model.LoadVoltage" /></td>
                             <td colspan="3">
-                                <strong>Voltage Remarks : </strong> <input value="@Model.CellRemarks" type="text" style="width: 100%" readonly="readonly" class="form-control" />
+                                <strong>Voltage Remarks : </strong> <input value="@Model.VoltageRemarks" type="text" style="width: 100%" readonly="readonly" class="form-control" />
                             </td>
 
                         </tr>
@@ -266,13 +266,13 @@
 
                             </td>
                             <td>
-                                <strong>Backup Time</strong><input type="number" name="BarckUpTime" class="form-control" placeholder="Backup Time.." required/>
+                                <strong>Backup Time</strong><input type="number" name="BackUpTime" class="form-control" placeholder="Backup Time.." required/>
 
                             </td>
 
                             <td>
 
-                                <strong>Rec. Backup Time</strong><input type="number" name="RecommendedBarckUpTime" class="form-control" placeholder="Recommended Backup Time.." required/>
+                                <strong>Rec. Backup Time</strong><input type="number" name="RecommendedBackUpTime" class="form-control" placeholder="Recommended Backup Time.." required/>
 
                             </td>
 
@@ -392,46 +392,6 @@
                 },
                 minLength: 1
             });
-        }
-    </script>
-
-    <script>
-
-        $(document).ready(function() {
-            var gr1 = @Model.SpGrCellOne;
-            var gr2 = @Model.SpGrCellTwo;
-            var gr3 = @Model.SpGrCellThree;
-            var gr4 = @Model.SpGrCellFour;
-            var gr5 =@Model.SpGrCellFive;
-            var gr6 = @Model.SpGrCellSix;
-
-            var cellGrValues = [gr1,gr2,gr3,gr4,gr5,gr6];
-
-
-            var minCellGr= Math.min.apply(Math, cellGrValues);
-            var maxCellGr = Math.max.apply(Math, cellGrValues);
-            var diff = maxCellGr - minCellGr;
-            //alert(diff);
-            $("#OldSpGrCellValueDifference").val(diff);
-        });
-        function CalculateSpGrCellValueDifference(event) {
-
-            var gr1 = isNaN(parseFloat($("#SpGrCellOne").val())) ? 0 : parseFloat($("#SpGrCellOne").val());
-            var gr2 = isNaN(parseFloat($("#SpGrCellTwo").val())) ? 0 : parseFloat($("#SpGrCellTwo").val());
-            var gr3 = isNaN(parseFloat($("#SpGrCellThree").val())) ? 0 : parseFloat($("#SpGrCellThree").val());
-            var gr4 = isNaN(parseFloat($("#SpGrCellFour").val())) ? 0 : parseFloat($("#SpGrCellFour").val());
-            var gr5 = isNaN(parseFloat($("#SpGrCellFive").val())) ? 0 : parseFloat($("#SpGrCellFive").val());
-            var gr6 = isNaN(parseFloat($("#SpGrCellSix").val())) ? 0 : parseFloat($("#SpGrCellSix").val());
-
-            var cellGrValues = [gr1,gr2,gr3,gr4,gr5,gr6];
-
-
-            var minCellGr= Math.min.apply(Math, cellGrValues);
-            var maxCellGr = Math.max.apply(Math, cellGrValues);
-            var diff = maxCellGr - minCellGr;
-            //alert(diff);
-            $("#SpGrCellValueDifference").val(diff);
-
         }
     </script>
 

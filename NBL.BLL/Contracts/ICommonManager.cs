@@ -61,7 +61,10 @@ namespace NBL.BLL.Contracts
         ICollection<CellCondition> GetAllCellConditions();
 
         ICollection<ForwardToModel> GetAllForwardToModels();
+        ICollection<ForwardToModel> GetAllForwardToModelsByUserAndActionId(int userId,long actionId);
+
         ICollection<object> GetCellConditionBySearchTerm(string searchTerm);
-       
+        ViewActionListModel GetActionListModelByAreaControllerActionName(string area,string controller,string action);
+
     }
 }

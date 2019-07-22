@@ -65,9 +65,17 @@ namespace NBL.Areas.Services.Controllers
 
             try
             {
+
+                var user = (ViewUser)Session["user"];
+                var actionModel =
+                    _iCommonManager.GetActionListModelByAreaControllerActionName("Services", "WarrantyBattery",
+                        "ChargeReport");
                 var product = _iServiceManager.GetReceivedServiceProductById(id);
+                DischargeReportModel dischargeReportModel = _iServiceManager.GetDisChargeReprortByReceiveId(id);
                 product.ProductHistory = _iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();
-                product.ForwardToModels = _iCommonManager.GetAllForwardToModels().ToList();
+                product.ForwardToModels = _iCommonManager
+                    .GetAllForwardToModelsByUserAndActionId(user.UserId, actionModel.Id).ToList();
+                product.DischargeReportModel = dischargeReportModel;
                 return View(product);
             }
             catch (Exception exception)
@@ -141,9 +149,14 @@ namespace NBL.Areas.Services.Controllers
 
             try
             {
+                var user = (ViewUser)Session["user"];
+                var actionModel =
+                    _iCommonManager.GetActionListModelByAreaControllerActionName("Services", "WarrantyBattery",
+                        "ChargeReport");
+
                 var product = _iServiceManager.GetReceivedServiceProductById(id);
                 product.ProductHistory = _iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();
-                product.ForwardToModels = _iCommonManager.GetAllForwardToModels().ToList();
+                product.ForwardToModels = _iCommonManager.GetAllForwardToModelsByUserAndActionId(user.UserId,actionModel.Id).ToList();
                 return View(product);
             }
             catch (Exception exception)
@@ -217,9 +230,15 @@ namespace NBL.Areas.Services.Controllers
         {
             try
             {
+                var user = (ViewUser)Session["user"];
+                var actionModel =
+                    _iCommonManager.GetActionListModelByAreaControllerActionName("Services", "WarrantyBattery",
+                        "Forward");
+
                 var product = _iServiceManager.GetReceivedServiceProductById(id);
                 product.ProductHistory =_iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();
-                product.ForwardToModels = _iCommonManager.GetAllForwardToModels().ToList();
+                product.ForwardToModels = _iCommonManager
+                    .GetAllForwardToModelsByUserAndActionId(user.UserId, actionModel.Id).ToList();
                 return View(product);
             }
             catch (Exception exception)
@@ -259,12 +278,17 @@ namespace NBL.Areas.Services.Controllers
         {
             try
             {
+
+                var user = (ViewUser)Session["user"];
+                var actionModel =
+                    _iCommonManager.GetActionListModelByAreaControllerActionName("Services", "WarrantyBattery",
+                        "Receive");
                 WarrantyBatteryModel model = new WarrantyBatteryModel
                 {
                     PhysicalConditions = _iCommonManager.GetAllPhysicalConditions().ToList(),
                     ServicingModels = _iCommonManager.GetAllServicingStatus().ToList(),
                     ChargingStatus = _iCommonManager.GetAllCharginStatus().ToList(),
-                    ForwardToModels = _iCommonManager.GetAllForwardToModels().ToList(),
+                    ForwardToModels = _iCommonManager.GetAllForwardToModelsByUserAndActionId(user.UserId,actionModel.Id).ToList(),
                     DistributionPoints = _iBranchManager.GetAllBranches().ToList()
                     
                     

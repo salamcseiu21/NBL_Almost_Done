@@ -14,6 +14,7 @@ namespace NBL.Models.ViewModels.Products
         public string ProductCategoryName { get; set; }
         public DateTime ProductionDate { get; set; }
         public DateTime DeliveryDate { get; set; }
+        public string DeliveredBy { get; set; }
         public DateTime? SaleDate { get; set; }
         public DateTime ReturnDate { get; set; }
         public DateTime ReceiveDate { get; set; }
@@ -41,7 +42,8 @@ namespace NBL.Models.ViewModels.Products
         public int SalesDuration => Convert.ToInt32((Convert.ToDateTime(SaleDate) - DeliveryDate).TotalDays-1);
 
         public int ServiceDuration { get; set; } 
-        public int CollectionDuration { get; set; }  
-
+        public int CollectionDuration { get; set; }
+        public string ReceiveRef { get; set; }
+        public string Remarks { get; set; }
     }
 }

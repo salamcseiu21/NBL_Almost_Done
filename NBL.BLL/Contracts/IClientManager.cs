@@ -21,6 +21,7 @@ namespace NBL.BLL.Contracts
        IEnumerable<ClientAttachment> GetClientAttachments();
        IEnumerable<ClientAttachment> GetClientAttachmentsByClientId(int clientId);
        IEnumerable<ViewClientSummaryModel> GetClientSummary();
-        ICollection<object> GetClientByBranchIdAndSearchTerm(int branchId, string searchTerm);  
-    }
+        ICollection<object> GetClientByBranchIdAndSearchTerm(int branchId, string searchTerm);
+       ICollection<object> GetAllClientBySearchTerm(string searchTerm);
+   }
 }

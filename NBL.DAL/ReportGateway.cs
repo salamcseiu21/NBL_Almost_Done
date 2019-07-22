@@ -7,6 +7,7 @@ using NBL.Models.EntityModels.Securities;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Reports;
 
 namespace NBL.DAL
@@ -708,6 +709,49 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect user wise Orders ", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ViewProductHistory GetProductHistoryByBarCode(string barcode)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetProductHistoryByBarcode";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@Bracode", barcode);
+                ViewProductHistory product =null;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if(reader.Read())
+                {
+                    product = new ViewProductHistory
+                    {
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductBarCode = reader["Barcode"].ToString(),
+                        ClientName=reader["Client"].ToString(),
+                        DeliveryDate = DBNull.Value.Equals(reader["DeliveryDate"])? default(DateTime):Convert.ToDateTime(reader["DeliveryDate"]),
+                        DeliveryRef = DBNull.Value.Equals(reader["DeliveryRef"]) ? null: reader["DeliveryRef"].ToString(),
+                        ReceiveDate = DBNull.Value.Equals(reader["ReceiveDate"]) ? default(DateTime) : Convert.ToDateTime(reader["ReceiveDate"]),
+                        ReceiveRef = DBNull.Value.Equals(reader["ReceiveDate"]) ? null : reader["ReceiveRef"].ToString(),
+                        ProductCategoryName = reader["Segment"].ToString(),
+                        DeliveredBy = DBNull.Value.Equals(reader["DeliveredBy"])? null: reader["DeliveredBy"].ToString(),
+                        DeliveryFromBranch = DBNull.Value.Equals(reader["BranchName"]) ? null : reader["BranchName"].ToString()
+                    };
+                }
+                reader.Close();
+                return product;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get product history ", exception);
             }
             finally
             {

@@ -58,5 +58,7 @@ namespace NBL.DAL.Contracts
        ICollection<CellCondition> GetAllCellConditions();
        ICollection<object> GetCellConditionBySearchTerm(string searchTerm);
        ICollection<ForwardToModel> GetAllForwardToModels();
+       ICollection<ForwardToModel> GetAllForwardToModelsByUserAndActionId(int userId, long actionId);
+       ViewActionListModel GetActionListModelByAreaControllerActionName(string area, string controller, string action);
    }
 }

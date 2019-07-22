@@ -75,7 +75,7 @@
         {
             <tr>
                 <td>@item.ProductName (@item.CategoryName)</td>
-                <td class="text-center">@item.BarCode</td>
+                <td class="text-center">@item.BarCode.ToUpper()</td>
                
                 <td class="text-center">@item.DeliveryDate.ToString("dd-MMMM-yyyy")</td>
                 <td class="text-center">@item.SaleDate.ToString("dd-MMMM-yyyy")</td>
@@ -96,12 +96,13 @@
                 Barcode
 
             </th>
+           
+            <th class="text-center">
+                Delivery Date
+            </th>
             <th class="text-center">
                 Sale Date
 
-            </th>
-            <th class="text-center">
-                Delivery Date
             </th>
             <th class="text-center">
                 Client

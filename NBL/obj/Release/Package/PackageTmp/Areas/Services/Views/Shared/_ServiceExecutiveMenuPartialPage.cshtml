@@ -64,14 +64,14 @@
         <li class="treeview">
             <a href="#">
                 <i class="fa fa-product-hunt"></i>
-                <span>Barcode Entry</span>
+                <span>Folio Entry</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li>@Html.ActionLink("  Barcode Entry", "RetailSale", "Order", new {area = "CommonArea"}, new {@class = "fa fa-plus"})</li>
-
+                <li>@Html.ActionLink("  Folio Entry", "RetailSale", "Order", new {area = "CommonArea"}, new {@class = "fa fa-plus"})</li>
+                <li>@Html.ActionLink("  Folio List", "FolioList", "Home", new {area = "Services"}, new {@class = "fa fa-plus"})</li>
             </ul>
         </li>
 
@@ -84,10 +84,10 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li>@Html.ActionLink("  Entry", "Receive", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-plus" })</li>
+                <li>@Html.ActionLink("  Receive", "Receive", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-plus" })</li>
                 <li>@Html.ActionLink("  View All", "All", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-eye" })</li>
-                <li>@Html.ActionLink("  Charge Report Entry", "ProductInChargeSection", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-eye" })</li>
                 <li>@Html.ActionLink("  Discharge Report Entry", "ProductInDisChargeSection", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-eye" })</li>
+                <li>@Html.ActionLink("  Charge Report Entry", "ProductInChargeSection", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-eye" })</li>
             </ul>
         </li>
         @*<li class="treeview">
@@ -166,12 +166,4 @@
                             <ul class="treeview-menu">
                                 <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
                                 <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ul>
-
-}
+                            </ul

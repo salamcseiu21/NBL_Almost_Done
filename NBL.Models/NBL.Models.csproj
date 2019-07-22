@@ -291,6 +291,7 @@
     <Compile Include="ViewModels\Orders\ViewTotalOrder.cs" />
     <Compile Include="ViewModels\ViewUser.cs" />
     <Compile Include="ViewModels\Orders\ViewVerifiedOrderModel.cs" />
+    <Compile Include="ViewModels\ViewActionListModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

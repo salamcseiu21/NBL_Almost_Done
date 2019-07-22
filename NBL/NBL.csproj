@@ -8125,6 +8125,8 @@
     <Content Include="Areas\Services\Views\Shared\_ServiceManagementMenuPartialPage.cshtml" />
     <Content Include="Areas\Services\Views\ServiceManagement\Details.cshtml" />
     <Content Include="Areas\SCM\Views\Order\OrderDetails.cshtml" />
+    <Content Include="Areas\Sales\Views\Product\ProductHistory.cshtml" />
+    <Content Include="Areas\Services\Views\Home\FolioList.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />

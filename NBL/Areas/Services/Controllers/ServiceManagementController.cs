@@ -7,7 +7,9 @@ using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Services;
 using NBL.Models.Enums;
 using NBL.Models.Logs;
+using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Products;
+using NBL.Models.ViewModels.Services;
 
 namespace NBL.Areas.Services.Controllers
 {
@@ -46,16 +48,45 @@ namespace NBL.Areas.Services.Controllers
 
         public ActionResult Details(long id)
         {
+
             try
             {
-
+                var user = (ViewUser) Session["user"];
+                var actionModel =
+                    _iCommonManager.GetActionListModelByAreaControllerActionName("Services", "ServiceManagement",
+                        "Details");
                 ChargeReportModel chargeReport = _iServiceManager.GetChargeReprortByReceiveId(id);
                 DischargeReportModel dischargeReportModel = _iServiceManager.GetDisChargeReprortByReceiveId(id); 
                 var product = _iServiceManager.GetReceivedServiceProductById(id);
                 product.ChargeReportModel = chargeReport;
                 product.DischargeReportModel = dischargeReportModel;
                 product.ProductHistory = _iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();
-                product.ForwardToModels = _iCommonManager.GetAllForwardToModels().ToList();
+                product.ForwardToModels = _iCommonManager.GetAllForwardToModelsByUserAndActionId(user.UserId,actionModel.Id).ToList();
+                return View(product);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public ActionResult Details(ViewReceivedServiceProduct model,long id)
+        {
+
+            try
+            {
+                var user = (ViewUser)Session["user"];
+                var actionModel =
+                    _iCommonManager.GetActionListModelByAreaControllerActionName("Services", "ServiceManagement",
+                        "Details");
+                ChargeReportModel chargeReport = _iServiceManager.GetChargeReprortByReceiveId(id);
+                DischargeReportModel dischargeReportModel = _iServiceManager.GetDisChargeReprortByReceiveId(id);
+                var product = _iServiceManager.GetReceivedServiceProductById(id);
+                product.ChargeReportModel = chargeReport;
+                product.DischargeReportModel = dischargeReportModel;
+                product.ProductHistory = _iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();
+                product.ForwardToModels = _iCommonManager.GetAllForwardToModelsByUserAndActionId(user.UserId, actionModel.Id).ToList();
                 return View(product);
             }
             catch (Exception exception)

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Orders.ViewSoldProduct>
+@{
+    ViewBag.Title = "FolioList";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Folio List</h3>
+    <table class="display table-bordered" id="tbl_folio_list" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>Product Code</th>
+            <th>Delivery Ref</th>
+            <th>Delivery Date</th>
+            <th>Client Name</th>
+            <th>Sale Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.BarCode</td>
+                <td>@item.DeliveryRef</td>
+                <td>@item.DeliveryDate</td>
+                <td>@item.ClientName</td>
+                <td>@item.SaleDate</td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Product Code</th>
+            <th>Delivery Ref</th>
+            <th>Delivery Date</th>
+            <th>Client Name</th>
+            <th>Sale Date</th>
+        </tr>
+        </tfoot>
+    </table>
+   
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_folio_list").DataTable();
+    </script>
+}

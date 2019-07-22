@@ -16,7 +16,7 @@
                 <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
                 </div>
                 <div class="form-group">
-                    <label for="ProductCode" class="control-label col-md-3">Product BarCode</label>
+                    <label for="ProductCode" class="control-label col-md-3">BarCode</label>
                     <input type="hidden" id="UserId" name="UserId" value="@user.UserId" />
                     <div class="col-md-9">
                                 
@@ -62,8 +62,10 @@
         $(document).ready(function () {
             $("#SaleDate").datepicker(
                 {
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "-1:+0",
                     dateFormat: 'dd-MM-yy',
-                    minDate: '-40D',
                     maxDate: '+0D'
                 });
 

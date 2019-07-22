@@ -223,9 +223,19 @@ namespace NBL.BLL
            return _iCommonGateway.GetAllForwardToModels();
        }
 
+       public ICollection<ForwardToModel> GetAllForwardToModelsByUserAndActionId(int userId, long actionId)
+       {
+           return _iCommonGateway.GetAllForwardToModelsByUserAndActionId(userId, actionId);
+       }
+
        public ICollection<object> GetCellConditionBySearchTerm(string searchTerm)
        {
            return _iCommonGateway.GetCellConditionBySearchTerm(searchTerm);
+       }
+
+       public ViewActionListModel GetActionListModelByAreaControllerActionName(string area, string controller, string action)
+       {
+           return _iCommonGateway.GetActionListModelByAreaControllerActionName(area, controller, action);
        }
    }
 }

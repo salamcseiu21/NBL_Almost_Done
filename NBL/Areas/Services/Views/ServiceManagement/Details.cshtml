@@ -169,18 +169,18 @@
 
                                 </td>
                                 <td>
-                                    <strong>Cell Value Difference:</strong><input id="OldSpGrCellValueDifference" type="number" class="form-control" readonly="readonly" />
+                                    <strong>Cell Value Difference:</strong><input id="oldSpGrCellValueDifference" type="number" class="form-control" readonly="readonly" />
                                 </td>
                             </tr>
                             <tr>
 
                                 <td colspan="2">
-                                    <strong>SpGr Remarks : </strong> <input value="@Model.CellRemarks" type="text" style="width: 100%" required class="form-control" readonly="readonly" />
+                                    <strong>SpGr Remarks : </strong> <input value="@Model.SpGrRemarks" type="text" style="width: 100%" required class="form-control" readonly="readonly" />
                                 </td>
                                 <td> <strong>Open Voltage :</strong><input type="number" readonly="readonly" style="width: 100%" class="form-control" value="@Model.OpenVoltage" /></td>
                                 <td> <strong>Load Voltage :</strong><input type="number" readonly="readonly" style="width: 100%" class="form-control" value="@Model.LoadVoltage" /></td>
                                 <td colspan="3">
-                                    <strong>Voltage Remarks : </strong> <input value="@Model.CellRemarks" type="text" style="width: 100%" readonly="readonly" class="form-control" />
+                                    <strong>Voltage Remarks : </strong> <input value="@Model.VoltageRemarks" type="text" style="width: 100%" readonly="readonly" class="form-control" />
                                 </td>
 
                             </tr>
@@ -255,23 +255,23 @@
                                     <tr>
 
                                         <td>
-                                            <strong>Cell 1 </strong><input type="number" class="form-control" placeholder="Cell 1 Sp Gr" readonly="readonly" value="@(chargeReportModel?.SpGrCellOne?? 0)" />
+                                            <strong>Cell 1 </strong><input type="number" class="form-control" placeholder="Cell 1 Sp Gr" readonly="readonly" value="@chargeReportModel.SpGrCellOne" />
                                             <input type="text" placeholder="Cell 1 condition" class="form-control" readonly="readonly" value="@Enum.GetName(typeof(CellConditionEnum), chargeReportModel.CellOneConditionId)" />
 
                                         </td>
                                         <td>
-                                            <strong>Cell 2 </strong><input type="number" class="form-control" placeholder="Cell 2 Sp Gr" value="@(chargeReportModel?.SpGrCellTwo?? 0 )" readonly="readonly" />
+                                            <strong>Cell 2 </strong><input type="number" class="form-control" placeholder="Cell 2 Sp Gr" value="@chargeReportModel.SpGrCellTwo" readonly="readonly" />
                                             <input type="text" placeholder="Cell 2 condition" class="form-control" readonly="readonly" value="@Enum.GetName(typeof(CellConditionEnum), chargeReportModel.CellTwoConditionId)" />
 
                                         </td>
                                         <td>
-                                            <strong>Cell 3 </strong><input type="number" class="form-control" placeholder="Cell 3 Sp Gr" value="@(chargeReportModel?.SpGrCellThree?? 0)" readonly="readonly" />
+                                            <strong>Cell 3 </strong><input type="number" class="form-control" placeholder="Cell 3 Sp Gr" value="@chargeReportModel.SpGrCellThree" readonly="readonly" />
                                             <input type="text" placeholder="Cell 3 condition" class="form-control" readonly="readonly" value="@Enum.GetName(typeof(CellConditionEnum), chargeReportModel.CellThreeConditionId)" />
 
                                         </td>
 
                                         <td>
-                                            <strong>Cell 4 </strong><input type="number" class="form-control" value="@(chargeReportModel?.SpGrCellFour?? 0))" placeholder="Cell 4 Sp Gr" readonly="readonly" />
+                                            <strong>Cell 4 </strong><input type="number" class="form-control" value="@chargeReportModel.SpGrCellFour" placeholder="Cell 4 Sp Gr" readonly="readonly" />
                                             <input type="text" placeholder="Cell 4 condition" class="form-control" readonly="readonly" value="@Enum.GetName(typeof(CellConditionEnum), chargeReportModel.CellFourConditionId)" />
 
                                         </td>
@@ -287,19 +287,19 @@
                                         </td>
 
                                         <td>
-                                            <strong> Cell Value Difference </strong> <input type="text" id="SpGrCellValueDifference" class="form-control" readonly placeholder="SpGr Cell Value Difference...." />
+                                            <strong> Cell Value Difference </strong> <input type="text" value="@chargeReportModel.SpGrCellValueDifference" class="form-control" readonly placeholder="SpGr Cell Value Difference...." />
                                         </td>
                                     </tr>
 
                                     <tr>
 
                                         <td colspan="3">
-                                            <strong>SpGr Remarks  </strong> <input id="SpGrCellRemarks" name="SpGrCellRemarks" type="text" style="width: 100%" readonly="readonly" class="form-control" placeholder="SpGr Cell Remarks..." />
+                                            <strong>SpGr Remarks  </strong> <input value="@chargeReportModel.SpGrCellRemarks" type="text" style="width: 100%" readonly="readonly" class="form-control" placeholder="SpGr Cell Remarks..." />
                                         </td>
                                         <td> <strong>Open Voltage </strong><input value="@chargeReportModel.OpenVoltage" type="number" readonly="readonly" style="width: 100%" class="form-control" placeholder="Open Voltage.." /></td>
                                         <td> <strong>Load Voltage </strong><input value="@chargeReportModel.LoadVoltage" type="number" readonly="readonly" style="width: 100%" class="form-control" placeholder="Load Voltage.." /></td>
                                         <td colspan="2">
-                                            <strong>Voltage Remarks  </strong> <input value="@chargeReportModel.CellRemarks" type="text" style="width: 100%" readonly="readonly" class="form-control" placeholder="Cell Remarks..." />
+                                            <strong>Voltage Remarks  </strong> <input value="@chargeReportModel.VoltageRemarks" type="text" style="width: 100%" readonly="readonly" class="form-control" placeholder="Cell Remarks..." />
                                         </td>
                                     </tr>
                                     <tr>
@@ -392,7 +392,7 @@
 
 
                                 <td>
-                                    <input type="hidden" name="BatteryReceiveId" value="@Model.ReceiveId" />
+                                    <input type="hidden" name="ReceiveId" value="@Model.ReceiveId" />
                                     <input type="hidden" name="ForwardFromId" value="@Model.ForwardedToId" />
                                     <strong>Forward To</strong><select name="ForwardToId" required style="width: 100%" class="form-control">
                                         <option value="">---Select--</option>
@@ -410,11 +410,7 @@
                                         }
                                     </select>
                                 </td>
-                                <td>
-                                    <strong>Report By</strong><input type="text" id="EmployeeName" style="width: 100%" required class="form-control" placeholder="type report by employee name.." />
-                                    @Html.HiddenFor(n => n.ReportByEmployeeId)
-                                </td>
-                                <td colspan="2"> <strong>Remarks</strong><input type="text" name="ForwardRemarks" style="width: 100%" class="form-control" placeholder="Forward remarks.." /> </td>
+                                <td colspan="3"> <strong>Remarks</strong><input type="text" name="ForwardRemarks" required style="width: 100%" class="form-control" placeholder="Forward remarks.." /> </td>
                                 <td>
                                     @*<strong>Distribution Point :</strong><select name="DistributionPointId" required style="width: 100%" class="form-control">
                                             <option value="">---Select--</option>
@@ -425,9 +421,10 @@
                                         </select>*@
                                     <br />
 
-                                    @Html.ActionLink("Back", "PendingList", "ServiceManagement", null, new { @class = "fa fa-arrow-left btn btn-danger" })
+                                   
                                     <input type="submit" value="Save" class="btn btn-info" />
-
+                                    <input type="button" onclick="location.href='@Url.Action("PendingList", "ServiceManagement",new {area="Services"})'"  value="Back" class="btn btn-danger"/>
+                                 
 
                                 </td>
                             </tr>
@@ -480,46 +477,6 @@
                 },
                 minLength: 1
             });
-        }
-    </script>
-
-    <script>
-
-        $(document).ready(function() {
-            var gr1 = @Model.SpGrCellOne;
-            var gr2 = @Model.SpGrCellTwo;
-            var gr3 = @Model.SpGrCellThree;
-            var gr4 = @Model.SpGrCellFour;
-            var gr5 =@Model.SpGrCellFive;
-            var gr6 = @Model.SpGrCellSix;
-
-            var cellGrValues = [gr1,gr2,gr3,gr4,gr5,gr6];
-
-
-            var minCellGr= Math.min.apply(Math, cellGrValues);
-            var maxCellGr = Math.max.apply(Math, cellGrValues);
-            var diff = maxCellGr - minCellGr;
-            //alert(diff);
-            $("#OldSpGrCellValueDifference").val(diff);
-        });
-        function CalculateSpGrCellValueDifference(event) {
-
-            var gr1 = isNaN(parseFloat($("#SpGrCellOne").val())) ? 0 : parseFloat($("#SpGrCellOne").val());
-            var gr2 = isNaN(parseFloat($("#SpGrCellTwo").val())) ? 0 : parseFloat($("#SpGrCellTwo").val());
-            var gr3 = isNaN(parseFloat($("#SpGrCellThree").val())) ? 0 : parseFloat($("#SpGrCellThree").val());
-            var gr4 = isNaN(parseFloat($("#SpGrCellFour").val())) ? 0 : parseFloat($("#SpGrCellFour").val());
-            var gr5 = isNaN(parseFloat($("#SpGrCellFive").val())) ? 0 : parseFloat($("#SpGrCellFive").val());
-            var gr6 = isNaN(parseFloat($("#SpGrCellSix").val())) ? 0 : parseFloat($("#SpGrCellSix").val());
-
-            var cellGrValues = [gr1,gr2,gr3,gr4,gr5,gr6];
-
-
-            var minCellGr= Math.min.apply(Math, cellGrValues);
-            var maxCellGr = Math.max.apply(Math, cellGrValues);
-            var diff = maxCellGr - minCellGr;
-            //alert(diff);
-            $("#SpGrCellValueDifference").val(diff);
-
         }
     </script>
 

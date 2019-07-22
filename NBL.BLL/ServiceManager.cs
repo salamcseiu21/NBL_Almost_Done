@@ -7,6 +7,7 @@ using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Services;
 using NBL.Models.Enums;
+using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Services;
 
 namespace NBL.BLL
@@ -78,6 +79,11 @@ namespace NBL.BLL
        {
            return _iServiceGateway.GetDisChargeReprortByReceiveId(id);
         }
+
+       public ICollection<ViewSoldProduct> GetAllSollProducts()
+       {
+           return _iServiceGateway.GetAllSollProducts();
+       }
 
 
        public bool Add(WarrantyBatteryModel model)

@@ -20,6 +20,7 @@ namespace NBL.Models.EntityModels.Services
         public decimal SpGrCellFour { get; set; }
         public decimal SpGrCellFive { get; set; }
         public decimal SpGrCellSix { get; set; }
+        public decimal SpGrCellValueDifference { get; set; }
         public int CellOneConditionId { get; set; }
         public int CellTwoConditionId { get; set; }
         public int CellThreeConditionId { get; set; }
@@ -28,7 +29,7 @@ namespace NBL.Models.EntityModels.Services
         public int CellSixConditionId { get; set; }
         public decimal OpenVoltage { get; set; }
         public decimal LoadVoltage { get; set; }
-        public string CellRemarks { get; set; }
+        public string VoltageRemarks { get; set; } 
         public string SpGrCellRemarks { get; set; }
 
         public int CoverStatusId { get; set; }
@@ -55,8 +56,8 @@ namespace NBL.Models.EntityModels.Services
         public int ForwardToId { get; set; }    
         public string ForwardRemarks { get; set; }     
         public int DistributionPointId { get; set; }     
-        public string DistributionPoint { get; set; }      
-         
+        public string DistributionPoint { get; set; }
+        public DateTime ForwardDatetime { get; set; } 
         public DateTime SysDatetime { get; set; }
         public List<PhysicalConditionModel> PhysicalConditions { set; get; }
         public List<ServicingModel> ServicingModels { set; get; }   

@@ -652,7 +652,44 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+        public ICollection<object> GetAllClientBySearchTerm(string searchTerm)
+        {
+            try
+            {
+                List<object> clients = new List<object>();
+                CommandObj.Parameters.Clear();
+                //CommandObj.CommandText = "spGetAllClientDetailsByBranchId";
+                CommandObj.CommandText = "UDSP_GetAllClientBySearchTerm";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    clients.Add(new
+                    {
+                        label = reader["Name"].ToString(),
+                        val = Convert.ToInt32(reader["ClientId"])
+                    });
 
+                }
+                reader.Close();
+                return clients;
+
+            }
+            catch (Exception e)
+            {
+                Log.WriteErrorLog(e);
+                throw new Exception("Unable to collect Client Information for auto complete by Serach term", e);
+
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
         public List<ViewProduct> GetStockProductToclient(int clientId)
         {
             try

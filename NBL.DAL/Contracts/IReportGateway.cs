@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Reports;
 
 namespace NBL.DAL.Contracts
@@ -25,5 +26,6 @@ namespace NBL.DAL.Contracts
        ICollection<ViewLoginInfo> GetLoginHistoryByDate(DateTime date);
        ICollection<OrderHistory> GetDistributionSetOrders();
        ICollection<UserWiseOrder> UserWiseOrders();
+       ViewProductHistory GetProductHistoryByBarCode(string barcode);
    }
 }

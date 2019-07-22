@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Services;
 using NBL.Models.Logs;
+using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Services;
 
 namespace NBL.DAL
@@ -37,6 +38,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@SpGrCellFour", product.SpGrCellFour);
                 CommandObj.Parameters.AddWithValue("@SpGrCellFive", product.SpGrCellFive);
                 CommandObj.Parameters.AddWithValue("@SpGrCellSix", product.SpGrCellSix);
+                CommandObj.Parameters.AddWithValue("@SpGrCellDiff", product.SpGrCellValueDifference);
                 CommandObj.Parameters.AddWithValue("@CellOneConditionId", product.CellOneConditionId);
                 CommandObj.Parameters.AddWithValue("@CellTwoConditionId", product.CellTwoConditionId);
                 CommandObj.Parameters.AddWithValue("@CellThreeConditionId", product.CellThreeConditionId);
@@ -45,7 +47,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@CellSixConditionId", product.CellSixConditionId);
                 CommandObj.Parameters.AddWithValue("@OpenVoltage", product.OpenVoltage);
                 CommandObj.Parameters.AddWithValue("@LoadVoltage", product.LoadVoltage);
-                CommandObj.Parameters.AddWithValue("@CellRemarks", product.CellRemarks);
+                CommandObj.Parameters.AddWithValue("@VoltageRemarks", product.VoltageRemarks);
                 CommandObj.Parameters.AddWithValue("@CoverStatusId", product.CoverStatusId);
                 CommandObj.Parameters.AddWithValue("@ContainerStatusId", product.ContainerStatusId);
                 CommandObj.Parameters.AddWithValue("@PostStatusId", product.PostStatusId);
@@ -225,7 +227,7 @@ namespace NBL.DAL
                         ForwardedToId = Convert.ToInt32(reader["ForwardToId"]),
                         OpenVoltage = Convert.ToDecimal(reader["OpenVoltage"]),
                         LoadVoltage = Convert.ToDecimal(reader["LoadVoltage"]),
-                        CellRemarks = reader["CellRemarks"].ToString(),
+                        VoltageRemarks = reader["VoltageRemarks"].ToString(),
                         CoverStatusId = Convert.ToInt32(reader["CoverStatusId"]),
                         ContainerStatusId = Convert.ToInt32(reader["ContainerStatusId"]),
                         PostStatusId = Convert.ToInt32(reader["PostStatusId"]),
@@ -235,8 +237,9 @@ namespace NBL.DAL
                         ChargingSystem = reader["ChargingSystem"].ToString(),
                         ServicingStatus = reader["ServicingStatus"].ToString(),
                         EntryByUser = reader["EntryByUser"].ToString(),
-                        ReceiveByBranch = reader["ReceiveByBranch"].ToString()
-
+                        ReceiveByBranch = reader["ReceiveByBranch"].ToString(),
+                        SpGrRemarks =DBNull.Value.Equals(reader["SpGrCellRemarks"])? null:reader["SpGrCellRemarks"].ToString(),
+                        SpGrCellValueDifference=Convert.ToDecimal(reader["SpGrCellDiff"])
                     };
                 }
                 reader.Close();
@@ -280,7 +283,8 @@ namespace NBL.DAL
                         DelivaryRef = reader["DelivaryRef"].ToString(),
                         TransactionRef = reader["TransactionRef"].ToString(),
                         ReceiveRef = DBNull.Value.Equals(reader["ReceiveRef"]) ? null : reader["ReceiveRef"].ToString(),
-                        ReceiveByBranch = reader["ReceiveByBranch"].ToString()
+                        ReceiveByBranch = reader["ReceiveByBranch"].ToString(),
+                        ForwardDatetime = Convert.ToDateTime(reader["ForwardDatetime"])
                     });
                 }
                 reader.Close();
@@ -349,6 +353,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@SpGrCellFour", product.SpGrCellFour);
                 CommandObj.Parameters.AddWithValue("@SpGrCellFive", product.SpGrCellFive);
                 CommandObj.Parameters.AddWithValue("@SpGrCellSix", product.SpGrCellSix);
+                CommandObj.Parameters.AddWithValue("@SpGrCellValueDiff", product.SpGrCellValueDifference);
                 CommandObj.Parameters.AddWithValue("@CellOneConditionId", product.CellOneConditionId);
                 CommandObj.Parameters.AddWithValue("@CellTwoConditionId", product.CellTwoConditionId);
                 CommandObj.Parameters.AddWithValue("@CellThreeConditionId", product.CellThreeConditionId);
@@ -357,7 +362,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@CellSixConditionId", product.CellSixConditionId);
                 CommandObj.Parameters.AddWithValue("@OpenVoltage", product.OpenVoltage);
                 CommandObj.Parameters.AddWithValue("@LoadVoltage", product.LoadVoltage);
-                CommandObj.Parameters.AddWithValue("@CellRemarks", product.CellRemarks);
+                CommandObj.Parameters.AddWithValue("@VoltageRemarks", product.VoltageRemarks);
                 CommandObj.Parameters.AddWithValue("@ReportByEmployeeId", product.ReportByEmployeeId);
                 CommandObj.Parameters.AddWithValue("@EntryByUserId", product.EntryByUserId);
                 CommandObj.Parameters.AddWithValue("@ForwardToId", product.ForwardToId);
@@ -464,9 +469,11 @@ namespace NBL.DAL
                         SpGrCellSix = Convert.ToDecimal(reader["SpGrCellSix"]),
                         OpenVoltage = Convert.ToDecimal(reader["OpenVoltage"]),
                         LoadVoltage = Convert.ToDecimal(reader["LoadVoltage"]),
-                        CellRemarks = DBNull.Value.Equals(reader["Report"])? null: reader["Report"].ToString(),
-                        ForwardRemarks = DBNull.Value.Equals(reader["Remarks"]) ? null : reader["Remarks"].ToString(),
-                        ReportByEmp=reader["ReportBy"].ToString()
+                        VoltageRemarks = DBNull.Value.Equals(reader["VoltageRemarks"])? null: reader["VoltageRemarks"].ToString(),
+                        ForwardRemarks = DBNull.Value.Equals(reader["ForwardRemarks"]) ? null : reader["ForwardRemarks"].ToString(),
+                        SpGrCellRemarks = DBNull.Value.Equals(reader["SpGrCellRemarks"]) ? null : reader["SpGrCellRemarks"].ToString(),
+                        ReportByEmp=reader["ReportBy"].ToString(),
+                        SpGrCellValueDifference = Convert.ToDecimal(reader["SpGrCellDiff"])
 
                     };
                 }
@@ -506,8 +513,9 @@ namespace NBL.DAL
                         BackUpTime = Convert.ToDecimal(reader["BackUpTime"]),
                         RecommendedBackUpTime = Convert.ToDecimal(reader["RecommendedBackUpTime"]),
                         DischargeAmp =DBNull.Value.Equals(reader["DischargeAmp"])? default(decimal): Convert.ToDecimal(reader["DischargeAmp"]),
-                        DischargeReport = DBNull.Value.Equals(reader["Report"]) ? null : reader["Report"].ToString(),
-                        DischargeRemarks = DBNull.Value.Equals(reader["Remarks"]) ? null : reader["Remarks"].ToString(),
+                        DischargeReport = DBNull.Value.Equals(reader["DischargeReport"]) ? null : reader["DischargeReport"].ToString(),
+                        DischargeRemarks = DBNull.Value.Equals(reader["DischargeRemarks"]) ? null : reader["DischargeRemarks"].ToString(),
+                        ForwardRemarks = DBNull.Value.Equals(reader["ForwardRemarks"]) ? null : reader["ForwardRemarks"].ToString(),
                         ReportByEmp = reader["ReportBy"].ToString()
 
                     };
@@ -519,6 +527,47 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not get discharge report by receive Id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<ViewSoldProduct> GetAllSollProducts()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetSoldProductInfo";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<ViewSoldProduct> products = new List<ViewSoldProduct>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    products.Add(new ViewSoldProduct
+                    {
+                       
+                        BarCode = reader["Barcode"].ToString(),
+                        //ProductName = reader["ProductName"].ToString(),
+                       DeliveryRef = reader["DeliveryRef"].ToString(),
+                       OrderRef = reader["OrderRef"].ToString(),
+                       ClientName = reader["ClientInfo"].ToString(),
+                       SaleDate = Convert.ToDateTime(reader["SaleDate"]),
+                        BranchName=reader["BranchName"].ToString(),
+                        InvoiceRef = reader["InvoiceRef"].ToString(),
+                        DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"])
+                    });
+                }
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get sold folio entried products", exception);
             }
             finally
             {

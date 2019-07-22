@@ -127,18 +127,10 @@ namespace NBL.Controllers
             return Json(clients);
         }
 
-        public JsonResult GetAllClientNameForAutoComplete(string prefix) 
+        public JsonResult GetAllClientNameForAutoComplete(string prefix)
         {
 
-          
-            var clientList = (from c in _iClientManager.GetAll().ToList().FindAll(n => n.Active.Equals("Y")).ToList()
-                where c.ClientName.ToLower().Contains(prefix.ToLower())
-                select new
-                {
-                    label = c.ClientName,
-                    val = c.ClientId
-                }).ToList();
-
+            ICollection<object> clientList = _iClientManager.GetAllClientBySearchTerm(prefix);
             return Json(clientList);
         }
         //----------------------Get Client By Id----------
@@ -504,6 +496,18 @@ namespace NBL.Controllers
 
         }
 
+        public FileResult Download(int attachmentId)
+        {
+            DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/ClientDocuments"));
+            var model = _iClientManager.GetClientAttachments().ToList().Find(n => n.Id == attachmentId);
+            var path = model.FilePath.Replace("ClientDocuments/", "");
+            model.FilePath = dirInfo.FullName + @"\" + path;
+            var fileName = model.AttachmentName + model.FileExtension;
+            byte[] fileBytes = System.IO.File.ReadAllBytes(model.FilePath);
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+
+            
+        }
         /// <summary>
         /// Filter order..
         /// </summary>

@@ -1,0 +1,86 @@
+﻿@model NBL.Models.ViewModels.Products.ViewProductHistory
+@{
+    ViewBag.Title = "ProductHistory";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+ 
+   
+   
+    <div class="panel panel-success">
+        <div class="panel panel-heading"><span>Product History</span></div>
+        <div class="panel panel-body">
+            
+            @using (Html.BeginForm())
+            {
+                <div class="form-horizontal">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="form-group">
+                            <label class="control-label col-md-3"> Barcode</label>
+                            <div class="col-md-9">
+                                <input type="text" name="ProductBarCode" class="form-control" placeholder="Type barcdoe here..." required autofocus/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3"> </label>
+                            <div class="col-md-9">
+                                <input type="button" onclick="location.href='@Url.Action("Home", "Home",new {area="Sales"})'"  value="Back" class="btn btn-danger"/>
+                            
+                                <input type="submit" value="Search" class="btn btn-info"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+           
+        </div>
+    </div>
+    
+    <table id="tbl_Barcode_history" class="table table-bordered">
+        <tbody>
+        <tr>
+            <td><strong>Product Name :</strong> @Model.ProductName</td>
+            <td><strong> Segment :</strong> @Model.ProductCategoryName</td>
+            <td><strong>Barcode :</strong> @Model.ProductBarCode</td>
+            @if(Model.Remarks !=null ){
+            <td style="color: red;"><strong> Receive Status:</strong> @Model.Remarks</td>
+            }
+            else
+            {
+                <td><strong> Receive Date:</strong> @Model.ReceiveDate</td>
+            }
+            
+        </tr>
+            @if (Model.ClientName != " ()")
+            {
+                <tr>
+                    <td><strong>Delivered To Client Name :</strong> @Model.ClientName</td>
+                    <td><strong> Delivery Date :</strong> @Model.DeliveryDate</td>
+                    <td><strong>Delivery Ref :</strong> @Model.DeliveryRef</td>
+                    <td colspan="2"><strong>Delivered By:</strong> @Model.DeliveredBy (@Model.DeliveryFromBranch)</td>
+                </tr>
+            }
+        
+        </tbody>
+    </table>
+   
+</section>
+
+@section Styles
+{
+    <style>
+        .panel-heading span {
+            color: black;
+            font-weight: bolder;
+            font-size: 18px;
+        }
+
+        .panel-body {
+            padding: 0;
+        }
+
+        .form-control > input {
+        }
+    </style>
+}

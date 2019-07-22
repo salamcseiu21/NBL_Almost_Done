@@ -9,6 +9,7 @@ using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
+using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Reports;
 
 namespace NBL.BLL
@@ -260,6 +261,11 @@ namespace NBL.BLL
         public ICollection<UserWiseOrder> UserWiseOrders()
         {
             return _iReportGateway.UserWiseOrders();
+        }
+
+        public ViewProductHistory GetProductHistoryByBarCode(string barcode)
+        {
+            return _iReportGateway.GetProductHistoryByBarCode(barcode);
         }
     }
 }

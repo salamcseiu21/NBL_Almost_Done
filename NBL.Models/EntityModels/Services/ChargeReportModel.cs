@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace NBL.Models.EntityModels.Services
 {
    public class ChargeReportModel
@@ -17,6 +12,7 @@ namespace NBL.Models.EntityModels.Services
         public decimal SpGrCellFour { get; set; }
         public decimal SpGrCellFive { get; set; }
         public decimal SpGrCellSix { get; set; }
+        public decimal SpGrCellValueDifference { get; set; }
         public int CellOneConditionId { get; set; }
         public int CellTwoConditionId { get; set; }
         public int CellThreeConditionId { get; set; }
@@ -25,7 +21,7 @@ namespace NBL.Models.EntityModels.Services
         public int CellSixConditionId { get; set; }
         public decimal OpenVoltage { get; set; }
         public decimal LoadVoltage { get; set; }
-        public string CellRemarks { get; set; }
+        public string VoltageRemarks { get; set; }
         public string SpGrCellRemarks { get; set; }
         public int ReportByEmployeeId { get; set; }
         public int EntryByUserId { get; set; }
@@ -34,7 +30,7 @@ namespace NBL.Models.EntityModels.Services
         public string Report { get; set; }
         public string ReportByEmp { get; set; }
         public ForwardDetails ForwardDetails { get; set; }
-
+        public DateTime ForwardDatetime { get; set; }
         public ChargeReportModel()
         {
             ForwardDetails=new ForwardDetails();

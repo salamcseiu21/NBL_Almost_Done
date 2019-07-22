@@ -4,6 +4,7 @@
     ViewBag.Title = "Charge Report";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
     var productHistory = Model.ProductHistory;
+    var disChargeReportModel = Model.DischargeReportModel;
 }
 
 <section>
@@ -166,18 +167,18 @@
 
                 </td>
                 <td>
-                    <strong>Cell Value Difference:</strong><input id="OldSpGrCellValueDifference" type="number" class="form-control" readonly="readonly"/>
+                    <strong>Cell Value Difference:</strong><input value="@Model.SpGrCellValueDifference" type="number" class="form-control" readonly="readonly"/>
                 </td>
             </tr>
             <tr>
 
                 <td colspan="2">
-                    <strong>SpGr Remarks : </strong> <input value="@Model.CellRemarks" type="text" style="width: 100%" required class="form-control" readonly="readonly"/>
+                    <strong>SpGr Remarks : </strong> <input value="@Model.SpGrRemarks" type="text" style="width: 100%" required class="form-control" readonly="readonly"/>
                 </td>
                 <td> <strong>Open Voltage :</strong><input type="number" readonly="readonly" style="width: 100%" class="form-control" value="@Model.OpenVoltage"/></td>
                 <td> <strong>Load Voltage :</strong><input type="number" readonly="readonly" style="width: 100%" class="form-control" value="@Model.LoadVoltage"/></td>
                 <td colspan="3">
-                    <strong>Voltage Remarks : </strong> <input value="@Model.CellRemarks" type="text" style="width: 100%" readonly="readonly" class="form-control"/>
+                    <strong>Voltage Remarks : </strong> <input value="@Model.VoltageRemarks" type="text" style="width: 100%" readonly="readonly" class="form-control"/>
                 </td>
 
             </tr>
@@ -247,104 +248,55 @@
                     <table class="table table-bordered" style="width: 100%">
                         <tbody>
 
-                            <tr>
-
-                                <td>
-                                    <strong>Cell 1 </strong><input id="SpGrCellOne" name="SpGrCellOne" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 1 Sp Gr" required />
-                                    <input type="text" id="CellOneCondition" name="CellOneCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 1 condition" class="form-control" />
-                                    @Html.HiddenFor(n => n.CellOneConditionId)
-                                </td>
-                                <td>
-                                    <strong>Cell 2 </strong><input id="SpGrCellTwo" name="SpGrCellTwo" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 2 Sp Gr" required />
-                                    <input type="text" id="CellTwoCondition" name="CellTwoCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 2 condition" class="form-control" />
-                                    @Html.HiddenFor(n => n.CellTwoConditionId)
-                                </td>
-                                <td>
-                                    <strong>Cell 3 </strong><input id="SpGrCellThree" name="SpGrCellThree" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 3 Sp Gr" required />
-                                    <input type="text" id="CellThreeCondition" name="CellThreeCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 3 condition" class="form-control" />
-                                    @Html.HiddenFor(n => n.CellThreeConditionId)
-                                </td>
-
-                                <td>
-                                    <strong>Cell 4 </strong><input id="SpGrCellFour" name="SpGrCellFour" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 4 Sp Gr" required />
-                                    <input type="text" id="CellFourCondition" onkeypress="CellConditionAutoComplete(this)" name="CellFourCondition" placeholder="Cell 4 condition" class="form-control" />
-                                    @Html.HiddenFor(n => n.CellFourConditionId)
-                                </td>
-                                <td>
-                                    <strong>Cell 5 </strong><input id="SpGrCellFive" name="SpGrCellFive" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 5 Sp Gr" required />
-                                    <input type="text" id="CellFiveCondition" name="CellFiveCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 5 condition" class="form-control" />
-                                    @Html.HiddenFor(n => n.CellFiveConditionId)
-                                </td>
-                                <td>
-                                    <strong>Cell 6 </strong><input id="SpGrCellSix" name="SpGrCellSix" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 6 Sp Gr" required />
-                                    <input type="text" id="CellSixCondition" name="CellSixCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 6 condition" class="form-control" />
-                                    @Html.HiddenFor(n => n.CellSixConditionId)
-                                </td>
-
-                                <td>
-                                    <strong> Cell Value Difference </strong> <input type="text" id="SpGrCellValueDifference" class="form-control" readonly placeholder="SpGr Cell Value Difference...." />
-                                </td>
-                            </tr>
-                          
-                            <tr>
-
-                                <td colspan="3">
-                                    <strong>SpGr Remarks  </strong> <input id="SpGrCellRemarks" name="SpGrCellRemarks" type="text" style="width: 100%" required class="form-control" placeholder="SpGr Cell Remarks..." />
-                                </td>
-                                <td> <strong>Open Voltage </strong><input id="OpenVoltage" name="OpenVoltage" type="number" required style="width: 100%" class="form-control" placeholder="Open Voltage.." /></td>
-                                <td> <strong>Load Voltage </strong><input id="LoadVoltage" name="LoadVoltage" type="number" required style="width: 100%" class="form-control" placeholder="Load Voltage.." /></td>
-                                <td colspan="2">
-                                    <strong>Voltage Remarks  </strong> <input id="CellRemarks" name="CellRemarks" type="text" style="width: 100%" required class="form-control" placeholder="Cell Remarks..." />
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="panel panel-success">
-                <div class="panel panel-heading">
-                    <span>Discharge Test Report</span>
-                </div>
-                <div class="panel panel-body">
-                    <table class="table table-bordered" style="width: 100%">
-                        <tbody>
-
-                            <tr>
-
-                                <td>
-                                    <strong>T.V.</strong><input  type="number"  class="form-control" placeholder="T.V." readonly="readonly" />
-                                   
-                                </td>
-                                <td>
-                                    <strong>L.V.</strong><input  type="number" class="form-control" placeholder="L.V....." readonly="readonly" />
-                                   
-                                </td>
-                                <td>
-                                    <strong>Discharge Amp</strong><input type="number" class="form-control" placeholder="Discharge Amp..." readonly="readonly" />
-
-                                </td>
-                                <td>
-                                    <strong>Backup Time</strong><input type="number"  class="form-control" placeholder="Backup Time.." readonly="readonly" />
-                                    
-                                </td>
-
-                                <td>
-                                   
-                                    <strong>Rec. Backup Time</strong><input type="number" class="form-control" placeholder="Backup Time.." readonly="readonly" />
-                                   
-                                </td>
-                               
-                            </tr>
                         <tr>
 
-                            
-                            <td  colspan="2">
-                                <strong>Report</strong><input  type="text"  placeholder="Report..." readonly="readonly" style="width: 100%" class="form-control"/>
+                            <td>
+                                <strong>Cell 1 </strong><input id="SpGrCellOne" name="SpGrCellOne" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 1 Sp Gr" required />
+                                <input type="text" id="CellOneCondition" name="CellOneCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 1 condition" class="form-control" />
+                                @Html.HiddenFor(n => n.CellOneConditionId)
                             </td>
+                            <td>
+                                <strong>Cell 2 </strong><input id="SpGrCellTwo" name="SpGrCellTwo" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 2 Sp Gr" required />
+                                <input type="text" id="CellTwoCondition" name="CellTwoCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 2 condition" class="form-control" />
+                                @Html.HiddenFor(n => n.CellTwoConditionId)
+                            </td>
+                            <td>
+                                <strong>Cell 3 </strong><input id="SpGrCellThree" name="SpGrCellThree" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 3 Sp Gr" required />
+                                <input type="text" id="CellThreeCondition" name="CellThreeCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 3 condition" class="form-control" />
+                                @Html.HiddenFor(n => n.CellThreeConditionId)
+                            </td>
+
+                            <td>
+                                <strong>Cell 4 </strong><input id="SpGrCellFour" name="SpGrCellFour" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 4 Sp Gr" required />
+                                <input type="text" id="CellFourCondition" onkeypress="CellConditionAutoComplete(this)" name="CellFourCondition" placeholder="Cell 4 condition" class="form-control" />
+                                @Html.HiddenFor(n => n.CellFourConditionId)
+                            </td>
+                            <td>
+                                <strong>Cell 5 </strong><input id="SpGrCellFive" name="SpGrCellFive" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 5 Sp Gr" required />
+                                <input type="text" id="CellFiveCondition" name="CellFiveCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 5 condition" class="form-control" />
+                                @Html.HiddenFor(n => n.CellFiveConditionId)
+                            </td>
+                            <td>
+                                <strong>Cell 6 </strong><input id="SpGrCellSix" name="SpGrCellSix" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 6 Sp Gr" required />
+                                <input type="text" id="CellSixCondition" name="CellSixCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 6 condition" class="form-control" />
+                                @Html.HiddenFor(n => n.CellSixConditionId)
+                            </td>
+
+                            <td>
+                                <strong> Cell Value Difference </strong> <input type="text" id="ViewSpGrCellValueDifference" class="form-control" readonly placeholder="SpGr Cell Value Difference...." />
+                                <input type="hidden" name="SpGrCellValueDifference" id="SpGrCellValueDifference"/>
+                            </td>
+                        </tr>
+                          
+                        <tr>
+
                             <td colspan="3">
-                                <strong>Remarks</strong><input type="text" placeholder="Remarks..." style="width: 100%" readonly="readonly" class="form-control" />
-                                   
+                                <strong>SpGr Remarks  </strong> <input id="SpGrCellRemarks" name="SpGrCellRemarks" type="text" style="width: 100%" required class="form-control" placeholder="SpGr Cell Remarks..." />
+                            </td>
+                            <td> <strong>Open Voltage </strong><input id="OpenVoltage" name="OpenVoltage" type="number" required style="width: 100%" class="form-control" placeholder="Open Voltage.." /></td>
+                            <td> <strong>Load Voltage </strong><input id="LoadVoltage" name="LoadVoltage" type="number" required style="width: 100%" class="form-control" placeholder="Load Voltage.." /></td>
+                            <td colspan="2">
+                                <strong>Voltage Remarks  </strong> <input id="VoltageRemarks" name="VoltageRemarks" type="text" style="width: 100%" required class="form-control" placeholder="Cell Remarks..." />
                             </td>
                         </tr>
 
@@ -352,6 +304,60 @@
                     </table>
                 </div>
             </div>
+            if(disChargeReportModel != null)
+            {
+                <div class="panel panel-success">
+                    <div class="panel panel-heading">
+                        <span>Discharge Test Report</span>
+                    </div>
+                    <div class="panel panel-body">
+                        <table class="table table-bordered" style="width: 100%">
+                            <tbody>
+
+                                <tr>
+
+                                    <td>
+                                        <strong>T.V.</strong><input type="number" class="form-control" value="@disChargeReportModel.Tv" placeholder="T.V." readonly="readonly" />
+
+                                    </td>
+                                    <td>
+                                        <strong>L.V.</strong><input type="number" class="form-control" value="@disChargeReportModel.Lv" placeholder="L.V....." readonly="readonly" />
+
+                                    </td>
+                                    <td>
+                                        <strong>Discharge Amp</strong><input type="number" class="form-control" value="@disChargeReportModel.DischargeAmp" placeholder="Discharge Amp..." readonly="readonly" />
+
+                                    </td>
+                                    <td>
+                                        <strong>Backup Time</strong><input type="number" class="form-control" value="@disChargeReportModel.BackUpTime" placeholder="Backup Time.." readonly="readonly" />
+
+                                    </td>
+
+                                    <td>
+
+                                        <strong>Rec. Backup Time</strong><input type="number" class="form-control" value="@disChargeReportModel.RecommendedBackUpTime" placeholder="Backup Time.." readonly="readonly" />
+
+                                    </td>
+
+                                </tr>
+                                <tr>
+
+
+                                    <td colspan="2">
+                                        <strong>Report</strong><input type="text" value="@disChargeReportModel.DischargeReport" placeholder="Report..." readonly="readonly" style="width: 100%" class="form-control" />
+                                    </td>
+                                    <td colspan="3">
+                                        <strong>Remarks</strong><input type="text" value="@disChargeReportModel.DischargeRemarks" placeholder="Remarks..." style="width: 100%" readonly="readonly" class="form-control" />
+
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+
             <div class="panel panel-success">
                 <div class="panel panel-heading">
                     <span>Forward Informaiton</span>
@@ -455,24 +461,7 @@
     </script>
    
     <script>
-
-        $(document).ready(function() {
-            var gr1 = @Model.SpGrCellOne;
-            var gr2 = @Model.SpGrCellTwo;
-            var gr3 = @Model.SpGrCellThree;
-            var gr4 = @Model.SpGrCellFour;
-            var gr5 =@Model.SpGrCellFive;
-            var gr6 = @Model.SpGrCellSix;
-
-            var cellGrValues = [gr1,gr2,gr3,gr4,gr5,gr6];
-
-
-            var minCellGr= Math.min.apply(Math, cellGrValues);
-            var maxCellGr = Math.max.apply(Math, cellGrValues);
-            var diff = maxCellGr - minCellGr;
-            //alert(diff);
-            $("#OldSpGrCellValueDifference").val(diff);
-        });
+  
         function CalculateSpGrCellValueDifference(event) {
 
             var gr1 = isNaN(parseFloat($("#SpGrCellOne").val())) ? 0 : parseFloat($("#SpGrCellOne").val());
@@ -490,6 +479,7 @@
             var diff = maxCellGr - minCellGr;
             //alert(diff);
             $("#SpGrCellValueDifference").val(diff);
+            $("#ViewSpGrCellValueDifference").val(diff);
 
         }
     </script>

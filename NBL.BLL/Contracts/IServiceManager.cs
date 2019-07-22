@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NBL.Models.EntityModels.Services;
+using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Services;
 
 namespace NBL.BLL.Contracts
@@ -19,5 +20,6 @@ namespace NBL.BLL.Contracts
         bool SaveDischargeReport(DischargeReportModel model);
         ChargeReportModel GetChargeReprortByReceiveId(long id);
         DischargeReportModel GetDisChargeReprortByReceiveId(long id);
+        ICollection<ViewSoldProduct> GetAllSollProducts();
     }
 }

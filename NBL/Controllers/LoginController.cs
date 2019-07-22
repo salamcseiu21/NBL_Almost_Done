@@ -15,6 +15,7 @@ using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Orders;
 
 namespace NBL.Controllers
 {
@@ -55,6 +56,8 @@ namespace NBL.Controllers
 
             try
             {
+                
+
                 //GetRealIpAddress();
                 //int roleId = Convert.ToInt32(collection["RoleId"]);
                 User user = new User();
@@ -112,10 +115,6 @@ namespace NBL.Controllers
                     switch (anUser.Roles)
                     {
 
-                        case "SuperUser":
-                            return RedirectToAction("Home", "Home", new { area = "SuperAdmin" });
-                        case "SystemAdmin":
-                            return RedirectToAction("Home", "Home", new { area = "Editor" });
                         case "Management":
                             return RedirectToAction("Home", "Home", new { area = "Management" });
                         case "Corporate":
@@ -169,13 +168,15 @@ namespace NBL.Controllers
             {
                 case "Admin":
                     return RedirectToAction("Home", "Home", new { area = "Admin" });
-                   
+                case "SuperUser":
+                    return RedirectToAction("Home", "Home", new { area = "SuperAdmin" });
                 case "SalesExecutive":
                 case "SalesManager":
                 case "DistributionManager":
                 case "SalesAdmin":
                     return RedirectToAction("Home", "Home", new { area = "Sales" });
-                            
+                case "SystemAdmin":
+                    return RedirectToAction("Home", "Home", new { area = "Editor" });
                 case "AccountExecutive": 
                 case "AccountManager":
                     return RedirectToAction("Home", "Home", new { area = "AccountsAndFinance" });

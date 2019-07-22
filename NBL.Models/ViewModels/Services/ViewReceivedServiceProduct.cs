@@ -24,13 +24,8 @@ namespace NBL.Models.ViewModels.Services
         public decimal SpGrCellFour { get; set; }
         public decimal SpGrCellFive { get; set; }
         public decimal SpGrCellSix { get; set; }
-        public string CellOneCondition { get; set; }
-        public string CellTwoCondition { get; set; }
-        public string CellThreeCondition { get; set; }
-        public string CellFourCondition { get; set; }
-        public string CellFiveCondition { get; set; }
-        public string CellSixCondition { get; set; }
-
+        public decimal SpGrCellValueDifference { get; set; }    
+        public string SpGrRemarks { get; set; } 
         public int CellOneConditionId { get; set; }
         public int CellTwoConditionId { get; set; }
         public int CellThreeConditionId { get; set; }
@@ -40,7 +35,7 @@ namespace NBL.Models.ViewModels.Services
 
         public decimal OpenVoltage { get; set; }
         public decimal LoadVoltage { get; set; }
-        public string CellRemarks { get; set; }
+        public string VoltageRemarks { get; set; }
         public string CoverStatus { get; set; }
         public string ContainerStatus { get; set; }
         public string PostStatus { get; set; }
@@ -80,7 +75,7 @@ namespace NBL.Models.ViewModels.Services
         public ChargeReportModel ChargeReportModel { get; set; }
         public DischargeReportModel DischargeReportModel { get; set; }
         public List<ForwardToModel> ForwardToModels { set; get; }
-
+        public DateTime ForwardDatetime { get; set; }
         public string ReceiveByBranch { get; set; } 
         public ViewReceivedServiceProduct()
         {

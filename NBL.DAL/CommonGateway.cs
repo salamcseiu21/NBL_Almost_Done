@@ -1390,5 +1390,79 @@ CommandObj.Parameters.Clear();
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public ICollection<ForwardToModel> GetAllForwardToModelsByUserAndActionId(int userId,long actionId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllForwardToModelsByUserAndActionId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@UserId", userId);
+                CommandObj.Parameters.AddWithValue("@ActionId", actionId);
+                List<ForwardToModel> models = new List<ForwardToModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ForwardToModel
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        ForwardType = reader["ForwardType"].ToString()
+                    });
+                }
+                reader.Close();
+                return models;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Colud not collect forward to info by userid and acitonid", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ViewActionListModel GetActionListModelByAreaControllerActionName(string area, string controller, string action)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetActionListModelByAreaControllerActionName";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Area", area);
+                CommandObj.Parameters.AddWithValue("@Controller", controller);
+                CommandObj.Parameters.AddWithValue("@Action", action);
+                ViewActionListModel actionListModel = null;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    actionListModel=new ViewActionListModel
+                    {
+                        ActionName = action,
+                        ControllerName = controller,
+                        AreaName = area,
+                        Id = Convert.ToInt64(reader["Id"])
+                    };
+                }
+                reader.Close();
+                return actionListModel;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Colud not get action model by area,controller and aciton", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }
