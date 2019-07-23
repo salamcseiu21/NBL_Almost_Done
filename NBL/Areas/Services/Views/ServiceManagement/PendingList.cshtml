@@ -12,12 +12,11 @@
                 <th>  Receive Ref</th>
                 <th>  Receive At</th>
                 <th>  Receive Date</th>
-                <th>  Forward Date</th>
-                <th>  Forward Duration</th>
                 <th>  Product Name</th>
-                <th>  Segment</th>
                 <th>  Barcode</th>
-                <th>  Status</th>
+                <th>  Client</th>
+                <th>  Discharge Report</th>
+                <th>  Charge Report</th>
                 <th class="text-center">Action</th>
             </tr>
         </thead>
@@ -26,13 +25,14 @@
             <tr>
                 <td>@item.ReceiveRef</td>
                 <td>@item.ReceiveByBranch</td>
-                <td>@item.ReceiveDatetime</td>
-                <td>@item.ForwardDatetime</td>
-                <td class="text-center"><strong>@((item.ForwardDatetime.Date - item.ReceiveDatetime.Date).Days) (Days)</strong></td>
-                <td>@item.ProductName</td>
-                <td>@item.ProductCategoryName</td>
+                <td>@item.ReceiveDatetime.ToString("dd-MMM-yyyy")</td>
+                <td>@item.ProductName - (@item.ProductCategoryName)</td>
+                
                 <td>@item.Barcode</td>
-                <td>@item.Status</td>
+                <td>@item.ClientInfo</td>
+                <td>@(item.DischargeReport?? "N/A")</td>
+                <td>@(item.ChargerReport?? "N/A")</td>
+             
                 <td class="text-center">
                     @Html.ActionLink(" Details", "Details", "ServiceManagement", new { id = item.ReceiveId }, new { @class = "fa fa-eye btn btn-info" })
                 </td>
@@ -43,12 +43,11 @@
                 <th>  Receive Ref</th>
                 <th>  Receive At</th>
                 <th>  Receive Date</th>
-                <th>  Forward Date</th>
-                <th>  Forward Duration</th>
                 <th>  Product Name</th>
-                <th>  Segment</th>
                 <th>  Barcode</th>
-                <th>  Status</th>
+                <th>  Client</th>
+                <th>  Discharge Report</th>
+                <th>  Charge Report</th>
                 <th class="text-center">Action</th>
             </tr>
         </tfoot>

@@ -5,10 +5,12 @@ using NBL.Models.EntityModels.Addresses;
 using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Companies;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Locations;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.ViewModels.Deliveries;
+using NBL.Models.ViewModels.FinanceModels;
 
 namespace NBL.Models.ViewModels
 {
@@ -102,6 +104,7 @@ namespace NBL.Models.ViewModels
         public List<Order> Orders { get; set; }
         public List<ViewProduct> StockProducts { get; set; }  
         public List<ClientAttachment> ClientAttachments { set; get; }
+        public List<ViewLedgerModel> LedgerModels { get; set; }
         public ICollection<ViewDeliveredOrderModel> DeliveredOrderModels { get; set; }  
         public ClientType ClientType { get; set; }
         public Territory Territory { set; get; }

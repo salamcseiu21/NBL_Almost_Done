@@ -21,6 +21,7 @@ namespace NBL.DAL.Contracts
         int SaveDischargeReport(DischargeReportModel model);
         ChargeReportModel GetChargeReprortByReceiveId(long id);
         DischargeReportModel GetDisChargeReprortByReceiveId(long id);
-        ICollection<ViewSoldProduct> GetAllSollProducts();
+        ICollection<ViewSoldProduct> GetAllSoldProducts();
+        int SaveApprovalInformation(int userId, ForwardDetails forwardDetails);
     }
 }

@@ -71,6 +71,8 @@ namespace NBL.Areas.Corporate.Controllers
             try
             {
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var topClients = _iReportManager.GetTopClientsByYear(DateTime.Now.Year);
+                var topProducts = _iReportManager.GetPopularBatteriesByYear(DateTime.Now.Year).ToList();
 
                 var totalProduction = _iReportManager.GetTotalProductionCompanyIdAndYear(companyId, DateTime.Now.Year);
                 var totalDispatch = _iReportManager.GetTotalDispatchCompanyIdAndYear(companyId, DateTime.Now.Year);
@@ -95,7 +97,9 @@ namespace NBL.Areas.Corporate.Controllers
                     Production = totalProduction,
                     Dispatch = totalDispatch,
                     TotalOrder = torders,
-                    AccountSummary = accountSummary
+                    AccountSummary = accountSummary,
+                    TopClients = topClients,
+                    TopProducts = topProducts
                     //OrderListByDate = todaysInvoceOrders
                 };
                 return View(model);
@@ -513,5 +517,51 @@ namespace NBL.Areas.Corporate.Controllers
             }
 
         }
+        public ActionResult SearchClient()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public PartialViewResult SearchClient(int clientId)
+        {
+            try
+            {
+                var client = _iClientManager.GetClientDeailsById(clientId);
+                var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+                client.LedgerModels = ledgers.ToList();
+                return PartialView("_ViewClientDetailsPartialPage", client);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        public PartialViewResult ClientDetails(int id)
+        {
+            try
+            {
+                var client = _iClientManager.GetClientDeailsById(id);
+                var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+                client.LedgerModels = ledgers.ToList();
+                return PartialView("_ViewClientDetailsPartialPage", client);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
+
     }
 }

@@ -71,18 +71,36 @@ namespace NBL.Areas.Services.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Details(ViewReceivedServiceProduct model,long id)
+        public ActionResult Details(FormCollection collection,long id)
         {
 
             try
             {
+
                 var user = (ViewUser)Session["user"];
+                var product = _iServiceManager.GetReceivedServiceProductById(id);
+                ForwardDetails forward = new ForwardDetails
+                {
+                    UserId = user.UserId,
+                    ForwardDateTime = DateTime.Now,
+                    ForwardFromId = product.ForwardedToId,
+                    ForwardToId = Convert.ToInt32(collection["ForwardToId"]),
+                    ReceiveId = id,
+                    ForwardRemarks =collection["ForwardRemarks"]
+                };
+
+
+                bool result = _iServiceManager.SaveApprovalInformation(user.UserId,forward);
+                if (result)
+                {
+                    return RedirectToAction("PendingList");
+                }
+
                 var actionModel =
                     _iCommonManager.GetActionListModelByAreaControllerActionName("Services", "ServiceManagement",
                         "Details");
                 ChargeReportModel chargeReport = _iServiceManager.GetChargeReprortByReceiveId(id);
                 DischargeReportModel dischargeReportModel = _iServiceManager.GetDisChargeReprortByReceiveId(id);
-                var product = _iServiceManager.GetReceivedServiceProductById(id);
                 product.ChargeReportModel = chargeReport;
                 product.DischargeReportModel = dischargeReportModel;
                 product.ProductHistory = _iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();

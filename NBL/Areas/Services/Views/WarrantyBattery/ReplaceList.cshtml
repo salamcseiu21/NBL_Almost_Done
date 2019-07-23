@@ -1,0 +1,50 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Services.ViewReceivedServiceProduct>
+@{
+    ViewBag.Title = "Replace List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <h3 class="text-center text-green"> Service Battery List For Return</h3>
+    <table id="tbl_Service_Products" class="display table-bordered" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>  Receive Ref</th>
+            <th>  Receive At</th>
+            <th>  Receive Date</th>
+            <th>  Product Name</th>
+            <th>  Barcode</th>
+            <th>  Client</th>
+         
+        </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ReceiveRef</td>
+                <td>@item.ReceiveByBranch</td>
+                <td>@item.ReceiveDatetime.ToString("dd-MMM-yyyy")</td>
+                <td>@item.ProductName - (@item.ProductCategoryName)</td>
+
+                <td>@item.Barcode</td>
+                <td>@item.ClientInfo</td>
+               
+            </tr>
+        }
+        <tfoot>
+        <tr>
+            <th>  Receive Ref</th>
+            <th>  Receive At</th>
+            <th>  Receive Date</th>
+            <th>  Product Name</th>
+            <th>  Barcode</th>
+            <th>  Client</th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+@section Scripts
+{
+    <script>
+        $("#tbl_Service_Products").DataTable();
+    </script>
+}

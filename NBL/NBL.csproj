@@ -8127,6 +8127,10 @@
     <Content Include="Areas\SCM\Views\Order\OrderDetails.cshtml" />
     <Content Include="Areas\Sales\Views\Product\ProductHistory.cshtml" />
     <Content Include="Areas\Services\Views\Home\FolioList.cshtml" />
+    <Content Include="Areas\Sales\Views\Home\SearchClient.cshtml" />
+    <Content Include="Areas\Services\Views\WarrantyBattery\ReplaceList.cshtml" />
+    <Content Include="Areas\Services\Views\WarrantyBattery\ReturnList.cshtml" />
+    <Content Include="Areas\Corporate\Views\Home\SearchClient.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
@@ -8275,6 +8279,7 @@
     <Content Include="Views\Shared\_ViewSoldProductsPartialPage.cshtml" />
     <Content Include="Views\Shared\_RptOveralStockPartialPage.cshtml" />
     <Content Include="Views\Shared\_MenuStockPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewClientDetailsPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

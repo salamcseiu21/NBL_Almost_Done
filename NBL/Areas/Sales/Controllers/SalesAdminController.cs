@@ -117,5 +117,7 @@ namespace NBL.Areas.Sales.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+
+        
     }
 }

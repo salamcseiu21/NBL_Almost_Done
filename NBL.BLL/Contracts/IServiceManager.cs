@@ -20,6 +20,7 @@ namespace NBL.BLL.Contracts
         bool SaveDischargeReport(DischargeReportModel model);
         ChargeReportModel GetChargeReprortByReceiveId(long id);
         DischargeReportModel GetDisChargeReprortByReceiveId(long id);
-        ICollection<ViewSoldProduct> GetAllSollProducts();
+        ICollection<ViewSoldProduct> GetAllSoldProducts();
+        bool SaveApprovalInformation(int userId, ForwardDetails forwardDetails);
     }
 }

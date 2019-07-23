@@ -29,7 +29,7 @@ namespace NBL.Areas.Services.Controllers
         {
             try
             {
-                var products = _iServiceManager.GetAllSollProducts();
+                var products = _iServiceManager.GetAllSoldProducts();
                 return View(products);
             }
             catch (Exception exception)

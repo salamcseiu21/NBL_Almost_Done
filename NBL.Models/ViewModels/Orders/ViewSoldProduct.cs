@@ -23,5 +23,6 @@ namespace NBL.Models.ViewModels.Orders
         public DateTime DeliveryDate { get; set; } 
         public DateTime SaleDate { get; set; }
         public string BranchName { get; set; }
+        public DateTime FolioEntryDate { get; set; }
     }
 }

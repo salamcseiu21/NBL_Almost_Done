@@ -284,7 +284,11 @@ namespace NBL.DAL
                         TransactionRef = reader["TransactionRef"].ToString(),
                         ReceiveRef = DBNull.Value.Equals(reader["ReceiveRef"]) ? null : reader["ReceiveRef"].ToString(),
                         ReceiveByBranch = reader["ReceiveByBranch"].ToString(),
-                        ForwardDatetime = Convert.ToDateTime(reader["ForwardDatetime"])
+                        ForwardDatetime = Convert.ToDateTime(reader["ForwardDatetime"]),
+                        ReceiveRemarks = reader["ReceiveReport"].ToString(),
+                        DischargeReport = DBNull.Value.Equals(reader["DischargeReport"]) ? null : reader["DischargeReport"].ToString(),
+                        ChargerReport = DBNull.Value.Equals(reader["ChargeReport"]) ? null : reader["ChargeReport"].ToString(),
+                        ClientInfo = reader["ClientInfo"].ToString()
                     });
                 }
                 reader.Close();
@@ -536,7 +540,7 @@ namespace NBL.DAL
             }
         }
 
-        public ICollection<ViewSoldProduct> GetAllSollProducts()
+        public ICollection<ViewSoldProduct> GetAllSoldProducts()
         {
             try
             {
@@ -551,14 +555,17 @@ namespace NBL.DAL
                     {
                        
                         BarCode = reader["Barcode"].ToString(),
-                        //ProductName = reader["ProductName"].ToString(),
+                        ProductName = reader["ProductName"].ToString(),
+                        CategoryName = reader["CategoryName"].ToString(),
                        DeliveryRef = reader["DeliveryRef"].ToString(),
                        OrderRef = reader["OrderRef"].ToString(),
                        ClientName = reader["ClientInfo"].ToString(),
                        SaleDate = Convert.ToDateTime(reader["SaleDate"]),
                         BranchName=reader["BranchName"].ToString(),
                         InvoiceRef = reader["InvoiceRef"].ToString(),
-                        DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"])
+                        DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
+                        FolioEntryDate = Convert.ToDateTime(reader["UpdateDate"])
+
                     });
                 }
                 reader.Close();
@@ -568,6 +575,39 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not get sold folio entried products", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int SaveApprovalInformation(int userId, ForwardDetails item)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_SaveForwardDetails";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@ReceiveId", item.ReceiveId);
+                CommandObj.Parameters.AddWithValue("@ForwardFromId", item.ForwardFromId);
+                CommandObj.Parameters.AddWithValue("@ForwardToId", item.ForwardToId);
+                CommandObj.Parameters.AddWithValue("@ForwardDateTime", item.ForwardDateTime);
+                CommandObj.Parameters.AddWithValue("@UserId", item.UserId);
+                CommandObj.Parameters.AddWithValue("@Remarks", item.ForwardRemarks);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var i = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return i;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not save approval information", exception);
             }
             finally
             {

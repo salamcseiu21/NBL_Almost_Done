@@ -80,10 +80,16 @@ namespace NBL.BLL
            return _iServiceGateway.GetDisChargeReprortByReceiveId(id);
         }
 
-       public ICollection<ViewSoldProduct> GetAllSollProducts()
+       public ICollection<ViewSoldProduct> GetAllSoldProducts()
        {
-           return _iServiceGateway.GetAllSollProducts();
+           return _iServiceGateway.GetAllSoldProducts();
        }
+
+       public bool SaveApprovalInformation(int userId, ForwardDetails forwardDetails)
+       {
+           int rowAffected = _iServiceGateway.SaveApprovalInformation(userId,forwardDetails);
+           return rowAffected > 0;
+        }
 
 
        public bool Add(WarrantyBatteryModel model)

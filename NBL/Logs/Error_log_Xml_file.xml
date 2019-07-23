@@ -1267,14 +1267,14 @@ The statement has been terminated.</CustomeMessage>
     <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
    at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
    at System.Data.SqlClient.SqlDataReader.get_Item(String name)
-   at NBL.DAL.ServiceGateway.GetAllSollProducts() in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 550</LogMessage>
+   at NBL.DAL.ServiceGateway.GetAllSoldProducts() in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 550</LogMessage>
     <LogDateTime>2019-07-22T17:27:04.4456875+06:00</LogDateTime>
     <CustomeMessage>ProductName</CustomeMessage>
   </Error>
   <Error LogId="19-Jul-22d124e2e9-5816-4237-b5e7-e7407046d6be">
     <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.DAL.ServiceGateway.GetAllSollProducts() in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 570
-   at NBL.BLL.ServiceManager.GetAllSollProducts() in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 85
+    <LogMessage>   at NBL.DAL.ServiceGateway.GetAllSoldProducts() in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 570
+   at NBL.BLL.ServiceManager.GetAllSoldProducts() in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 85
    at NBL.Areas.Services.Controllers.HomeController.FolioList() in E:\API\NBL\NBL\Areas\Services\Controllers\HomeController.cs:line 32</LogMessage>
     <LogDateTime>2019-07-22T17:27:04.4935429+06:00</LogDateTime>
     <CustomeMessage>Could not get sold folio entried products</CustomeMessage>

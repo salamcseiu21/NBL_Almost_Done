@@ -14,6 +14,7 @@ namespace NBL.BLL
         private readonly IClientGateway _iClientGateway;
         private readonly IOrderManager _iOrderManager;
         private readonly IDeliveryGateway _iDeliveryGateway;
+       
         public ClientManager(IClientGateway iClientGateway,IOrderManager iOrderManager,IDeliveryGateway iDeliveryGateway)
         {
             _iClientGateway = iClientGateway;
@@ -119,10 +120,11 @@ namespace NBL.BLL
         }
         public ViewClient GetClientDeailsById(int clientId)
         {
-            var client = _iClientGateway.GetClientDeailsById(clientId);
-             client.Orders = _iOrderManager.GetOrdersByClientId(clientId).ToList();
-             client.DeliveredOrderModels = _iDeliveryGateway.GetDeliveredOrderByClientId(clientId);
+              var client = _iClientGateway.GetClientDeailsById(clientId);
+              client.Orders = _iOrderManager.GetOrdersByClientId(clientId).ToList();
+              client.DeliveredOrderModels = _iDeliveryGateway.GetDeliveredOrderByClientId(clientId);
               client.StockProducts = _iClientGateway.GetStockProductToclient(clientId);
+          
             return client;
 
         }

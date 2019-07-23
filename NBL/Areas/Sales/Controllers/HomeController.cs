@@ -244,6 +244,34 @@ namespace NBL.Areas.Sales.Controllers
      
             return result.Length;
         }
-        
+
+        public ActionResult SearchClient()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public PartialViewResult SearchClient(int clientId)
+        {
+            try
+            {
+                var client = _iClientManager.GetClientDeailsById(clientId);
+                var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+                client.LedgerModels = ledgers.ToList();
+                return PartialView("_ViewClientDetailsPartialPage", client);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
     }
 }

@@ -48,7 +48,7 @@
                 <!-- AREA CHART -->
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Orders </h3>
+                        <h3 class="box-title">Top Clients (@DateTime.Now.Year)</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-minus"></i>
@@ -56,8 +56,24 @@
                             <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                         </div>
                     </div>
-                    <div class="box-body chart-responsive">
-                        <div class="chart" id="revenue-chart" style="height: 300px;"></div>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table no-margin">
+                          
+                                <tbody>
+                                @foreach (var client in Model.TopClients.ToList().Take(8))
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.ActionLink(client.CommercialName,"ClientDetails","Home",new { area = "Corporate",id =client.ClientId},null)
+                                        </td>
+                                        <td class="text-right">&#2547; @client.TotalDebitAmount.ToString("N")</td>
+                                    </tr>
+                                }
+
+                                </tbody>
+                            </table>
+                        </div>
 
                     </div>
                     <!-- /.box-body -->
@@ -75,7 +91,7 @@
                 <!-- LINE CHART -->
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Sales (@DateTime.Now.Year)</h3>
+                        <h3 class="box-title">Top Products (@DateTime.Now.Year)</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-minus"></i>
@@ -83,8 +99,24 @@
                             <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                         </div>
                     </div>
-                    <div class="box-body chart-responsive">
-                        <div class="chart" id="line-chart" style="height: 300px;"></div>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table no-margin">
+                          
+                                <tbody>
+                                @foreach (var battery in Model.TopProducts.ToList().Take(8))
+                                {
+                                    <tr>
+                                        <td>
+                                            @battery.ProductName
+                                        </td>
+                                        <td class="text-right">@battery.TotalSoldQty (Pcs)</td>
+                                    </tr>
+                                }
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -135,56 +167,6 @@
     <script>
         $(function() {
             "use strict";
-
-            // AREA CHART
-            var area = new Morris.Area({
-                element: 'revenue-chart',
-                resize: true,
-                data: [
-                    { y: '2019 Q1', Order: @q1 },
-                    { y: '2019 Q2', Order: @q2 },
-                    { y: '2019 Q3', Order: @q3 },
-                    { y: '2019 Q4', Order: @q4 },
-                    { y: '2020 Q1', Order: 0 },
-                    { y: '2020 Q2', Order: 0 },
-                    { y: '2020 Q3', Order: 0 },
-                    { y: '2020 Q4', Order: 0 },
-                    { y: '2021 Q1', Order: 0 },
-                    { y: '2021 Q2', Order: 0 },
-                    { y: '2021 Q3', Order: 0 },
-                    { y: '2021 Q4', Order: 0 }
-                ],
-                xkey: 'y',
-                ykeys: ['Order'],
-                labels: ['Order'],
-                lineColors: ['#a0d0e0'],
-                hideHover: 'auto'
-            });
-
-            // LINE CHART
-            var line = new Morris.Area({
-                element: 'line-chart',
-                resize: true,
-                data: [
-                    { y: '01 January', Order: @totalOrder.January },
-                    { y: '02 February', Order: @totalOrder.February },
-                    { y: '03 March', Order: @totalOrder.March },
-                    { y: '04 April', Order: @totalOrder.April },
-                    { y: '05 May', Order: @totalOrder.May },
-                    { y: '06 June', Order: @totalOrder.June },
-                    { y: '07 July', Order: @totalOrder.July },
-                    { y: '08 August', Order: @totalOrder.August },
-                    { y: '09 September', Order: @totalOrder.September },
-                    { y: '10 November', Order: @totalOrder.October },
-                    { y: '11 September', Order: @totalOrder.November },
-                    { y: '12 December', Order: @totalOrder.December }
-                ],
-                xkey: 'y',
-                ykeys: ['Order'],
-                labels: ['Order'],
-                lineColors: ['#a0d0e0'],
-                hideHover: 'auto'
-            });
 
             //DONUT CHART
             var donut = new Morris.Donut({
