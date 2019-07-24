@@ -19,6 +19,7 @@ using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Products;
 
 namespace NBL.Controllers
 {
@@ -643,6 +644,14 @@ namespace NBL.Controllers
             var user = (ViewUser) Session["user"];
             var roles = _userManager.GetAssignedUserRolesByUserId(user.UserId).ToList().FindAll(n=>n.BranchId==branchId);
             return Json(roles, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public JsonResult GetProductHistoryByBarcode(string barcode)
+        {
+            var product = _iInventoryManager.GetProductHistoryByBarcode(barcode) ?? new ViewProductHistory();
+            return Json(product, JsonRequestBehavior.AllowGet);
         }
     }
 

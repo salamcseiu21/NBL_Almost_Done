@@ -1,9 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
+using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Securities;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.Editor.Controllers
@@ -20,7 +23,8 @@ namespace NBL.Areas.Editor.Controllers
         private readonly IRegionManager _iRegionManager;
         private readonly ITerritoryManager _iTerritoryManager;
         private readonly UserManager _userManager=new UserManager();
-        public HomeController(IBranchManager iBranchManager,IClientManager iClientManager,IDepartmentManager iDepartmentManager,IEmployeeManager iEmployeeManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IProductManager iProductManager)
+        private readonly IAccountsManager _iAccountsManager;
+        public HomeController(IBranchManager iBranchManager,IClientManager iClientManager,IDepartmentManager iDepartmentManager,IEmployeeManager iEmployeeManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IProductManager iProductManager,IAccountsManager iAccountsManager)
         {
             _iBranchManager = iBranchManager;
             _iClientManager = iClientManager;
@@ -29,6 +33,7 @@ namespace NBL.Areas.Editor.Controllers
             _iRegionManager = iRegionManager;
             _iTerritoryManager = iTerritoryManager;
             _iProductManager = iProductManager;
+            _iAccountsManager = iAccountsManager;
         }
         // GET: Editor/Home
         public ActionResult Home() 
@@ -72,6 +77,35 @@ namespace NBL.Areas.Editor.Controllers
         public ActionResult BusinessArea()
         {
             return View();
+        }
+
+        public ActionResult SearchClient()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public PartialViewResult SearchClient(int clientId)
+        {
+            try
+            {
+                var client = _iClientManager.GetClientDeailsById(clientId);
+                var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+                client.LedgerModels = ledgers.ToList();
+                return PartialView("_ViewClientDetailsPartialPage", client);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
     }
 }

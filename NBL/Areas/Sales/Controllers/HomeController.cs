@@ -273,5 +273,21 @@ namespace NBL.Areas.Sales.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+
+        public ActionResult WarrantyCheck()
+        {
+
+            try
+            {
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+           
+        }
+
     }
 }

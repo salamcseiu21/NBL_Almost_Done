@@ -24,13 +24,13 @@ namespace NBL.BLL
             long maxSl = GetMaxSalesReturnNoByYear(year);
             long maxRefNo = GetMaxSalesReturnRefByYear(year);
             returnModel.ReturnNo = maxSl + 1;
-            returnModel.ReturnRef = GenerateOrderRefNo(maxRefNo);
+            returnModel.ReturnRef = GenerateSalesReturnRefNo(maxRefNo);
             int rowAffected = _iProductReturnGateway.SaveReturnProduct(returnModel);
             return rowAffected > 0;
         }
 
         
-        private string GenerateOrderRefNo(long maxsl)
+        private string GenerateSalesReturnRefNo(long maxsl)
         {
             string refCode = GetReferenceAccountCodeById(Convert.ToInt32(ReferenceType.SalesReturn));
             var sN = maxsl + 1;

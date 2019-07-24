@@ -2737,7 +2737,7 @@ namespace NBL.DAL
             {
                 CommandObj.CommandText = "UDSP_GetProductHistoryByBarcode";
                 CommandObj.CommandType = CommandType.StoredProcedure;
-                CommandObj.Parameters.AddWithValue("@BarCode", barcode);
+                CommandObj.Parameters.AddWithValue("@SearchCode", barcode);
                 ViewProductHistory model = null;
                 ConnectionObj.Open();
                 SqlDataReader reader = CommandObj.ExecuteReader();

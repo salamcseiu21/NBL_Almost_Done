@@ -2355,6 +2355,7 @@ namespace NBL.DAL
                         TransferItemId = Convert.ToInt64(reader["TransferItemId"]),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
                         ProductName = reader["ProductName"].ToString(),
+                        
                         Quantity = Convert.ToInt32(reader["ProductWiseQty"]),
                         ProductCategory = new ProductCategory
                         {

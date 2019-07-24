@@ -216,7 +216,7 @@ namespace NBL.Areas.Editor.Controllers
 
         // POST: Sales/Client/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Client aClient, HttpPostedFileBase file, HttpPostedFileBase ClientSignature)
+        public ActionResult Edit(int id, Client aClient, HttpPostedFileBase ClientImage, HttpPostedFileBase ClientSignature)
         {
             try
             {
@@ -242,20 +242,20 @@ namespace NBL.Areas.Editor.Controllers
                 //client.Branch = aBranch;
 
 
-                if (file != null)
+                if (ClientImage != null)
                 {
-                    string ext = Path.GetExtension(file.FileName);
-                    string image = "cp" + Guid.NewGuid().ToString().Replace("-", "").ToLower().Substring(2, 8) + ext;
+                    string ext = Path.GetExtension(ClientImage.FileName);
+                    string image = "cp_"+client.ClientId + Guid.NewGuid().ToString().Replace("-", "").ToLower().Substring(2, 8) + ext;
                     string path = Path.Combine(
                         Server.MapPath("~/Images/Client/Photos"), image);
                     // file is uploaded
-                    file.SaveAs(path);
+                    ClientImage.SaveAs(path);
                     client.ClientImage = "Images/Client/Photos/" + image;
                 }
                 if (ClientSignature != null)
                 {
                     string ext = Path.GetExtension(ClientSignature.FileName);
-                    string sign = "cs" + Guid.NewGuid().ToString().Replace("-", "").ToLower().Substring(2, 8) + ext;
+                    string sign = "cs_" + client.ClientId + Guid.NewGuid().ToString().Replace("-", "").ToLower().Substring(2, 8) + ext;
                     string path = Path.Combine(
                         Server.MapPath("~/Images/Client/Signatures"), sign);
                     // file is uploaded

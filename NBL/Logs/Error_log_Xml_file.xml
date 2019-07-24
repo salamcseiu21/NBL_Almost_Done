@@ -1279,4 +1279,85 @@ The statement has been terminated.</CustomeMessage>
     <LogDateTime>2019-07-22T17:27:04.4935429+06:00</LogDateTime>
     <CustomeMessage>Could not get sold folio entried products</CustomeMessage>
   </Error>
+  <Error LogId="19-Jul-2492b13926-aadb-4826-869a-55467b9b60c5">
+    <Heading>System.IO.FileNotFoundException</Heading>
+    <LogMessage>   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize)
+   at System.Xml.XmlDownloadManager.GetStream(Uri uri, ICredentials credentials, IWebProxy proxy, RequestCachePolicy cachePolicy)
+   at System.Xml.XmlUrlResolver.GetEntity(Uri absoluteUri, String role, Type ofObjectToReturn)
+   at System.Xml.XmlTextReaderImpl.FinishInitUriString()
+   at System.Xml.XmlTextReaderImpl..ctor(String uriStr, XmlReaderSettings settings, XmlParserContext context, XmlResolver uriResolver)
+   at System.Xml.XmlReaderSettings.CreateReader(String inputUri, XmlParserContext inputContext)
+   at System.Xml.XmlReader.Create(String inputUri, XmlReaderSettings settings, XmlParserContext inputContext)
+   at System.Xml.Linq.XDocument.Load(String uri, LoadOptions options)
+   at System.Xml.Linq.XDocument.Load(String uri)
+   at NBL.Areas.AccountsAndFinance.Controllers.AccountController.RemoveAll() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountController.cs:line 190
+   at NBL.Areas.AccountsAndFinance.Controllers.AccountController.Receivable() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountController.cs:line 37</LogMessage>
+    <LogDateTime>2019-07-24T13:39:37.1357849+06:00</LogDateTime>
+    <CustomeMessage>Could not find file 'E:\API\NBL\NBL\Areas\AccountsAndFinance\Files\Receivable\Receivable_4.xml'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-24384eeec6-be76-4970-89ad-0e8e957e1da6">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetProductHistoryByBarcode(String barcode) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 2743</LogMessage>
+    <LogDateTime>2019-07-24T15:02:42.5633167+06:00</LogDateTime>
+    <CustomeMessage>Conversion failed when converting date and/or time from character string.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-24d7478eb2-cfcc-4b4e-bf28-c7ab72255f94">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetProductHistoryByBarcode(String barcode) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 2743</LogMessage>
+    <LogDateTime>2019-07-24T15:49:50.626061+06:00</LogDateTime>
+    <CustomeMessage>Conversion failed when converting date and/or time from character string.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-24421df065-9481-4908-b90c-7c3bc1b068c3">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetProductHistoryByBarcode(String barcode) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 2743</LogMessage>
+    <LogDateTime>2019-07-24T15:53:20.7039202+06:00</LogDateTime>
+    <CustomeMessage>Conversion failed when converting date and/or time from character string.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-24d55492d6-52d1-459d-a8f5-f8c789016c48">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetMaxSalesReturnNoByYear(Int32 year) in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 104
+   at NBL.BLL.ProductReturnManager.GetMaxSalesReturnNoByYear(Int32 year) in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 55
+   at NBL.BLL.ProductReturnManager.SaveReturnProduct(ReturnModel returnModel) in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 24
+   at NBL.Areas.Sales.Controllers.ReturnController.ConfirmReturnEntry(FormCollection collection) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 98</LogMessage>
+    <LogDateTime>2019-07-24T16:11:07.7119578+06:00</LogDateTime>
+    <CustomeMessage>Could not get max sales return no</CustomeMessage>
+  </Error>
 </Errors>

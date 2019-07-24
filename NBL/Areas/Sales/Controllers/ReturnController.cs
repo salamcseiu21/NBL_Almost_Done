@@ -62,7 +62,7 @@ namespace NBL.Areas.Sales.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "SalesExecutive")]
         public ActionResult ConfirmReturnEntry()
         {
             try

@@ -40,7 +40,18 @@
 
             </ul>
         </li>
-
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-search"></i> <span>Search</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Search", "SearchClient", "Home", new {area = "Editor"}, new {@class = "fa fa-search", style = "font-weight: bolder"})</li>
+           
+            </ul>
+        </li>
         @*<li class="treeview">
             <a href="#">
                 <i class="fa fa-download" aria-hidden="true"></i> <span>Download</span>

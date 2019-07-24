@@ -1,4 +1,7 @@
-﻿
+﻿@using NBL.Models.ViewModels
+@{
+    var user = (ViewUser)Session["user"];
+}
 @*Sales common Menu*@
 @Html.Partial("_CommonMenuPartialPage")
 <li class="treeview">
@@ -16,17 +19,36 @@
         <li>@Html.ActionLink(" In Stock", "Stock", "Product", new { area = "Sales" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
     </ul>
 </li>
+@if (!user.Roles.Equals("DistributionManager"))
+{
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-search"></i> <span>Search</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink(" Search", "SearchClient", "Home", new {area = "Sales"}, new {@class = "fa fa-search", style = "font-weight: bolder"})</li>
+           
+        </ul>
+    </li>
+}
+
+
 
 <li class="treeview">
     <a href="#">
-        <i class="fa fa-search"></i> <span>Search</span>
+        <i class="fa fa-search"></i>
+        <span>Warranty Check</span>
         <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
         </span>
     </a>
     <ul class="treeview-menu">
-        <li>@Html.ActionLink(" Search", "SearchClient", "Home", new {area = "Sales"}, new {@class = "fa fa-search", style = "font-weight: bolder"})</li>
-           
+        <li>
+            @Html.ActionLink(" Check", "WarrantyCheck", "Home", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})
+        </li>
     </ul>
 </li>
 <li class="treeview">

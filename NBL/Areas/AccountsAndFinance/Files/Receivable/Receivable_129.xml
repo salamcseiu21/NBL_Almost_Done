@@ -1,12 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Payments>
-  <Payment Id="00_274f9756-35f5-4068-b2b3-c0fd3496c33a">
-    <ChequeAmount>500000</ChequeAmount>
-    <BankBranchName>Cash</BankBranchName>
-    <BankAccountNo>Cash</BankAccountNo>
-    <SourceBankName>Cash</SourceBankName>
-    <ChequeNo>Cash</ChequeNo>
-    <ChequeDate>2019-07-02T00:00:00</ChequeDate>
-    <PaymentTypeId>4</PaymentTypeId>
-  </Payment>
+
 </Payments>

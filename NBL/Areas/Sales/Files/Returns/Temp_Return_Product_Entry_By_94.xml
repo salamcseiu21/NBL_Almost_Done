@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Products>
+  <Product Id="06a30938-ce9a-4ab3-9537-769940c0638b">
+    <DeliveryId>3250</DeliveryId>
+    <DeliveryRef>192023210</DeliveryRef>
+    <ProuctId>42</ProuctId>
+    <Quantity>2</Quantity>
+    <ProductName>6 NSP 100</ProductName>
+    <DeliveryDate>2019-07-22T15:10:58.14</DeliveryDate>
+  </Product>
+  <Product Id="1c95d674-670c-487d-82c8-fa2b54ed45d2">
+    <DeliveryId>3240</DeliveryId>
+    <DeliveryRef>192023200</DeliveryRef>
+    <ProuctId>42</ProuctId>
+    <Quantity>1</Quantity>
+    <ProductName>6 NSP 100</ProductName>
+    <DeliveryDate>2019-07-22T13:13:28.77</DeliveryDate>
+  </Product>
+  <Product Id="93c794d9-c3f7-4a03-90ad-91c7c1945f34">
+    <DeliveryId>3240</DeliveryId>
+    <DeliveryRef>192023200</DeliveryRef>
+    <ProuctId>41</ProuctId>
+    <Quantity>3</Quantity>
+    <ProductName>6 NSP 80</ProductName>
+    <DeliveryDate>2019-07-22T13:13:28.77</DeliveryDate>
+  </Product>
+</Products>
