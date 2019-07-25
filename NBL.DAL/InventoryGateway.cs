@@ -1416,7 +1416,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
-
+       
         public IEnumerable<ViewProduct> GetAllProductsBarcode()
         {
             try
@@ -2690,13 +2690,13 @@ namespace NBL.DAL
             }
         }
         //----------------------------Product Life Cicle/1-July-2019-------
-        public ViewProductLifeCycleModel GetProductLifeCycle(string barcode)
+        public ViewProductLifeCycleModel GetProductLifeCycle(string code)
         {
             try
             {
                 CommandObj.CommandText = "UDSP_RptGetProductLifeCycle";
                 CommandObj.CommandType = CommandType.StoredProcedure;
-                CommandObj.Parameters.AddWithValue("@BarCode", barcode);
+                CommandObj.Parameters.AddWithValue("@Code", code);
                 ViewProductLifeCycleModel model = null;
                 ConnectionObj.Open();
                 SqlDataReader reader = CommandObj.ExecuteReader();
@@ -2711,7 +2711,12 @@ namespace NBL.DAL
                         ProductName = reader["ProductName"].ToString(),
                         LifeTime = Convert.ToInt32(reader["LifeTime"]),
                         ProductCategoryName=reader["ProductCategoryName"].ToString(),
-                        DispatchDate = DBNull.Value.Equals(reader["DespatchDate"])? default(DateTime):Convert.ToDateTime(reader["DespatchDate"])
+                        DispatchDate = DBNull.Value.Equals(reader["DespatchDate"])? default(DateTime):Convert.ToDateTime(reader["DespatchDate"]),
+                        LineNo = Convert.ToInt32(reader["LineNumber"]),
+                        BatchCode = reader["BatchCode"].ToString(),
+                        ShiftNo = reader["ShiftNo"].ToString(),
+                        Barcode = reader["ProductBarcode"].ToString()
+
                         // Status = Convert.ToInt32(reader["Status"])
                     };
                 }

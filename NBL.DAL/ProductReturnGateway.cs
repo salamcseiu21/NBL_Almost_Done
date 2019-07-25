@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Returns;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Returns;
 
@@ -16,6 +17,7 @@ namespace NBL.DAL
     {
         public int SaveReturnProduct(ReturnModel returnModel)
         {
+            int rowAffected = 0;
             ConnectionObj.Open();
             SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
             try
@@ -23,6 +25,7 @@ namespace NBL.DAL
                 CommandObj.Transaction = sqlTransaction;
                 CommandObj.CommandText = "UDSP_SaveSalesReturnProduct";
                 CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ClientId", returnModel.ClientId);
                 CommandObj.Parameters.AddWithValue("@SalesReturnNo", returnModel.ReturnNo);
                 CommandObj.Parameters.AddWithValue("@SalesReturnRef", returnModel.ReturnRef);
                 CommandObj.Parameters.AddWithValue("@TransactionRef", returnModel.ReturnRef);
@@ -35,7 +38,24 @@ namespace NBL.DAL
                 CommandObj.Parameters["@MasterId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
                 var masterId = Convert.ToInt64(CommandObj.Parameters["@MasterId"].Value);
-                var rowAffected = SaveReturnProductDetails(returnModel,masterId);
+                var list=returnModel.Products.GroupBy(n => n.DeliveryRef).ToList();
+                foreach (IGrouping<string, ReturnProduct> products in list)
+                {
+                    var deliveryref = products.Key;
+                    long refId = SaveReturnDeliveryRef(deliveryref,masterId);
+                    if (refId > 0)
+                    {
+                        var newListByDeleveryRef = returnModel.Products.FindAll(n => n.DeliveryRef == deliveryref);
+                        rowAffected += SaveReturnProductDetails(newListByDeleveryRef, masterId, refId);
+                    }
+                    else
+                    {
+                        rowAffected = 0;
+                    }
+                    
+
+                }
+              
                 if (rowAffected > 0)
                 {
                     sqlTransaction.Commit();
@@ -59,11 +79,25 @@ namespace NBL.DAL
             }
         }
 
+        private long SaveReturnDeliveryRef(string deliveryref, long masterId)
+        {
+            CommandObj.Parameters.Clear();
+            CommandObj.CommandText = "UDSP_SaveReturnDeliveryRef";
+            CommandObj.CommandType = CommandType.StoredProcedure;
+            CommandObj.Parameters.AddWithValue("@SalesReturnId", masterId);
+            CommandObj.Parameters.AddWithValue("@Deliveryref", deliveryref);
+            CommandObj.Parameters.Add("@MasterId", SqlDbType.BigInt);
+            CommandObj.Parameters["@MasterId"].Direction = ParameterDirection.Output;
+            CommandObj.ExecuteNonQuery();
+            var i = Convert.ToInt64(CommandObj.Parameters["@MasterId"].Value);
+            return i;
+        }
 
-        private int SaveReturnProductDetails(ReturnModel returnModel, long masterId)
+
+        private int SaveReturnProductDetails(List<ReturnProduct> products, long masterId,long refId)
         {
             int i = 0;
-            foreach (var item in returnModel.Products)
+            foreach (var item in products)
             {
                 CommandObj.Parameters.Clear();
                 CommandObj.CommandText = "UDSP_SaveSalesReturnDetails";
@@ -74,6 +108,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@DeliveryId", item.DeliveryId);
                 CommandObj.Parameters.AddWithValue("@DeliveryRef", item.DeliveryRef);
                 CommandObj.Parameters.AddWithValue("@DeliveryDate", item.DeliveryDate);
+                CommandObj.Parameters.AddWithValue("@RefDetailsId", refId);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
@@ -297,19 +332,21 @@ namespace NBL.DAL
                 {
                     model = new ReturnModel
                     {
-                        SalesReturnId = Convert.ToInt64(reader["SalesReturnId"]),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        ClientInfo = reader["ClientInfo"].ToString(),
+                        SalesReturnId = Convert.ToInt64(reader["Id"]),
                         BranchId = Convert.ToInt32(reader["BranchId"]),
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
-                        ReturnRef = reader["SalesReturnRef"].ToString(),
+                        ReturnRef = reader["ReturnRef"].ToString(),
                         ReturnNo = Convert.ToInt64(reader["SalesReturnNo"]),
-                        TotalQuantity = Convert.ToInt32(reader["TotalQuantity"]),
+                        TotalQuantity = Convert.ToInt32(reader["Quantity"]),
                         Remarks = reader["Remarks"].ToString(),
                         SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
-                        ReturnApproveByUserId = Convert.ToInt32(reader["ReturnApproveByUserId"]),
-                        ReturnApproveDateTime = DBNull.Value.Equals(reader["ReturnApproveDate"])
-                            ? default(DateTime)
-                            : Convert.ToDateTime(reader["ReturnApproveDate"]),
-                        NsmNotes = DBNull.Value.Equals(reader["NotesByNsm"]) ? null : reader["NotesByNsm"].ToString(),
+                        //ReturnApproveByUserId = Convert.ToInt32(reader["ReturnApproveByUserId"]),
+                        //ReturnApproveDateTime = DBNull.Value.Equals(reader["ReturnApproveDate"])
+                        //    ? default(DateTime)
+                        //    : Convert.ToDateTime(reader["ReturnApproveDate"]),
+                        NsmNotes = DBNull.Value.Equals(reader["Remarks"]) ? null : reader["Remarks"].ToString(),
                         ReturnStatus = Convert.ToInt32(reader["Status"]),
                         ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"])
                     };
@@ -411,19 +448,20 @@ namespace NBL.DAL
                 {
                     models.Add(new ReturnModel
                     {
-                        SalesReturnId=Convert.ToInt64(reader["SalesReturnId"]),
+                        SalesReturnId=Convert.ToInt64(reader["Id"]),
                         BranchId = Convert.ToInt32(reader["BranchId"]),
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
-                        ReturnRef = reader["SalesReturnRef"].ToString(),
+                        ReturnRef = reader["ReturnRef"].ToString(),
                         ReturnNo = Convert.ToInt64(reader["SalesReturnNo"]),
-                        TotalQuantity = Convert.ToInt32(reader["TotalQuantity"]),
+                        TotalQuantity = Convert.ToInt32(reader["Quantity"]),
                         Remarks =DBNull.Value.Equals(reader["Remarks"])?null: reader["Remarks"].ToString(),
                         SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
-                        ReturnApproveByUserId =DBNull.Value.Equals(reader["ReturnApproveByUserId"])? default(int): Convert.ToInt32(reader["ReturnApproveByUserId"]),
-                        ReturnApproveDateTime =DBNull.Value.Equals(reader["ReturnApproveDate"])? default(DateTime): Convert.ToDateTime(reader["ReturnApproveDate"]),
-                        NsmNotes = DBNull.Value.Equals(reader["NotesByNsm"])?null: reader["NotesByNsm"].ToString(),
+                        ReturnApproveByUserId =DBNull.Value.Equals(reader["ApproveByManagerUserId"])? default(int): Convert.ToInt32(reader["ApproveByManagerUserId"]),
+                        ReturnApproveDateTime =DBNull.Value.Equals(reader["ApproveByManagerDate"])? default(DateTime): Convert.ToDateTime(reader["ApproveByManagerDate"]),
+                        NsmNotes = DBNull.Value.Equals(reader["NotesByManager"])?null: reader["NotesByManager"].ToString(),
                         ReturnStatus = Convert.ToInt32(reader["Status"]),
-                        ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"])
+                        ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"]),
+                        ClientInfo = reader["ClientInfo"].ToString()
                     });
                 }
                 reader.Close();
@@ -431,6 +469,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect sales returns",exception);
             }
             finally
@@ -504,26 +543,17 @@ namespace NBL.DAL
                 {
                     models.Add(new ReturnDetails 
                     {
-                        SalesReturnId = Convert.ToInt64(reader["SalesReturnId"]),
-                        SalesReturnNo=Convert.ToInt64(reader["SalesReturnNo"]),
-                        ReturnDateTime = Convert.ToDateTime(reader["ReturnDateTime"]),
+                        SalesReturnId = Convert.ToInt64(reader["ReturnId"]),
                         DeliveryRef = reader["DeliveryRef"].ToString(),
                         DeliveryId = Convert.ToInt64(reader["DeliveryId"]),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
                         ProductName = reader["ProductName"].ToString(),
                         Quantity = Convert.ToInt32(reader["Quantity"]),
-                        SalsesReturnDetailsId = Convert.ToInt64(reader["SalsesReturnDetailsId"]),
-                        SalesAdminUserId = Convert.ToInt32(reader["SalesAdminUserId"]),
-                        ApproveBySalesAdminDateTime = Convert.ToDateTime(reader["ApprovedByAdminDateTime"]),
-                        NsmUserId = Convert.ToInt32(reader["NsmUserId"]),
-                        ApproveByNsmDateTime = Convert.ToDateTime(reader["ApprovedByNsmDateTime"]),
-                        OrderByUserId = Convert.ToInt32(reader["OrderByUserId"]),
-                        OrderDateTime = Convert.ToDateTime(reader["OrderDateTime"]),
-                        OrderId = Convert.ToInt64(reader["OrderId"]),
-                        ClientId = Convert.ToInt32(reader["ClientId"]),
-                        DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
-                        DeliveredDateTime = Convert.ToDateTime(reader["DeliveredDateTime"])
-
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        DeliveredDateTime = Convert.ToDateTime(reader["DeliveryDate"]),
+                        ReturnDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        OrderDateTime = Convert.ToDateTime(reader["OrderDate"])
+                        
                     });
                 }
                 reader.Close();
@@ -601,7 +631,7 @@ namespace NBL.DAL
         {
             try
             {
-                CommandObj.CommandText = "UDSP_ApproveSalesReturnByNsm";
+                CommandObj.CommandText = "UDSP_ApproveSalesReturnBySalesManager";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@Remarks", remarks);
                 CommandObj.Parameters.AddWithValue("@SalesReturnId", salesReturnId);

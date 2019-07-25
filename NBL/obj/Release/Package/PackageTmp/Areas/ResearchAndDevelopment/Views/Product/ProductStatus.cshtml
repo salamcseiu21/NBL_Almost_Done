@@ -16,9 +16,9 @@
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="BarCode" class="control-label col-md-3">BarCode</label>
+                        <label for="BarCode" class="control-label col-md-3">BarCode/BatchCode</label>
                         <div class="col-md-9">
-                            <input type="text" name="BarCode" id="BarCode" class="form-control" autofocus required=""/>
+                            <input type="text" name="BarCode" id="BarCode" placeholder="Type barcode or batchcoe..." class="form-control" autofocus required=""/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -44,32 +44,45 @@
             </div>
             <div class="panel-body">
                 
-                <table class="table table-responsive table-bordered">
+                <table class="table table-responsive table-bordered" style="font-weight: bolder">
                     <tr>
-                        <td>Product Name :</td>
-                        <td>@m.ProductName</td>
+                        <td>Product Name : @m.ProductName </td>
+                        <td>Segment : @m.ProductCategoryName </td>
                     </tr>
                     <tr>
-                        <td>Production Date :</td>
-                        <td>@m.ProductionDate.ToString("D")</td>
+                        <td>Barcode : @m.Barcode</td>
+                        <td>BatchCode : @m.BatchCode </td>
                     </tr>
                     <tr>
-                        <td>Come to Store :</td>
-                        <td>@m.ComeIntoInventory.ToString("D")</td>
+                        <td>Production Line : @m.LineNo</td>
+                        <td>Shift No: @m.ShiftNo</td>
                     </tr>
                     <tr>
-                        <td>Dispatch Date :</td>
-                        <td>@m.DispatchDate.ToString("D")</td>
+                        <td>Scann Date : @m.ComeIntoInventory.ToString("D")</td>
+                        <td>Despatch From Factory : @m.DispatchDate.ToString("D")</td>
                     </tr>
+                    
                     <tr>
-                        <td>Age :</td>
-                        <td>@m.Age</td>
+                        <td>LifeTime : @m.LifeTime</td>
+                        <td>Age : @m.Age</td>
+
                     </tr>
+                    
                 </table>
 
             </div>
             <div class="panel-footer">
-                <label>Product Status Heilight...</label>
+                @if (m.Age < m.LifeTime)
+                {
+                    <p class="text-center text-green" style="font-weight: bolder">The Remaining lifetime of this Product is <b>@m.RemainingLifeTime</b>(days)
+                    </p>
+                }
+                else
+                {
+                    <p class="text-center" style="color: red">This Product is death!!.
+                    </p>
+                }
+
             </div>
         </div>
     }

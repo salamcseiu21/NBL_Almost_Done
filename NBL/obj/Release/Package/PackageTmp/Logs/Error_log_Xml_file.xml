@@ -1360,4 +1360,52 @@ The statement has been terminated.</CustomeMessage>
     <LogDateTime>2019-07-24T16:11:07.7119578+06:00</LogDateTime>
     <CustomeMessage>Could not get max sales return no</CustomeMessage>
   </Error>
+  <Error LogId="19-Jul-25279904b1-d812-43ca-8ad9-e107fd36c24d">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.InventoryGateway.GetProductLifeCycle(String barcode) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 2705</LogMessage>
+    <LogDateTime>2019-07-25T10:26:38.0485783+06:00</LogDateTime>
+    <CustomeMessage>LineNo</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-2507060057-4a4d-4391-90ca-569cfe493556">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetProductLifeCycle(String barcode) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 2702</LogMessage>
+    <LogDateTime>2019-07-25T10:50:06.5758808+06:00</LogDateTime>
+    <CustomeMessage>Conversion failed when converting date and/or time from character string.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-2518ba4b73-c702-47e5-b3d3-06d508c7c9b2">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean&amp; moreRows)
+   at System.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean&amp; more)
+   at System.Data.SqlClient.SqlDataReader.Read()
+   at NBL.DAL.InventoryGateway.GetStockProductInFactory() in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 858</LogMessage>
+    <LogDateTime>2019-07-25T11:00:11.5483687+06:00</LogDateTime>
+    <CustomeMessage>Transaction (Process ID 70) was deadlocked on lock resources with another process and has been chosen as the deadlock victim. Rerun the transaction.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-25cce396fd-cc01-4f68-8a5c-6b3bf2c9a9ed">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.InventoryGateway.GetStockProductInFactory() in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 884
+   at NBL.BLL.InventoryManager.GetStockProductInFactory() in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 182
+   at NBL.Areas.Production.Controllers.HomeController.Home() in E:\API\NBL\NBL\Areas\Production\Controllers\HomeController.cs:line 37</LogMessage>
+    <LogDateTime>2019-07-25T11:00:11.6042187+06:00</LogDateTime>
+    <CustomeMessage>Could not collect stock product in facotry store</CustomeMessage>
+  </Error>
 </Errors>

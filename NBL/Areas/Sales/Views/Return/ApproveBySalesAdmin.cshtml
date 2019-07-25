@@ -1,11 +1,53 @@
-﻿@model IEnumerable<NBL.Models.EntityModels.Returns.ReturnDetails>
+﻿@model NBL.Models.ViewModels.Returns.ViewReturnModel
 @{
     ViewBag.Title = "Approve";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var returnModel = Model.ReturnModel;
+    var aClient = Model.Client;
 }
 
 <section class="content">
 
+    
+    <div class="panel panel-info">
+        <div class="panel panel-heading"><strong style="font-weight: bolder">Client Information</strong></div>
+        <div class="panel panel-body" style="margin: 0; padding: 0;font-weight: bolder">
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <section>
+                        <img src="~/@(aClient.ClientImage?? "Images/User.jpg")" height="120" width="100" style="float:left;margin-right:20px" title="@aClient.ClientName" />
+           
+                        <span>
+                            @Html.Raw(aClient.GetMailingAddress())
+                        </span>
+
+                    </section>
+
+
+                </div>
+                <div class="col-md-4">
+                    Outstanding: @if (aClient.Outstanding < 0)
+                                 {
+                                     <b>(@(aClient.Outstanding * -1))</b>  
+                    }
+                    else
+                    {
+                        @aClient.Outstanding
+                                 }
+                    <br/>
+                    Credit Limit: @aClient.CreditLimit<br/>
+                    Max Credit Days:@aClient.MaxCreditDay<br/>
+                </div>
+                <div class="col-md-4">
+                    Ref :<i>@Model.ReturnModel.ReturnRef</i><br />
+                    Date : <i>@Model.ReturnModel.SystemDateTime.ToString("D")</i>
+                </div>
+            </div>
+
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-10">
             <h3 class="text-center text-green">Approve Sales Return</h3>
@@ -19,7 +61,7 @@
                     <div class="form-group">
                         <label for="Remarks" class="control-label col-md-3">Remarks</label>
                         <div class="col-md-9">
-                            <input id="salesReturnId" name="salesReturnId" value="@ViewBag.SalesReturnId" type="hidden"/>
+                            <input id="salesReturnId" name="salesReturnId" value="@ViewBag.SalesReturnId" type="hidden" />
                             <textarea id="Remarks" name="Remarks" placeholder="Write remarks..." class="form-control" required autofocus style="resize: none" rows="3"></textarea>
                         </div>
                     </div>
@@ -40,41 +82,34 @@
             <tr>
                 <th>Product Name</th>
                 <th>Quanity</th>
+                <th>Delivery Ref</th>
                 <th>Order Date</th>
                 <th>Sales Manager Approve</th>
-                <th>Sales Admin Approve</th>
                 <th>Delivery Date</th>
                 <th>Return Date</th>
                 <th>Delivery-to-Return</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.ReturnDetailses)
             {
                 <tr>
                     <td>@item.ProductName</td>
+                   
                     <td class="text-center">@item.Quantity</td>
+                    <td>@item.DeliveryRef</td>
                     <td>@item.OrderDateTime.ToString("D")</td>
                     <td>
                         @if (!item.ApproveByNsmDateTime.HasValue)
-                    {
-                        <p>N/A</p>
-                    }
-                    else
-                    {
-                        @Convert.ToDateTime(item.ApproveByNsmDateTime).ToString("D")
-                    }
-                </td>
-                    <td>
-                        @if (!item.ApproveBySalesAdminDateTime.HasValue)
                         {
                             <p>N/A</p>
                         }
                         else
                         {
-                            @Convert.ToDateTime(item.ApproveBySalesAdminDateTime).ToString("D")
+                            @Convert.ToDateTime(item.ApproveByNsmDateTime).ToString("D")
                         }
                     </td>
+                    
                     <td>@item.DeliveredDateTime.ToString("D")</td>
                     <td>@item.ReturnDateTime.ToString("D")</td>
                     <td class="text-center">@(Math.Ceiling((item.ReturnDateTime - item.DeliveredDateTime).TotalDays))</td>
@@ -85,9 +120,9 @@
             <tr>
                 <th>Product Name</th>
                 <th>Quanity</th>
+                <th>Delivery Ref</th>
                 <th>Order Date</th>
                 <th>Sales Manager Approve</th>
-                <th>Sales Admin Approve</th>
                 <th>Delivery Date</th>
                 <th>Return Date</th>
                 <th>Delivery-to-Return</th>

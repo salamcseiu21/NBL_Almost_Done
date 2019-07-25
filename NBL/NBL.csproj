@@ -8133,6 +8133,8 @@
     <Content Include="Areas\Corporate\Views\Home\SearchClient.cshtml" />
     <Content Include="Areas\Sales\Views\Home\WarrantyCheck.cshtml" />
     <Content Include="Areas\Editor\Views\Home\SearchClient.cshtml" />
+    <Content Include="Areas\Production\Views\Home\ProductStatus.cshtml" />
+    <Content Include="Areas\Sales\Views\Return\ApproveBySalesAdmin.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />

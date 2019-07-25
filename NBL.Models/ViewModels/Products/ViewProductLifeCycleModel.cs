@@ -24,7 +24,11 @@ namespace NBL.Models.ViewModels.Products
         public int Status { get; set; }
         public Client Client { get; set; }
         public ViewOrder Order { get; set; }
-
+        public int LineNo { get; set; }
+        public string ShiftNo { get; set; }
+        public string BatchCode { get; set; }
+        public string Barcode { get; set; }
+       
         public ViewProductLifeCycleModel()
         {
             Client=new Client();

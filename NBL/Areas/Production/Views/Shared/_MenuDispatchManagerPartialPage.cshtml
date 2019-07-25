@@ -39,6 +39,20 @@
         </li>
         <li class="treeview">
             <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>Products</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+
+                @*<li>@Html.ActionLink(" Product Life Cycle ", "ProductLifeCycle", "Product", new {area = "ResearchAndDevelopment"}, new {@class = "fa fa-eye"})</li>*@
+                <li>@Html.ActionLink(" Product Status ", "ProductStatus", "Home", new {area = "Production"}, new {@class = "fa fa-eye"})</li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
                 <i class="fa fa-share"></i> <span>Reports</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>

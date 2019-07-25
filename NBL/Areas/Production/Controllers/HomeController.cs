@@ -99,5 +99,21 @@ namespace NBL.Areas.Production.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+
+        //--------------------------Product Status By Barcode---------------
+        public ActionResult ProductStatus()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ProductStatus(FormCollection collection)
+        {
+            var barcode = collection["BarCode"];
+            var product = _iInventoryManager.GetProductLifeCycle(barcode);
+            TempData["T"] = product;
+            return View();
+        }
+
     }
 }

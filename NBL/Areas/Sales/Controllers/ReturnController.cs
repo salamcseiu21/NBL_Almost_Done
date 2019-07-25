@@ -19,11 +19,13 @@ namespace NBL.Areas.Sales.Controllers
         private readonly IDeliveryManager _iDeliveryManager;
         private readonly IProductManager _iProductManager;
         private readonly IProductReturnManager _iProductReturnManager;
-        public ReturnController(IDeliveryManager iDeliveryManager,IProductManager iProductManager,IProductReturnManager iProductReturnManager)
+        private readonly IClientManager _iClientManager;
+        public ReturnController(IDeliveryManager iDeliveryManager,IProductManager iProductManager,IProductReturnManager iProductReturnManager,IClientManager iClientManager)
         {
             _iDeliveryManager = iDeliveryManager;
             _iProductManager = iProductManager;
             _iProductReturnManager = iProductReturnManager;
+            _iClientManager = iClientManager;
         }
         // GET: Sales/Return
         public ActionResult Home()
@@ -83,6 +85,8 @@ namespace NBL.Areas.Sales.Controllers
             try
             {
                 var products = GetProductFromXmlFile(GetTempReturnProductsXmlFilePath());
+                var deliveryId = products.FirstOrDefault().DeliveryId;
+                var clientId= _iDeliveryManager.GetChalanByDeliveryId(Convert.ToInt32(deliveryId)).ViewClient.ClientId; 
                 var user = (ViewUser)Session["user"];
                 var branchId = Convert.ToInt32(Session["BranchId"]);
                 var companyId = Convert.ToInt32(Session["CompanyId"]);
@@ -92,6 +96,7 @@ namespace NBL.Areas.Sales.Controllers
                     Products = products.ToList(),
                     BranchId = branchId,
                     CompanyId = companyId,
+                    ClientId = clientId,
                     Remarks = collection["Remarks"]
                 };
 
@@ -307,8 +312,8 @@ namespace NBL.Areas.Sales.Controllers
 
 
 
-        //---------------------Approve By NSM---------------
-        [Authorize(Roles = "Nsm")]
+        //---------------------Approve By sales Manager---------------
+        [Authorize(Roles = "SalesManager")]
         public ActionResult ApproveByNsm(long salesReturnId)
         {
             try
@@ -326,6 +331,57 @@ namespace NBL.Areas.Sales.Controllers
         }
         [HttpPost]
         public ActionResult ApproveByNsm(FormCollection collection)
+        {
+            try
+            {
+                var user = (ViewUser)Session["user"];
+                long salesReturnId = Convert.ToInt64(collection["salesReturnId"]);
+                var remarks = collection["Remarks"];
+                bool result = _iProductReturnManager.ApproveReturnByNsm(remarks, salesReturnId, user.UserId);
+                if (result)
+                {
+                    return RedirectToAction("ViewAll");
+                }
+
+                List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+                return View(models);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+
+        //---------------------Approve By sales Admin---------------
+        [Authorize(Roles = "SalesAdmin")]
+        public ActionResult ApproveBySalesAdmin(long salesReturnId)
+        {
+            try
+            {
+                ViewBag.SalesReturnId = salesReturnId;
+                var returnById=_iProductReturnManager.GetSalesReturnBySalesReturnId(salesReturnId);
+                List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+                var client = _iClientManager.GetById(returnById.ClientId);
+                ViewReturnModel model = new ViewReturnModel
+                {
+                    ReturnModel = returnById,
+                    ReturnDetailses = models,
+                    Client = client
+                };
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public ActionResult ApproveBySalesAdmin(FormCollection collection)
         {
             try
             {

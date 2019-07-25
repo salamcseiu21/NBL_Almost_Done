@@ -10,6 +10,7 @@
         <thead>
         <tr>
             <th class="text-center">Reference</th>
+            <th class="text-center">Client</th>
             <th class="text-center">Quantity</th>
             <th class="text-center">Date</th>
             <th class="text-center">Notes</th>
@@ -22,6 +23,7 @@
         {
             <tr>
                 <td class="text-center">@item.ReturnRef</td>
+                <td class="text-center">@item.ClientInfo</td>
                 <td class="text-center">@item.TotalQuantity</td>
                 <td class="text-center">@item.SystemDateTime.Date.ToString("D")</td>
                 <td class="text-center">@(item.Remarks?? "N/A")</td>
@@ -32,15 +34,19 @@
                     }
                     else if (item.ReturnStatus == 1)
                     {
-                        <span class="text-green">Approved</span>
+                        <span class="text-green">Approved by Sales Manager</span>
                     }
                 }</td>
                 <td class="text-center">
-                    @if (User.IsInRole("Nsm") && item.ReturnStatus==0)
+                    @if (User.IsInRole("SalesManager") && item.ReturnStatus==0)
                     {
                         @Html.ActionLink(" Approve", "ApproveByNsm", "Return", new { salesReturnId = item.SalesReturnId },null) <span> | </span>
                     }
                     
+                    @if (User.IsInRole("SalesAdmin") && item.ReturnStatus==1)
+                    {
+                        @Html.ActionLink(" Approve", "ApproveBySalesAdmin", "Return", new { salesReturnId = item.SalesReturnId },null) <span> | </span>
+                    }
                     @Html.ActionLink(" Details", "ReturnDetails", "Return", new {salesReturnId = item.SalesReturnId}, new {@class = "fa fa-eye"})
                 </td>
             </tr>
@@ -49,6 +55,7 @@
         <tfoot>
         <tr>
             <th class="text-center">Reference</th>
+            <th class="text-center">Client</th>
             <th class="text-center">Quantity</th>
             <th class="text-center">Date</th>
             <th class="text-center">Notes</th>

@@ -1,19 +1,2 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Products>
-  <Product Id="17cb5725-b84b-4052-bcf3-8948ed5c191e">
-    <DeliveryId>3242</DeliveryId>
-    <DeliveryRef>192023202</DeliveryRef>
-    <ProuctId>47</ProuctId>
-    <Quantity>1</Quantity>
-    <ProductName>6 NSP 30</ProductName>
-    <DeliveryDate>2019-07-22T13:22:41.323</DeliveryDate>
-  </Product>
-  <Product Id="5395fefd-5eaa-44f5-9b08-4c39c11a30db">
-    <DeliveryId>2465</DeliveryId>
-    <DeliveryRef>192022427</DeliveryRef>
-    <ProuctId>47</ProuctId>
-    <Quantity>3</Quantity>
-    <ProductName>6 NSP 30</ProductName>
-    <DeliveryDate>2019-07-10T11:26:31.583</DeliveryDate>
-  </Product>
-</Products>
+<Products />

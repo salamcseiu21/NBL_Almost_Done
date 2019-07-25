@@ -37,15 +37,16 @@ namespace NBL.Models.EntityModels.Returns
         public DateTime OrderDateTime { get; set; }
         public int NsmUserId { get; set; }
         public string NsmName { get; set; }
-        public DateTime ApproveByNsmDateTime { get; set; }
+        public DateTime? ApproveByNsmDateTime { get; set; }
         public int SalesAdminUserId { get; set; }
         public string SalesAdminName { get; set; }
-        public DateTime ApproveBySalesAdminDateTime { get; set; }
+        public DateTime? ApproveBySalesAdminDateTime { get; set; }
         public int DeliveredByUserId { get; set; }
         public string DeliveryPerson { get; set; }  
         public DateTime DeliveredDateTime { get; set; }
         public int ProductId { get; set; }
         public string ProductName { get; set; }
+        public string ProductCategoryName { get; set; } 
         public int Quantity { get; set; }
         public DateTime ReturnDateTime { get; set; }
 
