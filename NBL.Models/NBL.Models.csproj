@@ -195,6 +195,8 @@
     <Compile Include="ViewModels\Clients\ViewCreateClientModel.cs" />
     <Compile Include="ViewModels\Deliveries\ViewDeliveredOrderModel.cs" />
     <Compile Include="ViewModels\FinanceModels\ViewLedgerModel.cs" />
+    <Compile Include="ViewModels\FinanceModels\ViewMoneyReceiptModel.cs" />
+    <Compile Include="ViewModels\FinanceModels\ViewReceivableDetails.cs" />
     <Compile Include="ViewModels\Logs\ViewWriteLogModel.cs" />
     <Compile Include="EntityModels\Requisitions\MonthlyRequisitionModel.cs" />
     <Compile Include="EntityModels\Requisitions\RequisitionItem.cs" />

@@ -1572,7 +1572,11 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                     {
                         AccountCode = reader["SubSubSubAccountCode"].ToString(),
                         Amount = Convert.ToDecimal(reader["Amount"]),
-                        CollectionDate = Convert.ToDateTime(reader["SysDateTime"])
+                        CollectionDate = Convert.ToDateTime(reader["SysDateTime"]),
+                        AccountDetailsId = Convert.ToInt64(reader["AccountDetailsId"]),
+                        VoucherNo = Convert.ToInt64(reader["VoucherNo"]),
+                        ActiveDate = Convert.ToDateTime(reader["SysDateTime"])
+
                     });
                 }
                 reader.Close();
@@ -1583,6 +1587,134 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not Get Collection  by Branch", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public CollectionModel GetCollectionAmountById(long collectionId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetCollectionAmountById";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@CollectionId", collectionId);
+                ConnectionObj.Open();
+                CollectionModel collection = null;
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if(reader.Read())
+                {
+                    collection = new CollectionModel
+                    {
+                        AccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        Amount = Convert.ToDecimal(reader["Amount"]),
+                        CollectionDate = Convert.ToDateTime(reader["SysDateTime"]),
+                        AccountDetailsId = Convert.ToInt64(reader["AccountDetailsId"]),
+                        VoucherNo = Convert.ToInt64(reader["VoucherNo"]),
+                        ActiveDate = Convert.ToDateTime(reader["SysDateTime"]),
+                        CollectionMode = reader["Paymode"].ToString()
+                        
+
+                    };
+                }
+                reader.Close();
+                return collection;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Get Collection  by Id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<ViewReceivableDetails> GetActivetedReceivableListByBranch(int branchId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetActivetedReceivableListByBranch";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                ConnectionObj.Open();
+                List<ViewReceivableDetails> collection = new List<ViewReceivableDetails>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    collection.Add(new ViewReceivableDetails
+                    {
+                        AccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        Amount = Convert.ToDecimal(reader["ChequeAmount"]),
+                        ReceiveDate = Convert.ToDateTime(reader["ReceiveDate"]),
+                        ReceivableId = Convert.ToInt64(reader["ReceivableId"]),
+                        ReceiveableNo = Convert.ToInt64(reader["ReceivableNo"]),
+                        ActiveDate = Convert.ToDateTime(reader["ActiveDate"]),
+                        ClientInfo = reader["ClientInfo"].ToString(),
+                        ChequeDetailsId = Convert.ToInt64(reader["ChequeDetailsId"])
+
+                    });
+                }
+                reader.Close();
+                return collection;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Get receivable details  by Branch", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ViewReceivableDetails GetActivatedReceivableDetailsById(long chequeDetailsId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetActivatedReceivableDetailsById";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ChequeDetailsId", chequeDetailsId);
+                ConnectionObj.Open();
+                ViewReceivableDetails details = null;
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    details = new ViewReceivableDetails
+                    {
+                        AccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        Amount = Convert.ToDecimal(reader["ChequeAmount"]),
+                        ReceiveDate = Convert.ToDateTime(reader["ReceiveDate"]),
+                        ReceivableId = Convert.ToInt64(reader["ReceivableId"]),
+                        ReceiveableNo = Convert.ToInt64(reader["ReceivableNo"]),
+                        ActiveDate = Convert.ToDateTime(reader["ActiveDate"]),
+                        ClientInfo = reader["ClientInfo"].ToString(),
+                        ChequeDetailsId = Convert.ToInt64(reader["ChequeDetailsId"]),
+                        BankAccountNo = reader["BankAccountNo"].ToString(),
+                        SourceBankName = reader["SourceBankName"].ToString(),
+                        ChequeNo = reader["ChequeNo"].ToString()
+                    };
+                }
+                reader.Close();
+                return details;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Get receivable details  by Branch", exception);
             }
             finally
             {

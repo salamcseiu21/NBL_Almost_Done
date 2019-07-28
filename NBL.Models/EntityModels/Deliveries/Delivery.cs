@@ -38,6 +38,7 @@ namespace NBL.Models.EntityModels.Deliveries
         public int CategoryId { get; set; }
         public int CompanyId { get; set; }
         public int Quantity { get; set; }
+        public string ClientInfo { get; set; }
         public Client Client { get; set; }
         public ViewTripModel TripModel { get; set; }
         public FinancialTransactionModel FinancialTransactionModel { get; set; }    

@@ -49,7 +49,7 @@ namespace NBL.Models.EntityModels.Branches
 
         public string GetFullInformation()
         {
-            return $"<strong style='font-size:25px'> {BranchName}</strong></br> <strong style='font-size:15px'>{Title} </strong><br/> {BranchAddress}";
+            return $"<strong style='font-size:25px'>{Title} </strong><br/> {BranchAddress}";
         }
     }
 }

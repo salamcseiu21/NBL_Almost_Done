@@ -552,7 +552,10 @@ namespace NBL.DAL
                         ProductCategoryName = reader["ProductCategoryName"].ToString(),
                         DeliveredDateTime = Convert.ToDateTime(reader["DeliveryDate"]),
                         ReturnDateTime = Convert.ToDateTime(reader["SysDateTime"]),
-                        OrderDateTime = Convert.ToDateTime(reader["OrderDate"])
+                        OrderDateTime = Convert.ToDateTime(reader["OrderDate"]),
+                        VatAmount = Convert.ToDecimal(reader["VatAmount"]),
+                        DiscountAmount = Convert.ToDecimal(reader["UnitDiscount"]),
+                        UnitPrice = Convert.ToDecimal(reader["UnitPrice"])
                         
                     });
                 }

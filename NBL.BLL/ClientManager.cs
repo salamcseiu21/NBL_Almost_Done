@@ -183,5 +183,10 @@ namespace NBL.BLL
         {
             return _iClientGateway.GetAllClientBySearchTerm(searchTerm);
         }
+
+        public ViewClient GetClientInfoBySubSubSubAccountCode(string accountCode)
+        {
+            return _iClientGateway.GetClientInfoBySubSubSubAccountCode(accountCode);
+        }
     }
 }

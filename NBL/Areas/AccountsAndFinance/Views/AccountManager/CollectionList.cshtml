@@ -1,0 +1,47 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.FinanceModels.CollectionModel>
+@{
+    ViewBag.Title = "Collection List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Collection List</h3>
+    <table class="display table-bordered" id="tbl_Collection_List" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>Account Code</th>
+            <th class="text-right">Amount</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var  item in Model)
+        {
+            <tr>
+                <td>@item.AccountCode</td>
+                <td class="text-right">@item.Amount</td>
+                <td class="text-center">@item.CollectionDate.ToString("dd-MMM-yyyy")</td>
+                <td class="text-center">
+                    @Html.ActionLink(" Money Receipt", "MoneyReceipt", new {id = item.AccountDetailsId}, new {target = "_blank", @class = "fa fa-print" })
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Account Code</th>
+                <th class="text-right">Amount</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_Collection_List").DataTable();
+    </script>
+}

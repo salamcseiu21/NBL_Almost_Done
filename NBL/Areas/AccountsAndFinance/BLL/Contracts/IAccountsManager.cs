@@ -47,5 +47,8 @@ namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
        ICollection<ViewLedgerModel> GetClientLedgerBySubSubSubAccountCode(string clientSubSubSubAccountCode);
        ICollection<Purpose> GetCreditPurposesFromXmlFile(string filePath);
        ICollection<CollectionModel> GetTotalCollectionByBranch(int branchId);
+       CollectionModel GetCollectionAmountById(long id);
+       ICollection<ViewReceivableDetails> GetActivetedReceivableListByBranch(int branchId);
+       ViewReceivableDetails GetActivatedReceivableDetailsById(long chequeDetailsId);
    }
 }

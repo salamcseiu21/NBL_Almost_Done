@@ -49,6 +49,9 @@ namespace NBL.Models.EntityModels.Returns
         public string ProductCategoryName { get; set; } 
         public int Quantity { get; set; }
         public DateTime ReturnDateTime { get; set; }
+        public decimal VatAmount { get; set; }
+        public decimal DiscountAmount { get; set; }
+        public decimal UnitPrice { get; set; }  
 
     }
 }

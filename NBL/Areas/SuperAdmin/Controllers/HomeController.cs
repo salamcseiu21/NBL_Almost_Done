@@ -39,8 +39,8 @@ namespace NBL.Areas.SuperAdmin.Controllers
         private readonly IAccountsManager _iAccountsManager;
         private readonly IReportManager _iReportManager;
         private readonly IVatManager _iVatManager;
-
-        public HomeController(IVatManager iVatManager,IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IReportManager iReportManager,IEmployeeManager iEmployeeManager,ICommonManager iCommonManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IProductManager iProductManager,IAccountsManager iAccountsManager,IDivisionGateway iDivisionGateway)
+        private readonly IDeliveryManager _iDeliveryManager;
+        public HomeController(IVatManager iVatManager,IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IReportManager iReportManager,IEmployeeManager iEmployeeManager,ICommonManager iCommonManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IProductManager iProductManager,IAccountsManager iAccountsManager,IDivisionGateway iDivisionGateway,IDeliveryManager iDeliveryManager)
         {
             _iVatManager = iVatManager;
             _iBranchManager = iBranchManager;
@@ -54,6 +54,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
             _iProductManager = iProductManager;
             _iAccountsManager = iAccountsManager;
             _iDivisionGateway = iDivisionGateway;
+            _iDeliveryManager = iDeliveryManager;
         }
         public ActionResult Home()
         {
@@ -267,6 +268,48 @@ namespace NBL.Areas.SuperAdmin.Controllers
         {
             var histories= _iReportManager.GetLoginHistoryByDate(DateTime.Now);
             return View(histories);
+        }
+
+        public ActionResult DeliveredOrders()
+        {
+          var orders= _iDeliveryManager.GetAllDeliveredOrders();
+            return View(orders);
+        }
+
+        public ActionResult Chalan(int deliveryId)
+        {
+            var chalan = _iDeliveryManager.GetChalanByDeliveryId(deliveryId);
+            return View(chalan);
+
+        }
+
+        public ActionResult DeliveredBarCodeList(int deliveryId)
+        {
+            var chalan = _iDeliveryManager.GetChalanByDeliveryId(deliveryId);
+            return View(chalan);
+
+        }
+        [HttpGet]
+        public ActionResult Invoice(int deliveryId)
+        {
+            var delivery = _iDeliveryManager.GetOrderByDeliveryId(deliveryId);
+            //var chalan = _iDeliveryManager.GetChalanByDeliveryId(deliveryId);
+            var deliveryDetails = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(deliveryId);
+
+            // var invocedOrder = _iInvoiceManager.GetInvoicedOrderByInvoiceId(deliveryId);
+            var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
+            //IEnumerable<InvoiceDetails> details = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceId(deliveryId);
+            var client = _iClientManager.GetClientDeailsById(orderInfo.ClientId);
+
+            ViewInvoiceModel model = new ViewInvoiceModel
+            {
+                Client = client,
+                Order = orderInfo,
+                Delivery = delivery,
+                DeliveryDetails = deliveryDetails
+            };
+            return View(model);
+
         }
     }
 

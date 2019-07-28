@@ -690,6 +690,104 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public ViewClient GetClientInfoBySubSubSubAccountCode(string accountCode)
+        {
+            try
+            {
+                ViewClient client = new ViewClient();
+                CommandObj.Parameters.Clear();
+                CommandObj.CommandText = "UDSP_GetClientInfoBySubSubSubAccountCode";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@AccountCode", accountCode);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if(reader.Read())
+                {
+                    client = new ViewClient
+                    {
+
+
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        ClientName = reader["Name"].ToString(),
+                        CommercialName = DBNull.Value.Equals(reader["CommercialName"])
+                            ? null
+                            : reader["CommercialName"].ToString(),
+                        Address = reader["Address"].ToString(),
+                        Phone = reader["Phone"].ToString(),
+                        AlternatePhone = DBNull.Value.Equals(reader["AltPhone"]) ? null : reader["AltPhone"].ToString(),
+                        Email = DBNull.Value.Equals(reader["Email"]) ? null : reader["Email"].ToString(),
+                        Gender = reader["Gender"].ToString(),
+                        Fax = DBNull.Value.Equals(reader["Fax"]) ? null : reader["Fax"].ToString(),
+                        Website = DBNull.Value.Equals(reader["Website"]) ? null : reader["Website"].ToString(),
+                        PostOfficeId = DBNull.Value.Equals(reader["PostOfficeId"])
+                            ? default(int)
+                            : Convert.ToInt32(reader["PostOfficeId"]),
+                        ClientTypeId = Convert.ToInt32(reader["ClientTypeId"]),
+                        UpazillaId =
+                            DBNull.Value.Equals(reader["UpazillaId"])
+                                ? default(int)
+                                : Convert.ToInt32(reader["UpazillaId"]),
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        DistrictId =
+                            DBNull.Value.Equals(reader["DistrictId"])
+                                ? default(int)
+                                : Convert.ToInt32(reader["DistrictId"]),
+                        DivisionId =
+                            DBNull.Value.Equals(reader["DivisionId"])
+                                ? default(int)
+                                : Convert.ToInt32(reader["DivisionId"]),
+                        ClientTypeName = reader["ClientTypeName"].ToString(),
+                        Discount = Convert.ToDecimal(reader["Discount"]),
+                        PostCode = DBNull.Value.Equals(reader["PostCode"]) ? null : reader["PostCode"].ToString(),
+                        PostOfficeName = DBNull.Value.Equals(reader["PostOfficeName"])
+                            ? null
+                            : reader["PostOfficeName"].ToString(),
+                        UpazillaName = DBNull.Value.Equals(reader["UpazillaName"])
+                            ? null
+                            : reader["UpazillaName"].ToString(),
+                        DistrictName = DBNull.Value.Equals(reader["DistrictName"])
+                            ? null
+                            : reader["DistrictName"].ToString(),
+                        DivisionName = DBNull.Value.Equals(reader["DivisionName"])
+                            ? null
+                            : reader["DivisionName"].ToString(),
+                        SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        EntryDate = Convert.ToDateTime(reader["EntryDate"]),
+                        ClientImage = DBNull.Value.Equals(reader["ClientImage"])
+                            ? null
+                            : reader["ClientImage"].ToString(),
+                        ClientSignature = DBNull.Value.Equals(reader["ClientSignature"])
+                            ? null
+                            : reader["ClientSignature"].ToString(),
+                        NationalIdNo = DBNull.Value.Equals(reader["NationalIdNo"])
+                            ? null
+                            : reader["NationalIdNo"].ToString(),
+                        Active = reader["Active"].ToString(),
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
+                        MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"])
+
+                    };
+
+                }
+                reader.Close();
+                return client;
+
+            }
+            catch (Exception e)
+            {
+                Log.WriteErrorLog(e);
+                throw new Exception("Unable to collect Client Information by Sub sub sub account code", e);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         public List<ViewProduct> GetStockProductToclient(int clientId)
         {
             try

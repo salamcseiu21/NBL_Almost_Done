@@ -107,6 +107,21 @@ namespace NBL.Areas.AccountsAndFinance.BLL
             return _iAccountGateway.GetTotalCollectionByBranch(branchId);
         }
 
+        public CollectionModel GetCollectionAmountById(long id)
+        {
+            return _iAccountGateway.GetCollectionAmountById(id);
+        }
+
+        public ICollection<ViewReceivableDetails> GetActivetedReceivableListByBranch(int branchId)
+        {
+            return _iAccountGateway.GetActivetedReceivableListByBranch(branchId);
+        }
+
+        public ViewReceivableDetails GetActivatedReceivableDetailsById(long chequeDetailsId)
+        {
+            return _iAccountGateway.GetActivatedReceivableDetailsById(chequeDetailsId);
+        }
+
         private int GetMaxVoucherNoByTransactionInfix(string infix)
         {
             int temp = _invoiceGateway.GetMaxVoucherNoByTransactionInfix(infix);

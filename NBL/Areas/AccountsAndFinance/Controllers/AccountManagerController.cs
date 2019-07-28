@@ -13,6 +13,7 @@ using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.FinanceModels;
 
 namespace NBL.Areas.AccountsAndFinance.Controllers
 {
@@ -425,7 +426,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             {
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 List<CollectionModel> collection= _iAccountsManager.GetTotalCollectionByBranch(branchId).ToList();
-                return View();
+                return View(collection);
             }
             catch (Exception exception)
             {
@@ -433,6 +434,35 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 Log.WriteErrorLog(exception);
                 return PartialView("_ErrorPartial", exception);
             }
+        }
+
+
+        public ActionResult ActivetedReceivableList()  
+        {
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                List<ViewReceivableDetails> collection = _iAccountsManager.GetActivetedReceivableListByBranch(branchId).ToList();
+                return View(collection);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        public ActionResult MoneyReceipt(long id)
+        {
+
+            ViewReceivableDetails collectionModel = _iAccountsManager.GetActivatedReceivableDetailsById(id); 
+            ViewMoneyReceiptModel aModel = new ViewMoneyReceiptModel
+            {
+                ReceivableDetails = collectionModel,
+                Client = _iClientManager.GetClientInfoBySubSubSubAccountCode(collectionModel.AccountCode)
+            };
+            return View(aModel);
         }
     }
 }

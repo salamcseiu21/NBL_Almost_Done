@@ -1554,4 +1554,56 @@ The statement has been terminated.</CustomeMessage>
     <LogDateTime>2019-07-25T17:23:49.4452792+06:00</LogDateTime>
     <CustomeMessage>Could not collect outstanding balance of client by Account code due to Sql Exception</CustomeMessage>
   </Error>
+  <Error LogId="19-Jul-272118af2f-1e2e-4327-b56c-ad4441e70be5">
+    <Heading>System.NullReferenceException</Heading>
+    <LogMessage>   at NBL.Areas.Production.Controllers.BarCodeController.Print(PrintBarCodeModel model) in E:\API\NBL\NBL\Areas\Production\Controllers\BarCodeController.cs:line 179</LogMessage>
+    <LogDateTime>2019-07-27T09:55:07.5266116+06:00</LogDateTime>
+    <CustomeMessage>Object reference not set to an instance of an object.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-27ddbad106-fb55-47e4-b99d-582760c8d7ac">
+    <Heading>System.NullReferenceException</Heading>
+    <LogMessage>   at NBL.Areas.Production.Controllers.BarCodeController.Print(PrintBarCodeModel model) in E:\API\NBL\NBL\Areas\Production\Controllers\BarCodeController.cs:line 179</LogMessage>
+    <LogDateTime>2019-07-27T09:55:34.6590311+06:00</LogDateTime>
+    <CustomeMessage>Object reference not set to an instance of an object.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-27b982b392-cafa-4cf9-91fc-b2d331738692">
+    <Heading>System.NullReferenceException</Heading>
+    <LogMessage>   at NBL.Areas.Production.Controllers.BarCodeController.Print(PrintBarCodeModel model) in E:\API\NBL\NBL\Areas\Production\Controllers\BarCodeController.cs:line 179</LogMessage>
+    <LogDateTime>2019-07-27T09:57:20.7228995+06:00</LogDateTime>
+    <CustomeMessage>Object reference not set to an instance of an object.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-28f88f0c93-1869-4403-b57c-1dd02bbdc1ef">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetTotalCollectionByBranch(Int32 branchId) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 1571</LogMessage>
+    <LogDateTime>2019-07-28T10:58:38.8306982+06:00</LogDateTime>
+    <CustomeMessage>SystemDateTime</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-28a29f63a3-8046-477c-b13e-4b07802103d6">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetTotalCollectionByBranch(Int32 branchId) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 1589
+   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.GetTotalCollectionByBranch(Int32 branchId) in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 107
+   at NBL.Areas.AccountsAndFinance.Controllers.AccountManagerController.CollectionList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountManagerController.cs:line 428</LogMessage>
+    <LogDateTime>2019-07-28T10:58:38.8765753+06:00</LogDateTime>
+    <CustomeMessage>Could not Get Collection  by Branch</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-280bc765b8-d06d-45b6-93c9-7dc1c567181f">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetActivetedReceivableListByBranch(Int32 branchId) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 1653</LogMessage>
+    <LogDateTime>2019-07-28T15:18:33.3714848+06:00</LogDateTime>
+    <CustomeMessage>Amount</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-288364b886-a3fb-446c-88f4-58eb39335e54">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetActivetedReceivableListByBranch(Int32 branchId) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 1673
+   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.GetActivetedReceivableListByBranch(Int32 branchId) in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 117
+   at NBL.Areas.AccountsAndFinance.Controllers.AccountManagerController.ActivetedReceivableList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountManagerController.cs:line 445</LogMessage>
+    <LogDateTime>2019-07-28T15:18:33.4084136+06:00</LogDateTime>
+    <CustomeMessage>Could not Get receivable details  by Branch</CustomeMessage>
+  </Error>
 </Errors>

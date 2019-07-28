@@ -24,6 +24,21 @@
         </li>
         <li class="treeview">
             <a href="#">
+                <i class="fa fa-money"></i>
+                <span>Print Money Receipt</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Today's Money Receipt", "ActiveReceivable", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
+                <li>@Html.ActionLink(" All Money Receipt", "ActivetedReceivableList", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
+            </ul>
+        </li>
+        
+
+        <li class="treeview">
+            <a href="#">
                 <i class="fa fa-book"></i> <span>Reports</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
@@ -92,7 +107,7 @@
                 <li>@Html.ActionLink(" Clients", "ViewClient", "ShowInfo", new {area = "CommonArea"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
                 <li>@Html.ActionLink(" Products", "ViewProduct", "ShowInfo", new {area = "CommonArea"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
                 <li>@Html.ActionLink(" Branch List", "ViewBranch", "ShowInfo", new {area = "CommonArea"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
-                <li>@Html.ActionLink(" Collection List", "CollectionList", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
+                @*<li>@Html.ActionLink(" Collection List", "CollectionList", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>*@
             </ul>
         </li>
     </ul>

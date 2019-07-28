@@ -275,7 +275,34 @@ namespace NBL.Areas.Production.Controllers
             return Json(products, JsonRequestBehavior.AllowGet);
         }
 
-
+        public ActionResult PrintTypeWishBarcode()
+        {
+            try
+            {
+                ViewBag.ProductId = new SelectList(_iProductManager.GetAll(), "ProductId", "ProductName");
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public ActionResult PrintTypeWishBarcode(PrintBarCodeModel model)
+        {
+            try
+            {
+                var products = _iBarCodeManager.GetTodaysProductionProductList(model.ProductionDate);
+                ViewBag.ProductId = new SelectList(_iProductManager.GetAll(), "ProductId", "ProductName");
+                return PartialView("_PrintTypeWisePartialPage", products);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         //-------------Manually Generate Barcode --------------
         public ActionResult ManualGenerateBarcode()
         {

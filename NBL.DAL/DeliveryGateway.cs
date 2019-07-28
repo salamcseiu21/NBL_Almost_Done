@@ -219,7 +219,9 @@ namespace NBL.DAL
                         DriverName = reader["DriverName"].ToString(),
                         Transportation = reader["Transportation"].ToString(),
                         TransportationCost = Convert.ToDecimal(reader["TransportationCost"]),
-                        VehicleNo = reader["VehicleNo"].ToString()
+                        VehicleNo = reader["VehicleNo"].ToString(),
+                        ClientInfo = reader["ClientInfo"].ToString()
+                        
                     };
                     orders.Add(aModel);
                 }

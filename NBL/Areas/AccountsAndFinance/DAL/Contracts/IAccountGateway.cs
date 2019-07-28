@@ -83,5 +83,8 @@ namespace NBL.Areas.AccountsAndFinance.DAL.Contracts
         AccountSummary GetAccountSummaryofCurrentMonthByBranchAndCompanyId(int branchId, int companyId);
        ICollection<ViewLedgerModel> GetClientLedgerBySubSubSubAccountCode(string clientSubSubSubAccountCode);
        ICollection<CollectionModel> GetTotalCollectionByBranch(int branchId);
+       CollectionModel GetCollectionAmountById(long collectionId);
+       ICollection<ViewReceivableDetails> GetActivetedReceivableListByBranch(int branchId);
+       ViewReceivableDetails GetActivatedReceivableDetailsById(long chequeDetailsId);
    }
 }

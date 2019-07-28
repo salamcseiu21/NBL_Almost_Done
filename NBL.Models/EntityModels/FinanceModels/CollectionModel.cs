@@ -10,6 +10,10 @@ namespace NBL.Models.EntityModels.FinanceModels
     {
         public string AccountCode { get; set; }
         public decimal Amount { get; set; }
-        public DateTime CollectionDate { get; set; }    
+        public DateTime CollectionDate { get; set; }
+        public long AccountDetailsId { get; set; }
+        public long VoucherNo { get; set; }
+        public DateTime ActiveDate { get; set; }
+        public string CollectionMode { get; set; }  
     }
 }

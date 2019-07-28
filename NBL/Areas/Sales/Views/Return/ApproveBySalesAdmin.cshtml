@@ -10,7 +10,7 @@
 
     
     <div class="panel panel-info">
-        <div class="panel panel-heading"><strong style="font-weight: bolder">Client Information</strong></div>
+        <div class="panel panel-heading"><strong style="font-weight: bolder;font-size: 20px">Client Information</strong></div>
         <div class="panel panel-body" style="margin: 0; padding: 0;font-weight: bolder">
             <div class="row">
 
@@ -49,8 +49,8 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-10">
-            <h3 class="text-center text-green">Approve Sales Return</h3>
+        <div class="col-md-12">
+            <h3 class="text-center text-green" style="margin-top: 0; padding-top: 0;">Approve Sales Return</h3>
             @if (ViewBag.Result != null)
             {
                 <div class="text-center text-danger">@ViewBag.Result</div>
@@ -58,82 +58,67 @@
             @using (Html.BeginForm())
             {
                 <div class="form-horizontal">
+                    <table id="tbl_Return_details" class="display table-bordered" style="border: 1px solid">
+                        <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Quanity</th>
+                            <th>Delivery Ref</th>
+                            <th>Order Date</th>
+                            <th>UnitPrice</th>
+                            <th>Vat Amount</th>
+                            <th>Discount</th>
+                            <th>Delivery-to-Return</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model.ReturnDetailses)
+                        {
+                            <tr>
+                                <td>@item.ProductName</td>
+                   
+                                <td class="text-center">@item.Quantity</td>
+                                <td>@item.DeliveryRef</td>
+                                <td>@item.OrderDateTime.ToString("D")</td>
+                                <td class="text-right">
+                                    @item.UnitPrice
+                                </td>
+                    
+                                <td class="text-right">@item.VatAmount</td>
+                                <td class="text-right">@item.DiscountAmount.ToString("N2")</td>
+                                <td class="text-center">@(Math.Ceiling((item.ReturnDateTime - item.DeliveredDateTime).TotalDays))</td>
+                            </tr>
+                        }
+                        </tbody>
+                       
+                    </table>
+                    <br/>
                     <div class="form-group">
                         <label for="Remarks" class="control-label col-md-3">Remarks</label>
                         <div class="col-md-9">
-                            <input id="salesReturnId" name="salesReturnId" value="@ViewBag.SalesReturnId" type="hidden" />
+                            <input id="salesReturnId" name="salesReturnId" value="@ViewBag.SalesReturnId" type="hidden"/>
                             <textarea id="Remarks" name="Remarks" placeholder="Write remarks..." class="form-control" required autofocus style="resize: none" rows="3"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-9 col-md-offset-3">
 
-                            @Html.ActionLink(" Cancel", "ViewAll", "Return", null, new { @class = "btn btn-danger" })
-                            <input type="submit" value="Save" class="btn btn-primary" />
+                            @Html.ActionLink(" Cancel", "ViewAll", "Return", null, new {@class = "btn btn-danger"})
+                            <input type="submit" value="Save" class="btn btn-primary"/>
                         </div>
                     </div>
                 </div>
             }
         </div>
     </div>
-    <h3 class="text-center text-green"> Return Details</h3>
-    <table id="tbl_Return_details" class="display table-bordered" style="border: 1px solid">
-        <thead>
-            <tr>
-                <th>Product Name</th>
-                <th>Quanity</th>
-                <th>Delivery Ref</th>
-                <th>Order Date</th>
-                <th>Sales Manager Approve</th>
-                <th>Delivery Date</th>
-                <th>Return Date</th>
-                <th>Delivery-to-Return</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ReturnDetailses)
-            {
-                <tr>
-                    <td>@item.ProductName</td>
-                   
-                    <td class="text-center">@item.Quantity</td>
-                    <td>@item.DeliveryRef</td>
-                    <td>@item.OrderDateTime.ToString("D")</td>
-                    <td>
-                        @if (!item.ApproveByNsmDateTime.HasValue)
-                        {
-                            <p>N/A</p>
-                        }
-                        else
-                        {
-                            @Convert.ToDateTime(item.ApproveByNsmDateTime).ToString("D")
-                        }
-                    </td>
-                    
-                    <td>@item.DeliveredDateTime.ToString("D")</td>
-                    <td>@item.ReturnDateTime.ToString("D")</td>
-                    <td class="text-center">@(Math.Ceiling((item.ReturnDateTime - item.DeliveredDateTime).TotalDays))</td>
-                </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Product Name</th>
-                <th>Quanity</th>
-                <th>Delivery Ref</th>
-                <th>Order Date</th>
-                <th>Sales Manager Approve</th>
-                <th>Delivery Date</th>
-                <th>Return Date</th>
-                <th>Delivery-to-Return</th>
-            </tr>
-        </tfoot>
-    </table>
+   
 </section>
 
 @section Scripts
 {
     <script>
-        $("#tbl_Return_details").DataTable();
+        $("#tbl_Return_details").DataTable({
+            searching: false, paging: false, info: false
+        });
     </script>
 }
