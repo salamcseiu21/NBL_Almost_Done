@@ -45,6 +45,7 @@ namespace NBL.BLL.Contracts
        ICollection<Delivery> GetAllDeliveredOrdersByDistributionPointAndCompanyId(int branchId, int companyId);
         ViewChalanModel GetChalanByDeliveryIdFromFactory(int deliveryId);
        ViewChalanModel GetDeliveredReplaceBarcodeListbyDeliveryId(int deliveryId);
-       ICollection<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(int branchId, int companyId, DateTime now, int userId);   
+       ICollection<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(int branchId, int companyId, DateTime now, int userId);
+       ICollection<ViewProduct> GetDeliveredProductListByTransactionRef(string deliveryRef);
    }
 }

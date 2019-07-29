@@ -11,7 +11,7 @@ namespace NBL.Models.ViewModels.Returns
    public class ViewReturnReceiveModel
     {
         public long SalesReturnId { get; set; }
-        public List<ReturnDetails> ReturnDetailses { get; set; }
+        public List<ViewReturnDetails> ReturnDetailses { get; set; }
         public int ReceiveByUserId { get; set; }
         public string TransactionRef { get; set; }
         public int Status { get; set; }

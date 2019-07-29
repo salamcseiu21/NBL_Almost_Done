@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
+using NBL.Areas.Sales.BLL.Contracts;
 using NBL.BLL.Contracts;
 using NBL.Models;
+using NBL.Models.EntityModels.FinanceModels;
+using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Returns;
 using NBL.Models.Logs;
+using NBL.Models.Validators;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
+using NBL.Models.ViewModels.Logs;
+using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Returns;
 
 namespace NBL.Areas.Sales.Controllers
@@ -20,12 +26,16 @@ namespace NBL.Areas.Sales.Controllers
         private readonly IProductManager _iProductManager;
         private readonly IProductReturnManager _iProductReturnManager;
         private readonly IClientManager _iClientManager;
-        public ReturnController(IDeliveryManager iDeliveryManager,IProductManager iProductManager,IProductReturnManager iProductReturnManager,IClientManager iClientManager)
+        private readonly IOrderManager _iOrderManager;
+        private readonly IInvoiceManager _iInvoiceManager;
+        public ReturnController(IDeliveryManager iDeliveryManager,IProductManager iProductManager,IProductReturnManager iProductReturnManager,IClientManager iClientManager,IOrderManager iOrderManager,IInvoiceManager iInvoiceManager)
         {
             _iDeliveryManager = iDeliveryManager;
             _iProductManager = iProductManager;
             _iProductReturnManager = iProductReturnManager;
             _iClientManager = iClientManager;
+            _iOrderManager = iOrderManager;
+            _iInvoiceManager = iInvoiceManager;
         }
         // GET: Sales/Return
         public ActionResult Home()
@@ -285,7 +295,7 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
-                List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+                List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
                 return View(models);
             }
             catch (Exception exception)
@@ -310,6 +320,7 @@ namespace NBL.Areas.Sales.Controllers
             }
         }
 
+       
 
 
         //---------------------Approve By sales Manager---------------
@@ -318,9 +329,39 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
+
                 ViewBag.SalesReturnId = salesReturnId;
-                List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
-                return View(models);
+                var returnById = _iProductReturnManager.GetSalesReturnBySalesReturnId(salesReturnId);
+                List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+                ViewReturnModel returnModel = new ViewReturnModel
+                {
+                    ReturnDetailses = models,
+                    ReturnModel = returnById
+                };
+                var firstOrdefault=models.FirstOrDefault();
+                if(firstOrdefault != null)
+                {
+                    var delivery = _iDeliveryManager.GetOrderByDeliveryId(firstOrdefault.DeliveryId);
+                    //var chalan = _iDeliveryManager.GetChalanByDeliveryId(deliveryId);
+                    var deliveryDetails = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(firstOrdefault.DeliveryId);
+
+                    // var invocedOrder = _iInvoiceManager.GetInvoicedOrderByInvoiceId(deliveryId);
+                    var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
+                    //IEnumerable<InvoiceDetails> details = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceId(deliveryId);
+                    var client = _iClientManager.GetClientDeailsById(orderInfo.ClientId);
+
+                    ViewInvoiceModel model = new ViewInvoiceModel
+                    {
+                        Client = client,
+                        Order = orderInfo,
+                        Delivery = delivery,
+                        DeliveryDetails = deliveryDetails
+                    };
+
+                    returnModel.InvoiceModel = model;
+                }
+
+                return View(returnModel);
             }
             catch (Exception exception)
             {
@@ -343,8 +384,13 @@ namespace NBL.Areas.Sales.Controllers
                     return RedirectToAction("ViewAll");
                 }
 
-                List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
-                return View(models);
+                List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+                ViewReturnModel returnModel = new ViewReturnModel
+                {
+                    ReturnDetailses = models,
+                   
+                };
+                return View(returnModel);
             }
             catch (Exception exception)
             {
@@ -363,14 +409,34 @@ namespace NBL.Areas.Sales.Controllers
             {
                 ViewBag.SalesReturnId = salesReturnId;
                 var returnById=_iProductReturnManager.GetSalesReturnBySalesReturnId(salesReturnId);
-                List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
-                var client = _iClientManager.GetById(returnById.ClientId);
+                List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+
                 ViewReturnModel model = new ViewReturnModel
                 {
                     ReturnModel = returnById,
                     ReturnDetailses = models,
-                    Client = client
+                   
                 };
+                var firstOrdefault = models.FirstOrDefault();
+                if (firstOrdefault != null)
+                {
+                    var delivery = _iDeliveryManager.GetOrderByDeliveryId(firstOrdefault.DeliveryId);
+                    var deliveryDetails = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(firstOrdefault.DeliveryId);
+                    var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
+                    var client = _iClientManager.GetClientDeailsById(orderInfo.ClientId);
+
+                    ViewInvoiceModel invoice = new ViewInvoiceModel
+                    {
+                        Client = client,
+                        Order = orderInfo,
+                        Delivery = delivery,
+                        DeliveryDetails = deliveryDetails
+                    };
+                    model.InvoiceModel = invoice;
+                   
+                }
+              
+                
                 return View(model);
             }
             catch (Exception exception)
@@ -388,14 +454,86 @@ namespace NBL.Areas.Sales.Controllers
                 var user = (ViewUser)Session["user"];
                 long salesReturnId = Convert.ToInt64(collection["salesReturnId"]);
                 var remarks = collection["Remarks"];
-                bool result = _iProductReturnManager.ApproveReturnByNsm(remarks, salesReturnId, user.UserId);
+                var returnLessAmount = Convert.ToDecimal(collection["ReturnLessAmount"]);
+               
+                List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+
+
+               // List<ViewReturnDetails> newReturnDetailsList = new List<ViewReturnDetails>();
+                //ViewInvoiceModel invoice = new ViewInvoiceModel();
+                //var firstOrdefault = models.FirstOrDefault();
+
+                //var delivery = _iDeliveryManager.GetOrderByDeliveryId(firstOrdefault.DeliveryId);
+                //var invoicedOrder = _iInvoiceManager.GetInvoicedOrderByInvoiceId(delivery.InvoiceId);
+                //var deliveryDetails = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(firstOrdefault.DeliveryId);
+                //var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
+                //invoice = new ViewInvoiceModel
+                //{
+                //    Order = orderInfo,
+                //    DeliveryDetails = deliveryDetails
+                //};
+
+
+
+                //foreach (ViewReturnDetails item in models)
+                //{
+                //    item.UnitPrice = invoice.DeliveryDetails.ToList().Find(n => n.ProductId == item.ProductId)
+                //        .UnitPrice;
+                //    item.VatAmount= invoice.DeliveryDetails.ToList().Find(n => n.ProductId == item.ProductId)
+                //        .VatAmount;
+                //    item.DiscountAmount = invoice.DeliveryDetails.ToList().Find(n => n.ProductId == item.ProductId)
+                //        .UnitDiscount;
+                //    newReturnDetailsList.Add(item);
+                //}
+
+
+                //var grossAmount = newReturnDetailsList.Sum(n => (n.UnitPrice + n.VatAmount) * n.Quantity);
+                //var tradeDiscount = newReturnDetailsList.Sum(n => n.DiscountAmount * n.Quantity);
+                //var invoiceDiscount = (invoicedOrder.SpecialDiscount / invoicedOrder.Quantity) * newReturnDetailsList.Sum(n=>n.Quantity);
+                //var grossDiscount = tradeDiscount + invoiceDiscount;
+                //var vat = newReturnDetailsList.Sum(n => n.VatAmount * n.Quantity);
+
+
+                //var financialModel =
+                //    new FinancialTransactionModel
+                //    {
+                //        //--------Cr -------------------
+                //        ClientCode = invoice.Client.SubSubSubAccountCode,
+                //        ClientCrAmount = grossAmount - grossDiscount,
+                //        GrossDiscountAmount = grossDiscount,
+                //        GrossDiscountCode = "2102018",
+
+                //        //--------Dr -------------------
+                //        SalesRevenueCode = "2001021",
+                //        SalesRevenueAmount = grossAmount - vat,
+                //        VatCode = "2102013",
+                //        VatAmount = vat,
+
+
+                //        //--------------Sales Return---------
+                //        SalesReturnAmount = returnLessAmount,
+                //        SalesReturnCode = "1001022",
+                //        ClientDrAmount = returnLessAmount,
+
+
+                //        TradeDiscountCode = "2102012",
+                //        TradeDiscountAmount = tradeDiscount,
+                //        InvoiceDiscountAmount = invoiceDiscount,
+                //        InvoiceDiscountCode = "2102011"
+
+
+                //    };
+
+
+                
+
+                bool result = _iProductReturnManager.ApproveReturnBySalesAdmin(remarks, salesReturnId, user.UserId,returnLessAmount);
                 if (result)
                 {
                     return RedirectToAction("ViewAll");
                 }
-
-                List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
-                return View(models);
+                ViewReturnModel aModel = new ViewReturnModel {ReturnDetailses = models};
+                return View(aModel);
             }
             catch (Exception exception)
             {
@@ -403,6 +541,283 @@ namespace NBL.Areas.Sales.Controllers
                 Log.WriteErrorLog(exception);
                 return PartialView("_ErrorPartial", exception);
             }
+        }
+        [Authorize(Roles = "DistributionManager")]
+        public ActionResult PendingReturnList()
+        {
+            try
+            {
+                var products = _iProductReturnManager.GetAllReturnsByStatus(2).ToList();
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [Authorize(Roles = "DistributionManager")]
+        public ActionResult Receive(long id)
+        {
+            try
+            {
+                ViewBag.SalesReturnId = id;
+                var returnById = _iProductReturnManager.GetSalesReturnBySalesReturnId(id);
+                List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(id).ToList();
+                ViewReturnModel model = new ViewReturnModel
+                {
+                    ReturnModel = returnById,
+                    ReturnDetailses = models,
+
+                };
+                var firstOrdefault = models.FirstOrDefault();
+                if (firstOrdefault != null)
+                {
+                    var delivery = _iDeliveryManager.GetOrderByDeliveryId(firstOrdefault.DeliveryId);
+                    var deliveryDetails = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(firstOrdefault.DeliveryId);
+                    var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
+                    var client = _iClientManager.GetClientDeailsById(orderInfo.ClientId);
+
+                    ViewInvoiceModel invoice = new ViewInvoiceModel
+                    {
+                        Client = client,
+                        Order = orderInfo,
+                        Delivery = delivery,
+                        DeliveryDetails = deliveryDetails
+                    };
+                    model.InvoiceModel = invoice;
+
+                }
+
+
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult Receive(long salesReturnId, FormCollection collection)
+        {
+
+            try
+            {
+
+                var user = (ViewUser)Session["user"];
+                long returnId = salesReturnId;
+                var returnById = _iProductReturnManager.GetSalesReturnBySalesReturnId(salesReturnId);
+                List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+              
+                List<ViewReturnDetails> newReturnDetailsList = new List<ViewReturnDetails>();
+                ViewInvoiceModel invoice = new ViewInvoiceModel();
+                var firstOrdefault = models.FirstOrDefault();
+
+                var delivery = _iDeliveryManager.GetOrderByDeliveryId(firstOrdefault.DeliveryId);
+                var invoicedOrder = _iInvoiceManager.GetInvoicedOrderByInvoiceId(delivery.InvoiceId);
+                var deliveryDetails = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(firstOrdefault.DeliveryId);
+                var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
+                var client = _iClientManager.GetClientDeailsById(orderInfo.ClientId);
+
+                invoice = new ViewInvoiceModel
+                {
+                    Order = orderInfo,
+                    DeliveryDetails = deliveryDetails,
+                    Client = client
+                };
+
+
+
+                foreach (ViewReturnDetails item in models)
+                {
+                    item.UnitPrice = invoice.DeliveryDetails.ToList().Find(n => n.ProductId == item.ProductId)
+                        .UnitPrice;
+                    item.VatAmount = invoice.DeliveryDetails.ToList().Find(n => n.ProductId == item.ProductId)
+                        .VatAmount;
+                    item.DiscountAmount = invoice.DeliveryDetails.ToList().Find(n => n.ProductId == item.ProductId)
+                        .UnitDiscount;
+                    newReturnDetailsList.Add(item);
+                }
+
+
+                var grossAmount = newReturnDetailsList.Sum(n => (n.UnitPrice + n.VatAmount) * n.Quantity);
+                var tradeDiscount = newReturnDetailsList.Sum(n => n.DiscountAmount * n.Quantity);
+                var invoiceDiscount = (invoicedOrder.SpecialDiscount / invoicedOrder.Quantity) * newReturnDetailsList.Sum(n => n.Quantity);
+                var grossDiscount = tradeDiscount + invoiceDiscount;
+                var vat = newReturnDetailsList.Sum(n => n.VatAmount * n.Quantity);
+
+
+                var financialModel =
+                    new FinancialTransactionModel
+                    {
+                        //--------Cr -------------------
+                        ClientCode = invoice.Client.SubSubSubAccountCode,
+                        ClientCrAmount = grossAmount - grossDiscount,
+                        GrossDiscountAmount = grossDiscount,
+                        GrossDiscountCode = "2102018",
+
+                        //--------Dr -------------------
+                        SalesRevenueCode = "2001021",
+                        SalesRevenueAmount = grossAmount - vat,
+                        VatCode = "2102013",
+                        VatAmount = vat,
+
+
+                        //--------------Sales Return---------
+                        SalesReturnAmount = returnById.LessAmount,
+                        SalesReturnCode = "1001022",
+                        ClientDrAmount = returnById.LessAmount,
+
+
+                        TradeDiscountCode = "2102012",
+                        TradeDiscountAmount = tradeDiscount,
+                        InvoiceDiscountAmount = invoiceDiscount,
+                        InvoiceDiscountCode = "2102011"
+
+
+                    };
+
+                return View();
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+
+
+        [HttpPost]
+        public void SaveScannedBarcodeToTextFile(string barcode, long salesReturnId)
+        {
+            SuccessErrorModel model = new SuccessErrorModel();
+            ViewWriteLogModel log = new ViewWriteLogModel();
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var scannedBarCode = barcode.ToUpper();
+                int productId = Convert.ToInt32(scannedBarCode.Substring(2, 3));
+                var returndetailsbyId= _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList().FirstOrDefault(n=>n.SalesReturnId==salesReturnId);
+                var filePath = GetReceiveProductFilePath(salesReturnId, branchId);
+
+                //------------read Scanned barcode form text file---------
+                var barcodeList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                //------------Load receiveable product---------
+                var receivesProductList = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+                List<ViewProduct> products = _iDeliveryManager.GetDeliveredProductListByTransactionRef(returndetailsbyId.DeliveryRef).ToList();
+                var receivesProductCodeList = products.Select(n=>n.ProductBarCode).ToList();
+                var isvalid = Validator.ValidateProductBarCode(scannedBarCode);
+
+                int requistionQtyByProductId = receivesProductList.ToList().FindAll(n => n.ProductId == productId).Sum(n => n.Quantity);
+
+                int scannedQtyByProductId = barcodeList
+                    .FindAll(n => Convert.ToInt32(n.ProductCode.Substring(2, 3)) == productId).Count;
+
+                bool isScannComplete = requistionQtyByProductId.Equals(scannedQtyByProductId);
+
+                if (isScannComplete)
+                {
+                    model.Message = "<p style='color:green'> Scanned Complete</p>";
+                    // return Json(model, JsonRequestBehavior.AllowGet);
+                }
+                else if (!isvalid)
+                {
+                    model.Message = "<p style='color:red'> Invalid Barcode</p>";
+                    //return Json(model, JsonRequestBehavior.AllowGet);
+                }
+
+                else if (receivesProductCodeList.Contains(scannedBarCode))
+                {
+                    _iProductManager.AddProductToTextFile(scannedBarCode, filePath);
+                }
+            }
+            catch (FormatException exception)
+            {
+                Log.WriteErrorLog(exception);
+                model.Message = "<p style='color:red'>" + exception.GetType() + "</p>";
+                //return Json(model, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                model.Message = "<p style='color:red'>" + exception.Message + "</p>";
+                // return Json(model, JsonRequestBehavior.AllowGet);
+            }
+            // return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public PartialViewResult LoadReceiveableProduct(long salesReturnId)
+        {
+            try
+            {
+                var products = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId);
+                List<ViewDispatchModel> returnList=new List<ViewDispatchModel>();
+                foreach (var item in products )  {
+                     returnList.Add(new ViewDispatchModel
+                     {
+                         ProductName = item.ProductName,
+                         ProductCategory = new ProductCategory
+                         {
+                             ProductCategoryName = item.ProductCategoryName
+                         },
+                         Quantity = item.Quantity
+                     });
+                }
+                return PartialView("_ViewReceivalbeProductPartialPage", returnList);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+
+        [HttpPost]
+        public PartialViewResult LoadScannecdProduct(long salesReturnId)
+        {
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var filePath = GetReceiveProductFilePath(salesReturnId,branchId);
+                List<ScannedProduct> products = new List<ScannedProduct>();
+
+                if (System.IO.File.Exists(filePath))
+                {
+                    //if the file is exists read the file
+                    products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                }
+                else
+                {
+                    //if the file does not exists create the file
+                    System.IO.File.Create(filePath).Close();
+                }
+                return PartialView("_ViewScannedProductPartialPage", products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        private string GetReceiveProductFilePath(long salesReturnId, int branchId)
+        {
+            string fileName = "Received_Return_Product_For_" + salesReturnId + "_" + branchId;
+            var filePath = Server.MapPath("~/Areas/Sales/Files/Returns/" + fileName);
+            return filePath;
         }
     }
 }

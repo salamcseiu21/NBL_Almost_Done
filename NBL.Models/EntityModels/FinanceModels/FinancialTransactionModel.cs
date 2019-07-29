@@ -5,6 +5,7 @@ namespace NBL.Models.EntityModels.FinanceModels
     {
         public string ClientCode { get; set; }
         public decimal ClientDrAmount { get; set; } 
+        public decimal ClientCrAmount { get; set; } 
         public string TradeDiscountCode { get; set; }
         public decimal TradeDiscountAmount { get; set; }  
         public string InvoiceDiscountCode { get; set; }
@@ -14,7 +15,9 @@ namespace NBL.Models.EntityModels.FinanceModels
         public string VatCode { get; set; } 
         public decimal VatAmount { get; set; }   
         public string SalesRevenueCode { get; set; }
+        public string SalesReturnCode { get; set; }
         public decimal SalesRevenueAmount { get; set; }
+        public decimal SalesReturnAmount { get; set; }
         public string TransactionType { get; set; }
 
         public string ExpenceCode { get; set; }

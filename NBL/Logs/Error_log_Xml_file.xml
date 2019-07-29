@@ -1606,4 +1606,36 @@ The statement has been terminated.</CustomeMessage>
     <LogDateTime>2019-07-28T15:18:33.4084136+06:00</LogDateTime>
     <CustomeMessage>Could not Get receivable details  by Branch</CustomeMessage>
   </Error>
+  <Error LogId="19-Jul-294b6ba79f-7ae4-4a6f-882e-7e4ebaadecc1">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetReturnDetailsBySalesReturnId(Int64 salesReturnId) in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 569
+   at NBL.BLL.ProductReturnManager.GetReturnDetailsBySalesReturnId(Int64 salesReturnId) in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 86
+   at NBL.Areas.Sales.Controllers.ReturnController.ApproveBySalesAdmin(Int64 salesReturnId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 366</LogMessage>
+    <LogDateTime>2019-07-29T10:14:31.4987238+06:00</LogDateTime>
+    <CustomeMessage>Could not collect sales returns details</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-29dded8184-0bce-47fd-bbe8-0f5365912c88">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetAllReturnsByStatus(Int32 status) in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 550
+   at NBL.BLL.ProductReturnManager.GetAllReturnsByStatus(Int32 status) in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 103
+   at NBL.Areas.Sales.Controllers.ReturnController.PendingReturnList() in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 324</LogMessage>
+    <LogDateTime>2019-07-29T14:40:08.5333099+06:00</LogDateTime>
+    <CustomeMessage>Could not collect sales returns by status</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-2922d3e893-223e-4f28-bc4c-57f130e0cd88">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetAllReturnsByStatus(Int32 status) in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 551
+   at NBL.BLL.ProductReturnManager.GetAllReturnsByStatus(Int32 status) in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 103
+   at NBL.Areas.Sales.Controllers.ReturnController.PendingReturnList() in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 324</LogMessage>
+    <LogDateTime>2019-07-29T14:41:32.4946946+06:00</LogDateTime>
+    <CustomeMessage>Could not collect sales returns by status</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-290a7a6a92-ee80-44d5-8030-9c624afd6bde">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetSalesReturnBySalesReturnId(Int64 salesReturnId) in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 391
+   at NBL.BLL.ProductReturnManager.GetSalesReturnBySalesReturnId(Int64 salesReturnId) in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 108
+   at NBL.Areas.Sales.Controllers.ReturnController.ApproveByNsm(Int64 salesReturnId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 335</LogMessage>
+    <LogDateTime>2019-07-29T16:37:58.3923817+06:00</LogDateTime>
+    <CustomeMessage>Could not collect sales returns by id</CustomeMessage>
+  </Error>
 </Errors>

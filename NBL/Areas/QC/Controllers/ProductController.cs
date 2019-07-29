@@ -29,7 +29,7 @@ namespace NBL.Areas.QC.Controllers
         // GET: QC/Product
         public ActionResult Receive(int salsesReturnDetailsId)
         {
-            ReturnDetails model = _iProductReturnManager.GetReturnDetailsById(salsesReturnDetailsId);
+            ViewReturnDetails model = _iProductReturnManager.GetReturnDetailsById(salsesReturnDetailsId);
             return View(model);
         }
 
@@ -140,7 +140,7 @@ namespace NBL.Areas.QC.Controllers
         }
         public PartialViewResult LoadReceiveableProduct(long salesReturnId)
         {
-            List<ReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+            List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
             return PartialView("_ViewSalesReturnReceivablePartialPage", models);
         }
         public PartialViewResult LoadScannecdProduct(long salesReturnId)

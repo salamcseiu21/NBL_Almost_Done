@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Returns;
 using NBL.Models.Enums;
 using NBL.Models.ViewModels.Returns;
@@ -81,12 +82,12 @@ namespace NBL.BLL
             return _iProductReturnGateway.GetAll();
         }
 
-        public ICollection<ReturnDetails> GetReturnDetailsBySalesReturnId(long salesReturnId)
+        public ICollection<ViewReturnDetails> GetReturnDetailsBySalesReturnId(long salesReturnId)
         {
          return   _iProductReturnGateway.GetReturnDetailsBySalesReturnId(salesReturnId);
         }
 
-        public ReturnDetails GetReturnDetailsById(int salsesReturnDetailsId)
+        public ViewReturnDetails GetReturnDetailsById(long salsesReturnDetailsId)
         {
             return _iProductReturnGateway.GetReturnDetailsById(salsesReturnDetailsId);
         }
@@ -131,6 +132,12 @@ namespace NBL.BLL
         public ICollection<ViewReturnProductModel> GetAllVerifiedSalesReturnProducts()
         {
             return _iProductReturnGateway.GetAllVerifiedSalesReturnProducts();
+        }
+
+        public bool ApproveReturnBySalesAdmin(string remarks, long salesReturnId, int userId,decimal lessAmount)
+        {
+            int rowAffected = _iProductReturnGateway.ApproveReturnBySalesAdmin(remarks,salesReturnId,userId,lessAmount);
+            return rowAffected > 0;
         }
     }
 }

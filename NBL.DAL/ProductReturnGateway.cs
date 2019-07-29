@@ -312,6 +312,37 @@ namespace NBL.DAL
             }
         }
 
+        public int ApproveReturnBySalesAdmin(string remarks, long salesReturnId, int userId, decimal lessAmount)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_ApproveReturnBySalesAdmin";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Remarks", remarks);
+                CommandObj.Parameters.AddWithValue("@SalesReturnId", salesReturnId);
+                CommandObj.Parameters.AddWithValue("@SalseAdminUserId", userId);
+                CommandObj.Parameters.AddWithValue("@LessAmount", lessAmount);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                int rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not approve sales returns by Sales Admin", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+
+            }
+        }
+
 
         public ReturnModel GetById(int id)
         {
@@ -348,7 +379,8 @@ namespace NBL.DAL
                         //    : Convert.ToDateTime(reader["ReturnApproveDate"]),
                         NsmNotes = DBNull.Value.Equals(reader["Remarks"]) ? null : reader["Remarks"].ToString(),
                         ReturnStatus = Convert.ToInt32(reader["Status"]),
-                        ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"])
+                        ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"]),
+                        LessAmount = DBNull.Value.Equals(reader["LessAmount"]) ? default(decimal) : Convert.ToDecimal(reader["LessAmount"])
                     };
                 }
                 reader.Close();
@@ -496,19 +528,20 @@ namespace NBL.DAL
                 {
                     models.Add(new ReturnModel
                     {
-                        SalesReturnId = Convert.ToInt64(reader["SalesReturnId"]),
+                        SalesReturnId = Convert.ToInt64(reader["Id"]),
                         BranchId = Convert.ToInt32(reader["BranchId"]),
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
-                        ReturnRef = reader["SalesReturnRef"].ToString(),
+                        ReturnRef = reader["ReturnRef"].ToString(),
                         ReturnNo = Convert.ToInt64(reader["SalesReturnNo"]),
-                        TotalQuantity = Convert.ToInt32(reader["TotalQuantity"]),
-                        Remarks =DBNull.Value.Equals(reader["Remarks"])?null: reader["Remarks"].ToString(),
+                        TotalQuantity = Convert.ToInt32(reader["Quantity"]),
+                        Remarks = DBNull.Value.Equals(reader["Remarks"]) ? null : reader["Remarks"].ToString(),
                         SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
-                        ReturnApproveByUserId = Convert.ToInt32(reader["ReturnApproveByUserId"]),
-                        ReturnApproveDateTime = DBNull.Value.Equals(reader["ReturnApproveDate"]) ? default(DateTime) : Convert.ToDateTime(reader["ReturnApproveDate"]),
-                        NsmNotes = DBNull.Value.Equals(reader["NotesByNsm"]) ? null : reader["NotesByNsm"].ToString(),
-                        ReturnStatus =DBNull.Value.Equals(reader["Status"])?default(int): Convert.ToInt32(reader["Status"]),
-                        ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"])
+                        ReturnApproveByUserId = DBNull.Value.Equals(reader["ApproveByManagerUserId"]) ? default(int) : Convert.ToInt32(reader["ApproveByManagerUserId"]),
+                        ReturnApproveDateTime = DBNull.Value.Equals(reader["ApproveByManagerDate"]) ? default(DateTime) : Convert.ToDateTime(reader["ApproveByManagerDate"]),
+                        NsmNotes = DBNull.Value.Equals(reader["NotesByManager"]) ? null : reader["NotesByManager"].ToString(),
+                        ReturnStatus = Convert.ToInt32(reader["Status"]),
+                        ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"]),
+                        ClientInfo = reader["ClientInfo"].ToString()
                     });
                 }
                 reader.Close();
@@ -516,6 +549,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect sales returns by status", exception);
             }
             finally
@@ -529,19 +563,19 @@ namespace NBL.DAL
 
        
 
-        public ICollection<ReturnDetails> GetReturnDetailsBySalesReturnId(long salesReturnId)
+        public ICollection<ViewReturnDetails> GetReturnDetailsBySalesReturnId(long salesReturnId)
         {
             try
             {
                 CommandObj.CommandText = "UDSP_GetSalesReturnDetailsBySalesReturnId";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@SalesReturnId", salesReturnId);
-                List<ReturnDetails> models = new List<ReturnDetails>();
+                List<ViewReturnDetails> models = new List<ViewReturnDetails>();
                 ConnectionObj.Open();
                 SqlDataReader reader = CommandObj.ExecuteReader();
                 while (reader.Read())
                 {
-                    models.Add(new ReturnDetails 
+                    models.Add(new ViewReturnDetails
                     {
                         SalesReturnId = Convert.ToInt64(reader["ReturnId"]),
                         DeliveryRef = reader["DeliveryRef"].ToString(),
@@ -555,8 +589,10 @@ namespace NBL.DAL
                         OrderDateTime = Convert.ToDateTime(reader["OrderDate"]),
                         VatAmount = Convert.ToDecimal(reader["VatAmount"]),
                         DiscountAmount = Convert.ToDecimal(reader["UnitDiscount"]),
-                        UnitPrice = Convert.ToDecimal(reader["UnitPrice"])
-                        
+                        UnitPrice = Convert.ToDecimal(reader["UnitPrice"]),
+                        OrderRef = reader["OrderRef"].ToString(),
+                        SepecialDiscount = Convert.ToDecimal(reader["SpecialDiscount"])
+
                     });
                 }
                 reader.Close();
@@ -575,19 +611,19 @@ namespace NBL.DAL
             }
         }
 
-        public ReturnDetails GetReturnDetailsById(int salsesReturnDetailsId)
+        public ViewReturnDetails GetReturnDetailsById(long salsesReturnDetailsId)
         {
             try
             {
                 CommandObj.CommandText = "UDSP_GetSalesReturnDetailsById";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@SalesReturnDetailsId", salsesReturnDetailsId);
-                ReturnDetails model = null;
+                ViewReturnDetails model = null;
                 ConnectionObj.Open();
                 SqlDataReader reader = CommandObj.ExecuteReader();
                 while (reader.Read())
                 {
-                    model = new ReturnDetails
+                    model = new ViewReturnDetails
                     {
                         SalesReturnId = Convert.ToInt64(reader["SalesReturnId"]),
                         SalesReturnNo = Convert.ToInt64(reader["SalesReturnNo"]),
@@ -609,9 +645,8 @@ namespace NBL.DAL
                         DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
                         DeliveredDateTime = Convert.ToDateTime(reader["DeliveredDateTime"]),
                         BranchId = Convert.ToInt32(reader["BranchId"]),
-                        SalesReturnRef=reader["SalesReturnRef"].ToString()
-
-
+                        SalesReturnRef=reader["SalesReturnRef"].ToString(),
+                       
                     };
                 }
                 reader.Close();

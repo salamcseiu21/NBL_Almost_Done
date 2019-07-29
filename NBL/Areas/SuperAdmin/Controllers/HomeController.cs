@@ -14,6 +14,7 @@ using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.EntityModels.VatDiscounts;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Summaries;
@@ -310,6 +311,35 @@ namespace NBL.Areas.SuperAdmin.Controllers
             };
             return View(model);
 
+        }
+
+        public ActionResult SearchClient()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public PartialViewResult SearchClient(int clientId)
+        {
+            try
+            {
+                var client = _iClientManager.GetClientDeailsById(clientId);
+                var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+                client.LedgerModels = ledgers.ToList();
+                return PartialView("_ViewClientDetailsPartialPage", client);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
     }
 

@@ -31,5 +31,6 @@ namespace NBL.DAL.Contracts
         IEnumerable<ViewReplaceDetailsModel> GetDeliveredReplaceDetailsByDeliveryId(int deliveryId);
         IEnumerable<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(int branchId, int companyId, DateTime date, int userId);
         IEnumerable<Delivery> GetAllDeliveredOrdersByDistributionPointAndCompanyId(int branchId, int companyId);
+        ICollection<ViewProduct> GetDeliveredProductListByTransactionRef(string deliveryRef);
     }
 }

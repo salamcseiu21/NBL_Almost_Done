@@ -1,14 +1,184 @@
-﻿@model IEnumerable<NBL.Models.EntityModels.Returns.ReturnDetails>
+﻿@using NBL.Models.ViewModels.Deliveries
+@model NBL.Models.ViewModels.Returns.ViewReturnModel
 @{
     ViewBag.Title = "Approve";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var returnDetails = Model.ReturnDetailses;
+    var invoice = Model.InvoiceModel;
+    var i = 0;
 }
 
 <section class="content">
 
-    <div class="row">
-        <div class="col-md-10">
+    <div class="row" >
+        <div class="col-md-12">
             <h3 class="text-center text-green">Approve Sales Return</h3>
+            <div class="panel panel-info">
+                <div class="panel panel-body" style="margin: 0; padding: 0;">
+                    <!-- info row -->
+                    <div class="row invoice-info" style="padding: 15px;font-size: 14px">
+                        <!-- /.col -->
+                        <div class="col-md-3 invoice-col">
+                            <img class="img-responsive" src="~/@(invoice.Client.ClientImage?? "Images/User.jpg")" alt="Client Image" title="@invoice.Client.ClientName" width="110" height="150">
+                            <address>
+                                @Html.Raw(invoice.Client?.GetMailingAddress())
+                            </address>
+                            <b>Outstanding : </b>@{
+                                                                            if (invoice.Client.Outstanding < 0)
+                                                                            {
+                                                                                <b>(@(invoice.Client.Outstanding*(-1)))</b>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <b>
+                                                                                    @invoice.Client.Outstanding
+                                                                                </b>
+                                                                            }
+                                                                        }
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-9 invoice-col text-right">
+                            <div class="row">
+                                <div class="col-xs-12 table-responsive">
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th colspan="4"> Invoice Ref : @invoice.Delivery.DeliveryRef</th>
+                                            <th colspan="4" class="text-right">Date: @invoice.Delivery.DeliveryDate.ToString("D")</th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 10px">SL</th>
+                                            <th>Type </th>
+                                            <th class="text-right">Unit Price (&#2547;)</th>
+                                            <th class="text-right">Unit Discount (&#2547;)</th>
+                                            <th class="text-right">Vat (&#2547;)</th>
+                                            <th class="text-right">Sale Price (&#2547;)</th>
+                                            <th class="text-right">Quantity</th>
+                                            <th class="text-right">Invoice Amount (&#2547;)</th>
+                                        </tr>
+
+                                        </thead>
+                                        <tbody>
+
+                                            @{
+                                                int rowNo = 0;
+                                                foreach (IGrouping<string, ViewDeliveredOrderModel> details in invoice.DeliveryDetails.ToList().GroupBy(n => n.ProductCategoryName))
+                                                {
+                                                    foreach (ViewDeliveredOrderModel item in details)
+                                                    {
+
+                                                        <tr>
+                                                            <td>  @(rowNo += 1)</td>
+                                                            <td>@item.ProductName</td>
+
+                                                            <td class="text-right">@item.UnitPrice.ToString("N2")</td>
+                                                            <td class="text-right">@item.UnitDiscount.ToString("N2")</td>
+                                                            <td class="text-right">@item.VatAmount.ToString("N2")</td>
+                                                            <td class="text-right">@item.SalePrice.ToString("N2")</td>
+                                                            <td class="text-right">@item.Quantity</td>
+                                                            <td class="text-right">
+                                                                @((item.Quantity * (item.UnitPrice - item.UnitDiscount)).ToString("N2"))
+                                                            </td>
+                                                        </tr>
+                                                    }
+
+                                                }
+
+
+                                            }
+                                            <tr>
+                                                <th colspan="6" class="text-right">
+                                                    Invocie Quantity & Amount
+                                                </th>
+
+                                                <th class="text-right">
+                                                    @invoice.DeliveryDetails.ToList().Sum(n => n.Quantity)
+                                                </th>
+
+                                                <th class="text-right">
+                                                    @invoice.DeliveryDetails.ToList().Sum(n => (n.Quantity * n.SalePrice) - (n.Quantity * n.VatAmount)).ToString("N2")
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="6" class="text-right">
+                                                    Gross Discount
+                                                </th>
+                                                <th class="text-right">
+                                                    =
+                                                </th>
+                                                <th class="text-right">
+                                                    @(((invoice.Order.SpecialDiscount / invoice.Order.Quantity) * invoice.DeliveryDetails.Count).ToString("N2"))
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="6" class="text-right">
+                                                    Vat
+                                                </th>
+                                                <th class="text-right">
+                                                    =
+                                                </th>
+                                                <th class="text-right">
+                                                    @invoice.DeliveryDetails.Sum(n => n.VatAmount * n.Quantity)
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="6" class="text-right">
+                                                    Net Amount
+                                                </th>
+
+                                                <th class="text-right">
+                                                    =
+                                                </th>
+                                                <th class="text-right">
+                                                    @{
+                                                        var sd = (invoice.Order.SpecialDiscount / invoice.Order.Quantity) * invoice.DeliveryDetails.Count;
+                                                        var amount = invoice.DeliveryDetails.Sum(n => n.SalePrice * n.Quantity);
+                                                        @((amount - sd).ToString("N2"))
+                                                    }
+                                                </th>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                    <!-- Table row -->
+                   
+                </div>
+            </div>
+            <h3 class="text-center text-green"> Return Details</h3>
+         
+                <table id="tbl_Return_details" class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>SL</th>
+                        <th>Product Name</th>
+                        <th class="text-center">Quanity</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="text-right">Remarks:</th>
+                        <th colspan="2">@Model.ReturnModel.Remarks</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in returnDetails)
+                    {
+                        i++;
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.ProductName</td>
+                            <td class="text-center">@item.Quantity</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+         
+        
             @if (ViewBag.Result != null)
             {
                 <div class="text-center text-danger">@ViewBag.Result</div>
@@ -34,71 +204,12 @@
             }
         </div>
     </div>
-    <h3 class="text-center text-green"> Return Details</h3>
-    <table id="tbl_Return_details" class="display table-bordered" style="border: 1px solid">
-        <thead>
-            <tr>
-                <th>Product Name</th>
-                <th>Quanity</th>
-                <th>Order Date</th>
-                <th>Sales Manager Approve</th>
-                <th>Sales Admin Approve</th>
-                <th>Delivery Date</th>
-                <th>Return Date</th>
-                <th>Delivery-to-Return</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.ProductName</td>
-                    <td class="text-center">@item.Quantity</td>
-                    <td>@item.OrderDateTime.ToString("D")</td>
-                    <td>
-                        @if (!item.ApproveByNsmDateTime.HasValue)
-                    {
-                        <p>N/A</p>
-                    }
-                    else
-                    {
-                        @Convert.ToDateTime(item.ApproveByNsmDateTime).ToString("D")
-                    }
-                </td>
-                    <td>
-                        @if (!item.ApproveBySalesAdminDateTime.HasValue)
-                        {
-                            <p>N/A</p>
-                        }
-                        else
-                        {
-                            @Convert.ToDateTime(item.ApproveBySalesAdminDateTime).ToString("D")
-                        }
-                    </td>
-                    <td>@item.DeliveredDateTime.ToString("D")</td>
-                    <td>@item.ReturnDateTime.ToString("D")</td>
-                    <td class="text-center">@(Math.Ceiling((item.ReturnDateTime - item.DeliveredDateTime).TotalDays))</td>
-                </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Product Name</th>
-                <th>Quanity</th>
-                <th>Order Date</th>
-                <th>Sales Manager Approve</th>
-                <th>Sales Admin Approve</th>
-                <th>Delivery Date</th>
-                <th>Return Date</th>
-                <th>Delivery-to-Return</th>
-            </tr>
-        </tfoot>
-    </table>
+   
 </section>
 
 @section Scripts
 {
     <script>
-        $("#tbl_Return_details").DataTable();
+        //$("#tbl_Return_details").DataTable();
     </script>
 }

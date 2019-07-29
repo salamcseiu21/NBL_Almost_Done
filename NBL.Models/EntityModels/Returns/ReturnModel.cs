@@ -21,6 +21,7 @@ namespace NBL.Models.EntityModels.Returns
         public int CompanyId { get; set; }  
         public string Remarks { get; set; }
         public int TotalQuantity { get; set; }
-        public DateTime SystemDateTime { get; set; }      
+        public DateTime SystemDateTime { get; set; }
+        public decimal LessAmount { get; set; } 
     }
 }

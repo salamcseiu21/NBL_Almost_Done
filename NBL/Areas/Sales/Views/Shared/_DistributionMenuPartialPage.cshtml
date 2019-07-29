@@ -34,6 +34,7 @@
                 @*<li>@Html.ActionLink(" Transfer", "Transaction", "Product", new { area = "Sales" }, new { @class = "fa fa-pencil", style = "font-weight: bolder" })</li>*@
                 <li>@Html.ActionLink(" Receive", "Receive", "Product", new {area = "Sales"}, new {@class = "fa fa-pencil", style = "font-weight: bolder"})</li>
                 <li>@Html.ActionLink(" Receive Transfered Product", "ReceiveTransferProduct", "Product", new {area = "Sales"}, new {@class = "fa fa-pencil", style = "font-weight: bolder"})</li>
+                <li>@Html.ActionLink(" Receive Return Product", "PendingReturnList", "Return", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
             </ul>
         </li>
         <li class="treeview">

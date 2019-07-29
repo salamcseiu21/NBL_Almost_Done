@@ -123,6 +123,9 @@ G:\Salam\NBL\NBL\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 G:\Salam\NBL\NBL\obj\Debug\NBL.csprojResolveAssemblyReference.cache
 G:\Salam\NBL\NBL\obj\Debug\NBL.dll
 G:\Salam\NBL\NBL\obj\Debug\NBL.pdb
+E:\API\NBL\NBL\obj\Debug\NBL.csprojResolveAssemblyReference.cache
+E:\API\NBL\NBL\obj\Debug\RdlCompile.cache
+E:\API\NBL\NBL\obj\Debug\RdlCompile.compiled
 E:\API\NBL\NBL\bin\roslyn\csc.exe
 E:\API\NBL\NBL\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 E:\API\NBL\NBL\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -246,8 +249,5 @@ E:\API\NBL\NBL\bin\Microsoft.Owin.Security.OAuth.xml
 E:\API\NBL\NBL\bin\Microsoft.Owin.Security.Google.xml
 E:\API\NBL\NBL\bin\Microsoft.Owin.Security.Twitter.xml
 E:\API\NBL\NBL\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-E:\API\NBL\NBL\obj\Debug\NBL.csprojResolveAssemblyReference.cache
-E:\API\NBL\NBL\obj\Debug\RdlCompile.cache
-E:\API\NBL\NBL\obj\Debug\RdlCompile.compiled
 E:\API\NBL\NBL\obj\Debug\NBL.dll
 E:\API\NBL\NBL\obj\Debug\NBL.pdb

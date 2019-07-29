@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Returns;
 using NBL.Models.ViewModels.Returns;
 
@@ -13,8 +14,8 @@ namespace NBL.DAL.Contracts
         int SaveReturnProduct(ReturnModel returnModel);
         long GetMaxSalesReturnNoByYear(int year);
         long GetMaxSalesReturnRefByYear(int year);
-        ICollection<ReturnDetails> GetReturnDetailsBySalesReturnId(long salesReturnId);
-        ReturnDetails GetReturnDetailsById(int salsesReturnDetailsId);
+        ICollection<ViewReturnDetails> GetReturnDetailsBySalesReturnId(long salesReturnId);
+        ViewReturnDetails GetReturnDetailsById(long salsesReturnDetailsId);
         int ApproveReturnByNsm(string remarks, long salesReturnId, int userUserId);
         ICollection<ReturnModel> GetAllReturnsByStatus(int status);
         ReturnModel GetSalesReturnBySalesReturnId(long salesReturnId);
@@ -23,5 +24,6 @@ namespace NBL.DAL.Contracts
         ICollection<ViewReturnProductModel> GetSalesReturnProductListToTest();
         int AddVerificationNoteToReturnsProduct(long returnRcvDetailsId, string notes, int userUserId);
         ICollection<ViewReturnProductModel> GetAllVerifiedSalesReturnProducts();
+        int ApproveReturnBySalesAdmin(string remarks, long salesReturnId, int userId, decimal lessAmount); 
     }
 }

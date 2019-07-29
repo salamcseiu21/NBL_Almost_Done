@@ -7,6 +7,7 @@ using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.EntityModels.Transports;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
@@ -74,6 +75,7 @@ namespace NBL.DAL
                         DriverPhone = reader["DriverPhone"].ToString(),
                         Transportation = reader["Transportation"].ToString(),
                         VehicleNo = reader["VehicleNo"].ToString(),
+                        InvoiceId = Convert.ToInt32(reader["InvoiceId"]),
                         Client = new Client
                         {
                             ClientId = Convert.ToInt32(reader["ClientId"])
@@ -853,6 +855,48 @@ namespace NBL.DAL
             catch (Exception exception)
             {
                 throw new Exception("Could not Collect Delivered Orders by deistribution point and Company", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<ViewProduct> GetDeliveredProductListByTransactionRef(string deliveryRef)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetDeliveredProductsByDelivereRef";
+                CommandObj.Parameters.AddWithValue("@TransactionRef", deliveryRef);
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<ViewProduct> products = new List<ViewProduct>();
+                while (reader.Read())
+                {
+                    products.Add(new ViewProduct
+                    {
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        ProductBarCode = reader["ProductBarCode"].ToString()
+                    });
+                }
+                reader.Close();
+                return products;
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Delivered product List due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Delivered Delivered lsit by deistribution point and Company", exception);
             }
             finally
             {

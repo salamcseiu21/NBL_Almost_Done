@@ -11,7 +11,8 @@ namespace NBL.Models.ViewModels.Returns
    public class ViewReturnModel
     {
         public ReturnModel ReturnModel { get; set; }
-        public List<ReturnDetails> ReturnDetailses { get; set; }
+        public List<ViewReturnDetails> ReturnDetailses { get; set; }
         public Client Client { get; set; }
+        public ViewInvoiceModel InvoiceModel { get; set; }  
     }
 }
