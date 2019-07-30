@@ -36,7 +36,7 @@ namespace NBL.Models.ViewModels
         [Display(Name = "Alternate Phone")]
         public string AlternatePhone { get; set; }
         public string Email { get; set; }
-        public DateTime DoB { get; set; }
+        public DateTime? DoB { get; set; }
         [Display(Name = "Joining Date")]
         [Required]
         public DateTime JoiningDate { get; set; }

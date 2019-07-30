@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using NBL.Models;
 using NBL.Models.EntityModels.Deliveries;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Productions;
+using NBL.Models.EntityModels.Returns;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
@@ -22,7 +24,9 @@ namespace NBL.DAL.Contracts
        IEnumerable<TransactionModel> GetAllReceiveableProductToBranchByDeliveryRef(string deliveryRef);
        ICollection<ReceiveProductViewModel> GetAllReceiveableListByBranchAndCompanyId(int branchId, int companyId);
        int ReceiveProduct(ViewDispatchModel model);
-       int SaveReceiveProductDetails(ViewDispatchModel model, int inventoryId);
+       //------------Receive Sales Return Product----------------
+       int ReceiveProduct(List<ScannedProduct> barcodeList, int branchId, int userId, FinancialTransactionModel financialModel,ReturnModel returnModel);
+        int SaveReceiveProductDetails(ViewDispatchModel model, int inventoryId);
        int GetStockQtyByBranchAndProductId(int branchId, int productId);
        int SaveDeliveredOrder(List<ScannedProduct> scannedProducts, Delivery aDelivery, int invoiceStatus, int orderStatus); 
        int SaveDeliveredOrderDetails(List<ScannedProduct> scannedProducts,Delivery aDelivery, int inventoryId, int deliveryId);
@@ -54,7 +58,8 @@ namespace NBL.DAL.Contracts
        int SaveDeliveredOrderFromFactory(List<ScannedProduct> scannedProducts, Delivery aDelivery, int invoiceStatus, int orderStatus);
        ICollection<ViewProduct> GetTotalReceiveProductByBranchAndCompanyId(int branchId, int companyId);
        ICollection<ViewProduct> GetDeliveredProductByBranchAndCompanyId(int branchId, int companyId);
-       List<ChartModel> GetTotalProductionCompanyIdAndYear(int companyId, int year);
+     
+        List<ChartModel> GetTotalProductionCompanyIdAndYear(int companyId, int year);
        long GetmaxProductionRefByYear(int year);
        ICollection<ChartModel> GetTotalDispatchCompanyIdAndYear(int companyId, int year);
        int GetProductStatusInFactoryByBarCode(string barcode);

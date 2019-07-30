@@ -22,6 +22,13 @@ namespace NBL.Models.EntityModels.Returns
         public string Remarks { get; set; }
         public int TotalQuantity { get; set; }
         public DateTime SystemDateTime { get; set; }
-        public decimal LessAmount { get; set; } 
+        public decimal LessAmount { get; set; }
+        public DateTime? ApproveByManagerDate { get; set; }
+        public string NotesByManager { get; set; }
+        public int? ApproveByManagerUserId { get; set; } 
+        public DateTime? ApproveByAdminDate { get; set; }
+        public string NotesByAdmin { get; set; }
+        public int? ApproveByAdminUserId { get; set; } 
+
     }
 }

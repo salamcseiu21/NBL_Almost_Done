@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using NBL.Areas.Sales.BLL.Contracts;
 using NBL.BLL.Contracts;
 using NBL.Models;
+using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Returns;
@@ -28,7 +29,8 @@ namespace NBL.Areas.Sales.Controllers
         private readonly IClientManager _iClientManager;
         private readonly IOrderManager _iOrderManager;
         private readonly IInvoiceManager _iInvoiceManager;
-        public ReturnController(IDeliveryManager iDeliveryManager,IProductManager iProductManager,IProductReturnManager iProductReturnManager,IClientManager iClientManager,IOrderManager iOrderManager,IInvoiceManager iInvoiceManager)
+        private readonly IInventoryManager _iInventoryManager;
+        public ReturnController(IDeliveryManager iDeliveryManager,IProductManager iProductManager,IProductReturnManager iProductReturnManager,IClientManager iClientManager,IOrderManager iOrderManager,IInvoiceManager iInvoiceManager,IInventoryManager iInventoryManager)
         {
             _iDeliveryManager = iDeliveryManager;
             _iProductManager = iProductManager;
@@ -36,6 +38,7 @@ namespace NBL.Areas.Sales.Controllers
             _iClientManager = iClientManager;
             _iOrderManager = iOrderManager;
             _iInvoiceManager = iInvoiceManager;
+            _iInventoryManager = iInventoryManager;
         }
         // GET: Sales/Return
         public ActionResult Home()
@@ -608,9 +611,8 @@ namespace NBL.Areas.Sales.Controllers
 
             try
             {
-
+               
                 var user = (ViewUser)Session["user"];
-                long returnId = salesReturnId;
                 var returnById = _iProductReturnManager.GetSalesReturnBySalesReturnId(salesReturnId);
                 List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
               
@@ -623,6 +625,11 @@ namespace NBL.Areas.Sales.Controllers
                 var deliveryDetails = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(firstOrdefault.DeliveryId);
                 var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
                 var client = _iClientManager.GetClientDeailsById(orderInfo.ClientId);
+
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var filePath = GetReceiveProductFilePath(salesReturnId, branchId);
+                //------------read Scanned barcode form text file---------
+                var barcodeList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
 
                 invoice = new ViewInvoiceModel
                 {
@@ -682,6 +689,13 @@ namespace NBL.Areas.Sales.Controllers
 
                     };
 
+                bool result = _iInventoryManager.ReceiveProduct(barcodeList,branchId,user.UserId,financialModel,returnById);
+
+                if (result)
+                {
+                    System.IO.File.Create(filePath).Close();
+                    return RedirectToAction("PendingReturnList");
+                }
                 return View();
             }
             catch (Exception exception)
@@ -698,7 +712,7 @@ namespace NBL.Areas.Sales.Controllers
         public void SaveScannedBarcodeToTextFile(string barcode, long salesReturnId)
         {
             SuccessErrorModel model = new SuccessErrorModel();
-            ViewWriteLogModel log = new ViewWriteLogModel();
+          
             try
             {
                 int branchId = Convert.ToInt32(Session["BranchId"]);

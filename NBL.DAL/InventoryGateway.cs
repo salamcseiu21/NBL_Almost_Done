@@ -7,8 +7,10 @@ using NBL.DAL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Deliveries;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Productions;
+using NBL.Models.EntityModels.Returns;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
@@ -1086,6 +1088,9 @@ namespace NBL.DAL
                 ConnectionObj.Close();
             }
         }
+
+      
+
         public int SaveReceiveProductDetails(ViewDispatchModel model, int inventoryId)
         {
             int i = 0;
@@ -1109,7 +1114,9 @@ namespace NBL.DAL
             }
             return n;
         }
-        private int SaveReceivedItemWithQuantity(ViewDispatchModel model, int inventoryId) 
+
+
+        private int SaveReceivedItemWithQuantity(ViewDispatchModel model, int inventoryId)
         {
             int i = 0;
             foreach (var item in model.DispatchModels)
@@ -1377,6 +1384,138 @@ namespace NBL.DAL
             return i;
 
         }
+
+
+
+        public int ReceiveProduct(List<ScannedProduct> barcodeList, int branchId, int userId, FinancialTransactionModel financialModel,ReturnModel model)
+        {
+            ConnectionObj.Open();
+            SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
+            try
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Transaction = sqlTransaction;
+                CommandObj.CommandText = "UDSP_SaveReceiveReturnProuctToBranch";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@TransactionDate", model.ApproveByAdminDate);
+                CommandObj.Parameters.AddWithValue("@TransactionRef", model.ReturnRef);
+                CommandObj.Parameters.AddWithValue("@Quantity", model.TotalQuantity);
+                CommandObj.Parameters.AddWithValue("@ToBranchId", model.BranchId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", model.CompanyId);
+                CommandObj.Parameters.AddWithValue("@UserId", userId);
+                CommandObj.Parameters.AddWithValue("@ReturnNo", model.ReturnNo);
+                CommandObj.Parameters.Add("@InventoryId", SqlDbType.Int);
+                CommandObj.Parameters["@InventoryId"].Direction = ParameterDirection.Output;
+                CommandObj.Parameters.Add("@AccountMasterId", SqlDbType.BigInt);
+                CommandObj.Parameters["@AccountMasterId"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                int inventoryId = Convert.ToInt32(CommandObj.Parameters["@InventoryId"].Value);
+                var accountMasterId = Convert.ToInt32(CommandObj.Parameters["@AccountMasterId"].Value);
+                int rowAffected = SaveReceiveReturnProductDetails(barcodeList, inventoryId);
+              
+
+
+                int accountAffected = 0;
+                if (rowAffected > 0)
+                {
+
+                    var financial = financialModel;
+
+                    for (int i = 1; i <= 6; i++)
+                    {
+                        if (i == 1)
+                        {
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.ClientCode, financial.ClientCrAmount * (-1), accountMasterId, "Client Credit..");
+                        }
+                        else if (i == 2)
+                        {
+
+
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.SalesRevenueCode, financial.SalesRevenueAmount, accountMasterId, "Salses Debit..");
+                        }
+                        else if (i == 3)
+                        {
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.GrossDiscountCode, financial.GrossDiscountAmount * (-1), accountMasterId, "Gross Discount Credit..");
+                        }
+                        else if (i == 4)
+                        {
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.VatCode, financial.VatAmount, accountMasterId, "Vat Debit..");
+                        }
+                        else if (i == 5 && financial.SalesReturnAmount>0)
+                        {
+
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.ClientCode, financial.SalesReturnAmount, accountMasterId, "Client Debit..");
+                        }
+                        else if (i == 6 && financial.SalesReturnAmount > 0)
+                        {
+                            accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.SalesReturnCode, financial.SalesReturnAmount*(-1), accountMasterId, "Sales return  Credit..");
+                        }
+                    }
+                }
+                if (accountAffected > 0)
+                {
+                    sqlTransaction.Commit();
+                    return accountAffected;
+                }
+                return accountAffected;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                sqlTransaction.Rollback();
+                throw new Exception("Could not receive product", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public int SaveReceiveReturnProductDetails(List<ScannedProduct> products, int inventoryId)
+        {
+            int i = 0;
+            int n = 0;
+            foreach (var item in products)
+            {
+                CommandObj.CommandText = "spSaveReceiveProduct";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@ProductBarcode", item.ProductCode);
+                CommandObj.Parameters.AddWithValue("@ProductId", Convert.ToInt32(item.ProductCode.Substring(2, 3)));
+                CommandObj.Parameters.AddWithValue("@InventoryId", inventoryId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            }
+            if (i > 0)
+            {
+                n = SaveReceivedReturnItemWithQuantity(products, inventoryId);
+            }
+            return n;
+        }
+
+        private int SaveReceivedReturnItemWithQuantity(List<ScannedProduct> products, int inventoryId)
+        {
+            int i = 0;
+            foreach (var scannedProducts in products.GroupBy(n => n.ProductId))
+            {
+                CommandObj.CommandText = "spSaveReturnItemToInventory";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@ProductId", scannedProducts.Key);
+                CommandObj.Parameters.AddWithValue("@Quantity", scannedProducts.ToList().FindAll(n => n.ProductId == scannedProducts.Key).Count);
+                CommandObj.Parameters.AddWithValue("@InventoryId", inventoryId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            }
+            return i;
+        }
+
 
         public ViewProductLifeCycleModel GetProductLifeCycleByBarcode(string productBarCode)
         {

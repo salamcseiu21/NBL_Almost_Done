@@ -6,7 +6,9 @@ using NBL.DAL;
 using NBL.DAL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Deliveries;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Productions;
+using NBL.Models.EntityModels.Returns;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.Enums;
 using NBL.Models.ViewModels;
@@ -84,6 +86,12 @@ namespace NBL.BLL
         {
             
             return _iInventoryGateway.ReceiveProduct(model);
+        }
+        //------------Receive Sales Return Product----------------
+        public bool ReceiveProduct(List<ScannedProduct> barcodeList, int branchId, int userId, FinancialTransactionModel financialModel,ReturnModel returnModel)
+        {
+            int rowAffected =_iInventoryGateway.ReceiveProduct(barcodeList,branchId,userId,financialModel,returnModel);
+            return rowAffected > 0;
         }
 
         public IEnumerable<TransactionModel> GetAllReceiveableProductToBranchByDeliveryRef(string deliveryRef)

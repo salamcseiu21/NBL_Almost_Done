@@ -24,7 +24,7 @@
         <li class="treeview">
             <a href="#">
                 <i class="fa fa-product-hunt"></i>
-                <span>Products</span>
+                <span>Receive Product</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
@@ -32,12 +32,78 @@
             <ul class="treeview-menu">
                 @*<li>@Html.ActionLink("  Store", "Index", "Product", new { area = "Sales" }, new { @class = "fa fa-list" })</li>*@
                 @*<li>@Html.ActionLink(" Transfer", "Transaction", "Product", new { area = "Sales" }, new { @class = "fa fa-pencil", style = "font-weight: bolder" })</li>*@
-                <li>@Html.ActionLink(" Receive", "Receive", "Product", new {area = "Sales"}, new {@class = "fa fa-pencil", style = "font-weight: bolder"})</li>
+                <li>@Html.ActionLink(" Receive Factory Product ", "Receive", "Product", new {area = "Sales"}, new {@class = "fa fa-pencil", style = "font-weight: bolder"})</li>
                 <li>@Html.ActionLink(" Receive Transfered Product", "ReceiveTransferProduct", "Product", new {area = "Sales"}, new {@class = "fa fa-pencil", style = "font-weight: bolder"})</li>
                 <li>@Html.ActionLink(" Receive Return Product", "PendingReturnList", "Return", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
             </ul>
         </li>
+        
+        
         <li class="treeview">
+            <a href="#">
+                <i class="fa fa-shopping-cart"></i> <span>Delivery Product</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-circle-o"></i> Orders
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>@Html.ActionLink(" Latest Order List", "LatestOrderList", "Delivery", new {area = "Sales"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
+                        <li>@Html.ActionLink(" Partial Delivered List", "PartialDeliveredOrderList", "Delivery", new {area = "Sales"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
+                        <li>@Html.ActionLink(" Order List", "OrderList", "Delivery", new {area = "Sales"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
+                        <li>@Html.ActionLink(" Delivered Orders by Date", "OrderListByDate", "Delivery", new { area = "Sales" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
+                    </ul>
+                </li>
+             
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-circle-o"></i> Transfer
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>@Html.ActionLink(" Transfer List", "TransferList", "Delivery", new { area = "Sales" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
+                    </ul>
+                </li>
+                
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-circle-o"></i> Replace
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>@Html.ActionLink(" Pending List", "ViewAll", "Replace", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+                        <li>@Html.ActionLink("  Today's Replace List", "ReplaceList", "Replace", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+                        <li>@Html.ActionLink(" All Replace List", "AllReplaceLsit", "Replace", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+                    </ul>
+                </li>
+                
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-circle-o"></i> Requisitions
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>@Html.ActionLink(" General Requisition", "GeneralRequisitionList", "Requisition", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+
+
+        @*<li class="treeview">
             <a href="#">
                 <i class="fa fa-shopping-cart"></i>
                 <span>Orders</span>
@@ -63,11 +129,11 @@
             <ul class="treeview-menu">
                 <li>@Html.ActionLink(" Transfer List", "TransferList", "Delivery", new {area = "Sales"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
             </ul>
-        </li>
+        </li>*@
 
         <li class="treeview">
             <a href="#">
-                <i class="fa fa-shopping-cart"></i>
+                <i class="fa fa-print"></i>
                 <span>Chalan/Invoice</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
@@ -78,7 +144,7 @@
             </ul>
         </li>
 
-        <li class="treeview">
+        @*<li class="treeview">
             <a href="#">
                 <i class="fa fa-product-hunt"></i>
                 <span>Replace</span>
@@ -104,7 +170,7 @@
             <ul class="treeview-menu">
                 <li>@Html.ActionLink(" General Requisition", "GeneralRequisitionList", "Requisition", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
             </ul>
-        </li>
+        </li>*@
 
         <li class="treeview">
             <a href="#">

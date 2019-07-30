@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using NBL.Models;
 using NBL.Models.EntityModels.Deliveries;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Productions;
+using NBL.Models.EntityModels.Returns;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
@@ -20,7 +22,9 @@ namespace NBL.BLL.Contracts
        IEnumerable<ViewProduct> GetStockProductByCompanyId(int companyId);
        ICollection<ReceiveProductViewModel> GetAllReceiveableListByBranchAndCompanyId(int branchId, int companyId);
        int ReceiveProduct(ViewDispatchModel model);
-       int GetStockQtyByBranchAndProductId(int branchId, int productId);
+        //------------Receive Sales Return Product----------------
+       bool ReceiveProduct(List<ScannedProduct> barcodeList, int branchId, int userId, FinancialTransactionModel financialModel,ReturnModel returnModel);
+        int GetStockQtyByBranchAndProductId(int branchId, int productId);
        string GenerateDeliveryReference(int maxRefNo);
        IEnumerable<TransactionModel> GetAllReceiveableProductToBranchByDeliveryRef(string deliveryRef);
        ICollection<ViewDispatchModel> GetAllReceiveableProductToBranchByDispatchId(long dispatchId, int branchId);
@@ -65,5 +69,6 @@ namespace NBL.BLL.Contracts
        bool UpdateTripItemQuantity(long tripItemId, int quantity);
        ViewProductLifeCycleModel GetProductLifeCycle(string barcode);
        ViewProductHistory GetProductHistoryByBarcode(string barcode);
+      
    }
 }

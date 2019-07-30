@@ -380,7 +380,13 @@ namespace NBL.DAL
                         NsmNotes = DBNull.Value.Equals(reader["Remarks"]) ? null : reader["Remarks"].ToString(),
                         ReturnStatus = Convert.ToInt32(reader["Status"]),
                         ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"]),
-                        LessAmount = DBNull.Value.Equals(reader["LessAmount"]) ? default(decimal) : Convert.ToDecimal(reader["LessAmount"])
+                        LessAmount = DBNull.Value.Equals(reader["LessAmount"]) ? default(decimal) : Convert.ToDecimal(reader["LessAmount"]),
+                        ApproveByAdminDate = DBNull.Value.Equals(reader["ApproveByAdminDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ApproveByAdminDate"]),
+                        ApproveByAdminUserId = DBNull.Value.Equals(reader["ApproveByAdminUserId"]) ? (int?) null : Convert.ToInt32(reader["ApproveByAdminUserId"]),
+                        ApproveByManagerDate = DBNull.Value.Equals(reader["ApproveByManagerDate"]) ? (DateTime?)null:  Convert.ToDateTime(reader["ApproveByManagerDate"]),
+                        ApproveByManagerUserId = DBNull.Value.Equals(reader["ApproveByManagerUserId"]) ? (int?)null : Convert.ToInt32(reader["ApproveByManagerUserId"]),
+                        NotesByAdmin = DBNull.Value.Equals(reader["NotesByAdmin"]) ? null : reader["NotesByAdmin"].ToString(),
+                        NotesByManager = DBNull.Value.Equals(reader["NotesByManager"]) ? null : reader["NotesByManager"].ToString()
                     };
                 }
                 reader.Close();
@@ -488,9 +494,12 @@ namespace NBL.DAL
                         TotalQuantity = Convert.ToInt32(reader["Quantity"]),
                         Remarks =DBNull.Value.Equals(reader["Remarks"])?null: reader["Remarks"].ToString(),
                         SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
-                        ReturnApproveByUserId =DBNull.Value.Equals(reader["ApproveByManagerUserId"])? default(int): Convert.ToInt32(reader["ApproveByManagerUserId"]),
-                        ReturnApproveDateTime =DBNull.Value.Equals(reader["ApproveByManagerDate"])? default(DateTime): Convert.ToDateTime(reader["ApproveByManagerDate"]),
-                        NsmNotes = DBNull.Value.Equals(reader["NotesByManager"])?null: reader["NotesByManager"].ToString(),
+                        ApproveByManagerUserId = DBNull.Value.Equals(reader["ApproveByManagerUserId"]) ? (int?)null : Convert.ToInt32(reader["ApproveByManagerUserId"]),
+                        ApproveByManagerDate = DBNull.Value.Equals(reader["ApproveByManagerDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ApproveByManagerDate"]),
+                        ApproveByAdminDate = DBNull.Value.Equals(reader["ApproveByAdminDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ApproveByAdminDate"]),
+                        ApproveByAdminUserId = DBNull.Value.Equals(reader["ApproveByAdminUserId"]) ? (int?)null : Convert.ToInt32(reader["ApproveByAdminUserId"]),
+                        NotesByManager = DBNull.Value.Equals(reader["NotesByManager"]) ? null : reader["NotesByManager"].ToString(),
+                        NotesByAdmin = DBNull.Value.Equals(reader["NotesByAdmin"]) ? null : reader["NotesByAdmin"].ToString(),
                         ReturnStatus = Convert.ToInt32(reader["Status"]),
                         ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"]),
                         ClientInfo = reader["ClientInfo"].ToString()
@@ -536,9 +545,12 @@ namespace NBL.DAL
                         TotalQuantity = Convert.ToInt32(reader["Quantity"]),
                         Remarks = DBNull.Value.Equals(reader["Remarks"]) ? null : reader["Remarks"].ToString(),
                         SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
-                        ReturnApproveByUserId = DBNull.Value.Equals(reader["ApproveByManagerUserId"]) ? default(int) : Convert.ToInt32(reader["ApproveByManagerUserId"]),
-                        ReturnApproveDateTime = DBNull.Value.Equals(reader["ApproveByManagerDate"]) ? default(DateTime) : Convert.ToDateTime(reader["ApproveByManagerDate"]),
-                        NsmNotes = DBNull.Value.Equals(reader["NotesByManager"]) ? null : reader["NotesByManager"].ToString(),
+                        ApproveByManagerUserId = DBNull.Value.Equals(reader["ApproveByManagerUserId"]) ? (int?) null : Convert.ToInt32(reader["ApproveByManagerUserId"]),
+                        ApproveByManagerDate = DBNull.Value.Equals(reader["ApproveByManagerDate"]) ? (DateTime?) null : Convert.ToDateTime(reader["ApproveByManagerDate"]),
+                        ApproveByAdminDate = DBNull.Value.Equals(reader["ApproveByAdminDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ApproveByAdminDate"]),
+                        ApproveByAdminUserId = DBNull.Value.Equals(reader["ApproveByAdminUserId"]) ? (int?)null : Convert.ToInt32(reader["ApproveByAdminUserId"]),
+                        NotesByManager = DBNull.Value.Equals(reader["NotesByManager"]) ? null : reader["NotesByManager"].ToString(),
+                        NotesByAdmin = DBNull.Value.Equals(reader["NotesByAdmin"]) ? null : reader["NotesByAdmin"].ToString(),
                         ReturnStatus = Convert.ToInt32(reader["Status"]),
                         ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"]),
                         ClientInfo = reader["ClientInfo"].ToString()

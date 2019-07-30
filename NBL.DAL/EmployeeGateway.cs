@@ -232,7 +232,8 @@ namespace NBL.DAL
                         EmployeeSignature = DBNull.Value.Equals(reader["EmployeeSignature"]) ? null : reader["EmployeeSignature"].ToString(),
                         JoiningDate = Convert.ToDateTime(reader["JoiningDate"]),
                         SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
-                        EmployeeNo = reader["EmployeeNo"].ToString()
+                        EmployeeNo = reader["EmployeeNo"].ToString(),
+                        DoB = DBNull.Value.Equals(reader["DateOfBirth"])? (DateTime?) null : Convert.ToDateTime(reader["DateOfBirth"])
                     };
                     
                 }
@@ -396,6 +397,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@EmployeeSignature", anEmployee.EmployeeSignature ?? anEmployee.EmployeeSignature ?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@EmployeeNationalIdNo", anEmployee.NationalIdNo ?? anEmployee.NationalIdNo ?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@JoiningDate", anEmployee.JoiningDate);
+                CommandObj.Parameters.AddWithValue("@DoB", anEmployee.DoB?? anEmployee.DoB ?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@EmployeeId", anEmployee.EmployeeId);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
