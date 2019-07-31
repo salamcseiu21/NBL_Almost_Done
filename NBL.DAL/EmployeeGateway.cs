@@ -8,6 +8,7 @@ using NBL.Models.EntityModels.Departments;
 using NBL.Models.EntityModels.Designations;
 using NBL.Models.EntityModels.Employees;
 using NBL.Models.EntityModels.Masters;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 
 namespace NBL.DAL
@@ -536,6 +537,78 @@ namespace NBL.DAL
             catch (Exception exception)
             {
                 throw new Exception("Could not collect Employee Information by department and  search Term", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int UpdateEducationalInfo(EducationalInfo anEmployee)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_AddEducationalInfo";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@QualificationName", anEmployee.QualificationName);
+                CommandObj.Parameters.AddWithValue("@GroupSubject", anEmployee.GroupSubject);
+                CommandObj.Parameters.AddWithValue("@InstituteName", anEmployee.InstituteName);
+                CommandObj.Parameters.AddWithValue("@BoardName", anEmployee.BoardName);
+                CommandObj.Parameters.AddWithValue("@PassingYear", anEmployee.PassingYear);
+                CommandObj.Parameters.AddWithValue("@Result", anEmployee.Result);
+                CommandObj.Parameters.AddWithValue("@EmployeeId", anEmployee.EmployeeId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                int rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Add educational Information", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public List<EducationalInfo> GetEducationalInfoByEmpId(int employeeId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetEducationalInfoByEmpId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@EmployeeId", employeeId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<EducationalInfo> educationalInfos = new List<EducationalInfo>();
+                while (reader.Read())
+                {
+                    educationalInfos.Add(new EducationalInfo
+                    {
+                        QualificationName = reader["QualificationName"].ToString(),
+                        BoardName = reader["BoardName"].ToString(),
+                        InstituteName = reader["InstituteName"].ToString(),
+                        Result = reader["Result"].ToString(),
+                        GroupSubject = reader["GroupSubject"].ToString(),
+                        PassingYear = Convert.ToInt32(reader["PassingYear"])
+                       
+                    });
+                }
+                reader.Close();
+                return educationalInfos;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect Employee educational Information by employee id", exception);
             }
             finally
             {

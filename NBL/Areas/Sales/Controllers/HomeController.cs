@@ -13,9 +13,7 @@ using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Employees;
 using NBL.Models.EntityModels.FinanceModels;
-using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
-using NBL.Models.EntityModels.Identities;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Summaries;
@@ -354,8 +352,8 @@ namespace NBL.Areas.Sales.Controllers
 
                 if (result)
                 {
-                    TempData["Message"] = "Saved Successfully!";
-                    return RedirectToAction("Home", "Home");
+                    //TempData["Message"] = "Saved Successfully!";
+                    return RedirectToAction("MyProfile", "Home", new { id = emp.EmployeeId });
                 }
 
                 return View();
@@ -373,8 +371,8 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
-                Employee employee = _iEmployeeManager.GetById(id);
-                return View(employee);
+                EducationalInfo educational = new EducationalInfo {EmployeeId = id};
+                return View(educational);
             }
             catch (Exception exception)
             {
@@ -383,5 +381,41 @@ namespace NBL.Areas.Sales.Controllers
 
             }
         }
+        [HttpPost]
+        public ActionResult UpdateEducationalInfo(int id,EducationalInfo model)
+        {
+            try
+            {
+                bool result = _iEmployeeManager.UpdateEducationalInfo(model);
+                if (result)
+                {
+                    return RedirectToAction("MyProfile", "Home", new { id = model.EmployeeId } );
+                }
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+
+            }
+        }
+        public ActionResult MyProfile(int id)
+        {
+            try
+            {
+                List<EducationalInfo> educationalInfos = _iEmployeeManager.GetEducationalInfoByEmpId(id);
+                var employee = _iEmployeeManager.GetEmployeeById(id);
+                employee.EducationalInfos = educationalInfos;
+                return View(employee);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
     }
 }

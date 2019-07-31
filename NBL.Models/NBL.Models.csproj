@@ -113,6 +113,7 @@
     <Compile Include="Contracts\IMasterEntity.cs" />
     <Compile Include="EntityModels\Deliveries\DispatchModel.cs" />
     <Compile Include="EntityModels\Deliveries\ReceiveProductViewModel.cs" />
+    <Compile Include="EntityModels\Employees\EducationalInfo.cs" />
     <Compile Include="EntityModels\FinanceModels\CollectionModel.cs" />
     <Compile Include="EntityModels\FinanceModels\FinancialTransactionModel.cs" />
     <Compile Include="EntityModels\FinanceModels\LedgerModel.cs" />

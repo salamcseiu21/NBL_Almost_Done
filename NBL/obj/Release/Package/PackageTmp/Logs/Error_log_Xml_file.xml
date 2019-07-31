@@ -1408,4 +1408,269 @@ The statement has been terminated.</CustomeMessage>
     <LogDateTime>2019-07-25T11:00:11.6042187+06:00</LogDateTime>
     <CustomeMessage>Could not collect stock product in facotry store</CustomeMessage>
   </Error>
+  <Error LogId="19-Jul-252f084722-48a9-44d7-aac8-41770f9dd84d">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.SaveReturnProduct(ReturnModel returnModel) in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 70
+   at NBL.BLL.ProductReturnManager.SaveReturnProduct(ReturnModel returnModel) in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 28
+   at NBL.Areas.Sales.Controllers.ReturnController.ConfirmReturnEntry(FormCollection collection) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 98</LogMessage>
+    <LogDateTime>2019-07-25T12:13:10.7762917+06:00</LogDateTime>
+    <CustomeMessage>Could not save return products</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-25b3fdf11e-7a79-4408-918a-0010aa225acc">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.SaveReturnProduct(ReturnModel returnModel) in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 70
+   at NBL.BLL.ProductReturnManager.SaveReturnProduct(ReturnModel returnModel) in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 28
+   at NBL.Areas.Sales.Controllers.ReturnController.ConfirmReturnEntry(FormCollection collection) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 98</LogMessage>
+    <LogDateTime>2019-07-25T12:18:14.6301062+06:00</LogDateTime>
+    <CustomeMessage>Could not save return products</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-25d8508924-9552-4ff8-969c-edeb19b242f3">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetAll() in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 467
+   at NBL.BLL.ProductReturnManager.GetAll() in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 81
+   at NBL.Areas.Sales.Controllers.ReturnController.ViewAll() in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 297</LogMessage>
+    <LogDateTime>2019-07-25T14:46:14.6945433+06:00</LogDateTime>
+    <CustomeMessage>Could not collect sales returns</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-253b74d69f-b66c-4ff3-8bb5-0ebd07597757">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ProductReturnGateway.GetAll() in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 446</LogMessage>
+    <LogDateTime>2019-07-25T14:50:28.9388083+06:00</LogDateTime>
+    <CustomeMessage>SalesReturnRef</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-25b2eb4def-eb41-456d-bff8-f79a9d219c66">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetAll() in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 469
+   at NBL.BLL.ProductReturnManager.GetAll() in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 81
+   at NBL.Areas.Sales.Controllers.ReturnController.ViewAll() in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 297</LogMessage>
+    <LogDateTime>2019-07-25T14:50:28.9856819+06:00</LogDateTime>
+    <CustomeMessage>Could not collect sales returns</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-25dbec0b24-ca8e-4335-b7c1-ce321ec333fb">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ProductReturnGateway.GetAll() in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 446</LogMessage>
+    <LogDateTime>2019-07-25T14:52:43.3898006+06:00</LogDateTime>
+    <CustomeMessage>ReturnApproveByUserId</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-252a88aac2-36b6-47ce-b88b-5572d9b5d265">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetAll() in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 469
+   at NBL.BLL.ProductReturnManager.GetAll() in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 81
+   at NBL.Areas.Sales.Controllers.ReturnController.ViewAll() in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 297</LogMessage>
+    <LogDateTime>2019-07-25T14:52:43.4346796+06:00</LogDateTime>
+    <CustomeMessage>Could not collect sales returns</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-257e9acc7c-cb4e-452a-a6ca-3e4a5b4e4c23">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetReturnDetailsBySalesReturnId(Int64 salesReturnId) in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 569
+   at NBL.BLL.ProductReturnManager.GetReturnDetailsBySalesReturnId(Int64 salesReturnId) in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 86
+   at NBL.Areas.Sales.Controllers.ReturnController.ReturnDetails(Int64 salesReturnId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 283</LogMessage>
+    <LogDateTime>2019-07-25T14:55:47.4274389+06:00</LogDateTime>
+    <CustomeMessage>Could not collect sales returns details</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-2542db3a3a-bee5-4a6f-a46e-461b32c0e1ed">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetReturnDetailsBySalesReturnId(Int64 salesReturnId) in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 571
+   at NBL.BLL.ProductReturnManager.GetReturnDetailsBySalesReturnId(Int64 salesReturnId) in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 86
+   at NBL.Areas.Sales.Controllers.ReturnController.ReturnDetails(Int64 salesReturnId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 286</LogMessage>
+    <LogDateTime>2019-07-25T15:29:26.2990881+06:00</LogDateTime>
+    <CustomeMessage>Could not collect sales returns details</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-25c7e0d9a8-b57f-459a-b8f4-7b69509f756e">
+    <Heading>System.FormatException</Heading>
+    <LogMessage>   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.Convert.ToInt32(String value)
+   at NBL.Areas.Sales.Controllers.ReturnController.AddReturnProductToXmalFile(FormCollection collection) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 131</LogMessage>
+    <LogDateTime>2019-07-25T15:50:49.27115+06:00</LogDateTime>
+    <CustomeMessage>Input string was not in a correct format.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-25fc1d8b17-880e-4a23-bbe8-a4cfa4ef92cc">
+    <Heading>System.FormatException</Heading>
+    <LogMessage>   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.Convert.ToInt32(String value)
+   at NBL.Areas.Sales.Controllers.ReturnController.AddReturnProductToXmalFile(FormCollection collection) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 131</LogMessage>
+    <LogDateTime>2019-07-25T15:51:01.4319498+06:00</LogDateTime>
+    <CustomeMessage>Input string was not in a correct format.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-25abfb9404-7c61-455c-a407-4fec7f6e7cc8">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.ClientGateway.GetClientOustandingBalanceBySubSubSubAccountCode(String subsubsubAccountCode) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 909</LogMessage>
+    <LogDateTime>2019-07-25T17:22:45.0398342+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'UDSP_ClientOustandingBalanceBySubSubSubAccountCode' expects parameter '@SubSubSubCode', which was not supplied.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-257e545f49-8516-463e-9c49-8f660c6e3fe4">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ClientGateway.GetClientOustandingBalanceBySubSubSubAccountCode(String subsubsubAccountCode) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 921
+   at NBL.BLL.ClientManager.GetClientOustandingBalanceBySubSubSubAccountCode(String subsubsubAccountCode) in E:\API\NBL\NBL.BLL\ClientManager.cs:line 153
+   at NBL.BLL.ClientManager.GetById(Int32 clientId) in E:\API\NBL\NBL.BLL\ClientManager.cs:line 117
+   at NBL.Areas.Sales.Controllers.ReturnController.ApproveBySalesAdmin(Int64 salesReturnId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 367</LogMessage>
+    <LogDateTime>2019-07-25T17:22:45.097707+06:00</LogDateTime>
+    <CustomeMessage>Could not collect outstanding balance of client by Account code due to Sql Exception</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-2597e97af0-3291-4d64-b51f-9f349c2e936e">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.ClientGateway.GetClientOustandingBalanceBySubSubSubAccountCode(String subsubsubAccountCode) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 909</LogMessage>
+    <LogDateTime>2019-07-25T17:23:49.3585127+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'UDSP_ClientOustandingBalanceBySubSubSubAccountCode' expects parameter '@SubSubSubCode', which was not supplied.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-25694c9bd2-bc79-4d0c-951c-faca07aec23c">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ClientGateway.GetClientOustandingBalanceBySubSubSubAccountCode(String subsubsubAccountCode) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 921
+   at NBL.BLL.ClientManager.GetClientOustandingBalanceBySubSubSubAccountCode(String subsubsubAccountCode) in E:\API\NBL\NBL.BLL\ClientManager.cs:line 153
+   at NBL.BLL.ClientManager.GetById(Int32 clientId) in E:\API\NBL\NBL.BLL\ClientManager.cs:line 117
+   at NBL.Areas.Sales.Controllers.ReturnController.ApproveBySalesAdmin(Int64 salesReturnId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 367</LogMessage>
+    <LogDateTime>2019-07-25T17:23:49.4452792+06:00</LogDateTime>
+    <CustomeMessage>Could not collect outstanding balance of client by Account code due to Sql Exception</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-272118af2f-1e2e-4327-b56c-ad4441e70be5">
+    <Heading>System.NullReferenceException</Heading>
+    <LogMessage>   at NBL.Areas.Production.Controllers.BarCodeController.Print(PrintBarCodeModel model) in E:\API\NBL\NBL\Areas\Production\Controllers\BarCodeController.cs:line 179</LogMessage>
+    <LogDateTime>2019-07-27T09:55:07.5266116+06:00</LogDateTime>
+    <CustomeMessage>Object reference not set to an instance of an object.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-27ddbad106-fb55-47e4-b99d-582760c8d7ac">
+    <Heading>System.NullReferenceException</Heading>
+    <LogMessage>   at NBL.Areas.Production.Controllers.BarCodeController.Print(PrintBarCodeModel model) in E:\API\NBL\NBL\Areas\Production\Controllers\BarCodeController.cs:line 179</LogMessage>
+    <LogDateTime>2019-07-27T09:55:34.6590311+06:00</LogDateTime>
+    <CustomeMessage>Object reference not set to an instance of an object.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-27b982b392-cafa-4cf9-91fc-b2d331738692">
+    <Heading>System.NullReferenceException</Heading>
+    <LogMessage>   at NBL.Areas.Production.Controllers.BarCodeController.Print(PrintBarCodeModel model) in E:\API\NBL\NBL\Areas\Production\Controllers\BarCodeController.cs:line 179</LogMessage>
+    <LogDateTime>2019-07-27T09:57:20.7228995+06:00</LogDateTime>
+    <CustomeMessage>Object reference not set to an instance of an object.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-28f88f0c93-1869-4403-b57c-1dd02bbdc1ef">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetTotalCollectionByBranch(Int32 branchId) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 1571</LogMessage>
+    <LogDateTime>2019-07-28T10:58:38.8306982+06:00</LogDateTime>
+    <CustomeMessage>SystemDateTime</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-28a29f63a3-8046-477c-b13e-4b07802103d6">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetTotalCollectionByBranch(Int32 branchId) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 1589
+   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.GetTotalCollectionByBranch(Int32 branchId) in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 107
+   at NBL.Areas.AccountsAndFinance.Controllers.AccountManagerController.CollectionList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountManagerController.cs:line 428</LogMessage>
+    <LogDateTime>2019-07-28T10:58:38.8765753+06:00</LogDateTime>
+    <CustomeMessage>Could not Get Collection  by Branch</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-280bc765b8-d06d-45b6-93c9-7dc1c567181f">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetActivetedReceivableListByBranch(Int32 branchId) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 1653</LogMessage>
+    <LogDateTime>2019-07-28T15:18:33.3714848+06:00</LogDateTime>
+    <CustomeMessage>Amount</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-288364b886-a3fb-446c-88f4-58eb39335e54">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetActivetedReceivableListByBranch(Int32 branchId) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 1673
+   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.GetActivetedReceivableListByBranch(Int32 branchId) in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 117
+   at NBL.Areas.AccountsAndFinance.Controllers.AccountManagerController.ActivetedReceivableList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountManagerController.cs:line 445</LogMessage>
+    <LogDateTime>2019-07-28T15:18:33.4084136+06:00</LogDateTime>
+    <CustomeMessage>Could not Get receivable details  by Branch</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-294b6ba79f-7ae4-4a6f-882e-7e4ebaadecc1">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetReturnDetailsBySalesReturnId(Int64 salesReturnId) in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 569
+   at NBL.BLL.ProductReturnManager.GetReturnDetailsBySalesReturnId(Int64 salesReturnId) in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 86
+   at NBL.Areas.Sales.Controllers.ReturnController.ApproveBySalesAdmin(Int64 salesReturnId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 366</LogMessage>
+    <LogDateTime>2019-07-29T10:14:31.4987238+06:00</LogDateTime>
+    <CustomeMessage>Could not collect sales returns details</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-29dded8184-0bce-47fd-bbe8-0f5365912c88">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetAllReturnsByStatus(Int32 status) in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 550
+   at NBL.BLL.ProductReturnManager.GetAllReturnsByStatus(Int32 status) in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 103
+   at NBL.Areas.Sales.Controllers.ReturnController.PendingReturnList() in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 324</LogMessage>
+    <LogDateTime>2019-07-29T14:40:08.5333099+06:00</LogDateTime>
+    <CustomeMessage>Could not collect sales returns by status</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-2922d3e893-223e-4f28-bc4c-57f130e0cd88">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetAllReturnsByStatus(Int32 status) in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 551
+   at NBL.BLL.ProductReturnManager.GetAllReturnsByStatus(Int32 status) in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 103
+   at NBL.Areas.Sales.Controllers.ReturnController.PendingReturnList() in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 324</LogMessage>
+    <LogDateTime>2019-07-29T14:41:32.4946946+06:00</LogDateTime>
+    <CustomeMessage>Could not collect sales returns by status</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-290a7a6a92-ee80-44d5-8030-9c624afd6bde">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetSalesReturnBySalesReturnId(Int64 salesReturnId) in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 391
+   at NBL.BLL.ProductReturnManager.GetSalesReturnBySalesReturnId(Int64 salesReturnId) in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 108
+   at NBL.Areas.Sales.Controllers.ReturnController.ApproveByNsm(Int64 salesReturnId) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 335</LogMessage>
+    <LogDateTime>2019-07-29T16:37:58.3923817+06:00</LogDateTime>
+    <CustomeMessage>Could not collect sales returns by id</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-3060c45c5d-a74a-43b1-a40a-063419848c0f">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlParameterCollection.GetParameter(String parameterName)
+   at System.Data.SqlClient.SqlParameterCollection.get_Item(String parameterName)
+   at NBL.DAL.InventoryGateway.ReceiveProduct(List`1 barcodeList, Int32 branchId, Int32 userId, FinancialTransactionModel financialModel, ReturnModel model) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1414</LogMessage>
+    <LogDateTime>2019-07-30T14:28:02.2736146+06:00</LogDateTime>
+    <CustomeMessage>An SqlParameter with ParameterName '@AccountMasterId' is not contained by this SqlParameterCollection.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-308804a14f-6434-4767-8a04-5098dfef53c5">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.InventoryGateway.ReceiveProduct(List`1 barcodeList, Int32 branchId, Int32 userId, FinancialTransactionModel financialModel, ReturnModel model) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1460
+   at NBL.BLL.InventoryManager.ReceiveProduct(List`1 barcodeList, Int32 branchId, Int32 userId, FinancialTransactionModel financialModel, ReturnModel returnModel) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 93
+   at NBL.Areas.Sales.Controllers.ReturnController.Receive(Int64 salesReturnId, FormCollection collection) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 692</LogMessage>
+    <LogDateTime>2019-07-30T14:28:06.9340471+06:00</LogDateTime>
+    <CustomeMessage>Could not receive product</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-30054a8d25-ccb5-4578-8409-5df6132315ad">
+    <Heading>System.Data.SqlTypes.SqlTypeException</Heading>
+    <LogMessage>   at System.Data.SqlClient.TdsParser.TdsExecuteRPC(SqlCommand cmd, _SqlRPC[] rpcArray, Int32 timeout, Boolean inSchema, SqlNotificationRequest notificationRequest, TdsParserStateObject stateObj, Boolean isCommandProc, Boolean sync, TaskCompletionSource`1 completion, Int32 startRpc, Int32 startParam)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.InventoryGateway.ReceiveProduct(List`1 barcodeList, Int32 branchId, Int32 userId, FinancialTransactionModel financialModel, ReturnModel model) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1411</LogMessage>
+    <LogDateTime>2019-07-30T14:32:52.6879951+06:00</LogDateTime>
+    <CustomeMessage>SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Jul-30fe67c117-bfd7-4b2f-b4ed-ec83ea3d2eea">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.InventoryGateway.ReceiveProduct(List`1 barcodeList, Int32 branchId, Int32 userId, FinancialTransactionModel financialModel, ReturnModel model) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1460
+   at NBL.BLL.InventoryManager.ReceiveProduct(List`1 barcodeList, Int32 branchId, Int32 userId, FinancialTransactionModel financialModel, ReturnModel returnModel) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 93
+   at NBL.Areas.Sales.Controllers.ReturnController.Receive(Int64 salesReturnId, FormCollection collection) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 692</LogMessage>
+    <LogDateTime>2019-07-30T14:33:01.4709511+06:00</LogDateTime>
+    <CustomeMessage>Could not receive product</CustomeMessage>
+  </Error>
 </Errors>

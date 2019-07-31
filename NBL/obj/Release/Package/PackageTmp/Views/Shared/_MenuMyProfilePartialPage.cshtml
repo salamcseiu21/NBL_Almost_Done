@@ -1,0 +1,18 @@
+﻿@using NBL.Models.ViewModels
+@{
+    var u1 = (ViewUser) Session["user"];
+}
+ <li class="treeview">
+            <a href="#">
+                <i class="fa fa-eye"></i>
+                <span>My Profile</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" View Profile", "MyProfile", "Home", new { id = u1.EmployeeId }, new { @class = "fa fa-eye", style = "font-weight: bolder" })</li>
+                <li>@Html.ActionLink(" Update Basic Info", "UpdateBasicInfo", "Home", new {id=u1.EmployeeId }, new { @class = "fa fa-edit", style = "font-weight: bolder" })</li>
+                <li>@Html.ActionLink(" Update Educational Info", "UpdateEducationalInfo", "Home", new {id = u1.EmployeeId }, new { @class = "fa fa-edit", style = "font-weight: bolder" })</li>
+            </ul>
+        </li>

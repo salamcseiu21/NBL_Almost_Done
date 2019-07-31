@@ -65,18 +65,4 @@
         <li>@Html.ActionLink(" Branch List", "ViewBranch", "ShowInfo", new {area = "CommonArea"}, new {@class = "fa fa-list", style = "font-weight: bolder"})</li>
     </ul>
 </li>
-
-<li class="treeview">
-    <a href="#">
-        <i class="fa fa-eye"></i>
-        <span>My Profile</span>
-        <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-        </span>
-    </a>
-    <ul class="treeview-menu">
-
-        <li>@Html.ActionLink(" Update Basic Info", "UpdateBasicInfo", "Home", new { area = "Sales",id=user.EmployeeId }, new { @class = "fa fa-edit", style = "font-weight: bolder" })</li>
-        <li>@Html.ActionLink(" Update Educational Info", "UpdateEducationalInfo", "Home", new { area = "Sales", id = user.EmployeeId }, new { @class = "fa fa-edit", style = "font-weight: bolder" })</li>
-    </ul>
-</li>
+@Html.Partial("_MenuMyProfilePartialPage")

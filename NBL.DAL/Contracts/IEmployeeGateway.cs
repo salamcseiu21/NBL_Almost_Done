@@ -15,5 +15,7 @@ namespace NBL.DAL.Contracts
        IEnumerable<Employee> GetEmpoyeeListByDepartmentId(int departmentId);
        ICollection<object> GetEmployeeListBySearchTerm(string searchTerm);
        ICollection<object> GetEmployeeListByDepartmentAndSearchTerm(int departmentId, string searchTerm,int branchId);
+       int UpdateEducationalInfo(EducationalInfo model);
+       List<EducationalInfo> GetEducationalInfoByEmpId(int employeeId);
    }
 }

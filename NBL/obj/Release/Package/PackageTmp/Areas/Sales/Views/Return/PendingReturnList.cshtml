@@ -1,0 +1,55 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Returns.ReturnModel>
+@{
+    ViewBag.Title = "Pending Return List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Pending Return List to Receive</h3>
+    <table class="display table-bordered" style="border: 1px solid" id="tbl_Sales_Return_list">
+        <thead>
+            <tr>
+                <th class="text-center">Reference</th>
+                <th class="text-center">Client</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-center">Date</th>
+                
+              
+                <th class="text-center">View</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center">@item.ReturnRef</td>
+                    <td class="text-center">@item.ClientInfo</td>
+                    <td class="text-center">@item.TotalQuantity</td>
+                    <td class="text-center">@(item.ApproveByAdminDate?.Date.ToString("dd-MMM-yyyy"))</td>
+                   
+                <td class="text-center">
+                    @Html.ActionLink(" Receive", "Receive", "Return", new { id = item.SalesReturnId },null)
+                </td>
+            </tr>
+                        }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="text-center">Reference</th>
+                <th class="text-center">Client</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-center">Date</th>
+               
+              
+                <th class="text-center">View</th>
+            </tr>
+        </tfoot>
+    </table>
+</section>
+@section Scripts
+{
+    <script>
+        $("#tbl_Sales_Return_list").DataTable();
+    </script>
+}
+

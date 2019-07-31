@@ -8,10 +8,10 @@
     </tr>
     <tr>
         <th>Product Name</th>
-        <th>Quanity</th>
+        <th>Segment</th>
+        <th>Quantity</th>
+        <th>Delivery Ref</th>
         <th>Order Date</th>
-        <th>Nsm Approve</th>
-        <th>Admin Approve</th>
         <th>Delivery Date</th>
         <th>Return Date</th>
         <th>Delivery-to-Return</th>
@@ -22,10 +22,10 @@
     {
         <tr>
             <td>@item.ProductName</td>
+            <td>@item.ProductCategoryName</td>
             <td>@item.Quantity</td>
+            <td>@item.DeliveryRef</td>
             <td>@item.OrderDateTime.ToString("F")</td>
-            <td>@item.ApproveByNsmDateTime.ToString("F")</td>
-            <td>@item.ApproveBySalesAdminDateTime.ToString("F")</td>
             <td>@item.DeliveredDateTime.ToString("F")</td>
             <td>@item.ReturnDateTime.ToString("F")</td>
             <td>@(Math.Ceiling((item.ReturnDateTime - item.DeliveredDateTime).TotalDays))</td>
@@ -35,10 +35,10 @@
     <tfoot>
     <tr>
         <th>Product Name</th>
-        <th>Quanity</th>
+        <th>Segment</th>
+        <th>Quantity</th>
+        <th>Delivery Ref</th>
         <th>Order Date</th>
-        <th>Nsm Approve</th>
-        <th>Admin Approve</th>
         <th>Delivery Date</th>
         <th>Return Date</th>
         <th>Delivery-to-Return</th>

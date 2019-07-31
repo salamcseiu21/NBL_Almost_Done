@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Departments;
 using NBL.Models.EntityModels.Designations;
+using NBL.Models.EntityModels.Employees;
 using NBL.Models.EntityModels.Masters;
 
 namespace NBL.Models.ViewModels
@@ -54,6 +56,7 @@ namespace NBL.Models.ViewModels
         public Department Department { get; set; }
         public Designation Designation { get; set; }
         public EmployeeType EmployeeType { get; set; }
+        public List<EducationalInfo> EducationalInfos { get; set; }
         public Branch Branch { get; set; }
         public string EmployeeNo { get; set; }
         public string GetBasicInformation()

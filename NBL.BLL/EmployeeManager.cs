@@ -114,5 +114,16 @@ namespace NBL.BLL
         {
             return _iEmployeeGateway.GetEmployeeListByDepartmentAndSearchTerm(departmentId,searchTerm,branchId);
         }
+
+        public bool UpdateEducationalInfo(EducationalInfo model)
+        {
+            int rowAffected = _iEmployeeGateway.UpdateEducationalInfo(model);
+            return rowAffected > 0;
+        }
+
+        public List<EducationalInfo> GetEducationalInfoByEmpId(int employeeId)
+        {
+            return _iEmployeeGateway.GetEducationalInfoByEmpId(employeeId);
+        }
     }
 }
