@@ -1,14 +1,14 @@
-﻿@using NBL.Models.ViewModels.Deliveries
+﻿@using NBL.Models.EntityModels.Approval
+@using NBL.Models.ViewModels.Deliveries
 @model NBL.Models.ViewModels.Returns.ViewReturnModel
 @{
     ViewBag.Title = "Approve";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
-    var returnModel = Model.ReturnModel;
     var aClient = Model.InvoiceModel.Client;
     var firstOrDefault = Model.ReturnDetailses.ToList().FirstOrDefault();
     var invoice = Model.InvoiceModel;
     var i = 0;
-
+    var approvalActions = (List<ApprovalAction>)ViewBag.ApproverActionId;
 }
 
 <section class="content">
@@ -215,6 +215,20 @@
                        
                     </table>
                     <br/>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Action</label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="ApprovarActionId" name="ApprovarActionId" required>
+                                <option value="">--Select--</option>
+                                @foreach (var item in approvalActions)
+                                {
+                                    <option value="@item.ApproverActionId">@item.ApproverActionType</option>
+                                }
+                            </select>
+                        </div>
+
+
+                    </div>
                     <div class="form-group">
                         <label for="ReturnLessAmount" class="control-label col-md-3">Return Less</label>
                         <div class="col-md-9">

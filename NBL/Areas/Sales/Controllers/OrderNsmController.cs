@@ -21,14 +21,16 @@ namespace NBL.Areas.Sales.Controllers
         private readonly IProductManager _iProductManager;
         private readonly IClientManager _iClientManager;
         private readonly IBranchManager _iBranchManager;
+        private readonly IDeliveryManager _iDeliveryManager;
 
-        public OrderNsmController(IOrderManager iOrderManager, IInventoryManager iInventoryManager, IProductManager iProductManager, IClientManager iClientManager,IBranchManager iBranchManager)
+        public OrderNsmController(IOrderManager iOrderManager, IInventoryManager iInventoryManager, IProductManager iProductManager, IClientManager iClientManager,IBranchManager iBranchManager,IDeliveryManager iDeliveryManager)
         {
             _iOrderManager = iOrderManager;
             _iInventoryManager = iInventoryManager;
             _iProductManager = iProductManager;
             _iClientManager = iClientManager;
             _iBranchManager = iBranchManager;
+            _iDeliveryManager = iDeliveryManager;
 
         }
         public PartialViewResult All()
@@ -353,5 +355,6 @@ namespace NBL.Areas.Sales.Controllers
 
             return Json(productList);
         }
+
     }
 }

@@ -86,14 +86,28 @@ namespace NBL.Areas.Sales.Controllers
             }
 
         }
+        public PartialViewResult ViewBranch()
+        {
+            try
+            {
+                var branches = _iBranchManager.GetAllBranches().ToList();
+                return PartialView("_ViewBranchPartialPage", branches);
+            }
+            catch (Exception exception)
+            {
 
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         public PartialViewResult ViewClient()
         {
 
             try
             {
                 int branchId = Convert.ToInt32(Session["BranchId"]);
-                var clients = _iClientManager.GetClientByBranchId(branchId).ToList();
+               // var clients = _iClientManager.GetClientByBranchId(branchId).ToList();
+                ICollection<ViewClient> clients=  _iClientManager.GetClientByOrderCountAndBranchId(branchId);
                 return PartialView("_ViewClientPartialPage", clients);
             }
             catch (Exception exception)

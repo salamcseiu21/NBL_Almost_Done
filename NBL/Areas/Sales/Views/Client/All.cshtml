@@ -14,6 +14,7 @@
                 <th class="text-center">Basic Information</th>
                 <th class="text-center">Contact Info</th>
                 <th class="text-center">Total Order</th>
+                <th class="text-center">Outstanding</th>
                 <th class="text-center">Executive</th>
                 <th class="text-center">View</th>
             </tr>
@@ -24,10 +25,29 @@
                 <tr>
                     <td class="text-center">
                         <img class="img-circle" src="~/@(item.ClientImage?? "Images/User.jpg")" alt="Client Image" title="@item.ClientName" width="60" height="60"><br />
-                        @Html.Raw(item.GetBasicInformation())
+                        @Html.Raw(item.GetBasicInformation())<br/>
+                        @if (item.Outstanding < 0)
+                        {
+                            <span>Outstanding : ( @(item.Outstanding?.ToString("N2")) )</span>
+                        }
+                        else
+                        {
+                            <span style="color: green;font-weight: bolder">Outstanding : @(item.Outstanding?.ToString("N2"))</span>
+                        }
+                       
                     </td>
                     <td>@Html.Raw(item.GetContactInformation())</td>
                     <td class="text-center">@item.TotalOrder</td>
+                    <td class="text-center">
+                        @if (item.Outstanding < 0)
+                        {
+                            <span>( @(item.Outstanding?.ToString("N2")) )</span>
+                        }
+                        else
+                        {
+                            <span style="color: green;font-weight: bolder">@(item.Outstanding?.ToString("N2"))</span>
+                        }
+                    </td>
                     <td class="text-center">@(item.AssignedEmpName)</td>
                     <td class="text-center">
                         @Html.ActionLink(" Profile", "ViewClientProfile", "Client", new { area="Sales",id = item.ClientId }, new { @class = "fa fa-eye" })
@@ -41,6 +61,7 @@
                 <th class="text-center">Basic Information</th>
                 <th class="text-center">Contact Info</th>
                 <th class="text-center">Total Order</th>
+                <th class="text-center">Outstanding</th>
                 <th class="text-center">Executive</th>
                 <th class="text-center">View</th>
             </tr>
@@ -53,7 +74,7 @@
 
     $('#table_client_list').DataTable({
         "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
-        "order":[["2","desc"]]
+        "order":[["3","desc"]]
     });
 
 </script>

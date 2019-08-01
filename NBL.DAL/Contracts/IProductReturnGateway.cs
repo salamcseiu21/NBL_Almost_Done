@@ -16,7 +16,7 @@ namespace NBL.DAL.Contracts
         long GetMaxSalesReturnRefByYear(int year);
         ICollection<ViewReturnDetails> GetReturnDetailsBySalesReturnId(long salesReturnId);
         ViewReturnDetails GetReturnDetailsById(long salsesReturnDetailsId);
-        int ApproveReturnByNsm(string remarks, long salesReturnId, int userUserId);
+        int ApproveReturnBySalesManager(ReturnModel returnModel);
         ICollection<ReturnModel> GetAllReturnsByStatus(int status);
         ReturnModel GetSalesReturnBySalesReturnId(long salesReturnId);
         int ReceiveSalesReturnProduct(ViewReturnReceiveModel model);
@@ -24,6 +24,8 @@ namespace NBL.DAL.Contracts
         ICollection<ViewReturnProductModel> GetSalesReturnProductListToTest();
         int AddVerificationNoteToReturnsProduct(long returnRcvDetailsId, string notes, int userUserId);
         ICollection<ViewReturnProductModel> GetAllVerifiedSalesReturnProducts();
-        int ApproveReturnBySalesAdmin(string remarks, long salesReturnId, int userId, decimal lessAmount); 
+        int ApproveReturnBySalesAdmin(ReturnModel returnModel, decimal lessAmount);
+        ICollection<ReturnModel> GetAllReturnsByApprovarRoleId(int approverRoleId);
+        ICollection<ReturnModel> GetAllFinalApprovedReturnsList();
     }
 }

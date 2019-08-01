@@ -22,7 +22,7 @@ using NBL.Models.ViewModels.TransferProducts;
 
 namespace NBL.Areas.Sales.Controllers
 {
-    [Authorize(Roles = "DistributionManager")]
+    [Authorize]
     public class DeliveryController : Controller
     {
        
@@ -46,6 +46,7 @@ namespace NBL.Areas.Sales.Controllers
             _iOrderManager = iOrderManager;
             _iBranchManager = iBranchManager;
         }
+        [Authorize(Roles = "DistributionManager")]
         public PartialViewResult OrderList()
         {
             try
@@ -68,7 +69,7 @@ namespace NBL.Areas.Sales.Controllers
             }
 
         }
-
+        [Authorize(Roles = "DistributionManager")]
         public PartialViewResult LatestOrderList()
         {
             try
@@ -90,7 +91,7 @@ namespace NBL.Areas.Sales.Controllers
             }
             
         }
-
+        [Authorize(Roles = "DistributionManager")]
         public PartialViewResult PartialDeliveredOrderList() 
         {
             SummaryModel model = new SummaryModel();
@@ -105,7 +106,7 @@ namespace NBL.Areas.Sales.Controllers
             return PartialView("_OrderListPartialPage", model);
 
         }
-
+        [Authorize(Roles = "DistributionManager")]
         public ActionResult OrderListByDate()
         {
            
@@ -115,7 +116,7 @@ namespace NBL.Areas.Sales.Controllers
             //var orders =_iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(branchId,companyId,DateTime.Now.AddDays(-1),user.UserId);
             return View();
         }
-
+        [Authorize(Roles = "DistributionManager")]
         public PartialViewResult LoadOrderListByDate(DateTime deliveryDate)
         {
 
@@ -345,7 +346,7 @@ namespace NBL.Areas.Sales.Controllers
             }
            // return Json(model, JsonRequestBehavior.AllowGet);
         }
-
+        [Authorize(Roles = "DistributionManager")]
         public PartialViewResult ViewScannedBarcodeList(long id)
         {
             List<ScannedProduct> products = new List<ScannedProduct>();
@@ -354,6 +355,7 @@ namespace NBL.Areas.Sales.Controllers
             products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
             return PartialView("_ViewScannedBarCodePartialPage",products);
         }
+        [Authorize(Roles = "DistributionManager")]
         public ActionResult ViewInvoiceIdOrderDetails(int invoiceId)
         {
             var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
@@ -457,9 +459,15 @@ namespace NBL.Areas.Sales.Controllers
             int branchId = Convert.ToInt32(Session["BranchId"]);
             int companyId = Convert.ToInt32(Session["CompanyId"]);
             var user = (ViewUser) Session["user"];
-            // var orders = _iDeliveryManager.GetAllDeliveredOrdersByBranchCompanyAndUserId(branchId,companyId,user.UserId).ToList();
-          
-            var orders = _iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyAndUserId(branchId,companyId,user.UserId).ToList();
+            List<Delivery> orders=new List<Delivery>();
+            if(user.Roles=="DistributionManager")
+            {
+                orders = _iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyAndUserId(branchId, companyId, user.UserId).ToList();
+            }
+            else
+            {
+                orders = _iDeliveryManager.GetAllDeliveredOrdersByBranchAndCompanyId(branchId, companyId).ToList();
+            }
             return View(orders);
         }
        

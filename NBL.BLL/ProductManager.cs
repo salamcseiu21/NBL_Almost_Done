@@ -473,6 +473,11 @@ namespace NBL.BLL
             return rowAffected > 0;
         }
 
+        public ICollection<ViewGeneralRequisitionModel> GetGeneralRequisitionByUserId(int userId)
+        {
+            return _iProductGateway.GetGeneralRequisitionByUserId(userId);
+        }
+
         private string GenerateTransferRequisitionRef(int maxTrNo)
         {
 

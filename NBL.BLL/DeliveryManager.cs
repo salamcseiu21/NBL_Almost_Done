@@ -113,13 +113,7 @@ namespace NBL.BLL
         public ICollection<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(int branchId, int companyId, DateTime date,
             int userId)
         {
-            var deliveredOrders =
-                _iDeliveryGateway.GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(branchId, companyId,date, userId);
-            foreach (Delivery delivery in deliveredOrders)
-            {
-                var order = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
-                delivery.Client = _iClientManager.GetById(order.ClientId);
-            }
+            var deliveredOrders = _iDeliveryGateway.GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(branchId, companyId,date, userId);
 
             return deliveredOrders.ToList();
         }
@@ -143,12 +137,6 @@ namespace NBL.BLL
         {
             var deliveredOrders =
                 _iDeliveryGateway.GetAllDeliveredOrdersByDistributionPointCompanyAndUserId(branchId, companyId, userId);
-            foreach (Delivery delivery in deliveredOrders)
-            {
-                var order = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
-                delivery.Client = _iClientManager.GetById(order.ClientId);
-            }
-
             return deliveredOrders.ToList();
         }
 
@@ -156,12 +144,6 @@ namespace NBL.BLL
         {
             var deliveredOrders =
                 _iDeliveryGateway.GetAllDeliveredOrdersByDistributionPointAndCompanyId(branchId, companyId);
-            foreach (Delivery delivery in deliveredOrders)
-            {
-                var order = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
-                delivery.Client = _iClientManager.GetById(order.ClientId);
-            }
-
             return deliveredOrders.ToList();
         }
 

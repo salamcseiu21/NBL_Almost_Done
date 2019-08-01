@@ -46,7 +46,8 @@ namespace NBL.Areas.Sales.Controllers
             try
             {
                 int branchId = Convert.ToInt32(Session["BranchId"]);
-                return View(_iClientManager.GetClientByBranchId(branchId).ToList().FindAll(n => n.Active == "Y"));
+                ICollection<ViewClient> clients = _iClientManager.GetClientByOrderCountAndBranchId(branchId);
+                return View(clients);
             }
             catch (Exception exception)
             {

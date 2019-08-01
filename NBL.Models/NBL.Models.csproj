@@ -166,6 +166,7 @@
     <Compile Include="Enums\ReferenceType.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
     <Compile Include="Enums\RequisitionStatus.cs" />
+    <Compile Include="Enums\RoleEnum.cs" />
     <Compile Include="Enums\SalesReturn.cs" />
     <Compile Include="ErrorModel.cs" />
     <Compile Include="Generator.cs" />

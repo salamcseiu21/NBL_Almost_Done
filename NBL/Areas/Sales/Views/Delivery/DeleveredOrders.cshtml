@@ -15,6 +15,7 @@
                 <th>Client Info</th>
                 <th>Transportation</th>
                 <th>Delivery Ref</th>
+             
                 <th class="text-center">Delivery Date</th>
                 <th class="text-center">Action</th>
             </tr>
@@ -27,13 +28,16 @@
 
                 var aClient = item.Client;
                 <tr>
-                    <td>
+                    <td class="text-center">
+                        <img class="profile-user-img img-responsive img-circle" src="~/@(aClient.ClientImage?? "Images/User.jpg")" alt="Client Image" title="@aClient.ClientName"><br />
                         @Html.Raw(aClient.GetBasicInformation())
+                      
                     </td>
                    <td>
                        @Html.Raw(item.Transport.GetFullInformation())
                    </td>
                     <td>@item.DeliveryRef</td>
+                 
 
                     <td class="text-center">
 
@@ -54,6 +58,7 @@
                 <th>Client Info</th>
                 <th>Transportation</th>
                 <th>Delivery Ref</th>
+           
                 <th class="text-center">Delivery Date</th>
                 <th class="text-center">Action</th>
             </tr>

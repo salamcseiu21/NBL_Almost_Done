@@ -1,26 +1,33 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NBL.BLL.Contracts;
+using NBL.Models.Logs;
+using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Products;
+using NBL.Models.ViewModels.Requisitions;
 
 namespace NBL.Areas.ResearchAndDevelopment.Controllers
 {
-    [Authorize(Roles = "R&D")]
+    [Authorize]
     public class ProductController : Controller
     {
 
         private readonly IOrderManager _iOrderManager;
         private readonly IReportManager _iReportManager;
         private readonly IInventoryManager _iInventoryManager;
+        private readonly IProductManager _iProductManager;
 
-        public ProductController(IOrderManager iOrderManager, IReportManager iReportManager, IInventoryManager iInventoryManager)
+        public ProductController(IOrderManager iOrderManager, IReportManager iReportManager, IInventoryManager iInventoryManager,IProductManager iProductManager)
         {
             _iOrderManager = iOrderManager;
             _iReportManager = iReportManager;
             _iInventoryManager = iInventoryManager;
+            _iProductManager = iProductManager;
         }
         // GET: ResearchAndDevelopment/Product
         public ActionResult ProductLifeCycle()
@@ -28,7 +35,22 @@ namespace NBL.Areas.ResearchAndDevelopment.Controllers
             return View();
         }
 
+        public ActionResult ReturnProduct()
+        {
+            try
+            {
+                var user = (ViewUser) Session["user"];
+                ICollection<ViewGeneralRequisitionModel> requisitions = _iProductManager.GetGeneralRequisitionByUserId(user.UserId);
+                ViewBag.DeliveryId = new SelectList(requisitions.ToList(), "DeliveryId", "DeliveryRef");
+                return View();
+            }
+            catch (Exception exception)
+            {
 
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
 
         //--------------------------Product Status By Barcode---------------
         public ActionResult ProductStatus()

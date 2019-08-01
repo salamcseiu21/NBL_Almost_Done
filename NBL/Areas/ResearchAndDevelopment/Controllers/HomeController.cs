@@ -13,7 +13,7 @@ using NBL.Models.ViewModels.Requisitions;
 
 namespace NBL.Areas.ResearchAndDevelopment.Controllers
 {
-    [Authorize(Roles = "R&D")]
+    [Authorize]
     public class HomeController : Controller
     {
 

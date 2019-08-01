@@ -99,13 +99,12 @@ namespace NBL.BLL
         public IEnumerable<ViewClient> GetClientByBranchId(int branchId)
         {
             var clients = _iClientGateway.GetClientByBranchId(branchId);
-            //foreach (var client in clients)
-            //{
-            //    client.Orders = _iOrderManager.GetOrdersByClientId(client.ClientId).ToList();
-            //}
             return clients;
         }
-
+        public ICollection<ViewClient> GetClientByOrderCountAndBranchId(int branchId)
+        {
+            return _iClientGateway.GetClientByOrderCountAndBranchId(branchId);
+        }
         public bool Delete(Client model)
         {
             throw new System.NotImplementedException();
@@ -114,7 +113,6 @@ namespace NBL.BLL
         public Client GetById(int clientId)
         {
             var client= _iClientGateway.GetById(clientId);
-            client.Outstanding =GetClientOustandingBalanceBySubSubSubAccountCode(client.SubSubSubAccountCode);
             return client;
 
         }
@@ -188,5 +186,7 @@ namespace NBL.BLL
         {
             return _iClientGateway.GetClientInfoBySubSubSubAccountCode(accountCode);
         }
+
+        
     }
 }

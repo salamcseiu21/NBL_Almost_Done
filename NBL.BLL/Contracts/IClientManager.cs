@@ -24,5 +24,6 @@ namespace NBL.BLL.Contracts
         ICollection<object> GetClientByBranchIdAndSearchTerm(int branchId, string searchTerm);
        ICollection<object> GetAllClientBySearchTerm(string searchTerm);
        ViewClient GetClientInfoBySubSubSubAccountCode(string accountCode);
+       ICollection<ViewClient> GetClientByOrderCountAndBranchId(int branchId);
    }
 }

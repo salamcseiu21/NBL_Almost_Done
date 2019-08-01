@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Deliveries;
+using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.EntityModels.Transports;
 using NBL.Models.Logs;
@@ -269,6 +270,7 @@ namespace NBL.DAL
                         DeliveryRef = reader["DeliveryRef"].ToString(),
                         DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
                         TransactionRef = reader["TransactionRef"].ToString(),
+                        Quantity = Convert.ToInt32(reader["DeliveredQuantity"]),
                         DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
                         Status = Convert.ToInt32(reader["Status"]),
                         SysDateTime = Convert.ToDateTime(reader["SysDateTime"]),
@@ -279,7 +281,31 @@ namespace NBL.DAL
                             Transportation = reader["Transportation"].ToString(),
                             TransportationCost = Convert.ToDecimal(reader["TransportationCost"]),
                             VehicleNo = reader["VehicleNo"].ToString()
-                        }
+                        },
+                        Client = new Client
+                        {
+                            ClientName = reader["Name"].ToString(),
+                            CommercialName = reader["CommercialName"].ToString(),
+                    Address = reader["Address"].ToString(),
+                Phone = reader["Phone"].ToString(),
+                    AlternatePhone = DBNull.Value.Equals(reader["AltPhone"]) ? null : reader["AltPhone"].ToString(),
+                    Email = DBNull.Value.Equals(reader["Email"]) ? null : reader["Email"].ToString(),
+                   ClientImage = DBNull.Value.Equals(reader["ClientImage"]) ? null : reader["ClientImage"].ToString(),
+                    ClientSignature = DBNull.Value.Equals(reader["ClientSignature"]) ? null : reader["ClientSignature"].ToString(),
+                    NationalIdNo = DBNull.Value.Equals(reader["NationalIdNo"]) ? null : reader["NationalIdNo"].ToString(),
+                    Active = reader["Active"].ToString(),
+                   CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
+                    MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"]),
+                    TerritoryId = Convert.ToInt32(reader["TerritoryId"]),
+                    RegionId = Convert.ToInt32(reader["RegionId"]),
+                   SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                    BranchId = Convert.ToInt32(reader["BranchId"]),
+                    ClientType = new ClientType
+                    {
+                        ClientTypeName = reader["ClientTypeName"].ToString(),
+                        ClientTypeId = Convert.ToInt32(reader["ClientTypeId"])
+                    }
+                }
                     };
                     orders.Add(aModel);
                 }
@@ -622,6 +648,32 @@ namespace NBL.DAL
                             TransportationCost = Convert.ToDecimal(reader["TransportationCost"]),
                             VehicleNo = reader["VehicleNo"].ToString()
                         }
+                        ,
+                        Client = new Client
+                        {
+                            ClientName = reader["Name"].ToString(),
+                            CommercialName = reader["CommercialName"].ToString(),
+                            Address = reader["Address"].ToString(),
+                            Phone = reader["Phone"].ToString(),
+                            AlternatePhone = DBNull.Value.Equals(reader["AltPhone"]) ? null : reader["AltPhone"].ToString(),
+                            Email = DBNull.Value.Equals(reader["Email"]) ? null : reader["Email"].ToString(),
+                            ClientImage = DBNull.Value.Equals(reader["ClientImage"]) ? null : reader["ClientImage"].ToString(),
+                            ClientSignature = DBNull.Value.Equals(reader["ClientSignature"]) ? null : reader["ClientSignature"].ToString(),
+                            NationalIdNo = DBNull.Value.Equals(reader["NationalIdNo"]) ? null : reader["NationalIdNo"].ToString(),
+                            Active = reader["Active"].ToString(),
+                            CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
+                            MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"]),
+                            TerritoryId = Convert.ToInt32(reader["TerritoryId"]),
+                            RegionId = Convert.ToInt32(reader["RegionId"]),
+                            SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                            BranchId = Convert.ToInt32(reader["BranchId"]),
+                            Outstanding = DBNull.Value.Equals(reader["Outstanding"]) ? default(decimal): Convert.ToDecimal(reader["Outstanding"]),
+                    ClientType = new ClientType
+                            {
+                                ClientTypeName = reader["ClientTypeName"].ToString(),
+                                ClientTypeId = Convert.ToInt32(reader["ClientTypeId"])
+                            }
+                        }
                     };
                     orders.Add(aModel);
                 }
@@ -783,6 +835,31 @@ namespace NBL.DAL
                             Transportation = reader["Transportation"].ToString(),
                             TransportationCost = Convert.ToDecimal(reader["TransportationCost"]),
                             VehicleNo = reader["VehicleNo"].ToString()
+                        },
+                        Client = new Client
+                        {
+                            ClientName = reader["Name"].ToString(),
+                            CommercialName = reader["CommercialName"].ToString(),
+                            Address = reader["Address"].ToString(),
+                            Phone = reader["Phone"].ToString(),
+                            AlternatePhone = DBNull.Value.Equals(reader["AltPhone"]) ? null : reader["AltPhone"].ToString(),
+                            Email = DBNull.Value.Equals(reader["Email"]) ? null : reader["Email"].ToString(),
+                            ClientImage = DBNull.Value.Equals(reader["ClientImage"]) ? null : reader["ClientImage"].ToString(),
+                            ClientSignature = DBNull.Value.Equals(reader["ClientSignature"]) ? null : reader["ClientSignature"].ToString(),
+                            NationalIdNo = DBNull.Value.Equals(reader["NationalIdNo"]) ? null : reader["NationalIdNo"].ToString(),
+                            Active = reader["Active"].ToString(),
+                            CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
+                            MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"]),
+                            TerritoryId = Convert.ToInt32(reader["TerritoryId"]),
+                            RegionId = Convert.ToInt32(reader["RegionId"]),
+                            SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                            BranchId = Convert.ToInt32(reader["BranchId"]),
+                            Outstanding = DBNull.Value.Equals(reader["Outstanding"]) ? default(decimal) : Convert.ToDecimal(reader["Outstanding"]),
+                            ClientType = new ClientType
+                            {
+                                ClientTypeName = reader["ClientTypeName"].ToString(),
+                                ClientTypeId = Convert.ToInt32(reader["ClientTypeId"])
+                            }
                         }
                     };
                     orders.Add(aModel);

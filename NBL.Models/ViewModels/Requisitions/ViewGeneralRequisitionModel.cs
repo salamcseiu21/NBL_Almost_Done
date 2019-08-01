@@ -30,5 +30,7 @@ namespace NBL.Models.ViewModels.Requisitions
         public ICollection<ViewGeneralRequistionDetailsModel> GeneralRequistionDetails { get; set; }
         public ICollection<ApprovalDetails> ApprovalDetails { get; set; } 
         public GeneralRequisitionModel GeneralRequisitionModel { get; set; }
+        public long DeliveryId { get; set; }    
+        public string DeliveryRef { get; set; }    
     }
 }

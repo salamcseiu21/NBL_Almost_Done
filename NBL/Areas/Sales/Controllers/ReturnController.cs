@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -10,6 +11,7 @@ using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Returns;
+using NBL.Models.Enums;
 using NBL.Models.Logs;
 using NBL.Models.Validators;
 using NBL.Models.ViewModels;
@@ -30,7 +32,8 @@ namespace NBL.Areas.Sales.Controllers
         private readonly IOrderManager _iOrderManager;
         private readonly IInvoiceManager _iInvoiceManager;
         private readonly IInventoryManager _iInventoryManager;
-        public ReturnController(IDeliveryManager iDeliveryManager,IProductManager iProductManager,IProductReturnManager iProductReturnManager,IClientManager iClientManager,IOrderManager iOrderManager,IInvoiceManager iInvoiceManager,IInventoryManager iInventoryManager)
+        private readonly ICommonManager _iCommonManager;
+        public ReturnController(IDeliveryManager iDeliveryManager,IProductManager iProductManager,IProductReturnManager iProductReturnManager,IClientManager iClientManager,IOrderManager iOrderManager,IInvoiceManager iInvoiceManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager)
         {
             _iDeliveryManager = iDeliveryManager;
             _iProductManager = iProductManager;
@@ -39,6 +42,7 @@ namespace NBL.Areas.Sales.Controllers
             _iOrderManager = iOrderManager;
             _iInvoiceManager = iInvoiceManager;
             _iInventoryManager = iInventoryManager;
+            _iCommonManager = iCommonManager;
         }
         // GET: Sales/Return
         public ActionResult Home()
@@ -110,7 +114,9 @@ namespace NBL.Areas.Sales.Controllers
                     BranchId = branchId,
                     CompanyId = companyId,
                     ClientId = clientId,
-                    Remarks = collection["Remarks"]
+                    Remarks = collection["Remarks"],
+                    CurrentApprovalLevel = 1,
+                    CurrentApproverRoleId = Convert.ToInt32(RoleEnum.SalesManager)
                 };
 
                 var result = _iProductReturnManager.SaveReturnProduct(model);
@@ -323,8 +329,23 @@ namespace NBL.Areas.Sales.Controllers
             }
         }
 
-       
 
+        public ActionResult PendingSalesReturns() 
+        {
+            try
+            {
+
+
+                ICollection<ReturnModel> products = _iProductReturnManager.GetAllReturnsByApprovarRoleId(Convert.ToInt32(RoleEnum.SalesManager));
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
 
         //---------------------Approve By sales Manager---------------
         [Authorize(Roles = "SalesManager")]
@@ -333,13 +354,15 @@ namespace NBL.Areas.Sales.Controllers
             try
             {
 
+                ViewBag.ApproverActionId = _iCommonManager.GetAllApprovalActionList().ToList();
                 ViewBag.SalesReturnId = salesReturnId;
                 var returnById = _iProductReturnManager.GetSalesReturnBySalesReturnId(salesReturnId);
                 List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
                 ViewReturnModel returnModel = new ViewReturnModel
                 {
                     ReturnDetailses = models,
-                    ReturnModel = returnById
+                    ReturnModel = returnById,
+                    
                 };
                 var firstOrdefault=models.FirstOrDefault();
                 if(firstOrdefault != null)
@@ -378,13 +401,25 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
+                var remarks = collection["Remarks"];
                 var user = (ViewUser)Session["user"];
                 long salesReturnId = Convert.ToInt64(collection["salesReturnId"]);
-                var remarks = collection["Remarks"];
-                bool result = _iProductReturnManager.ApproveReturnByNsm(remarks, salesReturnId, user.UserId);
+                var aproverActionId= Convert.ToInt32(collection["ApprovarActionId"]);
+                var returnById = _iProductReturnManager.GetSalesReturnBySalesReturnId(salesReturnId);
+
+                returnById.LastApproverDatetime=DateTime.Now;
+                returnById.LastApproverRoleId = returnById.CurrentApproverRoleId;
+                returnById.CurrentApprovalLevel = returnById.CurrentApprovalLevel + 1;
+                returnById.CurrentApproverRoleId = Convert.ToInt32(RoleEnum.SalesAdmin);
+                returnById.NotesByManager = remarks;
+                returnById.SalesReturnId = salesReturnId;
+                returnById.ApproveByManagerUserId = user.UserId;
+                returnById.AproveActionId = aproverActionId;
+
+                bool result = _iProductReturnManager.ApproveReturnBySalesManager(returnById);
                 if (result)
                 {
-                    return RedirectToAction("ViewAll");
+                    return RedirectToAction("PendingSalesReturns");
                 }
 
                 List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
@@ -410,6 +445,7 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
+                ViewBag.ApproverActionId = _iCommonManager.GetAllApprovalActionList().ToList();
                 ViewBag.SalesReturnId = salesReturnId;
                 var returnById=_iProductReturnManager.GetSalesReturnBySalesReturnId(salesReturnId);
                 List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
@@ -457,80 +493,22 @@ namespace NBL.Areas.Sales.Controllers
                 var user = (ViewUser)Session["user"];
                 long salesReturnId = Convert.ToInt64(collection["salesReturnId"]);
                 var remarks = collection["Remarks"];
+                var aproverActionId = Convert.ToInt32(collection["ApprovarActionId"]);
                 var returnLessAmount = Convert.ToDecimal(collection["ReturnLessAmount"]);
-               
                 List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
 
+                var returnById = _iProductReturnManager.GetSalesReturnBySalesReturnId(salesReturnId);
+                returnById.LastApproverDatetime = DateTime.Now;
+                returnById.LastApproverRoleId = returnById.CurrentApproverRoleId;
+                returnById.CurrentApprovalLevel = 0;
+                returnById.CurrentApproverRoleId = 0;
+                returnById.IsFinalApproved = 1;
+                returnById.NotesByAdmin = remarks;
+                returnById.SalesReturnId = salesReturnId;
+                returnById.ApproveByAdminUserId = user.UserId;
+                returnById.AproveActionId = aproverActionId;
 
-               // List<ViewReturnDetails> newReturnDetailsList = new List<ViewReturnDetails>();
-                //ViewInvoiceModel invoice = new ViewInvoiceModel();
-                //var firstOrdefault = models.FirstOrDefault();
-
-                //var delivery = _iDeliveryManager.GetOrderByDeliveryId(firstOrdefault.DeliveryId);
-                //var invoicedOrder = _iInvoiceManager.GetInvoicedOrderByInvoiceId(delivery.InvoiceId);
-                //var deliveryDetails = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(firstOrdefault.DeliveryId);
-                //var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
-                //invoice = new ViewInvoiceModel
-                //{
-                //    Order = orderInfo,
-                //    DeliveryDetails = deliveryDetails
-                //};
-
-
-
-                //foreach (ViewReturnDetails item in models)
-                //{
-                //    item.UnitPrice = invoice.DeliveryDetails.ToList().Find(n => n.ProductId == item.ProductId)
-                //        .UnitPrice;
-                //    item.VatAmount= invoice.DeliveryDetails.ToList().Find(n => n.ProductId == item.ProductId)
-                //        .VatAmount;
-                //    item.DiscountAmount = invoice.DeliveryDetails.ToList().Find(n => n.ProductId == item.ProductId)
-                //        .UnitDiscount;
-                //    newReturnDetailsList.Add(item);
-                //}
-
-
-                //var grossAmount = newReturnDetailsList.Sum(n => (n.UnitPrice + n.VatAmount) * n.Quantity);
-                //var tradeDiscount = newReturnDetailsList.Sum(n => n.DiscountAmount * n.Quantity);
-                //var invoiceDiscount = (invoicedOrder.SpecialDiscount / invoicedOrder.Quantity) * newReturnDetailsList.Sum(n=>n.Quantity);
-                //var grossDiscount = tradeDiscount + invoiceDiscount;
-                //var vat = newReturnDetailsList.Sum(n => n.VatAmount * n.Quantity);
-
-
-                //var financialModel =
-                //    new FinancialTransactionModel
-                //    {
-                //        //--------Cr -------------------
-                //        ClientCode = invoice.Client.SubSubSubAccountCode,
-                //        ClientCrAmount = grossAmount - grossDiscount,
-                //        GrossDiscountAmount = grossDiscount,
-                //        GrossDiscountCode = "2102018",
-
-                //        //--------Dr -------------------
-                //        SalesRevenueCode = "2001021",
-                //        SalesRevenueAmount = grossAmount - vat,
-                //        VatCode = "2102013",
-                //        VatAmount = vat,
-
-
-                //        //--------------Sales Return---------
-                //        SalesReturnAmount = returnLessAmount,
-                //        SalesReturnCode = "1001022",
-                //        ClientDrAmount = returnLessAmount,
-
-
-                //        TradeDiscountCode = "2102012",
-                //        TradeDiscountAmount = tradeDiscount,
-                //        InvoiceDiscountAmount = invoiceDiscount,
-                //        InvoiceDiscountCode = "2102011"
-
-
-                //    };
-
-
-                
-
-                bool result = _iProductReturnManager.ApproveReturnBySalesAdmin(remarks, salesReturnId, user.UserId,returnLessAmount);
+                bool result = _iProductReturnManager.ApproveReturnBySalesAdmin(returnById,returnLessAmount);
                 if (result)
                 {
                     return RedirectToAction("ViewAll");
@@ -550,7 +528,8 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
-                var products = _iProductReturnManager.GetAllReturnsByStatus(2).ToList();
+               // var products = _iProductReturnManager.GetAllReturnsByStatus(2).ToList();
+                ICollection<ReturnModel> products=_iProductReturnManager.GetAllFinalApprovedReturnsList();
                 return View(products);
             }
             catch (Exception exception)

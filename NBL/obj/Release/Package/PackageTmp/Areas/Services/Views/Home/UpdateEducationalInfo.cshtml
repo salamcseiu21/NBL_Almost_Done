@@ -1,0 +1,118 @@
+﻿@model NBL.Models.EntityModels.Employees.EducationalInfo
+
+@{
+    ViewBag.Title = "Update Educational Info";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-success" style="margin-top: 0">Update Educational Information</h3>
+    <hr />
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.EmployeeId)
+        <p class="text-center text-danger">
+            @if (TempData["Error"] != null)
+            {
+                @TempData["Error"]
+            }
+        </p>
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.EmployeeId)
+
+            <div class="col-md-6 col-md-offset-3">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.QualificationName, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        <select class="form-control" id="QualificationName" name="QualificationName">
+                            <option value="">--Select--</option>
+                            <option value="SSC/Equivalent">SSC/Equivalent</option>
+                            <option value="HSC/Equivalent">HSC/Equivalent</option>
+                            <option value="Honours">Honours</option>
+                            <option value="Masters">Masters</option>
+                            <option value="B.Sc">B.Sc</option>
+                            <option value="M.Sc">M.Sc</option>
+                            <option value="PhD">PhD</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.QualificationName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BoardName, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        <select class="form-control" id="BoardName" name="BoardName">
+                            <option value="">--Select--</option>
+                            <option value="Barisal">Barisal</option>
+                            <option value="Chittagong">Chittagong</option>
+                            <option value="Comilla">Comilla</option>
+                            <option value="Dhaka">Dhaka</option>
+                            <option value="Jessore">Jessore</option>
+                            <option value="Mymensingh">Mymensingh</option>
+                            <option value="Rajshahi">Rajshahi</option>
+                            <option value="Sylhet">Sylhet</option>
+                            <option value="Dinajpur">Dinajpur</option>
+                            <option value="Madrasah">Madrasah</option>
+                            <option value="Technical">Technical</option>
+                            <option value="University">University</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.QualificationName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.GroupSubject, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.GroupSubject, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.GroupSubject, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.InstituteName, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.InstituteName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.InstituteName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PassingYear, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        <select class="form-control" id="PassingYear" name="PassingYear">
+                            <option value="">--Select--</option>
+                            @for (int i = DateTime.Now.Year; i >=1970; i--)
+                            {
+                                <option value="@i">@i</option>
+                            }
+
+
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Result, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Result, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Result, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-9">
+                        @Html.ActionLink("Back", "Home", "Home", null, new { @class = "btn btn-danger" })
+                        <input type="submit" value="Update" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+
+
+</section>
+@section Scripts{
+    <script>
+        
+    </script>
+
+}

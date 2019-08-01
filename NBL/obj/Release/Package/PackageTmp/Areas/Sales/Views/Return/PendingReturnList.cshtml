@@ -25,7 +25,7 @@
                     <td class="text-center">@item.ReturnRef</td>
                     <td class="text-center">@item.ClientInfo</td>
                     <td class="text-center">@item.TotalQuantity</td>
-                    <td class="text-center">@(item.ApproveByAdminDate?.Date.ToString("dd-MMM-yyyy"))</td>
+                    <td class="text-center">@(item.LastApproverDatetime?.Date.ToString("dd-MMM-yyyy"))</td>
                    
                 <td class="text-center">
                     @Html.ActionLink(" Receive", "Receive", "Return", new { id = item.SalesReturnId },null)

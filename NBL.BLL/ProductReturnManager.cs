@@ -92,17 +92,16 @@ namespace NBL.BLL
             return _iProductReturnGateway.GetReturnDetailsById(salsesReturnDetailsId);
         }
 
-        public bool ApproveReturnByNsm(string remarks, long salesReturnId, int userUserId)
-        {
-            int rowAffected = _iProductReturnGateway.ApproveReturnByNsm(remarks,salesReturnId,userUserId);
-            return rowAffected > 0;
-        }
+       
 
         public ICollection<ReturnModel> GetAllReturnsByStatus(int status)
         {
             return _iProductReturnGateway.GetAllReturnsByStatus(status);
         }
-
+        public ICollection<ReturnModel> GetAllFinalApprovedReturnsList()
+        {
+            return _iProductReturnGateway.GetAllFinalApprovedReturnsList();
+        }
         public ReturnModel GetSalesReturnBySalesReturnId(long salesReturnId)
         {
             return _iProductReturnGateway.GetSalesReturnBySalesReturnId(salesReturnId);
@@ -133,11 +132,22 @@ namespace NBL.BLL
         {
             return _iProductReturnGateway.GetAllVerifiedSalesReturnProducts();
         }
-
-        public bool ApproveReturnBySalesAdmin(string remarks, long salesReturnId, int userId,decimal lessAmount)
+        public bool ApproveReturnBySalesManager(ReturnModel returnModel)
         {
-            int rowAffected = _iProductReturnGateway.ApproveReturnBySalesAdmin(remarks,salesReturnId,userId,lessAmount);
+            int rowAffected = _iProductReturnGateway.ApproveReturnBySalesManager(returnModel);
             return rowAffected > 0;
         }
+        public bool ApproveReturnBySalesAdmin(ReturnModel returnModel,decimal lessAmount)
+        {
+            int rowAffected = _iProductReturnGateway.ApproveReturnBySalesAdmin(returnModel,lessAmount);
+            return rowAffected > 0;
+        }
+
+        public ICollection<ReturnModel> GetAllReturnsByApprovarRoleId(int approverRoleId)
+        {
+            return _iProductReturnGateway.GetAllReturnsByApprovarRoleId(approverRoleId);
+        }
+
+        
     }
 }

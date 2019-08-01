@@ -21,7 +21,8 @@
 
                 var aClient = item.Client;
                 <tr>
-                    <td>
+                    <td class="text-center">
+                        <img class="profile-user-img img-responsive img-circle" src="~/@(aClient.ClientImage?? "Images/User.jpg")" alt="Client Image" title="@aClient.ClientName"><br />
                         @Html.Raw(aClient.GetBasicInformation())
                     </td>
                     <td>

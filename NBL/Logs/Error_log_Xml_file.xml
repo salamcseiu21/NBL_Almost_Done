@@ -1673,4 +1673,61 @@ The statement has been terminated.</CustomeMessage>
     <LogDateTime>2019-07-30T14:33:01.4709511+06:00</LogDateTime>
     <CustomeMessage>Could not receive product</CustomeMessage>
   </Error>
+  <Error LogId="19-Aug-01a37ba728-31ce-4a01-aa6f-731313c481af">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.ProductReturnGateway.ApproveReturnBySalesAdmin(ReturnModel returnModel, Decimal lessAmount) in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 372</LogMessage>
+    <LogDateTime>2019-08-01T10:11:59.7954906+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'UDSP_ApproveReturnBySalesAdmin' expects parameter '@SalseAdminUserId', which was not supplied.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-012b977232-e16f-4bd7-ba7b-d8921bddc404">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.ApproveReturnBySalesAdmin(ReturnModel returnModel, Decimal lessAmount) in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 380
+   at NBL.BLL.ProductReturnManager.ApproveReturnBySalesAdmin(ReturnModel returnModel, Decimal lessAmount) in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 139
+   at NBL.Areas.Sales.Controllers.ReturnController.ApproveBySalesAdmin(FormCollection collection) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 510</LogMessage>
+    <LogDateTime>2019-08-01T10:11:59.8871002+06:00</LogDateTime>
+    <CustomeMessage>Could not approve sales returns by Sales Admin</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-01df67eb1f-b7d1-4ed5-a301-33a9d7dee084">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ProductGateway.GetGeneralRequisitionByUserId(Int32 userId) in E:\API\NBL\NBL.DAL\ProductGateway.cs:line 1270</LogMessage>
+    <LogDateTime>2019-08-01T15:42:34.6435054+06:00</LogDateTime>
+    <CustomeMessage>Quantity</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-01bdd1de12-e06c-406e-903d-81d49050612a">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductGateway.GetGeneralRequisitionByUserId(Int32 userId) in E:\API\NBL\NBL.DAL\ProductGateway.cs:line 1300
+   at NBL.BLL.ProductManager.GetGeneralRequisitionByUserId(Int32 userId) in E:\API\NBL\NBL.BLL\ProductManager.cs:line 478
+   at NBL.Areas.ResearchAndDevelopment.Controllers.ProductController.ReturnProduct() in E:\API\NBL\NBL\Areas\ResearchAndDevelopment\Controllers\ProductController.cs:line 43</LogMessage>
+    <LogDateTime>2019-08-01T15:42:34.6864183+06:00</LogDateTime>
+    <CustomeMessage>Could not collect general requisition list</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-01db28c2aa-25da-4d8b-ab48-c39cc440fc48">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ProductGateway.GetGeneralRequisitionByUserId(Int32 userId) in E:\API\NBL\NBL.DAL\ProductGateway.cs:line 1270</LogMessage>
+    <LogDateTime>2019-08-01T15:43:43.7749136+06:00</LogDateTime>
+    <CustomeMessage>Quantity</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-01afcc610e-7305-461a-b43e-83f1b6af21d4">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductGateway.GetGeneralRequisitionByUserId(Int32 userId) in E:\API\NBL\NBL.DAL\ProductGateway.cs:line 1300
+   at NBL.BLL.ProductManager.GetGeneralRequisitionByUserId(Int32 userId) in E:\API\NBL\NBL.BLL\ProductManager.cs:line 478
+   at NBL.Areas.ResearchAndDevelopment.Controllers.ProductController.ReturnProduct() in E:\API\NBL\NBL\Areas\ResearchAndDevelopment\Controllers\ProductController.cs:line 43</LogMessage>
+    <LogDateTime>2019-08-01T15:43:43.8118172+06:00</LogDateTime>
+    <CustomeMessage>Could not collect general requisition list</CustomeMessage>
+  </Error>
 </Errors>

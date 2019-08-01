@@ -28,7 +28,13 @@ namespace NBL.Models.EntityModels.Returns
         public int? ApproveByManagerUserId { get; set; } 
         public DateTime? ApproveByAdminDate { get; set; }
         public string NotesByAdmin { get; set; }
-        public int? ApproveByAdminUserId { get; set; } 
+        public int? ApproveByAdminUserId { get; set; }
 
+        public int? LastApproverRoleId { get; set; }
+        public DateTime? LastApproverDatetime { get; set; }
+        public int? CurrentApprovalLevel { get; set; }
+        public int? CurrentApproverRoleId { get; set; } 
+        public int? IsFinalApproved { get; set; }
+        public int AproveActionId { get; set; }
     }
 }

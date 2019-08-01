@@ -1204,6 +1204,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect general requisition list", exception);
             }
             finally
@@ -1254,6 +1255,56 @@ namespace NBL.DAL
             }
         }
 
+        public ICollection<ViewGeneralRequisitionModel> GetGeneralRequisitionByUserId(int userId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetGeneralRequisitionByUserId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@RequisitionByUserId", userId);
+                List<ViewGeneralRequisitionModel> requisitions = new List<ViewGeneralRequisitionModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    requisitions.Add(new ViewGeneralRequisitionModel
+                    {
+
+                        RequisitionId = Convert.ToInt64(reader["RequisitionId"]),
+                        RequisitionByUserId = Convert.ToInt32(reader["RequisitionByUserId"]),
+                        RequisitionDate = Convert.ToDateTime(reader["RequisitionDate"]),
+                        CurrentApproverUserId = Convert.ToInt32(reader["CurrentApproverUserId"]),
+                        CurrentApprovalLevel = Convert.ToInt32(reader["CurrentApprovalLevel"]),
+                        DistributionPointId = DBNull.Value.Equals(reader["DistributionPointId"]) ? default(int) : Convert.ToInt32(reader["DistributionPointId"]),
+                        EntryStatus = reader["EntryStatus"].ToString(),
+                        Status = Convert.ToInt32(reader["Status"]),
+                        IsCancelled = reader["IsCancelled"].ToString(),
+                        IsFinalApproved = reader["IsFinalApproved"].ToString(),
+                        RequisitionRemarks = reader["RequisitionRemarks"].ToString(),
+                        RequisitionRef = reader["RequisitionRef"].ToString(),
+                        LastApproverUserId = DBNull.Value.Equals(reader["LastApproverUserId"]) ? default(int) : Convert.ToInt32(reader["LastApproverUserId"]),
+                        LastApproveDateTime = DBNull.Value.Equals(reader["LastApproveDateTime"]) ? default(DateTime) : Convert.ToDateTime(reader["LastApproveDateTime"]),
+                        DeliveryStatus = Convert.ToInt32(reader["DeliveryStatus"]),
+                        DeliveryId=Convert.ToInt64(reader["DeliveryId"]),
+                        DeliveryRef = reader["DeliveryRef"].ToString()
+
+                    });
+                }
+                reader.Close();
+                return requisitions;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect general requisition list", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
         public int UpdateGeneralRequisitionQuantity(string id, int quantity)
         {
             try
