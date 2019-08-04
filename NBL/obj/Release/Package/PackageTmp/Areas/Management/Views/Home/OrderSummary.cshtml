@@ -45,41 +45,55 @@
     }
     <div style="padding: 10px">
 
-        <table id="table_Order_list" class="display table table-bordered responsive" style="border: 1px solid black">
-
-            <thead>
-            <tr>
-                <th>Order Slip No</th>
-                <th class="text-center">Order Date</th>
-                <th class="text-right">Amount (&#2547;)</th>
-                <th class="text-right">Vat (&#2547;)</th>
-                <th class="text-right">Discount (&#2547;)</th>
-                <th class="text-center">View</th>
-            </tr>
-            </thead>
-
-            <tbody></tbody>
-            <tfoot>
-            <tr>
-                <th>Order Slip No</th>
-                <th class="text-center">Order Date</th>
-                <th class="text-right">Amount (&#2547;)</th>
-                <th class="text-right">Vat (&#2547;)</th>
-                <th class="text-right">Discount (&#2547;)</th>
-                <th class="text-center">View</th>
-            </tr>
-            </tfoot>
-        </table>
+        <div id="divDeliveredList"></div>
 
     </div>
+    
+   
     <!--load modal partial here...-->
     @Html.Partial("_ModalPartialPage")
 </section>
 
 @section Scripts
 {
+    
+    <script>
+        $(function () {
 
-    <script type="text/javascript">
+            OrderListList(new Date());
+
+            $("form").bind("keypress", function (e) {
+                if (e.keyCode === 13) {
+                    return false;
+                }
+            });
+        });
+
+    </script>
+    
+    <script>
+        function GetOrderListByDate(event) {
+            OrderListList(event.value);
+        }
+
+
+        function OrderListList(value) {
+            var date =value;
+            var json = { deliveryDate: date };
+            $.ajax({
+                type: 'Post',
+                url: RootUrl + "sales/delivery/GetAllOrdersByBranchAndCompanyId",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("#divDeliveredList").html(data);
+                }
+            });
+        }
+    </script>
+    
+
+    @*<script type="text/javascript">
         $(document).ready(function () {
 
             $.ajax({
@@ -91,7 +105,7 @@
                 }
             });
         });
-    </script>
+    </script>*@
 
     <script>
 
@@ -145,68 +159,20 @@
             }
             var branchId = $("#BranchId").val();
             var clientName = $("#ClientName").val();
+            var json = { branchId: branchId, clientName: clientName, startDate: startDate, endDate: endDate };
             $.ajax({
-                url: '@Url.Action("GetOrdersByBranchId", "Common", new { area = "" })',
-                method: 'post',
-                dataType: 'json',
-                data: { branchId: branchId, clientName: clientName, startDate: startDate, endDate: endDate },
+               
+                type: 'Post',
+                url: RootUrl + "sales/delivery/GetOrdersByBranchId",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
                 success: function (data) {
-
-                    InitialiseDataTable(data);
-
+                    $("#divDeliveredList").html(data);
                 }
             });
         }
     </script>
     
     
-
-<script>
-
-        function InitialiseDataTable(data) {
-
-            $('#table_Order_list').dataTable({
-                destroy: true,
-                paging: true,
-                lengthMenu: [[15, 30, 50, -1], [15, 30, 50, "All"]],
-                sort: true,
-                searching: true,
-                scrollY: 500,
-                data: data,
-                columns: [
-                    { 'data': 'OrderSlipNo' },
-                    {
-                        'data': 'OrderDate',
-                        className: "text-center",
-                        'render': function (jsonDate) {
-                            var date = new Date(parseInt(jsonDate.substr(6)));
-                            var month = date.getMonth() + 1;
-                            return date.getDate() + "-" + month + "-" + date.getFullYear();
-                        }
-                    },
-                    {
-                        'data': 'Amounts',
-                        className: "text-right"
-                    },
-                    {
-                        'data': 'Vat',
-                        className: "text-right"
-                    },
-                    {
-                        'data': 'Discount',
-                        className: "text-right",
-                    },
-                    {
-                        data: null,
-                        className: "text-center",
-                        render: function (data, type, row) {
-                            return '<button type="button" class="btn btn-info" value=' + data.OrderId + ' onclick="viewDetails(this)"> <i class="fa fa-eye"></i> View</button>';
-                        }
-                    }
-
-                ]
-            });
-        }
-</script>
 
 }

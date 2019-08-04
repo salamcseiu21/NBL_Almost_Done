@@ -1730,4 +1730,181 @@ The statement has been terminated.</CustomeMessage>
     <LogDateTime>2019-08-01T15:43:43.8118172+06:00</LogDateTime>
     <CustomeMessage>Could not collect general requisition list</CustomeMessage>
   </Error>
+  <Error LogId="19-Aug-01967c5195-3736-42e1-9784-cf7ddde2a097">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.ReportGateway.GetOrderHistoriesByYear(Int32 year) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 773</LogMessage>
+    <LogDateTime>2019-08-01T16:41:45.1688976+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'UDSP_RptGetOrderHistoryByYear' expects parameter '@Year', which was not supplied.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-01e2771f4d-c79a-43ee-bfff-b063afb8cf41">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ReportGateway.GetOrderHistoriesByYear(Int32 year) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 796
+   at NBL.BLL.ReportManager.GetOrderHistoriesByYear(Int32 year) in E:\API\NBL\NBL.BLL\ReportManager.cs:line 273
+   at NBL.Areas.SuperAdmin.Controllers.HomeController.OrderHistory() in E:\API\NBL\NBL\Areas\SuperAdmin\Controllers\HomeController.cs:line 349</LogMessage>
+    <LogDateTime>2019-08-01T16:41:45.2088181+06:00</LogDateTime>
+    <CustomeMessage>Could not collect  Orders history ref by year</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-01d51b3dcd-af5c-45dc-b10a-cb39ea1f191f">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ReportGateway.GetOrderHistoriesByYear(Int32 year) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 777</LogMessage>
+    <LogDateTime>2019-08-01T16:42:58.6675026+06:00</LogDateTime>
+    <CustomeMessage>BranchName</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-01b5cbd246-2d4c-438e-97d0-df052607a424">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ReportGateway.GetOrderHistoriesByYear(Int32 year) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 797
+   at NBL.BLL.ReportManager.GetOrderHistoriesByYear(Int32 year) in E:\API\NBL\NBL.BLL\ReportManager.cs:line 273
+   at NBL.Areas.SuperAdmin.Controllers.HomeController.OrderHistory() in E:\API\NBL\NBL\Areas\SuperAdmin\Controllers\HomeController.cs:line 349</LogMessage>
+    <LogDateTime>2019-08-01T16:42:58.7542697+06:00</LogDateTime>
+    <CustomeMessage>Could not collect  Orders history ref by year</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-047989ecc0-b031-4550-bf6f-50f31183742c">
+    <Heading>System.IO.FileNotFoundException</Heading>
+    <LogMessage>   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize)
+   at System.Xml.XmlDownloadManager.GetStream(Uri uri, ICredentials credentials, IWebProxy proxy, RequestCachePolicy cachePolicy)
+   at System.Xml.XmlUrlResolver.GetEntity(Uri absoluteUri, String role, Type ofObjectToReturn)
+   at System.Xml.XmlTextReaderImpl.FinishInitUriString()
+   at System.Xml.XmlTextReaderImpl..ctor(String uriStr, XmlReaderSettings settings, XmlParserContext context, XmlResolver uriResolver)
+   at System.Xml.XmlReaderSettings.CreateReader(String inputUri, XmlParserContext inputContext)
+   at System.Xml.XmlReader.Create(String inputUri, XmlReaderSettings settings, XmlParserContext inputContext)
+   at System.Xml.Linq.XDocument.Load(String uri, LoadOptions options)
+   at System.Xml.Linq.XDocument.Load(String uri)
+   at NBL.Areas.Sales.Controllers.SalesCollectionController.RemoveAll() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 192
+   at NBL.Areas.Sales.Controllers.SalesCollectionController.Receivable() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 38</LogMessage>
+    <LogDateTime>2019-08-04T09:34:42.9323778+06:00</LogDateTime>
+    <CustomeMessage>Could not find file 'E:\API\NBL\NBL\Areas\AccountsAndFinance\Files\Receivable\Receivable_4.xml'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-044e09446f-43a9-4e41-8152-d2157b8c1bc4">
+    <Heading>System.IO.FileNotFoundException</Heading>
+    <LogMessage>   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize)
+   at System.Xml.XmlDownloadManager.GetStream(Uri uri, ICredentials credentials, IWebProxy proxy, RequestCachePolicy cachePolicy)
+   at System.Xml.XmlUrlResolver.GetEntity(Uri absoluteUri, String role, Type ofObjectToReturn)
+   at System.Xml.XmlTextReaderImpl.FinishInitUriString()
+   at System.Xml.XmlTextReaderImpl..ctor(String uriStr, XmlReaderSettings settings, XmlParserContext context, XmlResolver uriResolver)
+   at System.Xml.XmlReaderSettings.CreateReader(String inputUri, XmlParserContext inputContext)
+   at System.Xml.XmlReader.Create(String inputUri, XmlReaderSettings settings, XmlParserContext inputContext)
+   at System.Xml.Linq.XDocument.Load(String uri, LoadOptions options)
+   at System.Xml.Linq.XDocument.Load(String uri)
+   at NBL.Areas.Sales.Controllers.SalesCollectionController.RemoveAll() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 192
+   at NBL.Areas.Sales.Controllers.SalesCollectionController.Receivable() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 38</LogMessage>
+    <LogDateTime>2019-08-04T09:36:59.4039015+06:00</LogDateTime>
+    <CustomeMessage>Could not find file 'E:\API\NBL\NBL\Areas\sales\Files\Receivable\Receivable_4.xml'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-04e29ee046-0741-4b8d-9ba8-cee13b2d0b42">
+    <Heading>System.IO.FileNotFoundException</Heading>
+    <LogMessage>   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize)
+   at System.Xml.XmlDownloadManager.GetStream(Uri uri, ICredentials credentials, IWebProxy proxy, RequestCachePolicy cachePolicy)
+   at System.Xml.XmlUrlResolver.GetEntity(Uri absoluteUri, String role, Type ofObjectToReturn)
+   at System.Xml.XmlTextReaderImpl.FinishInitUriString()
+   at System.Xml.XmlTextReaderImpl..ctor(String uriStr, XmlReaderSettings settings, XmlParserContext context, XmlResolver uriResolver)
+   at System.Xml.XmlReaderSettings.CreateReader(String inputUri, XmlParserContext inputContext)
+   at System.Xml.XmlReader.Create(String inputUri, XmlReaderSettings settings, XmlParserContext inputContext)
+   at System.Xml.Linq.XDocument.Load(String uri, LoadOptions options)
+   at System.Xml.Linq.XDocument.Load(String uri)
+   at NBL.Areas.Sales.Controllers.SalesCollectionController.RemoveAll() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 192
+   at NBL.Areas.Sales.Controllers.SalesCollectionController.Receivable() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 38</LogMessage>
+    <LogDateTime>2019-08-04T09:38:31.8193646+06:00</LogDateTime>
+    <CustomeMessage>Could not find file 'E:\API\NBL\NBL\Areas\sales\Files\Receivable\Receivable_4.xml'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-0493650a02-4d54-4756-bc57-04e08bdbcd0b">
+    <Heading>System.IO.FileNotFoundException</Heading>
+    <LogMessage>   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize)
+   at System.Xml.XmlDownloadManager.GetStream(Uri uri, ICredentials credentials, IWebProxy proxy, RequestCachePolicy cachePolicy)
+   at System.Xml.XmlUrlResolver.GetEntity(Uri absoluteUri, String role, Type ofObjectToReturn)
+   at System.Xml.XmlTextReaderImpl.FinishInitUriString()
+   at System.Xml.XmlTextReaderImpl..ctor(String uriStr, XmlReaderSettings settings, XmlParserContext context, XmlResolver uriResolver)
+   at System.Xml.XmlReaderSettings.CreateReader(String inputUri, XmlParserContext inputContext)
+   at System.Xml.XmlReader.Create(String inputUri, XmlReaderSettings settings, XmlParserContext inputContext)
+   at System.Xml.Linq.XDocument.Load(String uri, LoadOptions options)
+   at System.Xml.Linq.XDocument.Load(String uri)
+   at NBL.Areas.Sales.Controllers.SalesCollectionController.RemoveAll() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 194
+   at NBL.Areas.Sales.Controllers.SalesCollectionController.Receivable() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 38</LogMessage>
+    <LogDateTime>2019-08-04T09:44:22.5448273+06:00</LogDateTime>
+    <CustomeMessage>Could not find file 'E:\API\NBL\NBL\Areas\sales\Files\Receivable\Receivable_4.xml'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-0410dfc294-cd87-4543-8c50-5829e82e106b">
+    <Heading>System.IO.FileNotFoundException</Heading>
+    <LogMessage>   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize)
+   at System.Xml.XmlDownloadManager.GetStream(Uri uri, ICredentials credentials, IWebProxy proxy, RequestCachePolicy cachePolicy)
+   at System.Xml.XmlUrlResolver.GetEntity(Uri absoluteUri, String role, Type ofObjectToReturn)
+   at System.Xml.XmlTextReaderImpl.FinishInitUriString()
+   at System.Xml.XmlTextReaderImpl..ctor(String uriStr, XmlReaderSettings settings, XmlParserContext context, XmlResolver uriResolver)
+   at System.Xml.XmlReaderSettings.CreateReader(String inputUri, XmlParserContext inputContext)
+   at System.Xml.XmlReader.Create(String inputUri, XmlReaderSettings settings, XmlParserContext inputContext)
+   at System.Xml.Linq.XDocument.Load(String uri, LoadOptions options)
+   at System.Xml.Linq.XDocument.Load(String uri)
+   at NBL.Areas.Sales.Controllers.SalesCollectionController.RemoveAll() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 194
+   at NBL.Areas.Sales.Controllers.SalesCollectionController.Receivable() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 38</LogMessage>
+    <LogDateTime>2019-08-04T09:44:30.1108964+06:00</LogDateTime>
+    <CustomeMessage>Could not find file 'E:\API\NBL\NBL\Areas\sales\Files\Receivable\Receivable_4.xml'.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-040978c945-24d9-437d-9140-20748a1160c7">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.OrderGateway.GetOrdersByBranchCompanyAndDateRange(SearchCriteria searchCriteria) in E:\API\NBL\NBL.DAL\OrderGateway.cs:line 2291</LogMessage>
+    <LogDateTime>2019-08-04T12:46:19.6160405+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'UDSP_RptGetOrdersByBranchCompanyAndDateRange' expects parameter '@CompnayId', which was not supplied.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-04c2190e5b-22cb-424f-a29b-f7cd85e800b5">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.OrderGateway.GetOrdersByBranchCompanyAndDateRange(SearchCriteria searchCriteria) in E:\API\NBL\NBL.DAL\OrderGateway.cs:line 2295</LogMessage>
+    <LogDateTime>2019-08-04T12:49:57.0382511+06:00</LogDateTime>
+    <CustomeMessage>NetAmounts</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-0438abcf1e-c573-469a-a443-d183d4d4df6d">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at NBL.DAL.OrderGateway.GetOrdersByBranchCompanyAndDateRange(SearchCriteria searchCriteria) in E:\API\NBL\NBL.DAL\OrderGateway.cs:line 2295</LogMessage>
+    <LogDateTime>2019-08-04T12:51:20.6903583+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-04ec73e228-7562-4604-a910-369db99789af">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.OrderGateway.GetOrdersByBranchCompanyAndDateRange(SearchCriteria searchCriteria) in E:\API\NBL\NBL.DAL\OrderGateway.cs:line 2295</LogMessage>
+    <LogDateTime>2019-08-04T12:54:27.9882806+06:00</LogDateTime>
+    <CustomeMessage>Quantity</CustomeMessage>
+  </Error>
 </Errors>

@@ -1,0 +1,128 @@
+﻿@using Microsoft.AspNet.Identity
+@using NBL.BLL
+@model NBL.Models.ViewModels.Orders.ViewOrder
+
+@{
+    ViewBag.Title = "OrderHistoryDetails";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    UserManager userManager = new UserManager();
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Order History Details</h3>
+    
+    <div style="border: 1px dotted; padding: 10px; font-size: 18px">
+        @Html.Partial("_OrderDetailsHeaderPartialPage", Model)
+        <div class="row">
+            <div class="col-md-4">
+                <fieldset>
+                    <legend>Order By</legend>
+                    @userManager.GetUserInformationByUserId(Model.UserId).EmployeeName<br />
+                    At:  @Model.SysDate.ToShortTimeString(),@Model.SysDate.ToString("dd-MMM-yyyy")
+                </fieldset>
+            </div>
+            <div class="col-md-4">
+                <fieldset>
+                    <legend>Sales Manager</legend>
+                    @userManager.GetUserInformationByUserId(Model.NsmUserId).EmployeeName<br />
+                    Approve At : @Model.ApprovedByNsmDateTime.ToShortTimeString(),@Model.ApprovedByNsmDateTime.ToString("dd-MMM-yyyy")
+
+                </fieldset>
+            </div>
+            <div class="col-md-4">
+                <fieldset>
+                    <legend>Sales Admin</legend>
+                    @userManager.GetUserInformationByUserId(Model.AdminUserId).EmployeeName<br />
+                    Approve At : @Model.ApprovedByAdminDateTime.ToShortTimeString(),@Model.ApprovedByAdminDateTime.ToString("dd-MMM-yyyy")
+                </fieldset>
+            </div>
+        </div><hr />
+        <div class="row">
+            <div class="col-md-3"><label>Net Amount:</label> @Model.NetAmounts (&#2547;)</div>
+            <div class="col-md-3"><label>Discount:</label> @Model.Discount (&#2547;)</div>
+            <div class="col-md-3"><label>Special Discount:</label> @Model.SpecialDiscount (&#2547;)</div>
+            <div class="col-md-3"><label>Vat:</label>@Model.Vat (&#2547;)</div>
+
+        </div>
+        <hr />
+        <h3 class="text-center text-green headingStyle">Product List</h3>
+        <table id="table_product_list" class="display table-bordered" style="border:1px solid black;font-size:14px">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+
+                    <th class="text-right">Unit Price (&#2547;)</th>
+                    <th class="text-right">Discount (&#2547;)</th>
+                    <th class="text-right">Vat (&#2547;)</th>
+                    <th class="text-right">Sale Price (&#2547;)</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-right">Sub Total (&#2547;)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderItems)
+            {
+                    <tr>
+                        <td>@item.ProductName</td>
+
+                        <td class="text-right">@item.UnitPrice</td>
+                        <td class="text-right">@item.DiscountAmount</td>
+                        <td class="text-right">@item.Vat</td>
+                        <td class="text-right">@item.SalePrice</td>
+                        <td class="text-right">@item.Quantity</td>
+                        <td class="text-right">
+                            @(item.Quantity * item.SalePrice)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+        @Html.ActionLink("Back to List", "OrderHistory", "Home", null, new { @class = "btn btn-info" })
+    </div>
+</section>
+
+@section Scripts
+{
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+    <script>
+
+        $('#table_product_list').DataTable({
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "order": [[1, "desc"]]
+        });
+
+    </script>
+}
+@section Styles
+{
+    <style>
+        fieldset {
+            margin: 10px;
+            padding: 0 10px 10px;
+            border: 1px solid #666;
+            border-radius: 8px;
+            box-shadow: 0 0 2px #666;
+            padding-top: 5px;
+        }
+
+        legend {
+            padding: 2px 4px;
+            background: #fff;
+            margin-bottom: 0px;
+            color: green;
+            /* For better legibility against the box-shadow */
+        }
+
+        fieldset > legend {
+            float: left;
+            margin-top: -20px;
+        }
+
+        fieldset > legend + * {
+            clear: both;
+        }
+    </style>
+
+}

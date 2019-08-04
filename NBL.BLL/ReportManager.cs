@@ -267,5 +267,10 @@ namespace NBL.BLL
         {
             return _iReportGateway.GetProductHistoryByBarCode(barcode);
         }
+
+        public ICollection<ViewOrderHistory> GetOrderHistoriesByYear(int year)
+        {
+            return _iReportGateway.GetOrderHistoriesByYear(year);
+        }
     }
 }

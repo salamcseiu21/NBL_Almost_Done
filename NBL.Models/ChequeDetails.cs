@@ -11,7 +11,10 @@ namespace NBL.Models
         public DateTime SysDateTime { get; set; }
         public string ReceivableRef { get; set; }
         public int ClientId { get; set; }
-        public Client Client { get; set; } 
+        public Client Client { get; set; }
+        public int ActiveStatus { get; set; }
+        public DateTime ReceivableDateTime { get; set; }
+        public string ClientInfo { get; set; }   
 
 
     }

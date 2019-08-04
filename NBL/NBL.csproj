@@ -384,6 +384,7 @@
     <Compile Include="Areas\Sales\Controllers\RequisitionController.cs" />
     <Compile Include="Areas\Sales\Controllers\ReturnController.cs" />
     <Compile Include="Areas\Sales\Controllers\SalesAdminController.cs" />
+    <Compile Include="Areas\Sales\Controllers\SalesCollectionController.cs" />
     <Compile Include="Areas\Sales\Controllers\SalesPersonController.cs" />
     <Compile Include="Areas\Sales\DAL\Contracts\IInvoiceGateway.cs" />
     <Compile Include="Areas\Sales\DAL\InvoiceGateway.cs" />
@@ -8160,6 +8161,13 @@
     <Content Include="Areas\Services\Views\Home\UpdateBasicInfo.cshtml" />
     <Content Include="Areas\Services\Views\Home\UpdateEducationalInfo.cshtml" />
     <Content Include="Areas\ResearchAndDevelopment\Views\Product\ReturnProduct.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Home\OrderHistory.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Home\OrderHistoryDetails.cshtml" />
+    <Content Include="Areas\Sales\Views\SalesCollection\Receivable.cshtml" />
+    <Content Include="Areas\Sales\Views\Shared\_ViewTempReceivalbePartialPage.cshtml" />
+    <Content Include="Areas\Sales\Views\SalesCollection\CollectionList.cshtml" />
+    <Content Include="Areas\Sales\Views\Delivery\OrderSummary.cshtml" />
+    <Content Include="Areas\Sales\Views\Shared\_ViewCollectionListPartialPage.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
@@ -8310,6 +8318,7 @@
     <Content Include="Views\Shared\_MenuStockPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewClientDetailsPartialPage.cshtml" />
     <Content Include="Views\Shared\_PrintTypeWisePartialPage.cshtml" />
+    <Content Include="Views\Shared\_RptViewOrderListBydatePartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -8339,6 +8348,7 @@
     <Folder Include="Areas\ResearchAndDevelopment\Models\" />
     <Folder Include="Areas\ResearchAndDevelopment\Views\RndExecutive\" />
     <Folder Include="Areas\ResearchAndDevelopment\Views\RndManager\" />
+    <Folder Include="Areas\Sales\Files\Receivable\" />
     <Folder Include="Areas\Sales\Files\ReceiveProducts\" />
     <Folder Include="Areas\Sales\Files\Replaces\" />
     <Folder Include="Areas\Sales\Files\Requisitions\" />

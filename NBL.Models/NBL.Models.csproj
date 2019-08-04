@@ -206,6 +206,7 @@
     <Compile Include="ViewModels\Orders\TempOrderedProduct.cs" />
     <Compile Include="ViewModels\Orders\ViewCreateRetailSaleModel.cs" />
     <Compile Include="ViewModels\Orders\ViewDisributedProduct.cs" />
+    <Compile Include="ViewModels\Orders\ViewOrderHistory.cs" />
     <Compile Include="ViewModels\Orders\ViewSoldProduct.cs" />
     <Compile Include="ViewModels\Productions\ProductionSummary.cs" />
     <Compile Include="ViewModels\Productions\ViewDispatchChalan.cs" />

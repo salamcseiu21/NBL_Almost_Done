@@ -2277,6 +2277,60 @@ ConnectionObj.Close();
             }
         }
 
+        public IEnumerable<ViewOrder> GetOrdersByBranchCompanyAndDateRange(SearchCriteria searchCriteria)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetOrdersByBranchCompanyAndDateRange";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@CompnayId", searchCriteria.CompanyId);
+                CommandObj.Parameters.AddWithValue("@BranchId", searchCriteria.BranchId);
+                CommandObj.Parameters.AddWithValue("@StartDate", searchCriteria.StartDate);
+                CommandObj.Parameters.AddWithValue("@EndDate", searchCriteria.EndDate);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                var orders = new List<ViewOrder>();
+                while (reader.Read())
+                {
+                    orders.Add(new ViewOrder
+                    {
+                        OrderId = Convert.ToInt32(reader["OrderId"]),
+                        OrderDate = Convert.ToDateTime(reader["OrderDate"]),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        OrderSlipNo = reader["OrderSlipNo"].ToString(),
+                        BranchId = Convert.ToInt32(reader["Branchid"]),
+                        Amounts = Convert.ToDecimal(reader["Amounts"]),
+                        Vat = Convert.ToDecimal(reader["Vat"]),
+                        Discount = Convert.ToDecimal(reader["Discount"]),
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        OrederRef = reader["OrderRef"].ToString(),
+                        Status = Convert.ToInt32(reader["OrderStatus"])
+                     
+                       
+                    });
+                }
+
+                reader.Close();
+                return orders;
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Orders due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Orders", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
         public IEnumerable<ViewOrder> GetDelayedOrdersToNsmByBranchAndCompanyId(int branchId, int companyId)
         {
             try

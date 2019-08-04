@@ -104,9 +104,17 @@ namespace NBL.Areas.SuperAdmin.Controllers
         public ActionResult OrderDetails(int id)
         {
             var order = _iOrderManager.GetOrderByOrderId(id);
+            order.Client = _iClientManager.GetById(order.ClientId);
             return View(order);
         }
-       
+
+        public ActionResult OrderHistoryDetails(int id)
+        {
+            var order = _iOrderManager.GetOrderByOrderId(id);
+            order.Client = _iClientManager.GetById(order.ClientId);
+            return View(order);
+        }
+
         public PartialViewResult ViewDivision() 
         {
             var divisions = _iDivisionGateway.GetAll().ToList();
@@ -334,6 +342,20 @@ namespace NBL.Areas.SuperAdmin.Controllers
                 var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
                 client.LedgerModels = ledgers.ToList();
                 return PartialView("_ViewClientDetailsPartialPage", client);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        
+        public ActionResult OrderHistory()
+        {
+            try
+            {
+                var orders=_iReportManager.GetOrderHistoriesByYear(DateTime.Now.Year);
+                return View(orders);
             }
             catch (Exception exception)
             {

@@ -2,10 +2,47 @@
 @{
     ViewBag.Title = "ClientLedger";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var aClient = Model.Client;
 }
 
 <section class="content">
-    <h3 class="text-center text-green">Client Ledger</h3>
+    <div class="panel panel-info">
+        <div class="panel panel-heading"><strong style="font-weight: bolder;font-size: 20px">Client Information</strong></div>
+        <div class="panel panel-body" style="margin: 0; padding: 0;font-weight: bolder">
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <section>
+                        <img src="~/@(aClient.ClientImage?? "Images/User.jpg")" height="120" width="100" style="float:left;margin-right:20px" title="@aClient.ClientName" />
+
+                        <span>
+                            @Html.Raw(aClient.GetMailingAddress())
+                        </span>
+
+                    </section>
+
+
+                </div>
+                <div class="col-md-6">
+                    Outstanding: @if (aClient.Outstanding < 0)
+                    {
+                        <b>(@(aClient.Outstanding * -1))</b>
+                    }
+                    else
+                    {
+                        @aClient.Outstanding
+                    }
+                    <br />
+                    Credit Limit: @aClient.CreditLimit<br />
+                    Max Credit Days:@aClient.MaxCreditDay<br />
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <h3 class="text-center text-green" style="margin: 0;padding: 0">Client Ledger</h3>
     <table id="tbl_Client_Ledger" class="display table-bordered" style="border: 1px solid">
         <thead>
         <tr>
@@ -23,19 +60,19 @@
                 <td class="text-right">@item.DebitAmount</td>
                 <td class="text-right">
                     <b>(@(item.CreditAmount * -1))</b>
-                
-            </td>
+
+                </td>
 
                 <td class="text-right">@{
-                        if (item.Balance < 0)
-                        {
-                            <b>(@(item.Balance*-1))</b>
-                        }
-                        else
-                        {
-                            <b>@item.Balance</b>
-                        }
-                    }</td>
+                                           if (item.Balance < 0)
+                                           {
+                                               <b>(@(item.Balance * -1))</b>
+                                           }
+                                           else
+                                           {
+                                               <b>@item.Balance</b>
+                                           }
+                                       }</td>
             </tr>
         }
         </tbody>
@@ -48,6 +85,9 @@
         </tr>
         </tfoot>
     </table>
+    <div>
+        @Html.ActionLink("Back to List", "All", "Client", null, new { @class = "btn btn-danger fa fa-arrow-left" })
+    </div>
 </section>
 
 @section Scripts

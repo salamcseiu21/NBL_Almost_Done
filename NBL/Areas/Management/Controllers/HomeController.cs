@@ -285,7 +285,7 @@ namespace NBL.Areas.Management.Controllers
         public ActionResult OrderSummary()
         {
             ViewOrderSearchModel model = new ViewOrderSearchModel();
-            ViewBag.BranchId = _iBranchManager.GetBranchSelectList();
+            //ViewBag.BranchId = _iBranchManager.GetBranchSelectList();
             return View(model);
         }
     }

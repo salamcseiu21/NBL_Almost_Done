@@ -1,0 +1,110 @@
+﻿
+@model IEnumerable<NBL.Models.EntityModels.Payments.Payment>
+@{
+    var tdate = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+}
+
+<div class="table-responsive">
+    <table id="tbl_requsition_Product" class="table table-bordered" style="border: 1px solid">
+        <thead>
+
+            <tr>
+
+                <th colspan="5">
+                    <div class="form-horizontal">
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="TotalQty" class="control-label col-md-3"> Amount :</label>
+                                    <div class="col-md-9">
+                                        <input type="number" id="TotalQty" name="TotalQty" class="form-control text-right" value="@Model.Sum(n=>n.ChequeAmount)" readonly="readonly" />
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+
+                                <div class="form-group">
+                                    <label for="RequisitionDate" class="control-label col-md-3">Date</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="RequisitionDate" name="RequisitionDate" value="@tdate" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+
+
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-9 col-md-offset-3">
+                                            <div class="btn-toolbar">
+                                                @Html.ActionLink("Cancel", "Home", "Home", new { area = "Sales" }, new { @class = "btn btn-danger" })
+                                                <input type="button" value="Save" id="submitButton" onclick="SaveReceivable(this)" class="btn btn-success" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </th>
+
+            </tr>
+            <tr>
+                <th>Bank Name</th>
+                <th>Cheque No</th>
+                <th>Cheque date</th>
+                <th>Amount</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@(item.BankBranchName)</td>
+                    <td>@item.ChequeNo</td>
+                    <td>
+                        @item.ChequeDate.ToString("dd-MMMM-yyyy")
+
+                    </td>
+                    <td>
+                       @item.ChequeAmount
+
+                    </td>
+                    <th class="text-center"><button id="@item.Serial" type='button' onclick='RemoveProductById(this)' class='btn btn-default btn-sm'><i class='fa fa-times' style='color: red;'></i></button></th>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Bank Name</th>
+                <th>Cheque No</th>
+                <th>Cheque date</th>
+                <th>Amount</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<script>
+    $("#tbl_requsition_Product").DataTable();
+    $(document).ready(function () {
+        $("#RequisitionDate").datepicker({ dateFormat: 'dd-MM-yy' });
+
+        var inputs = document.getElementsByTagName('input');
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].type === "text") {
+                inputs[i].onkeyup = doCheck;
+                inputs[i].onblur = doCheck;
+            }
+        }
+    });
+
+</script>

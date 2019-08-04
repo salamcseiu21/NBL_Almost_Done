@@ -299,6 +299,11 @@ namespace NBL.BLL
             return _iOrderGateway.GetOrdersByCompanyIdAndStatus(companyId,status);
         }
 
+        public IEnumerable<ViewOrder> GetOrdersByBranchCompanyAndDateRange(SearchCriteria searchCriteria)
+        {
+            return _iOrderGateway.GetOrdersByBranchCompanyAndDateRange(searchCriteria);
+        }
+
         public bool UpdateVerificationStatus(int orderId, string verificationNote, int userUserId)
         {
             return _iOrderGateway.UpdateVerificationStatus(orderId,verificationNote,userUserId)>0;

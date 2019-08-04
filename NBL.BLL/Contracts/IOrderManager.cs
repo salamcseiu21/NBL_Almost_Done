@@ -127,6 +127,7 @@ namespace NBL.BLL.Contracts
         ICollection<ViewOrder> GetCancelledOrdersToSalesPersonByBranchCompanyUserId(int branchId, int companyId,int userId);
         string ApproveOrderByScmManager(ViewOrder order);
 
-        ICollection<ViewOrder> GetOrdersByCompanyIdAndStatus(int companyId, int status);    
+        ICollection<ViewOrder> GetOrdersByCompanyIdAndStatus(int companyId, int status);
+        IEnumerable<ViewOrder> GetOrdersByBranchCompanyAndDateRange(SearchCriteria searchCriteria);
     }
 }

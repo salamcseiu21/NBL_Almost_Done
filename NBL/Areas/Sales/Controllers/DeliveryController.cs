@@ -12,9 +12,11 @@ using NBL.Models.EntityModels.Invoices;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.Enums;
 using NBL.Models.Logs;
+using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Logs;
+using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Sales;
 using NBL.Models.ViewModels.Summaries;
@@ -115,6 +117,53 @@ namespace NBL.Areas.Sales.Controllers
             //var user = (ViewUser)Session["user"];
             //var orders =_iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(branchId,companyId,DateTime.Now.AddDays(-1),user.UserId);
             return View();
+        }
+        public ActionResult OrderSummary()
+        {
+            ViewOrderSearchModel model = new ViewOrderSearchModel();
+            //ViewBag.BranchId = _iBranchManager.GetBranchSelectList();
+            return View(model);
+        }
+        public PartialViewResult GetAllOrdersByBranchAndCompanyId()
+        {
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            var orders = _iOrderManager.GetOrdersByBranchAndCompnayId(branchId, companyId);
+            return PartialView("_RptViewOrderListBydatePartialPage", orders);
+        }
+        [HttpPost]
+        public PartialViewResult GetOrdersByBranchId(SearchCriteria searchCriteria)
+        {
+
+
+            var companyId = Convert.ToInt32(Session["CompanyId"]);
+            var branchId = Convert.ToInt32(Session["BranchId"]);
+            searchCriteria.BranchId = branchId;
+            searchCriteria.CompanyId = companyId;
+            IEnumerable<ViewOrder> orders = _iOrderManager.GetOrdersByBranchCompanyAndDateRange(searchCriteria);
+            //if (searchCriteria.BranchId != null)
+            //{
+            //    orders = orders.ToList().FindAll(n => n.BranchId.Equals(searchCriteria.BranchId));
+            //}
+            //else
+            //{
+            //    orders = _iOrderManager.GetOrdersByCompanyId(companyId);
+            //}
+            //foreach (ViewOrder order in orders)
+            //{
+            //    order.Client = _iClientManager.GetById(order.ClientId);
+            //}
+            //if (!string.IsNullOrEmpty(searchCriteria.ClientName))
+            //{
+            //    orders = orders.ToList().FindAll(n => n.Client.ClientName.ToLower().Contains(searchCriteria.ClientName));
+            //}
+            //if (searchCriteria.StartDate != null && searchCriteria.EndDate != null)
+            //{
+            //    orders = orders.ToList().Where(n => n.OrderDate >= searchCriteria.StartDate && n.OrderDate <= searchCriteria.EndDate).ToList();
+            //}
+
+            //return PartialView("_OrdersPartialPage", orders);
+            return PartialView("_RptViewOrderListBydatePartialPage", orders);
         }
         [Authorize(Roles = "DistributionManager")]
         public PartialViewResult LoadOrderListByDate(DateTime deliveryDate)

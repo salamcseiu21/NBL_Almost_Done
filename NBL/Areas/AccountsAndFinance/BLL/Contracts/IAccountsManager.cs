@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NBL.Areas.Accounts.Models;
 using NBL.Areas.AccountsAndFinance.Models;
 using NBL.Models;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.VatDiscounts;
+using NBL.Models.Searchs;
 using NBL.Models.SummaryModels;
 using NBL.Models.ViewModels.FinanceModels;
 
@@ -50,5 +52,8 @@ namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
        CollectionModel GetCollectionAmountById(long id);
        ICollection<ViewReceivableDetails> GetActivetedReceivableListByBranch(int branchId);
        ViewReceivableDetails GetActivatedReceivableDetailsById(long chequeDetailsId);
+       ICollection<ChequeDetails> GetAllReceivableChequeByBranchAndCompanyIdUserId(int branchId, int companyId, int userId);
+       ICollection<ChequeDetails> GetAllReceivableCheque(int branchId, int companyId, int userId, DateTime collectionDate);
+       IEnumerable<ChequeDetails> GetAllReceivableCheque(SearchCriteria searchCriteria);
    }
 }

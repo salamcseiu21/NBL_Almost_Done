@@ -12,6 +12,7 @@ using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Enums;
+using NBL.Models.Searchs;
 using NBL.Models.SummaryModels;
 using NBL.Models.ViewModels.FinanceModels;
 
@@ -46,6 +47,20 @@ namespace NBL.Areas.AccountsAndFinance.BLL
         public IEnumerable<ChequeDetails> GetAllReceivableChequeByBranchAndCompanyId(int branchId, int companyId)
         {
             return _iAccountGateway.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId);
+        }
+        public ICollection<ChequeDetails> GetAllReceivableChequeByBranchAndCompanyIdUserId(int branchId, int companyId, int userId)
+        {
+            return _iAccountGateway.GetAllReceivableChequeByBranchAndCompanyIdUserId(branchId, companyId,userId);
+        }
+
+        public ICollection<ChequeDetails> GetAllReceivableCheque(int branchId, int companyId, int userId, DateTime collectionDate)
+        {
+            return _iAccountGateway.GetAllReceivableCheque(branchId, companyId,userId,collectionDate);
+        }
+
+        public IEnumerable<ChequeDetails> GetAllReceivableCheque(SearchCriteria searchCriteria)
+        {
+            return _iAccountGateway.GetAllReceivableCheque(searchCriteria);
         }
 
         public ChequeDetails GetReceivableChequeByDetailsId(int chequeDetailsId)
@@ -121,6 +136,8 @@ namespace NBL.Areas.AccountsAndFinance.BLL
         {
             return _iAccountGateway.GetActivatedReceivableDetailsById(chequeDetailsId);
         }
+
+        
 
         private int GetMaxVoucherNoByTransactionInfix(string infix)
         {

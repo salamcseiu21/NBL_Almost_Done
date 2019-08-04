@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -7,7 +6,6 @@ using System.Xml.Linq;
 using NBL.Areas.Sales.BLL.Contracts;
 using NBL.BLL.Contracts;
 using NBL.Models;
-using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Returns;
@@ -16,7 +14,6 @@ using NBL.Models.Logs;
 using NBL.Models.Validators;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
-using NBL.Models.ViewModels.Logs;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Returns;
 

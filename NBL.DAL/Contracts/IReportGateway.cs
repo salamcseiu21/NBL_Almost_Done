@@ -27,5 +27,6 @@ namespace NBL.DAL.Contracts
        ICollection<OrderHistory> GetDistributionSetOrders();
        ICollection<UserWiseOrder> UserWiseOrders();
        ViewProductHistory GetProductHistoryByBarCode(string barcode);
+       ICollection<ViewOrderHistory> GetOrderHistoriesByYear(int year);
    }
 }

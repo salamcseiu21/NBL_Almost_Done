@@ -517,7 +517,7 @@ namespace NBL.Controllers
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns></returns>
-        public ActionResult GetOrdersByBranchId(SearchCriteria searchCriteria)
+        public PartialViewResult GetOrdersByBranchId(SearchCriteria searchCriteria)
         {
 
             
@@ -545,7 +545,7 @@ namespace NBL.Controllers
             }
           
             //return PartialView("_OrdersPartialPage", orders);
-            return Json(orders, JsonRequestBehavior.AllowGet);
+            return PartialView("_RptViewOrderListBydatePartialPage", orders);
         }
 
         public PartialViewResult ViewModalPartial(int orderId)

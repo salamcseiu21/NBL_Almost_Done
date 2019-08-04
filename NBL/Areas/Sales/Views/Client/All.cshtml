@@ -51,7 +51,7 @@
                     <td class="text-center">@(item.AssignedEmpName)</td>
                     <td class="text-center">
                         @Html.ActionLink(" Profile", "ViewClientProfile", "Client", new { area="Sales",id = item.ClientId }, new { @class = "fa fa-eye" })
-                        @*@Html.ActionLink(" Ledger", "ClientLedger", null, new { id = item.ClientId }, new { @class = "fa fa-eye" })*@
+                        @Html.ActionLink(" Ledger", "ClientLedger", "Home", new { id = item.ClientId,area="Sales" }, new { @class = "fa fa-eye" })
                     </td>
                 </tr>
             }
