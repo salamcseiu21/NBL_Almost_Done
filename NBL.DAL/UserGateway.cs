@@ -42,7 +42,9 @@ namespace NBL.DAL
                             Email = DBNull.Value.Equals(reader["EmailAddress"])?null: reader["EmailAddress"].ToString(),
                             UserRoleId = Convert.ToInt32(reader["RoleId"]),
                             PresentAddress = DBNull.Value.Equals(reader["PresentAddress"])? null: reader["PresentAddress"].ToString(),
-                            JoiningDate = Convert.ToDateTime(reader["UserJoiningDate"])
+                            JoiningDate = Convert.ToDateTime(reader["UserJoiningDate"]),
+                            BranchName = reader["BranchName"].ToString()
+                            
                         });
                     }
                     reader.Close();

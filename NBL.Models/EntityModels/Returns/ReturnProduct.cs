@@ -10,7 +10,7 @@ namespace NBL.Models.EntityModels.Returns
         public string ProductName { get; set; }
         public string DeliveryRef { get; set; }
         public long DeliveryId { get; set; }
-        public DateTime DeliveryDate { get; set; }   
+        public DateTime? DeliveryDate { get; set; }   
         public int Quantity { get; set; }
        
     }

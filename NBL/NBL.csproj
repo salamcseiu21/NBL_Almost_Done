@@ -406,6 +406,7 @@
     <Compile Include="Areas\SuperAdmin\Controllers\SuperReportController.cs" />
     <Compile Include="Areas\SuperAdmin\Controllers\VoucherController.cs" />
     <Compile Include="Areas\SuperAdmin\DAL\SuperAdminUserGateway.cs" />
+    <Compile Include="Areas\SuperAdmin\Models\ViewModels\AssignRoleModel.cs" />
     <Compile Include="Areas\SuperAdmin\Models\ViewModels\ViewDeliveredOrder.cs" />
     <Compile Include="Areas\SuperAdmin\Reports\ViewReport.aspx.cs">
       <DependentUpon>ViewReport.aspx</DependentUpon>
@@ -484,6 +485,8 @@
     <Content Include="Areas\Production\Scripts\loadTempTripProducts.js" />
     <Content Include="Areas\Production\Scripts\requisitionReferencesAutoComplete.js" />
     <Content Include="Areas\QC\Scripts\receiveSalesReturnProducts.js" />
+    <Content Include="Areas\ResearchAndDevelopment\Scripts\RetunProducts\deleteProductFromTempReturn.js" />
+    <Content Include="Areas\ResearchAndDevelopment\Scripts\RetunProducts\returnProduct.js" />
     <Content Include="Areas\Sales\Files\Temp_Sales_Order_By_24.xml" />
     <Content Include="Areas\Sales\Scripts\addNewItemToList.js" />
     <Content Include="Areas\Sales\Scripts\cancelOrder.js" />
@@ -8168,6 +8171,19 @@
     <Content Include="Areas\Sales\Views\SalesCollection\CollectionList.cshtml" />
     <Content Include="Areas\Sales\Views\Delivery\OrderSummary.cshtml" />
     <Content Include="Areas\Sales\Views\Shared\_ViewCollectionListPartialPage.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Shared\_ViewActivatedReceivableListPartialPage.cshtml" />
+    <Content Include="Areas\ResearchAndDevelopment\Views\Shared\_ViewTempReturnProducts.cshtml" />
+    <Content Include="Areas\ResearchAndDevelopment\Views\Shared\_ViewDeliveryDetailsByIdPartialPage.cshtml" />
+    <Content Include="Areas\ResearchAndDevelopment\Views\Product\ConfirmReturnEntry.cshtml" />
+    <Content Include="Areas\ResearchAndDevelopment\Views\Shared\_MenuRndManagerPartialPage.cshtml" />
+    <Content Include="Areas\ResearchAndDevelopment\Views\RndManager\PendingGeneralReqReturns.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Assign\AssignRoleToUser.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Assign\UnAssignRoleFromUser.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Home\Clients.cshtml" />
+    <Content Include="Areas\ResearchAndDevelopment\Views\RndManager\ApproveGeneralRequistionReturn.cshtml" />
+    <Content Include="Areas\Sales\Views\Return\GeneralRequisitionReturn.cshtml" />
+    <Content Include="Areas\Sales\Views\Return\PendingGeneralReturnList.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Home\CollectionList.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
@@ -8319,6 +8335,7 @@
     <Content Include="Views\Shared\_ViewClientDetailsPartialPage.cshtml" />
     <Content Include="Views\Shared\_PrintTypeWisePartialPage.cshtml" />
     <Content Include="Views\Shared\_RptViewOrderListBydatePartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewCollectionListPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -8345,9 +8362,9 @@
     <Folder Include="Areas\Purchases\Views\Shared\" />
     <Folder Include="Areas\QC\Files\" />
     <Folder Include="Areas\QC\Models\" />
+    <Folder Include="Areas\ResearchAndDevelopment\Files\Returns\" />
     <Folder Include="Areas\ResearchAndDevelopment\Models\" />
     <Folder Include="Areas\ResearchAndDevelopment\Views\RndExecutive\" />
-    <Folder Include="Areas\ResearchAndDevelopment\Views\RndManager\" />
     <Folder Include="Areas\Sales\Files\Receivable\" />
     <Folder Include="Areas\Sales\Files\ReceiveProducts\" />
     <Folder Include="Areas\Sales\Files\Replaces\" />

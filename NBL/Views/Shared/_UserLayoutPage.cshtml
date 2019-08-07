@@ -101,6 +101,11 @@
         roleName = "R & D";
         areas = "researchanddevelopment";
     }
+    else if (User.IsInRole("R&DManager"))
+    {
+        roleName = "R & D Manager";
+        areas = "researchanddevelopment";
+    }
     else if (User.IsInRole("SCMManager"))
     {
         roleName = "SCM Manager";
@@ -267,6 +272,9 @@
                         break;
                     case "R&D":
                         Html.RenderPartial("~/Areas/ResearchAndDevelopment/Views/Shared/_MenuPartialPage.cshtml");
+                        break;
+                    case "R&DManager":
+                        Html.RenderPartial("~/Areas/ResearchAndDevelopment/Views/Shared/_MenuRndManagerPartialPage.cshtml");
                         break;
                     case "SCMManager":
                         Html.RenderPartial("~/Areas/SCM/Views/Shared/_MenuScmManagerPartialPage.cshtml");

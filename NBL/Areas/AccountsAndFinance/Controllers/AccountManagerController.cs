@@ -183,6 +183,62 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         }
 
 
+        [HttpPost]
+        public JsonResult ApproveOnlineCashAmount(FormCollection collection)
+        {
+            SuccessErrorModel aModel = new SuccessErrorModel();
+            try
+            {
+
+                var anUser = (ViewUser)Session["user"];
+                int detailsId = Convert.ToInt32(collection["ChequeDetailsId"]);
+                var chequeDetails = _iAccountsManager.GetReceivableChequeByDetailsId(detailsId);
+                Client aClient = _iClientManager.GetById(chequeDetails.ClientId);
+                DateTime date = DateTime.Now;
+                //------------Onlie Cash Code----------------
+                string bankCode = "3308012";
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                Receivable aReceivable = new Receivable
+                {
+                    TransactionRef = chequeDetails.ReceivableRef,
+                    SubSubSubAccountCode = bankCode,
+                    ReceivableDateTime = date,
+                    BranchId = branchId,
+                    CompanyId = companyId,
+                    Paymode = 'C',
+                    UserId = anUser.UserId,
+                    Remarks = "Active receivable by " + anUser.UserId
+                };
+                bool result = _iAccountsManager.ActiveReceivableCheque(chequeDetails, aReceivable, aClient);
+                //if (result)
+                //{
+                //    //---------Send Mail ----------------
+                //    var body = $"Dear {aClient.ClientName}, your receivalbe amount is receive by NBL. thanks and regards Accounts Departments NBL.";
+                //    var subject = $"Receiable Confirm at {DateTime.Now}";
+                //    var message = new MailMessage();
+                //    message.To.Add(new MailAddress(aClient.Email));  // replace with valid value 
+                //    message.Subject = subject;
+                //    message.Body = string.Format(body);
+                //    message.IsBodyHtml = true;
+                //    using (var smtp = new SmtpClient())
+                //    {
+                //        smtp.Send(message);
+                //    }
+                //    //------------End Send Mail-------------
+                //}
+                aModel.Message = result ? "<p class='text-green'>Online  Cash Amount Approved Successfully!</p>" : "<p class='text-danger'> Failed to  Approve Cash Amount! </p>";
+            }
+            catch (Exception exception)
+            {
+                string message = exception.Message;
+                aModel.Message = " <p style='color:red'>" + message + "</p>";
+                Log.WriteErrorLog(exception);
+
+            }
+            return Json(aModel, JsonRequestBehavior.AllowGet);
+        }
+
         public PartialViewResult Vouchers()
         {
             try
@@ -437,13 +493,28 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         }
 
 
-        public ActionResult ActivetedReceivableList()  
+        public PartialViewResult ActivetedReceivableList()  
         {
             try
             {
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 List<ViewReceivableDetails> collection = _iAccountsManager.GetActivetedReceivableListByBranch(branchId).ToList();
-                return View(collection);
+                return PartialView("_ViewActivatedReceivableListPartialPage",collection);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        public ActionResult TodaysMoneyReceiptList() 
+        {
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                List<ViewReceivableDetails> collection = _iAccountsManager.GetActivetedReceivableListByBranch(branchId).ToList();
+                return PartialView("_ViewActivatedReceivableListPartialPage", collection);
             }
             catch (Exception exception)
             {

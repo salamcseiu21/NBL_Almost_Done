@@ -44,6 +44,7 @@ namespace NBL.Models.ViewModels.Summaries
         public IEnumerable<Territory> Territories { get; set; }
         public IEnumerable<Region> Regions { get; set; }
         public ICollection<UserWiseOrder> UserWiseOrders { get; set; }  
+        public ICollection<TerritoryWiseDeliveredQty> TerritoryWiseDeliveredPrducts { get; set; }   
 
         public ViewTotalProduction Production { get; set; }
         public ViewTotalDispatch Dispatch { get; set; }

@@ -1,0 +1,109 @@
+﻿@using NBL.Models.EntityModels.Identities
+@using NBL.Models.ViewModels
+
+@{
+    ViewBag.Title = "Assign Role ToUser";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var branches = (List<ViewBranch>)ViewBag.BranchId;
+    var roles = (List<UserRole>)ViewBag.RoleId;
+
+}
+
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Assign Role To User</h3>
+    <hr />
+    <div class="col-md-6 col-md-offset-3">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="text-center">
+                @if (TempData["RoleAssignedMessage"] != null)
+                {
+                    @TempData["RoleAssignedMessage"]
+                }
+            </div>
+            <hr/>
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label for="UserName" class="control-label col-md-2">User Name</label>
+                    <div class="col-md-10">
+                        <input type="text" name="UserName" placeholder="type user name slowly" id="UserName" class="form-control" required />
+                        <input type="hidden" name="UserId" id="UserId" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="BranchId" class="control-label col-md-2">Branch</label>
+                    <div class="col-md-10">
+                        <select id="BranchId" name="BranchId" required class="form-control">
+                            <option value="">--SELECT--</option>
+                            @foreach (var item in branches)
+                            {
+                                <option value="@item.BranchId">@item.BranchName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="BranchId" class="control-label col-md-2">Role</label>
+                    <div class="col-md-10">
+                        <select id="RoleId" name="RoleId" required class="form-control">
+                            <option value="">--SELECT--</option>
+                            @foreach (var item in roles)
+                            {
+                                <option value="@item.RoleId">@item.RoleName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.ActionLink("Cancel", "ViewUser", null, null, new { @class = "btn btn-danger" })
+                        <input type="submit" value="Assign" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</section>
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#UserName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+
+                        url:'@Url.Action("UserAutoComplete", "Home", new { area = "SuperAdmin" })',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function(item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#UserId").val(i.item.val);
+                },
+                minLength: 1
+            });
+        });
+    </script>
+}
+
+
+
+

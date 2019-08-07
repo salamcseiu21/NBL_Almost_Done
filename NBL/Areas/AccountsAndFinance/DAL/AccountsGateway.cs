@@ -262,6 +262,8 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                         ActiveStatus = Convert.ToInt32(reader["IsActivated"]),
                         ClientInfo = reader["ClientInfo"].ToString(),
                         ReceivableDateTime = Convert.ToDateTime(reader["ReceivableDateTime"]),
+                        Remarks = DBNull.Value.Equals(reader["ReceivableRemarks"])?null: reader["ReceivableRemarks"].ToString(),
+                        EntryByEmp = DBNull.Value.Equals(reader["EntryBy"]) ? null : reader["EntryBy"].ToString(),
 
                     };
                     details.Add(aPayment);
@@ -417,7 +419,61 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                         ClientId = Convert.ToInt32(reader["ClientId"]),
                         ActiveStatus = Convert.ToInt32(reader["IsActivated"]),
                         ReceivableDateTime = Convert.ToDateTime(reader["ReceivableDateTime"]),
-                        ClientInfo = reader["ClientInfo"].ToString()
+                        ClientInfo = reader["ClientInfo"].ToString(),
+                        CollectionByBranch = reader["BranchName"].ToString(),
+                        EntryByEmp = DBNull.Value.Equals(reader["EntryBy"]) ? null : reader["EntryBy"].ToString(),
+
+                    };
+                    details.Add(aPayment);
+                }
+                reader.Close();
+                return details;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect receivable cheques", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<ChequeDetails> GetAllReceivableCheque(int companyId, DateTime collectionDate)
+        {
+            try
+            {
+                List<ChequeDetails> details = new List<ChequeDetails>();
+                CommandObj.CommandText = "spGetAllReceivableChequeByCompanyIdAndDate";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                CommandObj.Parameters.AddWithValue("@CollectionDate", collectionDate);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    ChequeDetails aPayment = new ChequeDetails
+                    {
+                        ChequeDetailsId = Convert.ToInt32(reader["ChequeDetailsId"]),
+                        ReceivableId = Convert.ToInt32(reader["ReceivableId"]),
+                        SourceBankName = reader["SourceBankName"].ToString(),
+                        BankAccountNo = reader["BankAccountNo"].ToString(),
+                        ChequeNo = reader["ChequeNo"].ToString(),
+                        ChequeDate = Convert.ToDateTime(reader["ChequeDate"]),
+                        ChequeAmount = Convert.ToDecimal(reader["ChequeAmount"]),
+                        PaymentTypeId = Convert.ToInt32(reader["PaymentTypeId"]),
+                        SysDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        ReceivableRef = reader["ReceivableRef"].ToString(),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        ActiveStatus = Convert.ToInt32(reader["IsActivated"]),
+                        ReceivableDateTime = Convert.ToDateTime(reader["ReceivableDateTime"]),
+                        ClientInfo = reader["ClientInfo"].ToString(),
+                        CollectionByBranch = reader["BranchName"].ToString(),
+                        EntryByEmp = DBNull.Value.Equals(reader["EntryBy"]) ? null : reader["EntryBy"].ToString(),
 
                     };
                     details.Add(aPayment);

@@ -50,6 +50,8 @@
 @section Scripts
 {
     <script>
-        $("#tbl_Order_History").DataTable();
+        $("#tbl_Order_History").DataTable({
+            "order":[[0,"desc"]]
+        });
     </script>
 }

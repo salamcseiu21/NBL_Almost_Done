@@ -467,7 +467,7 @@
                           bankChecqueNoList = [];
 
                           $('#message').html(response).fadeIn('slow');
-                          $('#message').html(result).fadeIn('slow') //also show a success message
+                          $('#message').html(result).fadeIn('slow');//also show a success message
                           $('#message').delay(5000).fadeOut('slow');
                           setTimeout(function () { ReloadPage(); }, 6000);
 
@@ -496,6 +496,15 @@
                 $('#ChequeNo').prop('readonly', true);
                 $('#BankAccountNo').prop('readonly', true);
                 $('#SourceBankName').prop('readonly', true);
+            }
+            else if (ptId === 5) {
+                $("#SourceBankName").val('Online-Cash');
+                $("#BankAccountNo").val('Online-Cash');
+                $("#ChequeNo").val('Online-Cash');
+                $('#SourceBankName').prop('readonly', true);
+                $('#ChequeNo').prop('readonly', false);
+                $('#BankAccountNo').prop('readonly', false);
+
             }
             else if (ptId === 3) {
                 $("#SourceBankName").val('DBBL Mobile Banking (Rocket)');

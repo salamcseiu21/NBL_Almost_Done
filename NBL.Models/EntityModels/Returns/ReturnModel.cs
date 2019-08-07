@@ -7,8 +7,11 @@ namespace NBL.Models.EntityModels.Returns
     {
         public long SalesReturnId { get; set; }   
         public List<ReturnProduct> Products { get; set; }
-        public int ClientId { get; set; }
+        public int? ClientId { get; set; }
+      
         public string ClientInfo { get; set; }
+        public int? RequisitionByEmpId { get; set; } 
+        public string EmployeeInfo { get; set; }
         public int ReturnIssueByUserId { get; set; }
         public int ReturnApproveByUserId { get; set; }
         public string NsmNotes { get; set; }

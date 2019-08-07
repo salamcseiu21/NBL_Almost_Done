@@ -123,6 +123,11 @@ namespace NBL.BLL
             return _iDeliveryGateway.GetDeliveredProductListByTransactionRef(deliveryRef);
         }
 
+        public IEnumerable<ViewDeliveredOrderModel> GetDeliveredGeneralReqById(long deliveryId)
+        {
+            return _iDeliveryGateway.GetDeliveredGeneralReqById(deliveryId);
+        }
+
         public ICollection<ViewDeliveredOrderModel> GetDeliveredOrderByClientId(int clientId)
         {
             return _iDeliveryGateway.GetDeliveredOrderByClientId(clientId);

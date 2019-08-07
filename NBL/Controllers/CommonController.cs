@@ -561,8 +561,8 @@ namespace NBL.Controllers
             var model = _iOrderManager.GetOrderByOrderId(orderId);
             model.Client = _iClientManager.GetById(model.ClientId);
             model.OrderBy = _userManager.GetUserInformationByUserId(model.UserId).EmployeeName;
-            model.SalesAdmin = _userManager.GetUserInformationByUserId(model.AdminUserId).EmployeeName;
-            model.SalesManager = _userManager.GetUserInformationByUserId(model.NsmUserId).EmployeeName;
+            model.SalesAdmin = _userManager.GetUserInformationByUserId(Convert.ToInt32(model.AdminUserId)).EmployeeName;
+            model.SalesManager = _userManager.GetUserInformationByUserId(Convert.ToInt32(model.NsmUserId)).EmployeeName;
             return PartialView("_ViewOrderDetailsModalPartialPage", model);
         }
 

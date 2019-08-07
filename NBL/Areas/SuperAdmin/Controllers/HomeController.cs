@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ using NBL.Models.EntityModels.Orders;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Logs;
+using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Summaries;
@@ -110,7 +112,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
 
         public ActionResult OrderHistoryDetails(int id)
         {
-            var order = _iOrderManager.GetOrderByOrderId(id);
+            var order = _iOrderManager.GetOrderHistoryByOrderId(id);
             order.Client = _iClientManager.GetById(order.ClientId);
             return View(order);
         }
@@ -362,6 +364,53 @@ namespace NBL.Areas.SuperAdmin.Controllers
                 Log.WriteErrorLog(exception);
                 return PartialView("_ErrorPartial", exception);
             }
+        }
+
+        public ActionResult Clients()
+        {
+            try
+            {
+                ICollection<ViewClient>  clients= _iReportManager.GetClientList();
+                return View(clients);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult CollectionList()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        public PartialViewResult GetCollectionListByDate(DateTime collectionDate)
+        {
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            var collections = _iAccountsManager.GetAllReceivableCheque(companyId, collectionDate).ToList();
+            return PartialView("_ViewCollectionListPartialPage", collections);
+        }
+
+        public PartialViewResult GetCollectionListByDateRange(SearchCriteria searchCriteria)
+        {
+
+            var companyId = Convert.ToInt32(Session["CompanyId"]);
+            searchCriteria.BranchId = 0;
+            searchCriteria.CompanyId = companyId;
+            searchCriteria.UserId = 0;
+            IEnumerable<ChequeDetails> collections = _iAccountsManager.GetAllReceivableCheque(searchCriteria);
+            return PartialView("_ViewCollectionListPartialPage", collections);
         }
     }
 

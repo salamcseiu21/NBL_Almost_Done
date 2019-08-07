@@ -14,6 +14,7 @@
             <th>Cheque Date</th>
             <th class="text-right">Amount (&#2547;) </th>
             <th class="text-center">Entry Date </th>
+            <th class="text-center">Entry By </th>
             <th class="text-center">Status</th>
         </tr>
     </thead>
@@ -30,6 +31,7 @@
                 <td>@item.ChequeDate.Date.ToString("dd-MMMM-yyyy")</td>
                 <td class="text-right">@item.ChequeAmount.ToString("N2")</td>
                 <th class="text-center">@item.ReceivableDateTime.Date.ToString("dd-MMM-yyyy") </th>
+                <th class="text-center">@item.EntryByEmp </th>
                 <td class="text-center">
                     @if (item.ActiveStatus == 0)
                     {
@@ -47,7 +49,7 @@
         <tr>
             <th colspan="6" class="text-right">Total </th>
             <th class="text-right">@Model.Sum(n => n.ChequeAmount).ToString("N2")</th>
-            <th colspan="2"></th>
+            <th colspan="3"></th>
         </tr>
         <tr>
             <th>Collection Ref</th>
@@ -58,6 +60,7 @@
             <th>Cheque Date</th>
             <th class="text-right">Amount (&#2547;) </th>
             <th class="text-center">Entry Date </th>
+            <th class="text-center">Entry By </th>
             <th class="text-center">Status</th>
         </tr>
     </tfoot>

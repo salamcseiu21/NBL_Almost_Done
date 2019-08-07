@@ -34,6 +34,8 @@ namespace NBL.Models.EntityModels.Identities
         public DateTime LogInDateTime { get; set; }
         public DateTime LogOutDateTime { get; set; } 
         public DateTime PasswordUpdateDate { get; set; }
-        public int PasswordChangeRequiredWithin { get; set; }   
+        public int PasswordChangeRequiredWithin { get; set; }
+        public string BranchName { get; set; }
+
     }
 }

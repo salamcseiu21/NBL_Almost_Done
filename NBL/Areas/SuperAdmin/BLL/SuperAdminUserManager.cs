@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NBL.Areas.SuperAdmin.DAL;
+using NBL.Areas.SuperAdmin.Models.ViewModels;
 using NBL.Models;
 using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Identities;
@@ -41,6 +42,12 @@ namespace NBL.Areas.SuperAdmin.BLL
         public IEnumerable<Branch> GetAssignedBranchByUserId(int userId)
         {
           return gateway.GetAssignedBranchByUserId(userId);
+        }
+
+        public bool AssignRoleToUser(AssignRoleModel model)
+        {
+            int rowAffected = gateway.AssignRoleToUser(model);
+            return rowAffected > 0;
         }
     }
 }

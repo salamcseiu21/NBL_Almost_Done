@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using NBL.Areas.SuperAdmin.Models.ViewModels;
 using NBL.DAL;
 using NBL.Models;
 using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Identities;
+using NBL.Models.Logs;
 
 namespace NBL.Areas.SuperAdmin.DAL
 {
@@ -35,6 +37,7 @@ namespace NBL.Areas.SuperAdmin.DAL
             }
             catch(Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not assign branch to user", exception);
             }
             finally
@@ -76,7 +79,39 @@ namespace NBL.Areas.SuperAdmin.DAL
             }
             catch(Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect assigned branches", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int AssignRoleToUser(AssignRoleModel model)
+        {
+            try
+            {
+                ConnectionObj.Open();
+                CommandObj.CommandText = "spAssignRoleToUser";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@UserId", model.UserId);
+                CommandObj.Parameters.AddWithValue("@BranchId", model.BranchId);
+                CommandObj.Parameters.AddWithValue("@RoleId", model.RoleId);
+                CommandObj.Parameters.AddWithValue("@IsActive", model.ActiveStatus);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not assign role to user", exception);
             }
             finally
             {

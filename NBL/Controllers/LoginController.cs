@@ -60,6 +60,7 @@ namespace NBL.Controllers
 
                 //GetRealIpAddress();
                 //int roleId = Convert.ToInt32(collection["RoleId"]);
+                
                 User user = new User();
                 string userName = collection["userName"];
                 string password = collection["Password"];
@@ -69,8 +70,15 @@ namespace NBL.Controllers
                //var userLocation = GetUserLocation();
                 var userLocation=new UserLocation
                 {
-                    IPAddress = GetRealIpAddress()
+                    IPAddress = GetRealIpAddress(),
                 };
+                //var ltttt= collection["Latitude"]; 
+                if (collection["Latitude"]!="")
+                {
+                    userLocation.Latitude = Convert.ToDecimal(collection["Latitude"]);
+                    userLocation.Longitude = Convert.ToDecimal(collection["Longitude"]);
+                }
+                
                 bool validUser = _userManager.ValidateUser(user);
 
                 if (validUser)
@@ -105,6 +113,7 @@ namespace NBL.Controllers
                     anUser.IpAddress = GetRealIpAddress();
                     anUser.MacAddress = GetMacAddress().ToString();
                     anUser.LogInDateTime = DateTime.Now;
+                    
 
                     bool result = _userManager.ChangeLoginStatus(anUser, 1, userLocation);
                     Session.Timeout = 180;
@@ -197,6 +206,8 @@ namespace NBL.Controllers
                 case "PH":
                     return RedirectToAction("Home", "ProductionHead", new { area = "Production" });
                 case "R&D":
+                    return RedirectToAction("Home", "Home", new { area = "ResearchAndDevelopment" });
+                case "R&DManager":
                     return RedirectToAction("Home", "Home", new { area = "ResearchAndDevelopment" });
                 case "SCMManager":
                     return RedirectToAction("Home", "Home", new { area = "SCM" });

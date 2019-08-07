@@ -73,7 +73,7 @@ namespace NBL.Areas.Sales.Controllers
             {
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
-                var orders = _iOrderManager.GetOrdersByBranchIdCompanyIdAndStatus(branchId, companyId, Convert.ToInt32(OrderStatus.ApprovedbyNsm)).ToList();
+                var orders = _iOrderManager.GetOrdersByBranchIdCompanyIdAndStatus(branchId, companyId, Convert.ToInt32(OrderStatus.ApprovedbySalesManager)).ToList();
                 return View(orders);
             }
             catch (Exception exception)
@@ -150,7 +150,7 @@ namespace NBL.Areas.Sales.Controllers
                     DiscountAccountCode = _iOrderManager.GetDiscountAccountCodeByClintTypeId(order.Client.ClientTypeId)
                 };
                 string invoice = _iInvoiceManager.Save(order.OrderItems, anInvoice);
-                order.Status = Convert.ToInt32(OrderStatus.InvoicedOrApprovedbyAdmin);
+                order.Status = Convert.ToInt32(OrderStatus.InvoicedOrApprovedbySalesAdmin);
                 order.SpecialDiscount = specialDiscount;
                 order.AdminUserId = anUser.UserId;
                 string result = _iOrderManager.ApproveOrderByAdmin(order);
@@ -309,7 +309,7 @@ namespace NBL.Areas.Sales.Controllers
                 order.Client = _iClientManager.GetById(order.ClientId);
                 order.ResonOfCancel = collection["Reason"];
                 order.CancelByUserId = user.UserId;
-                order.Status = Convert.ToInt32(OrderStatus.CancelledbyAdmin);
+                order.Status = Convert.ToInt32(OrderStatus.CancelledbySalesAdmin);
                 var status = _iOrderManager.CancelOrder(order);
                 return status ? RedirectToAction("All") : RedirectToAction("Cancel", new { id = orderId });
             }

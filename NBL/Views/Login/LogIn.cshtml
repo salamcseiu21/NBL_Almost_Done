@@ -30,7 +30,8 @@
 
             <form class="form-signin" method="post">
                 <div class="form-horizontal">
-
+                    <input type="hidden" name="Latitude" id="Latitude"/>
+                    <input type="hidden" name="Longitude" id="Longitude"/>
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-life-saver"></i></span>
@@ -79,7 +80,6 @@
                         </div>
                     </div>
                     <div class="form-group text-center">
-
                         <button class="btn  btn-info" type="submit">Log in</button>
                     </div>
                 </div>
@@ -143,3 +143,25 @@
     }
 
 </style>
+@*<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        getLocation();
+
+    });
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+
+        $("#Latitude").val(position.coords.latitude);
+        $("#Longitude").val(position.coords.longitude);
+    }
+</script>*@

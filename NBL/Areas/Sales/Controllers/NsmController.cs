@@ -40,6 +40,7 @@ namespace NBL.Areas.Sales.Controllers
                 var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).ToList();
                 var verifiedOrders = _iOrderManager.GetVerifiedOrdersByBranchAndCompanyId(branchId, companyId);
                 var userWiseOrders = _iReportManager.UserWiseOrders().ToList().FindAll(n=>n.BranchId==branchId).OrderByDescending(n=>n.TotalOrder).ToList();
+                var territoryWIshDelvieredQty = _iReportManager.GetTerritoryWishTotalSaleQtyByBranchId(branchId);
 
                 SummaryModel summary = new SummaryModel
                 {
@@ -51,7 +52,8 @@ namespace NBL.Areas.Sales.Controllers
                     PendingOrders = pendingorders,
                     Products = products,
                     VerifiedOrders = verifiedOrders,
-                    UserWiseOrders = userWiseOrders
+                    UserWiseOrders = userWiseOrders,
+                    TerritoryWiseDeliveredPrducts = territoryWIshDelvieredQty.ToList()
                   
                 };
                 return View(summary);

@@ -272,5 +272,15 @@ namespace NBL.BLL
         {
             return _iReportGateway.GetOrderHistoriesByYear(year);
         }
+
+        public ICollection<TerritoryWiseDeliveredQty> GetTerritoryWishTotalSaleQtyByBranchId(int branchId)
+        {
+            return _iReportGateway.GetTerritoryWishTotalSaleQtyByBranchId(branchId);
+        }
+
+        public ICollection<ViewClient> GetClientList()
+        {
+            return _iReportGateway.GetClientList();
+        }
     }
 }

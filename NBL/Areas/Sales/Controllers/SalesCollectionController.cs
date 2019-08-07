@@ -281,15 +281,6 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
-                //var user = (ViewUser)Session["user"];
-                //int branchId = Convert.ToInt32(Session["BranchId"]);
-                //int companyId = Convert.ToInt32(Session["CompanyId"]);
-                ////var receivableCheques = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId); 
-                //ICollection<ChequeDetails> receivableCheques= _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyIdUserId(branchId,companyId,user.UserId);
-                //foreach (ChequeDetails cheque in receivableCheques)
-                //{
-                //    cheque.Client = _iClientManager.GetById(cheque.ClientId);
-                //}
                 return View();
             }
             catch (Exception exception)

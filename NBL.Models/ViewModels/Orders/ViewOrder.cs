@@ -27,7 +27,7 @@ namespace NBL.Models.ViewModels.Orders
         public int UserId { get; set; }
         public string OrderBy { get; set; }
         [Display(Name = "Nsm User Id")]
-        public int NsmUserId { get; set; }
+        public int? NsmUserId { get; set; }
         public string SalesManager { get; set; }
         [Display(Name = "Delivered Or Receive User Id")]
         public int DeliveredOrReceiveUserId { get; set; }
@@ -46,23 +46,23 @@ namespace NBL.Models.ViewModels.Orders
         [Display(Name = "Order Date")]
         public DateTime OrderDate { get; set; }
         [Display(Name = "Approved By Nsm")]
-        public DateTime ApprovedByNsmDateTime { get; set; }
+        public DateTime? ApprovedByNsmDateTime { get; set; }
         [Display(Name = "Admin User Id")]
-        public int AdminUserId { get; set; }
+        public int? AdminUserId { get; set; }
         public string SalesAdmin { get; set; }
         [Display(Name = "Approved By Admin")]
-        public DateTime ApprovedByAdminDateTime { get; set; }
+        public DateTime? ApprovedByAdminDateTime { get; set; }
         [Display(Name = "Delivery Date")]
-        public DateTime DeliveryDateTime { get; set; }
-        public int DeliveredByUserId { get; set; }
+        public DateTime? DeliveryDateTime { get; set; }
+        public int? DeliveredByUserId { get; set; }
         public string OrederRef { get; set; }
         public string InvoiceRef { get; set; }
         public char Cancel { get; set; }
         public int VerificationStatus { get; set; } 
         public string ResonOfCancel { get; set; }
-        public int CancelByUserId { get; set; }
+        public int? CancelByUserId { get; set; }
         public decimal Vat { get; set; }
-        public DateTime CancelDateTime { get; set; }
+        public DateTime? CancelDateTime { get; set; }
         public IEnumerable<OrderItem> OrderItems { get; set; }  
         public Client Client { get; set; }
         public User User { get; set; }

@@ -27,7 +27,7 @@
                 <td class="text-right">@item.Amounts</td>
                 <td class="text-center">
 
-                    @item.ApprovedByNsmDateTime.ToShortTimeString(), @item.ApprovedByNsmDateTime.ToString("dd-MMM-yyyy")
+                    @(item.ApprovedByNsmDateTime?.ToShortTimeString()), @(item.ApprovedByNsmDateTime?.ToString("dd-MMM-yyyy"))
                 </td>
                 <td class="text-center">
 

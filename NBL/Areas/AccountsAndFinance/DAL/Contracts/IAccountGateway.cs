@@ -91,5 +91,6 @@ namespace NBL.Areas.AccountsAndFinance.DAL.Contracts
        ICollection<ChequeDetails> GetAllReceivableChequeByBranchAndCompanyIdUserId(int branchId, int companyId, int userId);
        ICollection<ChequeDetails> GetAllReceivableCheque(int branchId, int companyId, int userId, DateTime collectionDate);
        IEnumerable<ChequeDetails> GetAllReceivableCheque(SearchCriteria searchCriteria);
+       ICollection<ChequeDetails> GetAllReceivableCheque(int companyId, DateTime collectionDate);
    }
 }

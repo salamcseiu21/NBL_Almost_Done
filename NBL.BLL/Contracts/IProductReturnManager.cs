@@ -21,5 +21,8 @@ namespace NBL.BLL.Contracts
         bool ApproveReturnBySalesAdmin(ReturnModel returnModel,decimal lessAmount);
         ICollection<ReturnModel> GetAllReturnsByApprovarRoleId(int approverRoleId);
         ICollection<ReturnModel> GetAllFinalApprovedReturnsList();
+        ICollection<ReturnModel> GetAllGeneralReqReturnsByApprovarRoleId(int approverRoleId);
+        ICollection<ViewReturnDetails> GetGeneralReqReturnDetailsById(long returnId);
+        ICollection<ReturnModel> GetAllFinalApprovedGeneralReturnsList();
     }
 }

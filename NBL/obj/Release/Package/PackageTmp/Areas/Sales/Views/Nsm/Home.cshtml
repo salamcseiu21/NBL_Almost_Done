@@ -37,26 +37,76 @@
         </div>
         <!-- /.box-body -->
     </div>
-    <div class="row">
-        <h3 class="text-center text-green" style="font-weight: bolder">User Wise Orders</h3>
-        @foreach (var item in Model.UserWiseOrders)
-        {
-            <div class="col-md-3">
-                <!-- Profile Image -->
-                <div class="box box-primary">
-                    <div class="box-body box-profile" style="margin-bottom: 0; padding-bottom: 0;">
-                        <img class="profile-user-img img-responsive img-circle" src="~/@(item.EmployeeImage ?? "Images/User.jpg")" alt="Client Image" title="@item.Designation">
-                        <br/>
-                        @*<img class="profile-user-img img-responsive" src="~/@(item.EmployeeSignature?? "Images/sign.png")" alt="Client Signature ">*@
-                        <p class="text-center"><b class="text-green">@Html.Raw(item.EmployeeName)</b> </p>
-                        <p class="text-center"><b>Total Order Generated :</b> @Html.Raw(item.TotalOrder)</p>
+    <div class="panel panel-info">
+        <div class="panel panel-heading">
+            Territory Wish Delivered Quantity
+        </div>
+        <div class="panel panel-body" style="margin: 0; padding: 0;">
+            <table id="tbl_user_wish_Delivered_Quantity" class="display table-bordered" style="border: 1px solid">
+                <thead>
+                    <tr>
+                        <th>   Territory Name</th>
+                        <th class="text-right">   Total Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.TerritoryWiseDeliveredPrducts)
+                    {
+                        <tr>
+                            <td>
+                                <b>@Html.ActionLink(item.TerritoryName, "","",new {id=item.TerritoryId},null) </b>
+                            </td>
+                            <Td>
+                                <p class="text-right"> @Html.Raw(item.Quantity)</p>
+                            </Td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>   Territory Name</th>
+                    <th class="text-right">   Total Quantity</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
 
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-            </div>
-        }
+    </div>
+    <div class="panel panel-info">
+        <div class="panel panel-heading">
+            User Wise Orders
+        </div>
+        <div class="panel panel-body" style="margin: 0; padding: 0;">
+            <table id="tbl_user_wish_order_list" class="display table-bordered" style="border: 1px solid">
+                <thead>
+                <tr>
+                    <th>   Employee Info</th>
+                    <th class="text-right">   Total Order</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.UserWiseOrders)
+                {
+                    <tr>
+                        <td>
+                            <p><b class="text-green">@Html.Raw(item.EmployeeName)</b> - (@item.Designation)  
+                            </p>
+                        </td>
+                        <Td>
+                            <p class="text-right"> @Html.Raw(item.TotalOrder)</p>
+                        </Td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>   Employee Info</th>
+                    <th class="text-right">   Total Order</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+       
     </div>
     
 </section>
@@ -64,6 +114,14 @@
 }
 @section Scripts
 {
+    <script>
+        $("#tbl_user_wish_order_list").DataTable({
+            "order":[[1,"desc"]]
+        });
+        $("#tbl_user_wish_Delivered_Quantity").DataTable({
+            "order":[[1,"desc"]]
+        });
+    </script>
     @*Reload page after 1 minute *@
     <script type="text/javascript">
         var timeout = setTimeout("location.reload(true);", 60000);

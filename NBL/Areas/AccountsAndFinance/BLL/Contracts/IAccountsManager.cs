@@ -54,6 +54,8 @@ namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
        ViewReceivableDetails GetActivatedReceivableDetailsById(long chequeDetailsId);
        ICollection<ChequeDetails> GetAllReceivableChequeByBranchAndCompanyIdUserId(int branchId, int companyId, int userId);
        ICollection<ChequeDetails> GetAllReceivableCheque(int branchId, int companyId, int userId, DateTime collectionDate);
+       ICollection<ChequeDetails> GetAllReceivableCheque(int companyId, DateTime collectionDate);
        IEnumerable<ChequeDetails> GetAllReceivableCheque(SearchCriteria searchCriteria);
-   }
+       
+    }
 }

@@ -102,6 +102,12 @@ namespace NBL.BLL
         {
             return _iProductReturnGateway.GetAllFinalApprovedReturnsList();
         }
+
+        public ICollection<ReturnModel> GetAllFinalApprovedGeneralReturnsList()
+        {
+            return _iProductReturnGateway.GetAllFinalApprovedGeneralReturnsList();
+        }
+
         public ReturnModel GetSalesReturnBySalesReturnId(long salesReturnId)
         {
             return _iProductReturnGateway.GetSalesReturnBySalesReturnId(salesReturnId);
@@ -147,7 +153,16 @@ namespace NBL.BLL
         {
             return _iProductReturnGateway.GetAllReturnsByApprovarRoleId(approverRoleId);
         }
+        public ICollection<ReturnModel> GetAllGeneralReqReturnsByApprovarRoleId(int approverRoleId)
+        {
+            return _iProductReturnGateway.GetAllGeneralReqReturnsByApprovarRoleId(approverRoleId);
+        }
 
-        
+        public ICollection<ViewReturnDetails> GetGeneralReqReturnDetailsById(long returnId)
+        {
+            return _iProductReturnGateway.GetGeneralReqReturnDetailsById(returnId);
+        }
+
+       
     }
 }

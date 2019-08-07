@@ -49,8 +49,8 @@
                         Sales Return Ref : @Model.ReturnModel.ReturnRef<br />
                         Return Entry Date : @Model.ReturnModel.SystemDateTime.ToString("dd-MMM-yyyy")<br />
                         Order Date : @firstOrDefault.OrderDateTime.ToString("dd-MMM-yyyy")<br />
-                        Delivery Date : @firstOrDefault.DeliveredDateTime.ToString("dd-MMM-yyyy")<br />
-                        Delivery-to-Return Duration : @(Math.Ceiling((firstOrDefault.ReturnDateTime - firstOrDefault.DeliveredDateTime).TotalDays)) (Day's)
+                        Delivery Date : @firstOrDefault.DeliveredDateTime?.ToString("dd-MMM-yyyy")<br />
+                        Delivery-to-Return Duration : @((firstOrDefault.ReturnDateTime.Date - firstOrDefault.DeliveredDateTime?.Date)) (Day's)
                     </p>
 
                 </div>
@@ -59,7 +59,6 @@
         </div>
     </div>
     
-
     <div class="panel panel-info">
         <div class="panel panel-body" style="margin: 0; padding: 0;">
 

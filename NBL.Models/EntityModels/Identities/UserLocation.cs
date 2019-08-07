@@ -8,8 +8,8 @@
         public string CityName { get; set; }
         public string RegionName { get; set; }
         public string ZipCode { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
+        public decimal? Latitude { get; set; }
+        public decimal? Longitude { get; set; }
         public string TimeZone { get; set; }
         public int IsValidLogin { get; set; }
     }

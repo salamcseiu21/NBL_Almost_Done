@@ -32,6 +32,7 @@ namespace NBL.Models.Enums
         FqcManager = 22,
         SCMExecutive = 23,
         SCMManager = 24,
-        ServiceManagement = 25
+        ServiceManagement = 25,
+        RnDManager=26
     }
 }

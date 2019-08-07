@@ -73,8 +73,8 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li>@Html.ActionLink(" Pending List", "ViewAll", "Return", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
-           
+            <li>@Html.ActionLink(" Sales Return Pending List", "ViewAll", "Return", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+            <li>@Html.ActionLink(" General Return Pending List", "GeneralRequisitionReturn", "Return", new { area = "Sales" }, new { @class = "fa fa-eye", style = "font-weight: bolder" })</li>
         </ul>
     </li>
     <li class="treeview">

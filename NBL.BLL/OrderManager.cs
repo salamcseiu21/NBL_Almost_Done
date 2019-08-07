@@ -159,7 +159,19 @@ namespace NBL.BLL
             order.OrderItems = _iOrderGateway.GetOrderItemsByOrderId(orderId);
             return order;
         }
-      
+        public ViewOrder GetOrderHistoryByOrderId(int orderId)
+        {
+            var order = _iOrderGateway.GetOrderHistoryByOrderId(orderId);
+            order.OrderItems = _iOrderGateway.GetOrderItemsByOrderId(orderId);
+            return order;
+        }
+
+        public List<ViewOrder> GetOrdersByBranchCompanyAndUserId(int branchId, int companyId, int userId)
+        {
+            var orders = _iOrderGateway.GetOrdersByBranchCompanyAndUserId(branchId, companyId,userId);
+            return orders;
+        }
+
         public bool CancelOrder(ViewOrder order)
         {
             return _iOrderGateway.CancelOrder(order)>0;
@@ -303,6 +315,8 @@ namespace NBL.BLL
         {
             return _iOrderGateway.GetOrdersByBranchCompanyAndDateRange(searchCriteria);
         }
+
+        
 
         public bool UpdateVerificationStatus(int orderId, string verificationNote, int userUserId)
         {

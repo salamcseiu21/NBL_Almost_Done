@@ -47,7 +47,7 @@ namespace NBL.Models.ViewModels.Returns
         public DateTime? ApproveBySalesAdminDateTime { get; set; }
         public int DeliveredByUserId { get; set; }
         public string DeliveryPerson { get; set; }
-        public DateTime DeliveredDateTime { get; set; }
+        public DateTime? DeliveredDateTime { get; set; }
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public string ProductCategoryName { get; set; }

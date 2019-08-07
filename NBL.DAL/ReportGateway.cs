@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using NBL.DAL.Contracts;
+using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
@@ -795,6 +796,98 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect  Orders history ref by year", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<TerritoryWiseDeliveredQty> GetTerritoryWishTotalSaleQtyByBranchId(int branchId)
+        {
+            try
+            {
+
+                CommandObj.CommandText = "UDSP_RptGetTerritoryWishTotalSaleQtyByBranchId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                ConnectionObj.Open();
+                List<TerritoryWiseDeliveredQty> quantitis = new List<TerritoryWiseDeliveredQty>(); 
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    quantitis.Add(new TerritoryWiseDeliveredQty
+                    {
+                       TerritoryName = reader["TerritoryName"].ToString(),
+                       TerritoryId = Convert.ToInt64(reader["TerritoryId"]),
+                       Quantity = Convert.ToInt32(reader["TotalQuantity"])
+                 
+                    });
+                }
+                reader.Close();
+                return quantitis;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect  territory wish delivered qty by branchID", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<ViewClient> GetClientList()
+        {
+            try
+            {
+
+                CommandObj.CommandText = "UDSP_RptGetClientList";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<ViewClient> clients = new List<ViewClient>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    clients.Add(new ViewClient
+                    {
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        ClientName = reader["Name"].ToString(),
+                        CommercialName = DBNull.Value.Equals(reader["CommercialName"]) ? null : reader["CommercialName"].ToString(),
+                        Address = reader["Address"].ToString(),
+                        Phone = reader["Phone"].ToString(),
+                        AlternatePhone = DBNull.Value.Equals(reader["AltPhone"]) ? null : reader["AltPhone"].ToString(),
+                        Email = DBNull.Value.Equals(reader["Email"]) ? null : reader["Email"].ToString(),
+                        Gender = reader["Gender"].ToString(),
+                        Fax = DBNull.Value.Equals(reader["Fax"]) ? null : reader["Fax"].ToString(),
+                        Website = DBNull.Value.Equals(reader["Website"]) ? null : reader["Website"].ToString(),
+                        ClientTypeName = reader["ClientTypeName"].ToString(),
+                        SubSubSubAccountCode = DBNull.Value.Equals(reader["SubSubSubAccountCode"]) ? null : reader["SubSubSubAccountCode"].ToString(),
+                        EntryDate = Convert.ToDateTime(reader["EntryDate"]),
+                        ClientImage = DBNull.Value.Equals(reader["ClientImage"]) ? null : reader["ClientImage"].ToString(),
+                        ClientSignature = DBNull.Value.Equals(reader["ClientSignature"]) ? null : reader["ClientSignature"].ToString(),
+                        NationalIdNo = DBNull.Value.Equals(reader["NationalIdNo"]) ? null : reader["NationalIdNo"].ToString(),
+                        Active = reader["Active"].ToString(),
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
+                        MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"]),
+                        BranchName = DBNull.Value.Equals(reader["BranchName"]) ? null : reader["BranchName"].ToString()
+                    });
+                }
+                reader.Close();
+                return clients;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect  client list", exception);
             }
             finally
             {

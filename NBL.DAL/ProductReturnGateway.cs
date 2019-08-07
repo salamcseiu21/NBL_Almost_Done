@@ -25,7 +25,7 @@ namespace NBL.DAL
                 CommandObj.Transaction = sqlTransaction;
                 CommandObj.CommandText = "UDSP_SaveSalesReturnProduct";
                 CommandObj.CommandType = CommandType.StoredProcedure;
-                CommandObj.Parameters.AddWithValue("@ClientId", returnModel.ClientId);
+                CommandObj.Parameters.AddWithValue("@ClientId", returnModel.ClientId?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@SalesReturnNo", returnModel.ReturnNo);
                 CommandObj.Parameters.AddWithValue("@SalesReturnRef", returnModel.ReturnRef);
                 CommandObj.Parameters.AddWithValue("@TransactionRef", returnModel.ReturnRef);
@@ -109,7 +109,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@Quantity", item.Quantity);
                 CommandObj.Parameters.AddWithValue("@DeliveryId", item.DeliveryId);
                 CommandObj.Parameters.AddWithValue("@DeliveryRef", item.DeliveryRef);
-                CommandObj.Parameters.AddWithValue("@DeliveryDate", item.DeliveryDate);
+                CommandObj.Parameters.AddWithValue("@DeliveryDate", item.DeliveryDate?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@RefDetailsId", refId);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
@@ -418,7 +418,7 @@ namespace NBL.DAL
                         NotesByAdmin = DBNull.Value.Equals(reader["NotesByAdmin"]) ? null : reader["NotesByAdmin"].ToString(),
                         ReturnStatus = Convert.ToInt32(reader["Status"]),
                         ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"]),
-                        ClientInfo = reader["ClientInfo"].ToString(),
+                        ClientInfo =DBNull.Value.Equals(reader["ClientInfo"])? null: reader["ClientInfo"].ToString(),
 
                         LessAmount = DBNull.Value.Equals(reader["LessAmount"]) ? default(decimal):Convert.ToDecimal(reader["LessAmount"]),
                         LastApproverDatetime = DBNull.Value.Equals(reader["LastApproverDatetime"]) ? (DateTime?)null:Convert.ToDateTime(reader["LastApproverDatetime"]),
@@ -466,21 +466,21 @@ namespace NBL.DAL
                 {
                     model = new ReturnModel
                     {
-                        ClientId = Convert.ToInt32(reader["ClientId"]),
-                        ClientInfo = reader["ClientInfo"].ToString(),
+                        ClientId =DBNull.Value.Equals(reader["ClientId"])? (int?)null: Convert.ToInt32(reader["ClientId"]),
+                        ClientInfo = DBNull.Value.Equals(reader["ClientInfo"]) ? null : reader["ClientInfo"].ToString(),
+                        EmployeeInfo = DBNull.Value.Equals(reader["EmployeeInfo"]) ? null : reader["EmployeeInfo"].ToString(),
                         SalesReturnId = Convert.ToInt64(reader["Id"]),
                         BranchId = Convert.ToInt32(reader["BranchId"]),
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
                         ReturnRef = reader["ReturnRef"].ToString(),
                         ReturnNo = Convert.ToInt64(reader["SalesReturnNo"]),
                         TotalQuantity = Convert.ToInt32(reader["Quantity"]),
-                        Remarks = reader["Remarks"].ToString(),
+                        Remarks = DBNull.Value.Equals(reader["Remarks"])? null: reader["Remarks"].ToString(),
                         SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
                         //ReturnApproveByUserId = Convert.ToInt32(reader["ReturnApproveByUserId"]),
                         //ReturnApproveDateTime = DBNull.Value.Equals(reader["ReturnApproveDate"])
                         //    ? default(DateTime)
                         //    : Convert.ToDateTime(reader["ReturnApproveDate"]),
-                        NsmNotes = DBNull.Value.Equals(reader["Remarks"]) ? null : reader["Remarks"].ToString(),
                         ReturnStatus = Convert.ToInt32(reader["Status"]),
                         ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"]),
                         LessAmount = DBNull.Value.Equals(reader["LessAmount"]) ? default(decimal) : Convert.ToDecimal(reader["LessAmount"]),
@@ -732,6 +732,160 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect sales returns by status", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+
+            }
+        }
+
+        public ICollection<ReturnModel> GetAllFinalApprovedGeneralReturnsList()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllFinalApprovedGeneralReturnsList";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<ReturnModel> models = new List<ReturnModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ReturnModel
+                    {
+                        SalesReturnId = Convert.ToInt64(reader["Id"]),
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        ReturnRef = reader["ReturnRef"].ToString(),
+                        ReturnNo = Convert.ToInt64(reader["SalesReturnNo"]),
+                        TotalQuantity = Convert.ToInt32(reader["Quantity"]),
+                        Remarks = DBNull.Value.Equals(reader["Remarks"]) ? null : reader["Remarks"].ToString(),
+                        SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        ApproveByManagerUserId = DBNull.Value.Equals(reader["ApproveByManagerUserId"]) ? (int?)null : Convert.ToInt32(reader["ApproveByManagerUserId"]),
+                        ApproveByManagerDate = DBNull.Value.Equals(reader["ApproveByManagerDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ApproveByManagerDate"]),
+                        ApproveByAdminDate = DBNull.Value.Equals(reader["ApproveByAdminDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ApproveByAdminDate"]),
+                        ApproveByAdminUserId = DBNull.Value.Equals(reader["ApproveByAdminUserId"]) ? (int?)null : Convert.ToInt32(reader["ApproveByAdminUserId"]),
+                        NotesByManager = DBNull.Value.Equals(reader["NotesByManager"]) ? null : reader["NotesByManager"].ToString(),
+                        NotesByAdmin = DBNull.Value.Equals(reader["NotesByAdmin"]) ? null : reader["NotesByAdmin"].ToString(),
+                        ReturnStatus = Convert.ToInt32(reader["Status"]),
+                        ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"]),
+                        EmployeeInfo = reader["EmployeeInfo"].ToString(),
+                        LessAmount = DBNull.Value.Equals(reader["LessAmount"]) ? default(decimal) : Convert.ToDecimal(reader["LessAmount"]),
+                        LastApproverDatetime = DBNull.Value.Equals(reader["LastApproverDatetime"]) ? (DateTime?)null : Convert.ToDateTime(reader["LastApproverDatetime"]),
+                        LastApproverRoleId = DBNull.Value.Equals(reader["LastApproverRoleId"]) ? (int?)null : Convert.ToInt32(reader["LastApproverRoleId"]),
+                        CurrentApproverRoleId = DBNull.Value.Equals(reader["CurrentApproverRoleId"]) ? (int?)null : Convert.ToInt32(reader["CurrentApproverRoleId"]),
+                        CurrentApprovalLevel = DBNull.Value.Equals(reader["CurrentApprovalLevel"]) ? (int?)null : Convert.ToInt32(reader["CurrentApprovalLevel"]),
+                        IsFinalApproved = DBNull.Value.Equals(reader["IsFinalApproved"]) ? (int?)null : Convert.ToInt32(reader["IsFinalApproved"])
+                    });
+                }
+                reader.Close();
+                return models;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect sales returns by status", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+
+            }
+        }
+
+        public ICollection<ReturnModel> GetAllGeneralReqReturnsByApprovarRoleId(int approverRoleId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllGeneralReqReturnsByApprovarRoleId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ApproverRoleId", approverRoleId);
+                List<ReturnModel> models = new List<ReturnModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ReturnModel
+                    {
+                        SalesReturnId = Convert.ToInt64(reader["Id"]),
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        ReturnRef = reader["ReturnRef"].ToString(),
+                        ReturnNo = Convert.ToInt64(reader["SalesReturnNo"]),
+                        TotalQuantity = Convert.ToInt32(reader["Quantity"]),
+                        Remarks = DBNull.Value.Equals(reader["Remarks"]) ? null : reader["Remarks"].ToString(),
+                        SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        ApproveByManagerUserId = DBNull.Value.Equals(reader["ApproveByManagerUserId"]) ? (int?)null : Convert.ToInt32(reader["ApproveByManagerUserId"]),
+                        ApproveByManagerDate = DBNull.Value.Equals(reader["ApproveByManagerDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ApproveByManagerDate"]),
+                        ApproveByAdminDate = DBNull.Value.Equals(reader["ApproveByAdminDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ApproveByAdminDate"]),
+                        ApproveByAdminUserId = DBNull.Value.Equals(reader["ApproveByAdminUserId"]) ? (int?)null : Convert.ToInt32(reader["ApproveByAdminUserId"]),
+                        NotesByManager = DBNull.Value.Equals(reader["NotesByManager"]) ? null : reader["NotesByManager"].ToString(),
+                        NotesByAdmin = DBNull.Value.Equals(reader["NotesByAdmin"]) ? null : reader["NotesByAdmin"].ToString(),
+                        ReturnStatus = Convert.ToInt32(reader["Status"]),
+                        ReturnIssueByUserId = Convert.ToInt32(reader["ReturnIssueByUserId"]),
+                        EmployeeInfo = DBNull.Value.Equals(reader["EmployeeInfo"]) ? null : reader["EmployeeInfo"].ToString(),
+
+                        LessAmount = DBNull.Value.Equals(reader["LessAmount"]) ? default(decimal) : Convert.ToDecimal(reader["LessAmount"]),
+                        LastApproverDatetime = DBNull.Value.Equals(reader["LastApproverDatetime"]) ? (DateTime?)null : Convert.ToDateTime(reader["LastApproverDatetime"]),
+                        LastApproverRoleId = DBNull.Value.Equals(reader["LastApproverRoleId"]) ? (int?)null : Convert.ToInt32(reader["LastApproverRoleId"]),
+                        CurrentApproverRoleId = DBNull.Value.Equals(reader["CurrentApproverRoleId"]) ? (int?)null : Convert.ToInt32(reader["CurrentApproverRoleId"]),
+                        CurrentApprovalLevel = DBNull.Value.Equals(reader["CurrentApprovalLevel"]) ? (int?)null : Convert.ToInt32(reader["CurrentApprovalLevel"]),
+                        IsFinalApproved = DBNull.Value.Equals(reader["IsFinalApproved"]) ? (int?)null : Convert.ToInt32(reader["IsFinalApproved"])
+                    });
+                }
+                reader.Close();
+                return models;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect sales returns by approver role Id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+
+            }
+        }
+
+        public ICollection<ViewReturnDetails> GetGeneralReqReturnDetailsById(long returnId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetGeneralReqReturnDetailsById";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ReturnId", returnId);
+                List<ViewReturnDetails> models = new List<ViewReturnDetails>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ViewReturnDetails
+                    {
+                        SalesReturnId = Convert.ToInt64(reader["ReturnId"]),
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        DeliveryId = Convert.ToInt64(reader["DeliveryId"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        DeliveredDateTime =DBNull.Value.Equals(reader["DeliveryDate"])? (DateTime?)null: Convert.ToDateTime(reader["DeliveryDate"]),
+                        ReturnDateTime = Convert.ToDateTime(reader["SysDateTime"])
+                    });
+                }
+                reader.Close();
+                return models;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect sales returns details", exception);
             }
             finally
             {

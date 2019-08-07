@@ -27,5 +27,9 @@ namespace NBL.DAL.Contracts
         int ApproveReturnBySalesAdmin(ReturnModel returnModel, decimal lessAmount);
         ICollection<ReturnModel> GetAllReturnsByApprovarRoleId(int approverRoleId);
         ICollection<ReturnModel> GetAllFinalApprovedReturnsList();
+        ICollection<ReturnModel> GetAllFinalApprovedGeneralReturnsList();
+        ICollection<ReturnModel> GetAllGeneralReqReturnsByApprovarRoleId(int approverRoleId);
+        ICollection<ViewReturnDetails> GetGeneralReqReturnDetailsById(long returnId);
+        
     }
 }

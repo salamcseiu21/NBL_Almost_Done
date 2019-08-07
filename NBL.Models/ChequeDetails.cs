@@ -14,7 +14,9 @@ namespace NBL.Models
         public Client Client { get; set; }
         public int ActiveStatus { get; set; }
         public DateTime ReceivableDateTime { get; set; }
-        public string ClientInfo { get; set; }   
+        public string ClientInfo { get; set; }
+        public string CollectionByBranch { get; set; }
+        public string EntryByEmp { get; set; }
 
 
     }

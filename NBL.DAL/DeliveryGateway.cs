@@ -983,6 +983,48 @@ namespace NBL.DAL
             }
         }
 
+        public IEnumerable<ViewDeliveredOrderModel> GetDeliveredGeneralReqById(long deliveryId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetDeliveredGeneralReqById";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DeliveryId", deliveryId);
+                List<ViewDeliveredOrderModel> models = new List<ViewDeliveredOrderModel>();
+                ConnectionObj.Open();
+
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ViewDeliveredOrderModel
+                    {
+                        DeliveryRef = reader["TransactionRef"].ToString(),
+                        DeliveryId = deliveryId,
+                        DeliveredQty = Convert.ToInt32(reader["DeliveredQty"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString()
+                    });
+                }
+                reader.Close();
+                return models;
+
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Could not Collect general requisition Delivery  details due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Collect general requisition Delivery details", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
         public int Add(Delivery model)
         {
             throw new NotImplementedException();

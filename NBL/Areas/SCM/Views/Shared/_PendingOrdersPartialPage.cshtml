@@ -29,7 +29,7 @@
             <td class="text-right">@item.Amounts</td>
             <td class="text-center">
 
-                @item.ApprovedByAdminDateTime.ToShortTimeString(), @item.ApprovedByAdminDateTime.ToString("dd-MMM-yyyy")
+                @(item.ApprovedByAdminDateTime?.ToShortTimeString()), @(item.ApprovedByAdminDateTime?.ToString("dd-MMM-yyyy"))
             </td>
             <td class="text-center">
 

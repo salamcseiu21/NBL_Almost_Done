@@ -1,0 +1,57 @@
+﻿
+@model IEnumerable<NBL.Models.ViewModels.ViewClient>
+@{
+    ViewBag.Title = "Client List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+
+}
+<section class="content">
+    <h3 class="text-center text-green headingStyle">Client List</h3>
+    <table id="table_client_list" class="display table table-bordered" style="border:1px solid black">
+
+        <thead>
+        <tr>
+            <th class="text-center">Basic Information</th>
+            <th class="text-center">Contact Info</th>
+            <th class="text-center">View</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-center">
+                    <img class="img-circle" src="~/@(item.ClientImage?? "Images/User.jpg")" alt="Client Image" title="@item.ClientName" width="60" height="60"><br />
+                    @Html.Raw(item.ClientName)
+                </td>
+                <td>@Html.Raw(item.GetContactInformation())</td>
+                <td class="text-center">
+                    @Html.ActionLink(" Profile", "ViewClientProfile", null, new { id = item.ClientId }, new { @class = "fa fa-eye" })
+                    @*@Html.ActionLink(" Ledger", "ClientLedger", null, new { id = item.ClientId }, new { @class = "fa fa-eye" })*@
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th class="text-center">Basic Information</th>
+            <th class="text-center">Contact Info</th>
+            <th class="text-center">View</th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+
+@section Scripts
+{
+
+    <script>
+
+        $('#table_client_list').DataTable({
+            "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]]
+           
+        });
+
+    </script>
+
+}

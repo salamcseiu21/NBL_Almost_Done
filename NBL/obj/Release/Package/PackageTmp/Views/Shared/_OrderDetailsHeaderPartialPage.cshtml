@@ -1,4 +1,6 @@
-﻿@model NBL.Models.ViewModels.Orders.ViewOrder
+﻿@using NBL.Models.EntityModels.Deliveries
+@using NBL.Models.Enums
+@model NBL.Models.ViewModels.Orders.ViewOrder
 @{
 
     var aClient = Model.Client;
@@ -9,8 +11,8 @@
     <div class="col-md-4">
 
         <section>
-            <img src="~/@(aClient.ClientImage?? "Images/User.jpg")" height="120" width="100" style="float:left;margin-right:20px" title="@aClient.ClientName" />
            
+            <img src="~/@(aClient.ClientImage?? "Images/User.jpg")" height="120" width="100" style="float:left;margin-right:20px" title="@aClient.ClientName" />
             <span>
                 @Html.Raw(aClient.GetMailingAddress())
             </span>
@@ -26,7 +28,13 @@
     </div>
     <div class="col-md-4">
         Order Slip No :<i>@Model.OrderSlipNo</i><br />
-        Order Date : <i>@Model.SysDate.ToString("D")</i>
+        Order Date : <i>@Model.SysDate.ToString("D")</i><br/>
+        Order Status : <strong style="color: green">@Enum.GetName(typeof(OrderStatus), Model.Status)</strong>
+       @if (Model.Status == 3 || Model.Status == 4)
+                        {
+                            <p>  Delivery Date :<strong style="color: green">@(Model.DeliveryDateTime?.ToString("f"))</strong>
+        </p>
+                        }
     </div>
 </div>
 <hr />

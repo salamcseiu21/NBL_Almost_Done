@@ -1,0 +1,36 @@
+﻿
+@model IEnumerable<NBL.Models.EntityModels.Returns.ReturnProduct>
+<hr/>
+<table class="display" id="tbl_Temp_return_Products" style="border: 1px solid;">
+    <caption class="text-center text-green">Return Summary</caption>
+    <thead>
+    <tr>
+        <th>Product Name</th>
+        <th>Delivery Ref</th>
+        <th>Quantity</th>
+        <th>Action</th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                <input type="hidden" id="total_returns_qty" value="@Model.Sum(n=>n.Quantity)"/>
+                @item.ProductName
+            </td>
+            <td>@item.DeliveryRef</td>
+            <td>@item.Quantity</td>
+            <td>
+                <button type="button" class="btn btn-danger btn-sm" onclick="DeleteProduct(this)" value="@item.ReturnId"><i class="fa fa-times"></i></button>
+            </td>
+       
+        </tr>
+    }
+
+    </tbody>
+</table>
+<script src="~/Areas/ResearchAndDevelopment/Scripts/RetunProducts/deleteProductFromTempReturn.js"></script>

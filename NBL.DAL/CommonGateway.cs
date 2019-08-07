@@ -215,7 +215,6 @@ CommandObj.Parameters.Clear();
                         PaymentTypeId = Convert.ToInt32(reader["PaymentTypeId"]),
                         PaymentTypeName = reader["PaymentTypeName"].ToString(),
 
-
                     });
                 }
                 reader.Close();

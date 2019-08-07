@@ -39,7 +39,7 @@ namespace NBL.BLL
                 switch (client.ClientTypeId)
                 {
                     case 1:
-                        acountPrefix += "4";
+                        acountPrefix += "3";
                         break;
                     case 2:
                         acountPrefix += "2";

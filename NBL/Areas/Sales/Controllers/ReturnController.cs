@@ -315,8 +315,8 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
-                var products = _iProductReturnManager.GetAll().ToList();
-                return View(products);
+                var returnModels = _iProductReturnManager.GetAll().ToList();
+                return View(returnModels);
             }
             catch (Exception exception)
             {
@@ -325,7 +325,20 @@ namespace NBL.Areas.Sales.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+        public ActionResult GeneralRequisitionReturn()
+        {
+            try
+            {
+                var returnModels = _iProductReturnManager.GetAllGeneralReqReturnsByApprovarRoleId(Convert.ToInt32(RoleEnum.SalesAdmin)).ToList();
+                return View(returnModels);
+            }
+            catch (Exception exception)
+            {
 
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
 
         public ActionResult PendingSalesReturns() 
         {
@@ -445,34 +458,37 @@ namespace NBL.Areas.Sales.Controllers
                 ViewBag.ApproverActionId = _iCommonManager.GetAllApprovalActionList().ToList();
                 ViewBag.SalesReturnId = salesReturnId;
                 var returnById=_iProductReturnManager.GetSalesReturnBySalesReturnId(salesReturnId);
-                List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
-
-                ViewReturnModel model = new ViewReturnModel
+                List<ViewReturnDetails> models;
+                ViewReturnModel model = new ViewReturnModel();
+                if (returnById.ClientId != null)
                 {
-                    ReturnModel = returnById,
-                    ReturnDetailses = models,
-                   
-                };
-                var firstOrdefault = models.FirstOrDefault();
-                if (firstOrdefault != null)
-                {
-                    var delivery = _iDeliveryManager.GetOrderByDeliveryId(firstOrdefault.DeliveryId);
-                    var deliveryDetails = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(firstOrdefault.DeliveryId);
-                    var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
-                    var client = _iClientManager.GetClientDeailsById(orderInfo.ClientId);
-
-                    ViewInvoiceModel invoice = new ViewInvoiceModel
+                    models= _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+                    var firstOrdefault = models.FirstOrDefault();
+                    if (firstOrdefault != null)
                     {
-                        Client = client,
-                        Order = orderInfo,
-                        Delivery = delivery,
-                        DeliveryDetails = deliveryDetails
-                    };
-                    model.InvoiceModel = invoice;
-                   
+                        var delivery = _iDeliveryManager.GetOrderByDeliveryId(firstOrdefault.DeliveryId);
+                        var deliveryDetails = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(firstOrdefault.DeliveryId);
+                        var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
+                        var client = _iClientManager.GetClientDeailsById(orderInfo.ClientId);
+
+                        ViewInvoiceModel invoice = new ViewInvoiceModel
+                        {
+                            Client = client,
+                            Order = orderInfo,
+                            Delivery = delivery,
+                            DeliveryDetails = deliveryDetails
+                        };
+                        model.InvoiceModel = invoice;
+
+                    }
                 }
-              
-                
+                else
+                {
+                    models = _iProductReturnManager.GetGeneralReqReturnDetailsById(salesReturnId).ToList();
+                }
+                model.ReturnModel = returnById;
+                model.ReturnDetailses = models;
+             
                 return View(model);
             }
             catch (Exception exception)
@@ -536,6 +552,23 @@ namespace NBL.Areas.Sales.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+
+        [Authorize(Roles = "DistributionManager")]
+        public ActionResult PendingGeneralReturnList() 
+        {
+            try
+            {
+                // var products = _iProductReturnManager.GetAllReturnsByStatus(2).ToList();
+                ICollection<ReturnModel> products = _iProductReturnManager.GetAllFinalApprovedGeneralReturnsList(); 
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         [Authorize(Roles = "DistributionManager")]
         public ActionResult Receive(long id)
         {
@@ -543,31 +576,39 @@ namespace NBL.Areas.Sales.Controllers
             {
                 ViewBag.SalesReturnId = id;
                 var returnById = _iProductReturnManager.GetSalesReturnBySalesReturnId(id);
-                List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(id).ToList();
-                ViewReturnModel model = new ViewReturnModel
+                List<ViewReturnDetails> models;
+                ViewReturnModel model = new ViewReturnModel();
+                if (returnById.ClientId != null)
                 {
-                    ReturnModel = returnById,
-                    ReturnDetailses = models,
-
-                };
-                var firstOrdefault = models.FirstOrDefault();
-                if (firstOrdefault != null)
-                {
-                    var delivery = _iDeliveryManager.GetOrderByDeliveryId(firstOrdefault.DeliveryId);
-                    var deliveryDetails = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(firstOrdefault.DeliveryId);
-                    var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
-                    var client = _iClientManager.GetClientDeailsById(orderInfo.ClientId);
-
-                    ViewInvoiceModel invoice = new ViewInvoiceModel
+                    models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(id).ToList();
+                    var firstOrdefault = models.FirstOrDefault();
+                    if (firstOrdefault != null)
                     {
-                        Client = client,
-                        Order = orderInfo,
-                        Delivery = delivery,
-                        DeliveryDetails = deliveryDetails
-                    };
-                    model.InvoiceModel = invoice;
+                        var delivery = _iDeliveryManager.GetOrderByDeliveryId(firstOrdefault.DeliveryId);
+                        var deliveryDetails = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(firstOrdefault.DeliveryId);
+                        var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
+                        var client = _iClientManager.GetClientDeailsById(orderInfo.ClientId);
 
+                        ViewInvoiceModel invoice = new ViewInvoiceModel
+                        {
+                            Client = client,
+                            Order = orderInfo,
+                            Delivery = delivery,
+                            DeliveryDetails = deliveryDetails
+                        };
+                        model.InvoiceModel = invoice;
+
+                    }
                 }
+                else
+                {
+                    models = _iProductReturnManager.GetGeneralReqReturnDetailsById(id).ToList();
+                }
+
+                model.ReturnModel = returnById;
+                model.ReturnDetailses = models;
+               
+               
 
 
                 return View(model);
@@ -750,7 +791,16 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
-                var products = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId);
+                var returnById = _iProductReturnManager.GetSalesReturnBySalesReturnId(salesReturnId);
+                List<ViewReturnDetails> products;
+                if (returnById.ClientId != null)
+                {
+                    products = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+                }
+                else
+                {
+                    products = _iProductReturnManager.GetGeneralReqReturnDetailsById(salesReturnId).ToList();
+                }
                 List<ViewDispatchModel> returnList=new List<ViewDispatchModel>();
                 foreach (var item in products )  {
                      returnList.Add(new ViewDispatchModel

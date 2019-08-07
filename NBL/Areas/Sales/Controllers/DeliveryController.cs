@@ -126,43 +126,42 @@ namespace NBL.Areas.Sales.Controllers
         }
         public PartialViewResult GetAllOrdersByBranchAndCompanyId()
         {
+            
+            var user = (ViewUser)Session["user"];
             int branchId = Convert.ToInt32(Session["BranchId"]);
             int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var orders = _iOrderManager.GetOrdersByBranchAndCompnayId(branchId, companyId);
+            List<ViewOrder> orders;
+            if(user.Roles.Equals("SalesExecutive"))
+            {
+                orders = _iOrderManager.GetOrdersByBranchCompanyAndUserId(branchId, companyId, user.UserId);
+            }
+            else
+            {
+                orders = _iOrderManager.GetOrdersByBranchAndCompnayId(branchId, companyId).ToList();
+            }
+            
+        
             return PartialView("_RptViewOrderListBydatePartialPage", orders);
         }
         [HttpPost]
         public PartialViewResult GetOrdersByBranchId(SearchCriteria searchCriteria)
         {
 
-
+            var user = (ViewUser)Session["user"];
             var companyId = Convert.ToInt32(Session["CompanyId"]);
             var branchId = Convert.ToInt32(Session["BranchId"]);
             searchCriteria.BranchId = branchId;
             searchCriteria.CompanyId = companyId;
-            IEnumerable<ViewOrder> orders = _iOrderManager.GetOrdersByBranchCompanyAndDateRange(searchCriteria);
-            //if (searchCriteria.BranchId != null)
-            //{
-            //    orders = orders.ToList().FindAll(n => n.BranchId.Equals(searchCriteria.BranchId));
-            //}
-            //else
-            //{
-            //    orders = _iOrderManager.GetOrdersByCompanyId(companyId);
-            //}
-            //foreach (ViewOrder order in orders)
-            //{
-            //    order.Client = _iClientManager.GetById(order.ClientId);
-            //}
-            //if (!string.IsNullOrEmpty(searchCriteria.ClientName))
-            //{
-            //    orders = orders.ToList().FindAll(n => n.Client.ClientName.ToLower().Contains(searchCriteria.ClientName));
-            //}
-            //if (searchCriteria.StartDate != null && searchCriteria.EndDate != null)
-            //{
-            //    orders = orders.ToList().Where(n => n.OrderDate >= searchCriteria.StartDate && n.OrderDate <= searchCriteria.EndDate).ToList();
-            //}
-
-            //return PartialView("_OrdersPartialPage", orders);
+            if (user.Roles.Equals("SalesExecutive"))
+            {
+                searchCriteria.UserId = user.UserId;
+            }
+            else
+            {
+                searchCriteria.UserId = 0;
+            }
+            
+                IEnumerable<ViewOrder> orders = _iOrderManager.GetOrdersByBranchCompanyAndDateRange(searchCriteria);
             return PartialView("_RptViewOrderListBydatePartialPage", orders);
         }
         [Authorize(Roles = "DistributionManager")]

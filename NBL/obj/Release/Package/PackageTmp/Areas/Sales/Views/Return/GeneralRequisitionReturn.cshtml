@@ -1,0 +1,72 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Returns.ReturnModel>
+@{
+    ViewBag.Title = "Return List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">General Return List</h3>
+    <table class="display table-bordered" style="border: 1px solid" id="tbl_Sales_Return_list">
+        <thead>
+            <tr>
+                <th class="text-center">Reference</th>
+                <th class="text-center">Requisition By</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Notes</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">View</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center">@item.ReturnRef</td>
+                    <td class="text-center">@item.EmployeeInfo</td>
+                    <td class="text-center">@item.TotalQuantity</td>
+                    <td class="text-center">@item.SystemDateTime.Date.ToString("D")</td>
+                    <td class="text-center">@(item.NotesByManager ?? "N/A")</td>
+                    <td class="text-center">
+                        @{
+                        if (item.ReturnStatus == 0)
+                        {
+                            <span class="text-warning fa fa-spinner">Pending</span>
+                        }
+                        else if (item.ReturnStatus == 1)
+                        {
+                            <span class="text-green">Approved by Manager</span>
+                        }
+                    }
+                </td>
+                <td class="text-center">
+
+                    @if (User.IsInRole("SalesAdmin") && item.ReturnStatus == 1)
+                    {
+                        @Html.ActionLink(" Approve", "ApproveBySalesAdmin", "Return", new { salesReturnId = item.SalesReturnId }, null) <span> | </span>
+                    }
+                    @Html.ActionLink(" Details", "ReturnDetails", "Return", new { salesReturnId = item.SalesReturnId }, new { @class = "fa fa-eye" })
+                </td>
+            </tr>
+                        }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="text-center">Reference</th>
+                <th class="text-center">Requisition By</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Notes</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">View</th>
+            </tr>
+        </tfoot>
+    </table>
+</section>
+@section Scripts
+{
+    <script>
+        $("#tbl_Sales_Return_list").DataTable();
+    </script>
+}
+

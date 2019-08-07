@@ -1,0 +1,123 @@
+﻿
+@using NBL.Models.ViewModels
+@*R&D Menu*@
+@{
+    var user = (ViewUser)Session["user"];
+}
+@if (!user.IsPasswordChangeRequired)
+{
+    <ul class="sidebar-menu" data-widget="tree">
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-tachometer"></i>
+                <span>Dashboard</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    @Html.ActionLink(" Dashboard-1 ", "Home", "Home", new { area = "ResearchAndDevelopment" }, new { @class = "fa fa-eye", style = "font-weight: bolder" })
+                </li>
+            </ul>
+        </li>
+        @Html.Partial("_CommonMenuPartialPage")
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>Products</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                @*<li>@Html.ActionLink(" Product Life Cycle ", "ProductLifeCycle", "Product", new {area = "ResearchAndDevelopment"}, new {@class = "fa fa-eye"})</li>*@
+                <li>@Html.ActionLink(" Product Status ", "ProductStatus", "Product", new { area = "ResearchAndDevelopment" }, new { @class = "fa fa-eye" })</li>
+            </ul>
+        </li>
+
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-product-hunt"></i>
+                <span>Return</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Pending List ", "PendingGeneralReqReturns", "RndManager", new { area = "ResearchAndDevelopment" }, new { @class = "fa fa-eye" })</li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-share"></i> <span>Reports</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-circle-o"></i> Sales
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-file"></i> Daily Reports</a></li>
+                        <li><a href="#"><i class="fa fa-file"></i>Monthly Reports</a></li>
+                        <li><a href="#"><i class="fa fa-file"></i> Yearly Reports</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-circle-o"></i> Clients
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-circle-o"></i> Level Two
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-circle-o"></i> Stocks
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-circle-o"></i> Level Two
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+
+}

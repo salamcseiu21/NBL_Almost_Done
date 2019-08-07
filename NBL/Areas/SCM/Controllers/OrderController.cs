@@ -86,7 +86,7 @@ namespace NBL.Areas.SCM.Controllers
             {
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
 
-                var orders = _iOrderManager.GetOrdersByCompanyIdAndStatus(companyId, Convert.ToInt32(OrderStatus.InvoicedOrApprovedbyAdmin)).ToList();
+                var orders = _iOrderManager.GetOrdersByCompanyIdAndStatus(companyId, Convert.ToInt32(OrderStatus.InvoicedOrApprovedbySalesAdmin)).ToList();
                 return View(orders);
             }
             catch (Exception exception)

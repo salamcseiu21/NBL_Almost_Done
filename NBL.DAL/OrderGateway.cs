@@ -1182,8 +1182,8 @@ ConnectionObj.Close();
                          NetAmounts=Convert.ToDecimal(reader["NetAmounts"]),
                          Status = Convert.ToInt32(reader["OrderStatus"]),
                          SysDate = Convert.ToDateTime(reader["SysDateTime"]),
-                         ApprovedByNsmDateTime = Convert.ToDateTime(reader["ApprovedByNsmDateTime"]),
-                         ApprovedByAdminDateTime = Convert.ToDateTime(reader["ApprovedByAdminDateTime"]),
+                         ApprovedByNsmDateTime = DBNull.Value.Equals(reader["ApprovedByNsmDateTime"])? (DateTime?)null: Convert.ToDateTime(reader["ApprovedByNsmDateTime"]),
+                         ApprovedByAdminDateTime = DBNull.Value.Equals(reader["ApprovedByAdminDateTime"]) ? (DateTime?)null : Convert.ToDateTime(reader["ApprovedByAdminDateTime"]),
                          AdminUserId = Convert.ToInt32(reader["AdminUserId"]),
                          NsmUserId = Convert.ToInt32(reader["NsmUserId"]),
                          Cancel = Convert.ToChar(reader["Cancel"]),
@@ -1219,6 +1219,148 @@ ConnectionObj.Close();
                 ConnectionObj.Close();
             }
         }
+
+        public ViewOrder GetOrderHistoryByOrderId(int orderId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetOrderHistoryByOrderId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@OrderId", orderId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                ViewOrder order = null;
+                while (reader.Read())
+                {
+                    order = new ViewOrder
+                    {
+                        OrderId = orderId,
+                        OrderDate = Convert.ToDateTime(reader["OrderDate"]),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        OrderSlipNo = reader["OrderSlipNo"].ToString(),
+                        OrederRef = reader["OrderRef"].ToString(),
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        User = new User
+                        {
+                            UserId = Convert.ToInt32(reader["UserId"]),
+                            UserName = reader["UserName"].ToString(),
+                            EmployeeName = reader["EmployeeName"].ToString()
+                        },
+                        BranchId = Convert.ToInt32(reader["Branchid"]),
+                        Amounts = Convert.ToDecimal(reader["Amounts"]),
+                        Vat = Convert.ToDecimal(reader["Vat"]),
+                        Discount = DBNull.Value.Equals(reader["Discount"])? default(decimal): Convert.ToDecimal(reader["Discount"]),
+                        SpecialDiscount = Convert.ToDecimal(reader["SpecialDiscount"]),
+                        NetAmounts = Convert.ToDecimal(reader["NetAmounts"]),
+                        Status = Convert.ToInt32(reader["OrderStatus"]),
+                        SysDate = Convert.ToDateTime(reader["SysDateTime"]),
+                        ApprovedByNsmDateTime = DBNull.Value.Equals(reader["ApprovedByNsmDateTime"]) ? (DateTime?)null : Convert.ToDateTime(reader["ApprovedByNsmDateTime"]),
+                        ApprovedByAdminDateTime = DBNull.Value.Equals(reader["ApprovedByAdminDateTime"]) ? (DateTime?)null : Convert.ToDateTime(reader["ApprovedByAdminDateTime"]),
+                        AdminUserId = DBNull.Value.Equals(reader["AdminUserId"]) ? (int?)null:  Convert.ToInt32(reader["AdminUserId"]),
+                        NsmUserId = DBNull.Value.Equals(reader["NsmUserId"]) ? (int?)null : Convert.ToInt32(reader["NsmUserId"]),
+                        Cancel = Convert.ToChar(reader["Cancel"]),
+                        CancelByUserId = DBNull.Value.Equals(reader["CancelByUserId"]) ? (int?)null : Convert.ToInt32(reader["CancelByUserId"]),
+                        CancelDateTime = DBNull.Value.Equals(reader["CancelDateTime"]) ? (DateTime?)null : Convert.ToDateTime(reader["CancelDateTime"]),
+                        ResonOfCancel =DBNull.Value.Equals(reader["ReasonOfCancel"])? null: reader["ReasonOfCancel"].ToString(),
+                        StatusDescription = reader["StatusDescription"].ToString(),
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        DeliveredByUserId = DBNull.Value.Equals(reader["DeliveredByUserId"]) ? (int?)null : Convert.ToInt32(reader["DeliveredByUserId"]),
+                        DeliveryDateTime = DBNull.Value.Equals(reader["DeliveredDateTime"]) ? (DateTime?)null : Convert.ToDateTime(reader["DeliveredDateTime"]),
+                        DistributionPointId = Convert.ToInt32(reader["DistributionCenterId"])
+
+                    };
+                }
+
+                reader.Close();
+                return order;
+            }
+            catch (SqlException sqlException)
+            {
+                Log.WriteErrorLog(sqlException);
+                throw new Exception("Could not Collect Order due to Db Exception", sqlException);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Order", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public List<ViewOrder> GetOrdersByBranchCompanyAndUserId(int branchId, int companyId, int userId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetOrdersByBranchCompanyAndUserId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                CommandObj.Parameters.AddWithValue("@UserId", userId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                var orders = new List<ViewOrder>();
+                while (reader.Read())
+                {
+
+                    orders.Add(new ViewOrder
+                    {
+                        OrderId = Convert.ToInt32(reader["OrderId"]),
+                        OrederRef = reader["OrderRef"].ToString(),
+                        OrderDate = Convert.ToDateTime(reader["OrderDate"]),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        OrderSlipNo = reader["OrderSlipNo"].ToString(),
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        BranchId = Convert.ToInt32(reader["Branchid"]),
+                        Amounts = Convert.ToDecimal(reader["Amounts"]),
+                        Vat = Convert.ToDecimal(reader["Vat"]),
+                        Discount = Convert.ToDecimal(reader["Discount"]),
+                        SpecialDiscount = Convert.ToDecimal(reader["SpecialDiscount"]),
+                        NetAmounts = Convert.ToDecimal(reader["NetAmounts"]),
+                        Status = Convert.ToInt32(reader["OrderStatus"]),
+                        SysDate = Convert.ToDateTime(reader["SysDateTime"]),
+                        ApprovedByNsmDateTime = Convert.ToDateTime(reader["ApprovedByNsmDateTime"]),
+                        ApprovedByAdminDateTime = Convert.ToDateTime(reader["ApprovedByAdminDateTime"]),
+                        AdminUserId = Convert.ToInt32(reader["AdminUserId"]),
+                        NsmUserId = Convert.ToInt32(reader["NsmUserId"]),
+                        Cancel = Convert.ToChar(reader["Cancel"]),
+                        CancelByUserId = Convert.ToInt32(reader["CancelByUserId"]),
+                        CancelDateTime = Convert.ToDateTime(reader["CancelDateTime"]),
+                        ResonOfCancel = reader["ReasonOfCancel"].ToString(),
+                        StatusDescription = reader["StatusDescription"].ToString(),
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
+                        DeliveryDateTime = Convert.ToDateTime(reader["DeliveredDateTime"]),
+                        Quantity = Convert.ToInt32(reader["Quantity"])
+
+                    });
+                }
+
+                reader.Close();
+                return orders;
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Orders due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Orders", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
         public int GetOrderMaxSerialNoByYear(int year)  
         {
             try
@@ -2287,6 +2429,7 @@ ConnectionObj.Close();
                 CommandObj.Parameters.AddWithValue("@BranchId", searchCriteria.BranchId);
                 CommandObj.Parameters.AddWithValue("@StartDate", searchCriteria.StartDate);
                 CommandObj.Parameters.AddWithValue("@EndDate", searchCriteria.EndDate);
+                CommandObj.Parameters.AddWithValue("@UserId", searchCriteria.UserId);
                 ConnectionObj.Open();
                 SqlDataReader reader = CommandObj.ExecuteReader();
                 var orders = new List<ViewOrder>();
@@ -2331,6 +2474,7 @@ ConnectionObj.Close();
             }
         }
 
+      
         public IEnumerable<ViewOrder> GetDelayedOrdersToNsmByBranchAndCompanyId(int branchId, int companyId)
         {
             try

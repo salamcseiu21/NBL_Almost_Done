@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using NBL.Areas.SuperAdmin.Models.ViewModels;
 using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.DAL;
@@ -10,6 +11,7 @@ using NBL.Models;
 using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Locations;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 
 namespace NBL.Areas.SuperAdmin.Controllers
@@ -141,6 +143,98 @@ namespace NBL.Areas.SuperAdmin.Controllers
             var roles = _iCommonManager.GetAllUserRoles().ToList();
             ViewBag.Roles = roles;
             return View(branches);
+        }
+
+        public ActionResult AssignRoleToUser()
+        {
+            try
+            {
+                var branches = _iBranchManager.GetAllBranches();
+                var roles = _iCommonManager.GetAllUserRoles();
+                ViewBag.BranchId = branches;
+                ViewBag.RoleId = roles;
+                return View();
+            }
+            catch (Exception exception)
+            {
+               Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public ActionResult AssignRoleToUser(AssignRoleModel model)
+        {
+            try
+            {
+                var anUser = (ViewUser)Session["user"];
+                model.AssignedByUserId = anUser.UserId;
+                model.ActiveStatus = 1;
+                bool result=_superAdminUserManager.AssignRoleToUser(model);
+                if (result)
+                {
+                    TempData["RoleAssignedMessage"] = "Role Assigned Successfully!";
+                }
+                else
+                {
+                    TempData["RoleAssignedMessage"] = "Failed to assign Role Assigned";
+                }
+                var branches = _iBranchManager.GetAllBranches();
+                var roles = _iCommonManager.GetAllUserRoles();
+                ViewBag.BranchId = branches;
+                ViewBag.RoleId = roles;
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        public ActionResult UnAssignRoleFromUser()
+        {
+            try
+            {
+                var branches = _iBranchManager.GetAllBranches();
+                var roles = _iCommonManager.GetAllUserRoles();
+                ViewBag.BranchId = branches;
+                ViewBag.RoleId = roles;
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public ActionResult UnAssignRoleFromUser(AssignRoleModel model)
+        {
+            try
+            {
+                var anUser = (ViewUser)Session["user"];
+                model.AssignedByUserId = anUser.UserId;
+                model.ActiveStatus = 0;
+                bool result = _superAdminUserManager.AssignRoleToUser(model);
+                if (result)
+                {
+                    TempData["RoleUnAssignedMessage"] = "Role UsAssigned Successfully!";
+                }
+                else
+                {
+                    TempData["RoleUnAssignedMessage"] = "Failed to UsAssign Role Assigned";
+                }
+                var branches = _iBranchManager.GetAllBranches();
+                var roles = _iCommonManager.GetAllUserRoles();
+                ViewBag.BranchId = branches;
+                ViewBag.RoleId = roles;
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public ActionResult ViewUser()
         {

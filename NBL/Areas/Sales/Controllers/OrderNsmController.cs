@@ -176,7 +176,7 @@ namespace NBL.Areas.Sales.Controllers
                 order.Discount = orderItems.Sum(n => n.Quantity * n.DiscountAmount);
                 order.Vat = orderItems.Sum(n => n.Vat * n.Quantity);
                 order.Amounts = orderItems.Sum(n => (n.UnitPrice+n.Vat )* n.Quantity);
-                order.Status = Convert.ToInt32(OrderStatus.ApprovedbyNsm);
+                order.Status = Convert.ToInt32(OrderStatus.ApprovedbySalesManager);
                 order.SpecialDiscount = dicount;
                 order.ApprovedByNsmDateTime = DateTime.Now;
                 //order.DistributionPointId = Convert.ToInt32(collection["DistributionPointId"]);
@@ -281,7 +281,7 @@ namespace NBL.Areas.Sales.Controllers
                 var order = _iOrderManager.GetOrderByOrderId(orderId);
                 order.CancelByUserId = user.UserId;
                 order.ResonOfCancel = collection["Reason"];
-                order.Status = Convert.ToInt32(OrderStatus.CancelledbyNsm);
+                order.Status = Convert.ToInt32(OrderStatus.CancelledbySalesManager);
                 var status = _iOrderManager.CancelOrder(order);
                 return status ? RedirectToAction("PendingOrder") : RedirectToAction("Cancel", new { id = orderId });
             }
@@ -300,7 +300,7 @@ namespace NBL.Areas.Sales.Controllers
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
                 var user = (ViewUser)Session["user"];
-                var orders = _iOrderManager.GetOrdersByBranchCompanyAndNsmUserId(branchId, companyId, user.UserId).ToList().OrderByDescending(n => n.OrderId).ToList().FindAll(n => n.Status < Convert.ToInt32(OrderStatus.InvoicedOrApprovedbyAdmin)).ToList();
+                var orders = _iOrderManager.GetOrdersByBranchCompanyAndNsmUserId(branchId, companyId, user.UserId).ToList().OrderByDescending(n => n.OrderId).ToList().FindAll(n => n.Status < Convert.ToInt32(OrderStatus.InvoicedOrApprovedbySalesAdmin)).ToList();
                 return View(orders);
             }
             catch (Exception exception)
