@@ -38,6 +38,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Change the Order status", exception);
             }
             finally
@@ -88,10 +89,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders", exception);
             }
             finally
@@ -132,10 +135,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Invoiced Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Invoiced Orders", exception);
             }
             finally
@@ -182,10 +187,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders details due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered details Orders", exception);
             }
             finally
@@ -234,10 +241,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders", exception);
             }
             finally
@@ -315,10 +324,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders by branch and Company Id", exception);
             }
             finally
@@ -371,10 +382,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders by branch,Company and User Id", exception);
             }
             finally
@@ -418,10 +431,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Order by Invoice ref", exception);
             }
             finally
@@ -463,10 +478,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered products due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered products Orders", exception);
             }
             finally
@@ -527,10 +544,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivery ref due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivery ref", exception);
             }
             finally
@@ -599,10 +618,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivery details due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivery details", exception);
             }
             finally
@@ -683,10 +704,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders by branch,Company and User Id", exception);
             }
             finally
@@ -735,10 +758,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders details due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered details Orders", exception);
             }
             finally
@@ -781,10 +806,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered products due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered products Orders", exception);
             }
             finally
@@ -870,10 +897,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders by branch,Company and User Id", exception);
             }
             finally
@@ -927,10 +956,12 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders by deistribution point and Company", exception);
             }
             finally
@@ -1011,11 +1042,98 @@ namespace NBL.DAL
             }
             catch (SqlException exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect general requisition Delivery  details due to Db Exception", exception);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect general requisition Delivery details", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<Delivery> GetAllDeliveredOrdersByBranchAndCompany(int branchId, int companyId, int orderByUserId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetAllDeliveredOrdersByBranchAndCompany";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                CommandObj.Parameters.AddWithValue("@OrderByUserId", orderByUserId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<Delivery> orders = new List<Delivery>();
+                while (reader.Read())
+                {
+                    Delivery aModel = new Delivery
+                    {
+                        DeliveryId = Convert.ToInt32(reader["DeliveryId"]),
+                        ToBranchId = Convert.ToInt32(reader["ToBranchId"]),
+                        FromBranchId = Convert.ToInt32(reader["ToBranchId"]),
+                        CompanyId = companyId,
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
+                        Status = Convert.ToInt32(reader["Status"]),
+                        SysDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        Transport = new Transport
+                        {
+                            DriverName = reader["DriverName"].ToString(),
+                            DriverPhone = reader["DriverPhone"].ToString(),
+                            Transportation = reader["Transportation"].ToString(),
+                            TransportationCost = Convert.ToDecimal(reader["TransportationCost"]),
+                            VehicleNo = reader["VehicleNo"].ToString()
+                        }
+                        ,
+                        Client = new Client
+                        {
+                            ClientName = reader["Name"].ToString(),
+                            CommercialName = reader["CommercialName"].ToString(),
+                            Address = reader["Address"].ToString(),
+                            Phone = reader["Phone"].ToString(),
+                            AlternatePhone = DBNull.Value.Equals(reader["AltPhone"]) ? null : reader["AltPhone"].ToString(),
+                            Email = DBNull.Value.Equals(reader["Email"]) ? null : reader["Email"].ToString(),
+                            ClientImage = DBNull.Value.Equals(reader["ClientImage"]) ? null : reader["ClientImage"].ToString(),
+                            ClientSignature = DBNull.Value.Equals(reader["ClientSignature"]) ? null : reader["ClientSignature"].ToString(),
+                            NationalIdNo = DBNull.Value.Equals(reader["NationalIdNo"]) ? null : reader["NationalIdNo"].ToString(),
+                            Active = reader["Active"].ToString(),
+                            CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
+                            MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"]),
+                            TerritoryId = Convert.ToInt32(reader["TerritoryId"]),
+                            RegionId = Convert.ToInt32(reader["RegionId"]),
+                            SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                            BranchId = Convert.ToInt32(reader["BranchId"]),
+                            Outstanding = DBNull.Value.Equals(reader["Outstanding"]) ? default(decimal) : Convert.ToDecimal(reader["Outstanding"]),
+                            ClientType = new ClientType
+                            {
+                                ClientTypeName = reader["ClientTypeName"].ToString(),
+                                ClientTypeId = Convert.ToInt32(reader["ClientTypeId"])
+                            }
+                        }
+                    };
+                    orders.Add(aModel);
+                }
+                reader.Close();
+                return orders;
+
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Delivered Orders due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Delivered Orders by branch,Company and order by UserId", exception);
             }
             finally
             {

@@ -111,11 +111,6 @@ namespace NBL.Areas.Sales.Controllers
         [Authorize(Roles = "DistributionManager")]
         public ActionResult OrderListByDate()
         {
-           
-            //int branchId = Convert.ToInt32(Session["BranchId"]);
-            //int companyId = Convert.ToInt32(Session["CompanyId"]);
-            //var user = (ViewUser)Session["user"];
-            //var orders =_iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(branchId,companyId,DateTime.Now.AddDays(-1),user.UserId);
             return View();
         }
         public ActionResult OrderSummary()
@@ -507,13 +502,18 @@ namespace NBL.Areas.Sales.Controllers
             int branchId = Convert.ToInt32(Session["BranchId"]);
             int companyId = Convert.ToInt32(Session["CompanyId"]);
             var user = (ViewUser) Session["user"];
-            List<Delivery> orders=new List<Delivery>();
+            List<Delivery> orders;
             if(user.Roles=="DistributionManager")
             {
                 orders = _iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyAndUserId(branchId, companyId, user.UserId).ToList();
             }
+            else if (user.Roles.Equals("SalesExecutive"))
+            {
+                orders = _iDeliveryManager.GetAllDeliveredOrdersByBranchAndCompany(branchId, companyId, user.UserId);
+            }
             else
             {
+                
                 orders = _iDeliveryManager.GetAllDeliveredOrdersByBranchAndCompanyId(branchId, companyId).ToList();
             }
             return View(orders);

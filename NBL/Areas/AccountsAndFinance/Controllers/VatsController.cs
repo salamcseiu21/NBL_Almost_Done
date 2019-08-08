@@ -21,19 +21,19 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         [HttpGet]
         public ActionResult AddVat()
         {
-            var products = _iProductManager.GetAllProducts();
-            foreach (var product in products)
-            {
-                var model = new Vat
-                {
-                    VatAmount = 250,
-                    UpdateByUserId = 6,
-                    UpdateDate = DateTime.Now,
-                    ProductId = product.ProductId
-                };
-                _iVatManager.Add(model);
+            //var products = _iProductManager.GetAllProducts();
+            //foreach (var product in products)
+            //{
+            //    var model = new Vat
+            //    {
+            //        VatAmount = 250,
+            //        UpdateByUserId = 6,
+            //        UpdateDate = DateTime.Now,
+            //        ProductId = product.ProductId
+            //    };
+            //    _iVatManager.Add(model);
 
-            }
+            //}
 
             return View();
         }

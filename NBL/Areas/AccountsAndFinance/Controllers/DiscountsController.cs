@@ -25,27 +25,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
      
         public ActionResult AddDiscount()
         {
-            ViewBag.ClientTypes = _iCommonManager.GetAllClientType().ToList();
-            foreach (ClientType clientType in _iCommonManager.GetAllClientType())
-            {
-                foreach (var product in _iProductManager.GetAllProducts())
-                {
-                    Discount model = new Discount
-                    {
-                        UpdateByUserId = 6,
-                        DiscountPercent = 6,
-                        ClientTypeId = clientType.ClientTypeId,
-                        UpdateDate = DateTime.Now,
-                        ProductId =product.ProductId,
-
-                    };
-
-                    _iDiscountManager.Add(model);
-
-                }
-
-            }
-           
+             ViewBag.ClientTypes = _iCommonManager.GetAllClientType().ToList();
             return View();
         }
         [HttpPost]

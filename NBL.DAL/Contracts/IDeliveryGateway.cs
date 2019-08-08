@@ -32,6 +32,7 @@ namespace NBL.DAL.Contracts
         IEnumerable<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(int branchId, int companyId, DateTime date, int userId);
         IEnumerable<Delivery> GetAllDeliveredOrdersByDistributionPointAndCompanyId(int branchId, int companyId);
         ICollection<ViewProduct> GetDeliveredProductListByTransactionRef(string deliveryRef);
-        IEnumerable<ViewDeliveredOrderModel> GetDeliveredGeneralReqById(long deliveryId); 
+        IEnumerable<ViewDeliveredOrderModel> GetDeliveredGeneralReqById(long deliveryId);
+        ICollection<Delivery> GetAllDeliveredOrdersByBranchAndCompany(int branchId, int companyId, int orderByUserId);  
     }
 }

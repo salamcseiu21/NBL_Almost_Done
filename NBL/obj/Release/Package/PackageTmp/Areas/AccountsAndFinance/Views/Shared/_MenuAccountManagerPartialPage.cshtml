@@ -2,6 +2,7 @@
 @*Account Executive Menu *@
 @{
     var user = (ViewUser)Session["user"];
+    var branchId = Convert.ToInt32(Session["BranchId"]);
 }
 @if (!user.IsPasswordChangeRequired)
 {
@@ -18,8 +19,12 @@
                 <li>@Html.ActionLink(" Active Receivable", "ActiveReceivable", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-file", style = "font-weight: bolder;"})</li>
                 <li>@Html.ActionLink(" Vouchers", "Vouchers", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-file", style = "font-weight: bolder;"})</li>
                 <li>@Html.ActionLink(" Journal Vouchers", "ViewJournal", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-file", style = "font-weight: bolder;"})</li>
-                <li>@Html.ActionLink(" Approve Vats", "Vats", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-file", style = "font-weight: bolder;"})</li>
-                <li>@Html.ActionLink(" Approve Discounts", "Discounts", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-file", style = "font-weight: bolder;"})</li>
+                @if (branchId == 9)
+                {
+                    <li>@Html.ActionLink(" Approve Vats", "Vats", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-file", style = "font-weight: bolder;"})</li>
+                    <li>@Html.ActionLink(" Approve Discounts", "Discounts", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-file", style = "font-weight: bolder;"})</li>
+                }
+               
             </ul>
         </li>
         <li class="treeview">

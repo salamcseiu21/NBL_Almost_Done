@@ -127,6 +127,12 @@ namespace NBL.BLL
         {
             return _iDeliveryGateway.GetDeliveredGeneralReqById(deliveryId);
         }
+        //--------------------------- Get Delivered order by branch ,company 
+        public List<Delivery> GetAllDeliveredOrdersByBranchAndCompany(int branchId, int companyId, int orderByUserId)
+        {
+            var deliveredOrders =_iDeliveryGateway.GetAllDeliveredOrdersByBranchAndCompany(branchId, companyId, orderByUserId);
+            return deliveredOrders.ToList();
+        }
 
         public ICollection<ViewDeliveredOrderModel> GetDeliveredOrderByClientId(int clientId)
         {

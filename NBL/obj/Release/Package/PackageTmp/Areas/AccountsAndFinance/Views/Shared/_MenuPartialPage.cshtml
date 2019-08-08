@@ -3,6 +3,7 @@
 @*Accounts Menu *@
 @{
     var user = (ViewUser)Session["user"];
+    var branchId = Convert.ToInt32(Session["BranchId"]);
 }
 @if (!user.IsPasswordChangeRequired)
 {
@@ -25,33 +26,38 @@
                 @*<li>@Html.ActionLink(" Payable", "Payable", "Account", new { area = "Accounts" }, new { @class = "fa fa-file", style = "font-weight: bolder;" })</li>*@
             </ul>
         </li>
-        <li class="treeview">
-            <a href="#">
-                <i class="fa fa-plus"></i> <span>Vats-Discounts</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-            </a>
-            <ul class="treeview-menu">
-                <li>@Html.ActionLink(" Add New Vat", "AddVat", "Vats", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
-                <li>@Html.ActionLink(" Add New Discount", "AddDiscount", "Discounts", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
-            </ul>
-        </li>
+        @if (branchId == 9)
+        {
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-plus"></i> <span>Vats-Discounts</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li>@Html.ActionLink(" Add New Vat", "AddVat", "Vats", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
+                    <li>@Html.ActionLink(" Add New Discount", "AddDiscount", "Discounts", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
+                </ul>
+            </li>
 
-        <li class="treeview">
-            <a href="#">
-                <i class="fa fa-plus"></i> <span>Products</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-            </a>
-            <ul class="treeview-menu">
-                <li>@Html.ActionLink(" Add Product", "AddProduct", "Product", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
-                <li>@Html.ActionLink(" Add Product Details", "AddProductDetails", "Product", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
-                <li>@Html.ActionLink(" Products", "ViewProduct", "ShowInfo", new {area = "CommonArea"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
-            </ul>
-        </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-plus"></i> <span>Products</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li>@Html.ActionLink(" Add Product", "AddProduct", "Product", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
+                    <li>@Html.ActionLink(" Add Product Details", "AddProductDetails", "Product", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
+                    <li>@Html.ActionLink(" Products", "ViewProduct", "ShowInfo", new {area = "CommonArea"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
+                </ul>
+            </li>
 
+            
+        }
+     
         <li class="treeview">
             <a href="#">
                 <i class="fa fa-book"></i> <span>Return/Replace</span>

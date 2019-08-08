@@ -509,7 +509,6 @@ namespace NBL.Areas.Sales.Controllers
                 var aproverActionId = Convert.ToInt32(collection["ApprovarActionId"]);
                 var returnLessAmount = Convert.ToDecimal(collection["ReturnLessAmount"]);
                 List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
-
                 var returnById = _iProductReturnManager.GetSalesReturnBySalesReturnId(salesReturnId);
                 returnById.LastApproverDatetime = DateTime.Now;
                 returnById.LastApproverRoleId = returnById.CurrentApproverRoleId;
