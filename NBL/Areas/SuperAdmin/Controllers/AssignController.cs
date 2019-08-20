@@ -242,7 +242,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
             return View(users);
 
         }
-
+      
 
         public ActionResult UnAssignDistrict()
         {

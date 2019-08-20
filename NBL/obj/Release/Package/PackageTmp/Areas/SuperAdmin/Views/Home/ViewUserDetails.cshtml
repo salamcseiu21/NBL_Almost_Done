@@ -1,14 +1,16 @@
 ﻿@model NBL.Models.EntityModels.Identities.User
 @using NBL.Models
 @using NBL.Models.EntityModels.Branches
+@using NBL.Models.EntityModels.Identities
+@using NBL.Models.EntityModels.Securities
 
 @{
     ViewBag.Title = "User Details";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
-    IEnumerable<Branch> branches = null;
-    if(ViewBag.BranchList!=null)
+    IEnumerable<User> roles = null;
+    if(ViewBag.Roles != null)
     {
-        branches = (IEnumerable<Branch>)ViewBag.BranchList;
+        roles = (IEnumerable<User>)ViewBag.Roles;
     }
 }
 
@@ -16,35 +18,35 @@
         <h3 class="text-center text-green headingStyle">User Information</h3>
        <table class="table table-bordered table-striped">
            <tr>
-               <td><label>Employee Name: </label> <label>@Model.EmployeeName</label></td>
-               <td><label>User Name: </label><label>@Model.UserName</label></td>
-               <td><label>Role: </label><label>@Model.Roles</label></td>
+               <td><label>Employee Name: </label> <label>&nbsp; @Model.EmployeeName</label></td>
+               <td><label>User Name: </label><label>&nbsp; @Model.UserName</label></td>
+               <td><label>Role:  </label>&nbsp; <label>@StringCipher.Decrypt(Model.Password, "salam_cse_10_R")</label></td>
            </tr>
-           <tr>
+           @*<tr>
                <td><label>Active Status: </label> <label>@Model.ActiveStaus</label></td>
                <td><label>Block Status: </label><label>@Model.BlockStatus</label></td>
                <td><label>Joining Date: </label><label>@Model.JoiningDate</label></td>
-           </tr>
+           </tr>*@
        </table>
 
         <table id="table_assigned_branch_list" class="table table-bordered" style="border:1px solid black">
-            <caption class="text-center text-green" style="font-weight:bold;">Assigned Branch List</caption>
+            <caption class="text-center text-green" style="font-weight:bold;">Assigned Branch and Role List</caption>
 
             <thead>
                 <tr>
                     <th>Branch Name</th>
-                    <th>Address</th>
+                    <th>Roles</th>
                 </tr>
             </thead>
 
             <tbody>
 
-                @foreach (var item in branches)
+                @foreach (var item in roles)
             {
                     <tr>
 
                         <td>@item.BranchName</td>
-                        <td>@item.BranchAddress</td>
+                        <td>@item.Roles</td>
                     </tr>
                 }
 
@@ -52,7 +54,7 @@
             <tfoot>
                 <tr>
                     <th>Branch Name</th>
-                    <th>Address</th>
+                    <th>Roles</th>
                 </tr>
             </tfoot>
         </table>

@@ -120,5 +120,51 @@ namespace NBL.Areas.SuperAdmin.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public ICollection<User> GetAllUserWithRoles()
+        {
+            try
+            {
+                CommandObj.CommandText = "spGetAllUserWithRoles";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<User> users = new List<User>();
+                while (reader.Read())
+                {
+                    users.Add(new User
+                    {
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        ActiveStaus = Convert.ToInt32(reader["ActiveStatus"]),
+                        EmployeeId = DBNull.Value.Equals(reader["EmployeeId"]) ? 0 : Convert.ToInt32(reader["EmployeeId"]),
+                        UserName = reader["UserName"].ToString(),
+                        BlockStatus = Convert.ToInt32(reader["BlockStatus"]),
+                        Roles = reader["RoleName"].ToString(),
+                        Password = reader["UserPassword"].ToString(),
+                        EmployeeName = DBNull.Value.Equals(reader["EmployeeName"]) ? null : reader["EmployeeName"].ToString(),
+                        Phone = DBNull.Value.Equals(reader["Phone"]) ? null : reader["Phone"].ToString(),
+                        Email = DBNull.Value.Equals(reader["EmailAddress"]) ? null : reader["EmailAddress"].ToString(),
+                        UserRoleId = Convert.ToInt32(reader["RoleId"]),
+                        PresentAddress = DBNull.Value.Equals(reader["PresentAddress"]) ? null : reader["PresentAddress"].ToString(),
+                        JoiningDate = Convert.ToDateTime(reader["UserJoiningDate"]),
+                        BranchName = reader["BranchName"].ToString()
+
+                    });
+                }
+                reader.Close();
+                return users;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect User informations", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }

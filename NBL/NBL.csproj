@@ -8184,6 +8184,7 @@
     <Content Include="Areas\Sales\Views\Return\GeneralRequisitionReturn.cshtml" />
     <Content Include="Areas\Sales\Views\Return\PendingGeneralReturnList.cshtml" />
     <Content Include="Areas\SuperAdmin\Views\Home\CollectionList.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Home\ChangePassword.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />

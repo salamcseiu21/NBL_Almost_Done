@@ -49,5 +49,10 @@ namespace NBL.Areas.SuperAdmin.BLL
             int rowAffected = gateway.AssignRoleToUser(model);
             return rowAffected > 0;
         }
+
+        public ICollection<User> GetAllUserWithRoles()
+        {
+            return gateway.GetAllUserWithRoles();
+        }
     }
 }

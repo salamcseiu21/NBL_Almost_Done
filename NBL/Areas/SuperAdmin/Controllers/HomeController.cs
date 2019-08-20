@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
+using System.Net.Mail;
 using NBL.Areas.SuperAdmin.BLL;
 using System.Web.Helpers;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
@@ -91,8 +92,9 @@ namespace NBL.Areas.SuperAdmin.Controllers
         public ActionResult ViewUserDetails(int userId)
         {
             var userById = _userManager.GetAll.ToList().Find(n => n.UserId == userId);
-            var branches = _superAdminUserManager.GetAssignedBranchByUserId(userId);
-            ViewBag.BranchList = branches;
+            //var branches = _superAdminUserManager.GetAssignedBranchByUserId(userId);
+            var usersRoles= _superAdminUserManager.GetAllUserWithRoles().ToList().FindAll(n=>n.UserId==userId).ToList(); 
+            ViewBag.Roles = usersRoles;
             return View(userById);
         }
         public PartialViewResult AllOrders()
@@ -411,6 +413,47 @@ namespace NBL.Areas.SuperAdmin.Controllers
             searchCriteria.UserId = 0;
             IEnumerable<ChequeDetails> collections = _iAccountsManager.GetAllReceivableCheque(searchCriteria);
             return PartialView("_ViewCollectionListPartialPage", collections);
+        }
+
+
+        //------------------ Change password------------------------
+        public ActionResult ChangePassword()
+        {
+            ViewBag.UserId = new SelectList(_userManager.GetAll, "UserId", "UserName");
+            //var user = _userManager.GetUserInformationByUserId(id);
+            //user.Password = StringCipher.Decrypt(user.Password, "salam_cse_10_R");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(User model)
+        {
+            var user = _userManager.GetUserInformationByUserId(model.UserId);
+            var emp = _iEmployeeManager.GetEmployeeById(user.EmployeeId);
+            model.Password = "Nbl_123";
+
+            model.Password = StringCipher.Encrypt(model.Password, "salam_cse_10_R");
+            model.PasswordChangeRequiredWithin = 1;
+            bool result = _userManager.UpdatePassword(model);
+            if (result)
+            {
+                //---------Send Mail ----------------
+                var body = $"Dear {emp.EmployeeName}, your account password had been updated successfully!";
+                var subject = $"Password Changed at {DateTime.Now}";
+                var message = new MailMessage();
+                message.To.Add(new MailAddress(emp.Email));  // replace with valid value 
+                message.CC.Add("salam@navana.com");
+                message.Subject = subject;
+                message.Body = string.Format(body);
+                message.IsBodyHtml = true;
+                //message.Attachments.Add(new Attachment("E:/API/NBL/NBL/Images/bg1.jpg"));
+                using (var smtp = new SmtpClient())
+                {
+                    smtp.Send(message);
+                }
+                //------------End Send Mail-------------
+            }
+            return RedirectToAction("ChangePassword");
         }
     }
 

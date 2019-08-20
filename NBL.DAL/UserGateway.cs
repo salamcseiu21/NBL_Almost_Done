@@ -348,6 +348,7 @@ namespace NBL.DAL
                 ConnectionObj.Open();
                 CommandObj.Parameters.AddWithValue("@Password", model.Password);
                 CommandObj.Parameters.AddWithValue("@UserId", model.UserId);
+                CommandObj.Parameters.AddWithValue("@ChangeWithin", model.PasswordChangeRequiredWithin);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();

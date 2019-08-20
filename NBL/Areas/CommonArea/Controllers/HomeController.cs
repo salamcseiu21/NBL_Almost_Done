@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
@@ -24,11 +25,13 @@ namespace NBL.Areas.CommonArea.Controllers
         private readonly ICommonManager _iCommonManager;
         private readonly IProductManager _iProductManager;
         private readonly IBranchManager _iBranchManager;
-        public HomeController(ICommonManager iCommonManager, IProductManager iProductManager,IBranchManager iBranchManager)
+        private readonly IEmployeeManager _iEmployeeManager;
+        public HomeController(ICommonManager iCommonManager, IProductManager iProductManager,IBranchManager iBranchManager,IEmployeeManager iEmployeeManager)
         {
             _iCommonManager = iCommonManager;
             _iProductManager = iProductManager;
             _iBranchManager = iBranchManager;
+            _iEmployeeManager = iEmployeeManager;
         }
         // GET: CommonArea/Home
         public ActionResult Home()
@@ -358,10 +361,31 @@ namespace NBL.Areas.CommonArea.Controllers
         [HttpPost]
         public ActionResult ChangePassword(User model)
         {
+           var user = _userManager.GetUserInformationByUserId(model.UserId);
+           var emp = _iEmployeeManager.GetEmployeeById(user.EmployeeId);
             model.Password = StringCipher.Encrypt(model.Password, "salam_cse_10_R");
+            model.PasswordChangeRequiredWithin = 30;
             bool result = _userManager.UpdatePassword(model);
             if (result)
-                return RedirectToAction("LogIn","Login",new {area=""});
+            {
+                //---------Send Mail ----------------
+                var body = $"Dear {emp.EmployeeName}, your account password had been updated successfully!";
+                var subject = $"Password Changed at {DateTime.Now}";
+                var message = new MailMessage();
+                message.To.Add(new MailAddress(emp.Email));  // replace with valid value 
+                message.CC.Add("salam@navana.com");
+                message.Subject = subject;
+                message.Body = string.Format(body);
+                message.IsBodyHtml = true;
+                //message.Attachments.Add(new Attachment("E:/API/NBL/NBL/Images/bg1.jpg"));
+                using (var smtp = new SmtpClient())
+                {
+                    smtp.Send(message);
+                }
+                //------------End Send Mail-------------
+                return RedirectToAction("LogIn", "Login", new { area = "" });
+            }
+                
             return RedirectToAction("ChangePassword");
         }
     }

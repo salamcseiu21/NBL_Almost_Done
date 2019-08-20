@@ -27,4 +27,22 @@
     <LogDateTime>2019-08-07T14:20:35.2596392+06:00</LogDateTime>
     <CustomeMessage>Input string was not in a correct format.</CustomeMessage>
   </Error>
+  <Error LogId="19-Aug-20c8e2db44-e23f-4553-821a-1f75e864d6e0">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.Areas.SuperAdmin.DAL.SuperAdminUserGateway.GetAllUserWithRoles() in E:\API\NBL\NBL\Areas\SuperAdmin\DAL\SuperAdminUserGateway.cs:line 135</LogMessage>
+    <LogDateTime>2019-08-20T14:53:20.8709078+06:00</LogDateTime>
+    <CustomeMessage>Phone</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-20e93263f1-63f3-4a0e-8979-70c211badd10">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.Areas.SuperAdmin.DAL.SuperAdminUserGateway.GetAllUserWithRoles() in E:\API\NBL\NBL\Areas\SuperAdmin\DAL\SuperAdminUserGateway.cs:line 135</LogMessage>
+    <LogDateTime>2019-08-20T14:54:27.1406778+06:00</LogDateTime>
+    <CustomeMessage>UserJoiningDate</CustomeMessage>
+  </Error>
 </Errors>
