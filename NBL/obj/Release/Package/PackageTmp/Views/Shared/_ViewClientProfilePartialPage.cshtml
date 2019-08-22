@@ -1,4 +1,5 @@
 ﻿
+@using NBL.Models.Enums
 @model NBL.Models.ViewModels.ViewClient
 @{
     ViewBag.Title = "Client Profile";
@@ -96,24 +97,7 @@
                                         </td>
                                         <td class="text-center">
 
-                                            @{ if (item.Status == 4)
-                                               {
-                                                   <label class="text-green"><i class="fa fa-check-circle-o"></i> Deliverd</label>
-                                                }
-                                                if (item.Status == 3)
-                                                {
-                                                    <label class="text-danger">Partially Delivered</label>
-                                                }
-                                                if (item.Status == 2)
-                                                {
-                                                    <label class="text-success">Approved by Admin</label>
-                                                }
-                                                if (item.Status == 6 || item.Status == 5 || item.Status == 7)
-                                                {
-                                                    <label class="text-danger">Cancelled</label>
-                                                }
-                                                
-                                            }
+                                            @Enum.GetName(typeof(OrderStatus), item.Status)
                                         </td>
                                         <td class="text-center">
                                             <button type="button" value="@item.OrderId" onclick="viewDetails(this)" class="btn btn-success btn-sm"><i class="fa fa-eye"></i>&nbsp;Details</button> 

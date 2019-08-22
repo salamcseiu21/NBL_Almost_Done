@@ -1,0 +1,148 @@
+﻿@model NBL.Models.ViewModels.Returns.ViewReturnModel
+@{
+    ViewBag.Title = "Receive General Return Product";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var returnModel = Model.ReturnModel;
+    var models = Model.ReturnDetailses;
+}
+
+<section class="content">
+
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3" style="border: 1px solid;">
+
+            <div class="form-horizontal">
+                <h2 class="text-center">Scan Product</h2>
+                <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
+                </div>
+                <div class="form-group">
+                    <label for="ProductCode" class="control-label col-md-2"></label>
+                    <div class="col-md-10">
+                        <input type="hidden" id="SalesReturnId" name="SalesReturnId" value="@returnModel.SalesReturnId" />
+                        <input id="total_quantity_Receive" type="hidden" value="@models.Sum(n=>n.Quantity)" />
+                        <input type="text" id="ProductCode" name="ProductCode" class="form-control" placeholder="Always keep pointer here..!!" autofocus onchange="SaveScannedBarcodeToTextFile(this)" />
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+
+                        <button type="button" class="btn btn-info" onclick="ReceiveProductToBranch(this)" disabled="disabled" id="btnReceive">Receive</button>
+                        @Html.ActionLink("Back", "PendingGeneralReturnList", "Return", null, new { @class = "btn btn-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding: 15px; border: 1px solid;margin: 10px">
+        <div class="col-md-6">
+            <div id="receivable_list"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="scanned_Products"></div>
+        </div>
+        <hr />
+    </div>
+
+</section>
+
+@section Scripts
+{
+
+    @*<script src="@Url.Content("~/Areas/Sales/Scripts/ReceiveProduct/receiveProduct.js")"></script>*@
+    <script>
+        $(document).ready(function () {
+
+            loadAllReceivableProducts();
+            loadScannedProducts();
+
+        });
+
+        function SaveScannedBarcodeToTextFile(btnClicked) {
+            // var $form = $(btnClicked).parents('form');
+            var code = $("#ProductCode").val();
+            var salesReturnId = $("#SalesReturnId").val();
+            $.ajax({
+                type: "POST",
+                url: RootUrl + 'Sales/return/SaveScannedBarcodeToTextFile',
+                data: { barcode: code, salesReturnId: salesReturnId },
+                error: function (xhr, status, error) {
+                    alert(error);
+                },
+                success: function (response) {
+                    var result = response.Message;
+                    //alert("Saved Successfully");
+                    $('#message').html(response).fadeIn('slow');
+                    $('#message').html(result).fadeIn('slow'); //also show a success message
+                    $('#message').delay(700).fadeOut('slow');
+                    loadScannedProducts();
+                    $('#ProductCode').val("");
+                }
+            });
+        }
+
+        function loadAllReceivableProducts() {
+            var salesReturnId = $("#SalesReturnId").val();
+            var json = { salesReturnId: salesReturnId };
+
+            $.ajax({
+                type: 'POST',
+                url: RootUrl + "Sales/Return/LoadReceiveableProduct",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("#receivable_list").html(data);
+                }
+            });
+        }
+
+        function ReceiveProductToBranch(btnClick) {
+            var salesReturnId = $("#SalesReturnId").val();
+            if (confirm("Are you sure to Save?")) {
+                //$("#scanProductBarcodeForm").submit();
+                $.ajax({
+                    type: "Post",
+                    url: RootUrl + 'Sales/return/Receive',
+                    data: { salesReturnId: salesReturnId },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    },
+                    success: function (response) {
+                        loadAllReceivableProducts();
+                        loadScannedProducts();
+                        window.location.href = RootUrl + "sales/return/PendingReturnList";
+                    }
+                });
+
+            } else {
+                return false;// if it's a link to prevent post
+            }
+        }
+
+        function loadScannedProducts() {
+
+
+            var salesReturnId = $("#SalesReturnId").val();
+            var json = { salesReturnId: salesReturnId };
+            $.ajax({
+                type: 'POST',
+                url: RootUrl + "sales/return/LoadScannecdProduct",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("#scanned_Products").html(data);
+
+                    var trqty = $("#total_quantity_Receive").val();
+                    var tsqty = $("#total_Scanned_qty").val();
+                    if (trqty === tsqty) {
+                        $("#btnReceive").removeAttr('disabled');
+
+                    }
+                }
+            });
+
+
+        }
+    </script>
+}

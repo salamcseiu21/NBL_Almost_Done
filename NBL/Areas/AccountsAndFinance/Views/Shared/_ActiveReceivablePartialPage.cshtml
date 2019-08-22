@@ -1,4 +1,6 @@
-﻿
+﻿@{
+    var i = 0;
+}
 @model IEnumerable<NBL.Models.ChequeDetails>
 <h3 class="text-center text-green headingStyle">Active Receivable</h3>
 <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
@@ -8,13 +10,17 @@
 
     <thead>
         <tr>
+            <th>S.N</th>
             <th>Client Name</th>
+            <th>Branch Name</th>
             <th>Source Bank Name</th>
             <th>Account No</th>
             <th>Cheque No</th>
             <th>Cheque Date</th>
+            <th>Entry Date</th>
             <th class="text-right">Amount (&#2547;) </th>
             <th class="text-center">Remarks </th>
+            <th class="text-center">Entry By </th>
             <th class="text-center">Action</th>
         </tr>
     </thead>
@@ -22,16 +28,20 @@
     <tbody>
 
         @foreach (var item in Model)
-            {
-                
+        {
+            i++;
             <tr>
+                <td>@i</td>
                 <td>@item.Client.ClientName</td>
+                <td>@item.CollectionByBranch</td>
                 <td>@item.SourceBankName</td>
                 <td>@item.BankAccountNo</td>
                 <td>@item.ChequeNo</td>
                 <td>@item.ChequeDate.Date.ToString("dd-MMMM-yyyy")</td>
+                <td>@item.SysDateTime.Date.ToString("dd-MMMM-yyyy")</td>
                 <td class="text-right">@item.ChequeAmount.ToString("N2")</td>
                 <td class="text-center">@item.Remarks</td>
+                <td class="text-center">@item.EntryByEmp</td>
                 <td class="text-center">
                     @{
                         if (item.PaymentTypeId == 4)
@@ -63,17 +73,21 @@
 
     </tbody>
     <tfoot>
-        <tr>
-            <th>Client Name</th>
-            <th>Source Bank Name</th>
-            <th>Account No</th>
-            <th>Cheque No</th>
-            <th>Cheque Date</th>
-            <th class="text-right">Amount (&#2547;) </th>
-            <th class="text-center">Remarks </th>
-            <th class="text-center">Action</th>
+    <tr>
+        <th>S.N</th>
+        <th>Client Name</th>
+        <th>Branch Name</th>
+        <th>Source Bank Name</th>
+        <th>Account No</th>
+        <th>Cheque No</th>
+        <th>Cheque Date</th>
+        <th>Entry Date</th>
+        <th class="text-right">Amount (&#2547;) </th>
+        <th class="text-center">Remarks </th>
+        <th class="text-center">Entry By </th>
+        <th class="text-center">Action</th>
 
-        </tr>
+    </tr>
     </tfoot>
 </table>
 

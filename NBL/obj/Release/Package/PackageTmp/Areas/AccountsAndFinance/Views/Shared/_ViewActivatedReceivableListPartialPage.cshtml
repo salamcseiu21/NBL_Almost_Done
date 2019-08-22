@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Activeted Receivable List";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
 }
 
 
@@ -11,6 +12,7 @@
     <table class="display table-bordered" id="tbl_Receivable_List" style="border: 1px solid">
         <thead>
             <tr>
+                <th>S.N</th>
                 <th>Account Info</th>
                 <th>Account Code</th>
                 <th class="text-right">Amount</th>
@@ -21,7 +23,9 @@
         <tbody>
             @foreach (var item in Model.ToList())
             {
+                i++;
                 <tr>
+                    <td>@i</td>
                     <td>@item.ClientInfo</td>
                     <td>@item.AccountCode</td>
                     <td class="text-right">@item.Amount.ToString("N2")</td>
@@ -33,13 +37,14 @@
             }
         </tbody>
         <tfoot>
-            <tr>
-                <th>Account Info</th>
-                <th>Account Code</th>
-                <th class="text-right">Amount</th>
-                <th class="text-center">Date</th>
-                <th class="text-center">Action</th>
-            </tr>
+        <tr>
+            <th>S.N</th>
+            <th>Account Info</th>
+            <th>Account Code</th>
+            <th class="text-right">Amount</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Action</th>
+        </tr>
         </tfoot>
     </table>
 </section>

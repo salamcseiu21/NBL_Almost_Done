@@ -1,11 +1,15 @@
 ﻿
 @model IEnumerable<NBL.Models.ChequeDetails>
+    @{
+        var i = 0;
+    }
 
 <table id="table_receivable_list" class="table table-bordered" style="border: 1px solid black">
     <caption><h3 class="text-center text-green headingStyle">Collection List</h3></caption>
     <thead>
 
         <tr>
+            <th>S.N</th>
             <th>Collection Ref</th>
             <th>Client Name</th>
             <th>Source Bank Name</th>
@@ -21,8 +25,10 @@
     <tbody>
         @foreach (var item in Model)
         {
+            i++;
 
             <tr>
+                <td>@i</td>
                 <td>@item.ReceivableRef</td>
                 <td>@Html.ActionLink(item.ClientInfo,"ViewClientProfile","Home",new {id= item.ClientId},null) </td>
                 <td>@item.SourceBankName</td>
@@ -47,22 +53,23 @@
     </tbody>
     <tfoot>
         <tr>
-            <th colspan="6" class="text-right">Total </th>
+            <th colspan="7" class="text-right">Total </th>
             <th class="text-right">@Model.Sum(n => n.ChequeAmount).ToString("N2")</th>
             <th colspan="3"></th>
         </tr>
-        <tr>
-            <th>Collection Ref</th>
-            <th>Client Name</th>
-            <th>Source Bank Name</th>
-            <th>Account No</th>
-            <th>Cheque No</th>
-            <th>Cheque Date</th>
-            <th class="text-right">Amount (&#2547;) </th>
-            <th class="text-center">Entry Date </th>
-            <th class="text-center">Entry By </th>
-            <th class="text-center">Status</th>
-        </tr>
+    <tr>
+        <th>S.N</th>
+        <th>Collection Ref</th>
+        <th>Client Name</th>
+        <th>Source Bank Name</th>
+        <th>Account No</th>
+        <th>Cheque No</th>
+        <th>Cheque Date</th>
+        <th class="text-right">Amount (&#2547;) </th>
+        <th class="text-center">Entry Date </th>
+        <th class="text-center">Entry By </th>
+        <th class="text-center">Status</th>
+    </tr>
     </tfoot>
 </table>
 

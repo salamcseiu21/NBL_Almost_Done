@@ -42,7 +42,17 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             {
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
-                var receivableCheques = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId);
+                ICollection<ChequeDetails> receivableCheques;
+                if (branchId == 9)
+                {
+                    receivableCheques = _iAccountsManager.GetAllReceivableCheque(companyId);
+                }
+                else
+                {
+                    receivableCheques = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId).ToList();
+                }
+                
+               
                 foreach (ChequeDetails cheque in receivableCheques)
                 {
                     cheque.Client = _iClientManager.GetById(cheque.ClientId);
@@ -497,8 +507,19 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         {
             try
             {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
                 int branchId = Convert.ToInt32(Session["BranchId"]);
-                List<ViewReceivableDetails> collection = _iAccountsManager.GetActivetedReceivableListByBranch(branchId).ToList();
+                List<ViewReceivableDetails> collection;
+                if (branchId == 9)
+                {
+                  collection= _iAccountsManager.GetActivetedReceivableListByCompany(companyId).ToList();
+                }
+                else
+                {
+                    collection = _iAccountsManager.GetActivetedReceivableListByBranch(branchId).ToList();
+                }
+              
+
                 return PartialView("_ViewActivatedReceivableListPartialPage",collection);
             }
             catch (Exception exception)
@@ -512,8 +533,17 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         {
             try
             {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
                 int branchId = Convert.ToInt32(Session["BranchId"]);
-                List<ViewReceivableDetails> collection = _iAccountsManager.GetActivetedReceivableListByBranch(branchId).ToList();
+                List<ViewReceivableDetails> collection;
+                if (branchId == 9)
+                {
+                    collection = _iAccountsManager.GetActivetedReceivableListByCompany(companyId).ToList().FindAll(n=>n.ActiveDate.Date.Equals(DateTime.Now.Date));
+                }
+                else
+                {
+                    collection = _iAccountsManager.GetActivetedReceivableListByBranch(branchId).ToList().FindAll(n => n.ActiveDate.Date.Equals(DateTime.Now.Date));
+                }
                 return PartialView("_ViewActivatedReceivableListPartialPage", collection);
             }
             catch (Exception exception)

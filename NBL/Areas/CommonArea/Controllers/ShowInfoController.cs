@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NBL.BLL.Contracts;
+using NBL.Models.EntityModels.Employees;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels.Summaries;
 
@@ -131,7 +132,13 @@ namespace NBL.Areas.CommonArea.Controllers
         {
             try
             {
+
+                List<EducationalInfo> educationalInfos = _iEmployeeManager.GetEducationalInfoByEmpId(id);
                 var employee = _iEmployeeManager.GetEmployeeById(id);
+                employee.EducationalInfos = educationalInfos;
+                //return View(employee);
+
+                //var employee = _iEmployeeManager.GetEmployeeById(id);
                 return PartialView("_ViewEmployeeProfilePartialPage", employee);
             }
             catch (Exception exception)
