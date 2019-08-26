@@ -944,7 +944,47 @@ namespace NBL.DAL
 
             }
         }
+        public ICollection<ViewReturnDetails> GetGeneralReturnDetailsByReturnId(long returnId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetGeneralReturnDetailsByReturnId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ReturnId", returnId);
+                List<ViewReturnDetails> models = new List<ViewReturnDetails>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ViewReturnDetails
+                    {
+                        SalesReturnId = Convert.ToInt64(reader["ReturnId"]),
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        DeliveryId = Convert.ToInt64(reader["DeliveryId"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        DeliveredDateTime = Convert.ToDateTime(reader["DeiveryDateTime"]),
+                        ReturnDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        UnitPrice = Convert.ToDecimal(reader["UnitPrice"])
+                    });
+                }
+                reader.Close();
+                return models;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect general returns details by return id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
 
+            }
+        }
         public ViewReturnDetails GetReturnDetailsById(long salsesReturnDetailsId)
         {
             try

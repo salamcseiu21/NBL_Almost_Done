@@ -77,6 +77,7 @@ namespace NBL.BLL.Contracts
         IEnumerable<ViewSoldProduct> GetTempSoldBarcodesFromXmlFile(string filePath);
         bool AddBarCodeToTempSoldProductXmlFile(ViewDisributedProduct product, string barcode, string filePath);
 
-        ICollection<ViewGeneralRequisitionModel> GetGeneralRequisitionByUserId(int userId); 
+        ICollection<ViewGeneralRequisitionModel> GetGeneralRequisitionByUserId(int userId);
+        ICollection<ViewGeneralRequisitionModel> GetAllDeliveredGRequsition();
     }
 }

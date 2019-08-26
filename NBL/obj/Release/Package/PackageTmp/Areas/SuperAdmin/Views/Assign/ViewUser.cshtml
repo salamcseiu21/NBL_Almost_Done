@@ -1,4 +1,5 @@
 ﻿
+@using NBL.Models.Enums
 @model IEnumerable<NBL.Models.EntityModels.Identities.User>
 @{
     ViewBag.Title = "User List";
@@ -14,6 +15,7 @@
         <thead>
         <tr>
             <th>User Name</th>
+            <th>Is Blocked</th>
             <th>Branch Name</th>
             <th>UserId</th>
          
@@ -32,6 +34,9 @@
                 <tr>
                     
                     <td>@item.UserName</td>
+                    <td>
+                        @Enum.GetName(typeof(FlagEnum), item.BlockStatus)
+                    </td>
                     <td>@item.BranchName</td>
                     <td>@item.UserId</td>
                     <td>@(item.EmployeeName?? "N/A")</td>
@@ -48,6 +53,7 @@
         <tfoot>
             <tr>
                 <th>User Name</th>
+                <th>Is Blocked</th>
                 <th>Branch Name</th>
                 <th>UserId</th>
            

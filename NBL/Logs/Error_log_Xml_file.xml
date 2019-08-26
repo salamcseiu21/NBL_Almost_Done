@@ -1,21 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Errors>
-  <Error LogId="19-Aug-2192d7e513-af9b-4276-831c-0a5b5d9be4d9">
-    <Heading>System.IO.FileNotFoundException</Heading>
-    <LogMessage>   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
-   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
-   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize)
-   at System.Xml.XmlDownloadManager.GetStream(Uri uri, ICredentials credentials, IWebProxy proxy, RequestCachePolicy cachePolicy)
-   at System.Xml.XmlUrlResolver.GetEntity(Uri absoluteUri, String role, Type ofObjectToReturn)
-   at System.Xml.XmlTextReaderImpl.FinishInitUriString()
-   at System.Xml.XmlTextReaderImpl..ctor(String uriStr, XmlReaderSettings settings, XmlParserContext context, XmlResolver uriResolver)
-   at System.Xml.XmlReaderSettings.CreateReader(String inputUri, XmlParserContext inputContext)
-   at System.Xml.XmlReader.Create(String inputUri, XmlReaderSettings settings, XmlParserContext inputContext)
-   at System.Xml.Linq.XDocument.Load(String uri, LoadOptions options)
-   at System.Xml.Linq.XDocument.Load(String uri)
-   at NBL.Areas.AccountsAndFinance.Controllers.AccountController.RemoveAll() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountController.cs:line 190
-   at NBL.Areas.AccountsAndFinance.Controllers.AccountController.Receivable() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountController.cs:line 37</LogMessage>
-    <LogDateTime>2019-08-21T11:42:50.1679219+06:00</LogDateTime>
-    <CustomeMessage>Could not find file 'E:\API\NBL\NBL\Areas\AccountsAndFinance\Files\Receivable\Receivable_4.xml'.</CustomeMessage>
+  <Error LogId="19-Aug-25eaf33eb9-a7f0-45c3-baa5-eb57dd09350e">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ProductGateway.GetAllDeliveredGRequsition() in E:\API\NBL\NBL.DAL\ProductGateway.cs:line 1320</LogMessage>
+    <LogDateTime>2019-08-25T11:55:59.695163+06:00</LogDateTime>
+    <CustomeMessage>RequisitionDate</CustomeMessage>
   </Error>
 </Errors>

@@ -24,5 +24,6 @@ namespace NBL.BLL.Contracts
         ICollection<ReturnModel> GetAllGeneralReqReturnsByApprovarRoleId(int approverRoleId);
         ICollection<ViewReturnDetails> GetGeneralReqReturnDetailsById(long returnId);
         ICollection<ReturnModel> GetAllFinalApprovedGeneralReturnsList();
+        ICollection<ViewReturnDetails> GetGeneralReturnDetailsByReturnId(long returnId); 
     }
 }

@@ -1361,6 +1361,76 @@ ConnectionObj.Close();
             }
         }
 
+        public List<ViewOrder> GetAllOrderByBranchAndCompanyAndClientTypeId(int branchId, int companyId, int clientTypeId)
+        {
+            try
+            {
+
+                CommandObj.CommandText = "UDSP_GetOrdersByBranchAndCompanyIdClientType";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                CommandObj.Parameters.AddWithValue("@ClientTypeId", clientTypeId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<ViewOrder> orders = new List<ViewOrder>();
+                while (reader.Read())
+                {
+                    var anOrder = new ViewOrder
+                    {
+                        OrderId = Convert.ToInt32(reader["OrderId"]),
+                        OrderDate = Convert.ToDateTime(reader["OrderDate"]),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        OrderSlipNo = reader["OrderSlipNo"].ToString(),
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        CompanyId = companyId,
+                        BranchId = branchId,
+                        Amounts = Convert.ToDecimal(reader["Amounts"]),
+                        Status = Convert.ToInt32(reader["OrderStatus"]),
+                        SysDate = Convert.ToDateTime(reader["SysDateTime"]),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        Client = new Client
+                        {
+                            ClientName = reader["Name"].ToString(),
+                            CommercialName = reader["CommercialName"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            Phone = reader["Phone"].ToString(),
+                            Address = reader["Address"].ToString(),
+                            AlternatePhone = reader["AltPhone"].ToString(),
+                            SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                            ClientType = new ClientType
+                            {
+                                ClientTypeName = reader["ClientTypeName"].ToString(),
+                                ClientTypeId = Convert.ToInt32(reader["ClientTypeId"])
+                            }
+                        },
+
+
+                    };
+                    orders.Add(anOrder);
+                }
+
+                reader.Close();
+                return orders;
+            }
+            catch (SqlException sqlException)
+            {
+                Log.WriteErrorLog(sqlException);
+                throw new Exception("Could not Collect Orders due to sql Exception", sqlException);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Orders by branch,company and client type id", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
         public int GetOrderMaxSerialNoByYear(int year)  
         {
             try

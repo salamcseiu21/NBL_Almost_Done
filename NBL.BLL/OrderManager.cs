@@ -172,6 +172,11 @@ namespace NBL.BLL
             return orders;
         }
 
+        public List<ViewOrder> GetAllOrderByBranchAndCompanyAndClientTypeId(int branchId, int companyId, int clientTypeId)
+        {
+            return _iOrderGateway.GetAllOrderByBranchAndCompanyAndClientTypeId(branchId,companyId,clientTypeId);
+        }
+
         public bool CancelOrder(ViewOrder order)
         {
             return _iOrderGateway.CancelOrder(order)>0;

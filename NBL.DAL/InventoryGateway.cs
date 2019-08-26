@@ -1418,39 +1418,61 @@ namespace NBL.DAL
                 int accountAffected = 0;
                 if (rowAffected > 0)
                 {
-
                     var financial = financialModel;
 
-                    for (int i = 1; i <= 6; i++)
+                    if (!model.IsGeneralReturn)
                     {
-                        if (i == 1)
+                        for (int i = 1; i <= 6; i++)
                         {
-                            accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.ClientCode, financial.ClientCrAmount * (-1), accountMasterId, "Client Credit..");
-                        }
-                        else if (i == 2)
-                        {
+                            if (i == 1)
+                            {
+                                accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.ClientCode, financial.ClientCrAmount * (-1), accountMasterId, "Client Credit..");
+                            }
+                            else if (i == 2)
+                            {
 
 
-                            accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.SalesRevenueCode, financial.SalesRevenueAmount, accountMasterId, "Salses Debit..");
-                        }
-                        else if (i == 3)
-                        {
-                            accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.GrossDiscountCode, financial.GrossDiscountAmount * (-1), accountMasterId, "Gross Discount Credit..");
-                        }
-                        else if (i == 4)
-                        {
-                            accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.VatCode, financial.VatAmount, accountMasterId, "Vat Debit..");
-                        }
-                        else if (i == 5 && financial.SalesReturnAmount>0)
-                        {
+                                accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.SalesRevenueCode, financial.SalesRevenueAmount, accountMasterId, "Salses Debit..");
+                            }
+                            else if (i == 3)
+                            {
+                                accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.GrossDiscountCode, financial.GrossDiscountAmount * (-1), accountMasterId, "Gross Discount Credit..");
+                            }
+                            else if (i == 4)
+                            {
+                                accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.VatCode, financial.VatAmount, accountMasterId, "Vat Debit..");
+                            }
+                            else if (i == 5 && financial.SalesReturnAmount > 0)
+                            {
 
-                            accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.ClientCode, financial.SalesReturnAmount, accountMasterId, "Client Debit..");
-                        }
-                        else if (i == 6 && financial.SalesReturnAmount > 0)
-                        {
-                            accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.SalesReturnCode, financial.SalesReturnAmount*(-1), accountMasterId, "Sales return  Credit..");
+                                accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.ClientCode, financial.SalesReturnAmount, accountMasterId, "Client Debit..");
+                            }
+                            else if (i == 6 && financial.SalesReturnAmount > 0)
+                            {
+                                accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.SalesReturnCode, financial.SalesReturnAmount * (-1), accountMasterId, "Sales return  Credit..");
+                            }
                         }
                     }
+                    else
+                    {
+                        for (int i = 1; i <= 2; i++)
+                        {
+                            if (i == 1)
+                            {
+                                accountAffected += SaveFinancialTransactionToAccountsDetails("Cr", financial.ExpenceCode, financial.ExpenceAmount * (-1), accountMasterId, "Expence Credit..");
+                            }
+                            else if (i == 2)
+                            {
+
+                                accountAffected += SaveFinancialTransactionToAccountsDetails("Dr", financial.InventoryCode, financial.InventoryAmount, accountMasterId, "Inventory Debit..");
+                            }
+                            
+                        }
+                    }
+
+                   
+
+                    
                 }
                 if (accountAffected > 0)
                 {

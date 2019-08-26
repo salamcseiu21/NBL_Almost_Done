@@ -478,6 +478,11 @@ namespace NBL.BLL
             return _iProductGateway.GetGeneralRequisitionByUserId(userId);
         }
 
+        public ICollection<ViewGeneralRequisitionModel> GetAllDeliveredGRequsition()
+        {
+            return _iProductGateway.GetAllDeliveredGRequsition();
+        }
+
         private string GenerateTransferRequisitionRef(int maxTrNo)
         {
 

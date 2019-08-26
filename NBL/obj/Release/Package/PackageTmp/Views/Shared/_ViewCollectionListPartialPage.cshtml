@@ -8,6 +8,7 @@
         <tr>
             <th>Collection Ref</th>
             <th>Client Name</th>
+            <th>Branch Name</th>
             <th>Source Bank Name</th>
             <th>Account No</th>
             <th>Cheque No</th>
@@ -25,7 +26,7 @@
             <tr>
                 <td>@item.ReceivableRef (@item.CollectionByBranch)</td>
                 <td>@Html.ActionLink(item.ClientInfo,"ViewClientProfile","Home",new {id= item.ClientId},null) </td>
-              
+                <td>@item.CollectionByBranch</td>
                 <td>@item.SourceBankName</td>
                 <td>@item.BankAccountNo</td>
                 <td>@item.ChequeNo</td>
@@ -50,11 +51,12 @@
         <tr>
             <th colspan="7" class="text-right">Total </th>
             <th class="text-right">@Model.Sum(n => n.ChequeAmount).ToString("N2")</th>
-            <th colspan="2"></th>
+            <th colspan="3"></th>
         </tr>
         <tr>
             <th>Collection Ref</th>
             <th>Client Name</th>
+            <th>Branch Name</th>
             <th>Source Bank Name</th>
             <th>Account No</th>
             <th>Cheque No</th>
@@ -70,6 +72,7 @@
 <script>
     $('#table_receivable_list').DataTable({
         "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+        "order": [[8,'desc']],
         "oLanguage": {
             "sEmptyTable": "<h4 style='color:green;font-weight:bolder;'>There is no receivable cheque or cash to active right now !</h4>"
         }

@@ -31,6 +31,7 @@ namespace NBL.Models.ViewModels.Requisitions
         public ICollection<ApprovalDetails> ApprovalDetails { get; set; } 
         public GeneralRequisitionModel GeneralRequisitionModel { get; set; }
         public long DeliveryId { get; set; }    
-        public string DeliveryRef { get; set; }    
+        public string DeliveryRef { get; set; }
+        public DateTime DeliveryDate { get; set; }   
     }
 }

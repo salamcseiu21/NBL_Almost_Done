@@ -1,8 +1,50 @@
-﻿
+﻿@model IEnumerable<NBL.Models.ViewModels.Requisitions.ViewGeneralRequisitionModel>
 @{
-    ViewBag.Title = "DeliveredGRequsition";
+    ViewBag.Title = "Delivered GRequsition";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
 }
+<section class="content">
+    <h3 class="text-center text-green">Delivered General Requsition</h3>
+    <table id="tbl_Delivered_requisition_list" class="display table-bordered table-responsive" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>S.N</th>
+            <th>Delivery Ref</th>
+            <th>Requisition Ref</th>
+            <th>Requisition By</th>
+            <th>Delivery Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            i++;
+            <tr>
+                <td>@i</td>
+                <td>@item.DeliveryRef</td>
+                <td>@item.RequisitionRef</td>
+                <td>@item.RequisitionByEmp</td>
+                <td>@item.DeliveryDate.Date.ToString("dd-MMM-yyyy")</td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>S.N</th>
+            <th>Delivery Ref</th>
+            <th>Requisition Ref</th>
+            <th>Requisition By</th>
+            <th>Delivery Date</th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
 
-<h2>DeliveredGRequsition</h2>
 
+@section Scripts
+{
+    <script>
+        $("#tbl_Delivered_requisition_list").DataTable();
+    </script>
+}

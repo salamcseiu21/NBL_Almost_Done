@@ -30,6 +30,11 @@
         roleName = "Sales Executive";
         areas = "sales";
     }
+    else if (User.IsInRole("CorporateSalesManager"))
+    {
+        roleName = "CSM";
+        areas = "sales";
+    }
     else if (User.IsInRole("SalesManager"))
     {
         roleName = "Sales Manager";
@@ -291,7 +296,7 @@
                     case "SalesExecutive":
                         Html.RenderPartial("~/Areas/Sales/Views/Shared/_SalesPersonMenuPartialPage.cshtml");
                         break;
-                   
+                    case "CorporateSalesManager":
                     case "SalesManager":
                         Html.RenderPartial("~/Areas/Sales/Views/Shared/_NsmMenuPartialPage.cshtml");
                         break;
@@ -325,7 +330,7 @@
                     case "Management":
                         Html.RenderPartial("~/Areas/Management/Views/Shared/_MenuPartialPage.cshtml");
                         break;
-                  
+
                 }
 
             </section>

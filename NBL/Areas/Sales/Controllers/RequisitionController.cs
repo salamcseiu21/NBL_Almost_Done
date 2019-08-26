@@ -322,7 +322,9 @@ namespace NBL.Areas.Sales.Controllers
 
         public ActionResult DeliveredGRequsition()
         {
-            return View();
+
+            List<ViewGeneralRequisitionModel> requisitions = _iProductManager.GetAllDeliveredGRequsition().ToList();
+            return View(requisitions);
         }
     }
 }

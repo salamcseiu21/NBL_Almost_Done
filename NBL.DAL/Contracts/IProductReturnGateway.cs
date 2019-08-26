@@ -30,6 +30,7 @@ namespace NBL.DAL.Contracts
         ICollection<ReturnModel> GetAllFinalApprovedGeneralReturnsList();
         ICollection<ReturnModel> GetAllGeneralReqReturnsByApprovarRoleId(int approverRoleId);
         ICollection<ViewReturnDetails> GetGeneralReqReturnDetailsById(long returnId);
-        
+
+        ICollection<ViewReturnDetails> GetGeneralReturnDetailsByReturnId(long returnId);
     }
 }

@@ -920,78 +920,37 @@ namespace NBL.Areas.Sales.Controllers
 
                 var user = (ViewUser)Session["user"];
                 var returnById = _iProductReturnManager.GetSalesReturnBySalesReturnId(salesReturnId);
-                List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
-
+                returnById.IsGeneralReturn = true;
+                //List<ViewReturnDetails> models = _iProductReturnManager.GetReturnDetailsBySalesReturnId(salesReturnId).ToList();
+                ICollection<ViewReturnDetails> returnDetailses = _iProductReturnManager.GetGeneralReturnDetailsByReturnId(salesReturnId);
                 List<ViewReturnDetails> newReturnDetailsList = new List<ViewReturnDetails>();
-                var firstOrdefault = models.FirstOrDefault();
+                var firstOrdefault = returnDetailses.FirstOrDefault();
 
                 if (firstOrdefault != null)
                 {
-                    var delivery = _iDeliveryManager.GetOrderByDeliveryId(firstOrdefault.DeliveryId);
-                    var invoicedOrder = _iInvoiceManager.GetInvoicedOrderByInvoiceId(delivery.InvoiceId);
-                    var deliveryDetails = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(firstOrdefault.DeliveryId);
-                    var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
-                    var client = _iClientManager.GetClientDeailsById(orderInfo.ClientId);
 
                     int branchId = Convert.ToInt32(Session["BranchId"]);
                     var filePath = GetReceiveProductFilePath(salesReturnId, branchId);
                     //------------read Scanned barcode form text file---------
                     var barcodeList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
-
-                    var invoice = new ViewInvoiceModel
+                    foreach (ViewReturnDetails item in returnDetailses)
                     {
-                        Order = orderInfo,
-                        DeliveryDetails = deliveryDetails,
-                        Client = client
-                    };
-
-
-
-                    foreach (ViewReturnDetails item in models)
-                    {
-                        item.UnitPrice = invoice.DeliveryDetails.ToList().Find(n => n.ProductId == item.ProductId)
-                            .UnitPrice;
-                        item.VatAmount = invoice.DeliveryDetails.ToList().Find(n => n.ProductId == item.ProductId)
-                            .VatAmount;
-                        item.DiscountAmount = invoice.DeliveryDetails.ToList().Find(n => n.ProductId == item.ProductId)
-                            .UnitDiscount;
+                        item.UnitPrice = _iProductManager.GetProductDetailsByProductId(item.ProductId).UnitPrice;
                         newReturnDetailsList.Add(item);
                     }
 
 
                     var grossAmount = newReturnDetailsList.Sum(n => (n.UnitPrice + n.VatAmount) * n.Quantity);
-                    var tradeDiscount = newReturnDetailsList.Sum(n => n.DiscountAmount * n.Quantity);
-                    var invoiceDiscount = (invoicedOrder.SpecialDiscount / invoicedOrder.Quantity) * newReturnDetailsList.Sum(n => n.Quantity);
-                    var grossDiscount = tradeDiscount + invoiceDiscount;
-                    var vat = newReturnDetailsList.Sum(n => n.VatAmount * n.Quantity);
-
 
                     var financialModel =
                         new FinancialTransactionModel
                         {
-                            //--------Cr -------------------
-                            ClientCode = invoice.Client.SubSubSubAccountCode,
-                            ClientCrAmount = grossAmount - grossDiscount,
-                            GrossDiscountAmount = grossDiscount,
-                            GrossDiscountCode = "2102018",
-
-                            //--------Dr -------------------
-                            SalesRevenueCode = "2001021",
-                            SalesRevenueAmount = grossAmount - vat,
-                            VatCode = "2102013",
-                            VatAmount = vat,
-
-
-                            //--------------Sales Return---------
-                            SalesReturnAmount = returnById.LessAmount,
-                            SalesReturnCode = "1001022",
-                            ClientDrAmount = returnById.LessAmount,
-
-
-                            TradeDiscountCode = "2102012",
-                            TradeDiscountAmount = tradeDiscount,
-                            InvoiceDiscountAmount = invoiceDiscount,
-                            InvoiceDiscountCode = "2102011"
+                            //--------Expence Cr -------------------
+                            ExpenceCode = "2601011",
+                            ExpenceAmount = grossAmount,
+                            //--------Inventory Dr -------------------
+                            InventoryCode = "3301011",
+                            InventoryAmount = grossAmount
 
 
                         };
@@ -1014,6 +973,66 @@ namespace NBL.Areas.Sales.Controllers
             }
         }
 
+        [HttpPost]
+        public void SaveGeneralReturnScannedBarcodeToTextFile(string barcode, long salesReturnId)
+        {
+            SuccessErrorModel model = new SuccessErrorModel();
+
+            try
+            {
+
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var scannedBarCode = barcode.ToUpper();
+                int productId = Convert.ToInt32(scannedBarCode.Substring(2, 3));
+                var returndetailsbyId = _iProductReturnManager.GetGeneralReqReturnDetailsById(salesReturnId).FirstOrDefault();
+                var filePath = GetReceiveProductFilePath(salesReturnId, branchId);
+      
+                //------------read Scanned barcode form text file---------
+                var barcodeList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
+                //------------Load receiveable product---------
+                var receivesProductList = _iProductReturnManager.GetGeneralReqReturnDetailsById(salesReturnId).ToList();
+                List<ViewProduct> products = _iDeliveryManager.GetDeliveredProductListByTransactionRef(returndetailsbyId?.DeliveryRef).ToList();
+                var receivesProductCodeList = products.Select(n => n.ProductBarCode).ToList();
+                var isvalid = Validator.ValidateProductBarCode(scannedBarCode);
+
+                int requistionQtyByProductId = receivesProductList.ToList().FindAll(n => n.ProductId == productId).Sum(n => n.Quantity);
+
+                int scannedQtyByProductId = barcodeList
+                    .FindAll(n => Convert.ToInt32(n.ProductCode.Substring(2, 3)) == productId).Count;
+
+                bool isScannComplete = requistionQtyByProductId.Equals(scannedQtyByProductId);
+
+                if (isScannComplete)
+                {
+                    model.Message = "<p style='color:green'> Scanned Complete</p>";
+                    // return Json(model, JsonRequestBehavior.AllowGet);
+                }
+                else if (!isvalid)
+                {
+                    model.Message = "<p style='color:red'> Invalid Barcode</p>";
+                    //return Json(model, JsonRequestBehavior.AllowGet);
+                }
+
+                else if (receivesProductCodeList.Contains(scannedBarCode))
+                {
+                    _iProductManager.AddProductToTextFile(scannedBarCode, filePath);
+                }
+            }
+            catch (FormatException exception)
+            {
+                Log.WriteErrorLog(exception);
+                model.Message = "<p style='color:red'>" + exception.GetType() + "</p>";
+                //return Json(model, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                model.Message = "<p style='color:red'>" + exception.Message + "</p>";
+                // return Json(model, JsonRequestBehavior.AllowGet);
+            }
+            // return Json(model, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

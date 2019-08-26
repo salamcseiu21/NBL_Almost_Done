@@ -108,6 +108,11 @@ namespace NBL.BLL
             return _iProductReturnGateway.GetAllFinalApprovedGeneralReturnsList();
         }
 
+        public ICollection<ViewReturnDetails> GetGeneralReturnDetailsByReturnId(long returnId)
+        {
+            return _iProductReturnGateway.GetGeneralReturnDetailsByReturnId(returnId);
+        }
+
         public ReturnModel GetSalesReturnBySalesReturnId(long salesReturnId)
         {
             return _iProductReturnGateway.GetSalesReturnBySalesReturnId(salesReturnId);

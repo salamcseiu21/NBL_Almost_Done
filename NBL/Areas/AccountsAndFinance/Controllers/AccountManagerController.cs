@@ -492,6 +492,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             {
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 List<CollectionModel> collection= _iAccountsManager.GetTotalCollectionByBranch(branchId).ToList();
+                
                 return View(collection);
             }
             catch (Exception exception)

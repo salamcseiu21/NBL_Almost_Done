@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.Enums;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Orders;
 
 namespace NBL.Areas.Sales.Controllers
 {
 
-    [Authorize(Roles = "SalesManager")]
+    [Authorize(Roles = "SalesManager,CorporateSalesManager")]
     public class OrderNsmController : Controller
     {
         // GET: Sales/OrderNsm
@@ -37,11 +37,27 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
+                var user = (ViewUser) Session["user"];
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
-                var orders = _iOrderManager.GetAllOrderByBranchAndCompanyIdWithClientInformation(branchId, companyId).ToList();
+                List<ViewOrder> orders=new List<ViewOrder>();
+                if (user.Roles.Equals("CorporateSalesManager"))
+                {
+
+                    orders = _iOrderManager.GetAllOrderByBranchAndCompanyAndClientTypeId(branchId, companyId, Convert.ToInt32(ClientTypeEnum.Corporate));
+
+                }
+                else if(user.Roles.Equals("SalesManager"))
+                {
+                    orders = _iOrderManager.GetAllOrderByBranchAndCompanyAndClientTypeId(branchId, companyId, Convert.ToInt32(ClientTypeEnum.Dealer));
+                    foreach (var item in _iOrderManager.GetAllOrderByBranchAndCompanyAndClientTypeId(branchId, companyId, Convert.ToInt32(ClientTypeEnum.Individual)))
+                    {
+                        orders.Add(item);
+                    }
+                }
+                
                 ViewBag.Heading = "All Orders";
-                return PartialView("_ViewNsmOrdersPartialPage", orders);
+                return PartialView("_ViewNsmOrdersPartialPage", orders.ToList());
             }
             catch (Exception exception)
             {
@@ -55,9 +71,28 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
+                var user = (ViewUser)Session["user"];
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
-                var orders = _iOrderManager.GetLatestOrdersByBranchAndCompanyId(branchId, companyId).ToList();
+
+
+                var orders = new List<ViewOrder>();
+
+
+                if (user.Roles.Equals("CorporateSalesManager"))
+                {
+                    orders = _iOrderManager.GetAllOrderByBranchAndCompanyAndClientTypeId(branchId, companyId, Convert.ToInt32(ClientTypeEnum.Corporate));
+
+                }
+                else if (user.Roles.Equals("SalesManager"))
+                {
+                    orders = _iOrderManager.GetAllOrderByBranchAndCompanyAndClientTypeId(branchId, companyId, Convert.ToInt32(ClientTypeEnum.Dealer));
+                    foreach (var item in _iOrderManager.GetAllOrderByBranchAndCompanyAndClientTypeId(branchId, companyId, Convert.ToInt32(ClientTypeEnum.Individual)))
+                    {
+                        orders.Add(item);
+                    }
+                }
+               
                 ViewBag.Heading = "Latest Orders";
                 return PartialView("_ViewOrdersPartialPage", orders);
             }
@@ -73,9 +108,26 @@ namespace NBL.Areas.Sales.Controllers
 
             try
             {
+                var user = (ViewUser)Session["user"];
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
-                var orders = _iOrderManager.GetOrdersByBranchIdCompanyIdAndStatus(branchId, companyId, Convert.ToInt32(OrderStatus.Pending)).ToList();
+                var orders = new List<ViewOrder>();
+                if (user.Roles.Equals("CorporateSalesManager"))
+                {
+                    orders = _iOrderManager.GetOrdersByBranchIdCompanyIdAndStatus(branchId, companyId, Convert.ToInt32(OrderStatus.Pending)).ToList().FindAll(n => n.Client.ClientType.ClientTypeId == 2).ToList();
+
+                }
+                else if (user.Roles.Equals("SalesManager"))
+                {
+                    orders = _iOrderManager.GetOrdersByBranchIdCompanyIdAndStatus(branchId, companyId, Convert.ToInt32(OrderStatus.Pending)).ToList().FindAll(n => n.Client.ClientType.ClientTypeId == 3).ToList(); 
+                    var a= _iOrderManager.GetOrdersByBranchIdCompanyIdAndStatus(branchId, companyId, Convert.ToInt32(OrderStatus.Pending)).ToList().FindAll(n => n.Client.ClientType.ClientTypeId == 1).ToList();
+                    foreach (var order in a)
+                    {
+                            orders.Add(order);
+                    }
+                }
+               
+               
                 return View(orders);
             }
             catch (Exception exception)

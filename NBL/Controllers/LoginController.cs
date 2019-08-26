@@ -56,8 +56,7 @@ namespace NBL.Controllers
 
             try
             {
-                
-
+               
                 //GetRealIpAddress();
                 //int roleId = Convert.ToInt32(collection["RoleId"]);
                 
@@ -181,6 +180,7 @@ namespace NBL.Controllers
                     return RedirectToAction("Home", "Home", new { area = "SuperAdmin" });
                 case "SalesExecutive":
                 case "SalesManager":
+                case "CorporateSalesManager":
                 case "DistributionManager":
                 case "SalesAdmin":
                     return RedirectToAction("Home", "Home", new { area = "Sales" });

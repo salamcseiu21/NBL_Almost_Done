@@ -1,5 +1,8 @@
-﻿@using NBL.Models.EntityModels.Approval
+﻿
+@using NBL.Models.EntityModels.Approval
+
 @using NBL.Models.ViewModels.Deliveries
+
 @model NBL.Models.ViewModels.Returns.ViewReturnModel
 @{
     ViewBag.Title = "Approve";
@@ -47,10 +50,10 @@
                 <div class="col-md-4">
                     <p style="line-height: 1.5">
                         Sales Return Ref : @Model.ReturnModel.ReturnRef<br />
-                        Return Entry Date : @Model.ReturnModel.SystemDateTime.ToString("dd-MMM-yyyy")<br />
-                        Order Date : @firstOrDefault.OrderDateTime.ToString("dd-MMM-yyyy")<br />
-                        Delivery Date : @firstOrDefault.DeliveredDateTime?.ToString("dd-MMM-yyyy")<br />
-                        Delivery-to-Return Duration : @((firstOrDefault.ReturnDateTime.Date - firstOrDefault.DeliveredDateTime?.Date)) (Day's)
+                        Return Entry Date : @(Model.ReturnModel.SystemDateTime.ToString("dd-MMM-yyyy"))<br />
+                        Order Date : @(firstOrDefault?.OrderDateTime.ToString("dd-MMM-yyyy"))<br />
+                        Delivery Date : @(firstOrDefault?.DeliveredDateTime?.ToString("dd-MMM-yyyy"))<br />
+                        Delivery-to-Return Duration : @(((Convert.ToDateTime(firstOrDefault.ReturnDateTime) - Convert.ToDateTime(firstOrDefault.DeliveredDateTime)).TotalDays).ToString("N0")) (Day's)
                     </p>
 
                 </div>

@@ -159,7 +159,9 @@
     <Compile Include="EntityModels\Employees\Employee.cs" />
     <Compile Include="EntityModels\Masters\EmployeeType.cs" />
     <Compile Include="Enums\CellCondition.cs" />
+    <Compile Include="Enums\ClientTypeEnum.cs" />
     <Compile Include="Enums\Department.cs" />
+    <Compile Include="Enums\FlagEnum.cs" />
     <Compile Include="Enums\ForwardTo.cs" />
     <Compile Include="Enums\InvoiceStatus.cs" />
     <Compile Include="Enums\PhysicalConditionEnum.cs" />

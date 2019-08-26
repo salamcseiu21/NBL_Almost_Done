@@ -39,5 +39,6 @@ namespace NBL.Models.EntityModels.Returns
         public int? CurrentApproverRoleId { get; set; } 
         public int? IsFinalApproved { get; set; }
         public int AproveActionId { get; set; }
+        public bool IsGeneralReturn { get; set; }   
     }
 }

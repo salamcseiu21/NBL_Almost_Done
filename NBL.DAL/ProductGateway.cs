@@ -1305,6 +1305,50 @@ namespace NBL.DAL
                 ConnectionObj.Close();
             }
         }
+
+        public ICollection<ViewGeneralRequisitionModel> GetAllDeliveredGRequsition()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllDeliveredGRequsition";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<ViewGeneralRequisitionModel> requisitions = new List<ViewGeneralRequisitionModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    requisitions.Add(new ViewGeneralRequisitionModel
+                    {
+
+                        RequisitionId = Convert.ToInt64(reader["RequisitionId"]),
+                        RequisitionByUserId = Convert.ToInt32(reader["RequisitionByUserId"]),
+                        RequisitionDate = Convert.ToDateTime(reader["RequisitionDate"]),
+                        DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
+                        RequisitionRemarks = reader["RequisitionRemarks"].ToString(),
+                        RequisitionRef = reader["RequisitionRef"].ToString(),
+                        DeliveryId = Convert.ToInt64(reader["DeliveryId"]),
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        RequisitionByEmp = reader["RequisitionBy"].ToString(),
+                        
+
+                    });
+                }
+                reader.Close();
+                return requisitions;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect general requisition list", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
         public int UpdateGeneralRequisitionQuantity(string id, int quantity)
         {
             try

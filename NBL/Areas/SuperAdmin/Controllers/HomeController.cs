@@ -382,6 +382,24 @@ namespace NBL.Areas.SuperAdmin.Controllers
             }
         }
 
+        public ActionResult ViewClientProfile(int id)
+        {
+            try
+            {
+                var client = _iClientManager.GetClientDeailsById(id);
+                var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+                client.LedgerModels = ledgers.ToList();
+                return View(client);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
+
         [HttpGet]
         public ActionResult CollectionList()
         {

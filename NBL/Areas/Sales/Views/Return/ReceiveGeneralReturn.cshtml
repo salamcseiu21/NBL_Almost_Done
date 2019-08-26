@@ -65,7 +65,7 @@
             var salesReturnId = $("#SalesReturnId").val();
             $.ajax({
                 type: "POST",
-                url: RootUrl + 'Sales/return/SaveScannedBarcodeToTextFile',
+                url: RootUrl + 'Sales/return/SaveGeneralReturnScannedBarcodeToTextFile',
                 data: { barcode: code, salesReturnId: salesReturnId },
                 error: function (xhr, status, error) {
                     alert(error);
@@ -103,7 +103,7 @@
                 //$("#scanProductBarcodeForm").submit();
                 $.ajax({
                     type: "Post",
-                    url: RootUrl + 'Sales/return/Receive',
+                    url: RootUrl + 'Sales/return/ReceiveGeneralReturn',
                     data: { salesReturnId: salesReturnId },
                     error: function (xhr, status, error) {
                         alert(error);
