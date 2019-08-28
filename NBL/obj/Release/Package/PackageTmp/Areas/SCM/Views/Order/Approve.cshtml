@@ -45,8 +45,10 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2"></label>
                                 <div class="col-md-10 text-right">
-                                    @Html.ActionLink("Back", "PendingOrder", "Order", new { area = "SCM" }, new { @class = "btn btn-info" })
-                                    <input type="button" value="Approve" class="btn btn-success" onclick="ApproveOrder(this)" />
+                                
+                                    @Html.ActionLink("Back", "PendingOrder", "Order", new {area = "SCM"}, new {@class = "btn btn-info"})
+                                    @Html.ActionLink("Cancel", "CancelOrder", "Order", new { area = "SCM",id=Model.OrderId }, new { @class = "btn btn-danger" })
+                                    <input type="button" value="Approve" class="btn btn-success" onclick="ApproveOrder(this)"/>
                                 </div>
                             </div>
                         </div>

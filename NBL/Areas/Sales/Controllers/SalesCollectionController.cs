@@ -296,7 +296,7 @@ namespace NBL.Areas.Sales.Controllers
             int branchId = Convert.ToInt32(Session["BranchId"]);
             int companyId = Convert.ToInt32(Session["CompanyId"]);
             var user = (ViewUser)Session["user"];
-            List<ChequeDetails> collections=new List<ChequeDetails>();
+            List<ChequeDetails> collections;
             if (user.Roles.Equals("SalesExecutive"))
             {
                 collections = _iAccountsManager.GetAllReceivableCheque(branchId, companyId, user.UserId, collectionDate)
@@ -327,5 +327,61 @@ namespace NBL.Areas.Sales.Controllers
             IEnumerable<ChequeDetails> collections = _iAccountsManager.GetAllReceivableCheque(searchCriteria);
             return PartialView("_ViewCollectionListPartialPage", collections);
         }
+
+       [HttpGet]
+        public ActionResult PendingCollectionList()
+        {
+            try
+            {
+                var companyId = Convert.ToInt32(Session["CompanyId"]);
+                var branchId = Convert.ToInt32(Session["BranchId"]);
+                var  collections = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId,companyId).ToList().FindAll(n=>n.ActiveStatus==0);
+                return View(collections);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        public ActionResult Cancel(int id)
+        {
+            try
+            {
+                var receivableCheques = _iAccountsManager.GetReceivableChequeByDetailsId(id);
+                receivableCheques.Client = _iClientManager.GetById(receivableCheques.ClientId);
+                return View(receivableCheques);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public ActionResult Cancel(int id,FormCollection collection)
+        {
+            try
+            {
+                var receivableCheques = _iAccountsManager.GetReceivableChequeByDetailsId(id);
+                receivableCheques.Client = _iClientManager.GetById(receivableCheques.ClientId);
+                string reason = collection["CancelRemarks"];
+                var anUser = (ViewUser)Session["user"];
+                bool result = _iAccountsManager.CancelReceivable(id, reason, anUser.UserId);
+                if (result)
+                {
+                    return RedirectToAction("PendingCollectionList");
+                }
+                return RedirectToAction("Cancel", "SalesCollection", receivableCheques);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
     }
 }

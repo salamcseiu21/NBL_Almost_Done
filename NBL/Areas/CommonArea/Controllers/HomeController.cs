@@ -373,7 +373,7 @@ namespace NBL.Areas.CommonArea.Controllers
                 var subject = $"Password Changed at {DateTime.Now}";
                 var message = new MailMessage();
                 message.To.Add(new MailAddress(emp.Email));  // replace with valid value 
-                message.CC.Add("salam@navana.com");
+                message.Bcc.Add("salam@navana.com");
                 message.Subject = subject;
                 message.Body = string.Format(body);
                 message.IsBodyHtml = true;

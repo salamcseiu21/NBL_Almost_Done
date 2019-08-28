@@ -231,6 +231,7 @@
             },
             select: function (e, i) {
                 $("#ClientId").val(i.item.val);
+                RemoveAll();
                 //alert(i.item.val);
                 $("#InvoiceRef").empty();
                 $("#InvoiceRef").append('<option value="IN00">--Select--</option>');
@@ -604,6 +605,17 @@
             }
         }
 
+    function RemoveAll() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("RemoveAll","Account",new {area="AccountsAndFinance"})',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                ViewTempChequeInformation();
+            }
+
+        });
+    }
 
 </script>
 }

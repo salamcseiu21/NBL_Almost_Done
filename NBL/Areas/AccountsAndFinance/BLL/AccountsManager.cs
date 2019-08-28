@@ -68,14 +68,20 @@ namespace NBL.Areas.AccountsAndFinance.BLL
             return _iAccountGateway.GetAllReceivableCheque(searchCriteria);
         }
 
-        public ICollection<ChequeDetails> GetAllReceivableCheque(int companyId)
+        public ICollection<ChequeDetails> GetAllReceivableCheque(int companyId, int status)
         {
-            return _iAccountGateway.GetAllReceivableCheque(companyId);
+            return _iAccountGateway.GetAllReceivableCheque(companyId,status);
         }
 
         public ICollection<ViewReceivableDetails> GetActivetedReceivableListByCompany(int companyId)
         {
             return _iAccountGateway.GetActivetedReceivableListByCompany(companyId);
+        }
+
+        public bool CancelReceivable(int chequeDetailsId, string reason, int userId)
+        {
+            int rowAffected= _iAccountGateway.CancelReceivable(chequeDetailsId, reason, userId);
+            return rowAffected > 0;
         }
 
         public ChequeDetails GetReceivableChequeByDetailsId(int chequeDetailsId)

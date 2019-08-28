@@ -42,17 +42,16 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             {
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
-                ICollection<ChequeDetails> receivableCheques;
-                if (branchId == 9)
-                {
-                    receivableCheques = _iAccountsManager.GetAllReceivableCheque(companyId);
-                }
-                else
-                {
-                    receivableCheques = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId).ToList();
-                }
-                
-               
+                //if (branchId == 9)
+                //{
+                //    receivableCheques = _iAccountsManager.GetAllReceivableCheque(companyId,0);
+                //}
+                //else
+                //{
+                //    receivableCheques = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId).ToList();
+                //}
+
+                ICollection<ChequeDetails> receivableCheques = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId).ToList();
                 foreach (ChequeDetails cheque in receivableCheques)
                 {
                     cheque.Client = _iClientManager.GetById(cheque.ClientId);

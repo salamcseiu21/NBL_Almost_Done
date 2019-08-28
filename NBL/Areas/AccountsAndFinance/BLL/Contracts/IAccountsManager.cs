@@ -57,7 +57,8 @@ namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
        ICollection<ChequeDetails> GetAllReceivableCheque(int companyId, DateTime collectionDate);
        IEnumerable<ChequeDetails> GetAllReceivableCheque(SearchCriteria searchCriteria);
 
-       ICollection<ChequeDetails> GetAllReceivableCheque(int companyId);
+       ICollection<ChequeDetails> GetAllReceivableCheque(int companyId, int status);
        ICollection<ViewReceivableDetails> GetActivetedReceivableListByCompany(int companyId);
+       bool CancelReceivable(int chequeDetailsId, string reason, int userId); 
    }
 }

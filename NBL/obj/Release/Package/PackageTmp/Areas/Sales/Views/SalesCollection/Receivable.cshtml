@@ -230,7 +230,9 @@
                 });
             },
             select: function (e, i) {
+              
                 $("#ClientId").val(i.item.val);
+               // RemoveAllDuringChangeClient();
                 //alert(i.item.val);
                 $("#InvoiceRef").empty();
                 $("#InvoiceRef").append('<option value="IN00">--Select--</option>');
@@ -249,7 +251,6 @@
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(json),
                     success: function (data) {
-
                         var address = data.Address;
                         var phone = data.Phone;
                         var email = data.Email;
@@ -613,10 +614,24 @@
                     }
 
                 });
-
             }
         }
 
+
+    function RemoveAllDuringChangeClient() {
+
+     
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("RemoveAll","Account",new {area="AccountsAndFinance"})',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                alert("I am here!!!");
+                ViewTempChequeInformation();
+            }
+
+        });
+    }
 
 </script>
 }

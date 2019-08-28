@@ -187,9 +187,15 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         public void RemoveAll()
         {
             var filePath = GetTempReceivableXmlFilePath();
-            var xmlData = XDocument.Load(filePath);
-            xmlData.Root?.Elements().Remove();
-            xmlData.Save(filePath);
+
+
+            if (System.IO.File.Exists(filePath))
+            {
+                var xmlData = XDocument.Load(filePath);
+                xmlData.Root?.Elements().Remove();
+                xmlData.Save(filePath);
+            }
+           
 
         }
         [HttpGet]

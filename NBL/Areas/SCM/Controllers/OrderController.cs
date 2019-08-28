@@ -196,31 +196,12 @@ namespace NBL.Areas.SCM.Controllers
             try
             {
 
-                var invoicebyId= _iInvoiceManager.GetInvoicedOrderByInvoiceId(id);
-                //int branchId = Convert.ToInt32(Session["BranchId"]);
-                //int companyId = Convert.ToInt32(Session["CompanyId"]);
+             
                 var anUser = (ViewUser)Session["user"];
-
                 var order = _iOrderManager.GetOrderByOrderId(id);
                 order.DistributionPointId = Convert.ToInt32(collection["DistributionPointId"]);
                 order.Client = _iClientManager.GetById(order.ClientId);
                 order.DistributionPointSetByUserId = anUser.UserId;
-              
-                //Invoice anInvoice = new Invoice
-                //{
-                //    InvoiceDateTime = DateTime.Now,
-                //    CompanyId = companyId,
-                //    BranchId = branchId,
-                //    ClientId = order.ClientId,
-                //    Amounts = order.Amounts,
-                //    Discount = order.Discount,
-                //    InvoiceByUserId = anUser.UserId,
-                //    TransactionRef = order.OrederRef,
-                //    ClientAccountCode = order.Client.SubSubSubAccountCode,
-                //    Explanation = "Credit sale by " + anUser.UserId,
-                //    DiscountAccountCode = _iOrderManager.GetDiscountAccountCodeByClintTypeId(order.Client.ClientTypeId)
-                //};
-               // string invoice = _iInvoiceManager.Save(order.OrderItems, anInvoice);
                 order.Status = Convert.ToInt32(OrderStatus.DistributionPointSet);
                 string result = _iOrderManager.ApproveOrderByScmManager(order);
                 return RedirectToAction("PendingOrder");
@@ -232,7 +213,44 @@ namespace NBL.Areas.SCM.Controllers
             }
 
         }
+        //------------------Cancel Order by SCM --------------
+        public ActionResult CancelOrder(int id)
+        {
+            try
+            {
+                var order = _iOrderManager.GetOrderByOrderId(id);
+                order.Client = _iClientManager.GetById(order.ClientId);
+                return View(order);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public ActionResult CancelOrder(int id, FormCollection collection)
+        {
+            try
+            {
 
+                var user = (ViewUser)Session["user"];
+                var order = _iOrderManager.GetOrderByOrderId(id);
+                order.Client = _iClientManager.GetById(order.ClientId);
+                order.CancelByUserId = user.UserId;
+                order.ResonOfCancel = collection["CancelRemarks"];
+                order.Status = Convert.ToInt32(OrderStatus.CancelByScm);
+                var status = _iOrderManager.CancelOrder(order);
+                if (status)
+                return RedirectToAction("PendingOrder");
+                return View(order);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         public ActionResult PendingGeneralRequisitions()
         {
             var requisitions=_iProductManager.GetAllGeneralRequisitions().ToList().FindAll(n=>n.Status.Equals(1) && n.IsFinalApproved.Equals("Y"));

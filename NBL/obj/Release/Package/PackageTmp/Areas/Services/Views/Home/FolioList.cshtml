@@ -17,6 +17,7 @@
                 <th>Client Name</th>
                 <th class="text-center">Sale Date</th>
                 <th class="text-center">Folio Entry Date</th>
+                <th class="text-center"> Entry By</th>
             </tr>
             </thead>
             <tbody>
@@ -30,6 +31,7 @@
                     <td>@item.ClientName</td>
                     <td class="text-center">@item.SaleDate.ToString("dd-MMM-yyyy")</td>
                     <td class="text-center">@item.FolioEntryDate.ToString("dd-MMM-yyyy")</td>
+                    <td class="text-center">@item.FolioEntryBy</td>
                 </tr>
             }
             </tbody>
@@ -42,6 +44,7 @@
                 <th>Client Name</th>
                 <th class="text-center">Sale Date</th>
                 <th class="text-center">Folio Entry Date</th>
+                <th class="text-center"> Entry By</th>
             </tr>
             </tfoot>
         </table>

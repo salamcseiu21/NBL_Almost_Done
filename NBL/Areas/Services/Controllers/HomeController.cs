@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NBL.BLL;
@@ -19,7 +20,7 @@ namespace NBL.Areas.Services.Controllers
         private readonly UserManager _userManager=new UserManager();
 
         private readonly IServiceManager _iServiceManager;
-        private IEmployeeManager _iEmployeeManager;
+        private readonly IEmployeeManager _iEmployeeManager;
 
         public HomeController(IServiceManager iServiceManager,IEmployeeManager iEmployeeManager)
         {
@@ -36,7 +37,8 @@ namespace NBL.Areas.Services.Controllers
         {
             try
             {
-                var products = _iServiceManager.GetAllSoldProducts();
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                var products = _iServiceManager.GetAllSoldProducts().ToList().FindAll(n=>n.BranchId==branchId);
                 return View(products);
             }
             catch (Exception exception)

@@ -263,8 +263,11 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                         ClientInfo = reader["ClientInfo"].ToString(),
                         ReceivableDateTime = Convert.ToDateTime(reader["ReceivableDateTime"]),
                         Remarks = DBNull.Value.Equals(reader["ReceivableRemarks"])?null: reader["ReceivableRemarks"].ToString(),
+                        CancelRemarks = DBNull.Value.Equals(reader["CancelRemarks"]) ? null : reader["CancelRemarks"].ToString(),
                         EntryByEmp = DBNull.Value.Equals(reader["EntryBy"]) ? null : reader["EntryBy"].ToString(),
-                        CollectionByBranch = reader["CollectionByBranchName"].ToString()
+                        CollectionByBranch = reader["CollectionByBranchName"].ToString(),
+                        Cancel = Convert.ToInt32(reader["Cancel"]),
+                        CancelByUserId = DBNull.Value.Equals(reader["CancelByUserId"]) ? (int?)null : Convert.ToInt32(reader["CancelByUserId"])
 
                     };
                     details.Add(aPayment);
@@ -496,14 +499,15 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
         }
 
-        public ICollection<ChequeDetails> GetAllReceivableCheque(int companyId)
+        public ICollection<ChequeDetails> GetAllReceivableCheque(int companyId,int status)
         {
             try
             {
                 List<ChequeDetails> details = new List<ChequeDetails>();
-                CommandObj.CommandText = "spGetAllReceivableChequeByCompanyId";
+                CommandObj.CommandText = "spGetAllReceivableChequeByCompanyIdAndStatus";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                CommandObj.Parameters.AddWithValue("@Status", status);
                 ConnectionObj.Open();
                 SqlDataReader reader = CommandObj.ExecuteReader();
                 while (reader.Read())
@@ -1988,6 +1992,37 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                 ConnectionObj.Close();
             }
         }
+
+        public int CancelReceivable(int chequeDetailsId, string reason, int userId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_CancelReceivable";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@UserId", userId);
+                CommandObj.Parameters.AddWithValue("@ChequeDetailsId", chequeDetailsId);
+                CommandObj.Parameters.AddWithValue("@Reason", reason);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                int rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not cancel receivable chaque", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
         public ViewReceivableDetails GetActivatedReceivableDetailsById(long chequeDetailsId)
         {
             try

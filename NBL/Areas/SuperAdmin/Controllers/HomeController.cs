@@ -44,7 +44,8 @@ namespace NBL.Areas.SuperAdmin.Controllers
         private readonly IReportManager _iReportManager;
         private readonly IVatManager _iVatManager;
         private readonly IDeliveryManager _iDeliveryManager;
-        public HomeController(IVatManager iVatManager,IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IReportManager iReportManager,IEmployeeManager iEmployeeManager,ICommonManager iCommonManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IProductManager iProductManager,IAccountsManager iAccountsManager,IDivisionGateway iDivisionGateway,IDeliveryManager iDeliveryManager)
+        private readonly IServiceManager _iServiceManager;
+        public HomeController(IVatManager iVatManager,IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IReportManager iReportManager,IEmployeeManager iEmployeeManager,ICommonManager iCommonManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IProductManager iProductManager,IAccountsManager iAccountsManager,IDivisionGateway iDivisionGateway,IDeliveryManager iDeliveryManager,IServiceManager iServiceManager)
         {
             _iVatManager = iVatManager;
             _iBranchManager = iBranchManager;
@@ -59,6 +60,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
             _iAccountsManager = iAccountsManager;
             _iDivisionGateway = iDivisionGateway;
             _iDeliveryManager = iDeliveryManager;
+            _iServiceManager = iServiceManager;
         }
         public ActionResult Home()
         {
@@ -85,9 +87,6 @@ namespace NBL.Areas.SuperAdmin.Controllers
             return View(summary); 
 
         }
-     
-     
-       
       
         public ActionResult ViewUserDetails(int userId)
         {
@@ -433,6 +432,21 @@ namespace NBL.Areas.SuperAdmin.Controllers
             return PartialView("_ViewCollectionListPartialPage", collections);
         }
 
+        //--------------------Sold Product list------------
+        public ActionResult SoldProducts()
+        {
+            try
+            {
+                var products = _iServiceManager.GetAllSoldProducts().ToList();
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
 
         //------------------ Change password------------------------
         public ActionResult ChangePassword()

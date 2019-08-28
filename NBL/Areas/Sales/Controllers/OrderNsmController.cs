@@ -393,8 +393,8 @@ namespace NBL.Areas.Sales.Controllers
         [HttpPost]
         public JsonResult ProductNameAutoComplete(string prefix)
         {
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            int branchId = Convert.ToInt32(Session["BranchId"]);
+            //int companyId = Convert.ToInt32(Session["CompanyId"]);
+            //int branchId = Convert.ToInt32(Session["BranchId"]);
             //var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).ToList();
             var products = _iProductManager.GetAll();
             var productList = (from c in products

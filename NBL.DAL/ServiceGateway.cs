@@ -562,9 +562,11 @@ namespace NBL.DAL
                        ClientName = reader["ClientInfo"].ToString(),
                        SaleDate = Convert.ToDateTime(reader["SaleDate"]),
                         BranchName=reader["BranchName"].ToString(),
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
                         InvoiceRef = reader["InvoiceRef"].ToString(),
                         DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
-                        FolioEntryDate = Convert.ToDateTime(reader["UpdateDate"])
+                        FolioEntryDate = Convert.ToDateTime(reader["UpdateDate"]),
+                        FolioEntryBy = reader["SaleDateUpdaeBY"].ToString()
 
                     });
                 }

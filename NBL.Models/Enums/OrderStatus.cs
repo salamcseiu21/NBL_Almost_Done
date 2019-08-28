@@ -13,7 +13,8 @@ namespace NBL.Models.Enums
         CancelledbySalesPerson = 5,
         CancelledbySalesManager = 6,
         CancelledbySalesAdmin = 7,
-        DistributionPointSet=8
+        DistributionPointSet=8,
+        CancelByScm=9
     }
 
     public enum OrderStatus1

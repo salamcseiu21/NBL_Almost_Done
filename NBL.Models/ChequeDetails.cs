@@ -17,6 +17,9 @@ namespace NBL.Models
         public string ClientInfo { get; set; }
         public string CollectionByBranch { get; set; }
         public string EntryByEmp { get; set; }
+        public int Cancel { get; set; }
+        public string CancelRemarks { get; set; }
+        public int? CancelByUserId { get; set; } 
 
 
     }
