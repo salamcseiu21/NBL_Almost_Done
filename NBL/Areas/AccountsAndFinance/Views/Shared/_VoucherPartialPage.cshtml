@@ -6,6 +6,7 @@
     ViewBag.Title = "Vouchers";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
     var user = (ViewUser) Session["user"];
+    var i = 0;
 }
 
 <section class="content">
@@ -14,6 +15,7 @@
 
         <thead>
         <tr>
+            <th class="text-center">S.N </th>
             <th class="text-center">Voucher Name </th>
             <th class="text-center">Transaction Type </th>
             <th class="text-center">Date </th>
@@ -27,9 +29,10 @@
 
         @foreach (var item in Model)
         {
-
+            i++;
             <tr>
 
+                <td>@i</td>
                 <td>@item.VoucherName</td>
                 <td class="text-center">
                     @{
@@ -86,6 +89,7 @@
         </tbody>
         <tfoot>
         <tr>
+            <th class="text-center">S.N </th>
             <th class="text-center">Voucher Name </th>
             <th class="text-center">Transaction Type </th>
             <th class="text-center">Date </th>

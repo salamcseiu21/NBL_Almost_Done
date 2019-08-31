@@ -115,6 +115,8 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             {
                 var anUser = (ViewUser)Session["user"];
                 var payments= GetPaymentsFromXmlFile();
+                var employeeId = collection["EmployeeId"];
+               
                 Receivable receivable = new Receivable
                 {
                     Payments = payments,
@@ -123,7 +125,8 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                     ClientId = Convert.ToInt32(collection["ClientId"]),
                     BranchId = Convert.ToInt32(Session["BranchId"]),
                     CompanyId = Convert.ToInt32(Session["CompanyId"]),
-                    TransactionTypeId = Convert.ToInt32(collection["TransactionTypeId"])
+                    TransactionTypeId = Convert.ToInt32(collection["TransactionTypeId"]),
+                    CollectionByEmpId = employeeId==""? (int?)null: Convert.ToInt32(collection["EmployeeId"])
                 };
                 string inRef= collection["InvoiceRef"];
                

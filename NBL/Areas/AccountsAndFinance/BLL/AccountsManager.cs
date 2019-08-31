@@ -8,6 +8,7 @@ using NBL.Areas.AccountsAndFinance.Models;
 using NBL.Areas.Sales.DAL;
 using NBL.BLL.Contracts;
 using NBL.Models;
+using NBL.Models.EntityModels.ChartOfAccounts;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.VatDiscounts;
@@ -15,6 +16,7 @@ using NBL.Models.Enums;
 using NBL.Models.Searchs;
 using NBL.Models.SummaryModels;
 using NBL.Models.ViewModels.FinanceModels;
+using SubSubSubAccount = NBL.Models.EntityModels.ChartOfAccounts.SubSubSubAccount;
 
 namespace NBL.Areas.AccountsAndFinance.BLL
 {
@@ -82,6 +84,31 @@ namespace NBL.Areas.AccountsAndFinance.BLL
         {
             int rowAffected= _iAccountGateway.CancelReceivable(chequeDetailsId, reason, userId);
             return rowAffected > 0;
+        }
+
+        public ICollection<AccountType> GetAllChartOfAccountType()
+        {
+            return _iAccountGateway.GetAllChartOfAccountType();
+        }
+
+        public ICollection<AccountHead> GetAllChartOfAccountList()
+        {
+            return _iAccountGateway.GetAllChartOfAccountList();
+        }
+
+        public ICollection<SubAccount> GetAllSubAccountList()
+        {
+            return _iAccountGateway.GetAllSubAccountList();
+        }
+
+        public ICollection<SubSubAccount> GetAllSubSubAccountList()
+        {
+            return _iAccountGateway.GetAllSubSubAccountList();
+        }
+
+        public ICollection<SubSubSubAccount> GetAllSubSubSubAccountList()
+        {
+            return _iAccountGateway.GetAllSubSubSubAccountList();
         }
 
         public ChequeDetails GetReceivableChequeByDetailsId(int chequeDetailsId)

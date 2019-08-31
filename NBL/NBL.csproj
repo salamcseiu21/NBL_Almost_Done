@@ -8192,6 +8192,11 @@
     <Content Include="Areas\SCM\Views\Order\CancelOrder.cshtml" />
     <Content Include="Areas\Sales\Views\SalesCollection\PendingCollectionList.cshtml" />
     <Content Include="Areas\Sales\Views\SalesCollection\Cancel.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\ChartOfAccount\AccountType.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\ChartOfAccount\AccountList.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\ChartOfAccount\SubAccountList.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\ChartOfAccount\SubSubAccountList.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\ChartOfAccount\SubSubSubAccountList.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
@@ -8349,7 +8354,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\AccountsAndFinance\Files\Receivable\" />
     <Folder Include="Areas\AccountsAndFinance\Files\Vouchers\" />
-    <Folder Include="Areas\AccountsAndFinance\Views\ChartOfAccount\" />
     <Folder Include="Areas\Administrative\Models\" />
     <Folder Include="Areas\Administrative\Views\Shared\" />
     <Folder Include="Areas\CommonArea\Models\" />

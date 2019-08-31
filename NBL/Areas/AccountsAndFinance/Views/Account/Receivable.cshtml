@@ -1,9 +1,8 @@
-﻿@using NBL.Models.ViewModels
+﻿
 @model NBL.Models.ViewModels.ViewReceivableCreateModel
 @{
     ViewBag.Title = "Receiveable";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
-    var user = (ViewUser) Session["user"];
     var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
     
 }
@@ -20,7 +19,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="Remarks" class="control-label col-md-3">Remarks</label>
+                        <label for="Remarks" class="control-label col-md-3">Receivable Remarks</label>
                         <div class="col-md-9">
                             <textarea id="Remarks" name="Remarks" class="form-control" rows="2" placeholder="Remarks" style="resize:none" autofocus></textarea>
                         </div>
@@ -58,31 +57,56 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="SubSubSubAccountCode" class="control-label col-md-3">Client Code</label>
-                        <div class="col-md-9">
-                            <input type="text" id="SubSubSubAccountCode" name="SubSubSubAccountCode" class="form-control" placeholder="Client Code" readonly="readonly" />
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="SubSubSubAccountCode" class="control-label col-md-6">Client Code</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="SubSubSubAccountCode" name="SubSubSubAccountCode" class="form-control" placeholder="Client Code" readonly="readonly" />
 
+                                </div>
+                            </div>
+               
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ClientTypeName" class="control-label col-md-6">Client Type</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="ClientTypeName" name="ClientTypeName" class="form-control" readonly />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="SubSubSubAccountCode" class="control-label col-md-6">Credit Limit</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="CreditLimit" name="CreditLimit" placeholder="Credit Limit" class="form-control" readonly/>
+
+                                </div>
+                            </div>
+               
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ClientTypeName" class="control-label col-md-6">Balance</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="Balance" name="Balance" placeholder="client Balance" class="form-control" readonly/>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="ClientTypeName" class="control-label col-md-3">Type</label>
+                        <label for="ClientName" class="control-label col-md-3">Collection By</label>
                         <div class="col-md-9">
-                            <input type="text" id="ClientTypeName" name="ClientTypeName" placeholder="client type" class="form-control" readonly />
-
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="CreditLimit" class="control-label col-md-3">Credit Limit</label>
-                        <div class="col-md-9">
-                            <input type="text" id="CreditLimit" name="CreditLimit" placeholder="Credit Limit" class="form-control" readonly />
-
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="Balance" class="control-label col-md-3">Balance</label>
-                        <div class="col-md-9">
-                            <input type="text" id="Balance" name="Balance" placeholder="client Balance" class="form-control" readonly />
+                            <input type="text" id="CollectionByEmp" name="CollectionByEmp" class="form-control" placeholder="Start typing Employee Name" required />
+                            <input type="hidden" id="EmployeeId" name="EmployeeId" />
 
                         </div>
                     </div>
@@ -95,14 +119,6 @@
 
                         </div>
                     </div>
-
-                    @*<div class="form-group">
-                        <label for="InvoiceRef" class="control-label col-md-3">Invoice Ref</label>
-                        <div class="col-md-9">
-                            <input type="text" id="InvoiceRef" name="InvoiceRef" placeholder="Invoice Ref" class="form-control"  />
-                            <input type="hidden" id="InvoiceId" name="InvoiceId"/>
-                        </div>
-                    </div>*@
                 </div>
             </div>
 
@@ -129,7 +145,7 @@
                                     <input type="text" id="SourceBankName" name="SourceBankName" placeholder="Type Bank Name" class="form-control" required />
                                 </div>
                             </div>
-                            <div class="form-group bankInfo">
+                            <div class="form-group">
                                 <label for="BankAccountNo" class="control-label col-md-3">Account No</label>
                                 <div class="col-md-9">
                                     <input type="text" id="BankAccountNo" name="BankAccountNo" placeholder="Type Account No" class="form-control" required />
@@ -231,7 +247,7 @@
             },
             select: function (e, i) {
                 $("#ClientId").val(i.item.val);
-                RemoveAll();
+                RemoveAllDuringClientChange();
                 //alert(i.item.val);
                 $("#InvoiceRef").empty();
                 $("#InvoiceRef").append('<option value="IN00">--Select--</option>');
@@ -292,42 +308,6 @@
     });
     </script>
 
-    @*Invoice Reference Auto Complete by Client Id*@
-    <script type="text/javascript">
-    $(function () {
-
-        $("#InvoiceRef").autocomplete({
-
-            source: function (request, response) {
-                var clientId = parseInt($("#ClientId").val());
-                $.ajax({
-                    url: RootUrl +'/Common/InvoiceRefAutoComplete/',
-                    data: "{ 'prefix': '" + request.term + "','clientId': '" + clientId + "'}",
-                    dataType: "json",
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-                        response($.map(data,
-                            function (item) {
-                                return item;
-                            }));
-                    },
-                    error: function (response) {
-                        alert(response.responseText);
-                    },
-                    failure: function (response) {
-                        alert(response.responseText);
-                    }
-                });
-            },
-            select: function (e, i) {
-                $("#InvoiceId").val(i.item.val);
-
-            },
-            minLength: 1
-        });
-    });
-    </script>
 
     @*Add cheque info to lsit (Ajax form Submit)*@
     <script>
@@ -411,7 +391,7 @@
         var day = currentTime.getDate();
         var year = currentTime.getFullYear();
         var date = day + "-" + month[mm] + "-" + year;
-        return date// Function returns the date
+        return date; // Function returns the date
     }
 
     function RemoveChequeInfo(btnClicked) {
@@ -533,7 +513,7 @@
 
 
     function ViewTempChequeInformation() {
-       
+
         //alert("Hi");
 
         $.ajax({
@@ -546,26 +526,10 @@
         });
     }
 
-        function Update(btnClicked) {
-            ValidateMaxQuantity(btnClicked);
-            var id = btnClicked.id;
-            var qty = parseInt(btnClicked.value);
-            var json = { id: id,quantity:qty };
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("Update", "Requisition",new {area="Corporate"})',
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(json),
-                success: function (data) {
-                    ViewTempChequeInformation();
-                }
-            });
-        }
-
         function RemoveProductById(btnClicked) {
 
             //alert(btnClicked.id);
-            if (confirm("Are you sure to remove this product ??")) {
+            if (confirm("Are you sure to remove this Cheque Info ??")) {
                 var id = btnClicked.id;
                 var json = { id: id };
                 $.ajax({
@@ -580,7 +544,7 @@
                                 productIdlist.splice(i, 1);
                             }
                         }
-                      
+
                     }
                 });
             }
@@ -605,17 +569,50 @@
             }
         }
 
-    function RemoveAll() {
+    function RemoveAllDuringClientChange() {
         $.ajax({
             type: "GET",
             url: '@Url.Action("RemoveAll","Account",new {area="AccountsAndFinance"})',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 ViewTempChequeInformation();
+                bankChecqueNoList = [];
             }
 
         });
     }
+
+    $(function () {
+        $("#CollectionByEmp").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url :'@Url.Action("EmployeeAutoComplete","Common",new {area=""})',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data,
+                            function(item) {
+                                return item;
+                            }));
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#EmployeeId").val(i.item.val);
+                //alert(i.item.val);
+            },
+            minLength: 1
+        });
+    });
+
 
 </script>
 }

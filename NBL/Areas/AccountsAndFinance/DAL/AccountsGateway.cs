@@ -7,6 +7,7 @@ using NBL.Areas.AccountsAndFinance.DAL.Contracts;
 using NBL.Areas.AccountsAndFinance.Models;
 using NBL.DAL;
 using NBL.Models;
+using NBL.Models.EntityModels.ChartOfAccounts;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Payments;
@@ -15,6 +16,7 @@ using NBL.Models.Logs;
 using NBL.Models.Searchs;
 using NBL.Models.SummaryModels;
 using NBL.Models.ViewModels.FinanceModels;
+using SubSubSubAccount = NBL.Models.EntityModels.ChartOfAccounts.SubSubSubAccount;
 
 namespace NBL.Areas.AccountsAndFinance.DAL
 {
@@ -41,6 +43,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                 CommandObj.Parameters.AddWithValue("@CompanyId", receivable.CompanyId);
                 CommandObj.Parameters.AddWithValue("@TransactionTypeId", receivable.TransactionTypeId);
                 CommandObj.Parameters.AddWithValue("@Remarks", receivable.Remarks);
+                CommandObj.Parameters.AddWithValue("@CollectionByEmpId", receivable.CollectionByEmpId??(object)DBNull.Value);
                 CommandObj.Parameters.Add("@ReceivableId", SqlDbType.Int);
                 CommandObj.Parameters["@ReceivableId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
@@ -267,7 +270,8 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                         EntryByEmp = DBNull.Value.Equals(reader["EntryBy"]) ? null : reader["EntryBy"].ToString(),
                         CollectionByBranch = reader["CollectionByBranchName"].ToString(),
                         Cancel = Convert.ToInt32(reader["Cancel"]),
-                        CancelByUserId = DBNull.Value.Equals(reader["CancelByUserId"]) ? (int?)null : Convert.ToInt32(reader["CancelByUserId"])
+                        CancelByUserId = DBNull.Value.Equals(reader["CancelByUserId"]) ? (int?)null : Convert.ToInt32(reader["CancelByUserId"]),
+                        CollectionByEmp = DBNull.Value.Equals(reader["CollectionByEmp"]) ? null : reader["CollectionByEmp"].ToString() 
 
                     };
                     details.Add(aPayment);
@@ -2014,6 +2018,181 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not cancel receivable chaque", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<AccountType> GetAllChartOfAccountType()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllChartOfAccountType";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<AccountType> accountTypes = new List<AccountType>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    accountTypes.Add(new AccountType
+                    {
+                        AccountTypeName = reader["AccountType"].ToString(),
+                        AccountTypeAlias = reader["Alias"].ToString(),
+                        AccountTypeId = Convert.ToInt32(reader["AccountTypeId"])
+
+                    });
+                }
+                reader.Close();
+                return accountTypes;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect chart of account types", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<AccountHead> GetAllChartOfAccountList()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllChartOfAccountList";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<AccountHead> accountHeads = new List<AccountHead>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    accountHeads.Add(new AccountHead
+                    {
+                        AccountHeadName = reader["AccountName"].ToString(),
+                        AccountHeadCode = reader["AccountCode"].ToString()
+                    });
+                }
+                reader.Close();
+                return accountHeads;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect chart of account list", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<SubAccount> GetAllSubAccountList()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllSubAccountList";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<SubAccount> subAccounts = new List<SubAccount>(); 
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    subAccounts.Add(new SubAccount
+                    {
+                        SubAccountName = reader["SubAccountName"].ToString(),
+                        SubAccountCode = reader["SubAccountCode"].ToString(),
+                        AccountHeadCode = reader["AccountCode"].ToString()
+                    });
+                }
+                reader.Close();
+                return subAccounts;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect  sub account list", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<SubSubAccount> GetAllSubSubAccountList()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllSubSubAccountList";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<SubSubAccount> subSubAccounts = new List<SubSubAccount>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    subSubAccounts.Add(new SubSubAccount
+                    {
+                        SubSubAccountName = reader["SubSubAccountName"].ToString(),
+                        SubAccountCode = reader["SubAccountCode"].ToString(),
+                        SubSubAccountCode = reader["SubSubAccountCode"].ToString()
+                    });
+                }
+                reader.Close();
+                return subSubAccounts;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect sub sub account list", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<SubSubSubAccount> GetAllSubSubSubAccountList()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllSubSubSubAccountList";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<SubSubSubAccount> subSubSubAccounts = new List<SubSubSubAccount>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    subSubSubAccounts.Add(new SubSubSubAccount
+                    {
+                        SubSubSubAccountName = reader["SubSubSubAccountName"].ToString(),
+                        SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        SubSubAccountCode = reader["SubSubAccountCode"].ToString()
+                    });
+                }
+                reader.Close();
+                return subSubSubAccounts;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect sub sub sub account list", exception);
             }
             finally
             {

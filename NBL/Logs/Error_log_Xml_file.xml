@@ -119,4 +119,76 @@
     <LogDateTime>2019-08-28T16:13:21.3472281+06:00</LogDateTime>
     <CustomeMessage>Could not collect receivable cheques</CustomeMessage>
   </Error>
+  <Error LogId="19-Aug-2941fe26f0-dc86-4950-9f9f-d654045831e6">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.SaveReceivable(Receivable receivable) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 47</LogMessage>
+    <LogDateTime>2019-08-29T10:28:43.6406151+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'spSaveReceivable' expects parameter '@CollectionByEmpId', which was not supplied.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-298ca5922e-4c2d-4983-ac92-dbba251e859a">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.SaveReceivable(Receivable receivable) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 66
+   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.SaveReceivable(Receivable receivable) in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 38
+   at NBL.Areas.AccountsAndFinance.Controllers.AccountController.SaveReceivable(FormCollection collection) in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountController.cs:line 144</LogMessage>
+    <LogDateTime>2019-08-29T10:28:43.6718624+06:00</LogDateTime>
+    <CustomeMessage>Could not Save receivable informaiton</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-3121955ea0-b4a1-47a5-8a50-b32f0751cefa">
+    <Heading>System.NotImplementedException</Heading>
+    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllChartOfAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 2068
+   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.GetAllChartOfAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 96
+   at NBL.Areas.AccountsAndFinance.Controllers.ChartOfAccountController.AccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\ChartOfAccountController.cs:line 46</LogMessage>
+    <LogDateTime>2019-08-31T10:38:21.9790185+06:00</LogDateTime>
+    <CustomeMessage>The method or operation is not implemented.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-31c3adbbbb-8511-4eb3-92e0-935a347463b2">
+    <Heading>System.NotImplementedException</Heading>
+    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllSubAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 2073
+   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.GetAllSubAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 101
+   at NBL.Areas.AccountsAndFinance.Controllers.ChartOfAccountController.SubAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\ChartOfAccountController.cs:line 59</LogMessage>
+    <LogDateTime>2019-08-31T10:38:28.2013246+06:00</LogDateTime>
+    <CustomeMessage>The method or operation is not implemented.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-31aef5ee4b-70f3-476b-b9d0-57bad2a2c6c1">
+    <Heading>System.NotImplementedException</Heading>
+    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllSubSubAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 2078
+   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.GetAllSubSubAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 106
+   at NBL.Areas.AccountsAndFinance.Controllers.ChartOfAccountController.SubSubAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\ChartOfAccountController.cs:line 73</LogMessage>
+    <LogDateTime>2019-08-31T10:38:30.6108806+06:00</LogDateTime>
+    <CustomeMessage>The method or operation is not implemented.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-314735db98-e101-4ccd-b778-671a761f3b9b">
+    <Heading>System.NotImplementedException</Heading>
+    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllSubSubSubAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 2083
+   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.GetAllSubSubSubAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 111
+   at NBL.Areas.AccountsAndFinance.Controllers.ChartOfAccountController.SubSubSubAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\ChartOfAccountController.cs:line 87</LogMessage>
+    <LogDateTime>2019-08-31T10:38:33.3797142+06:00</LogDateTime>
+    <CustomeMessage>The method or operation is not implemented.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-310fdef53a-0f75-4279-b90b-5084343c95d3">
+    <Heading>System.NotImplementedException</Heading>
+    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllSubSubAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 2137
+   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.GetAllSubSubAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 106
+   at NBL.Areas.AccountsAndFinance.Controllers.ChartOfAccountController.SubSubAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\ChartOfAccountController.cs:line 73</LogMessage>
+    <LogDateTime>2019-08-31T11:02:59.5589059+06:00</LogDateTime>
+    <CustomeMessage>The method or operation is not implemented.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Aug-31749b717d-5274-4539-a8ea-24e881c91c19">
+    <Heading>System.FormatException</Heading>
+    <LogMessage>   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.Convert.ToInt32(String value)
+   at NBL.Areas.AccountsAndFinance.Controllers.VoucherController.SaveCreditVoucher(FormCollection collection) in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\VoucherController.cs:line 139</LogMessage>
+    <LogDateTime>2019-08-31T11:32:43.1083675+06:00</LogDateTime>
+    <CustomeMessage>Input string was not in a correct format.</CustomeMessage>
+  </Error>
 </Errors>

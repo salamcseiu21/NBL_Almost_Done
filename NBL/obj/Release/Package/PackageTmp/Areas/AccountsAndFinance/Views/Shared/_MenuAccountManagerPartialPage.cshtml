@@ -16,9 +16,9 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li>@Html.ActionLink(" Active Receivable", "ActiveReceivable", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-file", style = "font-weight: bolder;"})</li>
-                <li>@Html.ActionLink(" Vouchers", "Vouchers", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-file", style = "font-weight: bolder;"})</li>
-                <li>@Html.ActionLink(" Journal Vouchers", "ViewJournal", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-file", style = "font-weight: bolder;"})</li>
+                <li>@Html.ActionLink(" Active Receivable", "ActiveReceivable", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus", style = "font-weight: bolder;"})</li>
+                <li>@Html.ActionLink(" Vouchers", "Vouchers", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus", style = "font-weight: bolder;"})</li>
+                <li>@Html.ActionLink(" Journal Vouchers", "ViewJournal", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus", style = "font-weight: bolder;"})</li>
                 @if (branchId == 9)
                 {
                     <li>@Html.ActionLink(" Approve Vats", "Vats", "AccountManager", new {area = "AccountsAndFinance"}, new {@class = "fa fa-file", style = "font-weight: bolder;"})</li>

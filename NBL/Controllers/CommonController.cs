@@ -315,7 +315,7 @@ namespace NBL.Controllers
 
             if (isContra.Equals("true") && transactionTypeId==1)
             {
-                var accountList = (from c in _iCommonManager.GetAllSubSubSubAccounts().ToList().FindAll(n=>n.SubSubSubAccountCode.StartsWith("3307")).ToList()
+                var accountList = (from c in _iCommonManager.GetAllSubSubSubAccounts().ToList().FindAll(n=>n.SubSubSubAccountCode.StartsWith("3106")).ToList()
                                    where c.SubSubSubAccountName.ToLower().Contains(prefix.ToLower())
                                    select new
                                    {
@@ -325,9 +325,9 @@ namespace NBL.Controllers
 
                 return Json(accountList);
             }
-            else if(isContra.Equals("true") && transactionTypeId == 2)
+            if(isContra.Equals("true") && transactionTypeId == 2)
             {
-                var accountList = (from c in _iCommonManager.GetAllSubSubSubAccounts().ToList().FindAll(n => n.SubSubSubAccountCode.StartsWith("3308")).ToList()
+                var accountList = (from c in _iCommonManager.GetAllSubSubSubAccounts().ToList().FindAll(n => n.SubSubSubAccountCode.StartsWith("3105")).ToList()
                                    where c.SubSubSubAccountName.ToLower().Contains(prefix.ToLower())
                                    select new
                                    {

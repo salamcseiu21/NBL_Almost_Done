@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using NBL.Areas.Accounts.Models;
 using NBL.Areas.AccountsAndFinance.Models;
 using NBL.Models;
+using NBL.Models.EntityModels.ChartOfAccounts;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Searchs;
 using NBL.Models.SummaryModels;
 using NBL.Models.ViewModels.FinanceModels;
+using SubSubSubAccount = NBL.Models.EntityModels.ChartOfAccounts.SubSubSubAccount;
 
 namespace NBL.Areas.AccountsAndFinance.DAL.Contracts
 {
@@ -94,6 +96,11 @@ namespace NBL.Areas.AccountsAndFinance.DAL.Contracts
        ICollection<ChequeDetails> GetAllReceivableCheque(int companyId, DateTime collectionDate);
        ICollection<ChequeDetails> GetAllReceivableCheque(int companyId, int status);
        ICollection<ViewReceivableDetails> GetActivetedReceivableListByCompany(int companyId);
-       int CancelReceivable(int chequeDetailsId, string reason, int userId); 
+       int CancelReceivable(int chequeDetailsId, string reason, int userId);
+       ICollection<AccountType> GetAllChartOfAccountType();
+       ICollection<AccountHead> GetAllChartOfAccountList();
+       ICollection<SubAccount> GetAllSubAccountList();
+       ICollection<SubSubAccount> GetAllSubSubAccountList();
+       ICollection<SubSubSubAccount> GetAllSubSubSubAccountList();
    }
 }

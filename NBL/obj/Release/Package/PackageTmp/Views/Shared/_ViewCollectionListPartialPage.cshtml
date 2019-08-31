@@ -9,13 +9,12 @@
             <th>Collection Ref</th>
             <th>Client Name</th>
             <th>Branch Name</th>
-            <th>Source Bank Name</th>
-            <th>Account No</th>
-            <th>Cheque No</th>
+            <th>Collection Info</th>
             <th>Cheque Date</th>
             <th class="text-right">Amount (&#2547;) </th>
             <th class="text-center">Entry Date </th>
             <th class="text-center">Entry By </th>
+            <th class="text-center">Collection By </th>
             <th class="text-center">Status</th>
         </tr>
     </thead>
@@ -27,13 +26,18 @@
                 <td>@item.ReceivableRef (@item.CollectionByBranch)</td>
                 <td>@Html.ActionLink(item.ClientInfo,"ViewClientProfile","Home",new {id= item.ClientId},null) </td>
                 <td>@item.CollectionByBranch</td>
-                <td>@item.SourceBankName</td>
-                <td>@item.BankAccountNo</td>
-                <td>@item.ChequeNo</td>
+                <td>@{
+                        <p>
+                            <label>Source Bank :</label> @item.SourceBankName<br/>
+                            <label>Account No: </label> @item.BankAccountNo<br/>
+                            <label>Cheque No: </label> @item.ChequeNo
+                        </p>
+                    }</td>
                 <td>@item.ChequeDate.Date.ToString("dd-MMMM-yyyy")</td>
                 <td class="text-right">@item.ChequeAmount.ToString("N2")</td>
                 <th class="text-center">@item.ReceivableDateTime.Date.ToString("dd-MMM-yyyy") </th>
                 <th class="text-center">@item.EntryByEmp </th>
+                <th class="text-center">@(item.CollectionByEmp?? "N/A") </th>
                 <td class="text-center">
                     @if (item.ActiveStatus == 0)
                     {
@@ -57,13 +61,12 @@
             <th>Collection Ref</th>
             <th>Client Name</th>
             <th>Branch Name</th>
-            <th>Source Bank Name</th>
-            <th>Account No</th>
-            <th>Cheque No</th>
+            <th>Collection Info</th>
             <th>Cheque Date</th>
             <th class="text-right">Amount (&#2547;) </th>
             <th class="text-center">Entry Date </th>
             <th class="text-center">Entry By </th>
+            <th class="text-center">Collection By </th>
             <th class="text-center">Status</th>
         </tr>
     </tfoot>

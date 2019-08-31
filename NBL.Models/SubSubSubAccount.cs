@@ -11,6 +11,7 @@ namespace NBL.Models
         [DisplayName("Account Name")]
         public string SubSubSubAccountName { get; set; }
         public string SubSubSubAccountType { get; set; }
+        public string SubSubAccountCode { get; set; } 
 
 
         public string GetBasicInformation()

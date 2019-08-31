@@ -27,7 +27,7 @@ namespace NBL.Areas.AccountsAndFinance.Models
         public List<Payment> Payments { get; set; }
         public char Paymode { get; set; }
         public string InvoiceRef { get; set; }
-
+        public int? CollectionByEmpId { get; set; }  
 
     }
 }

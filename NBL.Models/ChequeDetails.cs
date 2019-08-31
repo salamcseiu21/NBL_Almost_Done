@@ -19,8 +19,8 @@ namespace NBL.Models
         public string EntryByEmp { get; set; }
         public int Cancel { get; set; }
         public string CancelRemarks { get; set; }
-        public int? CancelByUserId { get; set; } 
-
+        public int? CancelByUserId { get; set; }
+        public string CollectionByEmp { get; set; }
 
     }
 }

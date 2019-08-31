@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NBL.Areas.Accounts.Models;
 using NBL.Areas.AccountsAndFinance.Models;
 using NBL.Models;
+using NBL.Models.EntityModels.ChartOfAccounts;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.VatDiscounts;
@@ -59,6 +60,11 @@ namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
 
        ICollection<ChequeDetails> GetAllReceivableCheque(int companyId, int status);
        ICollection<ViewReceivableDetails> GetActivetedReceivableListByCompany(int companyId);
-       bool CancelReceivable(int chequeDetailsId, string reason, int userId); 
+       bool CancelReceivable(int chequeDetailsId, string reason, int userId);
+       ICollection<AccountType> GetAllChartOfAccountType();
+       ICollection<AccountHead> GetAllChartOfAccountList();
+       ICollection<SubAccount> GetAllSubAccountList();
+       ICollection<SubSubAccount> GetAllSubSubAccountList();
+       ICollection<NBL.Models.EntityModels.ChartOfAccounts.SubSubSubAccount> GetAllSubSubSubAccountList(); 
    }
 }

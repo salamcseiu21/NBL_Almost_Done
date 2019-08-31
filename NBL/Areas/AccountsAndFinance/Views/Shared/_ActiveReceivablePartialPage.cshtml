@@ -13,14 +13,13 @@
             <th>S.N</th>
             <th>Client Name</th>
             <th>Branch Name</th>
-            <th>Source Bank Name</th>
-            <th>Account No</th>
-            <th>Cheque No</th>
+            <th>Collection Info</th>
             <th>Cheque Date</th>
             <th>Entry Date</th>
             <th class="text-right">Amount (&#2547;) </th>
             <th class="text-center">Remarks </th>
             <th class="text-center">Entry By </th>
+            <th class="text-center">Collection By </th>
             <th class="text-center">Action</th>
         </tr>
     </thead>
@@ -34,14 +33,19 @@
                 <td>@i</td>
                 <td>@item.Client.ClientName</td>
                 <td>@item.CollectionByBranch</td>
-                <td>@item.SourceBankName</td>
-                <td>@item.BankAccountNo</td>
-                <td>@item.ChequeNo</td>
+                <td>@{
+                        <p>
+                            <label>Source Bank :</label> @item.SourceBankName<br/>
+                           <label>Account No: </label> @item.BankAccountNo<br/>
+                           <label>Cheque No: </label> @item.ChequeNo
+                        </p>
+                    }</td>
                 <td>@item.ChequeDate.Date.ToString("dd-MMMM-yyyy")</td>
                 <td>@item.SysDateTime.Date.ToString("dd-MMMM-yyyy")</td>
                 <td class="text-right">@item.ChequeAmount.ToString("N2")</td>
                 <td class="text-center">@item.Remarks</td>
                 <td class="text-center">@item.EntryByEmp</td>
+                <td class="text-center">@(item.CollectionByEmp?? "N/A")</td>
                 <td class="text-center">
                     @{
                         if (item.PaymentTypeId == 4)
@@ -77,14 +81,13 @@
         <th>S.N</th>
         <th>Client Name</th>
         <th>Branch Name</th>
-        <th>Source Bank Name</th>
-        <th>Account No</th>
-        <th>Cheque No</th>
+        <th>Collection Info</th>
         <th>Cheque Date</th>
         <th>Entry Date</th>
         <th class="text-right">Amount (&#2547;) </th>
         <th class="text-center">Remarks </th>
         <th class="text-center">Entry By </th>
+        <th class="text-center">Collection By </th>
         <th class="text-center">Action</th>
 
     </tr>
