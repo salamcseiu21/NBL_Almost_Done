@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Masters;
+using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
@@ -888,6 +889,48 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect  client list", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<ProductDetails> GetAllProductDetails()
+        {
+            try
+            {
+
+                CommandObj.CommandText = "UDSP_RptGetProductDetails";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<ProductDetails> detailses = new List<ProductDetails>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    detailses.Add(new ProductDetails
+                    {
+                       ProductId = Convert.ToInt32(reader["ProductId"]),
+                       ProductName = reader["ProductName"].ToString(),
+                       CategoryName = reader["CategoryName"].ToString(),
+                       UnitPrice = DBNull.Value.Equals(reader["UnitPrice"])? 0:Convert.ToDecimal(reader["UnitPrice"]),
+                       DealerDiscount = DBNull.Value.Equals(reader["DealerDiscount"])? (decimal?)null:Convert.ToDecimal(reader["DealerDiscount"]),
+                       CorporateDiscount = DBNull.Value.Equals(reader["CorporateDiscount"])? (decimal?)null:Convert.ToDecimal(reader["CorporateDiscount"]),
+                       IndividualDiscount = DBNull.Value.Equals(reader["IndividualDiscount"])? (decimal?)null:Convert.ToDecimal(reader["IndividualDiscount"]),
+                       VatAmount = DBNull.Value.Equals(reader["VatAmount"])? (decimal?)null:Convert.ToDecimal(reader["VatAmount"])
+
+                    });
+                }
+                reader.Close();
+                return detailses;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect product Details", exception);
             }
             finally
             {

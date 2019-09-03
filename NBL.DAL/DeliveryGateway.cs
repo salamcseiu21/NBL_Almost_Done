@@ -946,6 +946,17 @@ namespace NBL.DAL
                             Transportation = reader["Transportation"].ToString(),
                             TransportationCost = Convert.ToDecimal(reader["TransportationCost"]),
                             VehicleNo = reader["VehicleNo"].ToString()
+                        },
+                        Client = new Client
+                        {
+                            ClientId = Convert.ToInt32(reader["ClientId"]),
+                            ClientName = reader["Name"].ToString(),
+                            CommercialName = reader["CommercialName"].ToString(),
+                            ClientType = new ClientType
+                            {
+                                ClientTypeId = Convert.ToInt32(reader["ClientTypeId"]),
+                                ClientTypeName = reader["ClientTypeName"].ToString()
+                            }
                         }
                     };
                     orders.Add(aModel);

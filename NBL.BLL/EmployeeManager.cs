@@ -125,5 +125,11 @@ namespace NBL.BLL
         {
             return _iEmployeeGateway.GetEducationalInfoByEmpId(employeeId);
         }
+
+        public bool TransferEmployee(int empId, int fromBranchId, int toBranchId, string remarks, ViewUser user)
+        {
+            int rowAffected = _iEmployeeGateway.TransferEmployee(empId, fromBranchId, toBranchId, remarks,user);
+            return rowAffected > 0;
+        }
     }
 }

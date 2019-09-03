@@ -65,6 +65,7 @@ namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
        ICollection<AccountHead> GetAllChartOfAccountList();
        ICollection<SubAccount> GetAllSubAccountList();
        ICollection<SubSubAccount> GetAllSubSubAccountList();
-       ICollection<NBL.Models.EntityModels.ChartOfAccounts.SubSubSubAccount> GetAllSubSubSubAccountList(); 
+       ICollection<NBL.Models.EntityModels.ChartOfAccounts.SubSubSubAccount> GetAllSubSubSubAccountList();
+       ICollection<ChequeDetails> GetAllReceivableChequeByCompanyIdAndStatus(int companyId, int status);
    }
 }

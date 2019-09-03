@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
@@ -30,5 +31,6 @@ namespace NBL.DAL.Contracts
        ICollection<ViewOrderHistory> GetOrderHistoriesByYear(int year);
        ICollection<TerritoryWiseDeliveredQty> GetTerritoryWishTotalSaleQtyByBranchId(int branchId);
        ICollection<ViewClient> GetClientList();
+       ICollection<ProductDetails> GetAllProductDetails(); 
    }
 }

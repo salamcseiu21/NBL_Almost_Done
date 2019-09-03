@@ -277,6 +277,22 @@ namespace NBL.Areas.Sales.Controllers
         }
 
         [HttpGet]
+        public ActionResult TodaysCollectionList()
+        {
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var collections = _iAccountsManager.GetAllReceivableChequeByCompanyIdAndStatus(companyId, 1).ToList().FindAll(n => Convert.ToDateTime(n.ActiveDate).Date.Equals(DateTime.Now.Date));
+                return View(collections);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpGet]
         public ActionResult CollectionList()
         {
             try
@@ -290,6 +306,8 @@ namespace NBL.Areas.Sales.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+
+
 
         public PartialViewResult GetCollectionListByDate(DateTime collectionDate) 
         {
@@ -316,7 +334,7 @@ namespace NBL.Areas.Sales.Controllers
             var branchId = Convert.ToInt32(Session["BranchId"]);
             searchCriteria.BranchId = branchId;
             searchCriteria.CompanyId = companyId;
-            if (user.Roles.Equals("SalesExecutive"))
+            if(user.Roles.Equals("SalesExecutive"))
             {
                 searchCriteria.UserId = user.UserId;
             }

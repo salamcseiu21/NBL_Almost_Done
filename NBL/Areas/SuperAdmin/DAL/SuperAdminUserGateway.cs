@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.SqlClient;
 using NBL.Areas.SuperAdmin.Models.ViewModels;
 using NBL.DAL;
-using NBL.Models;
 using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.Logs;
@@ -15,8 +14,7 @@ namespace NBL.Areas.SuperAdmin.DAL
     {
         public int AssignBranchToUser(User user, Branch branch)
         {
-            
-            
+           
             try
             {
                

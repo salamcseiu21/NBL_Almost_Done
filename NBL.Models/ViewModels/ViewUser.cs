@@ -34,6 +34,7 @@ namespace NBL.Models.ViewModels
         public bool IsGeneralRequisitionRight { set; get; }
         public bool IsPasswordChangeRequired { set; get; }
         public int PasswordChangeRequiredWithin { get; set; }   
+        public int IsCorporateUser { get; set; }   
         public DateTime PasswordUpdateDate { get; set; }
     }
 }

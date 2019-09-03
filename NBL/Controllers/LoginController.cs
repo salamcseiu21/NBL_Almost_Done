@@ -15,8 +15,6 @@ using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
-using NBL.Models.ViewModels.Orders;
-
 namespace NBL.Controllers
 {
     public class LoginController : Controller

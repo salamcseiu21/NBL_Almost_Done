@@ -89,9 +89,17 @@
             @*<li>
                 @Html.ActionLink(" Collection Entry", "Receivable", "SalesCollection", new { area = "Sales" }, new { @class = "fa fa-plus", style = "font-weight: bolder" })
             </li>*@
+            @if (user.IsCorporateUser == 1)
+            {
+                <li>
+                    @Html.ActionLink(" Today's Collection List", "TodaysCollectionList", "SalesCollection", new { area = "Sales" }, new { @class = "fa fa-eye", style = "font-weight: bolder" })
+                </li>
+            }
+           
             <li>
                 @Html.ActionLink(" Collection List", "CollectionList", "SalesCollection", new { area = "Sales" }, new { @class = "fa fa-eye", style = "font-weight: bolder" })
             </li>
+           
         </ul>
     </li>
     <li class="treeview">

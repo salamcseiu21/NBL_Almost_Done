@@ -17,5 +17,6 @@ namespace NBL.DAL.Contracts
        ICollection<object> GetEmployeeListByDepartmentAndSearchTerm(int departmentId, string searchTerm,int branchId);
        int UpdateEducationalInfo(EducationalInfo model);
        List<EducationalInfo> GetEducationalInfoByEmpId(int employeeId);
+       int TransferEmployee(int empId, int fromBranchId, int toBranchId, string remarks, ViewUser user);
    }
 }

@@ -617,5 +617,35 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public int TransferEmployee(int empId, int fromBranchId, int toBranchId, string remarks, ViewUser user)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_TransferEmployee";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@EmployeeId", empId);
+                CommandObj.Parameters.AddWithValue("@FromBranchId", fromBranchId);
+                CommandObj.Parameters.AddWithValue("@ToBranchId", toBranchId);
+                CommandObj.Parameters.AddWithValue("@Remarks", remarks);
+                CommandObj.Parameters.AddWithValue("@TransferByUserId", user.UserId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                int rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Transfer Employee", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }

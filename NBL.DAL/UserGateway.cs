@@ -181,7 +181,8 @@ namespace NBL.DAL
                         LogInDateTime = DBNull.Value.Equals(reader["LogInDateTime"]) ? default(DateTime) : Convert.ToDateTime(reader["LogInDateTime"]),
                         LogOutDateTime = DBNull.Value.Equals(reader["LogOutDateTime"]) ? default(DateTime) : Convert.ToDateTime(reader["LogOutDateTime"]),
                         PasswordUpdateDate = DBNull.Value.Equals(reader["UpdatedAt"]) ? default(DateTime) : Convert.ToDateTime(reader["UpdatedAt"]),
-                        PasswordChangeRequiredWithin=Convert.ToInt32(reader["PasswordChangeRequiredWithin"])
+                        PasswordChangeRequiredWithin=Convert.ToInt32(reader["PasswordChangeRequiredWithin"]),
+                        IsCorporateUser = Convert.ToInt32(reader["IsCorporateUser"])
 
                     };
 
@@ -398,6 +399,63 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not collecd assigned role by username", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int BlockUser(int userId, ViewUser anUser)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_BlockUser";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                CommandObj.Parameters.AddWithValue("@BlockByUserId", anUser.UserId);
+                CommandObj.Parameters.AddWithValue("@UserId", userId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not block User", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int UnAssignBranchFromUser(int userId, int branchId, ViewUser anUser)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_UnAssignBranchFromUser";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                CommandObj.Parameters.AddWithValue("@UnAssignByUserId", anUser.UserId);
+                CommandObj.Parameters.AddWithValue("@UserId", userId);
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not unassign User from Branch", exception);
             }
             finally
             {

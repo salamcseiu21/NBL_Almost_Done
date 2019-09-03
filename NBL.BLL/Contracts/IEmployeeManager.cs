@@ -24,5 +24,6 @@ namespace NBL.BLL.Contracts
         ICollection<object> GetEmployeeListByDepartmentAndSearchTerm(int departmentId,string searchTerm,int branchId);
         bool UpdateEducationalInfo(EducationalInfo model);
         List<EducationalInfo> GetEducationalInfoByEmpId(int employeeId);
+        bool TransferEmployee(int empId, int fromBranchId, int toBranchId, string remarks, ViewUser user); 
     }
 }

@@ -222,7 +222,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
                 }
                 else
                 {
-                    TempData["RoleUnAssignedMessage"] = "Failed to UsAssign Role Assigned";
+                    TempData["RoleUnAssignedMessage"] = "Failed to UsAssign Role";
                 }
                 var branches = _iBranchManager.GetAllBranches();
                 var roles = _iCommonManager.GetAllUserRoles();
@@ -242,12 +242,51 @@ namespace NBL.Areas.SuperAdmin.Controllers
             return View(users);
 
         }
-      
 
-        public ActionResult UnAssignDistrict()
+        [HttpPost]
+        public void BlockUser(int userId)
+        {
+            SuccessErrorModel model = new SuccessErrorModel ();
+            var anUser = (ViewUser)Session["user"];
+            bool result = _userManager.BlockUser(userId,anUser);
+            if(result)
+            {
+                model.Message = "User Blocked Successfully!!";
+            }
+            else
+            {
+                model.Message = "User Blocked Falied!!";
+            }
+           
+        }
+
+        public ActionResult UnAssignBranch()
         {
 
-            return View(_iRegionManager.GetRegionListWithDistrictInfo());
+            var branches = _iBranchManager.GetAllBranches();
+            ViewBag.BranchId = branches;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UnAssignBranch(FormCollection collection)
+        {
+
+            var anUser = (ViewUser)Session["user"];
+            var userId = Convert.ToInt32(collection["UserId"]);
+            var branchId = Convert.ToInt32(collection["BranchId"]);
+            bool result = _userManager.UnAssignBranchFromUser(userId,branchId,anUser);
+            if (result)
+            {
+                TempData["BranchUnAssignedMessage"] = "Branch UsAssigned Successfully!";
+            }
+            else
+            {
+                TempData["BranchUnAssignedMessage"] = "Failed to UsAssign branch";
+            }
+            var branches = _iBranchManager.GetAllBranches();
+            ViewBag.BranchId = branches;
+            return View();
         }
         [HttpPost]
         public JsonResult UnAssignDistrict(FormCollection collection)

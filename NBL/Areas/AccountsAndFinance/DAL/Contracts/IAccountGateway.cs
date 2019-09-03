@@ -102,5 +102,6 @@ namespace NBL.Areas.AccountsAndFinance.DAL.Contracts
        ICollection<SubAccount> GetAllSubAccountList();
        ICollection<SubSubAccount> GetAllSubSubAccountList();
        ICollection<SubSubSubAccount> GetAllSubSubSubAccountList();
+       ICollection<ChequeDetails> GetAllReceivableChequeByCompanyIdAndStatus(int companyId, int status);
    }
 }

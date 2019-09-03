@@ -82,5 +82,17 @@ namespace NBL.BLL
         {
             return _userGateway.GetAssignedUserRolesByUserId(userId);
         }
+
+        public bool BlockUser(int userId, ViewUser anUser)
+        {
+            int rowAffected = _userGateway.BlockUser(userId, anUser);
+            return rowAffected > 0;
+        }
+
+        public bool UnAssignBranchFromUser(int userId, int branchId, ViewUser anUser)
+        {
+            int rowAffected = _userGateway.UnAssignBranchFromUser(userId,branchId, anUser);
+            return rowAffected > 0;
+        }
     }
 }

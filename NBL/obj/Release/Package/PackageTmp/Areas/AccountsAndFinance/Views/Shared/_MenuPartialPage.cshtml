@@ -8,6 +8,7 @@
 @if (!user.IsPasswordChangeRequired)
 {
     <ul class="sidebar-menu" data-widget="tree" style="font-weight: bolder; font-size: 16px">
+        
         <li class="treeview">
             <a href="#">
                 <i class="fa fa-money"></i>
@@ -26,6 +27,9 @@
                 @*<li>@Html.ActionLink(" Payable", "Payable", "Account", new { area = "Accounts" }, new { @class = "fa fa-file", style = "font-weight: bolder;" })</li>*@
             </ul>
         </li>
+        
+ 
+
         @if (branchId == 9)
         {
             <li class="treeview">
@@ -55,9 +59,9 @@
                 </ul>
             </li>
 
-            
+
         }
-     
+
         <li class="treeview">
             <a href="#">
                 <i class="fa fa-book"></i> <span>Return/Replace</span>
@@ -176,6 +180,23 @@
             <li>@Html.ActionLink(" Debit Vouchers", "ViewDebitVoucher", "Voucher", new { area = "Accounts" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
             <li>@Html.ActionLink(" Cheque Payment Vouchers", "ViewChequePaymentVoucher", "Voucher", new { area = "Accounts" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>
             <li>@Html.ActionLink(" Cheque Receive Vouchers", "ViewChequeReceiveVoucher", "Voucher", new { area = "Accounts" }, new { @class = "fa fa-list", style = "font-weight: bolder;" })</li>*@
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-money"></i>
+                <span>Chart of Account</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Account Types", "AccountType", "ChartOfAccount", new { area = "AccountsAndFinance" }, new { @class = "fa fa-eye", style = "font-weight: bolder;" })</li>
+                <li>@Html.ActionLink(" Account List", "AccountList", "ChartOfAccount", new { area = "AccountsAndFinance" }, new { @class = "fa fa-eye", style = "font-weight: bolder;" })</li>
+                <li>@Html.ActionLink(" Sub AccountList", "SubAccountList", "ChartOfAccount", new { area = "AccountsAndFinance" }, new { @class = "fa fa-eye", style = "font-weight: bolder;" })</li>
+                <li>@Html.ActionLink(" Sub Sub AccountList", "SubSubAccountList", "ChartOfAccount", new { area = "AccountsAndFinance" }, new { @class = "fa fa-eye", style = "font-weight: bolder;" })</li>
+                <li>@Html.ActionLink(" Sub Sub Sub AccountList", "SubSubSubAccountList", "ChartOfAccount", new { area = "AccountsAndFinance" }, new { @class = "fa fa-eye", style = "font-weight: bolder;" })</li>
+
             </ul>
         </li>
     </ul>

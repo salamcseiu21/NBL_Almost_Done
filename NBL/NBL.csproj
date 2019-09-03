@@ -8197,6 +8197,11 @@
     <Content Include="Areas\AccountsAndFinance\Views\ChartOfAccount\SubAccountList.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\ChartOfAccount\SubSubAccountList.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\ChartOfAccount\SubSubSubAccountList.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Assign\UnAssignBranch.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Home\TodaysCollectionList.cshtml" />
+    <Content Include="Areas\Sales\Views\SalesCollection\TodaysCollectionList.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Home\ProductDetails.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Home\TransferEmployee.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />

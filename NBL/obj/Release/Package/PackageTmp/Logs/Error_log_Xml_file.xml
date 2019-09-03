@@ -1,145 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Errors>
-  <Error LogId="19-Aug-25eaf33eb9-a7f0-45c3-baa5-eb57dd09350e">
+  <Error LogId="19-Sep-019c78c21e-de74-4d41-ade4-0c987f55d444">
     <Heading>System.IndexOutOfRangeException</Heading>
     <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
    at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
    at System.Data.SqlClient.SqlDataReader.get_Item(String name)
-   at NBL.DAL.ProductGateway.GetAllDeliveredGRequsition() in E:\API\NBL\NBL.DAL\ProductGateway.cs:line 1320</LogMessage>
-    <LogDateTime>2019-08-25T11:55:59.695163+06:00</LogDateTime>
-    <CustomeMessage>RequisitionDate</CustomeMessage>
+   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllReceivableChequeByCompanyIdAndStatus(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 308</LogMessage>
+    <LogDateTime>2019-09-01T14:50:42.3234307+06:00</LogDateTime>
+    <CustomeMessage>ReceivableRemarks</CustomeMessage>
   </Error>
-  <Error LogId="19-Aug-2646b6ab86-8dce-45f1-9a39-83f93ab2c163">
-    <Heading>System.IndexOutOfRangeException</Heading>
-    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
-   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
-   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
-   at NBL.DAL.InventoryGateway.GetProductHistoryByBarcode(String barcode) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 2912</LogMessage>
-    <LogDateTime>2019-08-26T15:51:14.0818612+06:00</LogDateTime>
-    <CustomeMessage>SysDateTime</CustomeMessage>
-  </Error>
-  <Error LogId="19-Aug-27f42ee014-c94d-4dfc-9f53-e786759917ea">
-    <Heading>System.Data.SqlClient.SqlException</Heading>
-    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
-   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
-   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
-   at System.Data.SqlClient.SqlDataReader.get_MetaData()
-   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
-   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
-   at System.Data.SqlClient.SqlCommand.ExecuteReader()
-   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllReceivableCheque(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 509</LogMessage>
-    <LogDateTime>2019-08-27T11:18:35.309175+06:00</LogDateTime>
-    <CustomeMessage>Could not find stored procedure 'spGetAllReceivableChequeByCompanyId'.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Aug-272ce2d9a4-df77-4252-b867-5c860fbcb319">
+  <Error LogId="19-Sep-01f7e7a83d-4bc2-421c-9680-ab277902626a">
     <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllReceivableCheque(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 542
-   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.GetAllReceivableCheque(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 73
-   at NBL.Areas.AccountsAndFinance.Controllers.AccountManagerController.ActiveReceivable() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountManagerController.cs:line 48</LogMessage>
-    <LogDateTime>2019-08-27T11:18:35.3688109+06:00</LogDateTime>
+    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllReceivableChequeByCompanyIdAndStatus(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 342
+   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.GetAllReceivableChequeByCompanyIdAndStatus(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 116
+   at NBL.Areas.SuperAdmin.Controllers.HomeController.TodaysCollectionList() in E:\API\NBL\NBL\Areas\SuperAdmin\Controllers\HomeController.cs:line 409</LogMessage>
+    <LogDateTime>2019-09-01T14:50:42.379281+06:00</LogDateTime>
     <CustomeMessage>Could not collect receivable cheques</CustomeMessage>
-  </Error>
-  <Error LogId="19-Aug-28ec1e1dda-b4f5-4c01-bcf7-8c16097d8a3c">
-    <Heading>System.InvalidCastException</Heading>
-    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
-   at System.Convert.ToInt32(Object value)
-   at NBL.DAL.ReportGateway.GetDistributionSetOrders() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 636</LogMessage>
-    <LogDateTime>2019-08-28T10:10:24.7466568+06:00</LogDateTime>
-    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Aug-283e5f39d9-5e6a-4156-8683-0ee313e163a8">
-    <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.DAL.ReportGateway.GetDistributionSetOrders() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 665
-   at NBL.BLL.ReportManager.GetDistributionSetOrders() in E:\API\NBL\NBL.BLL\ReportManager.cs:line 258
-   at NBL.Areas.SCM.Controllers.OrderController.TodaysApprovedOrder() in E:\API\NBL\NBL\Areas\SCM\Controllers\OrderController.cs:line 124</LogMessage>
-    <LogDateTime>2019-08-28T10:10:24.8723195+06:00</LogDateTime>
-    <CustomeMessage>Could not collect Distribution Set Orders  History</CustomeMessage>
-  </Error>
-  <Error LogId="19-Aug-284906885e-7f1f-450d-bd8a-b80af8a7d41f">
-    <Heading>System.InvalidCastException</Heading>
-    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
-   at System.Convert.ToInt32(Object value)
-   at NBL.DAL.ReportGateway.GetDistributionSetOrders() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 636</LogMessage>
-    <LogDateTime>2019-08-28T10:15:57.6253556+06:00</LogDateTime>
-    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Aug-282a3b9a71-b079-4c10-af6b-f60cf871b748">
-    <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.DAL.ReportGateway.GetDistributionSetOrders() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 665
-   at NBL.BLL.ReportManager.GetDistributionSetOrders() in E:\API\NBL\NBL.BLL\ReportManager.cs:line 258
-   at NBL.Areas.SCM.Controllers.OrderController.TodaysApprovedOrder() in E:\API\NBL\NBL\Areas\SCM\Controllers\OrderController.cs:line 124</LogMessage>
-    <LogDateTime>2019-08-28T10:15:57.6632563+06:00</LogDateTime>
-    <CustomeMessage>Could not collect Distribution Set Orders  History</CustomeMessage>
-  </Error>
-  <Error LogId="19-Aug-2863732042-f0b5-401b-9df8-21b341744380">
-    <Heading>System.IO.FileNotFoundException</Heading>
-    <LogMessage>   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
-   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
-   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize)
-   at System.Xml.XmlDownloadManager.GetStream(Uri uri, ICredentials credentials, IWebProxy proxy, RequestCachePolicy cachePolicy)
-   at System.Xml.XmlUrlResolver.GetEntity(Uri absoluteUri, String role, Type ofObjectToReturn)
-   at System.Xml.XmlTextReaderImpl.FinishInitUriString()
-   at System.Xml.XmlTextReaderImpl..ctor(String uriStr, XmlReaderSettings settings, XmlParserContext context, XmlResolver uriResolver)
-   at System.Xml.XmlReaderSettings.CreateReader(String inputUri, XmlParserContext inputContext)
-   at System.Xml.XmlReader.Create(String inputUri, XmlReaderSettings settings, XmlParserContext inputContext)
-   at System.Xml.Linq.XDocument.Load(String uri, LoadOptions options)
-   at System.Xml.Linq.XDocument.Load(String uri)
-   at NBL.Areas.AccountsAndFinance.Controllers.AccountController.RemoveAll() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountController.cs:line 194
-   at NBL.Areas.AccountsAndFinance.Controllers.AccountController.Receivable() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountController.cs:line 37</LogMessage>
-    <LogDateTime>2019-08-28T12:49:51.9312463+06:00</LogDateTime>
-    <CustomeMessage>Could not find file 'E:\API\NBL\NBL\Areas\AccountsAndFinance\Files\Receivable\Receivable_4.xml'.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Aug-28975d9240-4c5a-445b-9b59-7a0f344a91d2">
-    <Heading>System.NullReferenceException</Heading>
-    <LogMessage>   at NBL.Areas.Sales.Controllers.ReturnController.GetTempReturnProductsXmlFilePath() in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 279
-   at NBL.Areas.Sales.Controllers.ReturnController.AddReturnProductToXmalFile(FormCollection collection) in E:\API\NBL\NBL\Areas\Sales\Controllers\ReturnController.cs:line 156</LogMessage>
-    <LogDateTime>2019-08-28T13:28:48.136857+06:00</LogDateTime>
-    <CustomeMessage>Object reference not set to an instance of an object.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Aug-28fac96dbf-1698-49d2-942d-e43b7264019d">
-    <Heading>System.FormatException</Heading>
-    <LogMessage>   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
-   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
-   at System.String.System.IConvertible.ToInt32(IFormatProvider provider)
-   at System.Convert.ToInt32(Object value)
-   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllReceivableChequeByBranchAndCompanyId(Int32 branchId, Int32 companyId) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 249</LogMessage>
-    <LogDateTime>2019-08-28T16:13:21.2816876+06:00</LogDateTime>
-    <CustomeMessage>Input string was not in a correct format.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Aug-2853dbadde-da32-4d5b-b79d-59b9f2c11e43">
-    <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllReceivableChequeByBranchAndCompanyId(Int32 branchId, Int32 companyId) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 282
-   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.GetAllReceivableChequeByBranchAndCompanyId(Int32 branchId, Int32 companyId) in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 49
-   at NBL.Areas.Sales.Controllers.SalesCollectionController.PendingCollectionList() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 338</LogMessage>
-    <LogDateTime>2019-08-28T16:13:21.3472281+06:00</LogDateTime>
-    <CustomeMessage>Could not collect receivable cheques</CustomeMessage>
-  </Error>
-  <Error LogId="19-Aug-2941fe26f0-dc86-4950-9f9f-d654045831e6">
-    <Heading>System.Data.SqlClient.SqlException</Heading>
-    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
-   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
-   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
-   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
-   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
-   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.SaveReceivable(Receivable receivable) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 47</LogMessage>
-    <LogDateTime>2019-08-29T10:28:43.6406151+06:00</LogDateTime>
-    <CustomeMessage>Procedure or function 'spSaveReceivable' expects parameter '@CollectionByEmpId', which was not supplied.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Aug-298ca5922e-4c2d-4983-ac92-dbba251e859a">
-    <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.SaveReceivable(Receivable receivable) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 66
-   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.SaveReceivable(Receivable receivable) in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 38
-   at NBL.Areas.AccountsAndFinance.Controllers.AccountController.SaveReceivable(FormCollection collection) in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountController.cs:line 144</LogMessage>
-    <LogDateTime>2019-08-29T10:28:43.6718624+06:00</LogDateTime>
-    <CustomeMessage>Could not Save receivable informaiton</CustomeMessage>
   </Error>
 </Errors>

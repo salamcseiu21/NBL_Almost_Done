@@ -9,14 +9,13 @@
     <h3 class="text-center text-green headingStyle">Cheque Receive Voucher</h3>
     <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
     </div>
-    <hr />
     @using (Html.BeginForm("ChequePaymentVoucher", "Voucher", FormMethod.Post, new { id = "ChequePaymentVoucherForm" }))
     {
         @Html.AntiForgeryToken()
         <div class="form-horizontal">
 
 
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-body">
 
                     <div class="row">

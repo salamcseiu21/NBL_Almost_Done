@@ -15,6 +15,6 @@ namespace NBL.BLL.Contracts
         IEnumerable<ViewBranch> GetAllBranches();
         List<ViewAssignedRegion> GetAssignedRegionToBranchList();
         SelectList GetBranchSelectList();
-
+       
     }
 }

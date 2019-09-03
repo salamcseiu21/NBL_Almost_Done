@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
@@ -46,5 +47,7 @@ namespace NBL.BLL.Contracts
         ICollection<ViewOrderHistory> GetOrderHistoriesByYear(int year);
         ICollection<TerritoryWiseDeliveredQty> GetTerritoryWishTotalSaleQtyByBranchId(int branchId);
         ICollection<ViewClient> GetClientList();
+        ICollection<ProductDetails> GetAllProductDetails();
+
     }
 }

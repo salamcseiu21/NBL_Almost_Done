@@ -21,6 +21,6 @@ namespace NBL.Models
         public string CancelRemarks { get; set; }
         public int? CancelByUserId { get; set; }
         public string CollectionByEmp { get; set; }
-
+        public DateTime? ActiveDate { get; set; }
     }
 }

@@ -9,7 +9,7 @@
 
 <section class="content">
     <h3 class="text-center text-green headingStyle">User List with Role</h3>
-    <table id="table_user_list" class="table table-bordered" style="border:1px solid black">
+    <table id="table_user_list" class="display table-bordered" style="border:1px solid black">
 
 
         <thead>
@@ -29,8 +29,10 @@
 
         <tbody>
 
-            @foreach (var item in Model)
-            {
+        @foreach (var item in Model)
+        {
+
+            
                 <tr>
                     
                     <td>@item.UserName</td>
@@ -43,28 +45,33 @@
                     <td>@(item.Phone??"N/A")</td>
                     <td>@(item.Email?? "N/A")</td>
                     <td class="text-center">
-                        @Html.ActionLink("Details", "ViewUserDetails", "Home", new { userId = item.UserId }, null)
+                        <button type="button" onclick="BlockUser(this)" id="@item.UserId"><i class="fa fa-lock"></i> Block</button>
+                        <button>@Html.ActionLink(" Details", "ViewUserDetails", "Home", new {userId = item.UserId}, new {@class = "fa fa-eye"})</button>
+
                     </td>
 
                 </tr>
-            }
+            
+            
+        }
 
         </tbody>
         <tfoot>
-            <tr>
-                <th>User Name</th>
-                <th>Is Blocked</th>
-                <th>Branch Name</th>
-                <th>UserId</th>
+        <tr>
+            <th>User Name</th>
+            <th>Is Blocked</th>
+            <th>Branch Name</th>
+            <th>UserId</th>
            
-                <th>Employee Name</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th class="text-center">Action</th>
-            </tr>
+            <th>Employee Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th class="text-center">Action</th>
+        </tr>
         </tfoot>
     </table>
 </section>
+
 @section Scripts
 {
     <script>
@@ -73,6 +80,29 @@
             "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]]
         });
 
+
+        function BlockUser(id) {
+            if (confirm("Are you sure to block  this user ?")) {
+                // alert(id.id);
+                var userid = id.id;
+                $.ajax({
+                    type: "POST",
+                    url: RootUrl + 'superadmin/assign/BlockUser',
+                    data: { userId: userid },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    },
+                    success: function (response) {
+                        location.reload();
+
+                    }
+                });
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+        }
     </script>
 
 }

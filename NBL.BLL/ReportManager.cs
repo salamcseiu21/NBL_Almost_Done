@@ -5,6 +5,7 @@ using NBL.BLL.Contracts;
 using NBL.DAL;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.BarCodes;
+using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
@@ -281,6 +282,11 @@ namespace NBL.BLL
         public ICollection<ViewClient> GetClientList()
         {
             return _iReportGateway.GetClientList();
+        }
+
+        public ICollection<ProductDetails> GetAllProductDetails()
+        {
+            return _iReportGateway.GetAllProductDetails();
         }
     }
 }

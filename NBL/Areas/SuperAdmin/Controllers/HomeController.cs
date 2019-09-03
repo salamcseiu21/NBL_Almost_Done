@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
@@ -9,7 +8,6 @@ using System.Web.Helpers;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.BLL;
 using NBL.BLL.Contracts;
-using NBL.DAL;
 using NBL.DAL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Identities;
@@ -399,6 +397,23 @@ namespace NBL.Areas.SuperAdmin.Controllers
 
         }
 
+
+        [HttpGet]
+        public ActionResult TodaysCollectionList()
+        {
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var collections = _iAccountsManager.GetAllReceivableChequeByCompanyIdAndStatus(companyId,1).ToList().FindAll(n=> Convert.ToDateTime(n.ActiveDate).Date.Equals(DateTime.Now.Date));
+                return View(collections);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         [HttpGet]
         public ActionResult CollectionList()
         {
@@ -431,6 +446,21 @@ namespace NBL.Areas.SuperAdmin.Controllers
             IEnumerable<ChequeDetails> collections = _iAccountsManager.GetAllReceivableCheque(searchCriteria);
             return PartialView("_ViewCollectionListPartialPage", collections);
         }
+        //--------------Product Details--------------
+        public ActionResult ProductDetails()
+        {
+            try
+            {
+                var products = _iReportManager.GetAllProductDetails().ToList();
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
 
         //--------------------Sold Product list------------
         public ActionResult SoldProducts()
@@ -448,6 +478,48 @@ namespace NBL.Areas.SuperAdmin.Controllers
 
         }
 
+        //------------------Employee Transfer----------------------
+        public ActionResult TransferEmployee()
+        {
+            try
+            {
+                var branches = _iBranchManager.GetAllBranches();
+                return View(branches);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public ActionResult TransferEmployee(FormCollection collection)
+        {
+            try
+            {
+                var user = (ViewUser) Session["user"];
+                var empId = Convert.ToInt32(collection["EmployeeId"]);
+                var employeee= _iEmployeeManager.GetEmployeeById(empId);
+                var toBranchId = Convert.ToInt32(collection["ToBranchId"]);
+                var remarks = collection["Remarks"];
+                bool result = _iEmployeeManager.TransferEmployee(empId,employeee.BranchId,toBranchId,remarks,user);
+                if (result)
+                {
+                    TempData["TransferMessage"] = "Transfer Successfully!";
+                }
+                else
+                {
+                    TempData["TransferError"] = "Failed to Transfer";
+                }
+                var branches = _iBranchManager.GetAllBranches();
+                return View(branches);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         //------------------ Change password------------------------
         public ActionResult ChangePassword()
         {

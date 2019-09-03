@@ -1,0 +1,44 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.ChartOfAccounts.AccountType>
+@{
+    ViewBag.Title = "Account Type";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
+}
+
+<section class="content">
+    <h3 class="text-center text-green">AccountType</h3>
+    <table id="tbl_account_typeList" class="display table-bordered" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>S.N</th>
+            <th>Account Type</th>
+            <th>Alias</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            i++;
+            <tr>
+                <td>@i</td>
+                <td>@item.AccountTypeName</td>
+                <td>@item.AccountTypeAlias</td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>S.N</th>
+            <th>Account Type</th>
+            <th>Alias</th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_account_typeList").DataTable();
+    </script>
+}

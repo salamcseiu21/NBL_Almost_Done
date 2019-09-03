@@ -64,8 +64,6 @@ namespace NBL.Areas.CommonArea.Controllers
                 var result = _iOrderManager.SaveSoldProductBarCode(retail);
                 if (result)
                 {
-
-
                     var xmlData = XDocument.Load(filePath);
                     xmlData.Root?.Elements().Remove();
                     xmlData.Save(filePath);

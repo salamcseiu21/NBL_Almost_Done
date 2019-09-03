@@ -19,6 +19,13 @@ namespace NBL.Models.EntityModels.Products
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal DealerPrice { get; set; }
-        public ICollection<Product> Products { get; set; }  
+        public ICollection<Product> Products { get; set; }
+        public decimal? VatAmount { get; set; }
+        public decimal? DealerDiscount { get; set; }
+        public decimal? IndividualDiscount { get; set; }
+        public decimal? CorporateDiscount { get; set; }
+        public string CategoryName { get; set; }
+
+
     }
 }

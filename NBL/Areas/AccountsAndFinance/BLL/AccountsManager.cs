@@ -111,6 +111,11 @@ namespace NBL.Areas.AccountsAndFinance.BLL
             return _iAccountGateway.GetAllSubSubSubAccountList();
         }
 
+        public ICollection<ChequeDetails> GetAllReceivableChequeByCompanyIdAndStatus(int companyId, int status)
+        {
+            return _iAccountGateway.GetAllReceivableChequeByCompanyIdAndStatus(companyId,status);
+        }
+
         public ChequeDetails GetReceivableChequeByDetailsId(int chequeDetailsId)
         {
             return _iAccountGateway.GetReceivableChequeByDetailsId(chequeDetailsId);
