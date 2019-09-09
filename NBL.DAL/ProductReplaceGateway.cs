@@ -31,6 +31,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@TransactionRef", model.ReplaceRef);
                 CommandObj.Parameters.AddWithValue("@BranchId", model.BranchId);
                 CommandObj.Parameters.AddWithValue("@DistributionPointId", model.DistributionPointId);
+                CommandObj.Parameters.AddWithValue("@Remarks", model.Remarks);
                 CommandObj.Parameters.AddWithValue("@CompanyId", model.CompanyId);
                 CommandObj.Parameters.AddWithValue("@UserId", model.UserId);
                 CommandObj.Parameters.Add("@ReplaceMasterId", SqlDbType.BigInt);
@@ -158,7 +159,9 @@ namespace NBL.DAL
                         Quantity = Convert.ToInt32(reader["Quantity"]),
                         ReplaceRef = reader["ReplaceRef"].ToString(),
                         BranchId = Convert.ToInt32(reader["BranchId"]),
-                        CompanyId = Convert.ToInt32(reader["CompanyId"])
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        Remarks = reader["Remarks"].ToString()
+                        
                     });
                 }
                 reader.Close();

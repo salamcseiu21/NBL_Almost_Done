@@ -159,7 +159,6 @@ namespace NBL.Areas.Sales.DAL
             SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
             try
             {
-                int accountAffected = 0;
                 CommandObj.Transaction = sqlTransaction;
                 CommandObj.CommandText = "spSaveInvoicedOrder";
                 CommandObj.CommandType = CommandType.StoredProcedure;
@@ -176,79 +175,8 @@ namespace NBL.Areas.Sales.DAL
                 CommandObj.Parameters.Add("@InvoiceId", SqlDbType.Int);
                 CommandObj.Parameters["@InvoiceId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
-                int invoiceId = Convert.ToInt32(CommandObj.Parameters["@InvoiceId"].Value);
-                //------------------
-                //CommandObj.Parameters.Add("@AccountMasterId", SqlDbType.Int);
-                //CommandObj.Parameters["@AccountMasterId"].Direction = ParameterDirection.Output;
-
-                // int accountMasterId = Convert.ToInt32(CommandObj.Parameters["@AccountMasterId"].Value);
-                int rowAffected = SaveInvoiceDetails(orderItems, invoiceId);
-
-                //if (rowAffected > 0)
-                //{
-
-                //    for (int i = 1; i <= 2; i++)
-                //    {
-                //        if (i == 1)
-                //        {
-                //            anInvoice.TransactionType = "Dr";
-                //            anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
-                //        }
-                //        else
-                //        {
-                //            anInvoice.TransactionType = "Cr";
-                //            anInvoice.Amounts = anInvoice.Amounts * (-1);
-                //            anInvoice.SubSubSubAccountCode = "1001021";
-                //        }
-                //        accountAffected += SaveInvoiceDetailsToAccountsDetails(anInvoice, accountMasterId);
-                //    }
-
-                    //if (anInvoice.SpecialDiscount != 0)
-                    //{
-                    //    for (int i = 1; i <= 2; i++)
-                    //    {
-                    //        if (i == 1)
-                    //        {
-                    //            anInvoice.TransactionType = "Dr";
-                    //            anInvoice.Amounts = anInvoice.SpecialDiscount;
-                    //            anInvoice.SubSubSubAccountCode = anInvoice.DiscountAccountCode;
-                    //        }
-                    //        else
-                    //        {
-                    //            anInvoice.TransactionType = "Cr";
-                    //            anInvoice.Amounts = anInvoice.SpecialDiscount * (-1);
-                    //            anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
-                    //        }
-                    //        accountAffected += SaveInvoiceDetailsToAccountsDetails(anInvoice, accountMasterId);
-                    //    }
-                    //}
-                    //---------------------------------END----------
-                    //if (anInvoice.Discount != 0)
-                    //{
-                    //    for (int i = 1; i <= 2; i++)
-                    //    {
-                    //        if (i == 1)
-                    //        {
-                    //            anInvoice.TransactionType = "Dr";
-                    //            anInvoice.Amounts = anInvoice.Discount;
-                    //            anInvoice.SubSubSubAccountCode = "2601041";
-                    //        }
-                    //        else
-                    //        {
-                    //            anInvoice.TransactionType = "Cr";
-                    //            anInvoice.Amounts = anInvoice.Discount * (-1);
-                    //            anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
-                    //        }
-                    //        accountAffected += SaveInvoiceDetailsToAccountsDetails(anInvoice, accountMasterId);
-                    //    }
-                    //}
-
-                //}
-                //if (accountAffected > 0)
-                //{
-                //    sqlTransaction.Commit();
-                //}
-                //return accountAffected;
+                var invoiceId = Convert.ToInt32(CommandObj.Parameters["@InvoiceId"].Value);
+                var rowAffected = SaveInvoiceDetails(orderItems, invoiceId);
 
                 if (rowAffected > 0)
                 {
@@ -260,11 +188,13 @@ namespace NBL.Areas.Sales.DAL
             catch (SqlException sqlException)
             {
                 sqlTransaction.Rollback();
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not Save Invoiced order info due to sql exception", sqlException);
             }
             catch (Exception exception)
             {
                 sqlTransaction.Rollback();
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not Save Invoiced order info", exception);
             }
             finally
@@ -309,6 +239,7 @@ namespace NBL.Areas.Sales.DAL
                 CommandObj.Parameters.AddWithValue("@Quantity", order.Quantity);
                 CommandObj.Parameters.AddWithValue("@VatId", order.VatId);
                 CommandObj.Parameters.AddWithValue("@DiscountId", order.DiscountId);
+                CommandObj.Parameters.AddWithValue("@ProductDetailsId", order.ProductDetailsId);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
@@ -706,7 +637,7 @@ namespace NBL.Areas.Sales.DAL
             }
         }
 
-        public IEnumerable<InvoiceDetails> GetInvoicedOrderDetailsByInvoiceId(int invoiceId)
+        public IEnumerable<InvoiceDetails> GetInvoicedOrderDetailsByInvoiceId(long invoiceId)
         {
             try
             {
@@ -788,7 +719,7 @@ namespace NBL.Areas.Sales.DAL
                 CommandObj.Parameters.Clear();
             }
         }
-        public Invoice GetInvoicedOrderByInvoiceId(int invoiceId)
+        public Invoice GetInvoicedOrderByInvoiceId(long invoiceId)
         {
             try
             {

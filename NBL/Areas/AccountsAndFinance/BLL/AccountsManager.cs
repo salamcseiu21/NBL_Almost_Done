@@ -15,6 +15,7 @@ using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Enums;
 using NBL.Models.Searchs;
 using NBL.Models.SummaryModels;
+using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.FinanceModels;
 using SubSubSubAccount = NBL.Models.EntityModels.ChartOfAccounts.SubSubSubAccount;
 
@@ -114,6 +115,25 @@ namespace NBL.Areas.AccountsAndFinance.BLL
         public ICollection<ChequeDetails> GetAllReceivableChequeByCompanyIdAndStatus(int companyId, int status)
         {
             return _iAccountGateway.GetAllReceivableChequeByCompanyIdAndStatus(companyId,status);
+        }
+
+        public bool CancelVat(Vat vat)
+        {
+
+            int rowAffected = _iAccountGateway.CancelVat(vat);
+            return rowAffected > 0;
+        }
+
+        public bool ApproveProductPrice(ViewUser anUser, int productDetailsId, int productId)
+        {
+            int rowAffected = _iAccountGateway.ApproveProductPrice(anUser,productDetailsId,productId);
+            return rowAffected > 0;
+        }
+
+        public bool CancelUnitPriceAmount(ViewUser anUser, int productDetailsId)
+        {
+            int rowAffected = _iAccountGateway.CancelUnitPriceAmount(anUser, productDetailsId);
+            return rowAffected > 0;
         }
 
         public ChequeDetails GetReceivableChequeByDetailsId(int chequeDetailsId)

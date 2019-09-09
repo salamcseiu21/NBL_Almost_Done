@@ -42,6 +42,7 @@ namespace NBL.Models.ViewModels
         public decimal DealerPrice { get; set; }
         public decimal SalePrice { get; set; }
         public int VatId { get; set; }
+        public DateTime PriceUpdateDate { get; set; }
         public decimal Vat { get; set; }
         public int DiscountId { get; set; }
         public decimal DiscountAmount { get; set; }

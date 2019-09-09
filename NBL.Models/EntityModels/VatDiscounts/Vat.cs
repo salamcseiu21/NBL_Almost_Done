@@ -22,6 +22,8 @@ namespace NBL.Models.EntityModels.VatDiscounts
         public int ApprovedByUserId { get; set; }
         public string EntryStatus { get; set; }
         public string IsCurrent { get; set; }
+        public bool? IsCancelled { get; set; }
+        public int? CancelByUserId { get; set; }
         public DateTime SysDateTime { get; set; }
         public Product Product { get; set; }
 

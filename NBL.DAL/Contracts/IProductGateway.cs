@@ -88,5 +88,6 @@ namespace NBL.DAL.Contracts
         int AddBarCodeToTempSoldProductXmlFile(ViewDisributedProduct product, string barcode, string filePath);
         ICollection<ViewGeneralRequisitionModel> GetGeneralRequisitionByUserId(int userId);
         ICollection<ViewGeneralRequisitionModel> GetAllDeliveredGRequsition();
+        IEnumerable<ViewProduct> GetAllPendingProductPriceListByStatus(int status);
     }
 }

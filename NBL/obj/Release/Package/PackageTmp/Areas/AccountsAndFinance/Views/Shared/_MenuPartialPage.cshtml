@@ -32,33 +32,51 @@
 
         @if (branchId == 9)
         {
+
+
+
+
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-plus"></i> <span>Vats-Discounts</span>
+                    <i class="fa fa-share"></i> <span>Setup</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li>@Html.ActionLink(" Add New Vat", "AddVat", "Vats", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
-                    <li>@Html.ActionLink(" Add New Discount", "AddDiscount", "Discounts", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
+
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-plus"></i> <span>Vats-Discounts</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>@Html.ActionLink(" Add New Vat", "AddVat", "Vats", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
+                            <li>@Html.ActionLink(" Add New Discount", "AddDiscount", "Discounts", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
+                        </ul>
+                    </li>
+
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-plus"></i> <span>Products</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>@Html.ActionLink(" New Product", "AddProduct", "Product", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
+                            <li>@Html.ActionLink(" Product Details", "AddProductDetails", "Product", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
+                          
+                        </ul>
+                    </li>
+
                 </ul>
             </li>
 
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-plus"></i> <span>Products</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li>@Html.ActionLink(" Add Product", "AddProduct", "Product", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
-                    <li>@Html.ActionLink(" Add Product Details", "AddProductDetails", "Product", new {area = "AccountsAndFinance"}, new {@class = "fa fa-plus"})</li>
-                    <li>@Html.ActionLink(" Products", "ViewProduct", "ShowInfo", new {area = "CommonArea"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
-                </ul>
-            </li>
 
+          
 
         }
 
@@ -172,7 +190,7 @@
                 <li>@Html.ActionLink("  Employees", "ViewEmployee", "ShowInfo", new {area = "CommonArea"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
                 <li>@Html.ActionLink(" Clients", "ViewClient", "ShowInfo", new {area = "CommonArea"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
                 <li>@Html.ActionLink(" Branch List", "ViewBranch", "ShowInfo", new {area = "CommonArea"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
-                <li>@Html.ActionLink(" Products", "ViewProduct", "ShowInfo", new {area = "CommonArea"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
+                <li>@Html.ActionLink(" Product Price", "ViewProduct", "Home", new {area = "AccountsAndFinance"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
                 <li>@Html.ActionLink(" Journals", "ViewJournal", "Voucher", new {area = "AccountsAndFinance"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
                 <li>@Html.ActionLink(" All Vouchers", "Vouchers", "Voucher", new {area = "AccountsAndFinance"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>
                 <li>@Html.ActionLink(" Pending Vouchers", "PendingVouchers", "Voucher", new {area = "AccountsAndFinance"}, new {@class = "fa fa-list", style = "font-weight: bolder;"})</li>

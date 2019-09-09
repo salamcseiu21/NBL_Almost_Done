@@ -76,7 +76,7 @@ namespace NBL.Areas.Sales.BLL
         {
             return _iInvoiceGateway.GetAllInvoicedOrdersByCompanyId(companyId);
         }
-        public IEnumerable<InvoiceDetails> GetInvoicedOrderDetailsByInvoiceId(int invoiceId) 
+        public IEnumerable<InvoiceDetails> GetInvoicedOrderDetailsByInvoiceId(long invoiceId) 
         {
             return _iInvoiceGateway.GetInvoicedOrderDetailsByInvoiceId(invoiceId);
         }
@@ -84,7 +84,7 @@ namespace NBL.Areas.Sales.BLL
         {
             return _iInvoiceGateway.GetInvoicedOrderDetailsByInvoiceRef(invoiceRef);
         }
-        public Invoice GetInvoicedOrderByInvoiceId(int invoiceId)
+        public Invoice GetInvoicedOrderByInvoiceId(long invoiceId)
         {
             return _iInvoiceGateway.GetInvoicedOrderByInvoiceId(invoiceId); 
         }

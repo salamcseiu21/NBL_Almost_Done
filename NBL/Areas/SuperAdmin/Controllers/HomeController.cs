@@ -520,6 +520,35 @@ namespace NBL.Areas.SuperAdmin.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+
+        //------------------- Opening Balance-------------
+
+        public ActionResult SetOpeningBalance()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            };
+        }
+        [HttpPost]
+        public ActionResult SetOpeningBalance(FormCollection collection)
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            };
+        }
+
         //------------------ Change password------------------------
         public ActionResult ChangePassword()
         {

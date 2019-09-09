@@ -22,9 +22,9 @@ namespace NBL.Areas.Sales.DAL.Contracts
            int invoiceByUserId);
        IEnumerable<Invoice> GetAllInvoicedOrdersByUserId(int invoiceByUserId);
        IEnumerable<Invoice> GetInvoicedRefferencesByClientId(int clientId);
-       IEnumerable<InvoiceDetails> GetInvoicedOrderDetailsByInvoiceId(int invoiceId);
+       IEnumerable<InvoiceDetails> GetInvoicedOrderDetailsByInvoiceId(long invoiceId);
        IEnumerable<InvoiceDetails> GetInvoicedOrderDetailsByInvoiceRef(string invoiceRef);
-       Invoice GetInvoicedOrderByInvoiceId(int invoiceId);
+       Invoice GetInvoicedOrderByInvoiceId(long invoiceId);
        ICollection<ViewProduct> GetDeliveredProductsByInvoiceRef(string invoiceRef);
        ICollection<Invoice> GetInvoicedOrdersByCompanyIdAndDate(int companyId, DateTime date);
        ICollection<Invoice> GetLatestInvoicedOrdersByDistributionPoint(int distributionPointId);

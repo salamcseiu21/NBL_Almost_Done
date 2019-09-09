@@ -79,5 +79,6 @@ namespace NBL.BLL.Contracts
 
         ICollection<ViewGeneralRequisitionModel> GetGeneralRequisitionByUserId(int userId);
         ICollection<ViewGeneralRequisitionModel> GetAllDeliveredGRequsition();
+        IEnumerable<ViewProduct> GetAllPendingProductPriceListByStatus(int status);
     }
 }

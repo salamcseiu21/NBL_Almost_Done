@@ -46,6 +46,7 @@
                         <label for="LastUpdatedDate" class="control-label col-md-2">Last Update Date</label>
                         <div class="col-md-10">
                             <input type="text" id="LastUpdatedDate" name="LastUpdatedDate" class="form-control" readonly />
+                          
                         </div>
                     </div>
                     <div class="form-group">
@@ -118,6 +119,7 @@
                             var lastPriceUpdateDate = data.LastPriceUpdateDate;
                             $("#OldUnitPrice").val(unitPrice);
                             $("#LastUpdatedDate").val(new Date(parseInt(lastPriceUpdateDate.substr(6))));
+                           
                            
                         }
                     });

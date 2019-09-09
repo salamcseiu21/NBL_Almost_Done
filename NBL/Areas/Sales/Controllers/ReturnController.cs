@@ -344,8 +344,6 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
-
-
                 ICollection<ReturnModel> products = _iProductReturnManager.GetAllReturnsByApprovarRoleId(Convert.ToInt32(RoleEnum.SalesManager));
                 return View(products);
             }

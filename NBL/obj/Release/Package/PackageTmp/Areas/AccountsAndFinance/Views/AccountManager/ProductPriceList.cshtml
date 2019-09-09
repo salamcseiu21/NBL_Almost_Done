@@ -1,0 +1,157 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.ViewProduct>
+@{
+    ViewBag.Title = "Pending Price List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
+}
+
+<section class="content">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-weight: bolder">
+            Pending Product Price List
+        </div>
+        <div class="panel panel-body">
+            <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
+            </div>
+            <table id="table_pending_vats_to_approve" class="display table-bordered" style="border: 1px solid black">
+                <thead>
+                <tr>
+                    <th>S.N</th>
+                    <th>Product Name</th>
+                    <th>Segment</th>
+                    <th class="text-right">Unit Price (&#2547;)</th>
+                    <th class="text-center">Update Date</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.ProductCategoryName</td>
+                        <td class="text-right">@item.UnitPrice</td>
+                        <td class="text-center">@item.PriceUpdateDate.ToString("dd-MMM-yyyy")</td>
+                        <td style="width: 10%">
+                            <div class="row">
+                                <div class="col-md-6 text-center">
+                                    @using (Html.BeginForm("CancelVatAmount", "AccountManager", FormMethod.Post, new {id = item.VatId}))
+                                    {
+                                        <input type="hidden" value="@item.ProductDetailsId" id="ProductDetailsIdToCancel" name="ProductDetailsIdToCancel"/>
+                                        <input type="button" value="Cancel" class="btn btn-danger btn-sm" onclick="Cancel(this)"/>
+                                    }
+                                </div>
+                                <div class="col-md-6 text-center">
+                                    @using (Html.BeginForm("ApproveProductPrice", "AccountManager", FormMethod.Post, new {id = item.VatId}))
+                                    {
+                                        <input type="hidden" value="@item.ProductDetailsId" id="ProductDetailsIdToApprove" name="ProductDetailsIdToApprove"/>
+                                        <input type="hidden" name="ProductId" value="@item.ProductId"/>
+                                        <input type="button" value="Approve" class="btn btn-info btn-sm" id="@item.VatId" onclick="Approve(this)"/>
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>S.N</th>
+                    <th>Product Name</th>
+                    <th>Segment</th>
+                    <th class="text-right">Unit Price (&#2547;)</th>
+                    <th class="text-center">Update Date</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+
+    <script>
+
+        $('#table_pending_vats_to_approve').DataTable({
+            "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+            "oLanguage": {
+                "sEmptyTable": "<h4 style='color:green;font-weight:bolder;'>There is no pendings product price  to approve/active right now !</h4>"
+            }
+        });
+
+    </script>
+    <script>
+        function Approve(id) {
+
+            if (confirm("Are you sure to Approve  this unit price ?")) {
+                //$("#" + id.id).submit();
+
+                var $form = $(id).parents('form');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ApproveProductPrice", "AccountManager", new { area = "AccountsAndFinance" })',
+                    data: $form.serialize(),
+                    error: function (xhr, status, error) {
+                        //do something about the error
+                    },
+                    success: function (response) {
+                        var result = response.Message;
+                        $('#message').html(response).fadeIn('slow');
+                        $('#message').html(result).fadeIn('slow') //also show a success message
+                        $('#message').delay(5000).fadeOut('slow');
+                        setTimeout(function () { ReloadPage(); }, 6000);
+
+                    }
+                });
+
+
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+
+        }
+
+        function Cancel(id) {
+
+            if (confirm("Are you sure to cancel this product unit price ?")) {
+                //$("#" + id.id).submit();
+
+                var $form = $(id).parents('form');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("CancelUnitPriceAmount","AccountManager", new { area = "AccountsAndFinance" })',
+                    data: $form.serialize(),
+                    error: function (xhr, status, error) {
+                        //do something about the error
+                    },
+                    success: function (response) {
+                        var result = response.Message;
+                        $('#message').html(response).fadeIn('slow');
+                        $('#message').html(result).fadeIn('slow') //also show a success message
+                        $('#message').delay(5000).fadeOut('slow');
+                        setTimeout(function () { ReloadPage(); }, 6000);
+
+                    }
+                });
+
+
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+
+        }
+        function ReloadPage() {
+            location.reload();
+        }
+    </script>
+}

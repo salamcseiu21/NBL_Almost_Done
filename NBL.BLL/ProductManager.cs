@@ -483,6 +483,11 @@ namespace NBL.BLL
             return _iProductGateway.GetAllDeliveredGRequsition();
         }
 
+        public IEnumerable<ViewProduct> GetAllPendingProductPriceListByStatus(int status)
+        {
+            return _iProductGateway.GetAllPendingProductPriceListByStatus(status);
+        }
+
         private string GenerateTransferRequisitionRef(int maxTrNo)
         {
 

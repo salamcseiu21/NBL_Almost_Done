@@ -1,0 +1,294 @@
+﻿
+@{
+    ViewBag.Title = "Set Opening Balance";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-weight: bolder">Set Opening Balance</div>
+        <div class="panel panel-body">
+            @using (Html.BeginForm())
+            {
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            
+                            <div class="form-group">
+                                <label for="PurposeName" class="control-label col-md-4">Account Name</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="PurposeName" name="PurposeName" placeholder="Purpose Name" class="form-control" autofocus required/>
+                                    <input type="hidden" id="SubSubSubAccountId" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="PurposeCode" class="control-label col-md-4">Account Code</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="PurposeCode" name="PurposeCode" placeholder="PurposeCode" class="form-control" readonly/>
+                                </div>
+                            </div>
+                            
+                          
+
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Transaction Type</label>
+                                <div class="col-md-8">
+                                    <select id="TransactionType" name="TransactionType" class="form-control" required>
+                                        <option value="">--Select--</option>
+                                        <option value="Dr">Dr</option>
+                                        <option value="Cr">Cr</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="PurposeCode" class="control-label col-md-4">Amount (&#2547;)</label>
+                                <div class="col-md-8">
+                                    <input type="number" id="Amount" name="Amount" style="text-align: right" placeholder="Amount" class="form-control" min="0" required/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Remarks</label>
+                                <div class="col-md-8">
+                                    <textarea class="form-control" id="Remarks" name="Remarks" style="resize: none;" rows="2" placeholder="Remarks" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-9 col-md-offset-3">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <input type="submit" value="Save"  class="btn btn-info"/>
+                                        </div>
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+@section Scripts
+{
+
+    <script>
+
+        $(document).ready(function() {
+
+            ViewTempJournalInformation();
+            @* Date picker*@
+            $("#ReceiveDate").datepicker({ dateFormat: 'dd-MM-yy' });
+            $("#Date").datepicker({ dateFormat: 'dd-MM-yy' });
+
+
+            @*Sub Sub Sub Account list Auto Complete*@
+            $("#PurposeName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: RootUrl + 'Common/SubSubSubAccountNameAutoComplete/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function (item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#SubSubSubAccountId").val(i.item.val);
+                    //alert(i.item.val);
+
+                    $("#PurposeCode").val('');
+                    var sssAId = i.item.val;
+                    var json = { subSubSubAccountId: sssAId };
+
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("GetSubSubSubAccountById", "Common", new { area = "" })',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(json),
+                        success: function (data) {
+
+                            var code = data.SubSubSubAccountCode;
+                            $("#PurposeCode").val(code);
+                        }
+                    });
+                },
+                minLength: 1
+            });
+        });
+
+    </script>
+
+    @*Add Journal info to lsit (Ajax form Submit)*@
+    <script>
+    function AddJournalInfoToList(btnClicked) {
+
+        if ($("#PurposeName").val() === "") {
+            alert("Please enter purpose name..");
+        }
+        else if ($("#Amount").val() === "") {
+            alert("Please Enter amount");
+        }
+        else {
+            var $form = $(btnClicked).parents('form');
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("JournalVoucher")',
+                data: $form.serialize(),
+                error: function (xhr, status, error) {
+                    //do something about the error
+                },
+                success: function (response) {
+                    //alert("Saved Successfully");
+                    ViewTempJournalInformation();
+                }
+            });
+
+            return false; // if it's a link to prevent post
+        }
+
+    }
+
+
+    function RemoveJournalInfo(btnClicked) {
+
+
+        if (confirm("Are you sure to remove this journal info ??")) {
+            //alert(btnClicked);
+            $("#JournalInfoToRemove").val(btnClicked.id);
+            //alert(btnClicked.id);
+            //alert(btnClicked["delBtn"]);
+            var $form = $(btnClicked).parents('form');
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("RemoveJournalVoucher")',
+                data: $form.serialize(),
+                error: function (xhr, status, error) {
+                    //do something about the error
+                },
+                success: function (response) {
+                    ViewTempJournalInformation();
+                }
+            });
+        } else {
+            return false;// if it's a link to prevent post
+        }
+
+        return false;// if it's a link to prevent post
+
+    }
+
+
+    function SaveJournalVoucher(btnClicked) {
+
+        var summationDrCr = parseInt($("#SummationOfDebitAndCredit").val());
+          if (summationDrCr !==0) {
+            alert("Debit and Caredit amount not same!!");
+        }
+        else {
+            if (confirm("Are you sure to Save this Journal info ??")) {
+
+                var $form = $(btnClicked).parents('form');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("SaveJournalVoucher")',
+                    data: $form.serialize(),
+                    error: function (xhr, status, error) {
+                        //do something about the error
+                    },
+                    success: function (response) {
+                        var result = response.Message;
+                        $('#message').html(response).fadeIn('slow');
+                        $('#message').html(result).fadeIn('slow') //also show a success message
+                        $('#message').delay(5000).fadeOut('slow');
+                        setTimeout(function () { ReloadPage(); }, 6000);
+
+                    }
+                });
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+        }
+
+
+
+      }
+    function ReloadPage() {
+        location.reload();
+    }
+    </script>
+    <script>
+
+
+        function ViewTempJournalInformation() {
+            //alert("Hi");
+
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetTempJournalInformation", "Voucher")',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#divTempjournalVoucherList").html(data);
+
+                }
+            });
+        }
+
+
+        function RemoveDebitPurposeById(btnClicked) {
+
+            //alert(btnClicked.id);
+            if (confirm("Are you sure to remove this product ??")) {
+                var id = btnClicked.id;
+                var json = { id: id };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("RemoveJournalVoucher", "Voucher",new {area="AccountsAndFinance"})',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        ViewTempJournalInformation();
+                    }
+                });
+            }
+
+
+        }
+
+
+        function RemoveAll(btnClick) {
+            var result = confirm('Are you sure to remove all item ?');
+            if (result) {
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("RemoveAllJournalPurpose","Voucher",new {area="AccountsAndFinance"})',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        location.reload();
+                    }
+
+                });
+
+            }
+        }
+
+
+    </script>
+}

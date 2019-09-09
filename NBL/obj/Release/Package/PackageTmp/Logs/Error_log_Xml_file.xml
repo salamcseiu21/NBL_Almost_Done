@@ -1,20 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Errors>
-  <Error LogId="19-Sep-019c78c21e-de74-4d41-ade4-0c987f55d444">
-    <Heading>System.IndexOutOfRangeException</Heading>
-    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
-   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
-   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
-   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllReceivableChequeByCompanyIdAndStatus(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 308</LogMessage>
-    <LogDateTime>2019-09-01T14:50:42.3234307+06:00</LogDateTime>
-    <CustomeMessage>ReceivableRemarks</CustomeMessage>
-  </Error>
-  <Error LogId="19-Sep-01f7e7a83d-4bc2-421c-9680-ab277902626a">
+  <Error LogId="19-Sep-085e697022-ab61-4701-80ca-d6fb18c97f2b">
     <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllReceivableChequeByCompanyIdAndStatus(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 342
-   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.GetAllReceivableChequeByCompanyIdAndStatus(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 116
-   at NBL.Areas.SuperAdmin.Controllers.HomeController.TodaysCollectionList() in E:\API\NBL\NBL\Areas\SuperAdmin\Controllers\HomeController.cs:line 409</LogMessage>
-    <LogDateTime>2019-09-01T14:50:42.379281+06:00</LogDateTime>
-    <CustomeMessage>Could not collect receivable cheques</CustomeMessage>
+    <LogMessage>   at NBL.DAL.ProductGateway.GetAll() in E:\API\NBL\NBL.DAL\ProductGateway.cs:line 65
+   at NBL.BLL.ProductManager.GetAll() in E:\API\NBL\NBL.BLL\ProductManager.cs:line 37
+   at NBL.Areas.AccountsAndFinance.Controllers.HomeController.ViewProduct() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\HomeController.cs:line 99</LogMessage>
+    <LogDateTime>2019-09-08T10:20:19.4183259+06:00</LogDateTime>
+    <CustomeMessage>Colud not collect product list</CustomeMessage>
+  </Error>
+  <Error LogId="19-Sep-080ec84d93-f4b3-49ae-bff4-f7bde25f9976">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetAllVerifiedSalesReturnProducts() in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 305
+   at NBL.BLL.ProductReturnManager.GetAllVerifiedSalesReturnProducts() in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 144
+   at NBL.Areas.AccountsAndFinance.Controllers.AccountController.ViewAllSalesReturn() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountController.cs:line 278</LogMessage>
+    <LogDateTime>2019-09-08T10:40:11.7475886+06:00</LogDateTime>
+    <CustomeMessage>Could not collect verified Sales return product list</CustomeMessage>
+  </Error>
+  <Error LogId="19-Sep-08c5d426fa-1ccc-4138-920f-27153f44a0e1">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetAllVerifiedSalesReturnProducts() in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 305
+   at NBL.BLL.ProductReturnManager.GetAllVerifiedSalesReturnProducts() in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 144
+   at NBL.Areas.AccountsAndFinance.Controllers.AccountController.ViewAllSalesReturn() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountController.cs:line 278</LogMessage>
+    <LogDateTime>2019-09-08T10:40:20.3148191+06:00</LogDateTime>
+    <CustomeMessage>Could not collect verified Sales return product list</CustomeMessage>
   </Error>
 </Errors>

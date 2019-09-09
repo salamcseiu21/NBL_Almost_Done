@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Product List";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
 }
 <section class="content">
     <h3 class="text-center text-green headingStyle">Product List</h3>
@@ -10,7 +11,9 @@
             <thead>
            
             <tr>
+                <th>S.N</th>
                 <th>Product Name</th>
+                <th>Segment</th>
                 <th>Account Code</th>
                 <th class="text-right">Unit Price</th>
                 <th class="text-center">Last Price Update </th>
@@ -23,8 +26,11 @@
 
             @foreach (var item in Model)
             {
+                i++;
                 <tr>
+                    <td>@i</td>
                     <td>@item.ProductName</td>
+                    <td>@item.ProductCategory.ProductCategoryName</td>
                     <td>@item.SubSubSubAccountCode</td>
                     <td class="text-right">@item.UnitPrice</td>
                     <td class="text-center">@item.LastPriceUpdateDate.ToString("dd-MMMM-yyyy")</td>
@@ -36,7 +42,9 @@
             </tbody>
             <tfoot>
             <tr>
+                <th>S.N</th>
                 <th>Product Name</th>
+                <th>Segment</th>
                 <th>Account Code</th>
                 <th class="text-right">Unit Price</th>
                 <th class="text-center">Last Price Update </th>

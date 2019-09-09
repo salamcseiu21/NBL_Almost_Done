@@ -714,6 +714,7 @@ namespace NBL.DAL
                         SlNo = Convert.ToInt32(reader["SlNo"]),
                         VatId = Convert.ToInt32(reader["VatId"]),
                         DiscountId = Convert.ToInt32(reader["DiscountId"]),
+                        ProductDetailsId = DBNull.Value.Equals(reader["ProductDetailsId"])? 0:Convert.ToInt32(reader["ProductDetailsId"]),
                         Vat = DBNull.Value.Equals(reader["Vat"]) ? default(decimal) : Convert.ToDecimal(reader["Vat"])
                     });
                 }

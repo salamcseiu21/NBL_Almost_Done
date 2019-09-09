@@ -48,7 +48,12 @@ namespace NBL.DAL
                         Vat = Convert.ToDecimal(reader["VatAmount"]),
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
                         LastPriceUpdateDate = Convert.ToDateTime(reader["PriceUpdateDate"]),
-                        LastVatUpdateDate = Convert.ToDateTime(reader["VatUpdateDate"])
+                        LastVatUpdateDate = Convert.ToDateTime(reader["VatUpdateDate"]),
+                        ProductCategory = new ProductCategory
+                        {
+                            ProductCategoryId = Convert.ToInt32(reader["CategoryId"]),
+                            ProductCategoryName = reader["ProductCategoryName"].ToString()
+                        }
                     });
                 }
 
@@ -1346,6 +1351,41 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
                 CommandObj.Dispose();
                 ConnectionObj.Close();
+            }
+        }
+
+        public IEnumerable<ViewProduct> GetAllPendingProductPriceListByStatus(int status)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllPendingProductPriceListByStatus";
+                CommandObj.Parameters.AddWithValue("@Status", status);
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<ViewProduct> products = new List<ViewProduct>();
+                while (reader.Read())
+                {
+                    products.Add(new ViewProduct
+                    {
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        UnitPrice = Convert.ToDecimal(reader["UnitPrice"]),
+                        PriceUpdateDate = Convert.ToDateTime(reader["UpdatedDate"]),
+                        ProductDetailsId = Convert.ToInt32(reader["ProductDetailsId"])
+                        
+                    });
+                }
+                reader.Close();
+                return products;
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
             }
         }
 

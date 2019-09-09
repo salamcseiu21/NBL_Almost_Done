@@ -63,6 +63,7 @@ namespace NBL.Areas.Services.Controllers
                 model.BranchId = branchId;
                 model.UserId = user.UserId;
                 model.CompanyId = companyId;
+                model.Remarks = collection["Remarks"];
                 var result = _iProductReplaceManager.SaveReplacementInfo(model);
                 if (result)
                 {

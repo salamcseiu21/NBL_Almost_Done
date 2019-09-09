@@ -1,0 +1,150 @@
+﻿@using NBL.Models.ViewModels
+
+@*Editor Menu*@
+@{
+    var user = (ViewUser)Session["user"];
+}
+@if (!user.IsPasswordChangeRequired)
+{
+    <ul class="sidebar-menu" data-widget="tree">
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-share"></i> <span>Setup</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                
+                <li>@Html.ActionLink(" Client List", "ViewClient", "Home", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
+                <li>@Html.ActionLink(" Add New Client", "AddNewClient", "Client", new { area = "Editor" }, new { @class = "fa fa-plus" })</li>
+
+                <li>@Html.ActionLink(" Department", "AddNewDepartment", "Department", new { area = "Editor" }, new { @class = "fa fa-plus" })</li>
+                <li>@Html.ActionLink(" Designation", "AddNewDesignation", "Designation", new { area = "Editor" }, new { @class = "fa fa-plus" })</li>
+                <li>@Html.ActionLink(" Employee", "AddEmployee", "Employee", new { area = "Editor" }, new { @class = "fa fa-plus" })</li>
+                <li>@Html.ActionLink(" Branch", "AddBranch", "Branch", new { area = "Editor" }, new { @class = "fa fa-plus" })</li>
+                <li>@Html.ActionLink(" Region", "AddNewRegion", "Region", new { area = "Editor" }, new { @class = "fa fa-plus" })</li>
+                <li>@Html.ActionLink(" Territory", "AddNewTerritory", "Territory", new { area = "Editor" }, new { @class = "fa fa-plus" })</li>
+            </ul>
+        </li>
+
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-upload" aria-hidden="true"></i> <span>Upload</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Client Documents", "UploadClientDocument", "Client", new { area = "Editor" }, new { @class = "fa fa-upload" })</li>
+
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-search"></i> <span>Search</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Search", "SearchClient", "Home", new {area = "Editor"}, new {@class = "fa fa-search", style = "font-weight: bolder"})</li>
+           
+            </ul>
+        </li>
+
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-eye"></i>
+                <span>View/Show</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink("  Employee List", "ViewEmployee", "Home", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
+                <li>@Html.ActionLink(" Client List", "ViewClient", "Home", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
+                <li>@Html.ActionLink(" Product List", "ViewProduct", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-list" })</li>
+                <li>@Html.ActionLink(" Branch List", "ViewBranch", "Branch", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
+                <li>@Html.ActionLink(" Department List", "DepartmentList", "Department", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
+                <li>@Html.ActionLink(" Designation List", "DesignationList", "Designation", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
+                <li>@Html.ActionLink(" Employee Type List", "EmployeeTypeList", "EmployeeType", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
+                <li>@Html.ActionLink(" Region List", "All", "Region", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
+                <li>@Html.ActionLink(" Territory List", "All", "Territory", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
+                <li>@Html.ActionLink(" Division List", "All", "Division", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-pencil"></i> <span>Reports</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-circle-o"></i> Sales
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>@Html.ActionLink(" All", "Report", "Reoprt", new { area = "Sales" }, new { @class = "fa fa-file" })</li>
+                        <li><a href="#"><i class="fa fa-file"></i> Daily Reports</a></li>
+                        <li><a href="#"><i class="fa fa-file"></i>Monthly Reports</a></li>
+                        <li><a href="#"><i class="fa fa-file"></i> Yearly Reports</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-circle-o"></i> Clients
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-circle-o"></i> Level Two
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-circle-o"></i> Stocks
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-circle-o"></i> Level Two
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+
+}

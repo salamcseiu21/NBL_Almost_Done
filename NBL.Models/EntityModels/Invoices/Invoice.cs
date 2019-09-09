@@ -6,7 +6,7 @@ namespace NBL.Models.EntityModels.Invoices
 {
     public class Invoice
     {
-        public int InvoiceId { get; set; }
+        public long InvoiceId { get; set; }
         public DateTime InvoiceDateTime { get; set; }
         public string InvoiceRef { get; set; }
         public string TransactionRef { get; set; }

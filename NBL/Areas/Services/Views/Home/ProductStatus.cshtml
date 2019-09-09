@@ -1,0 +1,94 @@
+﻿@using NBL.Models.ViewModels.Products
+
+@{
+    ViewBag.Title = "Product Status";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Product Status</h3>
+
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="BarCode" class="control-label col-md-3">BarCode/BatchCode</label>
+                        <div class="col-md-9">
+                            <input type="text" name="BarCode" id="BarCode" placeholder="Type barcode or batchcoe..." class="form-control" autofocus required="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3"></div>
+                        <div class="btn btn-toolbar">
+                            <input type="submit" value="Search" class="btn btn-info" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+
+        </div>
+    }
+
+
+    @if (TempData["T"] != null)
+    {
+        var m = (ViewProductLifeCycleModel)TempData["T"];
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center">Product Life Cycle</h3>
+            </div>
+            <div class="panel-body">
+
+                <table class="table table-responsive table-bordered" style="font-weight: bolder">
+                    <tr>
+                        <td>Product Name : @m.ProductName </td>
+                        <td>Segment : @m.ProductCategoryName </td>
+                    </tr>
+                    <tr>
+                        <td>Barcode : @m.Barcode</td>
+                        <td>BatchCode : @m.BatchCode </td>
+                    </tr>
+                    <tr>
+                        <td>Production Line : @m.LineNo</td>
+                        <td>Shift No: @m.ShiftNo</td>
+                    </tr>
+                    <tr>
+                        <td>Scann Date : @m.ComeIntoInventory.ToString("D")</td>
+                        <td>Despatch From Factory : @m.DispatchDate.ToString("D")</td>
+                    </tr>
+
+                    <tr>
+                        <td>LifeTime : @m.LifeTime</td>
+                        <td>Age : @m.Age</td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+            <div class="panel-footer">
+                @if (m.Age < m.LifeTime)
+                {
+                    <p class="text-center text-green" style="font-weight: bolder">
+                        The Remaining lifetime of this Product is <b>@m.RemainingLifeTime</b>(days)
+                    </p>
+                }
+                else
+                {
+                    <p class="text-center" style="color: red">
+                        This Product is death!!.
+                    </p>
+                }
+
+            </div>
+        </div>
+    }
+
+
+</section>
+

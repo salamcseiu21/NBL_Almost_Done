@@ -86,9 +86,6 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
 
         public ActionResult AddProductDetails()
         {
-            
-
-            ViewBag.ProductId = new SelectList(_iProductManager.GetAllProducts(), "ProductId", "ProductName");
             return View();
         }
         [HttpPost]
@@ -108,7 +105,6 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 {
                     TempData["Result"] = "Failed to  Save";
                 }
-                ViewBag.ProductId = new SelectList(_iProductManager.GetAllProducts(), "ProductId", "ProductName");
                 return View();
 
             }

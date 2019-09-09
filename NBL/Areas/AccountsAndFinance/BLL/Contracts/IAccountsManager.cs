@@ -9,6 +9,7 @@ using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Searchs;
 using NBL.Models.SummaryModels;
+using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.FinanceModels;
 
 namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
@@ -67,5 +68,8 @@ namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
        ICollection<SubSubAccount> GetAllSubSubAccountList();
        ICollection<NBL.Models.EntityModels.ChartOfAccounts.SubSubSubAccount> GetAllSubSubSubAccountList();
        ICollection<ChequeDetails> GetAllReceivableChequeByCompanyIdAndStatus(int companyId, int status);
+       bool CancelVat(Vat vat);
+       bool ApproveProductPrice(ViewUser anUser, int productDetailsId, int productId);
+       bool CancelUnitPriceAmount(ViewUser anUser, int productDetailsId);
    }
 }

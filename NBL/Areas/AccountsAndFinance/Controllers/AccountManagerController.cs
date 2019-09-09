@@ -10,6 +10,7 @@ using NBL.BLL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.FinanceModels;
+using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
@@ -26,13 +27,15 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         private readonly IClientManager _iClientManager;
         private readonly IVatManager _iVatManager;
         private readonly IDiscountManager _iDiscountManager;
+        private readonly IProductManager _iProductManager;
 
-        public AccountManagerController(IVatManager iVatManager, IClientManager iClientManager, IDiscountManager iDiscountManager, IAccountsManager iAccountsManager)
+        public AccountManagerController(IVatManager iVatManager, IClientManager iClientManager, IDiscountManager iDiscountManager, IAccountsManager iAccountsManager,IProductManager iProductManager)
         {
             _iVatManager = iVatManager;
             _iClientManager = iClientManager;
             _iDiscountManager = iDiscountManager;
             _iAccountsManager = iAccountsManager;
+            _iProductManager = iProductManager;
         }
         // GET: AccountsAndFinance/AccountManager
         [HttpGet]
@@ -443,7 +446,31 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             return Json(aModel, JsonRequestBehavior.AllowGet);
 
         }
+        [HttpPost]
+        public JsonResult CancelVatAmount(FormCollection collection)
+        {
+            SuccessErrorModel aModel = new SuccessErrorModel();
+            try
+            {
+                int vatId = Convert.ToInt32(collection["VatIdToCancel"]);
+                var vat = _iVatManager.GetAllPendingVats().ToList().Find(n => n.VatId == vatId);
+                var anUser = (ViewUser)Session["user"];
+                vat.CancelByUserId = anUser.UserId;
+                bool result = _iAccountsManager.CancelVat(vat);
+                aModel.Message = result ? "<p class='text-green'>Cancelled</p>" : "<p class='text-danger'>Failed to Approve!!</p>";
+            }
+            catch (Exception e)
+            {
+                if (e.InnerException != null)
+                    aModel.Message = "<p style='color:red'>" + e.InnerException.Message + "</p>";
+                Log.WriteErrorLog(e);
 
+            }
+
+            return Json(aModel, JsonRequestBehavior.AllowGet);
+
+        }
+        
         public ActionResult Discounts()
         {
             try
@@ -479,6 +506,71 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                     aModel.Message = "<p style='color:red'>" + e.InnerException.Message + "</p>";
                 Log.WriteErrorLog(e);
                
+            }
+
+            return Json(aModel, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult ProductPriceList()
+        {
+            try
+            {
+                IEnumerable<ViewProduct> products = _iProductManager.GetAllPendingProductPriceListByStatus(0); 
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult ApproveProductPrice(FormCollection collection)
+        {
+            SuccessErrorModel aModel = new SuccessErrorModel();
+            try
+            {
+                int productDetailsId = Convert.ToInt32(collection["ProductDetailsIdToApprove"]);
+                int productId = Convert.ToInt32(collection["ProductId"]);
+                var anUser = (ViewUser)Session["user"];
+                bool result = _iAccountsManager.ApproveProductPrice(anUser,productDetailsId,productId);
+                aModel.Message = result ? "<p class='text-green'>Unit price approved Successfully!!</p>" : "<p class='text-danger'>Failed to Approve!!</p>";
+            }
+            catch (Exception e)
+            {
+                if (e.InnerException != null)
+                    aModel.Message = "<p style='color:red'>" + e.InnerException.Message + "</p>";
+                Log.WriteErrorLog(e);
+
+            }
+
+            return Json(aModel, JsonRequestBehavior.AllowGet);
+
+        }
+
+        
+
+
+       [HttpPost]
+        public JsonResult CancelUnitPriceAmount(FormCollection collection)
+        {
+            SuccessErrorModel aModel = new SuccessErrorModel();
+            try
+            {
+                int productDetailsId = Convert.ToInt32(collection["ProductDetailsIdToCancel"]);
+                var anUser = (ViewUser)Session["user"];
+                bool result = _iAccountsManager.CancelUnitPriceAmount(anUser,productDetailsId);
+                aModel.Message = result ? "<p class='text-green'>Cancelled</p>" : "<p class='text-danger'>Failed to Cancel!!</p>";
+            }
+            catch (Exception e)
+            {
+                if (e.InnerException != null)
+                    aModel.Message = "<p style='color:red'>" + e.InnerException.Message + "</p>";
+                Log.WriteErrorLog(e);
+
             }
 
             return Json(aModel, JsonRequestBehavior.AllowGet);

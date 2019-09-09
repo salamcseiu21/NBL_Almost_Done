@@ -12,10 +12,7 @@
             <th>S.N</th>
             <th>Collection Ref</th>
             <th>Client Name</th>
-            <th>Source Bank Name</th>
-            <th>Account No</th>
-            <th>Cheque No</th>
-            <th>Cheque Date</th>
+            <th>Collection Info</th>
             <th class="text-right">Amount (&#2547;) </th>
             <th class="text-center">Entry Date </th>
             <th class="text-center">Entry By </th>
@@ -31,10 +28,14 @@
                 <td>@i</td>
                 <td>@item.ReceivableRef</td>
                 <td>@Html.ActionLink(item.ClientInfo,"ViewClientProfile","Home",new {id= item.ClientId},null) </td>
-                <td>@item.SourceBankName</td>
-                <td>@item.BankAccountNo</td>
-                <td>@item.ChequeNo</td>
-                <td>@item.ChequeDate.Date.ToString("dd-MMMM-yyyy")</td>
+                <td>@{
+                        <label>Bank Name:</label> @item.SourceBankName<br/>
+                        <label>Account No:</label>@item.BankAccountNo<br />
+                        <label>Cheque No:</label>@item.ChequeNo<br/>
+                        <label>Date:</label>@item.ChequeDate.Date.ToString("dd-MMM-yyyy")
+
+
+                }</td>
                 <td class="text-right">@item.ChequeAmount.ToString("N2")</td>
                 <th class="text-center">@item.ReceivableDateTime.Date.ToString("dd-MMM-yyyy") </th>
                 <th class="text-center">@item.EntryByEmp </th>
@@ -53,7 +54,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <th colspan="7" class="text-right">Total </th>
+            <th colspan="4" class="text-right">Total </th>
             <th class="text-right">@Model.Sum(n => n.ChequeAmount).ToString("N2")</th>
             <th colspan="3"></th>
         </tr>
@@ -61,10 +62,7 @@
         <th>S.N</th>
         <th>Collection Ref</th>
         <th>Client Name</th>
-        <th>Source Bank Name</th>
-        <th>Account No</th>
-        <th>Cheque No</th>
-        <th>Cheque Date</th>
+        <th>Collection Info</th>
         <th class="text-right">Amount (&#2547;) </th>
         <th class="text-center">Entry Date </th>
         <th class="text-center">Entry By </th>

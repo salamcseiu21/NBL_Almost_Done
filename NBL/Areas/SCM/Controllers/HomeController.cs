@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using NBL.Areas.Sales.BLL.Contracts;
 using NBL.BLL;
 using NBL.BLL.Contracts;
-using NBL.Models.EntityModels.Securities;
-using NBL.Models.EntityModels.Identities;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Summaries;

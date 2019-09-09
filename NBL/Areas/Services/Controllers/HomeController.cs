@@ -21,11 +21,12 @@ namespace NBL.Areas.Services.Controllers
 
         private readonly IServiceManager _iServiceManager;
         private readonly IEmployeeManager _iEmployeeManager;
-
-        public HomeController(IServiceManager iServiceManager,IEmployeeManager iEmployeeManager)
+        private readonly IInventoryManager _iInventoryManager;
+        public HomeController(IServiceManager iServiceManager,IEmployeeManager iEmployeeManager, IInventoryManager iInventoryManager)
         {
             _iServiceManager = iServiceManager;
             _iEmployeeManager = iEmployeeManager;
+            _iInventoryManager = iInventoryManager;
         }
         // GET: Services/Home
         public ActionResult Home()
@@ -49,6 +50,28 @@ namespace NBL.Areas.Services.Controllers
            
         }
 
+        //--------------------------Product Status By Barcode---------------
+        public ActionResult ProductStatus()
+        {
+
+            try
+            {
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public ActionResult ProductStatus(FormCollection collection)
+        {
+            var barcode = collection["BarCode"];
+            var product = _iInventoryManager.GetProductLifeCycle(barcode);
+            TempData["T"] = product;
+            return View();
+        }
         //--------------------------Update User Profile----------------
         [HttpGet]
         public ActionResult UpdateBasicInfo(int id)

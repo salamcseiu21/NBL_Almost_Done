@@ -92,6 +92,20 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             }
 
         }
+        public PartialViewResult ViewProduct()
+        {
+            try
+            {
+                var products = _iProductManager.GetAll().ToList();
+                return PartialView("_ViewProductPartialPage", products);
+            }
+            catch (Exception exception)
+            {
 
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
     }
 }

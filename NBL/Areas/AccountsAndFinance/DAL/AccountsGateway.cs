@@ -15,6 +15,7 @@ using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Logs;
 using NBL.Models.Searchs;
 using NBL.Models.SummaryModels;
+using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.FinanceModels;
 using SubSubSubAccount = NBL.Models.EntityModels.ChartOfAccounts.SubSubSubAccount;
 
@@ -349,6 +350,9 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+       
+
         public ICollection<ChequeDetails> GetAllReceivableChequeByBranchAndCompanyIdUserId(int branchId, int companyId, int userId)
         {
             try
@@ -1712,6 +1716,93 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Unable to approve vat info",exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+        public int CancelVat(Vat vat)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_CancelVat";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@VatId", vat.VatId);
+                CommandObj.Parameters.AddWithValue("@CancelByUserId", vat.CancelByUserId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                int rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Unable to cancel vat info", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int ApproveProductPrice(ViewUser anUser, int productDetailsId,int productId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_ApproveProductPrice";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ProductId", productId);
+                CommandObj.Parameters.AddWithValue("@ProductDetailsId", productDetailsId);
+                CommandObj.Parameters.AddWithValue("@ApproveByUserId", anUser.UserId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                int rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Unable to approve product price info", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int CancelUnitPriceAmount(ViewUser anUser, int productDetailsId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_CancelUnitPriceAmount";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ProductDetailsId", productDetailsId);
+                CommandObj.Parameters.AddWithValue("@CancelByUserId", anUser.UserId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                int rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Unable to cancel product price", exception);
             }
             finally
             {

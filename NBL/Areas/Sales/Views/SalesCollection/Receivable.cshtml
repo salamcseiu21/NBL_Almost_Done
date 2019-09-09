@@ -305,6 +305,7 @@
     var bankChecqueNoList = [];
     function AddChequeInfoToList(btnClicked) {
 
+      
         if ($("#TransactionTypeId").val() === "") {
             alert("Please select Transaction Type...");
         }
@@ -473,7 +474,7 @@
                 $("#SourceBankName").val('Online-Cash');
                 $("#BankAccountNo").val('Online-Cash');
                 $("#ChequeNo").val('Online-Cash');
-                $('#SourceBankName').prop('readonly', true);
+                $('#SourceBankName').prop('readonly', false);
                 $('#ChequeNo').prop('readonly', false);
                 $('#BankAccountNo').prop('readonly', false);
 
