@@ -24,7 +24,8 @@ namespace NBL.Areas.Editor.Controllers
         private readonly ITerritoryManager _iTerritoryManager;
         private readonly UserManager _userManager=new UserManager();
         private readonly IAccountsManager _iAccountsManager;
-        public HomeController(IBranchManager iBranchManager,IClientManager iClientManager,IDepartmentManager iDepartmentManager,IEmployeeManager iEmployeeManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IProductManager iProductManager,IAccountsManager iAccountsManager)
+        private readonly IReportManager _iReportManager;
+        public HomeController(IBranchManager iBranchManager,IClientManager iClientManager,IDepartmentManager iDepartmentManager,IEmployeeManager iEmployeeManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IProductManager iProductManager,IAccountsManager iAccountsManager,IReportManager iReportManager)
         {
             _iBranchManager = iBranchManager;
             _iClientManager = iClientManager;
@@ -34,6 +35,7 @@ namespace NBL.Areas.Editor.Controllers
             _iTerritoryManager = iTerritoryManager;
             _iProductManager = iProductManager;
             _iAccountsManager = iAccountsManager;
+            _iReportManager = iReportManager;
         }
         // GET: Editor/Home
         public ActionResult Home() 
@@ -43,12 +45,14 @@ namespace NBL.Areas.Editor.Controllers
             Session.Remove("Branch");
             SummaryModel model = new SummaryModel
             {
-                Clients = _iClientManager.GetAllClientDetails().ToList(),
-                Employees = _iEmployeeManager.GetAllEmployeeWithFullInfo(),
-                Departments = _iDepartmentManager.GetAll(),
-                Branches = _iBranchManager.GetAllBranches(),
-                Regions = _iRegionManager.GetAll(),
-                Territories = _iTerritoryManager.GetAll()
+               // Clients = _iClientManager.GetAllClientDetails().ToList(),
+                //Employees = _iEmployeeManager.GetAllEmployeeWithFullInfo(),
+               // Departments = _iDepartmentManager.GetAll(),
+                //Branches = _iBranchManager.GetAllBranches(),
+                //Regions = _iRegionManager.GetAll(),
+                //Territories = _iTerritoryManager.GetAll(),
+                ClientList = _iClientManager.GetActiveClient().ToList(),
+                ViewEntityCount = _iReportManager.GetTotalEntityCount()
             };
             return View(model);
         }

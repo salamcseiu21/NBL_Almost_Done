@@ -11,6 +11,7 @@ using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Reports;
+using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.DAL
 {
@@ -931,6 +932,43 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect product Details", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ViewEntityCount GetTotalEntityCount()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetTotalEntityCount";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+               ViewEntityCount entity=new ViewEntityCount();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if(reader.Read())
+                {
+                    entity = new ViewEntityCount
+                    {
+                        TotalBranch = Convert.ToInt32(reader["TotalBranch"]),
+                        TotalClient = Convert.ToInt32(reader["TotalClient"]),
+                        TotalDept = Convert.ToInt32(reader["TotalDept"]),
+                        TotalEmployee = Convert.ToInt32(reader["TotalEmp"]),
+                        TotalRegion = Convert.ToInt32(reader["TotalRegion"]),
+                        TotalTerritory = Convert.ToInt32(reader["TotalTerritory"])
+                    };
+                }
+                reader.Close();
+                return entity;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect Entity Count", exception);
             }
             finally
             {

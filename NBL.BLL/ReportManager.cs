@@ -12,6 +12,7 @@ using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Reports;
+using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.BLL
 {
@@ -287,6 +288,11 @@ namespace NBL.BLL
         public ICollection<ProductDetails> GetAllProductDetails()
         {
             return _iReportGateway.GetAllProductDetails();
+        }
+
+        public ViewEntityCount GetTotalEntityCount()
+        {
+            return _iReportGateway.GetTotalEntityCount();
         }
     }
 }

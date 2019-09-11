@@ -10,6 +10,7 @@ using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Reports;
+using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.BLL.Contracts
 {
@@ -48,6 +49,7 @@ namespace NBL.BLL.Contracts
         ICollection<TerritoryWiseDeliveredQty> GetTerritoryWishTotalSaleQtyByBranchId(int branchId);
         ICollection<ViewClient> GetClientList();
         ICollection<ProductDetails> GetAllProductDetails();
+        ViewEntityCount GetTotalEntityCount();
 
     }
 }

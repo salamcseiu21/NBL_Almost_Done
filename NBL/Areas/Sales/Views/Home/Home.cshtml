@@ -6,15 +6,24 @@
     var user = (ViewUser)Session["user"];
 
 }
-@if(user.IsPasswordChangeRequired)
+@if(!user.IsPasswordChangeRequired)
 { 
 <!-- Info boxes -->
 <section class="content">
   
-    <div class="row">
-        @Html.Partial("_ViewSalesReportChartPartialPage", Model.TotalOrder)
-        <!-- /.col -->
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-weight: bolder">Stock Product</div>
+        <div class="panel panel-body">
+            @Html.Partial("_ViewProductSummaryPartialPage",Model.Products)
+        </div>
     </div>
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-weight: bolder">Order Report</div>
+        <div class="panel panel-body">
+            @Html.Partial("_ViewSalesReportChartPartialPage", Model.TotalOrder)
+        </div>
+    </div>
+   
 </section>
 @section Scripts{
     
@@ -25,6 +34,16 @@
             timeout = setTimeout("location.reload(true);", 60000);
         }
     </script>
+<script>
+
+        $('#table_product_list_in_stock').DataTable({
+            "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+            responsive: true
+        });
+
+</script>
 
 }
 }
+
+

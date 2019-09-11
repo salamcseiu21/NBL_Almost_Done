@@ -1,6 +1,6 @@
 ﻿$.ajax({
     type: 'GET',
-    url: "http://localhost/nbl/api/departments",
+    url: "http://49.0.41.34:1181/api/departments",
     dataType: 'jsonp',
     success: function (data) {
         $('#table_Department_list').dataTable({

@@ -264,7 +264,7 @@ namespace NBL.Areas.Editor.Controllers
                 }
                 client.ClientId = id;
                 bool result = _iClientManager.Update(client);
-                return RedirectToAction("ViewClient","Home");
+                return RedirectToAction("Home","Home");
             }
             catch(Exception exception)
             {

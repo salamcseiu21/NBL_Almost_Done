@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Departments;
 using NBL.Models.EntityModels.Invoices;
 using NBL.Models.EntityModels.Locations;
@@ -28,6 +29,7 @@ namespace NBL.Models.ViewModels.Summaries
             }
         }
         public IEnumerable<ViewClient> Clients { get; set; }
+        public IEnumerable<Client> ClientList { get; set; }
         public IEnumerable<ViewClient> TopClients { get; set; }
         public IEnumerable<ViewProduct> TopProducts { get; set; }   
         public IEnumerable<ViewProduct> Products { get; set; }
@@ -44,7 +46,8 @@ namespace NBL.Models.ViewModels.Summaries
         public IEnumerable<Territory> Territories { get; set; }
         public IEnumerable<Region> Regions { get; set; }
         public ICollection<UserWiseOrder> UserWiseOrders { get; set; }  
-        public ICollection<TerritoryWiseDeliveredQty> TerritoryWiseDeliveredPrducts { get; set; }   
+        public ICollection<TerritoryWiseDeliveredQty> TerritoryWiseDeliveredPrducts { get; set; }
+        public ViewEntityCount ViewEntityCount { get; set; } 
 
         public ViewTotalProduction Production { get; set; }
         public ViewTotalDispatch Dispatch { get; set; }
@@ -67,6 +70,7 @@ namespace NBL.Models.ViewModels.Summaries
             Departments=new List<Department>();
             Territories=new List<Territory>();
             Regions=new List<Region>();
+            ViewEntityCount=new ViewEntityCount();
         }
     }
 }

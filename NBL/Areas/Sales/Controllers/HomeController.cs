@@ -62,6 +62,7 @@ namespace NBL.Areas.Sales.Controllers
                 //var clients = _iClientManager.GetAllClientDetails();
                 //var topProducts = _iReportManager.GetPopularBatteriesByYear(DateTime.Now.Year).ToList();
                 //var employees = _iEmployeeManager.GetAllEmployeeWithFullInfo().ToList();
+                var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).ToList();
                 SummaryModel summary = new SummaryModel
                 {
                    // Branches = branches.ToList(),
@@ -72,7 +73,7 @@ namespace NBL.Areas.Sales.Controllers
                    // TopProducts = topProducts,
                    // Clients = clients,
                    // Employees = employees,
-                   // Products = products,
+                     Products = products,
                    // AccountSummary = accountSummary
 
                 };

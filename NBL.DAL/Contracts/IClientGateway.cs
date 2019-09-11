@@ -26,5 +26,6 @@ namespace NBL.DAL.Contracts
         ICollection<object> GetAllClientBySearchTerm(string searchTerm);
         ViewClient GetClientInfoBySubSubSubAccountCode(string accountCode);
         ICollection<ViewClient> GetClientByOrderCountAndBranchId(int branchId);
+        ICollection<Client> GetActiveClient();
     }
 }

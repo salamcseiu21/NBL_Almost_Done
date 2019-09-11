@@ -6,6 +6,7 @@ using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Reports;
+using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.DAL.Contracts
 {
@@ -31,6 +32,7 @@ namespace NBL.DAL.Contracts
        ICollection<ViewOrderHistory> GetOrderHistoriesByYear(int year);
        ICollection<TerritoryWiseDeliveredQty> GetTerritoryWishTotalSaleQtyByBranchId(int branchId);
        ICollection<ViewClient> GetClientList();
-       ICollection<ProductDetails> GetAllProductDetails(); 
+       ICollection<ProductDetails> GetAllProductDetails();
+       ViewEntityCount GetTotalEntityCount();
    }
 }

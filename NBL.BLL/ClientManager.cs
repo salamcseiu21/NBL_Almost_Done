@@ -105,6 +105,12 @@ namespace NBL.BLL
         {
             return _iClientGateway.GetClientByOrderCountAndBranchId(branchId);
         }
+
+        public ICollection<Client> GetActiveClient()
+        {
+            return _iClientGateway.GetActiveClient();
+        }
+
         public bool Delete(Client model)
         {
             throw new System.NotImplementedException();

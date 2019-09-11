@@ -201,10 +201,49 @@
                 }
             });
         });
-     
+
     </script>
 
+    <script>
 
+        var productIdlist = [];
+        function AddItemToList(btnClicked) {
+            if ($("#ClientName").val() === "") {
+                alert('Please type & select a Client Name');
+            }
+
+            else if ($("#ProductName").val() === "") {
+                alert('Please type & select a product Name');
+            }
+            else {
+                var id = $("#ProductId").val();
+                var a = $.inArray(id, productIdlist);
+                if (a < 0) {
+                    productIdlist.push(id);
+                    var $form = $(btnClicked).parents('form');
+                    $.ajax({
+                        type: "POST",
+                        url: RootUrl + 'Sales/Order/Order',
+                        data: $form.serialize(),
+                        error: function (xhr, status, error) {
+                            //do something about the error
+                        },
+                        success: function (response) {
+                            //alert("Saved Successfully");
+                            ViewTempOrders();
+                            $("#ProductName").val('');
+                        }
+                    });
+                }
+                else {
+                    alert("This Product already exits in the list");
+                }
+            }
+           
+
+        }
+
+    </script>
 
     <script>
         function CalculateNetAmount(id) {
@@ -261,32 +300,6 @@
         function ReloadPage() {
             location.reload();
         }
-
-        //function doCheck() {
-        //    var allFilled = true;
-
-        //    var inputs = document.getElementsByTagName('input');
-        //    for (var i = 0; i < inputs.length; i++) {
-        //        if (inputs[i].type === "text" && inputs[i].value === '') {
-        //            allFilled = false;
-        //            break;
-        //        }
-        //    }
-
-        //    document.getElementById("addItemButton").disabled = !allFilled;
-        //}
-
-        //window.onload = function () {
-        //    var inputs = document.getElementsByTagName('input');
-        //    for (var i = 0; i < inputs.length; i++) {
-        //        if (inputs[i].type === "text") {
-        //            inputs[i].onkeyup = doCheck;
-        //            inputs[i].onblur = doCheck;
-        //        }
-        //    }
-        //};
-
-
         function Update(btnClicked) {
             var id = btnClicked.id;
             var qty = parseInt(btnClicked.value);

@@ -1,18 +1,23 @@
 ﻿  @model IEnumerable<NBL.Models.ViewModels.ViewProduct>
+      
+@{
+    var i = 0;
+}
 <div class="table-responsive">
-    <table id="table_product_list_in_stock" class="display table-bordered" style="border:1px solid black">
+    <table id="table_product_list_in_stock" class="display table-bordered" style="border: 1px solid black;width: 100%">
 
         <thead>
         <tr>
-            <th>Total Quantity :</th>
+            <th  colspan="2">Total Quantity :</th>
             <th class="text-left" colspan="3">@Model.Sum(n=>n.Quantity)</th>
        
         </tr>
         <tr>
+            <th>S.N</th>
             <th class="text-center">Product Name</th>
-            <th class="text-center">Category </th>
+            <th class="text-center">Segment </th>
             <th class="text-center">Account Code </th>
-            <th class="text-center" style="width: 60px"> Quantity</th>
+            <th class="text-center"> Quantity</th>
         </tr>
         </thead>
 
@@ -20,7 +25,9 @@
 
         @foreach (var item in Model)
         {
+            i++;
             <tr>
+                <td>@i</td>
                 <td>@item.ProductName</td>
                 <td class="text-center">@item.ProductCategoryName</td>
                 <td class="text-center">@item.SubSubSubAccountCode</td>
@@ -31,13 +38,14 @@
         </tbody>
         <tfoot>
         <tr>
+            <th>S.N</th>
             <th class="text-center">Product Name</th>
-
-            <th class="text-center">Category </th>
-            <th class="text-center">Account Code  </th>
+            <th class="text-center">Segment </th>
+            <th class="text-center">Account Code </th>
             <th class="text-center">Quantity</th>
         </tr>
         </tfoot>
     </table>
 
 </div>
+

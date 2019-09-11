@@ -1,10 +1,4 @@
 ﻿
-
-
-
-
-
-
 $(function () {
     $("#Quantity").change(function () {
         var unitPrice = $("#UnitPrice").val();

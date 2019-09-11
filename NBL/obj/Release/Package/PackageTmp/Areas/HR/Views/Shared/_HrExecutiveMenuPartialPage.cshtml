@@ -62,16 +62,17 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li>@Html.ActionLink("  Employee List", "ViewEmployee", "Home", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
-                <li>@Html.ActionLink(" Client List", "ViewClient", "Home", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
+                <li>@Html.ActionLink("  Employee List", "ViewEmployee", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-list" })</li>
+                <li>@Html.ActionLink(" Client List", "ViewClient", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-list" })</li>
+                <li>@Html.ActionLink(" Supplier List", "Supplier", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-list" })</li>
                 <li>@Html.ActionLink(" Product List", "ViewProduct", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-list" })</li>
-                <li>@Html.ActionLink(" Branch List", "ViewBranch", "Branch", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
-                <li>@Html.ActionLink(" Department List", "DepartmentList", "Department", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
+                <li>@Html.ActionLink(" Branch List", "ViewBranch", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-list" })</li>
+                @*<li>@Html.ActionLink(" Department List", "DepartmentList", "Department", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
                 <li>@Html.ActionLink(" Designation List", "DesignationList", "Designation", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
                 <li>@Html.ActionLink(" Employee Type List", "EmployeeTypeList", "EmployeeType", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
                 <li>@Html.ActionLink(" Region List", "All", "Region", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
                 <li>@Html.ActionLink(" Territory List", "All", "Territory", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
-                <li>@Html.ActionLink(" Division List", "All", "Division", new { area = "Editor" }, new { @class = "fa fa-list" })</li>
+                <li>@Html.ActionLink(" Division List", "All", "Division", new { area = "Editor" }, new { @class = "fa fa-list" })</li>*@
             </ul>
         </li>
         <li class="treeview">

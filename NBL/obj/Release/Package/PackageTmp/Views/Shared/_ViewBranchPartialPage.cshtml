@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Branch List";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
 }
 <section class="content">
     <h3 class="text-center text-green headingStyle">Branch List</h3>
@@ -9,6 +10,7 @@
        
         <thead>
         <tr>
+            <th>S.N</th>
             <th>Branch Name</th>
             <th>Address</th>
             <th>Phone</th>
@@ -21,8 +23,9 @@
 
         @foreach (var item in Model)
         {
+            i++;
             <tr>
-
+                <td>@i</td>
                 <td>
                     <h4>@item.BranchName</h4>
                     <h5>@item.Title</h5>
@@ -37,6 +40,7 @@
         </tbody>
         <tfoot>
         <tr>
+            <th>S.N</th>
             <th>Branch Name</th>
             <th>Address</th>
             <th>Phone</th>
