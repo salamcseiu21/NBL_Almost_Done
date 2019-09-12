@@ -116,6 +116,21 @@ namespace NBL.Areas.SuperAdmin.Controllers
             return View(order);
         }
 
+        public ActionResult OrderHistory()
+        {
+            try
+            {
+                var orders = _iReportManager.GetOrderHistoriesByYear(DateTime.Now.Year);
+                return View(orders);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+
         public PartialViewResult ViewDivision() 
         {
             var divisions = _iDivisionGateway.GetAll().ToList();
@@ -351,20 +366,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
             }
         }
         
-        public ActionResult OrderHistory()
-        {
-            try
-            {
-                var orders=_iReportManager.GetOrderHistoriesByYear(DateTime.Now.Year);
-                return View(orders);
-            }
-            catch (Exception exception)
-            {
-                Log.WriteErrorLog(exception);
-                return PartialView("_ErrorPartial", exception);
-            }
-        }
-
+       
         public ActionResult Clients()
         {
             try

@@ -320,6 +320,10 @@ namespace NBL.Areas.Sales.Controllers
                 collections = _iAccountsManager.GetAllReceivableCheque(branchId, companyId, user.UserId, collectionDate)
                     .ToList();
             }
+            else if (user.IsCorporateUser == 1)
+            {
+                collections = _iAccountsManager.GetAllReceivableCheque(companyId, 0).ToList();
+            }
             else
             {
                 collections = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId).ToList();
@@ -338,6 +342,7 @@ namespace NBL.Areas.Sales.Controllers
             {
                 searchCriteria.UserId = user.UserId;
             }
+
             else
             {
                 searchCriteria.UserId = 0;
@@ -351,9 +356,20 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
+                List<ChequeDetails> collections;
                 var companyId = Convert.ToInt32(Session["CompanyId"]);
                 var branchId = Convert.ToInt32(Session["BranchId"]);
-                var  collections = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId,companyId).ToList().FindAll(n=>n.ActiveStatus==0);
+               
+                var user = (ViewUser)Session["user"];
+                if(user.IsCorporateUser == 1)
+                {
+                    collections=_iAccountsManager.GetAllReceivableCheque(companyId, 0).ToList();
+                }
+                else
+                {
+                    collections = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId).ToList().FindAll(n => n.ActiveStatus == 0);
+                }
+              
                 return View(collections);
             }
             catch (Exception exception)

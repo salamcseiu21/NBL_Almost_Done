@@ -1,14 +1,21 @@
-﻿@model IEnumerable<NBL.Models.ChequeDetails>
+﻿@using NBL.Models.ViewModels
+@model IEnumerable<NBL.Models.ChequeDetails>
 @{
-    ViewBag.Title = "PendingCollectionList";
+    ViewBag.Title = "Pending Collection List";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
     var i = 0;
+    var user = (ViewUser) Session["user"];
 }
 
 <section class="content">
-    <table id="table_receivable_list" class="display table-bordered" style="border: 1px solid black">
-        <caption><h3 class="text-center text-green headingStyle">Pending Collection List</h3></caption>
-        <thead>
+    
+    @if (user.Roles.Equals("SalesExecutive"))
+    {
+        <table id="table_receivable_list" class="display table-bordered" style="border: 1px solid black;width: 100%">
+            <caption>
+                <h3 class="text-center text-green headingStyle">Pending Collection List</h3>
+            </caption>
+            <thead>
 
             <tr>
                 <th>S.N</th>
@@ -24,8 +31,8 @@
                 <th class="text-center">Status</th>
                 <th class="text-center">Action</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             @foreach (var item in Model)
             {
                 i++;
@@ -33,7 +40,7 @@
                 <tr>
                     <td>@i</td>
                     <td>@item.ReceivableRef</td>
-                    <td>@Html.ActionLink(item.ClientInfo, "ViewClientProfile", "Home", new { id = item.ClientId }, null) </td>
+                    <td>@Html.ActionLink(item.ClientInfo, "ViewClientProfile", "Home", new {id = item.ClientId}, null) </td>
                     <td>@item.SourceBankName</td>
                     <td>@item.BankAccountNo</td>
                     <td>@item.ChequeNo</td>
@@ -51,11 +58,11 @@
                             <p class="fa fa-check text-success"> Approved</p>
                         }
                     </td>
-                    <td>@Html.ActionLink(" Cancel", "Cancel", "SalesCollection", new { id = item.ChequeDetailsId }, new {@class="fa fa-times text-red"}) </td>
+                    <td>@Html.ActionLink(" Cancel", "Cancel", "SalesCollection", new {id = item.ChequeDetailsId}, new {@class = "fa fa-times text-red"}) </td>
                 </tr>
             }
-        </tbody>
-        <tfoot>
+            </tbody>
+            <tfoot>
             <tr>
                 <th colspan="7" class="text-right">Total </th>
                 <th class="text-right">@Model.Sum(n => n.ChequeAmount).ToString("N2")</th>
@@ -75,14 +82,21 @@
                 <th class="text-center">Status</th>
                 <th class="text-center">Action</th>
             </tr>
-        </tfoot>
-    </table>
+            </tfoot>
+        </table>
+    }
+    else
+    {
+        @Html.Partial("_ViewCollectionListPartialPage",Model)
+    }
+
 </section>
 @section Scripts
 {
     <script>
         $('#table_receivable_list').DataTable({
             "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+            responsive:true,
             "oLanguage": {
                 "sEmptyTable": "<h4 style='color:green;font-weight:bolder;'>There is no receivable cheque or cash to active right now !</h4>"
             }

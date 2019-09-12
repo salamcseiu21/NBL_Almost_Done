@@ -787,7 +787,9 @@ namespace NBL.DAL
                        InvoiceRef = DBNull.Value.Equals(reader["InvoiceRef"])?null:reader["InvoiceRef"].ToString(),
                        DeliveryId = DBNull.Value.Equals(reader["DeliveryId"]) ? (long?)null : Convert.ToInt64(reader["DeliveryId"]),
                        DeliveryRef = DBNull.Value.Equals(reader["DeliveryRef"]) ? null : reader["DeliveryRef"].ToString(),
-                       BranchName = reader["OrderByBranch"].ToString()
+                       BranchName = reader["OrderByBranch"].ToString(),
+                       DistributionCenterId = DBNull.Value.Equals(reader["DistributionCenterId"])?(int?)null:Convert.ToInt32(reader["DistributionCenterId"]),
+                       ClientName = reader["ClientName"].ToString()
                     });
                 }
                 reader.Close();

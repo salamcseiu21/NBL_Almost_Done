@@ -17,6 +17,9 @@ namespace NBL.Models.ViewModels.Orders
         public string InvoiceRef { get; set; }
         public string DeliveryRef { get; set; }
         public long? DeliveryId { get; set; }
+        public int? DistributionCenterId { get; set; }
+        public string ClientName { get; set; }
+        public string ClientTypeName { get; set; }  
        
       
     }

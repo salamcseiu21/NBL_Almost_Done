@@ -305,6 +305,30 @@ namespace NBL.Areas.Sales.Controllers
            
         }
 
+
+        //---------------------Order History----
+        [Authorize(Roles = "SalesAdmin,SalesManager")]
+        public ActionResult OrderHistory()
+        {
+            try
+            {
+                var orders = _iReportManager.GetOrderHistoriesByYear(DateTime.Now.Year);
+                return View(orders);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [Authorize(Roles = "SalesAdmin,SalesManager")]
+
+        public ActionResult OrderHistoryDetails(int id)
+        {
+            var order = _iOrderManager.GetOrderHistoryByOrderId(id);
+            order.Client = _iClientManager.GetById(order.ClientId);
+            return View(order);
+        }
         //--------------------------Update User Profile----------------
         [HttpGet]
         public ActionResult UpdateBasicInfo(int id)

@@ -158,6 +158,7 @@
     <Compile Include="EntityModels\Locations\Division.cs" />
     <Compile Include="EntityModels\Employees\Employee.cs" />
     <Compile Include="EntityModels\Masters\EmployeeType.cs" />
+    <Compile Include="Enums\BranchEnum.cs" />
     <Compile Include="Enums\CellCondition.cs" />
     <Compile Include="Enums\ClientTypeEnum.cs" />
     <Compile Include="Enums\Department.cs" />

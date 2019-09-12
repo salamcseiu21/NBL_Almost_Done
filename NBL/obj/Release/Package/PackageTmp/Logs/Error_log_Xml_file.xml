@@ -43,4 +43,25 @@
     <CustomeMessage>Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, &lt;, &lt;= , &gt;, &gt;= or when the subquery is used as an expression.
 Conversion failed when converting date and/or time from character string.</CustomeMessage>
   </Error>
+  <Error LogId="19-Sep-12dc0072eb-7a54-48f1-97bd-e1275992e7d6">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean&amp; moreRows)
+   at System.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean&amp; more)
+   at System.Data.SqlClient.SqlDataReader.Read()
+   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllReceivableCheque(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 577</LogMessage>
+    <LogDateTime>2019-09-12T11:35:50.540065+06:00</LogDateTime>
+    <CustomeMessage>Conversion failed when converting the varchar value 'N' to data type bit.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Sep-1279cd0c23-2f16-4a4e-95b8-cd5b7750b038">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllReceivableCheque(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 609
+   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.GetAllReceivableCheque(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 76
+   at NBL.Areas.Sales.Controllers.SalesCollectionController.PendingCollectionList() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 366</LogMessage>
+    <LogDateTime>2019-09-12T11:35:50.5896034+06:00</LogDateTime>
+    <CustomeMessage>Could not collect receivable cheques</CustomeMessage>
+  </Error>
 </Errors>

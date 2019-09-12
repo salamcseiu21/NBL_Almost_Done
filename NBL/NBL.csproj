@@ -8206,6 +8206,8 @@
     <Content Include="Areas\HR\Views\Shared\_HrExecutiveMenuPartialPage.cshtml" />
     <Content Include="Areas\Services\Views\Home\ProductStatus.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\AccountManager\ProductPriceList.cshtml" />
+    <Content Include="Areas\Sales\Views\Home\OrderHistory.cshtml" />
+    <Content Include="Areas\Sales\Views\Home\OrderHistoryDetails.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />

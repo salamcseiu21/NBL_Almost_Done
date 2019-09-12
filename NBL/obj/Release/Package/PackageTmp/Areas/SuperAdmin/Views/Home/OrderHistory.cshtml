@@ -11,10 +11,11 @@
         <thead>
         <tr>
             <th>Order Ref</th>
-            <th>Order By Branch</th>
+            <th>Client Info</th>
             <th>Order Date</th>
             <th>Invoice Ref</th>
             <th>Delivery Ref</th>
+            <th>Delivery Point</th>
             <th class="text-center">Status</th>
             <th class="text-center">Action</th>
         </tr>
@@ -23,12 +24,24 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.OrderRef
-                    </td>
-                    <td>@item.BranchName</td>
+                    <td>@item.OrderRef</td>
+                    <td><b>@item.ClientName</b><br/>
+                        @item.BranchName</td>
                     <td>@item.OrderDate.ToString("dd-MMM-yyyy")</td>
                     <td>@(item.InvoiceRef?? "N/A")</td>
                     <td>@(item.DeliveryRef?? "N/A")</td>
+                    <td>@{
+                            if (item.DistributionCenterId == null)
+                            {
+                                <span>N/A</span>
+                            }
+                            else
+                            {
+                                @Enum.GetName(typeof(BranchEnum), item.DistributionCenterId)
+                        }
+                    }
+                    </td>
+                   
                     <td class="text-center">@Enum.GetName(typeof(OrderStatus), item.OrderStatus)</td>
                     <td class="text-center">@Html.ActionLink(" Details", "OrderHistoryDetails", "Home", new { area = "SuperAdmin", id = item.OrderId }, new { @class = "fa fa-eye" })</td>
                 </tr>
@@ -37,10 +50,11 @@
         <tfoot>
             <tr>
                 <th>Order Ref</th>
-                <th>Order By Branch</th>
+                <th>Client Info</th>
                 <th>Order Date</th>
                 <th>Invoice Ref</th>
                 <th>Delivery Ref</th>
+                <th>Delivery Point</th>
                 <th class="text-center">Status</th>
                 <th class="text-center">Action</th>
             </tr>
