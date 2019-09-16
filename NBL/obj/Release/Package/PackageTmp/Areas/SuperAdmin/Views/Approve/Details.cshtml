@@ -1,0 +1,43 @@
+﻿@using NBL.Models.Enums
+@model NBL.Models.EntityModels.Clients.Client
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <div class="panel panel-info" style="margin: 0; padding: 0;">
+        <div class="panel panel-heading" style="font-weight: bolder">
+            Client Details
+        </div>
+        <div class="panel panel-body">
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <section>
+           
+                        <img src="~/@(Model.ClientImage?? "Images/User.jpg")" height="120" width="100" style="float:left;margin-right:20px" title="@Model.ClientName" />
+                        <span>
+                            @Html.Raw(Model.GetMailingAddress())
+                        </span>
+
+                    </section>
+
+
+                </div>
+                <div class="col-md-6">
+                    Branch: @Model.Branch.BranchName<br/>
+                    Outstanding: @Model.Outstanding<br/>
+                    Credit Limit: @Model.CreditLimit<br/>
+                    Max Credit Days:@Model.MaxCreditDay<br/>
+                </div>
+                
+            </div>
+        </div>
+        <div class="panel panel-footer">
+            @Html.ActionLink(" Back","ApproveClient","Approve",new {area="SuperAdmin"},new {@class="btn btn-danger fa fa-arrow-left"})
+        </div>
+    </div>
+</section>
+

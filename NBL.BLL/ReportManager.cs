@@ -294,5 +294,10 @@ namespace NBL.BLL
         {
             return _iReportGateway.GetTotalEntityCount();
         }
+
+        public ICollection<ViewOrderHistory> GetOrderHistoriesByYearAndDistributionPointId(int year, int distributionPointId)
+        {
+            return _iReportGateway.GetOrderHistoriesByYearAndDistributionPointId(year,distributionPointId);
+        }
     }
 }

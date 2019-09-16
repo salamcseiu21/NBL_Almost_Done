@@ -35,8 +35,9 @@ namespace NBL.Areas.Sales.Controllers
         private readonly ICommonManager _iCommonManager;
         private readonly IOrderManager _iOrderManager;
         private readonly IBranchManager _iBranchManager;
+        private readonly IReportManager _iReportManager;
 
-        public DeliveryController(IDeliveryManager iDeliveryManager,IInventoryManager iInventoryManager,IProductManager iProductManager,IClientManager iClientManager,IInvoiceManager iInvoiceManager,ICommonManager iCommonManager,IOrderManager iOrderManager,IBranchManager iBranchManager)
+        public DeliveryController(IDeliveryManager iDeliveryManager,IInventoryManager iInventoryManager,IProductManager iProductManager,IClientManager iClientManager,IInvoiceManager iInvoiceManager,ICommonManager iCommonManager,IOrderManager iOrderManager,IBranchManager iBranchManager,IReportManager iReportManager)
         {
             _iDeliveryManager = iDeliveryManager;
             _iInventoryManager = iInventoryManager;
@@ -46,6 +47,7 @@ namespace NBL.Areas.Sales.Controllers
             _iCommonManager = iCommonManager;
             _iOrderManager = iOrderManager;
             _iBranchManager = iBranchManager;
+            _iReportManager = iReportManager;
         }
         [Authorize(Roles = "DistributionManager")]
         public PartialViewResult OrderList()
@@ -287,7 +289,7 @@ namespace NBL.Areas.Sales.Controllers
                 if (result.StartsWith("S"))
                 {
                     System.IO.File.Create(filePath).Close();
-                    return RedirectToAction("OrderList");
+                    return RedirectToAction("LatestOrderList");
                 }
                 return View();
             }
@@ -722,5 +724,30 @@ namespace NBL.Areas.Sales.Controllers
             return PartialView("_ModalTransferDeliveryPartialPage", requisition);
         }
 
+        //---------------------Order History----
+        [Authorize(Roles = "SalesAdmin,SalesManager,SalesExecutive")]
+        public ActionResult OrderHistory()
+        {
+            try
+            {
+                //  var orders = _iReportManager.GetOrderHistoriesByYear(DateTime.Now.Year);
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                ICollection<ViewOrderHistory> orderHistories = _iReportManager.GetOrderHistoriesByYearAndDistributionPointId(DateTime.Now.Year, branchId);
+                return PartialView("_OrderHistoryPartialPage",orderHistories);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [Authorize(Roles = "SalesAdmin,SalesManager,SalesExecutive")]
+
+        public ActionResult OrderHistoryDetails(int id)
+        {
+            var order = _iOrderManager.GetOrderHistoryByOrderId(id);
+            order.Client = _iClientManager.GetById(order.ClientId);
+            return PartialView("_OrderHistoryDetailsPartialPage", order);
+        }
     }
 }

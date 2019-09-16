@@ -13,6 +13,7 @@ using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Employees;
 using NBL.Models.EntityModels.FinanceModels;
+using NBL.Models.Enums;
 using NBL.Models.ViewModels;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels.Orders;
@@ -233,20 +234,6 @@ namespace NBL.Areas.Sales.Controllers
             }
         }
 
-        //public ActionResult Test()
-        //{
-        //    var list = _iCommonManager.TestMethod();
-        //    string message = "";
-        //    foreach (dynamic item in list)
-        //    {
-        //        message += $"Product Name: {item.ProductName}, Vat {item.Vat} <br/>";
-        //    }
-        //    ViewBag.Data = message;
-        //    Task.Run(
-        //        DownloadPageAsync);
-        //    return View();
-        //}
-
         public async Task<int?> DownloadPageAsync()
         {
             // ... Target page.
@@ -312,8 +299,9 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
-                var orders = _iReportManager.GetOrderHistoriesByYear(DateTime.Now.Year);
-                return View(orders);
+             //  var orders = _iReportManager.GetOrderHistoriesByYear(DateTime.Now.Year);
+                ICollection<ViewOrderHistory> orderHistories = _iReportManager.GetOrderHistoriesByYearAndDistributionPointId(DateTime.Now.Year,Convert.ToInt32(BranchEnum.Factory));
+                return PartialView("_OrderHistoryPartialPage", orderHistories);
             }
             catch (Exception exception)
             {
@@ -327,7 +315,7 @@ namespace NBL.Areas.Sales.Controllers
         {
             var order = _iOrderManager.GetOrderHistoryByOrderId(id);
             order.Client = _iClientManager.GetById(order.ClientId);
-            return View(order);
+            return PartialView("_OrderHistoryDetailsPartialPage",order);
         }
         //--------------------------Update User Profile----------------
         [HttpGet]

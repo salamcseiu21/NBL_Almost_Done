@@ -1777,13 +1777,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/25/2019 11:55:21</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Shared/_MenuPartialPage.cshtml">
-      <publishTime>09/09/2019 11:40:12</publishTime>
+      <publishTime>09/16/2019 14:17:50</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Shared/_ModalTransferDeliveryPartialPage.cshtml">
       <publishTime>05/08/2019 10:08:28</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Shared/_NsmMenuPartialPage.cshtml">
       <publishTime>08/22/2019 16:22:30</publishTime>
+    </File>
+    <File Include="Areas/Sales/Views/Shared/_OrderHistoryDetailsPartialPage.cshtml">
+      <publishTime>09/16/2019 15:18:05</publishTime>
+    </File>
+    <File Include="Areas/Sales/Views/Shared/_OrderHistoryPartialPage.cshtml">
+      <publishTime>09/16/2019 15:18:20</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Shared/_OrderListPartialPage.cshtml">
       <publishTime>05/09/2019 10:34:40</publishTime>
@@ -1993,7 +1999,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/SuperAdmin/Views/Approve/ApproveClient.cshtml">
-      <publishTime>07/11/2019 10:01:32</publishTime>
+      <publishTime>09/16/2019 11:20:52</publishTime>
+    </File>
+    <File Include="Areas/SuperAdmin/Views/Approve/Details.cshtml">
+      <publishTime>09/16/2019 11:40:17</publishTime>
     </File>
     <File Include="Areas/SuperAdmin/Views/Approve/Edit.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -23389,16 +23398,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="bin/NBL.BLL.dll">
-      <publishTime>09/12/2019 15:07:22</publishTime>
+      <publishTime>09/16/2019 15:22:29</publishTime>
     </File>
     <File Include="bin/NBL.DAL.dll">
-      <publishTime>09/12/2019 15:07:22</publishTime>
+      <publishTime>09/16/2019 15:22:29</publishTime>
     </File>
     <File Include="bin/NBL.dll">
-      <publishTime>09/12/2019 15:07:28</publishTime>
+      <publishTime>09/16/2019 15:22:36</publishTime>
     </File>
     <File Include="bin/NBL.Models.dll">
-      <publishTime>09/12/2019 15:07:21</publishTime>
+      <publishTime>09/16/2019 15:22:28</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>04/22/2019 01:06:16</publishTime>
@@ -23597,6 +23606,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Files/Deliverable_Product_For_130">
       <publishTime>05/14/2019 12:43:16</publishTime>
+    </File>
+    <File Include="Files/index.html">
+      <publishTime>09/14/2019 11:39:50</publishTime>
     </File>
     <File Include="Files/Monthly_Requisition_Products.xml">
       <publishTime>03/25/2019 17:37:04</publishTime>

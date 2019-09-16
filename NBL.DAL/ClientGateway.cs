@@ -379,6 +379,11 @@ namespace NBL.DAL
                         ClientTypeName = reader["ClientTypeName"].ToString(),
                         ClientTypeId = Convert.ToInt32(reader["ClientTypeId"])
                     };
+                    client.Branch=new Branch
+                    {
+                        BranchName = reader["NBranchName"].ToString(),
+                        BranchAddress = reader["NBranchAddress"].ToString()
+                    };
 
                 }
                 reader.Close();

@@ -41,8 +41,9 @@
                         <input type="hidden" value="@item.ClientId" id="ClientId" name="ClientId" />
                         <a href="#" id="@item.ClientId" onclick="Approve(this)">Approve</a>
                         }
-                   
-                    @Html.ActionLink(" Edit","Edit","Approve",new {Area="SuperAdmin",id=item.ClientId },new {@class= "fa fa-edit" })</td>
+                     @Html.ActionLink(" Details","Details","Approve",new {Area="SuperAdmin",id=item.ClientId },new {@class= "fa fa-eye" }) | 
+                     @Html.ActionLink(" Edit","Edit","Approve",new {Area="SuperAdmin",id=item.ClientId },new {@class= "fa fa-edit" })
+                    </td>
                 </tr>
             }
         </tbody>

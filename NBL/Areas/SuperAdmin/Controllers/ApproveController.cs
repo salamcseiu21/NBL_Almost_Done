@@ -8,6 +8,7 @@ using NBL.BLL.Contracts;
 using NBL.DAL;
 using NBL.Models;
 using NBL.Models.EntityModels.Clients;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 
 namespace NBL.Areas.SuperAdmin.Controllers
@@ -136,6 +137,20 @@ namespace NBL.Areas.SuperAdmin.Controllers
             catch
             {
                 return View();
+            }
+        }
+
+        public ActionResult Details(int id)
+        {
+            try
+            {
+                Client client = _iClientManager.GetById(id);
+                return View(client);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
             }
         }
     }

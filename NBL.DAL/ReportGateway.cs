@@ -809,6 +809,51 @@ namespace NBL.DAL
             }
         }
 
+        public ICollection<ViewOrderHistory> GetOrderHistoriesByYearAndDistributionPointId(int year, int distributionPointId)
+        {
+            try
+            {
+
+                CommandObj.CommandText = "UDSP_RptGetOrderHistoryByYearAndDistributionCenterId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Year", year);
+                CommandObj.Parameters.AddWithValue("@DistributionCenterId", distributionPointId);
+                ConnectionObj.Open();
+                List<ViewOrderHistory> orders = new List<ViewOrderHistory>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    orders.Add(new ViewOrderHistory
+                    {
+                        OrderId = Convert.ToInt64(reader["OrderId"]),
+                        OrderRef = reader["OrderRef"].ToString(),
+                        OrderDate = Convert.ToDateTime(reader["OrderDate"]),
+                        OrderStatus = Convert.ToInt32(reader["OrderStatus"]),
+                        InvoiceId = DBNull.Value.Equals(reader["InvoiceId"]) ? (long?)null : Convert.ToInt64(reader["InvoiceId"]),
+                        InvoiceRef = DBNull.Value.Equals(reader["InvoiceRef"]) ? null : reader["InvoiceRef"].ToString(),
+                        DeliveryId = DBNull.Value.Equals(reader["DeliveryId"]) ? (long?)null : Convert.ToInt64(reader["DeliveryId"]),
+                        DeliveryRef = DBNull.Value.Equals(reader["DeliveryRef"]) ? null : reader["DeliveryRef"].ToString(),
+                        BranchName = reader["OrderByBranch"].ToString(),
+                        DistributionCenterId = DBNull.Value.Equals(reader["DistributionCenterId"]) ? (int?)null : Convert.ToInt32(reader["DistributionCenterId"]),
+                        ClientName = reader["ClientName"].ToString()
+                    });
+                }
+                reader.Close();
+                return orders;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect  Orders history ref by year and distribution Point", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
         public ICollection<TerritoryWiseDeliveredQty> GetTerritoryWishTotalSaleQtyByBranchId(int branchId)
         {
             try
@@ -979,5 +1024,7 @@ namespace NBL.DAL
                 ConnectionObj.Close();
             }
         }
+
+        
     }
 }
