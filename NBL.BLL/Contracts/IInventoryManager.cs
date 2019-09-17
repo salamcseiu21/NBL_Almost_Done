@@ -69,6 +69,7 @@ namespace NBL.BLL.Contracts
        bool UpdateTripItemQuantity(long tripItemId, int quantity);
        ViewProductLifeCycleModel GetProductLifeCycle(string barcode);
        ViewProductHistory GetProductHistoryByBarcode(string barcode);
-      
+
+       IEnumerable<ViewTripModel> GetAllDeliverableTripList();
    }
 }

@@ -1,10 +1,13 @@
 ﻿@model IEnumerable<NBL.Models.ViewModels.Deliveries.ViewDispatchModel>
-
+@{
+    var i = 0;
+}
 <section class="content">
     <h3 class="text-center text-green">Despatch List</h3>
     <table id="tbl_dispatch_list" class="display table-bordered" style="border: 1px solid">
         <thead>
             <tr>
+                <th>S.N</th>
                 <th>Despatch Ref</th>
                 <th class="text-right">Quantity</th>
                 <th class="text-center">Date</th>
@@ -15,7 +18,9 @@
         <tbody>
             @foreach (var item in Model)
             {
+                i++;
                 <tr>
+                    <td>@i</td>
                     <td>@item.DispatchRef</td>
                     <td class="text-right">@item.Quantity</td>
                     <td class="text-center">@item.DispatchDate.ToString("dd-MMMM-yyyy")</td>
@@ -30,13 +35,14 @@
             }
         </tbody>
         <tfoot>
-            <tr>
-                <th>Despatch Ref</th>
-                <th class="text-right">Quantity</th>
-                <th class="text-center">Date</th>
-                <th class="text-center">Despatch By</th>
-                <th class="text-center">Print Chalan</th>
-            </tr>
+        <tr>
+            <th>S.N</th>
+            <th>Despatch Ref</th>
+            <th class="text-right">Quantity</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Despatch By</th>
+            <th class="text-center">Print Chalan</th>
+        </tr>
         </tfoot>
     </table>
 </section>

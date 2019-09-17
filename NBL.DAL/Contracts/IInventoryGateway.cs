@@ -74,5 +74,6 @@ namespace NBL.DAL.Contracts
        ViewProductLifeCycleModel GetProductLifeCycle(string barcode);
        ViewProductHistory GetProductHistoryByBarcode(string barcode);
        ICollection<ViewProduct> GetTotalReceiveProductByCompanyId(int companyId);
+       IEnumerable<ViewTripModel> GetAllDeliverableTripList();
    }
 }

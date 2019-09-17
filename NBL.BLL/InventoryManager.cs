@@ -26,7 +26,7 @@ namespace NBL.BLL
 
         private readonly  IInventoryGateway _iInventoryGateway;
         private readonly ICommonGateway _iCommonGateway;
-        readonly CommonGateway _commonGateway = new CommonGateway();
+        private readonly CommonGateway _commonGateway = new CommonGateway();
       
         public InventoryManager(IInventoryGateway iInventoryGateway,ICommonGateway iCommonGateway)
         {
@@ -231,7 +231,10 @@ namespace NBL.BLL
         {
             return _iInventoryGateway.GetAllTrip();
         }
-
+        public IEnumerable<ViewTripModel> GetAllDeliverableTripList()
+        {
+            return _iInventoryGateway.GetAllDeliverableTripList();
+        }
         public ViewDispatchModel GetDispatchByDispatchId(long dispatchId)
         {
             return _iInventoryGateway.GetDispatchByDispatchId(dispatchId); 
@@ -346,5 +349,7 @@ namespace NBL.BLL
         {
             return _iInventoryGateway.GetProductHistoryByBarcode(barcode);
         }
+
+       
     }
 }

@@ -147,6 +147,8 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+       
         public ICollection<ViewProduct> GetDeliveredProductByBranchAndCompanyId(int branchId, int companyId)
         {
 
@@ -1698,7 +1700,61 @@ namespace NBL.DAL
             }
         }
 
-       
+        public IEnumerable<ViewTripModel> GetAllDeliverableTripList()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllDeliverableTripList";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                List<ViewTripModel> models = new List<ViewTripModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ViewTripModel
+                    {
+                        TripId = Convert.ToInt64(reader["TripId"]),
+                        TripRef = reader["TripRef"].ToString(),
+                        DriverPhone = reader["DriverPhone"].ToString(),
+                        DriverName = reader["DriverName"].ToString(),
+                        CreatedByUserId = Convert.ToInt32(reader["CreatedByUserId"]),
+                        TransportationCost = Convert.ToDecimal(reader["TransportationCost"]),
+                        DeliveryQuantity = Convert.ToInt32(reader["Quantity"]),
+                        Transportation = reader["Transportation"].ToString(),
+                        VehicleNo = reader["VehicleNo"].ToString(),
+                        Remarks = reader["Remarks"].ToString(),
+                        Status = Convert.ToInt32(reader["Status"]),
+                        SystemDateTime = Convert.ToDateTime(reader["SystemDateTime"]),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        TripCreatedBy = new ViewEmployee
+                        {
+                            SubSubSubAccountCode = DBNull.Value.Equals(reader["SubSubSubAccountCode"]) ? null : reader["SubSubSubAccountCode"].ToString(),
+                            EmployeeName = DBNull.Value.Equals(reader["EmployeeName"]) ? null : reader["EmployeeName"].ToString(),
+                            DepartmentName = DBNull.Value.Equals(reader["DepartmentName"]) ? null : reader["DepartmentName"].ToString(),
+                            DesignationName = DBNull.Value.Equals(reader["DesignationName"]) ? null : reader["DesignationName"].ToString(),
+                            EmployeeImage = DBNull.Value.Equals(reader["EmployeeImage"]) ? null : reader["EmployeeImage"].ToString()
+                        }
+
+
+                    });
+                }
+                reader.Close();
+                return models;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect deliverable trip info", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
 
         public int CreateTrip(ViewCreateTripModel model)
         {

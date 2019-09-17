@@ -27,6 +27,7 @@ namespace NBL.DAL
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@DispatchDate", dispatchModel.DispatchDate);
                 CommandObj.Parameters.AddWithValue("@TripId", dispatchModel.TripModel.TripId);
+                CommandObj.Parameters.AddWithValue("@TripStatus", dispatchModel.TripModel.Status);
 
                 //CommandObj.Parameters.AddWithValue("@RequisitionId", dispatchModel.TripModel.RequisitionId);
                 //CommandObj.Parameters.AddWithValue("@ToBranchId", dispatchModel.TripModel.ToBranchId);

@@ -178,27 +178,37 @@ namespace NBL.Areas.Production.Controllers
         {
             try
             {
-                var products = _iProductManager.GetDeliverableProductListByTripId(tripId);
+              
                 string fileName = "Deliverable_Product_For_" + tripId;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 var scannedProducts = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
-                int dispatchByUserId = ((ViewUser)Session["user"]).UserId;
-                int companyId = Convert.ToInt32(Session["CompanyId"]);
-                var viewTrip = _iInventoryManager.GetAllTrip().ToList().Find(n => n.TripId == tripId);
-
-                DispatchModel model = new DispatchModel
-                {
-                    DispatchByUserId = dispatchByUserId,
-                    CompanyId = companyId,
-                    TripModel = viewTrip,
-                    DispatchDate = DateTime.Now,
-                    ScannedProducts = scannedProducts,
-                    DispatchModels = products
-                };
-
 
                 if (scannedProducts.Count > 0)
                 {
+                    var products = _iProductManager.GetDeliverableProductListByTripId(tripId);
+                    int dispatchByUserId = ((ViewUser)Session["user"]).UserId;
+                    int companyId = Convert.ToInt32(Session["CompanyId"]);
+                    var viewTrip = _iInventoryManager.GetAllTrip().ToList().Find(n => n.TripId == tripId);
+                    viewTrip.Status = 2;
+                    var tripQty = products.Sum(n => n.Quantity);
+                    var deliveryQty = scannedProducts.Count;
+
+                    if (tripQty != deliveryQty)
+                    {
+                        viewTrip.Status = 1;
+                    }
+
+                    DispatchModel model = new DispatchModel
+                    {
+                        DispatchByUserId = dispatchByUserId,
+                        CompanyId = companyId,
+                        TripModel = viewTrip,
+                        DispatchDate = DateTime.Now,
+                        ScannedProducts = scannedProducts,
+                        DispatchModels = products
+
+                    };
+
                     string result = _iFactoryDeliveryManager.SaveDispatchInformation(model);
                     if (result.StartsWith("Sa"))
                     {
@@ -278,7 +288,6 @@ namespace NBL.Areas.Production.Controllers
             try
             {
                 var products = _iProductManager.GetDeliverableProductListByTripId(tripId).ToList();
-
                 return PartialView("_ViewRequiredTripProductsPartialPage", products);
             }
             catch (Exception exception)
@@ -338,7 +347,7 @@ namespace NBL.Areas.Production.Controllers
         {
             try
             {
-                IEnumerable<ViewTripModel> tripModels = _iInventoryManager.GetAllTrip().ToList().FindAll(n => n.Status.Equals(0));
+                IEnumerable<ViewTripModel> tripModels = _iInventoryManager.GetAllDeliverableTripList();
                 return View(tripModels);
             }
             catch (Exception exception)
