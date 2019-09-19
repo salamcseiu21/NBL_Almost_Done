@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Designations;
 using NBL.Models.EntityModels.Employees;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Employees;
 
@@ -87,6 +88,7 @@ namespace NBL.Areas.Editor.Controllers
             }
             catch (Exception e)
             {
+                Log.WriteErrorLog(e);
                 ViewBag.EmployeeTypeId = new SelectList(_iEmployeeTypeManager.GetAll(), "EmployeeTypeId", "EmployeeTypeName");
                 ViewBag.BranchId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName");
                 ViewBag.DepartmentId = new SelectList(_iDepartmentManager.GetAll(), "DepartmentId", "DepartmentName");

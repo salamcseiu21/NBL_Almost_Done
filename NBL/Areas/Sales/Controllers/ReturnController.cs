@@ -138,7 +138,7 @@ namespace NBL.Areas.Sales.Controllers
             SuccessErrorModel model = new SuccessErrorModel();
             try
             {
-                int _count = 0;
+                int count = 0;
                 var collectionKeys = collection.AllKeys.ToList();
                 foreach (string key in collectionKeys)
                 {
@@ -167,12 +167,12 @@ namespace NBL.Areas.Sales.Controllers
                                     new XElement("DeliveryDate", deliveredOrder.DeliveryDate)
                                 ));
                             xmlDocument.Save(filePath);
-                            _count++;
+                            count++;
                         }
                         
                     }
                 }
-                if (_count > 0)
+                if (count > 0)
                 {
                     model.Message = "<p style='color:green'>Added Successfully</p>";
                 }
@@ -182,7 +182,6 @@ namespace NBL.Areas.Sales.Controllers
             catch (Exception e)
             {
                 Log.WriteErrorLog(e);
-             
                 model.Message = "<p style='color:red'> Failed to add" + e.Message + "</p>";
                 return Json(model, JsonRequestBehavior.AllowGet);
             }
@@ -414,7 +413,6 @@ namespace NBL.Areas.Sales.Controllers
                 long salesReturnId = Convert.ToInt64(collection["salesReturnId"]);
                 var aproverActionId= Convert.ToInt32(collection["ApprovarActionId"]);
                 var returnById = _iProductReturnManager.GetSalesReturnBySalesReturnId(salesReturnId);
-
                 returnById.LastApproverDatetime=DateTime.Now;
                 returnById.LastApproverRoleId = returnById.CurrentApproverRoleId;
                 returnById.CurrentApprovalLevel = returnById.CurrentApprovalLevel + 1;

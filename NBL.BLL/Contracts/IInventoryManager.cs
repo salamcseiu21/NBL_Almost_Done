@@ -71,5 +71,8 @@ namespace NBL.BLL.Contracts
        ViewProductHistory GetProductHistoryByBarcode(string barcode);
 
        IEnumerable<ViewTripModel> GetAllDeliverableTripList();
+       ICollection<Inventory> GetReceivedProductByBranchId(int branchId);
+       ICollection<ViewProduct> GetReceivedProductBarcodeById(long inventoryId);
+       ICollection<ViewProduct> GetReceivedProductById(long inventoryId); 
    }
 }

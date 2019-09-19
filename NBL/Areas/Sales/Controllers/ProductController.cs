@@ -92,6 +92,54 @@ namespace NBL.Areas.Sales.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+
+        public ActionResult ReceivedList() 
+        {
+            try
+            {
+
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                ICollection<Inventory> products = _iInventoryManager.GetReceivedProductByBranchId(branchId).ToList();
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        public ActionResult ReceivedBarcode(long id)
+        {
+            try
+            {
+                ICollection<ViewProduct> products = _iInventoryManager.GetReceivedProductBarcodeById(id).ToList();
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        public ActionResult ReceivedProduct(long id)
+        {
+            try
+            {
+                ICollection<ViewProduct> products = _iInventoryManager.GetReceivedProductById(id).ToList();
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
         [HttpGet]
         public ActionResult Transaction()
         {

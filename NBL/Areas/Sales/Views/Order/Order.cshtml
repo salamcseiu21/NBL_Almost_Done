@@ -11,170 +11,155 @@
 </style>
 <!-- Main content -->
 <section class="content">
-    <h3 class="text-center text-green headingStyle">Sales Order</h3>
-    <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
-    </div>
-    <hr />
-    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "addnewSaleForm" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="form-horizontal" style="padding:0;">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            
-            @Html.Partial("_ClientDetailsPartialPage")
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="ProductId" class="control-label col-md-3">Product</label>
-                        <div class="col-md-9">
+    <div class="panel panel-info">
+        
+        <div class="panel panel-heading" style="font-weight: bolder; margin-bottom: 0;font-size: 22px"> <i class="fa fa-shopping-cart"></i> Sales Order</div>
+        <div class="panel panel-body">
+            <div id="message" style="display: none; font-weight: bold; font-size: 20px" class="text-center">
+            </div>
+            @using (Html.BeginForm(null, null, FormMethod.Post, new {id = "addnewSaleForm"}))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal" style="padding: 0;">
+                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
-                            <input type="text" name="ProductName" id="ProductName" class="form-control" placeholder="Type Product Name" required />
-                            <input type="hidden" id="ProductId" name="ProductId" />
+                    @Html.Partial("_ClientDetailsPartialPage")
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="ProductId" class="control-label col-md-3">Product</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="ProductName" id="ProductName" class="form-control" placeholder="Type Product Name" required/>
+                                    <input type="hidden" id="ProductId" name="ProductId"/>
+                                </div>
+                            </div>
 
+
+                            <div class="form-group">
+                                <label for="Quantity" class="control-label col-md-3">Quantity</label>
+                                <div class="col-md-9">
+                                    <input type="number" id="Quantity" name="Quantity" class="form-control text-right" min="1" value="1"/>
+
+                                    <div id="divQuantityLimitOutput"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-9 col-md-offset-3">
+                                    <div class="btn-toolbar">
+
+                                        <button class="btn btn-danger" type="button" onclick="RemoveAllProducts()">Remove All</button>
+                                        <input type="button" value="Add Item" onclick="AddItemToList(this)" class="btn btn-primary" id="addItemButton1"/>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                     </div>
-                    
-                  
+                        <div class="col-md-4">
+                            <div class="form-group">
 
-                    <div class="form-group">
-                        <label for="Quantity" class="control-label col-md-3">Quantity</label>
-                        <div class="col-md-9">
-
-                            <input type="number" id="Quantity" name="Quantity" class="form-control text-right" min="1" value="1"/>
-                          
-                            <div id="divQuantityLimitOutput"></div>
+                                <label for="StockQty" class="control-label col-md-2">Stock Qty</label>
+                                <div class="col-md-10">
+                                    <input type="number" id="StockQty" name="StockQty" class="form-control text-right" readonly value="0"/>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-
-                        <div class="col-md-9 col-md-offset-3">
-                            <div class="btn-toolbar">
-                                
-                                <button class="btn btn-danger" type="button" onclick="RemoveAllProducts()">Remove All</button>
-                                <input type="button" value="Add Item" onclick="AddItemToList(this)" class="btn btn-primary" id="addItemButton1" />
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="UnitPrice" class="control-label col-md-3">Unit Price (&#2547;)</label>
+                                <div class="col-md-9">
+                                    <input type="number" id="UnitPrice" name="UnitPrice" class="form-control text-right" readonly/>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-
-
-                        <label for="StockQty" class="control-label col-md-2">Stock Qty</label>
-                        <div class="col-md-10">
-
-                            <input type="number" id="StockQty" name="StockQty" class="form-control text-right" readonly value="0" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="UnitPrice" class="control-label col-md-3">Unit Price (&#2547;)</label>
-                        <div class="col-md-9">
-
-                            <input type="number" id="UnitPrice" name="UnitPrice" class="form-control text-right" readonly />
-
-                        </div>
-                    </div>
-                </div>
+            }
+            <hr style="padding: 0; margin: 0;"/>
+            <div id="dialog" title="Warning">
+                <p> Delivery qty must be less than or equal stock qty </p>
             </div>
+            <hr/>
+            @using (Html.BeginForm("Confirm", "Order", FormMethod.Post, new { id = "saveOrderForm" }))
+            {
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="Total" class="control-label col-md-5">Total (&#2547;) :</label>
+                                <div class="col-md-7">
+                                    <input type="number" id="Total" name="Total" class="form-control text-right" value="0" readonly="readonly" />
+                                    <input type="hidden" id="ClientId" name="ClientId" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="SD" class="control-label col-md-5">Special Discount (&#2547;) : </label>
+                                <div class="col-md-7">
+                                    <input type="number" id="SD" name="SD" class="form-control text-right" min="0" value="0" placeholder="Special Discount" onkeyup="CalculateNetAmount(this)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="NetAmount" class="control-label col-md-5">Net Amount (&#2547;) :</label>
+                                <div class="col-md-7">
+                                    <input type="number" id="NetAmount" name="NetAmount" class="form-control text-right" readonly="readonly" />
+                                </div>
+                            </div>
 
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="OrderDate" class="control-label col-md-5">Date</label>
+                                <div class="col-md-7">
+                                    <input type="text" id="OrderDate" name="OrderDate" value="@tdate" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-7 col-md-offset-5 text-right">
+                                    <div class="btn btn-toolbar">
+                                        <input type="button" value="Cancel" class="btn btn-danger" onclick="ReloadPage()" />
+                                        <input type="button" value="Submit" onclick="SubmitOrderDetails(this)" class="btn btn-success" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <p style="font-weight: bolder;font-size: 20px" class="text-center">Product List</p>
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "updateQuantiyForm" }))
+            {
+                <input type="hidden" id="productIdToRemove" name="productIdToRemove" />
+
+                <div class="table-responsive">
+                    <table class="table table-bordered" style="margin: 0; padding: 0;">
+                        <thead>
+                            <tr>
+                                <th style="border: 1px solid black;" class="text-center">Product Name</th>
+                                <th style="border: 1px solid black;" class="text-center">Unit Price (&#2547;)</th>
+                                <th style="border: 1px solid black;" class="text-center">Vat (&#2547;)</th>
+                                <th style="border: 1px solid black;" class="text-center">Discount (&#2547;)</th>
+                                <th style="border: 1px solid black;" class="text-center">Sale Price(&#2547;)</th>
+                                <th style="border: 1px solid black; min-width: 100px" class="text-center">Quantity</th>
+                                <th style="border: 1px solid black;" class="text-center">Sub Total (&#2547;)</th>
+                                <th style="border: 1px solid black;" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders"></tbody>
+                    </table>
+                </div>
+
+
+            }
         </div>
-    }
-    <hr style="padding: 0; margin: 0;" />
-    <div id="dialog" title="Warning">
-       <p> Delivery qty must be less than or equal stock qty </p>
     </div>
 </section>
 
 
 <section class="content" style="margin-top: 0; padding-top: 0;">
     
-    @using (Html.BeginForm("Confirm", "Order", FormMethod.Post, new { id = "saveOrderForm" }))
-    {
-        <div class="form-horizontal">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="Total" class="control-label col-md-5">Total (&#2547;) :</label>
-                        <div class="col-md-7">
-                            <input type="number" id="Total" name="Total" class="form-control text-right" value="0" readonly="readonly" />
-                            <input type="hidden" id="ClientId" name="ClientId" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="SD" class="control-label col-md-5">Special Discount (&#2547;) : </label>
-                        <div class="col-md-7">
-
-                            <input type="number" id="SD" name="SD" class="form-control text-right" min="0" value="0" placeholder="Special Discount" onkeyup="CalculateNetAmount(this)" />
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="NetAmount" class="control-label col-md-5">Net Amount (&#2547;) :</label>
-                        <div class="col-md-7">
-
-                            <input type="number" id="NetAmount" name="NetAmount" class="form-control text-right" readonly="readonly" />
-
-                        </div>
-                    </div>
-                   
-                </div>
-                <div class="col-md-3">
-
-                    <div class="form-group">
-                        <label for="OrderDate" class="control-label col-md-5">Date</label>
-                        <div class="col-md-7">
-
-                            <input type="text" id="OrderDate" name="OrderDate" value="@tdate" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-
-                        <div class="col-md-7 col-md-offset-5 text-right">
-                            <div class="btn btn-toolbar">
-                                <input type="button" value="Cancel" class="btn btn-danger" onclick="ReloadPage()" />
-                                <input type="button" value="Submit" onclick="SubmitOrderDetails(this)" class="btn btn-success" />
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    }
-
-    <p style="font-weight: bolder;font-size: 20px" class="text-center">Product List</p>
-    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "updateQuantiyForm" }))
-    {
-        <input type="hidden" id="productIdToRemove" name="productIdToRemove" />
-
-        <div class="table-responsive">
-            <table class="table table-bordered" style="margin: 0; padding: 0;">
-
-                <thead>
-
-                <tr>
-                    <th style="border: 1px solid black;" class="text-center">Product Name</th>
-                    <th style="border: 1px solid black;" class="text-center">Unit Price (&#2547;)</th>
-                    <th style="border: 1px solid black;" class="text-center">Vat (&#2547;)</th>
-                    <th style="border: 1px solid black;" class="text-center">Discount (&#2547;)</th>
-                    <th style="border: 1px solid black;" class="text-center">Sale Price(&#2547;)</th>
-                    <th style="border: 1px solid black; min-width: 100px" class="text-center">Quantity</th>
-                    <th style="border: 1px solid black;" class="text-center">Sub Total (&#2547;)</th>
-                    <th style="border: 1px solid black;" class="text-center">Action</th>
-                </tr>
-                </thead>
-                <tbody id="orders"></tbody>
-            </table>
-        </div>
-
-
-    }
+ 
    
 </section>
 
@@ -236,7 +221,26 @@
                     });
                 }
                 else {
-                    alert("This Product already exits in the list");
+                   // alert("");
+                    
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "3000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    toastr.warning('This Product already exits in the list', { timeOut: 2000 });
                 }
             }
            

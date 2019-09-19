@@ -235,6 +235,22 @@ namespace NBL.BLL
         {
             return _iInventoryGateway.GetAllDeliverableTripList();
         }
+
+        public ICollection<Inventory> GetReceivedProductByBranchId(int branchId)
+        {
+            return _iInventoryGateway.GetReceivedProductByBranchId(branchId);
+        }
+
+        public ICollection<ViewProduct> GetReceivedProductBarcodeById(long inventoryId)
+        {
+            return _iInventoryGateway.GetReceivedProductBarcodeById(inventoryId);
+        }
+
+        public ICollection<ViewProduct> GetReceivedProductById(long inventoryId)
+        {
+            return _iInventoryGateway.GetReceivedProductById(inventoryId);
+        }
+
         public ViewDispatchModel GetDispatchByDispatchId(long dispatchId)
         {
             return _iInventoryGateway.GetDispatchByDispatchId(dispatchId); 

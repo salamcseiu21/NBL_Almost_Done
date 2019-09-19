@@ -7,185 +7,189 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-green headingStyle">Receivable</h3>
-    <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
-    </div>
-    <hr />
-    @using (Html.BeginForm("SaveReceivable", "SalesCollection", FormMethod.Post, new { id = "ReceivableForm" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="form-horizontal">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="Remarks" class="control-label col-md-3">Remarks</label>
-                        <div class="col-md-9">
-                            <textarea id="Remarks" name="Remarks" class="form-control" rows="2" placeholder="Remarks" style="resize:none" autofocus></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="TransactionTypeId" class="control-label col-md-3">Transaction Type</label>
-                        <div class="col-md-9">
-                            <select id="TransactionTypeId" name="TransactionTypeId" class="form-control" autofocus required>
-                                <option value="">--Select--</option>
-                                @foreach (var item in Model.TransactionTypes)
-                                {
-                                    <option value="@item.TransactionTypeId">@item.TransactionTypeName</option> 
-                                }
-                                
-                            </select>
-
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="ClientName" class="control-label col-md-3">Client Name</label>
-                        <div class="col-md-9">
-                            <input type="text" id="ClientName" name="ClientName" class="form-control" placeholder="Start typing Client Name" required />
-                            <input type="hidden" id="ClientId" name="ClientId" />
-
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="InvoiceRef" class="control-label col-md-3">Invoice Ref</label>
-                        <div class="col-md-9">
-                            <select class="form-control" id="InvoiceRef" name="InvoiceRef">
-                                <option value="IN00">--Select--</option>
-                            </select>
-
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="Address" class="control-label col-md-3">Address</label>
-                        <div class="col-md-9">
-
-                            <textarea id="Address" name="Address" class="form-control" placeholder="client address" readonly="readonly" rows="2" style="resize: none"></textarea>
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="SubSubSubAccountCode" class="control-label col-md-6">Client Code</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="SubSubSubAccountCode" name="SubSubSubAccountCode" class="form-control" placeholder="Client Code" readonly="readonly"/>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="ClientTypeName" class="control-label col-md-6">Client Type</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="ClientTypeName" name="ClientTypeName" class="form-control" readonly/>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="SubSubSubAccountCode" class="control-label col-md-6">Credit Limit</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="CreditLimit" name="CreditLimit" placeholder="Credit Limit" class="form-control" readonly/>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="ClientTypeName" class="control-label col-md-6">Outstanding</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="Outstanding" name="Outstanding" placeholder="client Outstanding" class="form-control" readonly/>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder"><i class="fa fa-money"></i> Receivable/Collection Entry</div>
+        <div class="panel panel-body">
+            <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
             </div>
-
-
-            <div class="panel panel-default">
-                <div class="panel-body">
+            <hr />
+            @using (Html.BeginForm("SaveReceivable", "SalesCollection", FormMethod.Post, new { id = "ReceivableForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="PaymentTypeId" class="control-label col-md-3">Payment Type</label>
+                                <label for="Remarks" class="control-label col-md-3">Remarks</label>
                                 <div class="col-md-9">
-
-                                    <select class="form-control" id="PaymentTypeId" name="PaymentTypeId"  required>
-                                        @foreach (var item in Model.PaymentTypes)
+                                    <textarea id="Remarks" name="Remarks" class="form-control" rows="2" placeholder="Remarks" style="resize:none" autofocus></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="TransactionTypeId" class="control-label col-md-3">Transaction Type</label>
+                                <div class="col-md-9">
+                                    <select id="TransactionTypeId" name="TransactionTypeId" class="form-control" autofocus required>
+                                        <option value="">--Select--</option>
+                                        @foreach (var item in Model.TransactionTypes)
                                         {
-                                            <option value="@item.PaymentTypeId">@item.PaymentTypeName</option>
+                                            <option value="@item.TransactionTypeId">@item.TransactionTypeName</option>
                                         }
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="SourceBankName" class="control-label col-md-3">Source Bank Name</label>
-                                <div class="col-md-9">
-                                    <input type="text" id="SourceBankName" name="SourceBankName" placeholder="Type Bank Name" class="form-control" required />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="BankAccountNo" class="control-label col-md-3">Account No</label>
-                                <div class="col-md-9">
-                                    <input type="text" id="BankAccountNo" name="BankAccountNo" placeholder="Type Account No" class="form-control" required />
-                                </div>
-                            </div>
-                        </div>
 
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="ClientName" class="control-label col-md-3">Client Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="ClientName" name="ClientName" class="form-control" placeholder="Start typing Client Name" required />
+                                    <input type="hidden" id="ClientId" name="ClientId" />
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="InvoiceRef" class="control-label col-md-3">Invoice Ref</label>
+                                <div class="col-md-9">
+                                    <select class="form-control" id="InvoiceRef" name="InvoiceRef">
+                                        <option value="IN00">--Select--</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="ChequeNo" class="control-label col-md-3">Cheque No / Trx ID</label>
+                                <label for="Address" class="control-label col-md-3">Address</label>
                                 <div class="col-md-9">
 
-                                    <input type="text" id="ChequeNo" name="ChequeNo" placeholder="Cheque No / Trx ID" class="form-control" required />
+                                    <textarea id="Address" name="Address" class="form-control" placeholder="client address" readonly="readonly" rows="2" style="resize: none"></textarea>
+
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="SubSubSubAccountCode" class="control-label col-md-6">Client Code</label>
+                                        <div class="col-md-6">
+                                            <input type="text" id="SubSubSubAccountCode" name="SubSubSubAccountCode" class="form-control" placeholder="Client Code" readonly="readonly" />
 
-                            <div class="form-group">
-                                <label for="Date" class="control-label col-md-3">Date</label>
-                                <div class="col-md-9">
+                                        </div>
+                                    </div>
 
-                                    <input type="text" id="Date" name="Date" value="@date" class="form-control" />
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="Amount" class="control-label col-md-3">Amount</label>
-                                <div class="col-md-9">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ClientTypeName" class="control-label col-md-6">Client Type</label>
+                                        <div class="col-md-6">
+                                            <input type="text" id="ClientTypeName" name="ClientTypeName" class="form-control" readonly />
 
-                                    <input type="number" id="Amount" name="Amount" placeholder="Amount" class="form-control" min="0" required />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-9 col-md-offset-3">
-                                    <div class="btn-toolbar">
-                                        <input type="button" id="removeAllButton" value="Remove All" onclick="RemoveAll(this)" class="btn btn-danger " />
-                                        <input type="button" value="Add to List" onclick="AddChequeInfoToList(this)" class="btn btn-info" id="addItemButton" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="SubSubSubAccountCode" class="control-label col-md-6">Credit Limit</label>
+                                        <div class="col-md-6">
+                                            <input type="text" id="CreditLimit" name="CreditLimit" placeholder="Credit Limit" class="form-control" readonly />
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ClientTypeName" class="control-label col-md-6">Outstanding</label>
+                                        <div class="col-md-6">
+                                            <input type="text" id="Outstanding" name="Outstanding" placeholder="client Outstanding" class="form-control" readonly />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
-                   
-                </div>
-            </div>
-            
 
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="PaymentTypeId" class="control-label col-md-3">Payment Type</label>
+                                        <div class="col-md-9">
+
+                                            <select class="form-control" id="PaymentTypeId" name="PaymentTypeId" required>
+                                                @foreach (var item in Model.PaymentTypes)
+                                                {
+                                                    <option value="@item.PaymentTypeId">@item.PaymentTypeName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="SourceBankName" class="control-label col-md-3">Source Bank Name</label>
+                                        <div class="col-md-9">
+                                            <input type="text" id="SourceBankName" name="SourceBankName" placeholder="Type Bank Name" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="BankAccountNo" class="control-label col-md-3">Account No</label>
+                                        <div class="col-md-9">
+                                            <input type="text" id="BankAccountNo" name="BankAccountNo" placeholder="Type Account No" class="form-control" required />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ChequeNo" class="control-label col-md-3">Cheque No / Trx ID</label>
+                                        <div class="col-md-9">
+
+                                            <input type="text" id="ChequeNo" name="ChequeNo" placeholder="Cheque No / Trx ID" class="form-control" required />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="Date" class="control-label col-md-3">Date</label>
+                                        <div class="col-md-9">
+
+                                            <input type="text" id="Date" name="Date" value="@date" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Amount" class="control-label col-md-3">Amount</label>
+                                        <div class="col-md-9">
+
+                                            <input type="number" id="Amount" name="Amount" placeholder="Amount" class="form-control" min="0" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-9 col-md-offset-3">
+                                            <div class="btn-toolbar">
+                                                <input type="button" id="removeAllButton" value="Remove All" onclick="RemoveAll(this)" class="btn btn-danger " />
+                                                <input type="button" value="Add to List" onclick="AddChequeInfoToList(this)" class="btn btn-info" id="addItemButton" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div id="divTempReceivableList"></div>
+            }
         </div>
-        <div id="divTempReceivableList"></div>
-    }
+    </div>
   
 </section>
 @section Scripts

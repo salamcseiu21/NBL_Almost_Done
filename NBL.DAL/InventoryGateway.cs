@@ -1755,6 +1755,116 @@ namespace NBL.DAL
             }
         }
 
+        public ICollection<Inventory> GetReceivedProductByBranchId(int branchId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetReceiveProductByBranchId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                List<Inventory> models = new List<Inventory>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new Inventory
+                    {
+                        InventoryId = Convert.ToInt64(reader["InventoryId"]),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        TransactionDate = Convert.ToDateTime(reader["TransactionDate"]),
+                        Quantity = Convert.ToInt32(reader["Quantity"])
+                    });
+                }
+                reader.Close();
+                return models;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect received product list", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<ViewProduct> GetReceivedProductBarcodeById(long inventoryId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetReceivedProductBarcodeByInventoryId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@InventoryId", inventoryId);
+                List<ViewProduct> models = new List<ViewProduct>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ViewProduct
+                    {
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductBarCode = reader["ProductBarCode"].ToString()
+                       
+                    });
+                }
+                reader.Close();
+                return models;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect received barcdoe list by id", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<ViewProduct> GetReceivedProductById(long inventoryId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetReceivedProductByInventoryId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@InventoryId", inventoryId);
+                List<ViewProduct> models = new List<ViewProduct>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ViewProduct
+                    {
+                        ProductName = reader["ProductName"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"])
+
+                    });
+                }
+                reader.Close();
+                return models;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect received product list by id", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
 
         public int CreateTrip(ViewCreateTripModel model)
         {

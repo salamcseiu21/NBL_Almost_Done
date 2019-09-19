@@ -164,14 +164,14 @@ namespace NBL.Areas.Sales.Controllers
         }
 
         [HttpGet]
-        public ActionResult Invoice(long deliveryId)
+        public ActionResult Invoice(long id)
         {
 
             try
             {
-                var invocedOrder = _iInvoiceManager.GetInvoicedOrderByInvoiceId(deliveryId);
+                var invocedOrder = _iInvoiceManager.GetInvoicedOrderByInvoiceId(id);
                 var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(invocedOrder.TransactionRef);
-                IEnumerable<InvoiceDetails> details = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceId(deliveryId);
+                IEnumerable<InvoiceDetails> details = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceId(id);
                 var client = _iClientManager.GetClientDeailsById(orderInfo.ClientId);
 
                 ViewInvoiceModel model = new ViewInvoiceModel

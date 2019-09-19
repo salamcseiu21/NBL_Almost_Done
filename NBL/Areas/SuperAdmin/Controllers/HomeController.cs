@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net.Mail;
 using NBL.Areas.SuperAdmin.BLL;
 using System.Web.Helpers;
+using Microsoft.ReportingServices.Interfaces;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.BLL;
 using NBL.BLL.Contracts;

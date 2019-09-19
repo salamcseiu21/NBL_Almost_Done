@@ -5,68 +5,73 @@
 
 }
 <section class="content">
-    <h3 class="text-center text-red headingStyle">Cancelled Order List</h3>
-    <table id="table_Order_list" class="table table-bordered" style="border:1px solid black">
+    <div class="panel panel-danger">
+        <div class="panel panel-heading" style="font-weight: bolder;font-size: 22px"><i class="fa fa-trash"></i> Cancelled Order List</div>
+        <div class="panel panel-body">
 
-        <thead>
-            <tr>
-                <th>Client Info</th>
-                <th>Order Slip No</th>
-                <th class="text-right">Amount (&#2547;)</th>
-                <th class="text-right">Vat (&#2547;)</th>
-                <th class="text-right">Discount (&#2547;)</th>
-                <th class="text-right">S.D (&#2547;)</th>
-                <th class="text-right">Net Amount (&#2547;)</th>
-                <th class="text-right">Qty</th>
-                <th class="text-center">Date</th>
-                <th class="text-center">Reason</th>
+            <table id="table_Order_list" class="table table-bordered" style="border: 1px solid black">
 
-                <th class="text-center">View</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var order in Model)
-            {
-
-
+                <thead>
                 <tr>
-                    <td>@Html.Raw(order.Client.GetBasicInformation())</td>
-                    <td>@order.OrderSlipNo</td>
-                    <td class="text-right">@(order.Amounts - order.Vat)</td>
-                    <td class="text-right">@order.Vat</td>
-                    <td class="text-right">@order.Discount</td>
-                    <td class="text-right">@order.SpecialDiscount</td>
-                    <td class="text-right">@order.NetAmounts</td>
-                    <td class="text-right">@order.Quantity</td>
-                    <td class="text-center">
-                        @order.OrderDate.ToString("dd-MMM-yyyy")
-                    </td>
-                    <td class="text-center">
-                        <label class="text-danger">@order.ResonOfCancel</label>
-                    </td>
+                    <th>Client Info</th>
+                    <th>Order Slip No</th>
+                    <th class="text-right">Amount (&#2547;)</th>
+                    <th class="text-right">Vat (&#2547;)</th>
+                    <th class="text-right">Discount (&#2547;)</th>
+                    <th class="text-right">S.D (&#2547;)</th>
+                    <th class="text-right">Net Amount (&#2547;)</th>
+                    <th class="text-right">Qty</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Reason</th>
 
-                    <td class="text-center">
-                        <button type="button" value="@order.OrderId" class="btn btn-success btn-sm" onclick="viewDetails(this)"><i class="fa fa-eye"></i> Details</button>
-                    </td>
+                    <th class="text-center">View</th>
                 </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Client Info</th>
-                <th>Order Slip No</th>
-                <th class="text-right">Amount (&#2547;)</th>
-                <th class="text-right">Vat (&#2547;)</th>
-                <th class="text-right">Discount (&#2547;)</th>
-                <th class="text-right">S.D (&#2547;)</th>
-                <th class="text-right">Net Amount (&#2547;)</th>
-                <th class="text-right">Qty</th>
-                <th class="text-center">Date</th>
-                <th class="text-center">Reason</th>
-                <th class="text-center">View</th>
-            </tr>
-        </tfoot>
-    </table>
+                </thead>
+                <tbody>
+                @foreach (var order in Model)
+                {
+
+
+                    <tr>
+                        <td>@Html.Raw(order.Client.GetBasicInformation())</td>
+                        <td>@order.OrderSlipNo</td>
+                        <td class="text-right">@(order.Amounts - order.Vat)</td>
+                        <td class="text-right">@order.Vat</td>
+                        <td class="text-right">@order.Discount</td>
+                        <td class="text-right">@order.SpecialDiscount</td>
+                        <td class="text-right">@order.NetAmounts</td>
+                        <td class="text-right">@order.Quantity</td>
+                        <td class="text-center">
+                            @order.OrderDate.ToString("dd-MMM-yyyy")
+                        </td>
+                        <td class="text-center">
+                            <label class="text-danger">@order.ResonOfCancel</label>
+                        </td>
+
+                        <td class="text-center">
+                            <button type="button" value="@order.OrderId" class="btn btn-success btn-sm" onclick="viewDetails(this)"><i class="fa fa-eye"></i> Details</button>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Client Info</th>
+                    <th>Order Slip No</th>
+                    <th class="text-right">Amount (&#2547;)</th>
+                    <th class="text-right">Vat (&#2547;)</th>
+                    <th class="text-right">Discount (&#2547;)</th>
+                    <th class="text-right">S.D (&#2547;)</th>
+                    <th class="text-right">Net Amount (&#2547;)</th>
+                    <th class="text-right">Qty</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Reason</th>
+                    <th class="text-center">View</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
     @Html.Partial("_ModalPartialPage")
 </section>
 @section Scripts

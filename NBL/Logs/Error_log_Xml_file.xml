@@ -1,30 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Errors>
-  <Error LogId="19-Sep-085e697022-ab61-4701-80ca-d6fb18c97f2b">
-    <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.DAL.ProductGateway.GetAll() in E:\API\NBL\NBL.DAL\ProductGateway.cs:line 65
-   at NBL.BLL.ProductManager.GetAll() in E:\API\NBL\NBL.BLL\ProductManager.cs:line 37
-   at NBL.Areas.AccountsAndFinance.Controllers.HomeController.ViewProduct() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\HomeController.cs:line 99</LogMessage>
-    <LogDateTime>2019-09-08T10:20:19.4183259+06:00</LogDateTime>
-    <CustomeMessage>Colud not collect product list</CustomeMessage>
+  <Error LogId="19-Sep-19cdae16c7-5fe4-477f-b030-0e3d57dff392">
+    <Heading>System.NullReferenceException</Heading>
+    <LogMessage>   at NBL.Areas.Sales.Controllers.OrderController.CancelledOrders() in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 574</LogMessage>
+    <LogDateTime>2019-09-19T10:06:30.4707096+06:00</LogDateTime>
+    <CustomeMessage>Object reference not set to an instance of an object.</CustomeMessage>
   </Error>
-  <Error LogId="19-Sep-080ec84d93-f4b3-49ae-bff4-f7bde25f9976">
-    <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetAllVerifiedSalesReturnProducts() in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 305
-   at NBL.BLL.ProductReturnManager.GetAllVerifiedSalesReturnProducts() in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 144
-   at NBL.Areas.AccountsAndFinance.Controllers.AccountController.ViewAllSalesReturn() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountController.cs:line 278</LogMessage>
-    <LogDateTime>2019-09-08T10:40:11.7475886+06:00</LogDateTime>
-    <CustomeMessage>Could not collect verified Sales return product list</CustomeMessage>
-  </Error>
-  <Error LogId="19-Sep-08c5d426fa-1ccc-4138-920f-27153f44a0e1">
-    <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetAllVerifiedSalesReturnProducts() in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 305
-   at NBL.BLL.ProductReturnManager.GetAllVerifiedSalesReturnProducts() in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 144
-   at NBL.Areas.AccountsAndFinance.Controllers.AccountController.ViewAllSalesReturn() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountController.cs:line 278</LogMessage>
-    <LogDateTime>2019-09-08T10:40:20.3148191+06:00</LogDateTime>
-    <CustomeMessage>Could not collect verified Sales return product list</CustomeMessage>
-  </Error>
-  <Error LogId="19-Sep-09209b89cd-f5a3-4e1c-820b-cbb411a96f33">
+  <Error LogId="19-Sep-19571305a1-4f4c-42d1-bfbd-2f36ca481935">
     <Heading>System.Data.SqlClient.SqlException</Heading>
     <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
    at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
@@ -38,12 +20,63 @@
    at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
    at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
    at System.Data.SqlClient.SqlCommand.ExecuteReader()
-   at NBL.DAL.InventoryGateway.GetProductLifeCycle(String code) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 2863</LogMessage>
-    <LogDateTime>2019-09-09T11:44:11.8578841+06:00</LogDateTime>
-    <CustomeMessage>Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, &lt;, &lt;= , &gt;, &gt;= or when the subquery is used as an expression.
-Conversion failed when converting date and/or time from character string.</CustomeMessage>
+   at NBL.DAL.InventoryGateway.GetReceivedProductByBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1767</LogMessage>
+    <LogDateTime>2019-09-19T15:10:59.5376597+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'UDSP_GetReceiveProductByBranchId' expects parameter '@BranchId', which was not supplied.</CustomeMessage>
   </Error>
-  <Error LogId="19-Sep-12dc0072eb-7a54-48f1-97bd-e1275992e7d6">
+  <Error LogId="19-Sep-1955ef9a66-4067-481e-b6ef-f6444deb3f0b">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.InventoryGateway.GetReceivedProductByBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1785
+   at NBL.BLL.InventoryManager.GetReceivedProductByBranchId(Int32 branchId) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 241
+   at NBL.Areas.Sales.Controllers.ProductController.ReceivedList() in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 102</LogMessage>
+    <LogDateTime>2019-09-19T15:10:59.6047746+06:00</LogDateTime>
+    <CustomeMessage>Could not Collect received product list</CustomeMessage>
+  </Error>
+  <Error LogId="19-Sep-196ff1c63b-66f9-44c6-8a60-9e5b9cf1323d">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetReceivedProductByBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1767</LogMessage>
+    <LogDateTime>2019-09-19T15:11:24.0538842+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'UDSP_GetReceiveProductByBranchId' expects parameter '@BranchId', which was not supplied.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Sep-19e914fcc5-a73e-4088-b527-4ee28a9a0726">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetReceivedProductByBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1768</LogMessage>
+    <LogDateTime>2019-09-19T15:12:56.3433512+06:00</LogDateTime>
+    <CustomeMessage>Procedure or function 'UDSP_GetReceiveProductByBranchId' expects parameter '@BranchId', which was not supplied.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Sep-19cb8dad14-809e-4089-8f9a-49ddd840d4c5">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.InventoryGateway.GetReceivedProductByBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1786
+   at NBL.BLL.InventoryManager.GetReceivedProductByBranchId(Int32 branchId) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 241
+   at NBL.Areas.Sales.Controllers.ProductController.ReceivedList() in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 102</LogMessage>
+    <LogDateTime>2019-09-19T15:12:56.3852391+06:00</LogDateTime>
+    <CustomeMessage>Could not Collect received product list</CustomeMessage>
+  </Error>
+  <Error LogId="19-Sep-198ef995ef-4c5f-47fa-9e5e-3c0698017537">
     <Heading>System.Data.SqlClient.SqlException</Heading>
     <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
    at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
@@ -52,16 +85,16 @@ Conversion failed when converting date and/or time from character string.</Custo
    at System.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean&amp; moreRows)
    at System.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean&amp; more)
    at System.Data.SqlClient.SqlDataReader.Read()
-   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllReceivableCheque(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 577</LogMessage>
-    <LogDateTime>2019-09-12T11:35:50.540065+06:00</LogDateTime>
-    <CustomeMessage>Conversion failed when converting the varchar value 'N' to data type bit.</CustomeMessage>
+   at NBL.DAL.InventoryGateway.GetReceivedProductBarcodeById(Int64 inventoryId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1807</LogMessage>
+    <LogDateTime>2019-09-19T16:06:27.0515085+06:00</LogDateTime>
+    <CustomeMessage>Transaction (Process ID 60) was deadlocked on lock resources with another process and has been chosen as the deadlock victim. Rerun the transaction.</CustomeMessage>
   </Error>
-  <Error LogId="19-Sep-1279cd0c23-2f16-4a4e-95b8-cd5b7750b038">
+  <Error LogId="19-Sep-199820cfbe-0992-4d72-87d1-f7e5b1c4fb64">
     <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllReceivableCheque(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 609
-   at NBL.Areas.AccountsAndFinance.BLL.AccountsManager.GetAllReceivableCheque(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\BLL\AccountsManager.cs:line 76
-   at NBL.Areas.Sales.Controllers.SalesCollectionController.PendingCollectionList() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 366</LogMessage>
-    <LogDateTime>2019-09-12T11:35:50.5896034+06:00</LogDateTime>
-    <CustomeMessage>Could not collect receivable cheques</CustomeMessage>
+    <LogMessage>   at NBL.DAL.InventoryGateway.GetReceivedProductBarcodeById(Int64 inventoryId) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 1822
+   at NBL.BLL.InventoryManager.GetReceivedProductBarcodeById(Int64 inventoryId) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 246
+   at NBL.Areas.Sales.Controllers.ProductController.ReceivedBarcode(Int64 id) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 117</LogMessage>
+    <LogDateTime>2019-09-19T16:06:27.0874412+06:00</LogDateTime>
+    <CustomeMessage>Could not Collect received barcdoe list by id</CustomeMessage>
   </Error>
 </Errors>

@@ -1,8 +1,8 @@
 ﻿
 
 .headingStyle{
-    font-weight:bold;
-    font-size:20px;
+    font-weight:bolder;
+    font-size:22px;
     margin:0;padding:0;
     font-family:'Times New Roman';
 }
@@ -12,3 +12,7 @@
     font-size: 10pt;
 }
 
+.panel-heading {
+    font-weight: bolder;
+    font-size: 22px
+}

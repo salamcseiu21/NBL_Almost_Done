@@ -1,0 +1,71 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Products.Inventory>
+@{
+    ViewBag.Title = "ReceivedList";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
+   var year= DateTime.Now.Year.ToString().Substring(2,2);
+
+}
+
+<section class="content">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Received Product List </div>
+        <div class="panel panel-body">
+            <table id="tbl_Received_product_lsit" class="display table-bordered table-responsive" style="width: 100%;border: 1px solid">
+                <thead>
+                <tr>
+                    <td>  S.N</td>
+                    <td>  Transaction Ref</td>
+                    <td class="text-center">  Transaction Date</td>
+                    <td class="text-center">  Receive From</td>
+                    <td class="text-right">  Total Quantity</td>
+                    <td class="text-center">  Action</td>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.TransactionRef</td>
+                        <td class="text-center">@item.TransactionDate.ToString("dd-MMMM-yyyy")</td>
+                        <td class="text-center">@{
+                                                    if (item.TransactionRef.StartsWith(year + "201"))
+                                                    {
+                                                        <span>Receive from Factory</span>
+                                                    }
+                                                    else if (item.TransactionRef.StartsWith(year + "200"))
+                                                    {
+                                                        <span>Receive from Inter transfer</span>
+                                                    }
+                                                }</td>
+                        <td class="text-right">@item.Quantity</td>
+                        <td class="text-center">
+                            @Html.ActionLink(" View Product", "ReceivedProduct", new {id=item.InventoryId},new {@class="fa fa-eye"}) | 
+                            @Html.ActionLink("View Barcode", "ReceivedBarcode", new {id=item.InventoryId},new {@class="fa fa-eye"})
+                        </td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td>  S.N</td>
+                    <td>  Transaction Ref</td>
+                    <td class="text-center">  Transaction Date</td>
+                    <td class="text-right">  Total Quantity</td>
+                    <td class="text-center">  Receive From</td>
+                    <td class="text-center">  Action</td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_Received_product_lsit").DataTable();
+    </script>
+}

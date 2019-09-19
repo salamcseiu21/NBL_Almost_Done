@@ -1,18 +1,2 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Products>
-  <Product Id="1">
-    <ProductId>1</ProductId>
-    <ProductName>NS 40</ProductName>
-    <Quantity>1</Quantity>
-    <ClientTypeId>3</ClientTypeId>
-    <UnitPrice>3215.66</UnitPrice>
-    <CategoryId>3</CategoryId>
-    <SubSubSubAccountCode>3101031</SubSubSubAccountCode>
-    <Vat>482.35</Vat>
-    <VatId>132</VatId>
-    <DiscountAmount>0.00</DiscountAmount>
-    <DiscountId>4589</DiscountId>
-    <SalePrice>3698.01</SalePrice>
-    <ProductDetailsId>12</ProductDetailsId>
-  </Product>
-</Products>
+<Products />

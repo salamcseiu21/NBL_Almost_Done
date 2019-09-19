@@ -9,87 +9,91 @@
 
 <section class="content">
     
-    @if (user.Roles.Equals("SalesExecutive"))
-    {
-        <table id="table_receivable_list" class="display table-bordered" style="border: 1px solid black;width: 100%">
-            <caption>
-                <h3 class="text-center text-green headingStyle">Pending Collection List</h3>
-            </caption>
-            <thead>
-
-            <tr>
-                <th>S.N</th>
-                <th>Collection Ref</th>
-                <th>Client Name</th>
-                <th>Source Bank Name</th>
-                <th>Account No</th>
-                <th>Cheque No</th>
-                <th>Cheque Date</th>
-                <th class="text-right">Amount (&#2547;) </th>
-                <th class="text-center">Entry Date </th>
-                <th class="text-center">Entry By </th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model)
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-weight: bolder;font-size: 22px"><i class="fa fa-money"></i> Pending Collection List</div>
+        <div class="panel panel-body">
+            @if (user.Roles.Equals("SalesExecutive"))
             {
-                i++;
+                <table id="table_receivable_list" class="display table-bordered" style="border: 1px solid black;width: 100%">
+                   
+                    <thead>
 
-                <tr>
-                    <td>@i</td>
-                    <td>@item.ReceivableRef</td>
-                    <td>@Html.ActionLink(item.ClientInfo, "ViewClientProfile", "Home", new {id = item.ClientId}, null) </td>
-                    <td>@item.SourceBankName</td>
-                    <td>@item.BankAccountNo</td>
-                    <td>@item.ChequeNo</td>
-                    <td>@item.ChequeDate.Date.ToString("dd-MMMM-yyyy")</td>
-                    <td class="text-right">@item.ChequeAmount.ToString("N2")</td>
-                    <th class="text-center">@item.ReceivableDateTime.Date.ToString("dd-MMM-yyyy") </th>
-                    <th class="text-center">@item.EntryByEmp </th>
-                    <td class="text-center">
-                        @if (item.ActiveStatus == 0)
+                        <tr>
+                            <th>S.N</th>
+                            <th>Collection Ref</th>
+                            <th>Client Name</th>
+                            <th>Source Bank Name</th>
+                            <th>Account No</th>
+                            <th>Cheque No</th>
+                            <th>Cheque Date</th>
+                            <th class="text-right">Amount (&#2547;) </th>
+                            <th class="text-center">Entry Date </th>
+                            <th class="text-center">Entry By </th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
                         {
-                            <p class="fa fa-spinner text-warning"> Pending</p>
+                            i++;
+
+                            <tr>
+                                <td>@i</td>
+                                <td>@item.ReceivableRef</td>
+                                <td>@Html.ActionLink(item.ClientInfo, "ViewClientProfile", "Home", new { id = item.ClientId }, null) </td>
+                                <td>@item.SourceBankName</td>
+                                <td>@item.BankAccountNo</td>
+                                <td>@item.ChequeNo</td>
+                                <td>@item.ChequeDate.Date.ToString("dd-MMMM-yyyy")</td>
+                                <td class="text-right">@item.ChequeAmount.ToString("N2")</td>
+                                <th class="text-center">@item.ReceivableDateTime.Date.ToString("dd-MMM-yyyy") </th>
+                                <th class="text-center">@item.EntryByEmp </th>
+                                <td class="text-center">
+                                    @if (item.ActiveStatus == 0)
+                                    {
+                                        <p class="fa fa-spinner text-warning"> Pending</p>
+                                    }
+                                    else if (item.ActiveStatus == 1)
+                                    {
+                                        <p class="fa fa-check text-success"> Approved</p>
+                                    }
+                                </td>
+                                <td>@Html.ActionLink(" Cancel", "Cancel", "SalesCollection", new { id = item.ChequeDetailsId }, new { @class = "fa fa-times text-red" }) </td>
+                            </tr>
                         }
-                        else if (item.ActiveStatus == 1)
-                        {
-                            <p class="fa fa-check text-success"> Approved</p>
-                        }
-                    </td>
-                    <td>@Html.ActionLink(" Cancel", "Cancel", "SalesCollection", new {id = item.ChequeDetailsId}, new {@class = "fa fa-times text-red"}) </td>
-                </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="7" class="text-right">Total </th>
+                            <th class="text-right">@Model.Sum(n => n.ChequeAmount).ToString("N2")</th>
+                            <th colspan="4"></th>
+                        </tr>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Collection Ref</th>
+                            <th>Client Name</th>
+                            <th>Source Bank Name</th>
+                            <th>Account No</th>
+                            <th>Cheque No</th>
+                            <th>Cheque Date</th>
+                            <th class="text-right">Amount (&#2547;) </th>
+                            <th class="text-center">Entry Date </th>
+                            <th class="text-center">Entry By </th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </tfoot>
+                </table>
             }
-            </tbody>
-            <tfoot>
-            <tr>
-                <th colspan="7" class="text-right">Total </th>
-                <th class="text-right">@Model.Sum(n => n.ChequeAmount).ToString("N2")</th>
-                <th colspan="4"></th>
-            </tr>
-            <tr>
-                <th>S.N</th>
-                <th>Collection Ref</th>
-                <th>Client Name</th>
-                <th>Source Bank Name</th>
-                <th>Account No</th>
-                <th>Cheque No</th>
-                <th>Cheque Date</th>
-                <th class="text-right">Amount (&#2547;) </th>
-                <th class="text-center">Entry Date </th>
-                <th class="text-center">Entry By </th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Action</th>
-            </tr>
-            </tfoot>
-        </table>
-    }
-    else
-    {
-        @Html.Partial("_ViewCollectionListPartialPage",Model)
-    }
+            else
+            {
+                @Html.Partial("_ViewCollectionListPartialPage", Model)
+            }
 
+
+        </div>
+    </div>
 </section>
 @section Scripts
 {

@@ -4,38 +4,42 @@
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
 }
 <section class="content">
-    <br/>
-    @using (Html.BeginForm(null, null, FormMethod.Post, new {id = "salesSummaryForm"}))
-    {
-        <div class="form-horizontal">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="form-group">
-                    <label class="control-label col-md-3">Date range</label>
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder"><i class="fa fa-money"></i> Collection List </div>
+        <div class="panel panel-body">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new {id = "salesSummaryForm"}))
+            {
+                <div class="form-horizontal">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Date range</label>
 
-                    <div class="col-md-9">
-                        <div class="input-group">
-                            <button type="button" class="btn btn-default pull-right" id="daterange-btn">
-                                <span>
-                                    <i class="fa fa-calendar"></i> Select a Date range
-                                </span>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                                        <span>
+                                            <i class="fa fa-calendar"></i> Select a Date range
+                                        </span>
 
-                                <i class="fa fa-caret-down"></i>
-                            </button>
-                            <input type="hidden" id="DateFrom" name="DateFrom"/>
-                            <input type="hidden" id="DateTo" name="DateTo"/>
+                                        <i class="fa fa-caret-down"></i>
+                                    </button>
+                                    <input type="hidden" id="DateFrom" name="DateFrom"/>
+                                    <input type="hidden" id="DateTo" name="DateTo"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    }
+            }
  
-    <div style="padding: 10px;">
+            <div style="padding: 10px;">
 
-        <div id="divCollectionList"></div>
+                <div id="divCollectionList"></div>
 
-    </div>
+            </div>
    
+        </div>
+    </div>
 
 </section>
 
