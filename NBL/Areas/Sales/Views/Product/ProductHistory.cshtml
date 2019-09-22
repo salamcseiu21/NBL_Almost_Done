@@ -81,8 +81,48 @@
         </tbody>
     </table>
    
+    <table id="tbl_transaction_details" class="display table-bordered table-responsive" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Product Segment</th>
+            <th>Product Barcode</th>
+            <th>Reference</th>
+            <th>Transaction Type</th>
+            <th>Transaction Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.TransactionDetailses)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.ProductCategory</td>
+                <td>@item.BarCode</td>
+                <td>@item.TransactionRef</td>
+                <td>@item.TransactionType</td>
+                <td>@item.TransactionDate</td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Product Name</th>
+            <th>Product Segment</th>
+            <th>Product Barcode</th>
+            <th>Reference</th>
+            <th>Transaction Type</th>
+            <th>Transaction Date</th>
+        </tr>
+        </tfoot>
+    </table>
 </section>
-
+@section Scripts
+{
+    <script>
+        $("#tbl_transaction_details").DataTable();
+    </script>
+}
 @section Styles
 {
     <style>

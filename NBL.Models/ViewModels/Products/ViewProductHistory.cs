@@ -45,5 +45,11 @@ namespace NBL.Models.ViewModels.Products
         public int CollectionDuration { get; set; }
         public string ReceiveRef { get; set; }
         public string Remarks { get; set; }
+        public ICollection<ViewProductTransactionDetails> TransactionDetailses { get; set; }
+
+        public ViewProductHistory()
+        {
+            TransactionDetailses=new List<ViewProductTransactionDetails>();
+        }
     }
 }

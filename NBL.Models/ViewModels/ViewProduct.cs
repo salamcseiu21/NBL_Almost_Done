@@ -49,7 +49,7 @@ namespace NBL.Models.ViewModels
         public Discount Discount { get; set; }
         public ProductType ProductType { get; set; }
         public ProductCategory ProductCategory { get; set; }
-
+        public int Age { get; set; }    
 
     }
 }

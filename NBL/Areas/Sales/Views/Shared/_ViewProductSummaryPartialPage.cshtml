@@ -9,7 +9,7 @@
         <thead>
         <tr>
             <th  colspan="2">Total Quantity :</th>
-            <th class="text-left" colspan="3">@Model.Sum(n=>n.Quantity)</th>
+            <th class="text-left" colspan="4">@Model.Sum(n=>n.Quantity)</th>
        
         </tr>
         <tr>
@@ -17,7 +17,8 @@
             <th class="text-center">Product Name</th>
             <th class="text-center">Segment </th>
             <th class="text-center">Account Code </th>
-            <th class="text-center"> Quantity</th>
+            <th class="text-right"> Quantity</th>
+            <th class="text-center"> Action</th>
         </tr>
         </thead>
 
@@ -31,7 +32,8 @@
                 <td>@item.ProductName</td>
                 <td class="text-center">@item.ProductCategoryName</td>
                 <td class="text-center">@item.SubSubSubAccountCode</td>
-                <td class="text-center">@item.Quantity</td>
+                <td class="text-right">@item.Quantity</td>
+                <td class="text-center">@Html.ActionLink(" Barcodes", "StockBarcodes", "Home",new {id=item.ProductId},new {@class="fa fa-eye"})</td>
             </tr>
         }
 
@@ -42,7 +44,8 @@
             <th class="text-center">Product Name</th>
             <th class="text-center">Segment </th>
             <th class="text-center">Account Code </th>
-            <th class="text-center">Quantity</th>
+            <th class="text-right">Quantity</th>
+            <th class="text-center"> Action</th>
         </tr>
         </tfoot>
     </table>

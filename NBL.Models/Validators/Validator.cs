@@ -7,8 +7,6 @@ namespace NBL.Models.Validators
     {
         public static bool ValidateProductBarCode(string barCode)
         {
-
-            
             if(IsValiedProductId(barCode) && barCode.Length==13)
             {
                 return true;

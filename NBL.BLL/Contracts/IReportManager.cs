@@ -50,6 +50,8 @@ namespace NBL.BLL.Contracts
         ICollection<ViewClient> GetClientList();
         ICollection<ProductDetails> GetAllProductDetails();
         ViewEntityCount GetTotalEntityCount();
-        ICollection<ViewOrderHistory> GetOrderHistoriesByYearAndDistributionPointId(int year, int distributionPointId);  
+        ICollection<ViewOrderHistory> GetOrderHistoriesByYearAndDistributionPointId(int year, int distributionPointId);
+        ICollection<ViewProductTransactionDetails> GetProductTransactionDetailsByBarcode(string barcode);
+        List<ViewProduct> GetStockProductBarcodeByBranchAndProductId(int branchId, int id);
     }
 }

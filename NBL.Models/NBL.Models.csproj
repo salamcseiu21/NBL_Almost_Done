@@ -197,6 +197,7 @@
     <Compile Include="StockModel.cs" />
     <Compile Include="SubSubSubAccount.cs" />
     <Compile Include="SuccessErrorModel.cs" />
+    <Compile Include="Validators\BarCodeValidator.cs" />
     <Compile Include="ViewModels\Clients\ViewCreateClientModel.cs" />
     <Compile Include="ViewModels\Deliveries\ViewDeliveredOrderModel.cs" />
     <Compile Include="ViewModels\FinanceModels\ViewLedgerModel.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="ViewModels\Products\ProductStatusModel.cs" />
     <Compile Include="ViewModels\Products\ViewCreateProductDetailsModel.cs" />
     <Compile Include="ViewModels\Products\ViewProductHistory.cs" />
+    <Compile Include="ViewModels\Products\ViewProductTransactionDetails.cs" />
     <Compile Include="ViewModels\Replaces\ReplaceReport.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceDetailsModel.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceModel.cs" />

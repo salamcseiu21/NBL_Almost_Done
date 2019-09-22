@@ -1,0 +1,70 @@
+﻿@using NBL.BLL.Contracts
+@using NBL.Models
+@model IEnumerable<NBL.Models.ViewModels.ViewProduct>
+@{
+    ViewBag.Title = "Stock Products Barcode";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
+}
+<section class="content">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-weight: bolder;font-size: 22px">Stock Product's Barcode</div>
+        <div class="panel panel-body">
+            <table class="display table-bordered table-responsive" style="border: 1px solid;width: 100%" id="tbl_Barcode_list">
+                <thead>
+                <tr>
+                    <td>S.N</td>
+                    <td>Product Name</td>
+                    <td>Segment</td>
+                    <td>Barcode</td>
+                    <td class="text-center">Production Date</td>
+                    <td class="text-right">Age </td>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.ProductCategoryName</td>
+                        <td>@item.ProductBarCode</td>
+                        <td class="text-center">@item.ProductionDate.ToString("dd-MMM-yyyy")</td>
+                        <td class="text-right">@{
+                                                   if (item.Age > 60)
+                                                   {
+                                                       <span style="color: red;font-weight: bolder">@item.Age</span>
+                                                   }
+                                                   else
+                                                   {
+                                                       @item.Age
+                                                   }
+                                               }</td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td>S.N</td>
+                    <td>Product Name</td>
+                    <td>Segment</td>
+                    <td>Barcode</td>
+                    <td class="text-center">Production Date</td>
+                    <td class="text-right">Age</td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="panel panel-footer">
+            @Html.ActionLink(" Back","Home","Home",null,new {@class="btn btn-danger fa fa-arrow-left"})
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_Barcode_list").DataTable();
+    </script>
+}

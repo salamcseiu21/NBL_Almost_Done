@@ -88,6 +88,13 @@ namespace NBL.Areas.Sales.Controllers
             }
 
         }
+        [Authorize]
+        public PartialViewResult StockBarcodes(int id)
+        {
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            List<ViewProduct> products = _iReportManager.GetStockProductBarcodeByBranchAndProductId(branchId,id);
+            return PartialView("_ViewStockProductBarcodePartialPage",products);
+        }
         public PartialViewResult ViewBranch()
         {
             try

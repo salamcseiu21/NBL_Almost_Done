@@ -121,10 +121,12 @@ namespace NBL.DAL
             }
             catch (SqlException sqlException)
             {
+                Log.WriteErrorLog(sqlException);
                 throw new Exception("Could not collect top clients by branch Id due to sql Exception", sqlException);
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect top clients by branch Id", exception);
             }
             finally
@@ -161,6 +163,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect top clients by branch id and Year", exception);
             }
             finally
@@ -195,6 +198,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect popular batteries", exception);
             }
             finally
@@ -231,6 +235,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect popular batteries by year", exception);
             }
             finally
@@ -268,6 +273,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect popular batteries by branch and Company Id", exception);
             }
             finally
@@ -854,6 +860,91 @@ namespace NBL.DAL
                 ConnectionObj.Close();
             }
         }
+
+        public ICollection<ViewProductTransactionDetails> GetProductTransactionDetailsByBarcode(string barcode)
+        {
+            try
+            {
+
+                CommandObj.CommandText = "UDSP_RptGetProductTransactionDetailsByBarcode";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Barcode", barcode);
+                ConnectionObj.Open();
+                List<ViewProductTransactionDetails> transactions = new List<ViewProductTransactionDetails>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    transactions.Add(new ViewProductTransactionDetails
+                    {
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        TransactionRef = reader["Reference"].ToString(),
+                        TransactionDate = Convert.ToDateTime(reader["TransactionDate"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductCategory = reader["ProductCategoryName"].ToString(),
+                        BarCode = reader["Barcode"].ToString(),
+                        TransactionType = reader["TransactionType"].ToString()
+                    });
+                }
+                reader.Close();
+                return transactions;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get product transaction details", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public List<ViewProduct> GetStockProductBarcodeByBranchAndProductId(int branchId, int productId)
+        {
+            try
+            {
+
+                CommandObj.CommandText = "UDSP_RptGetStockProductBarcodeByBranchAndProductId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                CommandObj.Parameters.AddWithValue("@ProductId", productId);
+                ConnectionObj.Open();
+                List<ViewProduct> products = new List<ViewProduct>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    products.Add(new ViewProduct
+                    {
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        ProductBarCode = reader["ProductBarcode"].ToString(),
+                        ProductionDate = Convert.ToDateTime(reader["ProductionDate"]),
+                        Age = Convert.ToInt32(reader["Age"])
+
+                        
+                    });
+                }
+                reader.Close();
+                return products;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get stock product barcodes by barnch and productid", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
         public ICollection<TerritoryWiseDeliveredQty> GetTerritoryWishTotalSaleQtyByBranchId(int branchId)
         {
             try

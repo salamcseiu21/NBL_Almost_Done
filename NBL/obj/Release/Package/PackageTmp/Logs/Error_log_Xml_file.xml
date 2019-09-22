@@ -97,4 +97,13 @@
     <LogDateTime>2019-09-19T16:06:27.0874412+06:00</LogDateTime>
     <CustomeMessage>Could not Collect received barcdoe list by id</CustomeMessage>
   </Error>
+  <Error LogId="19-Sep-212806c35a-3407-4a92-838a-00527ca1aa4c">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ReportGateway.GetProductTransactionDetailsByBarcode(String barcode) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 871</LogMessage>
+    <LogDateTime>2019-09-21T11:09:24.2340792+06:00</LogDateTime>
+    <CustomeMessage>TransactionRef</CustomeMessage>
+  </Error>
 </Errors>

@@ -1062,6 +1062,7 @@ namespace NBL.Areas.Sales.Controllers
         public ActionResult ProductHistory(ViewProductHistory model)
         {
             ViewProductHistory product = _iReportManager.GetProductHistoryByBarCode(model.ProductBarCode) ?? new ViewProductHistory {Remarks = "Not Receive by branch..."};
+            product.TransactionDetailses = _iReportManager.GetProductTransactionDetailsByBarcode(model.ProductBarCode);
             return View(product);
         }
     }

@@ -299,5 +299,15 @@ namespace NBL.BLL
         {
             return _iReportGateway.GetOrderHistoriesByYearAndDistributionPointId(year,distributionPointId);
         }
+
+        public ICollection<ViewProductTransactionDetails> GetProductTransactionDetailsByBarcode(string barcode)
+        {
+            return _iReportGateway.GetProductTransactionDetailsByBarcode(barcode);
+        }
+
+        public List<ViewProduct> GetStockProductBarcodeByBranchAndProductId(int branchId, int productId)
+        {
+            return _iReportGateway.GetStockProductBarcodeByBranchAndProductId(branchId,productId);
+        }
     }
 }

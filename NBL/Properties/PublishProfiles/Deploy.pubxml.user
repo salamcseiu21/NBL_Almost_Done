@@ -1624,7 +1624,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/09/2019 09:33:08</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Product/ProductHistory.cshtml">
-      <publishTime>09/19/2019 16:16:16</publishTime>
+      <publishTime>09/21/2019 11:17:47</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Product/Receive.cshtml">
       <publishTime>06/11/2019 12:46:39</publishTime>
@@ -1843,7 +1843,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/19/2019 10:01:12</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Shared/_ViewProductSummaryPartialPage.cshtml">
-      <publishTime>09/11/2019 10:33:55</publishTime>
+      <publishTime>09/22/2019 11:08:34</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Shared/_ViewReceivableListPartialPage.cshtml">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -23407,16 +23407,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="bin/NBL.BLL.dll">
-      <publishTime>09/19/2019 16:29:39</publishTime>
+      <publishTime>09/22/2019 11:11:59</publishTime>
     </File>
     <File Include="bin/NBL.DAL.dll">
-      <publishTime>09/19/2019 16:29:38</publishTime>
+      <publishTime>09/22/2019 11:11:59</publishTime>
     </File>
     <File Include="bin/NBL.dll">
-      <publishTime>09/19/2019 16:29:44</publishTime>
+      <publishTime>09/22/2019 11:12:05</publishTime>
     </File>
     <File Include="bin/NBL.Models.dll">
-      <publishTime>09/19/2019 16:29:38</publishTime>
+      <publishTime>09/22/2019 11:11:57</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>04/22/2019 01:06:16</publishTime>
@@ -24118,7 +24118,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/17/2019 10:05:07</publishTime>
     </File>
     <File Include="Logs/Error_log_Xml_file.xml">
-      <publishTime>09/19/2019 16:06:27</publishTime>
+      <publishTime>09/21/2019 11:09:24</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>09/18/2019 14:45:33</publishTime>
@@ -24530,6 +24530,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/Shared/_ViewSoldProductsPartialPage.cshtml">
       <publishTime>07/21/2019 16:13:49</publishTime>
+    </File>
+    <File Include="Views/Shared/_ViewStockProductBarcodePartialPage.cshtml">
+      <publishTime>09/22/2019 11:10:12</publishTime>
     </File>
     <File Include="Views/Shared/_ViewStockProductInBranchPartialPage.cshtml">
       <publishTime>06/12/2019 16:55:07</publishTime>

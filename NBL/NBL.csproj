@@ -8373,6 +8373,7 @@
     <Content Include="Views\Shared\_PrintTypeWisePartialPage.cshtml" />
     <Content Include="Views\Shared\_RptViewOrderListBydatePartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewCollectionListPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewStockProductBarcodePartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

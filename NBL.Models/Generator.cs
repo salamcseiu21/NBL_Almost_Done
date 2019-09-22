@@ -23,7 +23,7 @@ namespace NBL.Models
             var dd = str.Substring(0, 2);
             var mm = str.Substring(2, 2);
             var yy = str.Substring(4, 2);
-            var date = dd + "-" + mm + "-20" + yy;
+            var date = dd + "-" + mm + "-"+DateTime.Now.Year.ToString().Substring(0,2) + yy;
             DateTime myDate = DateTime.Parse(date);
             return myDate;
         }

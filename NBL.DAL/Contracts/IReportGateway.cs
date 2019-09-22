@@ -35,5 +35,7 @@ namespace NBL.DAL.Contracts
        ICollection<ProductDetails> GetAllProductDetails();
        ViewEntityCount GetTotalEntityCount();
        ICollection<ViewOrderHistory> GetOrderHistoriesByYearAndDistributionPointId(int year, int distributionPointId);
+       ICollection<ViewProductTransactionDetails> GetProductTransactionDetailsByBarcode(string barcode);
+       List<ViewProduct> GetStockProductBarcodeByBranchAndProductId(int branchId, int productId);
    }
 }
