@@ -9,6 +9,8 @@ namespace NBL.Models.ViewModels.Products
         public string BarCode { get; set; }
         public string TransactionRef { get; set; }
         public DateTime TransactionDate { get; set; }
-        public string TransactionType { get; set; } 
+        public string TransactionType { get; set; }
+        public string EmployeeInfo { get; set; }
+        public string TransactionDescription { get; set; } 
     }
 }

@@ -9,7 +9,10 @@
         <thead>
         <tr>
             <th  colspan="2">Total Quantity :</th>
-            <th class="text-left" colspan="4">@Model.Sum(n=>n.Quantity)</th>
+            <th class="text-left" colspan="3">@Model.Sum(n=>n.Quantity)</th>
+            <th class="text-left">
+                @Html.ActionLink(" Barcodes", "AllStockBarcodes", "Home", null, new { @class = "fa fa-eye" })
+            </th>
        
         </tr>
         <tr>

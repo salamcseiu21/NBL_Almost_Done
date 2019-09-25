@@ -54,7 +54,7 @@
                         <li>@Html.ActionLink(" Entry", "Entry", "Replace", new {area = "Services"}, new {@class = "fa fa-plus", style = "font-weight: bolder"})</li>
                         <li>@Html.ActionLink(" Pending List", "ViewAll", "Replace", new {area = "Services"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
                         <li>@Html.ActionLink(" Delivered List", "ReplaceList", "Replace", new {area = "Services"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
-
+                        <li>@Html.ActionLink(" Overal replace Summary", "ReplaceSummary", "Home", new {area = "Services"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
                     </ul>
                 </li>
             </ul>
@@ -64,7 +64,7 @@
         <li class="treeview">
             <a href="#">
                 <i class="fa fa-product-hunt"></i>
-                <span>Folio Entry</span>
+                <span>Folio</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
@@ -187,6 +187,7 @@
 
                 @*<li>@Html.ActionLink(" Product Life Cycle ", "ProductLifeCycle", "Product", new {area = "ResearchAndDevelopment"}, new {@class = "fa fa-eye"})</li>*@
                 <li>@Html.ActionLink(" Product Status ", "ProductStatus", "Home", new {area = "Services"}, new {@class = "fa fa-eye"})</li>
+                <li>@Html.ActionLink(" Product History ", "ProductHistory", "Home", new {area = "Services"}, new {@class = "fa fa-eye"})</li>
             </ul>
         </li>
         @Html.Partial("_MenuMyProfilePartialPage")

@@ -172,7 +172,7 @@ namespace NBL.DAL
                         DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
                         TransactionRef = reader["TransactionRef"].ToString(),
                         DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
-                        Quantity = reader["DeliveredQuantity"] is DBNull ? 0 : Convert.ToInt32(reader["DeliveredQuantity"]),
+                        Quantity = reader["ProductWishDeliveredQty"] is DBNull ? 0 : Convert.ToInt32(reader["ProductWishDeliveredQty"]),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
                         ProductName = reader["ProductName"].ToString(),
                         //ProductBarCode = reader["ProductBarCode"].ToString(),

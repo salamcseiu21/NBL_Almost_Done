@@ -2,48 +2,57 @@
 @{
     ViewBag.Title = "Factory Stock";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
 }
 
 <section class="content">
-   
-    <h3 class="text-center text-green">Factory Stock</h3>
+  
 
-    <div style="padding: 10px; margin: 10px; font-weight: bolder; height: 50px;border: 1px solid green"> Total Quantity : @Model.Sum(n => n.Quantity)</div>
-    <div class="table-responsive">
-    <table id="table_product_list_in_stock" class="display table table-striped table-bordered" style="border:1px solid black">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-weight: bolder;font-size: 22px">Factory Stock</div>
+        <div class="panel panel-body">
+            <div style="padding: 10px; margin-bottom: 5px; font-weight: bolder; height: 50px;border: 1px solid green"> Total Quantity : @Model.Sum(n => n.Quantity)</div>
+            <div class="table-responsive">
+                <table id="table_product_list_in_stock" class="display table table-striped table-bordered" style="border:1px solid black">
 
-        <thead>
-        <tr>
-            <th class="text-center">Product Name</th>
-            <th class="text-center">Category </th>
-            <th class="text-center">Account Code  </th>
-            <th class="text-center" style="width: 60px">Stock Qty</th>
-        </tr>
-        </thead>
+                    <thead>
+                    <tr>
+                        <th>S.N</th>
+                        <th class="text-center">Product Name</th>
+                        <th class="text-center">Category </th>
+                        <th class="text-center">Account Code  </th>
+                        <th class="text-center" style="width: 60px">Stock Qty</th>
+                    </tr>
+                    </thead>
 
-        <tbody>
+                    <tbody>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.ProductName</td>
-                <td class="text-center">@item.ProductCategoryName</td>
-                <td class="text-center">@item.SubSubSubAccountCode</td>
-                <td class="text-center">@item.Quantity</td>
-            </tr>
-        }
+                    @foreach (var item in Model)
+                    {
+                        i++;
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.ProductName</td>
+                            <td class="text-center">@item.ProductCategoryName</td>
+                            <td class="text-center">@item.SubSubSubAccountCode</td>
+                            <td class="text-center">@item.Quantity</td>
+                        </tr>
+                    }
        
-        </tbody>
-        <tfoot>
-        <tr>
-            <th class="text-center">Product Name</th>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>S.N</th>
+                        <th class="text-center">Product Name</th>
 
-            <th class="text-center">Category </th>
-            <th class="text-center">Account Code  </th>
-            <th class="text-center">Stock Qty</th>
-        </tr>
-        </tfoot>
-    </table>
+                        <th class="text-center">Category </th>
+                        <th class="text-center">Account Code </th>
+                        <th class="text-center">Stock Qty</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
     </div>
 </section>
 @section Scripts
@@ -56,14 +65,25 @@
                 "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
                 dom: 'Bfrtip',
                 buttons: [
-                    'excel',
                     {
-                        extend: 'pdf'
+                        extend: 'excel',
+                        text: 'Download as Excel',
+                        title: 'Factory_Stock'
+
+
+                    },
+
+                    {
+                        extend: 'pdf',
+                        text :'Download as Pdf',
+                        title:'Factory_Stock'
 
 
                     },
                     {
                         extend: 'print',
+                        text :'Print',
+                        title:'Factory Stock',
                         customize: function (win) {
                             $(win.document.body)
                                 .css('font-size', '10pt');

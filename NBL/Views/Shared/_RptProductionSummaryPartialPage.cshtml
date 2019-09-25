@@ -2,39 +2,49 @@
 @{
     ViewBag.Title = "Production Summary";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
 }
 
 <section class="content">
-    <h3 class="text-center text-green">Production Summary</h3>
-    <table id="tbl_Production_Summary" class="display table-bordered" style="border: 1px solid">
-        <thead>
-        <tr>
-            <th>Product Name</th>
-            <th>Code</th>
-            <th class="text-center">Quantity</th>
-            <th class="text-center">Scan Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.ProductName</td>
-                <td>@item.ProductCode</td>
-                <td  class="text-right">@item.Quantity</td>
-                <td class="text-center">@item.CameToStoreDate.ToString("dd-MMMM-yyyy")</td>
-            </tr>
-        }
-        </tbody>
-        <tfoot>
-        <tr>
-            <th>Product Name</th>
-            <th>Code</th>
-            <th class="text-center">Quantity</th>
-            <th class="text-center">Scan Date</th>
-        </tr>
-        </tfoot>
-    </table>
+   
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-weight: bolder;font-size: 22px">Production Summary</div>
+        <div class="panel panel-body">
+            <table id="tbl_Production_Summary" class="display table-bordered table-responsive" style="border: 1px solid;width: 100%">
+                <thead>
+                <tr>
+                    <th>S.N</th>
+                    <th>Product Name</th>
+                    <th>Code</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-center">Scan Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.ProductCode</td>
+                        <td  class="text-right">@item.Quantity</td>
+                        <td class="text-center">@item.CameToStoreDate.ToString("dd-MMMM-yyyy")</td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>S.N</th>
+                    <th>Product Name</th>
+                    <th>Code</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-center">Scan Date</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
 </section>
 
 @section Scripts

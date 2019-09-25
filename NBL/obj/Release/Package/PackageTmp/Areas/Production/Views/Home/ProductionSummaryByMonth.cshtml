@@ -3,39 +3,48 @@
 @{
     ViewBag.Title = "Production Summary";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
 }
 
 <section class="content">
-    <h3 class="text-center text-green">Production in <strong>@DateTime.Now.ToString("MMMM")</strong> Month</h3>
-    <table id="tbl_Production_Summary" class="display table-bordered" style="border: 1px solid">
-        <thead>
-        <tr>
-            <th>Product Name</th>
-            <th>Code</th>
-            <th class="text-center">Quantity</th>
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Production in <strong>@DateTime.Now.ToString("MMMM")</strong> Month</div>
+        <div class="panel panel-body">
+            <table id="tbl_Production_Summary" class="display table-bordered" style="border: 1px solid">
+                <thead>
+                <tr>
+                    <th>S.N</th>
+                    <th>Product Name</th>
+                    <th>Code</th>
+                    <th class="text-center">Quantity</th>
           
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.ProductName</td>
-                <td>@item.ProductCode</td>
-                <td  class="text-right">@item.Quantity</td>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.ProductCode</td>
+                        <td  class="text-right">@item.Quantity</td>
               
-            </tr>
-        }
-        </tbody>
-        <tfoot>
-        <tr>
-            <th>Product Name</th>
-            <th>Code</th>
-            <th class="text-center">Quantity</th>
-          
-        </tr>
-        </tfoot>
-    </table>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>S.N</th>
+                    <th>Product Name</th>
+                    <th>Code</th>
+                    <th class="text-center">Quantity</th>
+
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
 </section>
 
 @section Scripts

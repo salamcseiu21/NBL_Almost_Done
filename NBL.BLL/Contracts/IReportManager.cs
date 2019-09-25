@@ -9,6 +9,7 @@ using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
+using NBL.Models.ViewModels.Replaces;
 using NBL.Models.ViewModels.Reports;
 using NBL.Models.ViewModels.Summaries;
 
@@ -52,6 +53,9 @@ namespace NBL.BLL.Contracts
         ViewEntityCount GetTotalEntityCount();
         ICollection<ViewOrderHistory> GetOrderHistoriesByYearAndDistributionPointId(int year, int distributionPointId);
         ICollection<ViewProductTransactionDetails> GetProductTransactionDetailsByBarcode(string barcode);
-        List<ViewProduct> GetStockProductBarcodeByBranchAndProductId(int branchId, int id);
+        ICollection<ViewProduct> GetStockProductBarcodeByBranchAndProductId(int branchId, int id);
+        ICollection<ViewProduct> GetStockProductBarcodeByBranchId(int branchId);
+        List<ViewProduct> GetStockProductToclientByClientIdWithBarcode(int clientId);
+        ICollection<ViewReplaceSummary> GetTotalReplaceProductList(); 
     }
 }

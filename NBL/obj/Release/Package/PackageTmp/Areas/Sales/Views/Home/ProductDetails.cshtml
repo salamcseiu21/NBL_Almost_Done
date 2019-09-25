@@ -1,0 +1,73 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Products.ProductDetails>
+@{
+    ViewBag.Title = "Product Details";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
+}
+<section class="content">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-weight: bolder;color:green">Product Details</div>
+        <div class="panel panel-body">
+            <table id="tbl_Product_details" class="display table-bordered table-responsive" style="border: 1px solid;width: 100%">
+                <thead>
+                    <tr>
+                        <th>S.N</th>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th class="text-right">UnitPrice</th>
+                        <th class="text-right">Dealer Discount (%)</th>
+                        <th class="text-right">Corporate Discount (%)</th>
+                        <th class="text-right">Individual Discount (%)</th>
+                        <th class="text-right">Vat Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        i++;
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.ProductName</td>
+                            <td>@item.CategoryName</td>
+                            <td class="text-right">@item.UnitPrice</td>
+                            <td class="text-right">@(item.DealerDiscount)</td>
+                            <td class="text-right">@(item.CorporateDiscount)</td>
+                            <td class="text-right">
+                                @{
+                                    if (item.IndividualDiscount == null)
+                                    {
+                                        <span>N/A</span>
+                                    }
+                                    else
+                                    {
+                                        @item.IndividualDiscount
+                                    }
+                                }
+                            </td>
+                            <td class="text-right">@(item.VatAmount)</td>
+                    </tr>
+                                }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>S.N</th>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th class="text-right">UnitPrice</th>
+                        <th class="text-right">Dealer Discount (%)</th>
+                        <th class="text-right">Corporate Discount (%)</th>
+                        <th class="text-right">Individual Discount (%)</th>
+                        <th class="text-right">Vat Amount</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_Product_details").DataTable();
+    </script>
+}

@@ -18,10 +18,11 @@
         <div class="col-md-2 text-left">
             <!-- Profile Image -->
             <div class="box box-primary">
-                <div class="box-body box-profile" style="margin-bottom:0;padding-bottom:0;">
-                    <img class="profile-user-img img-responsive img-circle" src="~/@(Model.ClientImage?? "Images/User.jpg")" alt="Client Image" title="@Model.ClientName">
-                    <br />
-                    <img class="profile-user-img img-responsive" src="~/@(Model.ClientSignature?? "Images/sign.png")" alt="Client Signature ">
+                <div class="box-body box-profile" style="margin-bottom: 0; padding-bottom: 0;">
+                    <input type="hidden" id="client_Name" value="@Model.ClientName"/>
+                    <img class="profile-user-img img-responsive img-circle" src="~/@(Model.ClientImage ?? "Images/User.jpg")" alt="Client Image" title="@Model.ClientName">
+                    <br/>
+                    <img class="profile-user-img img-responsive" src="~/@(Model.ClientSignature ?? "Images/sign.png")" alt="Client Signature ">
                     <p class="text-center">@Html.Raw(Model.GetBasicInformation())</p>
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
@@ -294,36 +295,39 @@
                             <tr>
                                 <th>S.N</th>
                                 <th>Product Name</th>
-                                <th>Segment</th>
-                                <th class="text-center">Qty</th>
-
+                                <th class="text-center">Receive Qty</th>
+                                <th class="text-center">Sold Qty</th>
+                                <th class="text-center">Stock Qty</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach (var item in Model.StockProducts.ToList())
+                            @foreach (var item in Model.StockProducts.ToList().GroupBy(n=>n.ProductName))
                             {
                                 d++;
                                 <tr>
 
                                     <td>@d</td>
-                                    <td>@item.ProductName</td>
-                                    <td>@item.ProductCategoryName</td>
-                                    <td class="text-right">@item.StockQuantity</td>
-
+                                    <td>@item.Key</td>
+                                    <td class="text-right">@item.Count()</td>
+                                    <td class="text-right">@item.ToList().FindAll(n=>n.IsSold==1).Count</td>
+                                    <td class="text-right">@(item.Count()-item.ToList().FindAll(n=>n.IsSold==1).Count)</td>
                                 </tr>
                             }
                             </tbody>
                             <tfoot>
                             <tr>
                            
-                                <th colspan="3" class="text-right">Total</th>
-                                <th class="text-right">@Model.StockProducts.Sum(n => n.StockQuantity)</th>
+                                <th colspan="2" class="text-right">Total</th>
+                                <th class="text-right">@Model.StockProducts.Count</th>
+                                <th class="text-right">@Model.StockProducts.FindAll(n=>n.IsSold==1).Count</th>
+                                <th class="text-right">@(Model.StockProducts.Count-Model.StockProducts.FindAll(n=>n.IsSold==1).Count)</th>
                             </tr>
                             <tr>
                                 <th>S.N</th>
                                 <th>Product Name</th>
-                                <th>Segment</th>
-                                <th class="text-center">Qty</th>
+                                <th class="text-center">Receive Qty</th>
+                                <th class="text-center">Sold Qty</th>
+                                <th class="text-center">Stock Qty</th>
                             </tr>
                             </tfoot>
                         </table>
@@ -413,10 +417,45 @@
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     });
 
-    var t5 = $('#tbl_Client_Ledger').DataTable({
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+</script>
+
+<script>
+    $(document).ready(function () {
+
+            $('#tbl_Client_Ledger').DataTable({
+                "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        text: 'Download As Excel',
+                        title: $("#client_Name").val()
+
+        },
+
+                {
+                    extend: 'pdf',
+                    text: 'Download As Pdf',
+                    title: $("#client_Name").val()
+
+                },
+                {
+                    extend: 'print',
+                    title: $("#client_Name").val(),
+                    customize: function (win) {
+                        $(win.document.body)
+                            .css('font-size', '10pt');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ]
+        });
     });
 </script>
+
 <script>
 
     function viewDetails(orderId) {

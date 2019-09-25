@@ -8221,6 +8221,11 @@
     <Content Include="Areas\Sales\Views\Product\ReceivedList.cshtml" />
     <Content Include="Areas\Sales\Views\Product\ReceivedBarcode.cshtml" />
     <Content Include="Areas\Sales\Views\Product\ReceivedProduct.cshtml" />
+    <Content Include="Areas\Sales\Views\Home\ProductDetails.cshtml" />
+    <Content Include="Areas\Sales\Views\Home\ReplaceSummary.cshtml" />
+    <Content Include="Areas\Services\Views\Home\ReplaceSummary.cshtml" />
+    <Content Include="Areas\Services\Views\Shared\_ServiceManagerMenuPartialPage.cshtml" />
+    <Content Include="Areas\Services\Views\Home\ProductHistory.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />

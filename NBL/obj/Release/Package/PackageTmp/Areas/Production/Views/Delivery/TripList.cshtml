@@ -7,63 +7,70 @@
 
 <section class="content">
    
-    @if (TempData["Dispatched"] != null)
-    {
-        <div class="alert-success text-center">
-            @TempData["Dispatched"]
-        </div>
-    }
-    <h3 class="text-center headingStyle text-green">Trip List</h3>
-        <table class="display table-bordered" id="tbl_trip_List" style="border: 1px solid">
-            <thead>
-            <tr>
-                <th>S.N</th>
-                <th>Trip Ref</th>
-                <th class="text-right">Quantiy</th>
-                <th>Date</th>
-                <th  class="text-center">Status</th>
-                <th class="text-center" style="width: 50px">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model)
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Trip List</div>
+        <div class="panel panel-body">
+            @if (TempData["Dispatched"] != null)
             {
-                i++;
-                <tr>
-                    <td>@i</td>
-                    <td>@item.TripRef</td>
-                    <td class="text-right">@item.DeliveryQuantity</td>
-                    <td>@item.SystemDateTime.ToString("F")</td>
-                    <td  class="text-center">
-                        @{
-                            if (item.Status == 0)
-                            {
-                                <span class="fa fa-spinner"> Pending</span>
-                            }
-                            else
-                            {
-                                <span> Partially Despatched</span>
-                            }
-                        }
-                        </td>
-                   
-                    <td class="text-center">
-                        @Html.ActionLink("Delivery", "Delivery", "Delivery", new {area = "Production", id = item.TripId}, new {@class = "btn btn-info btn-sm"})
-                    </td>
-                </tr>
+                <div class="alert-success text-center">
+                    @TempData["Dispatched"]
+                </div>
             }
-            </tbody>
-            <tfoot>
-            <tr>
-                <th>S.N</th>
-                <th>Trip Ref</th>
-                <th class="text-right">Quantiy</th>
-                <th>Date</th>
-                <th class="text-center">Status</th>
-                <th class="text-center" style="width: 50px">Action</th>
-            </tr>
-            </tfoot>
-        </table>
+            <table class="display table-bordered" id="tbl_trip_List" style="border: 1px solid">
+                <thead>
+                <tr>
+                    <th>S.N</th>
+                    <th>Trip Ref</th>
+                    <th class="text-right">Quantiy</th>
+                    <th>Date</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center" style="width: 50px">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.TripRef</td>
+                        <td class="text-right">@item.DeliveryQuantity</td>
+                        <td>@item.SystemDateTime.ToString("F")</td>
+                        <td class="text-center">
+                            @{
+                                if (item.Status == 0)
+                                {
+                                    <span class="fa fa-spinner"> Pending</span>
+                                }
+                                else
+                                {
+                                    <span> Partially Despatched</span>
+                                }
+                            }
+                        </td>
+
+                        <td class="text-center">
+                            @Html.ActionLink("Delivery", "Delivery", "Delivery", new {area = "Production", id = item.TripId}, new {@class = "btn btn-info btn-sm"})
+                        </td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>S.N</th>
+                    <th>Trip Ref</th>
+                    <th class="text-right">Quantiy</th>
+                    <th>Date</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center" style="width: 50px">Action</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    
+
+   
 </section>
 @section Scripts
 {

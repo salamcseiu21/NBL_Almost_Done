@@ -118,13 +118,20 @@
     }
     else if (User.IsInRole("ServiceExecutive"))
     {
-        roleName = "Service Executive";
+        
+           roleName = "Service Executive";
+        areas = "services";
+    }
+    else if (User.IsInRole("ServiceManager"))
+    {
+        
+            roleName = "Service Manager";
         areas = "services";
     }
     else if (User.IsInRole("ServiceManagement"))
     {
         roleName = "Service Management";
-        areas = "services"; 
+        areas = "services";
     }
     else if (User.IsInRole("HRExecutive"))
     {
@@ -292,6 +299,9 @@
                         break;
                     case "ServiceExecutive":
                         Html.RenderPartial("~/Areas/Services/Views/Shared/_ServiceExecutiveMenuPartialPage.cshtml");
+                        break;
+                    case "ServiceManager":
+                        Html.RenderPartial("~/Areas/Services/Views/Shared/_ServiceManagerMenuPartialPage.cshtml");
                         break;
                     case "ServiceManagement":
                         Html.RenderPartial("~/Areas/Services/Views/Shared/_ServiceManagementMenuPartialPage.cshtml");

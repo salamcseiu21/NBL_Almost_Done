@@ -92,9 +92,18 @@ namespace NBL.Areas.Sales.Controllers
         public PartialViewResult StockBarcodes(int id)
         {
             int branchId = Convert.ToInt32(Session["BranchId"]);
-            List<ViewProduct> products = _iReportManager.GetStockProductBarcodeByBranchAndProductId(branchId,id);
+            List<ViewProduct> products = _iReportManager.GetStockProductBarcodeByBranchAndProductId(branchId,id).ToList();
             return PartialView("_ViewStockProductBarcodePartialPage",products);
         }
+
+        [Authorize]
+        public PartialViewResult AllStockBarcodes()
+        {
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            List<ViewProduct> products = _iReportManager.GetStockProductBarcodeByBranchId(branchId).ToList();
+            return PartialView("_ViewStockProductBarcodePartialPage", products);
+        }
+
         public PartialViewResult ViewBranch()
         {
             try
@@ -323,6 +332,38 @@ namespace NBL.Areas.Sales.Controllers
             var order = _iOrderManager.GetOrderHistoryByOrderId(id);
             order.Client = _iClientManager.GetById(order.ClientId);
             return PartialView("_OrderHistoryDetailsPartialPage",order);
+        }
+
+        [Authorize(Roles = "SalesAdmin,SalesManager")]
+
+        public ActionResult ProductDetails()
+        {
+            try
+            {
+                var products = _iReportManager.GetAllProductDetails().ToList();
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        [Authorize(Roles = "SalesAdmin,SalesManager")]
+
+        public ActionResult ReplaceSummary() 
+        {
+            try
+            {
+                var products = _iReportManager.GetTotalReplaceProductList().ToList();
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         //--------------------------Update User Profile----------------
         [HttpGet]

@@ -4,44 +4,49 @@
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
 }
 <section class="content">
-    <h3 class="text-center text-green">General Requisition List</h3>
-    <div class="table-responsive">
-        <table id="tbl_General_requsition_List" class="display table-bordered table-hover" style="border: 1px solid">
-            <thead>
-                <tr>
-                    <th>Reference</th>
-                    <th>Requisition By</th>
-                    <th class="text-center">Quantity</th>
-                    <th class="text-center">Requisiton Date</th>
-                    <th class="text-center">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-            {
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">General Requisition List</div>
+        <div class="panel panel-body">
+            <div class="table-responsive">
+                <table id="tbl_General_requsition_List" class="display table-bordered table-hover" style="border: 1px solid">
+                    <thead>
                     <tr>
-                        <td>@item.RequisitionRef</td>
-                        <td>@item.RequisitionByEmp</td>
-                        <td class="text-right">@item.Quantity</td>
-                        <td class="text-center">@item.RequisitionDate.ToString("dd-MMMM-yyyy")</td>
-                        <td class="text-center">
-                            @Html.ActionLink(" Delivery", "Delivery", "Requisition", new { area = "Production", id = item.RequisitionId }, new { @class = "fa fa-eye" })
-                        </td>
-
+                        <th>Reference</th>
+                        <th>Requisition By</th>
+                        <th class="text-center">Quantity</th>
+                        <th class="text-center">Requisiton Date</th>
+                        <th class="text-center">Action</th>
                     </tr>
-                }
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>Reference</th>
-                    <th>Requisition By</th>
-                    <th class="text-center">Quantity</th>
-                    <th class="text-center">Requisiton Date</th>
-                    <th class="text-center">Action</th>
-                </tr>
-            </tfoot>
-        </table>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.RequisitionRef</td>
+                            <td>@item.RequisitionByEmp</td>
+                            <td class="text-right">@item.Quantity</td>
+                            <td class="text-center">@item.RequisitionDate.ToString("dd-MMMM-yyyy")</td>
+                            <td class="text-center">
+                                @Html.ActionLink(" Delivery", "Delivery", "Requisition", new { area = "Production", id = item.RequisitionId }, new { @class = "fa fa-eye" })
+                            </td>
+
+                        </tr>
+                    }
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>Reference</th>
+                        <th>Requisition By</th>
+                        <th class="text-center">Quantity</th>
+                        <th class="text-center">Requisiton Date</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
     </div>
+  
 </section>
 @section Scripts
 {

@@ -225,6 +225,7 @@
     <Compile Include="ViewModels\Replaces\ReplaceReport.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceDetailsModel.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceModel.cs" />
+    <Compile Include="ViewModels\Replaces\ViewReplaceSummary.cs" />
     <Compile Include="ViewModels\Reports\OrderHistory.cs" />
     <Compile Include="ViewModels\Reports\TerritoryWiseDeliveredQty.cs" />
     <Compile Include="ViewModels\Reports\UserWiseOrder.cs" />

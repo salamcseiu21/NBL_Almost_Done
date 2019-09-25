@@ -44,28 +44,7 @@
             <td><strong>Product Name :</strong> @Model.ProductName</td>
             <td><strong> Segment :</strong> @Model.ProductCategoryName</td>
             <td><strong>Barcode :</strong> @Model.ProductBarCode</td>
-            @if(Model.Remarks !=null ){
-            <td style="color: red;"><strong> Receive Status:</strong> @Model.Remarks</td>
-            }
-            else
-            {
-                <td><strong> Receive Date:</strong> 
-                    @Model.ReceiveDate<br/>
-                    @*@{
-                        if (Model.ReceiveRef != null)
-                        {
-                            if (Model.ReceiveRef.StartsWith(year + "201"))
-                            {
-                                <span>Receive from Factory</span>
-                            }
-                            else if (Model.ReceiveRef.StartsWith(year + "200"))
-                            {
-                                <span>Receive from Inter transfer</span>
-                            }
-                        }
-                    }*@
-            </td>
-            }
+            
             
         </tr>
             @if (Model.ClientName != " ()")
@@ -74,7 +53,7 @@
                     <td><strong>Delivered To Client Name :</strong> @Model.ClientName</td>
                     <td><strong> Delivery Date :</strong> @Model.DeliveryDate</td>
                     <td><strong>Delivery Ref :</strong> @Model.DeliveryRef</td>
-                    <td colspan="2"><strong>Delivered By:</strong> @Model.DeliveredBy (@Model.DeliveryFromBranch)</td>
+                   
                 </tr>
             }
         
@@ -88,8 +67,10 @@
             <th>Product Segment</th>
             <th>Product Barcode</th>
             <th>Reference</th>
+            <th>Description</th>
             <th>Transaction Type</th>
             <th>Transaction Date</th>
+            <th>Operation By</th>
         </tr>
         </thead>
         <tbody>
@@ -100,8 +81,10 @@
                 <td>@item.ProductCategory</td>
                 <td>@item.BarCode</td>
                 <td>@item.TransactionRef</td>
+                <td>@item.TransactionDescription</td>
                 <td>@item.TransactionType</td>
                 <td>@item.TransactionDate</td>
+                <td>@item.EmployeeInfo</td>
             </tr>
         }
         </tbody>
@@ -111,8 +94,10 @@
             <th>Product Segment</th>
             <th>Product Barcode</th>
             <th>Reference</th>
+            <th>Description</th>
             <th>Transaction Type</th>
             <th>Transaction Date</th>
+            <th>Operation By</th>
         </tr>
         </tfoot>
     </table>

@@ -1,5 +1,4 @@
-﻿@using NBL.BLL.Contracts
-@using NBL.Models
+﻿
 @model IEnumerable<NBL.Models.ViewModels.ViewProduct>
 @{
     ViewBag.Title = "Stock Products Barcode";
@@ -13,12 +12,12 @@
             <table class="display table-bordered table-responsive" style="border: 1px solid;width: 100%" id="tbl_Barcode_list">
                 <thead>
                 <tr>
-                    <td>S.N</td>
-                    <td>Product Name</td>
-                    <td>Segment</td>
-                    <td>Barcode</td>
-                    <td class="text-center">Production Date</td>
-                    <td class="text-right">Age </td>
+                    <th>S.N</th>
+                    <th>Product Name</th>
+                    <th>Segment</th>
+                    <th>Barcode</th>
+                    <th class="text-center">Production Date</th>
+                    <th class="text-right">Age (Days)</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -46,12 +45,12 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td>S.N</td>
-                    <td>Product Name</td>
-                    <td>Segment</td>
-                    <td>Barcode</td>
-                    <td class="text-center">Production Date</td>
-                    <td class="text-right">Age</td>
+                    <th>S.N</th>
+                    <th>Product Name</th>
+                    <th>Segment</th>
+                    <th>Barcode</th>
+                    <th class="text-center">Production Date</th>
+                    <th class="text-right">Age (Days)</th>
                 </tr>
                 </tfoot>
             </table>
@@ -65,6 +64,38 @@
 @section Scripts
 {
     <script>
-        $("#tbl_Barcode_list").DataTable();
+        $(document).ready(function () {
+            $('#tbl_Barcode_list').DataTable({
+                "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        text: 'Download As Excel',
+                        title: 'Stock_Products_Barcodes'
+
+                    },
+
+                    {
+                        extend: 'pdf',
+                        text: 'Download As Pdf',
+                        title: 'Stock_Products_Barcodes'
+
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Stock_Products_Barcodes',
+                        customize: function (win) {
+                            $(win.document.body)
+                                .css('font-size', '10pt');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+            });
+        });
     </script>
 }

@@ -6,54 +6,60 @@
 }
 
 <section class="content">
-    <p class="text-center text-green headingStyle">All Delivered orders</p>
-    <div class="table-responsive">
-        <table id="table_Order_list" class="table table-bordered" style="border:1px solid black">
-            <thead>
-                <tr>
-                    <th>Client Info</th>
-                    <th>Transportation</th>
-                    <th>Delivery Ref</th>
-                    <th class="text-center">Delivery Date</th>
-                    <th class="text-center">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">All Delivered orders</div>
+        <div class="panel panel-body">
+            <div class="table-responsive">
+                <table id="table_Order_list" class="table table-bordered" style="border:1px solid black">
+                    <thead>
+                        <tr>
+                            <th>Client Info</th>
+                            <th>Transportation</th>
+                            <th>Delivery Ref</th>
+                            <th class="text-center">Delivery Date</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
             {
 
                 var aClient = item.Client;
-                    <tr>
-                        <td>
-                            @Html.Raw(aClient.GetBasicInformation())
-                        </td>
-                        <td>
-                            @Html.Raw(item.Transport.GetFullInformation())
-                        </td>
-                        <td>@item.DeliveryRef</td>
-                        <td class="text-center">
-                            @item.SysDateTime.ToString("F")
-                        </td>
+                            <tr>
+                                <td>
+                                    @Html.Raw(aClient.GetBasicInformation())
+                                </td>
+                                <td>
+                                    @Html.Raw(item.Transport.GetFullInformation())
+                                </td>
+                                <td>@item.DeliveryRef</td>
+                                <td class="text-center">
+                                    @item.SysDateTime.ToString("F")
+                                </td>
 
-                        <td class="text-center">
-                            @Html.ActionLink(" Barcode", "DeliveredBarCodeList", new { deliveryId = item.DeliveryId }, new { target = "_blank", @class = "fa fa-print" }) |
-                            @Html.ActionLink(" Challan", "OrderChalan", new { deliveryId = item.DeliveryId }, new { target = "_blank", @class = "fa fa-print" })
-                            @*@Html.ActionLink(" Invoice", "Invoice", new {deliveryId = item.DeliveryId}, new {target = "_blank", @class = "fa fa-eye"})*@
-                        </td>
-                    </tr>
-                }
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>Client Info</th>
-                    <th>Transportation</th>
-                    <th>Delivery Ref</th>
-                    <th class="text-center">Delivery Date</th>
-                    <th class="text-center">Action</th>
-                </tr>
-            </tfoot>
-        </table>
+                                <td class="text-center">
+                                    @Html.ActionLink(" Barcode", "DeliveredBarCodeList", new { deliveryId = item.DeliveryId }, new { target = "_blank", @class = "fa fa-print" }) |
+                                    @Html.ActionLink(" Challan", "OrderChalan", new { deliveryId = item.DeliveryId }, new { target = "_blank", @class = "fa fa-print" })
+                                    @*@Html.ActionLink(" Invoice", "Invoice", new {deliveryId = item.DeliveryId}, new {target = "_blank", @class = "fa fa-eye"})*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Client Info</th>
+                            <th>Transportation</th>
+                            <th>Delivery Ref</th>
+                            <th class="text-center">Delivery Date</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
     </div>
+   
 
 </section>
 @section Scripts

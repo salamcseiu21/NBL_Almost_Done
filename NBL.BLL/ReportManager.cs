@@ -11,6 +11,7 @@ using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
+using NBL.Models.ViewModels.Replaces;
 using NBL.Models.ViewModels.Reports;
 using NBL.Models.ViewModels.Summaries;
 
@@ -305,9 +306,23 @@ namespace NBL.BLL
             return _iReportGateway.GetProductTransactionDetailsByBarcode(barcode);
         }
 
-        public List<ViewProduct> GetStockProductBarcodeByBranchAndProductId(int branchId, int productId)
+        public ICollection<ViewProduct> GetStockProductBarcodeByBranchAndProductId(int branchId, int productId)
         {
             return _iReportGateway.GetStockProductBarcodeByBranchAndProductId(branchId,productId);
+        }
+        public ICollection<ViewProduct> GetStockProductBarcodeByBranchId(int branchId)
+        {
+            return _iReportGateway.GetStockProductBarcodeByBranchId(branchId);
+        }
+
+        public List<ViewProduct> GetStockProductToclientByClientIdWithBarcode(int clientId)
+        {
+            return _iReportGateway.GetStockProductToclientByClientIdWithBarcode(clientId);
+        }
+
+        public ICollection<ViewReplaceSummary> GetTotalReplaceProductList()
+        {
+            return _iReportGateway.GetTotalReplaceProductList();
         }
     }
 }

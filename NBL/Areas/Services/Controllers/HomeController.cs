@@ -11,6 +11,7 @@ using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Products;
 
 namespace NBL.Areas.Services.Controllers
 {
@@ -22,11 +23,13 @@ namespace NBL.Areas.Services.Controllers
         private readonly IServiceManager _iServiceManager;
         private readonly IEmployeeManager _iEmployeeManager;
         private readonly IInventoryManager _iInventoryManager;
-        public HomeController(IServiceManager iServiceManager,IEmployeeManager iEmployeeManager, IInventoryManager iInventoryManager)
+        private readonly IReportManager _iReportManager;
+        public HomeController(IServiceManager iServiceManager,IEmployeeManager iEmployeeManager, IInventoryManager iInventoryManager,IReportManager iReportManager)
         {
             _iServiceManager = iServiceManager;
             _iEmployeeManager = iEmployeeManager;
             _iInventoryManager = iInventoryManager;
+            _iReportManager = iReportManager;
         }
         // GET: Services/Home
         public ActionResult Home()
@@ -72,8 +75,60 @@ namespace NBL.Areas.Services.Controllers
             TempData["T"] = product;
             return View();
         }
+        //------------------------Product History------------------------
+        public ActionResult ProductHistory()
+        {
+            ViewProductHistory product = new ViewProductHistory();
+            return View(product);
+        }
+        [HttpPost]
+        public ActionResult ProductHistory(ViewProductHistory model)
+        {
+            //ViewProductHistory product = _iReportManager.GetProductHistoryByBarCode(model.ProductBarCode) ?? new ViewProductHistory {Remarks = "Not Receive by branch..."};
+            ViewProductHistory product = new ViewProductHistory();
+            var fromBranch = _iReportManager.GetDistributedProductFromBranch(model.ProductBarCode);
+            if (fromBranch != null)
+            {
+                product.ProductBarCode = fromBranch.BarCode;
+                product.ClientName = fromBranch.ClientName;
+                product.ProductCategoryName = fromBranch.ProductCategoryName;
+                product.DeliveryRef = fromBranch.DeliveryRef;
+                product.ProductName = fromBranch.ProductName;
+                product.DeliveryDate = fromBranch.DeliveryDate;
+
+            }
+            else
+            {
+                var fromFactory = _iReportManager.GetDistributedProductFromFactory(model.ProductBarCode);
+                product.ProductBarCode = fromFactory.BarCode;
+                product.ClientName = fromFactory.ClientName;
+                product.ProductCategoryName = fromFactory.ProductCategoryName;
+                product.DeliveryRef = fromFactory.DeliveryRef;
+                product.ProductName = fromFactory.ProductName;
+                product.DeliveryDate = fromFactory.DeliveryDate;
+            }
+
+            product.TransactionDetailses = _iReportManager.GetProductTransactionDetailsByBarcode(model.ProductBarCode);
+            return View(product);
+        }
+        public ActionResult ReplaceSummary()
+        {
+            try
+            {
+                var products = _iReportManager.GetTotalReplaceProductList().ToList();
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+
+            }
+        }
+
         //--------------------------Update User Profile----------------
-        [HttpGet]
+            [
+            HttpGet]
         public ActionResult UpdateBasicInfo(int id)
         {
 

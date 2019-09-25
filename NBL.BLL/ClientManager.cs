@@ -14,12 +14,14 @@ namespace NBL.BLL
         private readonly IClientGateway _iClientGateway;
         private readonly IOrderManager _iOrderManager;
         private readonly IDeliveryGateway _iDeliveryGateway;
+        private readonly IReportManager _iReportManager;
        
-        public ClientManager(IClientGateway iClientGateway,IOrderManager iOrderManager,IDeliveryGateway iDeliveryGateway)
+        public ClientManager(IClientGateway iClientGateway,IOrderManager iOrderManager,IDeliveryGateway iDeliveryGateway,IReportManager iReportManager)
         {
             _iClientGateway = iClientGateway;
             _iOrderManager = iOrderManager;
             _iDeliveryGateway = iDeliveryGateway;
+            _iReportManager = iReportManager;
         }
         
         public bool Add(Client client)
@@ -127,9 +129,10 @@ namespace NBL.BLL
               var client = _iClientGateway.GetClientDeailsById(clientId);
               client.Orders = _iOrderManager.GetOrdersByClientId(clientId).ToList();
               client.DeliveredOrderModels = _iDeliveryGateway.GetDeliveredOrderByClientId(clientId);
-              client.StockProducts = _iClientGateway.GetStockProductToclient(clientId);
-          
-            return client;
+             // client.StockProducts = _iClientGateway.GetStockProductToclient(clientId);
+              client.StockProducts = _iReportManager.GetStockProductToclientByClientIdWithBarcode(clientId);
+
+             return client;
 
         }
         public bool Update(Client client)

@@ -1061,7 +1061,30 @@ namespace NBL.Areas.Sales.Controllers
         [HttpPost]
         public ActionResult ProductHistory(ViewProductHistory model)
         {
-            ViewProductHistory product = _iReportManager.GetProductHistoryByBarCode(model.ProductBarCode) ?? new ViewProductHistory {Remarks = "Not Receive by branch..."};
+            //ViewProductHistory product = _iReportManager.GetProductHistoryByBarCode(model.ProductBarCode) ?? new ViewProductHistory {Remarks = "Not Receive by branch..."};
+            ViewProductHistory product=new ViewProductHistory();
+            var fromBranch=_iReportManager.GetDistributedProductFromBranch(model.ProductBarCode);
+            if (fromBranch != null)
+            {
+                product.ProductBarCode = fromBranch.BarCode;
+                product.ClientName = fromBranch.ClientName;
+                product.ProductCategoryName = fromBranch.ProductCategoryName;
+                product.DeliveryRef = fromBranch.DeliveryRef;
+                product.ProductName = fromBranch.ProductName;
+                product.DeliveryDate = fromBranch.DeliveryDate;
+
+            }
+            else
+            {
+                var fromFactory = _iReportManager.GetDistributedProductFromFactory(model.ProductBarCode);
+                product.ProductBarCode = fromFactory.BarCode;
+                product.ClientName = fromFactory.ClientName;
+                product.ProductCategoryName = fromFactory.ProductCategoryName;
+                product.DeliveryRef = fromFactory.DeliveryRef;
+                product.ProductName = fromFactory.ProductName;
+                product.DeliveryDate = fromFactory.DeliveryDate;
+            }
+           
             product.TransactionDetailses = _iReportManager.GetProductTransactionDetailsByBarcode(model.ProductBarCode);
             return View(product);
         }

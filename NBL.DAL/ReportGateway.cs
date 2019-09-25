@@ -10,6 +10,7 @@ using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Products;
+using NBL.Models.ViewModels.Replaces;
 using NBL.Models.ViewModels.Reports;
 using NBL.Models.ViewModels.Summaries;
 
@@ -751,7 +752,8 @@ namespace NBL.DAL
                         ReceiveRef = DBNull.Value.Equals(reader["ReceiveDate"]) ? null : reader["ReceiveRef"].ToString(),
                         ProductCategoryName = reader["Segment"].ToString(),
                         DeliveredBy = DBNull.Value.Equals(reader["DeliveredBy"])? null: reader["DeliveredBy"].ToString(),
-                        DeliveryFromBranch = DBNull.Value.Equals(reader["BranchName"]) ? null : reader["BranchName"].ToString()
+                        DeliveryFromBranch = DBNull.Value.Equals(reader["BranchName"]) ? null : reader["BranchName"].ToString(),
+                      
                     };
                 }
                 reader.Close();
@@ -882,7 +884,9 @@ namespace NBL.DAL
                         ProductName = reader["ProductName"].ToString(),
                         ProductCategory = reader["ProductCategoryName"].ToString(),
                         BarCode = reader["Barcode"].ToString(),
-                        TransactionType = reader["TransactionType"].ToString()
+                        TransactionType = reader["TransactionType"].ToString(),
+                        EmployeeInfo = reader["EmployeeInfo"].ToString(),
+                        TransactionDescription=reader["TransactionDescription"].ToString() 
                     });
                 }
                 reader.Close();
@@ -902,7 +906,7 @@ namespace NBL.DAL
             }
         }
 
-        public List<ViewProduct> GetStockProductBarcodeByBranchAndProductId(int branchId, int productId)
+        public ICollection<ViewProduct> GetStockProductBarcodeByBranchAndProductId(int branchId, int productId)
         {
             try
             {
@@ -936,6 +940,122 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not get stock product barcodes by barnch and productid", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<ViewProduct> GetStockProductBarcodeByBranchId(int branchId)
+        {
+            try
+            {
+
+                CommandObj.CommandText = "UDSP_RptGetStockProductBarcodeByBranchId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                ConnectionObj.Open();
+                List<ViewProduct> products = new List<ViewProduct>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    products.Add(new ViewProduct
+                    {
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        ProductBarCode = reader["ProductBarcode"].ToString(),
+                        ProductionDate = Convert.ToDateTime(reader["ProductionDate"]),
+                        Age = Convert.ToInt32(reader["Age"])
+
+
+                    });
+                }
+                reader.Close();
+                return products;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get stock product barcodes by barnchId", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public List<ViewProduct> GetStockProductToclientByClientIdWithBarcode(int clientId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetClientStockByClientIdWithBarcode";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ClientId", clientId);
+                ConnectionObj.Open();
+                List<ViewProduct> products = new List<ViewProduct>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    products.Add(new ViewProduct
+                    {
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        ProductBarCode = reader["Barcode"].ToString(),
+                        IsSold = Convert.ToInt32(reader["IsSold"])
+
+                    });
+                }
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get stock product barcodes by client Id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<ViewReplaceSummary> GetTotalReplaceProductList()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptTotalReplace";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<ViewReplaceSummary> products = new List<ViewReplaceSummary>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    products.Add(new ViewReplaceSummary
+                    {
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        Quantity = Convert.ToInt32(reader["TotalReplaceQty"])
+
+                    });
+                }
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get repalced product List", exception);
             }
             finally
             {

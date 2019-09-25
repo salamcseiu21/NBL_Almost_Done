@@ -5,57 +5,64 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-green">Trip List</h3>
-    <table id="tbl_trip_List" class="display table-bordered" style="border: 1px solid">
-        <thead>
-        <tr>
-            <th>Trip Ref</th>
-            <th class="text-right">Quantity</th>
-           
-            <th>Remarks</th>
-            <th class="text-center">Created By</th>
-            <th class="text-center">Date</th>
-            <th class="text-center">Status</th>
-            <th class="text-center">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.TripRef</td>
-                <td class="text-right">@item.Quantity</td>
-                
-                <td>@item.Remarks</td>
-                <td class="text-center">@(item.TripCreatedBy.EmployeeName?? "Demo User")</td>
-                <td class="text-center">@item.SystemDateTime.ToString("dd-MMMM-yyyy")</td>
-                <td class="text-center">@if (item.Status == 0)
-                                        {
-                                            <i class="fa fa-spinner text-danger"> Pending</i>
-                                        }
-                                        else if(item.Status==2)
-                                        {
-                                            <i class="fa fa-check-circle text-green"> Dispatched</i>
-                                        }
-                </td>
-                <td class="text-center">
-                    @Html.ActionLink(" View Details", "TripDetails", "Transfer", new { id = item.TripId}, new {@class="fa fa-eye btn-sm btn btn-info"})
-                </td>
-            </tr>
-        }
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Trip Ref</th>
-                <th class="text-right">Quantity</th>
-                <th>Remarks</th>
-                <th class="text-center">Created By</th>
-                <th class="text-center">Date</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Action</th>
-            </tr>
-        </tfoot>
-    </table>
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Trip List</div>
+        <div class="panel panel-body">
+            <table id="tbl_trip_List" class="display table-bordered table-responsive" style="border: 1px solid;width: 100%">
+                <thead>
+                    <tr>
+                        <th>Trip Ref</th>
+                        <th class="text-right">Quantity</th>
+
+                        <th>Remarks</th>
+                        <th class="text-center">Created By</th>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.TripRef</td>
+                            <td class="text-right">@item.Quantity</td>
+
+                            <td>@item.Remarks</td>
+                            <td class="text-center">@(item.TripCreatedBy.EmployeeName ?? "Demo User")</td>
+                            <td class="text-center">@item.SystemDateTime.ToString("dd-MMMM-yyyy")</td>
+                            <td class="text-center">
+                                @if (item.Status == 0)
+                            {
+                                <i class="fa fa-spinner text-danger"> Pending</i>
+                            }
+                            else if (item.Status == 2)
+                            {
+                                <i class="fa fa-check-circle text-green"> Dispatched</i>
+                            }
+                        </td>
+                        <td class="text-center">
+                            @Html.ActionLink(" View Details", "TripDetails", "Transfer", new { id = item.TripId }, new { @class = "fa fa-eye btn-sm btn btn-info" })
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Trip Ref</th>
+                        <th class="text-right">Quantity</th>
+                        <th>Remarks</th>
+                        <th class="text-center">Created By</th>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </div>
+  
 </section>
 
 @section Scripts

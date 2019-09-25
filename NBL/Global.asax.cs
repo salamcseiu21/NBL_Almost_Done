@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -21,7 +22,7 @@ namespace NBL
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             UnityConfig.RegisterComponents();
-          
+           // SendMail();
         }
 
 
@@ -79,5 +80,26 @@ namespace NBL
                 }
             }
         }
+
+
+        //private void SendMail()
+        //{
+
+
+        //    ////---------Send Mail ----------------
+        //    //var aClient = _iClientManager.GetById(Convert.ToInt32(collection["ClientId"]));
+        //    var body = $"Dear Abdus Salam Mail was send from Global aspx";
+        //    var subject = $"New Receiable Create at {DateTime.Now}";
+        //    var message = new MailMessage();
+        //    message.To.Add(new MailAddress("salam@navana.com"));  // replace with valid value 
+        //    message.Subject = subject;
+        //    message.Body = string.Format(body);
+        //    message.IsBodyHtml = true;
+        //    using (var smtp = new SmtpClient())
+        //    {
+        //        smtp.Send(message);
+        //    }
+        //    ////------------End Send Mail-------------
+        //}
     }
 }
