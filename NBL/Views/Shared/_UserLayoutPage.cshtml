@@ -200,8 +200,10 @@
             });
         } );
     </script>
+
     <link href="~/Content/myStyle.css" rel="stylesheet" />
     @RenderSection("Styles", required: false)
+
 </head>
 <body class="hold-transition skin-blue fixed sidebar-mini">
     <div class="wrapper">
@@ -371,6 +373,19 @@
                 </div>
             </section>
             <div class="body-content" style="margin: 0; padding: 0;">
+                
+                @if (user.UserDoB != null && Convert.ToDateTime(user.UserDoB).Month==DateTime.Now.Month && Convert.ToDateTime(user.UserDoB).Day == DateTime.Now.Day)
+                {
+                    <div class="panel panel-success" style="padding: 0px;margin-bottom: 0">
+                        <h3><marquee width="100%" direction="left" height="30px;" style="font-weight: bolder;color: hotpink">
+                            <i class="fa fa-birthday-cake" aria-hidden="true"></i> Happy Birth Day to you <i class="fa fa-birthday-cake" aria-hidden="true"></i>
+                        </marquee></h3>
+                       
+                    </div>
+
+                }
+               
+
                 <style>
                     .ui-autocomplete {
                         max-height: 250px;
@@ -380,10 +395,10 @@
                     }
 
                     html .ui-autocomplete {
-                        height:250px;
+                        height: 250px;
                     }
 
-                     .ui-tooltip, .arrow:after {
+                    .ui-tooltip, .arrow:after {
                         background: orange;
                         border: 1px solid white;
                     }
@@ -406,37 +421,37 @@
                         bottom: -16px;
                     }
 
-                        .arrow.top {
-                            top: -16px;
-                            bottom: auto;
-                        }
+                    .arrow.top {
+                        top: -16px;
+                        bottom: auto;
+                    }
 
-                        .arrow.left {
-                            left: 20%;
-                        }
+                    .arrow.left {
+                        left: 20%;
+                    }
 
-                        .arrow:after {
-                            content: "";
-                            position: absolute;
-                            left: 20px;
-                            top: -20px;
-                            width: 25px;
-                            height: 25px;
-                            box-shadow: 6px 5px 9px -9px black;
-                            -webkit-transform: rotate(45deg);
-                            -ms-transform: rotate(45deg);
-                            transform: rotate(45deg);
-                        }
+                    .arrow:after {
+                        content: "";
+                        position: absolute;
+                        left: 20px;
+                        top: -20px;
+                        width: 25px;
+                        height: 25px;
+                        box-shadow: 6px 5px 9px -9px black;
+                        -webkit-transform: rotate(45deg);
+                        -ms-transform: rotate(45deg);
+                        transform: rotate(45deg);
+                    }
 
-                        .arrow.top:after {
-                            bottom: -20px;
-                            top: auto;
-                        }
-                        .content {
-                            padding: 5px;
-                        }
+                    .arrow.top:after {
+                        bottom: -20px;
+                        top: auto;
+                    }
+                    .content {
+                        padding: 5px;
+                    }
                 </style>
-            
+
 
                 <!-- Main content -->
                 <section class="content" id="bodyContent" style="margin: 0; padding: 0;">

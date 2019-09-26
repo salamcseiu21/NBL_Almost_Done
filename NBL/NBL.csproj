@@ -341,6 +341,10 @@
     <Compile Include="Areas\Editor\Controllers\TerritoryController.cs" />
     <Compile Include="Areas\AccountsAndFinance\Controllers\VatsController.cs" />
     <Compile Include="Areas\Editor\EditorAreaRegistration.cs" />
+    <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
+    <Compile Include="Areas\HR\Controllers\DesignationController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeTypeController.cs" />
     <Compile Include="Areas\Production\Controllers\ApproveController.cs" />
     <Compile Include="Areas\Production\Controllers\BarCodeController.cs" />
     <Compile Include="Areas\Production\Controllers\BranchController.cs" />
@@ -6974,6 +6978,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\birth_day.JPG" />
     <Content Include="Images\ok.png" />
     <Content Include="Images\sign.png" />
     <Content Include="Images\a_battery_logo.png" />
@@ -8226,6 +8231,18 @@
     <Content Include="Areas\Services\Views\Home\ReplaceSummary.cshtml" />
     <Content Include="Areas\Services\Views\Shared\_ServiceManagerMenuPartialPage.cshtml" />
     <Content Include="Areas\Services\Views\Home\ProductHistory.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\AccountManager\EditReceivable.cshtml" />
+    <Content Include="Areas\HR\Views\Department\AddNewDepartment.cshtml" />
+    <Content Include="Areas\HR\Views\Department\DepartmentList.cshtml" />
+    <Content Include="Areas\HR\Views\Department\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\Designation\AddNewDesignation.cshtml" />
+    <Content Include="Areas\HR\Views\Designation\DesignationList.cshtml" />
+    <Content Include="Areas\HR\Views\Designation\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\Employee\AddEmployee.cshtml" />
+    <Content Include="Areas\HR\Views\Employee\Details.cshtml" />
+    <Content Include="Areas\HR\Views\Employee\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeType\EmployeeTypeList.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeType\Add.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />

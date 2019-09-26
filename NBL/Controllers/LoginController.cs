@@ -101,6 +101,8 @@ namespace NBL.Controllers
                         anUser.EmployeeImage = employee.EmployeeImage;
                         anUser.DesignationName = employee.DesignationName;
                         anUser.EmployeeName = employee.EmployeeName;
+                        anUser.UserDoB = employee.DoB;
+
                     }
                     else
                     {

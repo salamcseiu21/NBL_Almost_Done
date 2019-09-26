@@ -8,5 +8,6 @@ namespace NBL.BLL.Contracts
     public interface IEmployeeTypeManager
     {
         IEnumerable<EmployeeType> GetAll();
+        bool Add(EmployeeType model); 
     }
 }

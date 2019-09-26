@@ -2,97 +2,96 @@
     var i = 0;
 }
 @model IEnumerable<NBL.Models.ChequeDetails>
-<h3 class="text-center text-green headingStyle">Active Receivable</h3>
-<div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
-</div>
-<hr />
-<table id="table_receivable_list" class="table table-bordered" style="border:1px solid black">
 
-    <thead>
-        <tr>
-            <th>S.N</th>
-            <th>Client Name</th>
-            <th>Branch Name</th>
-            <th>Collection Info</th>
-            <th>Cheque Date</th>
-            <th>Entry Date</th>
-            <th class="text-right">Amount (&#2547;) </th>
-            <th class="text-center">Remarks </th>
-            <th class="text-center">Entry By </th>
-            <th class="text-center">Collection By </th>
-            <th class="text-center">Action</th>
-        </tr>
-    </thead>
-
-    <tbody>
-
-        @foreach (var item in Model)
-        {
-            i++;
+<div class="panel panel-info">
+    <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Active Receivable</div>
+    <div class="panel panel-body">
+        <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
+        </div>
+        <table id="table_receivable_list" class="table table-bordered" style="border: 1px solid black">
+            <thead>
             <tr>
-                <td>@i</td>
-                <td>@item.Client.ClientName</td>
-                <td>@item.CollectionByBranch</td>
-                <td>@{
-                        <p>
-                            <label>Source Bank :</label> @item.SourceBankName<br/>
-                           <label>Account No: </label> @item.BankAccountNo<br/>
-                           <label>Cheque No: </label> @item.ChequeNo
-                        </p>
-                    }</td>
-                <td>@item.ChequeDate.Date.ToString("dd-MMMM-yyyy")</td>
-                <td>@item.SysDateTime.Date.ToString("dd-MMMM-yyyy")</td>
-                <td class="text-right">@item.ChequeAmount.ToString("N2")</td>
-                <td class="text-center">@item.Remarks</td>
-                <td class="text-center">@item.EntryByEmp</td>
-                <td class="text-center">@(item.CollectionByEmp?? "N/A")</td>
-                <td class="text-center">
-                    @{
-                        if (item.PaymentTypeId == 4)
+                <th>S.N</th>
+                <th>Client Name</th>
+                <th>Collection Details</th>
+                <th class="text-right">Amount (&#2547;) </th>
+                <th class="text-center">Remarks </th>
+                <th class="text-center">Collection Info </th>
+                <th class="text-center">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>@i</td>
+                    <td>
+                        @item.Client.ClientName<br/>
+                        <span style="font-weight: bolder; color: green"> (@item.CollectionByBranch)</span>
+                    </td>
+                    <td>
+                        @{
+                            <p>
+                                <label>Source Bank :</label> @item.SourceBankName<br/>
+                                <label>Account No: </label> @item.BankAccountNo<br/>
+                                <label>Cheque No: </label> @item.ChequeNo<br/>
+                                <label>Date :</label> @item.ChequeDate.Date.ToString("dd-MMMM-yyyy")
+                            </p>
+                        }
+                    </td>
+                    <td class="text-right">@item.ChequeAmount.ToString("N2")</td>
+                    <td class="text-center">@item.Remarks</td>
+                    <td class="text-center">
+                        <label>Entry By :</label> @item.EntryByEmp<br/>
+                        <label>Entry Date :</label> @item.SysDateTime.Date.ToString("dd-MMMM-yyyy")<br/>
+                        <label>Collection By :</label> @(item.CollectionByEmp ?? "N/A")
+
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink(" Edit", "EditReceivable", "AccountManager", new {area = "AccountsAndFinance", id = item.ChequeDetailsId}, new {@class = "fa fa-edit"})
+                        @{
+                            if (item.PaymentTypeId == 4)
+                            {
+                                using (Html.BeginForm("ApproveCashAmount", "AccountManager", FormMethod.Post, new {id = item.ChequeDetailsId}))
+                                {
+                                    <input type="hidden" value="@item.ChequeDetailsId" id="ChequeDetailsId" name="ChequeDetailsId"/>
+                                    <a href="#" class="btn btn-info btn-sm" id="@item.ChequeDetailsId" onclick="Approve(this)">Approve</a>
+                                }
+
+                            }
+                        @*else if (item.PaymentTypeId == 5)
                         {
-                            using (Html.BeginForm("ApproveCashAmount", "AccountManager", FormMethod.Post, new { id = item.ChequeDetailsId }))
+                            using (Html.BeginForm("ApproveOnlineCashAmount", "AccountManager", FormMethod.Post, new { id = item.ChequeDetailsId }))
                             {
                                 <input type="hidden" value="@item.ChequeDetailsId" id="ChequeDetailsId" name="ChequeDetailsId" />
                                 <a href="#" class="btn btn-info btn-sm" id="@item.ChequeDetailsId" onclick="Approve(this)">Approve</a>
                             }
-
+                        }*@
+                            else
+                            {
+                                @Html.ActionLink(" Details", "ReceivableDetails", "AccountManager", new {area = "AccountsAndFinance", id = item.ChequeDetailsId}, new {@class = "fa fa-eye"})
+                            }
                         }
-                        @*else if (item.PaymentTypeId == 5)
-                         {
-                             using (Html.BeginForm("ApproveOnlineCashAmount", "AccountManager", FormMethod.Post, new { id = item.ChequeDetailsId }))
-                             {
-                                 <input type="hidden" value="@item.ChequeDetailsId" id="ChequeDetailsId" name="ChequeDetailsId" />
-                                 <a href="#" class="btn btn-info btn-sm" id="@item.ChequeDetailsId" onclick="Approve(this)">Approve</a>
-                             }
-                         }*@
-                         else
-                         {
-                             @Html.ActionLink(" View Details", "ReceivableDetails", "AccountManager", new { area = "AccountsAndFinance", id = item.ChequeDetailsId }, new { @class = "fa fa-eye" })
-                         }
-                    }
-
-                </td>
+                    </td>
+                </tr>
+            }
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>S.N</th>
+                <th>Client Name</th>
+                <th>Collection Details</th>
+                <th class="text-right">Amount (&#2547;) </th>
+                <th class="text-center">Remarks </th>
+                <th class="text-center">Collection Info </th>
+                <th class="text-center">Action</th>
             </tr>
-        }
+            </tfoot>
+        </table>
+    </div>
+</div>
 
-    </tbody>
-    <tfoot>
-    <tr>
-        <th>S.N</th>
-        <th>Client Name</th>
-        <th>Branch Name</th>
-        <th>Collection Info</th>
-        <th>Cheque Date</th>
-        <th>Entry Date</th>
-        <th class="text-right">Amount (&#2547;) </th>
-        <th class="text-center">Remarks </th>
-        <th class="text-center">Entry By </th>
-        <th class="text-center">Collection By </th>
-        <th class="text-center">Action</th>
-
-    </tr>
-    </tfoot>
-</table>
 
 
 

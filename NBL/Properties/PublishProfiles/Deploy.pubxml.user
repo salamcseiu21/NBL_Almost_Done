@@ -141,6 +141,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Areas/AccountsAndFinance/Views/AccountManager/Discounts.cshtml">
       <publishTime>06/12/2019 10:23:27</publishTime>
     </File>
+    <File Include="Areas/AccountsAndFinance/Views/AccountManager/EditReceivable.cshtml">
+      <publishTime>09/26/2019 10:57:49</publishTime>
+    </File>
     <File Include="Areas/AccountsAndFinance/Views/AccountManager/JournalDetails.cshtml">
       <publishTime>05/28/2019 10:20:27</publishTime>
     </File>
@@ -151,7 +154,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/08/2019 16:41:47</publishTime>
     </File>
     <File Include="Areas/AccountsAndFinance/Views/AccountManager/ReceivableDetails.cshtml">
-      <publishTime>08/07/2019 12:11:19</publishTime>
+      <publishTime>09/26/2019 12:09:24</publishTime>
     </File>
     <File Include="Areas/AccountsAndFinance/Views/AccountManager/Vats.cshtml">
       <publishTime>09/05/2019 16:32:42</publishTime>
@@ -193,7 +196,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/08/2019 09:58:49</publishTime>
     </File>
     <File Include="Areas/AccountsAndFinance/Views/Shared/_ActiveReceivablePartialPage.cshtml">
-      <publishTime>08/29/2019 11:07:21</publishTime>
+      <publishTime>09/26/2019 12:06:43</publishTime>
     </File>
     <File Include="Areas/AccountsAndFinance/Views/Shared/_MenuAccountManagerPartialPage.cshtml">
       <publishTime>09/08/2019 15:59:07</publishTime>
@@ -23422,16 +23425,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="bin/NBL.BLL.dll">
-      <publishTime>09/25/2019 16:19:11</publishTime>
+      <publishTime>09/26/2019 12:11:23</publishTime>
     </File>
     <File Include="bin/NBL.DAL.dll">
-      <publishTime>09/25/2019 16:19:11</publishTime>
+      <publishTime>09/26/2019 12:11:23</publishTime>
     </File>
     <File Include="bin/NBL.dll">
-      <publishTime>09/25/2019 16:19:16</publishTime>
+      <publishTime>09/26/2019 12:11:29</publishTime>
     </File>
     <File Include="bin/NBL.Models.dll">
-      <publishTime>09/25/2019 16:19:10</publishTime>
+      <publishTime>09/26/2019 12:11:22</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>04/22/2019 01:06:16</publishTime>
@@ -24133,7 +24136,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/17/2019 10:05:07</publishTime>
     </File>
     <File Include="Logs/Error_log_Xml_file.xml">
-      <publishTime>09/25/2019 15:11:33</publishTime>
+      <publishTime>09/26/2019 11:47:55</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>09/18/2019 14:45:33</publishTime>

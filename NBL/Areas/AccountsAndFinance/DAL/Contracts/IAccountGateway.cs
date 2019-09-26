@@ -83,9 +83,9 @@ namespace NBL.Areas.AccountsAndFinance.DAL.Contracts
 
        int ApproveDiscount(Discount discount);
 
-        AccountSummary GetAccountSummaryOfCurrentMonth(); 
-        AccountSummary GetAccountSummaryofCurrentMonthByCompanyId(int companyId);
-        AccountSummary GetAccountSummaryofCurrentMonthByBranchAndCompanyId(int branchId, int companyId);
+       AccountSummary GetAccountSummaryOfCurrentMonth(); 
+       AccountSummary GetAccountSummaryofCurrentMonthByCompanyId(int companyId);
+       AccountSummary GetAccountSummaryofCurrentMonthByBranchAndCompanyId(int branchId, int companyId);
        ICollection<ViewLedgerModel> GetClientLedgerBySubSubSubAccountCode(string clientSubSubSubAccountCode);
        ICollection<CollectionModel> GetTotalCollectionByBranch(int branchId);
        CollectionModel GetCollectionAmountById(long collectionId);
@@ -107,5 +107,6 @@ namespace NBL.Areas.AccountsAndFinance.DAL.Contracts
        int CancelVat(Vat vat);
        int ApproveProductPrice(ViewUser anUser, int productDetailsId,int productId);
        int CancelUnitPriceAmount(ViewUser anUser, int productDetailsId);
+       int UpdateReceivableCheque(ChequeDetails oldChequeByDetails, ChequeDetails newChequeDetails);
    }
 }

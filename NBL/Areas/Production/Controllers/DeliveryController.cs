@@ -96,11 +96,11 @@ namespace NBL.Areas.Production.Controllers
           
             try
             {
-               
+                var user = (ViewUser) Session["user"];
                 var products = (List<ViewFactoryStockModel>) Session["Factory_Stock"];
                 string scannedBarCode = barcode.ToUpper();
                 int productId = Convert.ToInt32(scannedBarCode.Substring(2, 3));
-                string fileName = "Deliverable_Product_For_" + tripId;
+                string fileName = "Deliverable_Product_For_"+user.UserId+"_" + tripId;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 var barcodeList = _iProductManager.ScannedProducts(filePath);
                 if (barcodeList.Count != 0)
@@ -178,8 +178,8 @@ namespace NBL.Areas.Production.Controllers
         {
             try
             {
-              
-                string fileName = "Deliverable_Product_For_" + tripId;
+                var user = (ViewUser) Session["user"];
+                string fileName = "Deliverable_Product_For_" + user.UserId + "_" + tripId;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 var scannedProducts = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
 
@@ -303,8 +303,9 @@ namespace NBL.Areas.Production.Controllers
         {
             try
             {
+                var user = (ViewUser)Session["user"];
                 List<ScannedProduct> products = new List<ScannedProduct>();
-                string fileName = "Deliverable_Product_For_" + tripId;
+                string fileName = "Deliverable_Product_For_" + user.UserId + "_" + tripId;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 if (System.IO.File.Exists(filePath))
                 {
@@ -330,7 +331,8 @@ namespace NBL.Areas.Production.Controllers
         {
             try
             {
-                string fileName = "Deliverable_Product_For_" + id;
+                var user = (ViewUser)Session["user"];
+                string fileName = "Deliverable_Product_For_" + user.UserId + "_" + id;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 var products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
                 return PartialView("_ViewScannedBarCodePartialPage", products);
@@ -414,7 +416,7 @@ namespace NBL.Areas.Production.Controllers
         {
             try
             {
-
+                var user = (ViewUser)Session["user"];
                 var transport = collection["ownTransport"];
                 bool isOwnTransport = transport != null;
                 int deliverebyUserId = ((ViewUser)Session["user"]).UserId;
@@ -424,7 +426,7 @@ namespace NBL.Areas.Production.Controllers
                 var client = _iClientManager.GetClientDeailsById(invoice.ClientId);
                 var deliveredQty = _iInvoiceManager.GetDeliveredProductsByInvoiceRef(invoice.InvoiceRef).Count;
                 var remainingToDeliverQty = invoice.Quantity - deliveredQty;
-                string fileName = "Scanned_Ordered_Product_List_For_" + invoiceId;
+                string fileName = "Scanned_Ordered_Product_List_For_" +user.UserId+"_"+ invoiceId;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 //if the file is exists read the file
                 var barcodeList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
@@ -533,7 +535,8 @@ namespace NBL.Areas.Production.Controllers
                 var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
                 string scannedBarCode = barcode.ToUpper();
                 int productId = Convert.ToInt32(scannedBarCode.Substring(2, 3));
-                string fileName = "Scanned_Ordered_Product_List_For_" + invoiceId;
+                var user = (ViewUser) Session["user"];
+                string fileName = "Scanned_Ordered_Product_List_For_" + user.UserId + "_" + invoiceId;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 var barcodeList = _iProductManager.ScannedProducts(filePath);
 
@@ -618,7 +621,8 @@ namespace NBL.Areas.Production.Controllers
         {
             try
             {
-                string fileName = "Scanned_Ordered_Product_List_For_" + id;
+                var user = (ViewUser) Session["user"];
+                string fileName = "Scanned_Ordered_Product_List_For_" + user.UserId + "_" + id;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 var products = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
                 return PartialView("_ViewScannedBarCodePartialPage", products);
@@ -650,8 +654,9 @@ namespace NBL.Areas.Production.Controllers
         {
             try
             {
+                var user = (ViewUser) Session["user"];
                 var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
-                string fileName = "Ordered_Product_List_For_" + invoiceId;
+                string fileName = "Ordered_Product_List_For_" + user.UserId + "_" + invoiceId;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 if (!System.IO.File.Exists(filePath))
                 {
@@ -697,7 +702,8 @@ namespace NBL.Areas.Production.Controllers
 
             try
             {
-                string fileName = "Scanned_Ordered_Product_List_For_" + invoiceId;
+                var user = (ViewUser) Session["user"];
+                string fileName = "Scanned_Ordered_Product_List_For_" + user.UserId + "_" + invoiceId;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 List<ScannedProduct> list = new List<ScannedProduct>();
                 if (!System.IO.File.Exists(filePath))

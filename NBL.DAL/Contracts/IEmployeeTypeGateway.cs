@@ -11,5 +11,6 @@ namespace NBL.DAL.Contracts
     public interface IEmployeeTypeGateway
     {
         IEnumerable<EmployeeType> GetAll();
+        int Add(EmployeeType model);
     }
 }

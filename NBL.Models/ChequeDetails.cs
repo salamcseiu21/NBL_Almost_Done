@@ -22,5 +22,6 @@ namespace NBL.Models
         public int? CancelByUserId { get; set; }
         public string CollectionByEmp { get; set; }
         public DateTime? ActiveDate { get; set; }
+        public int UserId { get; set; } 
     }
 }

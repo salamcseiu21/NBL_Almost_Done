@@ -136,6 +136,12 @@ namespace NBL.Areas.AccountsAndFinance.BLL
             return rowAffected > 0;
         }
 
+        public bool UpdateReceivableCheque(ChequeDetails oldChequeByDetails, ChequeDetails newChequeDetails)
+        {
+            int rowAffected = _iAccountGateway.UpdateReceivableCheque(oldChequeByDetails, newChequeDetails);
+            return rowAffected > 0;
+        }
+
         public ChequeDetails GetReceivableChequeByDetailsId(int chequeDetailsId)
         {
             return _iAccountGateway.GetReceivableChequeByDetailsId(chequeDetailsId);

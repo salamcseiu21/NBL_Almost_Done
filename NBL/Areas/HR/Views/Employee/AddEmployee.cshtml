@@ -1,0 +1,262 @@
+﻿@model NBL.Models.EntityModels.Employees.Employee
+@{
+    ViewBag.Title = "Add New Employee";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var tdate = DateTime.Now.Date.ToString("dd/MMMM/yyyy");
+}
+<style>
+    label.error {
+        color: #FF0000;
+    }
+</style>
+<!-- Main content -->
+<section class="content">
+
+
+    @if(TempData["Message"] != null)
+    {<p class="text-center text-success" id="message">
+        @TempData["Message"]
+    </p>
+    }
+
+    <h2 class="text-center text-green" style="margin-top:0;padding-top:0;">Add New Employee</h2>
+    <form id="addNewEmployeeForm" method="POST" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EmployeeTypeId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.EmployeeTypeId, null, "--Select--", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.EmployeeTypeId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EmployeeName, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.EmployeeName, new { @class = "form-control", placeholder = "Enter Employee Name", id = "EmployeeName", required = "required" })
+                            @Html.ValidationMessageFor(model => model.EmployeeName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PresentAddress, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.PresentAddress, new { @class = "form-control", placeholder = "Enter Employee Present Address", rows = 2, id = "PresentAddress", style = "resize:none" })
+                            @Html.ValidationMessageFor(model => model.PresentAddress, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DepartmentId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.DepartmentId, null, "--Select--", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DesignationId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.DesignationId, null, "--Select--", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.DesignationId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BranchId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.BranchId, null, "--Select--", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.BranchId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NationalIdNo, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.NationalIdNo, new { @class = "form-control", placeholder = "Enter Employee NID", id = "NationalIdNo" })
+                            @Html.ValidationMessageFor(model => model.NationalIdNo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Phone, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", placeholder = "Enter client phone", id = "Phone" })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AlternatePhone, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.AlternatePhone, new { @class = "form-control", placeholder = "Enter client Alternate phone", id = "AlternatePhone" })
+                            @Html.ValidationMessageFor(model => model.AlternatePhone, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "E-mail Address", id = "Email" })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            <span id="EmailError"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Gender, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <select class="form-control" id="Gender" name="Gender">
+                                <option value="M">Male</option>
+                                <option value="F">Famale</option>
+                                <option value="O">Others</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EmployeeImage, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input type="file" name="EmployeeImage" id="EmployeeImage" style="width: 100%;" />
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EmployeeSignature, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input type="file" name="EmployeeSignature" id="EmployeeSignature" style="width: 100%;" />
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="JoiningDate" class="control-label col-md-3">Joining Date</label>
+                        <div class="col-md-9">
+
+                            <input type="text" id="JoiningDate" name="JoiningDate" value="@tdate" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="col-md-9 col-md-offset-3">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    @Html.ActionLink("Back to List", "ViewEmployee", "Home", new { area = "HR" }, new { @class = "btn btn-danger" })
+                                    <input type="submit" value="Save" class="btn btn-success" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </form>
+    
+
+    @*<div style="border: 1px solid;padding: 10px">
+        <table id="table_employee_list" class="display" style="border:1px solid black">
+            <caption class="text-center text-green" style="font-weight:bold;">Employee List</caption>
+            <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Department</th>
+                <th>Designation</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th class="text-center">Joining Date</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            </tbody>
+            <tfoot>
+            <tr>
+        
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Department</th>
+                <th>Designation</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th class="text-center">Joining Date</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>*@
+</section>
+@section Scripts{
+    <script>
+        $(function () {
+
+            $("#JoiningDate").datepicker(
+                {
+                     dateFormat: 'dd-MM-yy',
+                     changeMonth: true,
+                     changeYear: true,
+                     yearRange: "-20:+0"
+                });
+
+        });
+    </script>
+
+    @*Jquery Validation*@
+    <script>
+        $("#addNewEmployeeForm").validate({
+        rules: {
+            EmployeeTypeId: "required",
+            EmployeeName: "required",
+            PresentAddress: "required",
+            DepartmentId: "required",
+            DesignationId: "required",
+            BranchId: "required",
+            //EmployeeImage: "required",
+            //EmployeeSignature: "required",
+            Phone: "required",
+            //AlternatePhone: "required",
+            //NationalIdNo: "required",
+            Email:{
+                       required: true,
+                       email: true
+                   },
+
+
+        },
+        messages: {
+            EmployeeTypeId: "*",
+            EmployeeName: "*",
+            PresentAddress: "*",
+            DepartmentId: "*",
+            DesignationId: "*",
+            BranchId: "*",
+            //EmployeeImage: "*",
+            //EmployeeSignature: "*",
+            Phone: "*",
+            //AlternatePhone: "*",
+            //NationalIdNo: "*",
+            Email : {
+                required: "*",
+                email:"Please! Enter a valid Email Address."
+                }
+
+        }
+    });
+    </script>
+    <script src="@Url.Content("~/Scripts/Employee/ViewEmployeeList.js")"></script>
+}

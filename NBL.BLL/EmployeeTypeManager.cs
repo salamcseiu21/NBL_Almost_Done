@@ -20,5 +20,11 @@ namespace NBL.BLL
         {
             return _iEmployeeTypeGateway.GetAll();
         }
+
+        public bool Add(EmployeeType model)
+        {
+            int rowAffected = _iEmployeeTypeGateway.Add(model);
+            return rowAffected > 0;
+        }
     }
 }

@@ -1812,6 +1812,52 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
         }
 
+        public int UpdateReceivableCheque(ChequeDetails oldChequeByDetails, ChequeDetails newChequeDetails)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_UpdateReceivableCheque";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ChequeDetailsId", oldChequeByDetails.ChequeDetailsId);
+
+                CommandObj.Parameters.AddWithValue("@ReceivableId", oldChequeByDetails.ReceivableId);
+                CommandObj.Parameters.AddWithValue("@OldSourceBankName", oldChequeByDetails.SourceBankName);
+                CommandObj.Parameters.AddWithValue("@OldBankAccountNo", oldChequeByDetails.BankAccountNo);
+                CommandObj.Parameters.AddWithValue("@OldChequeAmount", oldChequeByDetails.ChequeAmount);
+                CommandObj.Parameters.AddWithValue("@OldChequeDate", oldChequeByDetails.ChequeDate);
+                CommandObj.Parameters.AddWithValue("@OldChequeNo", oldChequeByDetails.ChequeNo);
+                CommandObj.Parameters.AddWithValue("@OldRemarks", oldChequeByDetails.Remarks?? (object)DBNull.Value);
+
+                CommandObj.Parameters.AddWithValue("@NewSourceBankName", newChequeDetails.SourceBankName);
+                CommandObj.Parameters.AddWithValue("@NewBankAccountNo", newChequeDetails.BankAccountNo);
+                CommandObj.Parameters.AddWithValue("@NewChequeAmount", newChequeDetails.ChequeAmount);
+                CommandObj.Parameters.AddWithValue("@NewChequeDate", newChequeDetails.ChequeDate);
+                CommandObj.Parameters.AddWithValue("@NewChequeNo", newChequeDetails.ChequeNo);
+                CommandObj.Parameters.AddWithValue("@NewRemarks", newChequeDetails.Remarks);
+                CommandObj.Parameters.AddWithValue("@UserId", newChequeDetails.UserId);
+
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                int rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Unable to update receivable cheque details..", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+
+        }
+
         public int ApproveDiscount(Discount discount)
         {
             try

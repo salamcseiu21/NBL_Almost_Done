@@ -252,8 +252,9 @@ namespace NBL.Areas.Production.Controllers
         [Authorize(Roles = "ProductionManager")]
         public ActionResult AddProductToTempFile() 
         {
+            var user = (ViewUser)Session["user"];
             ScanProductViewModel model=new ScanProductViewModel();
-            string fileName = "Production_In_" + DateTime.Now.ToString("ddMMMyyyy");
+            string fileName = "Production_In_" + user.UserId + "_" + DateTime.Now.ToString("ddMMMyyyy");
             var filePath = Server.MapPath("~/Files/" + fileName);
             if (!System.IO.File.Exists(filePath))
             {
@@ -269,7 +270,8 @@ namespace NBL.Areas.Production.Controllers
             SuccessErrorModel successErrorModel = new SuccessErrorModel();
             try
             {
-                string fileName = "Production_In_" + DateTime.Now.ToString("ddMMMyyyy");
+                var user=(ViewUser)Session["user"];
+                string fileName = "Production_In_" + user.UserId + "_" + DateTime.Now.ToString("ddMMMyyyy");
                 string filePath = Server.MapPath("~/Files/" + fileName);
                 var scannedBarcode = barcode.ToUpper();
                 bool isValid= Validator.ValidateProductBarCode(scannedBarcode);
@@ -323,7 +325,7 @@ namespace NBL.Areas.Production.Controllers
             try
             {
                 int userId = ((ViewUser)Session["user"]).UserId;
-                string fileName = "Production_In_" + DateTime.Now.ToString("ddMMMyyyy");
+                string fileName = "Production_In_" + userId + "_" + DateTime.Now.ToString("ddMMMyyyy");
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 if (System.IO.File.Exists(filePath))
                 {
@@ -356,8 +358,9 @@ namespace NBL.Areas.Production.Controllers
         [HttpGet]
         public PartialViewResult LoadScannedProducts()
         {
+            var user = (ViewUser)Session["user"];
             ScanProductViewModel model = new ScanProductViewModel();
-            string fileName = "Production_In_" + DateTime.Now.ToString("ddMMMyyyy");
+            string fileName = "Production_In_" + user.UserId + "_" + DateTime.Now.ToString("ddMMMyyyy");
             var filePath = Server.MapPath("~/Files/" + fileName);
             if (System.IO.File.Exists(filePath))
             {

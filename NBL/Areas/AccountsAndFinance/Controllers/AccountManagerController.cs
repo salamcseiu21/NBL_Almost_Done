@@ -139,6 +139,45 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             }
         }
 
+        public ActionResult EditReceivable(int id)
+        {
+
+            var receivableCheques = _iAccountsManager.GetReceivableChequeByDetailsId(id);
+            receivableCheques.Client = _iClientManager.GetById(receivableCheques.ClientId);
+            return  View(receivableCheques);
+        }
+        [HttpPost]
+        public ActionResult EditReceivable(int id,FormCollection collection)
+        {
+            var anUser = (ViewUser)Session["user"];
+            var bankName = collection["SourceBankName"];
+            var accountNo = collection["BankAccountNo"];
+            var chequeNo = collection["ChequeNo"];
+            var chequeDate = Convert.ToDateTime(collection["ChequeDate"]);
+            var newAmount = Convert.ToDecimal(collection["NewAmount"]);
+            var editRemarks = collection["EditRemarks"];
+
+             ChequeDetails newChequeDetails=new ChequeDetails
+             {
+                 SourceBankName = bankName,
+                 BankAccountNo = accountNo,
+                 ChequeAmount = newAmount,
+                 ChequeNo = chequeNo,
+                 ChequeDate = chequeDate,
+                 Remarks = editRemarks,
+                 UserId = anUser.UserId
+             };
+            var oldChequeByDetails = _iAccountsManager.GetReceivableChequeByDetailsId(id);
+            oldChequeByDetails.UserId = anUser.UserId;
+            oldChequeByDetails.Client = _iClientManager.GetById(oldChequeByDetails.ClientId);
+
+            bool result = _iAccountsManager.UpdateReceivableCheque(oldChequeByDetails,newChequeDetails);
+            if (result)
+            {
+                return RedirectToAction("ActiveReceivable");
+            }
+            return View(oldChequeByDetails);
+        }
         [HttpPost]
         public JsonResult ApproveCashAmount(FormCollection collection)
         {

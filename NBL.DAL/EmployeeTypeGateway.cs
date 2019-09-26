@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Masters;
+using NBL.Models.Logs;
 
 namespace NBL.DAL
 {
@@ -31,7 +32,36 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect employee Types", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int Add(EmployeeType model)
+        {
+            try
+            {
+                CommandObj.CommandText = "spAddNewEmployeeType";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@TypeName", model.EmployeeTypeName);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not add employee Type", exception);
             }
             finally
             {
