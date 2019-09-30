@@ -551,7 +551,38 @@ namespace NBL.Areas.SuperAdmin.Controllers
                 return PartialView("_ErrorPartial", exception);
             };
         }
+        //----Credit limit-------------
 
+        public ActionResult SetCreditLimit()
+        {
+           
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SetCreditLimit(FormCollection collection)
+        {
+            try
+            {
+                var clientId = Convert.ToInt32(collection["ClientId"]);
+                var creditLimit = Convert.ToDecimal(collection["NewCreditLimit"]);
+                bool result=_iClientManager.SetCreditLimit(clientId,creditLimit);
+                if (result)
+                {
+                    TempData["CreditLimitSetMessage"] = "Credit Limit Set Successfully!";
+                }
+                else
+                {
+                    TempData["CreditLimitSetMessage"] = "Failed to set Credit Limit";
+                }
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            };
+        }
         //------------------ Change password------------------------
         public ActionResult ChangePassword()
         {

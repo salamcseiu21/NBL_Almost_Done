@@ -1,6 +1,6 @@
 ﻿@model NBL.Models.ViewModels.Orders.CreateOrderViewModel
 @{
-    ViewBag.Title = "Order";
+    ViewBag.Title = "New Order";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
     var tdate = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
 }
@@ -200,6 +200,7 @@
             else if ($("#ProductName").val() === "") {
                 alert('Please type & select a product Name');
             }
+            
             else {
                 var id = $("#ProductId").val();
                 var a = $.inArray(id, productIdlist);
@@ -405,7 +406,7 @@
                     $("#ClientPhone").val('');
                     $("#ClientEmail").val('');
                     $("#CreditLimit").val('');
-
+                     
                     $.ajax({
 
                         type: "POST",
@@ -423,6 +424,7 @@
                             var cl = data.CreditLimit;
                             var ct = data.ClientTypeId;
                             var outstd = data.Outstanding;
+                            var clientBranchId = data.BranchId;
                             $("#Address").val(address);
                             $("#ClientPhone").val(phone);
                             $("#ClientEmail").val(email);
@@ -432,7 +434,15 @@
                             $("#CreditLimit").val(cl);
                             $("#Outstandging").val(outstd);
                             $("#ClientTypeId").val(ct);
-                            //alert(email);
+                            //if (clientBranchId === 10) {
+                            //    if (cl > outstd) {
+                            //        $("#addItemButton1").removeAttr("disabled");
+                            //    } else {
+
+                            //        $("#addItemButton1").attr("disabled", true);
+                            //    }
+                            //}
+                            
 
                         }
                     });

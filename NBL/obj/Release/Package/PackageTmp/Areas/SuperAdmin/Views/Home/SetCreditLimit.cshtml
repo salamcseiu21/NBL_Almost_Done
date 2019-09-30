@@ -1,0 +1,201 @@
+﻿
+@{
+    ViewBag.Title = "Set Credit Limit";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<div class="panel panel-info">
+    <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Set Client Credit Limit</div>
+    <div class="panel panel-body">
+        <div class="text-center">
+            @if (TempData["CreditLimitSetMessage"] != null)
+            {
+               @TempData["CreditLimitSetMessage"]
+            }
+        </div>
+        @using (Html.BeginForm())
+            {
+            <div class="form-horizontal">
+                <div class="row">
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="ClientName" class="control-label col-md-3">Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="ClientName" name="ClientName" class="form-control" placeholder="Start typing Client Name" autofocus required/>
+                                    <input type="hidden" id="ClientId" name="ClientId" />
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Address" class="control-label col-md-3">Address</label>
+                                <div class="col-md-9">
+                                    <textarea id="Address" name="Address" class="form-control" readonly="readonly" rows="2" style="resize: none"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="SubSubSubAccountCode" class="control-label col-md-4">Code</label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="SubSubSubAccountCode" name="SubSubSubAccountCode" class="form-control" placeholder="Client Code" readonly="readonly" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ClientTypeName" class="control-label col-md-4">Type</label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="ClientTypeName" name="ClientTypeName" class="form-control" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="ClientPhone" class="control-label col-md-2">Phone</label>
+                                <div class="col-md-10">
+                                    <input type="text" id="ClientPhone" name="ClientPhone" value="" class="form-control" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="ClientEmail" class="control-label col-md-2">E-mail</label>
+                                <div class="col-md-10">
+                                    <input type="text" id="ClientEmail" name="ClientEmail" value="" class="form-control" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                           
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="CreditLimit" class="control-label col-md-5">Cr. Limit</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="CreditLimit" name="CreditLimit" value="" class="form-control text-right" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="Outstandging" class="control-label col-md-5"> Outstandging</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="Outstandging" name="Outstandging" value="0" class="form-control text-right" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="NewCreditLimit" class="control-label col-md-3">New Credit Limit</label>
+                                <div class="col-md-9">
+                                    <input type="number" id="NewCreditLimit" name="NewCreditLimit" placeholder="Enter new Credit limit.." class="form-control"  required/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                               
+                                <div class="col-md-10 col-md-offset-2">
+                                   <input type="submit" value="Submit" class="btn btn-info"/>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#ClientName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: RootUrl + 'Common/GetAllClientNameForAutoComplete/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function (item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#ClientId").val(i.item.val);
+                    var json = { clientId: i.item.val };
+                    $("#Total").val('');
+                    $("#Net").val('');
+                    $("#SpecialDiscount").val('');
+                    //alert(i.item.val);
+                    $("#Discount").val('');
+                    $("#Address").val('');
+                    $("#ClientPhone").val('');
+                    $("#ClientEmail").val('');
+                    $("#CreditLimit").val('');
+
+                    $.ajax({
+
+                        type: "POST",
+                        url: RootUrl + 'Common/GetClientById/',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(json),
+                        success: function (data) {
+
+                            var address = data.Address;
+                            var phone = data.Phone;
+                            var email = data.Email;
+                            var discount = data.Discount;
+                            var code = data.SubSubSubAccountCode;
+                            var ctype = data.ClientTypeName;
+                            var cl = data.CreditLimit;
+                            var ct = data.ClientTypeId;
+                            var outstd = data.Outstanding;
+                            var clientBranchId = data.BranchId;
+                            $("#Address").val(address);
+                            $("#ClientPhone").val(phone);
+                            $("#ClientEmail").val(email);
+                            $("#Discount").val(discount);
+                            $("#SubSubSubAccountCode").val(code);
+                            $("#ClientTypeName").val(ctype);
+                            $("#CreditLimit").val(cl);
+                            $("#Outstandging").val(outstd);
+                            $("#ClientTypeId").val(ct);
+                            //if (clientBranchId === 10) {
+                            //    if (cl > outstd) {
+                            //        $("#addItemButton1").removeAttr("disabled");
+                            //    } else {
+
+                            //        $("#addItemButton1").attr("disabled", true);
+                            //    }
+                            //}
+
+
+                        }
+                    });
+                },
+                minLength: 1
+            });
+        });
+</script>
+
+}

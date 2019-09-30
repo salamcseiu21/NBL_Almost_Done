@@ -385,6 +385,7 @@
     <Compile Include="Areas\Sales\Controllers\ProductController.cs" />
     <Compile Include="Areas\Corporate\Controllers\RequisitionController.cs" />
     <Compile Include="Areas\Sales\Controllers\ReplaceController.cs" />
+    <Compile Include="Areas\Sales\Controllers\ReportController.cs" />
     <Compile Include="Areas\Sales\Controllers\RequisitionController.cs" />
     <Compile Include="Areas\Sales\Controllers\ReturnController.cs" />
     <Compile Include="Areas\Sales\Controllers\SalesAdminController.cs" />
@@ -8243,6 +8244,9 @@
     <Content Include="Areas\HR\Views\Employee\Edit.cshtml" />
     <Content Include="Areas\HR\Views\EmployeeType\EmployeeTypeList.cshtml" />
     <Content Include="Areas\HR\Views\EmployeeType\Add.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Home\SetCreditLimit.cshtml" />
+    <Content Include="Areas\Sales\Views\Report\AllDeliveredQtyForOrder.cshtml" />
+    <Content Include="Areas\Sales\Views\Shared\_ViewDeliveredQtyPartialPage.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />

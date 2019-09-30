@@ -203,6 +203,7 @@
     <Compile Include="ViewModels\FinanceModels\ViewLedgerModel.cs" />
     <Compile Include="ViewModels\FinanceModels\ViewMoneyReceiptModel.cs" />
     <Compile Include="ViewModels\FinanceModels\ViewReceivableDetails.cs" />
+    <Compile Include="ViewModels\FinanceModels\ViewTotalCollection.cs" />
     <Compile Include="ViewModels\Logs\ViewWriteLogModel.cs" />
     <Compile Include="EntityModels\Requisitions\MonthlyRequisitionModel.cs" />
     <Compile Include="EntityModels\Requisitions\RequisitionItem.cs" />
@@ -240,6 +241,8 @@
     <Compile Include="ViewModels\Returns\ViewReturnModel.cs" />
     <Compile Include="ViewModels\Returns\ViewReturnProductModel.cs" />
     <Compile Include="ViewModels\Returns\ViewReturnReceiveModel.cs" />
+    <Compile Include="ViewModels\Sales\ViewDeliveredQuantityModel.cs" />
+    <Compile Include="ViewModels\Sales\ViewTotalSaleValue.cs" />
     <Compile Include="ViewModels\Scraps\ViewCreateScrapModel.cs" />
     <Compile Include="ViewModels\Services\ViewReceivedServiceProduct.cs" />
     <Compile Include="ViewModels\Summaries\FactorySummaryModel.cs" />

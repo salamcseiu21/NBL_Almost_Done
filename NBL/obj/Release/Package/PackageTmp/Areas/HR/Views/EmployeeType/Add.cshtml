@@ -1,0 +1,48 @@
+﻿@model NBL.Models.EntityModels.Masters.EmployeeType
+@{
+    ViewBag.Title = "Add Employee Type";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+ 
+<div class="panel panel-info">
+    <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder"><i class="fa fa-plus"></i> Add New Employee Type</div>
+    <div class="panel panel-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <div class="text-center">
+                    @if (TempData["Message"] != null)
+                {
+                        @TempData["Message"]
+                    } @if (TempData["Error"] != null)
+                {
+                        <div style="color:orangered">@Html.Raw(TempData["Error"])</div>
+                    }
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EmployeeTypeName, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.EmployeeTypeName, null, new { placeholder = "Enter Employee Type name", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.EmployeeTypeName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @Html.ActionLink("Back to List", "EmployeeTypeList", "EmployeeType", new { area = "HR" }, new { @class = "btn btn-info" })
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                            <div class="col-md-6">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

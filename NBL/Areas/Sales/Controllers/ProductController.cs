@@ -1064,6 +1064,7 @@ namespace NBL.Areas.Sales.Controllers
             //ViewProductHistory product = _iReportManager.GetProductHistoryByBarCode(model.ProductBarCode) ?? new ViewProductHistory {Remarks = "Not Receive by branch..."};
             ViewProductHistory product=new ViewProductHistory();
             var fromBranch=_iReportManager.GetDistributedProductFromBranch(model.ProductBarCode);
+            var fromFactory = _iReportManager.GetDistributedProductFromFactory(model.ProductBarCode);
             if (fromBranch != null)
             {
                 product.ProductBarCode = fromBranch.BarCode;
@@ -1074,9 +1075,8 @@ namespace NBL.Areas.Sales.Controllers
                 product.DeliveryDate = fromBranch.DeliveryDate;
 
             }
-            else
+            else if (fromFactory!=null)
             {
-                var fromFactory = _iReportManager.GetDistributedProductFromFactory(model.ProductBarCode);
                 product.ProductBarCode = fromFactory.BarCode;
                 product.ClientName = fromFactory.ClientName;
                 product.ProductCategoryName = fromFactory.ProductCategoryName;
@@ -1084,7 +1084,6 @@ namespace NBL.Areas.Sales.Controllers
                 product.ProductName = fromFactory.ProductName;
                 product.DeliveryDate = fromFactory.DeliveryDate;
             }
-           
             product.TransactionDetailses = _iReportManager.GetProductTransactionDetailsByBarcode(model.ProductBarCode);
             return View(product);
         }

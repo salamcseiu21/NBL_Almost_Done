@@ -1,0 +1,51 @@
+﻿@model NBL.Models.EntityModels.Departments.Department
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content" style="margin:0;padding:0;">
+    <h3 class="text-center text-green">Update Department Information</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <div class="text-center text-danger">
+                @if (TempData["Error"] != null)
+                {
+                    @Html.Raw(TempData["Error"])
+                }
+            </div>
+            <hr />
+           
+            @Html.HiddenFor(model => model.DepartmentId)
+
+            <div class="form-group">
+                @Html.LabelFor(m=>m.DepartmentCode,new {@class="control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m=>m.DepartmentCode,new {@class="form-control", placeholder = "Enter deparment code" })
+                    @Html.ValidationMessageFor(m=>m.DepartmentCode,"",new {@class="text-danger"})
+                </div>
+            </div>
+            <div class="form-group">
+                
+                @Html.LabelFor(m=>m.DepartmentName,new {@class="control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m=>m.DepartmentName,new {@class="form-control", placeholder = "Enter deparment name" })
+                   @Html.ValidationMessageFor(m=>m.DepartmentName,"",new {@class="text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @Html.ActionLink("Back to List", "DepartmentList", "Department", new { area = "HR" }, new { @class = "btn btn-info" })
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+
+</section>

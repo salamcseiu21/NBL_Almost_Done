@@ -113,6 +113,12 @@ namespace NBL.BLL
             return _iClientGateway.GetActiveClient();
         }
 
+        public bool SetCreditLimit(int clientId, decimal creditLimit)
+        {
+            int rowAffected = _iClientGateway.SetCreditLimit(clientId,creditLimit);
+            return rowAffected > 0;
+        }
+
         public bool Delete(Client model)
         {
             throw new System.NotImplementedException();

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Masters.EmployeeType>
+@{
+    ViewBag.Title = "Employee Type List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
+}
+
+<section class="content">
+    <div class="text-center">
+
+        @Html.ActionLink("Add New Employee Type", "Add", "EmployeeType", new { area = "HR" }, new { @class = "btn btn-info" })
+    </div>
+    <table id="table_EmployeeType_list" class="display" style="border:1px solid black">
+        <caption class="text-center text-green" style="font-weight:bold;">Employee Type List</caption>
+
+        <thead>
+            <tr>
+                <th>S.N</th>
+                <th>Employee Type</th>
+            
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    
+                    <td>
+                      @i
+                    </td>
+                    <td>@item.EmployeeTypeName</td>
+
+                   
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>S.N</th>
+                <th>Employee Type</th>
+            </tr>
+        </tfoot>
+    </table>
+
+</section>
+@section Scripts
+{
+    <script>
+
+        $('#table_EmployeeType_list').DataTable({
+            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]]
+        });
+
+    </script>
+
+}

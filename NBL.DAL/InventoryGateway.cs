@@ -1192,6 +1192,7 @@ namespace NBL.DAL
                 CommandObj.CommandText = "spSaveDeliveredOrderInformation";
                 CommandObj.Parameters.AddWithValue("@TransactionDate", aDelivery.DeliveryDate);
                 CommandObj.Parameters.AddWithValue("@TransactionRef", aDelivery.TransactionRef);
+                CommandObj.Parameters.AddWithValue("@SpecialDiscount", aDelivery.SpecialDiscount);
                 CommandObj.Parameters.AddWithValue("@DeliveryRef", aDelivery.DeliveryRef);
                 CommandObj.Parameters.AddWithValue("@VoucherNo", aDelivery.VoucherNo);
                 CommandObj.Parameters.AddWithValue("@InvoiceRef", aDelivery.InvoiceRef);
@@ -2526,6 +2527,7 @@ namespace NBL.DAL
                 CommandObj.CommandText = "UDSP_SaveDeliveredOrderInformationFromFactory";
                 CommandObj.Parameters.AddWithValue("@TransactionDate", aDelivery.DeliveryDate);
                 CommandObj.Parameters.AddWithValue("@TransactionRef", aDelivery.TransactionRef);
+                CommandObj.Parameters.AddWithValue("@SpecialDiscount", aDelivery.SpecialDiscount);
                 CommandObj.Parameters.AddWithValue("@DeliveryRef", aDelivery.DeliveryRef);
                 CommandObj.Parameters.AddWithValue("@VoucherNo", aDelivery.VoucherNo);
                 CommandObj.Parameters.AddWithValue("@InvoiceRef", aDelivery.InvoiceRef);
@@ -3032,13 +3034,13 @@ namespace NBL.DAL
                     model = new ViewProductLifeCycleModel
                     {
                         Age = Convert.ToInt32(reader["Age"]),
-                        ComeIntoInventory = Convert.ToDateTime(reader["ScanDate"]),
+                        ComeIntoInventory = DBNull.Value.Equals(reader["ScanDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ScanDate"]),
                         ProductionDate = Convert.ToDateTime(reader["ProductionDate"]),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
                         ProductName = reader["ProductName"].ToString(),
                         LifeTime = Convert.ToInt32(reader["LifeTime"]),
                         ProductCategoryName=reader["ProductCategoryName"].ToString(),
-                        DispatchDate = DBNull.Value.Equals(reader["DespatchDate"])? default(DateTime):Convert.ToDateTime(reader["DespatchDate"]),
+                        DispatchDate = DBNull.Value.Equals(reader["DespatchDate"])? (DateTime?)null: Convert.ToDateTime(reader["DespatchDate"]),
                         LineNo = Convert.ToInt32(reader["LineNumber"]),
                         BatchCode = reader["BatchCode"].ToString(),
                         ShiftNo = reader["ShiftNo"].ToString(),

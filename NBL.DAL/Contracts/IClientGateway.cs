@@ -27,5 +27,6 @@ namespace NBL.DAL.Contracts
         ViewClient GetClientInfoBySubSubSubAccountCode(string accountCode);
         ICollection<ViewClient> GetClientByOrderCountAndBranchId(int branchId);
         ICollection<Client> GetActiveClient();
+        int SetCreditLimit(int clientId, decimal creditLimit);
     }
 }

@@ -14,6 +14,7 @@ using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Sales;
 using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.Management.Controllers
@@ -67,6 +68,9 @@ namespace NBL.Areas.Management.Controllers
             //var branches = _iBranchManager.GetAllBranches();
             var totalProduction = _iReportManager.GetTotalProductionCompanyIdAndYear(companyId, DateTime.Now.Year);
             var totalDispatch = _iReportManager.GetTotalDispatchCompanyIdAndYear(companyId, DateTime.Now.Year);
+            var viewTotalCollection = _iReportManager.GetTotalCollectionByYear(DateTime.Now.Year);
+            var viewTotalSaleValue = _iReportManager.GetTotalSaleValueByYear(DateTime.Now.Year);
+            accountSummary.TotalSaleValue = _iReportManager.GetTotalSaleValueByYearAndMonth(DateTime.Now.Year,DateTime.Now.Month);
             SummaryModel aModel = new SummaryModel
             {
                // Branches = branches.ToList(),
@@ -82,7 +86,9 @@ namespace NBL.Areas.Management.Controllers
                 //Employees = employees,
                 AccountSummary = accountSummary,
                 Dispatch = totalDispatch,
-                Production = totalProduction
+                Production = totalProduction,
+                ViewTotalCollection =viewTotalCollection,
+                ViewTotalSaleValue = viewTotalSaleValue
 
             };
             return View(aModel);

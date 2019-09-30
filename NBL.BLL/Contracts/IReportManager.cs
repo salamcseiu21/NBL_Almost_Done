@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.FinanceModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Replaces;
 using NBL.Models.ViewModels.Reports;
+using NBL.Models.ViewModels.Sales;
 using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.BLL.Contracts
@@ -56,6 +58,10 @@ namespace NBL.BLL.Contracts
         ICollection<ViewProduct> GetStockProductBarcodeByBranchAndProductId(int branchId, int id);
         ICollection<ViewProduct> GetStockProductBarcodeByBranchId(int branchId);
         List<ViewProduct> GetStockProductToclientByClientIdWithBarcode(int clientId);
-        ICollection<ViewReplaceSummary> GetTotalReplaceProductList(); 
+        ICollection<ViewReplaceSummary> GetTotalReplaceProductList();
+        ViewTotalSaleValue GetTotalSaleValueByYear(int year);
+        ViewTotalCollection GetTotalCollectionByYear(int year);
+        decimal GetTotalSaleValueByYearAndMonth(int year, int month);
+        ICollection<ViewDeliveredQuantityModel> GetTotalDeliveredQtyByBranchId(int branchId);
     }
 }

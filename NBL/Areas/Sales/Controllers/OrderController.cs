@@ -232,6 +232,7 @@ namespace NBL.Areas.Sales.Controllers
                 var user = (ViewUser)Session["user"];
                 var filePath = GetTempSalesOrderXmlFilePath();
                 int clientId = Convert.ToInt32(collection["ClientId"]);
+                var clientInfo= _iClientManager.GetClientDeailsById(clientId);
                 int orderByUserId = user.UserId;
                 decimal amount = Convert.ToDecimal(collection["Total"]);
                 DateTime orderDate = Convert.ToDateTime(collection["OrderDate"]);
@@ -251,6 +252,8 @@ namespace NBL.Areas.Sales.Controllers
                     Vat = vat,
                     Amounts = productList.Sum(n=>(n.UnitPrice+n.Vat)*n.Quantity)
                 };
+
+
                 var result = _iOrderManager.Save(order);
                 if (result > 0)
                 {
@@ -264,6 +267,47 @@ namespace NBL.Areas.Sales.Controllers
                     aModel.Message = "<p class='text-danger'>Failed to Submit!!</p>";
 
                 }
+
+                //if (clientInfo.BranchId == 10)
+                //{
+                //    if (clientInfo.CreditLimit >= order.Amounts)
+                //    {
+                //        var result = _iOrderManager.Save(order);
+                //        if (result > 0)
+                //        {
+                //            Session["Orders"] = null;
+                //            RemoveAll();
+                //            aModel.Message = "<p class='text-green'>Order Submitted Successfully!!</p>";
+                //        }
+
+                //        else
+                //        {
+                //            aModel.Message = "<p class='text-danger'>Failed to Submit!!</p>";
+
+                //        }
+                //    }
+                //    else
+                //    {
+                //        aModel.Message = "<p class='text-danger'> Credit limit exceed!! </p>";
+                //    }
+                //}
+                //else
+                //{
+                //    var result = _iOrderManager.Save(order);
+                //    if (result > 0)
+                //    {
+                //        Session["Orders"] = null;
+                //        RemoveAll();
+                //        aModel.Message = "<p class='text-green'>Order Submitted Successfully!!</p>";
+                //    }
+
+                //    else
+                //    {
+                //        aModel.Message = "<p class='text-danger'>Failed to Submit!!</p>";
+
+                //    }
+                //}
+               
 
             }
             catch (Exception e)

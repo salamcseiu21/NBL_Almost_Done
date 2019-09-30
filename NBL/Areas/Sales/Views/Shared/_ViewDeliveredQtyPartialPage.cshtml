@@ -1,0 +1,38 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Sales.ViewDeliveredQuantityModel >
+    @{
+        var i = 0;
+    }
+<table id="tbl_delivered_qty" class="display table-bordered table-responsive" style="width: 100%; border: 1px solid">
+    <thead>
+    <tr>
+        <th>S.N</th>
+        <th>Product Name</th>
+        <th>Segment</th>
+        <th class="text-right">Quantity</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        i++;
+        <tr>
+            <td>@i</td>
+            <td>@item.ProductName</td>
+            <td>@item.Segment</td>
+            <td class="text-right">@item.Quantity</td>
+        </tr>
+    }
+    </tbody>
+    <tfoot>
+    <tr>
+        <th class="text-right" colspan="3">Total </th>
+        <th class="text-right">@Model.Sum(n=>n.Quantity)</th>
+    </tr>
+    <tr>
+        <th>S.N</th>
+        <th>Product Name</th>
+        <th>Segment</th>
+        <th class="text-right">Quantity</th>
+    </tr>
+    </tfoot>
+</table>

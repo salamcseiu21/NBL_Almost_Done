@@ -1,0 +1,60 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Designations.Designation>
+@{
+    ViewBag.Title = "Department List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <div class="text-center">
+
+        @Html.ActionLink("Add New Designation", "AddNewDesignation", "Designation", new { area = "HR" }, new { @class = "btn btn-info" })
+    </div>
+    <table id="table_Designation_list" class="display" style="border:1px solid black">
+        <caption class="text-center text-green" style="font-weight:bold;">Designation List</caption>
+
+        <thead>
+            <tr>
+                <th>Designation Code</th>
+                <th>Designation Name</th>
+              
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="font-weight: bold">@item.DesignationCode</td>
+                    <td style="font-weight: bold">@item.DesignationName</td>
+                   
+                    <td class="text-center">
+                        @Html.ActionLink(" Edit", "Edit", new { id = item.DesignationId }, new { @class = "fa fa-edit" })
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Designation Code</th>
+                <th>Designation Name</th>
+               
+                <th class="text-center">Action</th>
+            </tr>
+        </tfoot>
+    </table>
+
+
+</section>
+@section Scripts{
+    <script>
+         
+        $('#table_Designation_list').DataTable({
+            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]]
+        });
+
+    </script>
+
+}

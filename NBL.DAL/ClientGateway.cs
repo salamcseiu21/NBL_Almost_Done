@@ -1097,6 +1097,42 @@ namespace NBL.DAL
             }
         }
 
+        public int SetCreditLimit(int clientId, decimal creditLimit)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_SetClientCreditLimit";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@CreditLimit", creditLimit);
+                CommandObj.Parameters.AddWithValue("@ClientId", clientId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                int rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (SqlException sqlException)
+            {
+                Log.WriteErrorLog(sqlException);
+                throw new Exception("Unable to set credit limit due to Sql Exception", sqlException);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Unable to set credit limit", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+
+            }
+        }
+
         public int ApproveClient(Client aClient, ViewUser anUser)
         {
             try

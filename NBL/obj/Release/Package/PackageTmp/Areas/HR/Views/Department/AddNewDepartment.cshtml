@@ -1,0 +1,133 @@
+﻿@model NBL.Models.EntityModels.Departments.Department
+
+@{
+    ViewBag.Title = "Add New Department";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+<div class="col-md-8 col-md-offset-2">
+    <h3 class="text-center text-green">Add New Department</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            <div class="text-center">
+                @if (TempData["Message"] != null)
+                {
+                    @TempData["Message"]
+                } @if (TempData["Error"] != null)
+                {
+                   <div style="color:orangered">@Html.Raw(TempData["Error"])</div>
+                }
+            </div>
+            <div class="form-group">
+               
+                @Html.LabelFor(model => model.DepartmentCode, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model=>model.DepartmentCode,null,new { placeholder = "Enter deparment code", @class="form-control", onblur = "clearFileds()" })
+                    @Html.ValidationMessageFor(model=>model.DepartmentCode,"",new {@class="text-danger"})
+                    <div id="divCodeExitsOutput"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.DepartmentName, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model=>model.DepartmentName,null,new { placeholder = "Enter deparment name", @class="form-control"})
+                   @Html.ValidationMessageFor(model=>model.DepartmentName,"",new {@class="text-danger"})
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.ActionLink("Back to List", "DepartmentList", "Department", new { area = "HR" }, new { @class = "btn btn-info" })
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                        <div class="col-md-6">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+    
+    @*<div style="border: 1px solid;padding: 10px">
+        <table id="table_Department_list" class="table table-bordered" style="border:1px solid black">
+            <caption class="text-center text-green " style="font-weight:bold;">Department List</caption>
+
+            <thead>
+            <tr>
+                <th>Department Code</th>
+                <th>Department Name</th>
+                <th class="text-center">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>Department Code</th>
+                <th>Department Name</th>
+                <th class="text-center">Action</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>*@
+
+</div>
+
+</section>
+
+@section Scripts{
+    @*Is Department code exits or not*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#DepartmentCode').keyup(function () {
+                var code = $(this).val();
+
+                if (code.length >= 2) {
+                    $.ajax({
+                        url: '/Editor/Department/DepartmentCodeExists',
+                        method: 'post',
+                        data: { code: code },
+                        dataType: 'json',
+                        success: function (data) {
+                            var divElement = $('#divCodeExitsOutput');
+                            if (data.DepartmentCodeInUse) {
+                                divElement.text('The Department code "' + data.DepartmentCode + '" is already in use');
+                                divElement.css('color', 'red');
+                            }
+                            else {
+                                divElement.text('The Department code "' + data.DepartmentCode + '" is available');
+                                divElement.css('color', 'green');
+                            }
+                        },
+                        error: function (err) {
+                            alert(err);
+                        }
+                    });
+                }
+            });
+        });
+        function clearFileds() {
+            var divElement = $('#divCodeExitsOutput');
+            divElement.text('');
+  
+        }
+
+    </script>
+   
+    @*<script src="@Url.Content("~/Scripts/Department/ViewDepartmentList.js")"></script>*@
+    
+}

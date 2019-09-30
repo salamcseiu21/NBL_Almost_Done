@@ -4,9 +4,11 @@ using NBL.Models.EntityModels.Departments;
 using NBL.Models.EntityModels.Invoices;
 using NBL.Models.EntityModels.Locations;
 using NBL.Models.SummaryModels;
+using NBL.Models.ViewModels.FinanceModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Reports;
+using NBL.Models.ViewModels.Sales;
 
 namespace NBL.Models.ViewModels.Summaries
 {
@@ -51,6 +53,8 @@ namespace NBL.Models.ViewModels.Summaries
 
         public ViewTotalProduction Production { get; set; }
         public ViewTotalDispatch Dispatch { get; set; }
+        public ViewTotalSaleValue ViewTotalSaleValue { get; set; }
+        public ViewTotalCollection ViewTotalCollection { get; set; }    
 
         public SummaryModel()
         {

@@ -58,8 +58,23 @@
                         <td>Shift No: @m.ShiftNo</td>
                     </tr>
                     <tr>
-                        <td>Scann Date : @m.ComeIntoInventory.ToString("D")</td>
-                        <td>Despatch From Factory : @m.DispatchDate.ToString("D")</td>
+                        <td>Scann Date : @if (m.ComeIntoInventory != null)
+                                         {
+                                             @Convert.ToDateTime(m.ComeIntoInventory).ToString("D")
+                                         }
+                                         else
+                                         {
+                                             <span style="color: maroon"> Not Scan yet by Production !!</span>
+                                         }</td>
+                        <td>Despatch From Factory :@if (m.DispatchDate != null)
+                                                   {
+                                                       @Convert.ToDateTime(m.DispatchDate).ToString("D")
+                                                   }
+                                                   else
+                                                   {
+                                                       <span style="color: maroon">Not Despatch yet from factory !!</span>
+                                                   }
+                        </td>
                     </tr>
                     
                     <tr>

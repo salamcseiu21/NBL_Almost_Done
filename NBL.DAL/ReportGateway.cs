@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using NBL.DAL.Contracts;
+using NBL.Models;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Securities;
@@ -12,6 +13,7 @@ using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Replaces;
 using NBL.Models.ViewModels.Reports;
+using NBL.Models.ViewModels.Sales;
 using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.DAL
@@ -1061,6 +1063,166 @@ namespace NBL.DAL
             {
                 CommandObj.Dispose();
                 CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<ChartModel> GetTotalSaleValueByYear(int year)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetTotalSaleValueByYear";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Year", year);
+                List<ChartModel> models = new List<ChartModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    var model = new ChartModel
+                    {
+                        Total = Convert.ToInt32(reader["TotalQuantity"]),
+                        TotalSaleValue = Convert.ToDecimal(reader["NetSaleValue"]),
+                        MonthName = reader["MonthName"].ToString()
+                    };
+                    models.Add(model);
+                }
+                reader.Close();
+                return models;
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect total sale value by year due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect total sale value by  year", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<ChartModel> GetTotalCollectionByYear(int year)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetTotalCollecionValueByYear";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Year", year);
+                List<ChartModel> models = new List<ChartModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    var model = new ChartModel
+                    {
+                        TotalCollectionValue = Convert.ToDecimal(reader["TotalCollectionValue"]),
+                        MonthName = reader["MonthName"].ToString()
+                    };
+                    models.Add(model);
+                }
+                reader.Close();
+                return models;
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect total collection value by year due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect total collection value by  year", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public decimal GetTotalSaleValueByYearAndMonth(int year, int month)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetTotalSaleValueByYearAndMonth";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Year", year);
+                CommandObj.Parameters.AddWithValue("@Month", month);
+                ConnectionObj.Open();
+                decimal saleValue = 0;
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if(reader.Read())
+                {
+
+                    saleValue = Convert.ToDecimal(reader["TotalSaleValue"]);
+
+                }
+                reader.Close();
+                return saleValue;
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect total collection value by year & month due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect total collection value by  year & month.", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<ViewDeliveredQuantityModel> GetTotalDeliveredQtyByBranchId(int branchId)
+        {
+            try
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.CommandText = "UDSP_RptGetTotalDeliveredQtyByBranchId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                ConnectionObj.Open();
+                List<ViewDeliveredQuantityModel> models=new List<ViewDeliveredQuantityModel>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while(reader.Read())
+                {
+                    models.Add(new ViewDeliveredQuantityModel
+                    {
+                        ProductName = reader["ProductName"].ToString(),
+                        Segment = reader["ProductCategoryName"].ToString(),
+                        Quantity = Convert.ToInt32(reader["TotalQuantity"])
+                    });
+                }
+                reader.Close();
+                return models;
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect total delivered Qty by branch id due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect total delivered Qty by branch id", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
                 ConnectionObj.Close();
             }
         }

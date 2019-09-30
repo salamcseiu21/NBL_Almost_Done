@@ -26,5 +26,6 @@ namespace NBL.BLL.Contracts
        ViewClient GetClientInfoBySubSubSubAccountCode(string accountCode);
        ICollection<ViewClient> GetClientByOrderCountAndBranchId(int branchId);
        ICollection<Client> GetActiveClient();
+       bool SetCreditLimit(int clientId, decimal creditLimit);
    }
 }

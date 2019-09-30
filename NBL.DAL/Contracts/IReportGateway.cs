@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NBL.Models;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
@@ -7,6 +8,7 @@ using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Replaces;
 using NBL.Models.ViewModels.Reports;
+using NBL.Models.ViewModels.Sales;
 using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.DAL.Contracts
@@ -41,5 +43,10 @@ namespace NBL.DAL.Contracts
        ICollection<ViewProduct> GetStockProductBarcodeByBranchId(int branchId);
        List<ViewProduct> GetStockProductToclientByClientIdWithBarcode(int clientId);
        ICollection<ViewReplaceSummary> GetTotalReplaceProductList();
+
+       ICollection<ChartModel> GetTotalSaleValueByYear(int year);
+       ICollection<ChartModel> GetTotalCollectionByYear(int year);
+       decimal GetTotalSaleValueByYearAndMonth(int year, int month);
+       ICollection<ViewDeliveredQuantityModel> GetTotalDeliveredQtyByBranchId(int branchId);
    }
 }

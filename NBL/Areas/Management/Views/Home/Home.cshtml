@@ -8,7 +8,8 @@
     var dispatch = Model.Dispatch;
     var production = Model.Production;
     var tOrder = Model.TotalOrder;
-
+    var collection = Model.ViewTotalCollection;
+    var saleValue = Model.ViewTotalSaleValue;
 }
 @if (!user.IsPasswordChangeRequired)
 {
@@ -121,7 +122,7 @@
             <div class="col-md-6">
                 @*@Html.Partial("_ViewSalesReportChartPartialPage", Model.TotalOrder)*@
                 
-                <div class="box box-success">
+                @*<div class="box box-success">
                     <div class="box-header with-border">
                         <h3 class="box-title">Total Order (@DateTime.Now.Year)</h3>
                         <div class="box-tools pull-right">
@@ -134,7 +135,20 @@
                     <div class="box-body chart-responsive">
                         <canvas id="barchart" height="255" width="600"></canvas>
                     </div>
-                    <!-- /.box-body -->
+                </div>*@
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Sales VS Collection (@DateTime.Now.Year)</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body chart-responsive">
+                        <div class="chart" id="bar-chart-sales-vs-collection" style="height: 350px;"></div>
+                    </div>
                 </div>
 
             </div>
@@ -152,7 +166,6 @@
                     <div class="box-body chart-responsive">
                         <div class="chart" id="bar-chart" style="height: 350px;"></div>
                     </div>
-                    <!-- /.box-body -->
                 </div>
             </div>
            
@@ -225,6 +238,38 @@
        
     </script>
     
+    <script>
+        $(function() {
+            "use strict";
+
+            //BAR CHART
+            var bar = new Morris.Bar({
+                element: 'bar-chart-sales-vs-collection',
+                resize: true,
+                data: [
+                    { y: 'January', a: @saleValue.January, b: @collection.January },
+                    { y: 'February', a: @saleValue.February, b: @collection.February },
+                    { y: 'March', a: @saleValue.March, b: @collection.March },
+                    { y: 'April', a: @saleValue.April, b: @collection.April },
+                    { y: 'May', a: @saleValue.May, b: @collection.May },
+                    { y: 'June', a: @saleValue.June, b: @collection.June },
+                    { y: 'July', a: @saleValue.July, b: @collection.July },
+                    { y: 'August', a: @saleValue.August, b: @collection.August },
+                    { y: 'September', a: @saleValue.September, b: @collection.September },
+                    { y: 'October', a: @saleValue.October, b: @collection.October },
+                    { y: 'November', a: @saleValue.November, b: @collection.November },
+                    { y: 'December', a: @saleValue.December, b: @collection.December }
+                ],
+                barColors: ['#00a65a', '#f56954'],
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['Sale', 'Collection'],
+                hideHover: 'auto'
+            });
+        });
+       
+    </script>
+
     <script>
 
         var barChartData = {

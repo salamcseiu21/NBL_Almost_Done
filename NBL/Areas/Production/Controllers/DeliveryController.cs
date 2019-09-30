@@ -506,7 +506,8 @@ namespace NBL.Areas.Production.Controllers
                     ToBranchId = invoice.BranchId,
                     InvoiceId = invoiceId,
                     FromBranchId = invoice.BranchId,
-                    FinancialTransactionModel = financialModel
+                    FinancialTransactionModel = financialModel,
+                    SpecialDiscount = invoiceDiscount
                 };
                 string result = _iInventoryManager.SaveDeliveredOrderFromFactory(barcodeList, aDelivery, invoiceStatus, orderStatus);
                 if (result.StartsWith("S"))

@@ -283,7 +283,8 @@ namespace NBL.Areas.Sales.Controllers
                     ToBranchId = invoice.BranchId,
                     InvoiceId = invoiceId,
                     FromBranchId = invoice.BranchId,
-                    FinancialTransactionModel = financialModel
+                    FinancialTransactionModel = financialModel,
+                    SpecialDiscount = invoiceDiscount
                 };
                 string result = _iInventoryManager.SaveDeliveredOrder(barcodeList, aDelivery, invoiceStatus,orderStatus);
                 if (result.StartsWith("S"))

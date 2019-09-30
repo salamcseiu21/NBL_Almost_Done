@@ -12,8 +12,8 @@ namespace NBL.Models.ViewModels.Products
         public string ProductName { get; set; }
         public string ProductCategoryName { get; set; }
         public DateTime ProductionDate { get; set; }
-        public DateTime ComeIntoInventory { get; set; }
-        public DateTime DispatchDate { get; set; }
+        public DateTime? ComeIntoInventory { get; set; }
+        public DateTime? DispatchDate { get; set; }
         public DateTime ReceiveDate{ get; set; }
         public DateTime DistributioDate { get; set; }
         public DateTime? SaleDate { get; set; }

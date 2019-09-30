@@ -2,29 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using NBL.BLL.Contracts;
-using NBL.DAL;
 using NBL.DAL.Contracts;
-using NBL.Models.EntityModels.BarCodes;
+using NBL.Models;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.FinanceModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Replaces;
 using NBL.Models.ViewModels.Reports;
+using NBL.Models.ViewModels.Sales;
 using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.BLL
 {
     public class ReportManager:IReportManager
     {
-       private readonly IReportGateway _iReportGateway;
+        private readonly IReportGateway _iReportGateway;
        private readonly IOrderManager _iOrderManager;
         private readonly IInventoryManager _iInventoryManager;
         private readonly IBarCodeManager _iBarCodeManager;
 
-        public ReportManager(IOrderManager iOrderManager,IReportGateway iReportGateway,IInventoryManager iInventoryManager,IBarCodeManager iBarCodeManager)
+        public ReportManager(IOrderManager iOrderManager, IReportGateway iReportGateway, IInventoryManager iInventoryManager,IBarCodeManager iBarCodeManager)
         {
             _iOrderManager = iOrderManager;
             _iReportGateway = iReportGateway;
@@ -197,6 +198,62 @@ namespace NBL.BLL
                 December = totalDispatch?.ToList().Find(n => n.MonthName.StartsWith("Dec"))?.Total
             };
             return dispatch;
+        }
+
+
+        //------------Total Sale value--------------
+        public ViewTotalSaleValue GetTotalSaleValueByYear(int year)
+        {
+            ICollection<ChartModel> totalSaleValues = _iReportGateway.GetTotalSaleValueByYear(year).ToList();
+
+            ViewTotalSaleValue saleValue = new ViewTotalSaleValue
+            {
+                January = totalSaleValues?.ToList().Find(n => n.MonthName.StartsWith("Jan"))?.TotalSaleValue,
+                February = totalSaleValues?.ToList().Find(n => n.MonthName.StartsWith("Feb"))?.TotalSaleValue,
+                March = totalSaleValues?.ToList().Find(n => n.MonthName.StartsWith("Mar"))?.TotalSaleValue,
+                April = totalSaleValues?.ToList().Find(n => n.MonthName.StartsWith("Ap"))?.TotalSaleValue,
+                May = totalSaleValues?.ToList().Find(n => n.MonthName.StartsWith("May"))?.TotalSaleValue,
+                June = totalSaleValues?.ToList().Find(n => n.MonthName.StartsWith("June"))?.TotalSaleValue,
+                July = totalSaleValues?.ToList().Find(n => n.MonthName.StartsWith("July"))?.TotalSaleValue,
+                August = totalSaleValues?.ToList().Find(n => n.MonthName.StartsWith("Aug"))?.TotalSaleValue,
+                September = totalSaleValues?.ToList().Find(n => n.MonthName.StartsWith("Sep"))?.TotalSaleValue,
+                October = totalSaleValues?.ToList().Find(n => n.MonthName.StartsWith("Oct"))?.TotalSaleValue,
+                November = totalSaleValues?.ToList().Find(n => n.MonthName.StartsWith("Nov"))?.TotalSaleValue,
+                December = totalSaleValues?.ToList().Find(n => n.MonthName.StartsWith("Dec"))?.TotalSaleValue
+            };
+            return saleValue;
+        }
+        //--------------Total collection value by year---------
+        public ViewTotalCollection GetTotalCollectionByYear(int year)
+        {
+            ICollection<ChartModel> totalCollection = _iReportGateway.GetTotalCollectionByYear(year).ToList();
+
+            ViewTotalCollection collection = new ViewTotalCollection
+            {
+                January = totalCollection?.ToList().Find(n => n.MonthName.StartsWith("Jan"))?.TotalCollectionValue,
+                February = totalCollection?.ToList().Find(n => n.MonthName.StartsWith("Feb"))?.TotalCollectionValue,
+                March = totalCollection?.ToList().Find(n => n.MonthName.StartsWith("Mar"))?.TotalCollectionValue,
+                April = totalCollection?.ToList().Find(n => n.MonthName.StartsWith("Ap"))?.TotalCollectionValue,
+                May = totalCollection?.ToList().Find(n => n.MonthName.StartsWith("May"))?.TotalCollectionValue,
+                June = totalCollection?.ToList().Find(n => n.MonthName.StartsWith("June"))?.TotalCollectionValue,
+                July = totalCollection?.ToList().Find(n => n.MonthName.StartsWith("July"))?.TotalCollectionValue,
+                August = totalCollection?.ToList().Find(n => n.MonthName.StartsWith("Aug"))?.TotalCollectionValue,
+                September = totalCollection?.ToList().Find(n => n.MonthName.StartsWith("Sep"))?.TotalCollectionValue,
+                October = totalCollection?.ToList().Find(n => n.MonthName.StartsWith("Oct"))?.TotalCollectionValue,
+                November = totalCollection?.ToList().Find(n => n.MonthName.StartsWith("Nov"))?.TotalCollectionValue,
+                December = totalCollection?.ToList().Find(n => n.MonthName.StartsWith("Dec"))?.TotalCollectionValue
+            };
+            return collection;
+        }
+
+        public decimal GetTotalSaleValueByYearAndMonth(int year, int month)
+        {
+            return _iReportGateway.GetTotalSaleValueByYearAndMonth(year,month);
+        }
+
+        public ICollection<ViewDeliveredQuantityModel> GetTotalDeliveredQtyByBranchId(int branchId)
+        {
+            return _iReportGateway.GetTotalDeliveredQtyByBranchId(branchId);
         }
 
         public bool IsValiedBarcode(string barcode)
