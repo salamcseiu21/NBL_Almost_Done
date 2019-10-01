@@ -355,6 +355,7 @@
     <Compile Include="Areas\Production\Controllers\ProductionHeadController.cs" />
     <Compile Include="Areas\Production\Controllers\ProductionManagerController.cs" />
     <Compile Include="Areas\Production\Controllers\QcController.cs" />
+    <Compile Include="Areas\Production\Controllers\ReplaceController.cs" />
     <Compile Include="Areas\Production\Controllers\RequisitionController.cs" />
     <Compile Include="Areas\Production\Controllers\TransferController.cs" />
     <Compile Include="Areas\HR\Controllers\HomeController.cs" />
@@ -8247,6 +8248,16 @@
     <Content Include="Areas\SuperAdmin\Views\Home\SetCreditLimit.cshtml" />
     <Content Include="Areas\Sales\Views\Report\AllDeliveredQtyForOrder.cshtml" />
     <Content Include="Areas\Sales\Views\Shared\_ViewDeliveredQtyPartialPage.cshtml" />
+    <Content Include="Areas\Management\Views\Home\ClientProfile.cshtml" />
+    <Content Include="Areas\Production\Views\Replace\AllReplaceLsit.cshtml" />
+    <Content Include="Areas\Production\Views\Replace\DeliveredList.cshtml" />
+    <Content Include="Areas\Production\Views\Replace\Delivery.cshtml" />
+    <Content Include="Areas\Production\Views\Replace\Home.cshtml" />
+    <Content Include="Areas\Production\Views\Replace\ReplaceList.cshtml" />
+    <Content Include="Areas\Production\Views\Replace\ViewAll.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Assign\AssignForwardPermission.cshtml" />
+    <Content Include="Areas\SCM\Views\Shared\_MenuScmExecutivePartialPage.cshtml" />
+    <Content Include="Areas\SCM\Views\Shared\_CommonMenuPartialPage.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
@@ -8418,6 +8429,7 @@
     <Folder Include="Areas\Editor\Models\" />
     <Folder Include="Areas\HR\Models\" />
     <Folder Include="Areas\Management\Models\" />
+    <Folder Include="Areas\Production\Files\Replaces\" />
     <Folder Include="Areas\Production\Images\BarCodes\" />
     <Folder Include="Areas\Production\Models\" />
     <Folder Include="Areas\Purchases\Models\" />

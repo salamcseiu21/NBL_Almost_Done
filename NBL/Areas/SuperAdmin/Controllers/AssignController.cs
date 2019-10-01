@@ -334,5 +334,32 @@ namespace NBL.Areas.SuperAdmin.Controllers
 
             return Json(aModel, JsonRequestBehavior.AllowGet);
         }
+        //---------------------- Forwarding permission for service battery-------------------
+        public ActionResult AssignForwardPermission()
+        {
+            ViewBag.ActionId = _iCommonManager.GetAllActionList().ToList();
+            ViewBag.ForwardToId= _iCommonManager.GetAllForwardToModels();
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AssignForwardPermission(FormCollection collection)
+        {
+
+            var userId = Convert.ToInt32(collection["UserId"]);
+            var actionId = Convert.ToInt32(collection["ActionId"]);
+            var forwardToId = Convert.ToInt32(collection["ForwardToId"]);
+            bool result = _superAdminUserManager.AssignForwardPermissionToUser(userId,actionId,forwardToId);
+            if (result)
+            {
+                TempData["ForwaredMsg"] = " <p style='color:green'>Assigned successfully!</p>";
+            }
+            else
+            {
+                TempData["ForwaredMsg"] = "<p style='color:red'> Failed to Assign Forward permission</p>";
+            }
+            ViewBag.ActionId = _iCommonManager.GetAllActionList().ToList();
+            ViewBag.ForwardToId = _iCommonManager.GetAllForwardToModels();
+            return View();
+        }
     }
 }

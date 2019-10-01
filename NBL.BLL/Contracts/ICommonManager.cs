@@ -65,6 +65,7 @@ namespace NBL.BLL.Contracts
 
         ICollection<object> GetCellConditionBySearchTerm(string searchTerm);
         ViewActionListModel GetActionListModelByAreaControllerActionName(string area,string controller,string action);
+        ICollection<ViewActionListModel> GetAllActionList();
 
     }
 }

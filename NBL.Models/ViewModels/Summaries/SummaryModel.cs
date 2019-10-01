@@ -54,8 +54,8 @@ namespace NBL.Models.ViewModels.Summaries
         public ViewTotalProduction Production { get; set; }
         public ViewTotalDispatch Dispatch { get; set; }
         public ViewTotalSaleValue ViewTotalSaleValue { get; set; }
-        public ViewTotalCollection ViewTotalCollection { get; set; }    
-
+        public ViewTotalCollection ViewTotalCollection { get; set; }
+        public ViewTotalDeliveredQuantity TotalDeliveredQuantity { get; set; }  
         public SummaryModel()
         {
             TotalOrder=new ViewTotalOrder();

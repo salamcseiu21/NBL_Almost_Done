@@ -58,8 +58,8 @@
                         <td>Shift No: @m.ShiftNo</td>
                     </tr>
                     <tr>
-                        <td>Scann Date : @m.ComeIntoInventory.ToString("D")</td>
-                        <td>Despatch From Factory : @m.DispatchDate.ToString("D")</td>
+                        <td>Scann Date : @Convert.ToDateTime(m.ComeIntoInventory).ToString("D")</td>
+                        <td>Despatch From Factory : @Convert.ToDateTime(m.DispatchDate).ToString("D")</td>
                     </tr>
                     
                     <tr>

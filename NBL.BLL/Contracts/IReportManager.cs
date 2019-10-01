@@ -63,5 +63,6 @@ namespace NBL.BLL.Contracts
         ViewTotalCollection GetTotalCollectionByYear(int year);
         decimal GetTotalSaleValueByYearAndMonth(int year, int month);
         ICollection<ViewDeliveredQuantityModel> GetTotalDeliveredQtyByBranchId(int branchId);
+        ViewTotalDeliveredQuantity GetTotalDeliveredQuantityByYear(int year);
     }
 }

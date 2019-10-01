@@ -148,7 +148,7 @@
                         <tr>
 
                             <td colspan="3">
-                                <strong>Remarks : </strong> <textarea id="VerificationRemarks" name="VerificationRemarks" placeholder="verificaiton remarks.." style="resize: none" class="form-control"  required></textarea>
+                                <strong>Remarks : </strong> <textarea id="VerificationRemarks" name="VerificationRemarks" placeholder="verificaiton remarks.." style="resize: none" class="form-control"></textarea>
                             </td>
 
                         </tr>
@@ -169,33 +169,33 @@
                         <tr>
 
                             <td>
-                                <strong>Cell 1 :</strong><input id="SpGrCellOne" name="SpGrCellOne" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 1 Sp Gr" required />
+                                <strong>Cell 1 :</strong><input id="SpGrCellOne" name="SpGrCellOne" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 1 Sp Gr" />
                                 <input type="text" id="CellOneCondition" name="CellOneCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 1 condition" class="form-control" />
                                 @Html.HiddenFor(n => n.CellOneConditionId)
                             </td>
                             <td>
-                                <strong>Cell 2 :</strong><input id="SpGrCellTwo" name="SpGrCellTwo" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 2 Sp Gr" required />
+                                <strong>Cell 2 :</strong><input id="SpGrCellTwo" name="SpGrCellTwo" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 2 Sp Gr" />
                                 <input type="text" id="CellTwoCondition" name="CellTwoCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 2 condition" class="form-control" />
                                 @Html.HiddenFor(n => n.CellTwoConditionId)
                             </td>
                             <td>
-                                <strong>Cell 3 :</strong><input id="SpGrCellThree" name="SpGrCellThree" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 3 Sp Gr" required />
+                                <strong>Cell 3 :</strong><input id="SpGrCellThree" name="SpGrCellThree" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 3 Sp Gr" />
                                 <input type="text" id="CellThreeCondition" name="CellThreeCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 3 condition" class="form-control" />
                                 @Html.HiddenFor(n => n.CellThreeConditionId)
                             </td>
 
                             <td>
-                                <strong>Cell 4 :</strong><input id="SpGrCellFour" name="SpGrCellFour" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 4 Sp Gr" required />
+                                <strong>Cell 4 :</strong><input id="SpGrCellFour" name="SpGrCellFour" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 4 Sp Gr" />
                                 <input type="text" id="CellFourCondition" onkeypress="CellConditionAutoComplete(this)" name="CellFourCondition" placeholder="Cell 4 condition" class="form-control" />
                                 @Html.HiddenFor(n => n.CellFourConditionId)
                             </td>
                             <td>
-                                <strong>Cell 5 :</strong><input id="SpGrCellFive" name="SpGrCellFive" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 5 Sp Gr" required />
+                                <strong>Cell 5 :</strong><input id="SpGrCellFive" name="SpGrCellFive" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 5 Sp Gr" />
                                 <input type="text" id="CellFiveCondition" name="CellFiveCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 5 condition" class="form-control" />
                                 @Html.HiddenFor(n => n.CellFiveConditionId)
                             </td>
                             <td>
-                                <strong>Cell 6 :</strong><input id="SpGrCellSix" name="SpGrCellSix" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 6 Sp Gr" required />
+                                <strong>Cell 6 :</strong><input id="SpGrCellSix" name="SpGrCellSix" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 6 Sp Gr" />
                                 <input type="text" id="CellSixCondition" name="CellSixCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 6 condition" class="form-control" />
                                 @Html.HiddenFor(n => n.CellSixConditionId)
                             </td>
@@ -214,13 +214,13 @@
                         <tr>
                             
                             <td colspan="3">
-                                <strong>SpGr Remarks : </strong> <input id="SpGrCellRemarks" name="SpGrCellRemarks" type="text" style="width: 100%" required class="form-control" placeholder="SpGr Cell Remarks..."/>
+                                <strong>SpGr Remarks : </strong> <input id="SpGrCellRemarks" name="SpGrCellRemarks" type="text" style="width: 100%" class="form-control" placeholder="SpGr Cell Remarks..."/>
                             </td>
                             
-                            <td> <strong>Open Voltage :</strong><input id="OpenVoltage" name="OpenVoltage" type="number" required style="width: 100%" class="form-control" placeholder="Open Voltage.."/></td>
-                            <td> <strong>Load Voltage :</strong><input id="LoadVoltage" name="LoadVoltage" type="number" required style="width: 100%" class="form-control" placeholder="Load Voltage.." /></td>
+                            <td> <strong>Open Voltage :</strong><input id="OpenVoltage" name="OpenVoltage" type="number"  style="width: 100%" class="form-control" placeholder="Open Voltage.."/></td>
+                            <td> <strong>Load Voltage :</strong><input id="LoadVoltage" name="LoadVoltage" type="number"  style="width: 100%" class="form-control" placeholder="Load Voltage.." /></td>
                             <td colspan="2">
-                                <strong>Voltage Remarks : </strong> <input id="VoltageRemarks" name="VoltageRemarks" type="text" style="width: 100%" required class="form-control" placeholder="Voltage Remarks..."/>
+                                <strong>Voltage Remarks : </strong> <input id="VoltageRemarks" name="VoltageRemarks" type="text" style="width: 100%"  class="form-control" placeholder="Voltage Remarks..."/>
                             </td>
                         </tr>
                        
@@ -240,7 +240,7 @@
                             <tr>
 
                                 <td>
-                                    <strong>Cover :</strong><select name="CoverStatusId" required class="form-control">
+                                    <strong>Cover :</strong><select name="CoverStatusId" class="form-control">
                                         <option value="">---Select--</option>
                                         @foreach (var item in Model.PhysicalConditions)
                                         {
@@ -249,7 +249,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <strong>Container :</strong><select name="ContainerStatusId" required class="form-control">
+                                    <strong>Container :</strong><select name="ContainerStatusId" class="form-control">
                                         <option value="">---Select--</option>
                                         @foreach (var item in Model.PhysicalConditions)
                                         {
@@ -258,7 +258,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <strong>Post :</strong><select name="PostStatusId" required class="form-control">
+                                    <strong>Post :</strong><select name="PostStatusId" class="form-control">
                                         <option value="">---Select--</option>
                                         @foreach (var item in Model.PhysicalConditions)
                                         {
@@ -267,7 +267,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <strong>Servicing :</strong><select name="ServicingStatusId" required class="form-control">
+                                    <strong>Servicing :</strong><select name="ServicingStatusId" class="form-control">
                                         <option value="">---Select--</option>
                                         @foreach (var item in Model.ServicingModels)
                                         {

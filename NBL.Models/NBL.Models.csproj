@@ -216,6 +216,7 @@
     <Compile Include="ViewModels\Productions\ProductionSummary.cs" />
     <Compile Include="ViewModels\Productions\ViewDispatchChalan.cs" />
     <Compile Include="ViewModels\Productions\ViewRejectedProduct.cs" />
+    <Compile Include="ViewModels\Productions\ViewTotalDeliveredQuantity.cs" />
     <Compile Include="ViewModels\Productions\ViewTotalDispatch.cs" />
     <Compile Include="ViewModels\Productions\ViewTotalProduction.cs" />
     <Compile Include="ViewModels\Products\Inventory.cs" />

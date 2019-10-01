@@ -47,7 +47,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@CellSixConditionId", product.CellSixConditionId);
                 CommandObj.Parameters.AddWithValue("@OpenVoltage", product.OpenVoltage);
                 CommandObj.Parameters.AddWithValue("@LoadVoltage", product.LoadVoltage);
-                CommandObj.Parameters.AddWithValue("@VoltageRemarks", product.VoltageRemarks);
+                CommandObj.Parameters.AddWithValue("@VoltageRemarks", product.VoltageRemarks?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@CoverStatusId", product.CoverStatusId);
                 CommandObj.Parameters.AddWithValue("@ContainerStatusId", product.ContainerStatusId);
                 CommandObj.Parameters.AddWithValue("@PostStatusId", product.PostStatusId);
@@ -67,10 +67,10 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@RbdDate", product.RbdDate);
                 CommandObj.Parameters.AddWithValue("@RbdBarcode", product.RbdBarcode?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@ForwardToId", product.ForwardToId);
-                CommandObj.Parameters.AddWithValue("@ForwardRemarks", product.ForwardRemarks);
-                CommandObj.Parameters.AddWithValue("@SpGrCellRemarks", product.SpGrCellRemarks);
+                CommandObj.Parameters.AddWithValue("@ForwardRemarks", product.ForwardRemarks?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@SpGrCellRemarks", product.SpGrCellRemarks ?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@DistributionPointId", product.DistributionPointId);
-                CommandObj.Parameters.AddWithValue("@DistributionPoint", product.DistributionPoint);
+                CommandObj.Parameters.AddWithValue("@DistributionPoint", product.DistributionPoint ?? (object)DBNull.Value);
                 CommandObj.Parameters.Add("@ReceiveId", SqlDbType.Int);
                 CommandObj.Parameters["@ReceiveId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
@@ -107,7 +107,7 @@ namespace NBL.DAL
             CommandObj.Parameters.AddWithValue("@ForwardToId", item.ForwardToId);
             CommandObj.Parameters.AddWithValue("@ForwardDateTime", item.ForwardDateTime);
             CommandObj.Parameters.AddWithValue("@UserId", item.UserId);
-            CommandObj.Parameters.AddWithValue("@Remarks", item.ForwardRemarks);
+            CommandObj.Parameters.AddWithValue("@Remarks", item.ForwardRemarks ?? (object)DBNull.Value);
             CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
             CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
             CommandObj.ExecuteNonQuery();
@@ -234,8 +234,10 @@ namespace NBL.DAL
                         ReceiveReport = reader["ReceiveReport"].ToString(),
                         OtherInformationRemarks = reader["OtherInformationRemarks"].ToString(),
                         ReportByEmployee = reader["EmployeeName"].ToString(),
-                        ChargingSystem = reader["ChargingSystem"].ToString(),
-                        ServicingStatus = reader["ServicingStatus"].ToString(),
+
+                        //ChargingSystem = reader["ChargingSystem"].ToString(),
+                        //ServicingStatus = reader["ServicingStatus"].ToString(),
+
                         EntryByUser = reader["EntryByUser"].ToString(),
                         ReceiveByBranch = reader["ReceiveByBranch"].ToString(),
                         SpGrRemarks =DBNull.Value.Equals(reader["SpGrCellRemarks"])? null:reader["SpGrCellRemarks"].ToString(),

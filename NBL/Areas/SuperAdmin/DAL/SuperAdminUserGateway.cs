@@ -164,5 +164,36 @@ namespace NBL.Areas.SuperAdmin.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public int AssignForwardPermissionToUser(int userId, int actionId, int forwardToId)
+        {
+            try
+            {
+               
+                CommandObj.CommandText = "spAssignForwardPermissionToUser";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@UserId", userId);
+                CommandObj.Parameters.AddWithValue("@ViewId", actionId);
+                CommandObj.Parameters.AddWithValue("@ForwartToId", forwardToId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Unable to assign forward permission to user", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }

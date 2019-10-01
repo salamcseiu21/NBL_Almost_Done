@@ -83,9 +83,6 @@ namespace NBL.Areas.Services.Controllers
             }
         }
 
-
-    
-
         public ActionResult ChargeReport(long id)
         {
 

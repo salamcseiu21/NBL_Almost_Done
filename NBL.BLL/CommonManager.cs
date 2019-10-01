@@ -237,5 +237,10 @@ namespace NBL.BLL
        {
            return _iCommonGateway.GetActionListModelByAreaControllerActionName(area, controller, action);
        }
+
+       public ICollection<ViewActionListModel> GetAllActionList()
+       {
+           return _iCommonGateway.GetAllActionList();
+       }
    }
 }

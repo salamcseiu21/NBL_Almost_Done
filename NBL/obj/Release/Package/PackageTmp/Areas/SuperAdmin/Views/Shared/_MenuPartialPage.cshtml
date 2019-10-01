@@ -114,8 +114,9 @@
                     </a>
                     <ul class="treeview-menu">
 
-                        <li>@Html.ActionLink(" Assign Branch to User", "AssignBranchToUser", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-                        <li>@Html.ActionLink(" Assign Role to User", "AssignRoleToUser", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+                        <li>@Html.ActionLink(" Branch", "AssignBranchToUser", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+                        <li>@Html.ActionLink(" Role", "AssignRoleToUser", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+                        <li>@Html.ActionLink(" Forward Permission", "AssignForwardPermission", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
                         @*<li>@Html.ActionLink(" Assign Region to Branch", "AssignRegionToBranch", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
                 <li>@Html.ActionLink(" Assign District to Region", "AssignDistrictToRegion", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-plus", style = "font-weight: bolder" })</li>
                 <li>@Html.ActionLink(" Assign Upazilla to Territory", "AssignUpazillaToTerritory", "Assign", new { area = "SuperAdmin" }, new { @class = "fa fa-plus", style = "font-weight: bolder" })</li>*@
@@ -144,7 +145,7 @@
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-pencil"></i>
-                        <span>Opening Balance</span>
+                        <span>Set Balance</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
@@ -152,7 +153,6 @@
                     <ul class="treeview-menu">
                         <li>@Html.ActionLink(" Set Credit Limit", "SetCreditLimit", "Home", new { area = "SuperAdmin" }, new { @class = "fa fa-plus", style = "font-weight: bolder" })</li>
                         <li>@Html.ActionLink(" Set Opening Balance", "SetOpeningBalance", "Home", new {area = "SuperAdmin"}, new {@class = "fa fa-plus", style = "font-weight: bolder"})</li>
-                        <li>@Html.ActionLink(" User List", "ViewUser", "Assign", new {area = "SuperAdmin"}, new {@class = "fa fa-list", style = "font-weight: bolder"})</li>
                     </ul>
                 </li>
             </ul>

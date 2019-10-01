@@ -48,5 +48,6 @@ namespace NBL.DAL.Contracts
        ICollection<ChartModel> GetTotalCollectionByYear(int year);
        decimal GetTotalSaleValueByYearAndMonth(int year, int month);
        ICollection<ViewDeliveredQuantityModel> GetTotalDeliveredQtyByBranchId(int branchId);
+       ICollection<ChartModel> GetTotalDeliveredQuantityByYear(int year);
    }
 }

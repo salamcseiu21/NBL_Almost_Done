@@ -12,6 +12,7 @@ using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Sales;
@@ -88,7 +89,8 @@ namespace NBL.Areas.Management.Controllers
                 Dispatch = totalDispatch,
                 Production = totalProduction,
                 ViewTotalCollection =viewTotalCollection,
-                ViewTotalSaleValue = viewTotalSaleValue
+                ViewTotalSaleValue = viewTotalSaleValue,
+                TotalDeliveredQuantity = _iReportManager.GetTotalDeliveredQuantityByYear(DateTime.Now.Year)
 
             };
             return View(aModel);
@@ -286,6 +288,21 @@ namespace NBL.Areas.Management.Controllers
             return View(summary);
         }
 
+        public ActionResult ClientProfile(int id)
+        {
+            try
+            {
+                var client = _iClientManager.GetClientDeailsById(id);
+                var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+                client.LedgerModels = ledgers.ToList();
+                return View(client);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         public ActionResult OrderSummary()
         {
             ViewOrderSearchModel model = new ViewOrderSearchModel();

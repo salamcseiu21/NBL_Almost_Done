@@ -23,6 +23,7 @@
                 <td class="text-center">
                     <img class="img-circle" src="~/@(item.ClientImage?? "Images/User.jpg")" alt="Client Image" title="@item.ClientName" width="60" height="60"><br />
                     @Html.Raw(item.ClientName)
+                   
                 </td>
                 <td>@Html.Raw(item.GetContactInformation())</td>
                 <td class="text-center">

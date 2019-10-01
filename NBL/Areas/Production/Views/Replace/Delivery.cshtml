@@ -1,0 +1,184 @@
+﻿@model NBL.Models.ViewModels.Replaces.ViewReplaceModel
+@{
+    ViewBag.Title = "Delivery";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Replace Delivery</h3>
+    <div class="row">
+        <div class="form-horizontal">
+            <div id="message" style="display: none; font-weight: bold; font-size: 20px" class="text-center">
+            </div>
+            <br/>
+            <div class="col-md-6">
+
+        
+                <div class="form-group">
+                    <label class="control-label col-md-3">Client Name</label>
+                    <div class="col-md-9">
+                        <input type="text" readonly="readonly" class="form-control" value="@Model.ClientName"/>
+                        <input type="hidden" id="ReplaceId" name="ReplaceId" value="@Model.ReplaceId"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Client Code</label>
+                    <div class="col-md-9">
+                        <input type="text" readonly="readonly" class="form-control" value="@Model.ClientCode"/>
+
+                    </div>
+                </div>
+          
+                
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-md-3">Client Address</label>
+                    <div class="col-md-9">
+
+                        <textarea  readonly="readonly" class="form-control" rows="2" style="resize: none; width: 100%">@Model.ClientAddress</textarea>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ProductCode" class="control-label col-md-3">Scan Code</label>
+                    <div class="col-md-9">
+                        <input type="text" name="ProductCode" id="ProductCode" autofocus class="form-control" placeholder="Always keep pointer here.." onchange="SaveScannedBarcodeToTextFile(this)" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9">
+                            <div class="btn toolbar">
+                                <button type="button" id="btnDelivery" class="btn btn-success" value="@Model.ReplaceId" onclick="Delivery(this)"> Delivery</button>
+                                @Html.ActionLink("Back", "ViewAll", "Replace", null, new { @class = "btn btn-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+          
+            <table id="tbl_deliverable_list" class="display table-bordered" style="border: 1px solid">
+                <caption class="text-center text-green" style="font-weight:bolder;font-size:20px">Deliverable List</caption>
+                <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th class="text-right">Quantity</th>
+                    <th class="text-center">Expiry Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td class="text-right">@item.Quantity</td>
+                        <td class="text-center">@item.ExpiryDate.ToString("dd-MMMM-yyyy")</td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Product Name</th>
+                    <th class="text-right">Quantity</th>
+                    <th class="text-center">Expiry Date</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="col-md-6">
+            
+            <div id="divScannedProducts"></div>
+        </div>
+    </div>
+    @Html.Partial("_ModalDeliveryPartialPage")
+</section>
+@section Scripts
+{
+    
+    <script>
+
+        function SaveDeliveryInfo(id) {
+
+            if (confirm("Are you sure to Save  this delivery info?")) {
+                // var invoiceId = $("#InvoiceId").val();
+                $("#saveDeliveryInfoForm").submit();
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+
+        }
+    </script>
+    <script>
+
+        function Delivery(replace) {
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ViewReplaceDetails", "Replace", new { area = "Production" })",
+                data: { replaceId: replace.value },
+                success: function (response) {
+                    $('#modalBody').html(response);
+                    $('#showDeliveryModal').modal('show');
+                }
+            });
+        }
+
+    </script>
+    <script>
+        function SaveScannedBarcodeToTextFile(btnClicked) {
+            //var $form = $(btnClicked).parents('form');
+            var code = $("#ProductCode").val();
+            var replaceId = $("#ReplaceId").val();
+            $.ajax({
+                type: "POST",
+                url: RootUrl + 'production/replace/SaveScannedBarcodeToTextFile',
+                data: { barcode: code, replaceId: replaceId },
+                error: function (xhr, status, error) {
+                    alert(error);
+                },
+                success: function (response) {
+                    var result = response.Message;
+                    //alert("Saved Successfully");
+                    $('#message').html(response).fadeIn('slow');
+                    $('#message').html(result).fadeIn('slow'); //also show a success message
+                    $('#message').delay(700).fadeOut('slow');
+                    loadAllScannedProducts();
+                    $('#ProductCode').val("");
+                }
+            });
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            loadAllScannedProducts();
+            $("#tbl_deliverable_list").DataTable();
+        });
+      
+    
+        function loadAllScannedProducts() {
+            var replaceId = $("#ReplaceId").val();
+            var json = { replaceId: replaceId };
+            $.ajax({
+                type: 'Post',
+                url: RootUrl + "production/Replace/LoadScannedProduct",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("#divScannedProducts").html(data);
+                }
+            });
+        }
+    </script>
+    
+
+}

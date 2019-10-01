@@ -1,0 +1,50 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Replaces.ViewReplaceModel>
+@{
+    ViewBag.Title = "View All";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <h3 class="text-center text-green">Replace List</h3>
+    <table id="tbl_replace_list" class="display table-bordered" style="border: 1px solid">
+        <thead>
+        <tr>
+            <th>Ref no</th>
+            <th>Client Info</th>
+            <th class="text-right">Quantity</th>
+            <th class="text-center">Entry Date</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ReplaceRef</td>
+                <td>@item.ClientName<br/>
+                    @item.ClientCode</td>
+                <td class="text-right">@item.Quantity</td>
+                <td class="text-center">@item.EntryDate.ToString("dd-MMMM-yyyy")</td>
+                <td class="text-center">
+                    @Html.ActionLink(" Delivery", "Delivery", new { id = item.ReplaceId },null) 
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Ref no</th>
+            <th>Client Info</th>
+            <th class="text-right">Quantity</th>
+            <th class="text-center">Entry Date</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+@section Scripts
+{
+    <script>
+        $("#tbl_replace_list").DataTable();
+    </script>
+}

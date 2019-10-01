@@ -1,0 +1,45 @@
+﻿
+@using NBL.Models.ViewModels
+
+@*SCM area menu*@
+@{
+    var user = (ViewUser)Session["user"];
+}
+@if (!user.IsPasswordChangeRequired)
+{
+    <ul class="sidebar-menu" data-widget="tree" style="font-size: 16px; font-weight: bolder">
+
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-tachometer"></i>
+                <span>Dashboard</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    @Html.ActionLink(" Dashboard-1 ", "Home", "Home", new { area = "SCM" }, new { @class = "fa fa-eye", style = "font-weight: bolder" })
+                </li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-shopping-cart"></i>
+                <span>Return/Replace</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Pending Orders", "PendingOrder", "Order", new { area = "SCM" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+                <li>@Html.ActionLink(" Today's Approved Orders", "TodaysApprovedOrder", "Order", new { area = "SCM" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+                <li>@Html.ActionLink(" All Approved Orders", "ApprovedOrder", "Order", new { area = "SCM" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
+                @*<li>@Html.ActionLink(" Latest Orders", "LatestOrders", "Order", new {area = "SCM"}, new {@class = "fa fa-list", style = "font-weight: bolder"})</li>
+                    <li>@Html.ActionLink(" All Orders", "All", "Order", new {area = "SCM"}, new {@class = "fa fa-list", style = "font-weight: bolder"})</li>*@
+                @*<li>@Html.ActionLink(" All Delivered Orders", "ViewAllDeliveredOrders", "Order", new { area = "SCM" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>*@
+            </ul>
+        </li>
+        @Html.Partial("_CommonMenuPartialPage")
+    </ul>
+}

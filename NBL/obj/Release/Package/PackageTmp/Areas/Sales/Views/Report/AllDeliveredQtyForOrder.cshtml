@@ -1,0 +1,54 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Sales.ViewDeliveredQuantityModel>
+@{
+    ViewBag.Title = "All Delivered Qty For Order";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+ 
+<section class="content">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">All Delivered Qty For Order</div>
+        <div class="panel panel-body">
+            @Html.Partial("_ViewDeliveredQtyPartialPage",Model)
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_delivered_qty").DataTable({
+            "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    text: 'Download as Excel',
+                    title: 'All Delivered Qty For Order'
+
+
+                },
+
+                {
+                    extend: 'pdf',
+                    text: 'Download as Pdf',
+                    title: 'All Delivered Qty For Order'
+
+
+                },
+                {
+                    extend: 'print',
+                    text: 'Print',
+                    title: 'All Delivered Qty For Order',
+                    customize: function (win) {
+                        $(win.document.body)
+                            .css('font-size', '10pt');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ]
+        });
+    </script>
+}

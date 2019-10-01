@@ -54,5 +54,11 @@ namespace NBL.Areas.SuperAdmin.BLL
         {
             return gateway.GetAllUserWithRoles();
         }
+
+        public bool AssignForwardPermissionToUser(int userId, int actionId, int forwardToId)
+        {
+            int rowAffected = gateway.AssignForwardPermissionToUser(userId,actionId,forwardToId);
+            return rowAffected > 0;
+        }
     }
 }

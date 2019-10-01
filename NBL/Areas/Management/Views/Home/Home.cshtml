@@ -5,7 +5,7 @@
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
     var user = (ViewUser)Session["user"];
-    var dispatch = Model.Dispatch;
+    var delivered = Model.TotalDeliveredQuantity;
     var production = Model.Production;
     var tOrder = Model.TotalOrder;
     var collection = Model.ViewTotalCollection;
@@ -155,7 +155,7 @@
             <div class="col-md-6">
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Production VS Dispatch (@DateTime.Now.Year)</h3>
+                        <h3 class="box-title">Production VS Sale (@DateTime.Now.Year)</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-minus"></i>
@@ -176,7 +176,45 @@
         <div class="row">
             <div class="col-md-6">
                 <!-- TABLE: Top clients -->
-                @Html.Partial("_ViewTopClientsPartialPage", Model.TopClients)
+                <div class="box box-success">
+                    <div class="box-header with-border" style="background-color: #00A65A;color: white">
+                        <h3 class="box-title">Top 10 Clients (@DateTime.Now.Year) by Debit</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus" style="color: white"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" style="color: white"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table no-margin">
+                          
+                                <tbody>
+                                @foreach (var client in Model.TopClients)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.ActionLink(client.CommercialName,"ClientProfile","Home",new { area = "Management",id =client.ClientId},null)
+                                        </td>
+                                        <td class="text-right">&#2547; @client.TotalDebitAmount.ToString("N")</td>
+                                    </tr>
+                                }
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer clearfix">
+
+                        <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-right">View All</a>
+                    </div>
+                    <!-- /.box-footer -->
+                </div>
+
                 <!-- /.box -->
             </div>
             <div class="col-md-6">
@@ -215,23 +253,23 @@
                 element: 'bar-chart',
                 resize: true,
                 data: [
-                    { y: 'January', a: @production.January, b: @dispatch.January },
-                    { y: 'February', a: @production.February, b: @dispatch.February },
-                    { y: 'March', a: @production.March, b: @dispatch.March },
-                    { y: 'April', a: @production.April, b: @dispatch.April },
-                    { y: 'May', a: @production.May, b: @dispatch.May },
-                    { y: 'June', a: @production.June, b: @dispatch.June },
-                    { y: 'July', a: @production.July, b: @dispatch.July },
-                    { y: 'August', a: @production.August, b: @dispatch.August },
-                    { y: 'September', a: @production.September, b: @dispatch.September },
-                    { y: 'October', a: @production.October, b: @dispatch.October },
-                    { y: 'November', a: @production.November, b: @dispatch.November },
-                    { y: 'December', a: @production.December, b: @dispatch.December }
+                    { y: 'January', a: @production.January, b: @delivered.January },
+                    { y: 'February', a: @production.February, b: @delivered.February },
+                    { y: 'March', a: @production.March, b: @delivered.March },
+                    { y: 'April', a: @production.April, b: @delivered.April },
+                    { y: 'May', a: @production.May, b: @delivered.May },
+                    { y: 'June', a: @production.June, b: @delivered.June },
+                    { y: 'July', a: @production.July, b: @delivered.July },
+                    { y: 'August', a: @production.August, b: @delivered.August },
+                    { y: 'September', a: @production.September, b: @delivered.September },
+                    { y: 'October', a: @production.October, b: @delivered.October },
+                    { y: 'November', a: @production.November, b: @delivered.November },
+                    { y: 'December', a: @production.December, b: @delivered.December }
                 ],
                 barColors: ['#00a65a', '#f56954'],
                 xkey: 'y',
                 ykeys: ['a', 'b'],
-                labels: ['Production', 'Dispatch'],
+                labels: ['Production', 'Sale'],
                 hideHover: 'auto'
             });
         });

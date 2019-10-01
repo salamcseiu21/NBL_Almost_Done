@@ -256,6 +256,28 @@ namespace NBL.BLL
             return _iReportGateway.GetTotalDeliveredQtyByBranchId(branchId);
         }
 
+        public ViewTotalDeliveredQuantity GetTotalDeliveredQuantityByYear(int year)
+        { 
+            ICollection<ChartModel> totalDelivery = _iReportGateway.GetTotalDeliveredQuantityByYear(year).ToList();
+
+            ViewTotalDeliveredQuantity delivered = new ViewTotalDeliveredQuantity
+            {
+                January = totalDelivery?.ToList().Find(n => n.MonthName.StartsWith("Jan"))?.TotalDeliveredQty,
+                February = totalDelivery?.ToList().Find(n => n.MonthName.StartsWith("Feb"))?.TotalDeliveredQty,
+                March = totalDelivery?.ToList().Find(n => n.MonthName.StartsWith("Mar"))?.TotalDeliveredQty,
+                April = totalDelivery?.ToList().Find(n => n.MonthName.StartsWith("Ap"))?.TotalDeliveredQty,
+                May = totalDelivery?.ToList().Find(n => n.MonthName.StartsWith("May"))?.TotalDeliveredQty,
+                June = totalDelivery?.ToList().Find(n => n.MonthName.StartsWith("June"))?.TotalDeliveredQty,
+                July = totalDelivery?.ToList().Find(n => n.MonthName.StartsWith("July"))?.TotalDeliveredQty,
+                August = totalDelivery?.ToList().Find(n => n.MonthName.StartsWith("Aug"))?.TotalDeliveredQty,
+                September = totalDelivery?.ToList().Find(n => n.MonthName.StartsWith("Sep"))?.TotalDeliveredQty,
+                October = totalDelivery?.ToList().Find(n => n.MonthName.StartsWith("Oct"))?.TotalDeliveredQty,
+                November = totalDelivery?.ToList().Find(n => n.MonthName.StartsWith("Nov"))?.TotalDeliveredQty,
+                December = totalDelivery?.ToList().Find(n => n.MonthName.StartsWith("Dec"))?.TotalDeliveredQty
+            };
+            return delivered;
+        }
+
         public bool IsValiedBarcode(string barcode)
         {
             var model = _iBarCodeManager.GetAll().ToList().Select(n=>n.Barcode).ToList().Contains(barcode);

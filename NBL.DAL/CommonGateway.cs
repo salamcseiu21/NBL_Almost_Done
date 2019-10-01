@@ -1463,5 +1463,41 @@ CommandObj.Parameters.Clear();
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public ICollection<ViewActionListModel> GetAllActionList()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllActionList";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<ViewActionListModel> actionList=new List<ViewActionListModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                   actionList.Add(new ViewActionListModel
+                   {
+                       ActionName = reader["ActionName"].ToString(),
+                       ControllerName = reader["ControllerName"].ToString(),
+                       AreaName =reader["AreaName"].ToString(),
+                       Id = Convert.ToInt64(reader["Id"])
+                   });
+                }
+                
+                reader.Close();
+                return actionList;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Colud not collect action list ", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }
