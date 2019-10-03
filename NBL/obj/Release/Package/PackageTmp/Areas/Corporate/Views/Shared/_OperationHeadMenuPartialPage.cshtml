@@ -15,26 +15,12 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li>@Html.ActionLink(" Summary", "Home", "Summaries", new {area = "Corporate"}, new {@class = "fa fa-circle-o", style = "font-weight: bolder"})</li>
-                <li>@Html.ActionLink(" Branch Wise Summary", "BranchWiseSummary", "Summaries", new {area = "Corporate"}, new {@class = "fa fa-circle-o", style = "font-weight: bolder"})</li>
-                @*<li>@Html.ActionLink(" Search", "Search", "OperationHead", new { area = "Corporate" }, new { @class = "fa fa-search", style = "font-weight: bolder" })</li>*@
+              
+                <li>@Html.ActionLink(" Client Summary", "ClientSummary", "Home", new {area = "Corporate"}, new {@class = "fa fa-circle-o", style = "font-weight: bolder"})</li>
+                <li>@Html.ActionLink(" Sales Summary", "SalesSummary", "Home", new { area = "Corporate" }, new { @class = "fa fa-circle-o", style = "font-weight: bolder" })</li>
             </ul>
         </li>
-
-        <li class="treeview">
-            <a href="#">
-                <i class="fa fa-pencil"></i>
-                <span>Requisition</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-            </a>
-            <ul class="treeview-menu">
-                <li>@Html.ActionLink(" Pending Requisition", "PendingRequisition", "Requisition", new {area = "Corporate"}, new {@class = "fa fa-list", style = "font-weight: bolder"})</li>
-                <li>@Html.ActionLink(" All", "All", "Requisition", new {area = "Corporate"}, new {@class = "fa fa-list", style = "font-weight: bolder"})</li>
-                @*<li>@Html.ActionLink(" Monthly Requisition", "MonthlyRequisition", "Requisition", new {area = "Corporate"}, new {@class = "fa fa-plus", style = "font-weight: bolder"})</li>*@
-            </ul>
-        </li>
+       
         @Html.Partial("_MenuPartialPage")
 
 

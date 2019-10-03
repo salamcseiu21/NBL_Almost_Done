@@ -17,7 +17,9 @@
                     <th>Segment</th>
                     <th>Barcode</th>
                     <th class="text-center">Production Date</th>
-                    <th class="text-right">Age (Days)</th>
+                    <th class="text-right">Stock Age Limit(Days)</th>
+                    <th class="text-right">Age In Stock(Days)</th>
+                    <th class="text-right">Remaining Life (Days)</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,18 +32,22 @@
                         <td>@item.ProductCategoryName</td>
                         <td>@item.ProductBarCode</td>
                         <td class="text-center">@item.ProductionDate.ToString("dd-MMM-yyyy")</td>
+                        <td class="text-right">@item.AgeLimitInSelfStock</td>
+                        <td class="text-right">@item.AgeInStock</td>
                         <td class="text-right">@{
-                                                   if (item.Age > 60)
+                            var rLife = item.AgeLimitInSelfStock - item.AgeInStock;
+                                                   if (rLife < 0)
                                                    {
-                                                       <span style="color: red;font-weight: bolder">@item.Age</span>
+                                                       <span style="color: red;font-weight: bolder">@rLife</span>
                                                    }
                                                    else
                                                    {
-                                                       @item.Age
+                                                    
+                                                       <span style="color: green;font-weight: bolder">@rLife</span>
                                                    }
                                                }</td>
                     </tr>
-                }
+                            }
                 </tbody>
                 <tfoot>
                 <tr>
@@ -50,7 +56,9 @@
                     <th>Segment</th>
                     <th>Barcode</th>
                     <th class="text-center">Production Date</th>
-                    <th class="text-right">Age (Days)</th>
+                    <th class="text-right">Stock Age Limit(Days)</th>
+                    <th class="text-right">Age In Stock(Days)</th>
+                    <th class="text-right">Remaining Life (Days)</th>
                 </tr>
                 </tfoot>
             </table>

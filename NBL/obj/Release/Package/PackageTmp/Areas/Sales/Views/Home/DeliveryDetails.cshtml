@@ -1,0 +1,104 @@
+﻿@using NBL.Models.Enums
+@model NBL.Models.ViewModels.Deliveries.ViewDeliveryModel
+@{
+    ViewBag.Title = "DeliveryDetails";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var aClient = Model.Client;
+}
+
+<section class="content">
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Delivery Details</div>
+        <div class="panel panel-body">
+            <div style="border: 1px dotted; padding: 10px; font-size: 18px">
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <section>
+           
+                            <img src="~/@(aClient.ClientImage?? "Images/User.jpg")" height="120" width="100" style="float:left;margin-right:20px" title="@aClient.ClientName" />
+                            <span>
+                                @Html.Raw(aClient.GetMailingAddress())
+                            </span>
+
+                        </section>
+
+
+                    </div>
+                    <div class="col-md-6">
+                        Outstanding: @aClient.Outstanding<br/>
+                        Credit Limit: @aClient.CreditLimit<br/>
+                        Max Credit Days:@aClient.MaxCreditDay<br/>
+                        Delivery Ref :<i>@Model.Delivery.DeliveryRef</i><br />
+                        Delivery Date : <i>@Model.Delivery.DeliveryDate.ToString("D")</i>
+                    </div>
+                    
+                </div>
+                <hr />
+                <h4 class="text-center text-green headingStyle">Product List</h4>
+                <table id="table_stock_product_list" class="display table-bordered table-responsive" style="border:1px solid black; font-size: 13px;width: 100%">
+                    <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th class="text-center">Receive Quantity</th>
+                        <th class="text-center">Sold Quantity</th>
+                        <th class="text-center">Stock Quantity</th>
+                        <th class="text-center">Age limit (Days)</th>
+                        <th class="text-center">Age (Days)</th>
+                        <th class="text-center">Remaining Life (Days)</th>
+               
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model.ClientStockProducts)
+                    {
+                        <tr>
+                            <td>@item.ProductName</td>
+                    
+                            <td class="text-right">@Model.DeliveryDetailses.ToList().Find(n=>n.ProductId==item.ProductId).Quantity</td>
+                            <td class="text-right">@(Model.DeliveryDetailses.ToList().Find(n=>n.ProductId==item.ProductId).Quantity-item.Quantity)</td>
+                            <td class="text-right">@item.Quantity</td>
+                            <td class="text-right">@item.AgeLimitInDealerStock</td>
+                            <td class="text-right">@item.AgeInDealerStock</td>
+                            <td class="text-right">@{
+                                var remainingLife = item.AgeLimitInDealerStock - item.AgeInDealerStock;
+                                                       if (remainingLife < 0)
+                                                       {
+                                                           <span style="color: red;font-weight: bolder">(@(remainingLife*-1))</span>
+                                                       }
+                                                       else
+                                                       {
+                                                           <span style="color: green;font-weight: bolder">@remainingLife</span>
+                                                       }
+                                                   }
+                           </td>
+                    
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+        <div class="panel panel-footer">
+            @Html.ActionLink("Search Again", "SearchClient", "Home", null, new { @class = "btn btn-info" })
+        </div>
+    </div>
+</section>
+@section Scripts
+{
+    <script>
+
+        $('#table_product_list').DataTable({
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "order": [[1, "desc"]]
+        });
+        $('#table_stock_product_list').DataTable({
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "order": [[1, "desc"]]
+        });
+    </script>
+}

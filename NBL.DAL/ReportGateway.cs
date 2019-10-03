@@ -929,9 +929,11 @@ namespace NBL.DAL
                         ProductCategoryName = reader["ProductCategoryName"].ToString(),
                         ProductBarCode = reader["ProductBarcode"].ToString(),
                         ProductionDate = Convert.ToDateTime(reader["ProductionDate"]),
-                        Age = Convert.ToInt32(reader["Age"])
-
-                        
+                        Age = Convert.ToInt32(reader["Age"]),
+                        LifeTime = Convert.ToInt32(reader["LifeTime"]),
+                        AgeLimitInDealerStock = Convert.ToInt32(reader["AgeLimitInDealerStock"]),
+                        AgeLimitInSelfStock = Convert.ToInt32(reader["AgeLimitInSelfStock"]),
+                        AgeInStock = Convert.ToInt32(reader["AgeInStock"])
                     });
                 }
                 reader.Close();
@@ -971,7 +973,11 @@ namespace NBL.DAL
                         ProductCategoryName = reader["ProductCategoryName"].ToString(),
                         ProductBarCode = reader["ProductBarcode"].ToString(),
                         ProductionDate = Convert.ToDateTime(reader["ProductionDate"]),
-                        Age = Convert.ToInt32(reader["Age"])
+                        Age = Convert.ToInt32(reader["Age"]),
+                        LifeTime = Convert.ToInt32(reader["LifeTime"]),
+                        AgeLimitInDealerStock = Convert.ToInt32(reader["AgeLimitInDealerStock"]),
+                        AgeLimitInSelfStock = Convert.ToInt32(reader["AgeLimitInSelfStock"]),
+                        AgeInStock = Convert.ToInt32(reader["AgeInStock"])
 
 
                     });
@@ -1380,7 +1386,8 @@ namespace NBL.DAL
                        DealerDiscount = DBNull.Value.Equals(reader["DealerDiscount"])? (decimal?)null:Convert.ToDecimal(reader["DealerDiscount"]),
                        CorporateDiscount = DBNull.Value.Equals(reader["CorporateDiscount"])? (decimal?)null:Convert.ToDecimal(reader["CorporateDiscount"]),
                        IndividualDiscount = DBNull.Value.Equals(reader["IndividualDiscount"])? (decimal?)null:Convert.ToDecimal(reader["IndividualDiscount"]),
-                       VatAmount = DBNull.Value.Equals(reader["VatAmount"])? (decimal?)null:Convert.ToDecimal(reader["VatAmount"])
+                       VatAmount = DBNull.Value.Equals(reader["VatAmount"])? (decimal?)null:Convert.ToDecimal(reader["VatAmount"]),
+                       HasWarrenty = Convert.ToBoolean(reader["HasWarrenty"])
 
                     });
                 }

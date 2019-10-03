@@ -1,0 +1,25 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Orders.ViewSoldProduct>
+@{
+    ViewBag.Title = "Folio List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Folio List</div>
+        <div class="panel panel-body">
+            @Html.Partial("_ViewFolioPartialPage", Model)
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_folio_list").DataTable();
+    </script>
+}
+
+
+
+

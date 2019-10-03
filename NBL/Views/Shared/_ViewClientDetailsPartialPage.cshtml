@@ -192,7 +192,8 @@
                                             <td class="text-right">@item.DeliveredQty</td>
                                             <td class="text-center">@item.DeliveredDateTime.ToString("F")</td>
                                             <td class="text-center">
-                                                <button type="button" value="@item.DeliveryId" onclick="viewDeliveryDetails(this)" class="btn btn-success btn-sm"><i class="fa fa-eye"></i>&nbsp;Details</button>
+                                                
+                                                @Html.ActionLink(" Details","DeliveryDetails","Home",new {id=item.DeliveryId},new {@class="fa fa-eye"})
                                             </td>
                                         </tr>
                                     }
@@ -237,7 +238,7 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="files">
-                        <table id="table_client_file_list" class="display table-bordered responsive" style="border:1px solid black">
+                        <table id="table_client_file_list" class="display table-bordered table-responsive" style="border: 1px solid black;width: 100%">
                             <thead>
                                 <tr>
                                     <th>S.N</th>

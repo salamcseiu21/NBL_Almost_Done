@@ -92,7 +92,7 @@ namespace NBL.Areas.Corporate.Controllers
         public PartialViewResult BranchWiseSummary()
         {
             var branches = _iBranchManager.GetAllBranches().ToList().FindAll(n => n.BranchId != 13).ToList();
-            foreach (ViewBranch branch in branches)
+            foreach (ViewBranch branch in branches.ToList().FindAll(n=>n.BranchId!=14))
             {
                 branch.Orders = _iOrderManager.GetOrdersByBranchId(branch.BranchId).ToList();
             }

@@ -1,0 +1,151 @@
+﻿@model NBL.Models.ViewModels.ProductWarranty.ViewWarrantyPolicy
+@{
+    ViewBag.Title = "Product Warranty Policy";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Product Warranty Policy</div>
+        <div class="panel panel-body">
+            <div class="text-center">
+                @if (TempData["PolicyMessge"] != null)
+                {
+                    @Html.Raw(TempData["PolicyMessge"])
+                }
+            </div>
+            @using (Html.BeginForm())
+            {
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ProductName, new {@class = "control-label col-md-3"})
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.ProductName, new {htmlAttributes = new {@class = "form-control", placeholder = "Type Product Name..", autofocus = "autofocus"}})
+                                    @Html.ValidationMessageFor(model => model.ProductName, "", new {@class = "text-danger"})
+                                    @Html.HiddenFor(model => model.ProductId)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.WarrantyFrom, new {@class = "control-label col-md-3"})
+                                <div class="col-md-9">
+                                    <select name="WarrantyFrom" id="WarrantyFrom" class="form-control" required>
+                                        <option value="">--Select---</option>
+                                        <option value="D">From Delivery Date</option>
+                                        <option value="R">From Retail Sales Date</option>
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.WarrantyFrom, "", new {@class = "text-danger"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.WarrantyPeriodInDays, new {@class = "control-label col-md-3"})
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.WarrantyPeriodInDays, new {htmlAttributes = new {@class = "form-control", placeholder = "Enter Warranty Period InDays"}})
+                                    @Html.ValidationMessageFor(model => model.WarrantyPeriodInDays, "", new {@class = "text-danger"})
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.FromBatch, new {@class = "control-label col-md-3"})
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.FromBatch, new {htmlAttributes = new {@class = "form-control", placeholder = "Enter to batch no.."}})
+                                    @Html.ValidationMessageFor(model => model.FromBatch, "", new {@class = "text-danger"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ToBatch, new {@class = "control-label col-md-3"})
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.ToBatch, new {htmlAttributes = new {@class = "form-control", placeholder = "Enter from batch no.."}})
+                                    @Html.ValidationMessageFor(model => model.ToBatch, "", new {@class = "text-danger"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ClientName, new {@class = "control-label col-md-3"})
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.ClientName, new {htmlAttributes = new {@class = "form-control", placeholder = "Enter Client Name.."}})
+                                    @Html.ValidationMessageFor(model => model.ClientName, "", new {@class = "text-danger"})
+                                    @Html.HiddenFor(model => model.ClientId)
+                                </div>
+                            </div>
+                            <div class="form-group">
+
+                                <div class="col-md-9 col-md-offset-3">
+                                    <input type="submit" class="btn btn-info" value="Save"/>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#ProductName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: RootUrl + 'common/ProductNameAutoComplete/',
+                    // url: RootUrl + 'common/ProductAutoComplete/',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data,
+                            function (item) {
+                                return item;
+                            }));
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#ProductId").val(i.item.val);
+            },
+            minLength: 1
+        });
+    </script>
+
+<script>
+        $(function () {
+            $("#ClientName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: RootUrl + 'Common/ClientNameAutoComplete/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data,
+                                function (item) {
+                                    return item;
+                                }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#ClientId").val(i.item.val);
+                },
+                minLength: 1
+            });
+        });
+</script>
+}

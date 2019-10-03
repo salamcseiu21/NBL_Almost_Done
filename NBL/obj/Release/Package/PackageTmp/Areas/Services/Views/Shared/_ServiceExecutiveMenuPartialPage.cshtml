@@ -2,6 +2,7 @@
 @*Sales Menu*@
 @{
     var user = (ViewUser)Session["user"];
+    var branchId = Convert.ToInt32(Session["BranchId"]);
 }
 @if (!user.IsPasswordChangeRequired)
 {
@@ -85,7 +86,7 @@
             </a>
             <ul class="treeview-menu">
                 <li>@Html.ActionLink("  Receive", "Receive", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-plus" })</li>
-                <li>@Html.ActionLink("  View All", "All", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-eye" })</li>
+                <li>@Html.ActionLink("  View All Received List", "All", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-eye" })</li>
                 <li>@Html.ActionLink("  Discharge Report Entry", "ProductInDisChargeSection", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-eye" })</li>
                 <li>@Html.ActionLink("  Charge Report Entry", "ProductInChargeSection", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-eye" })</li>
                 
@@ -93,6 +94,22 @@
                 <li>@Html.ActionLink("  Replace List", "ReplaceList", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-eye" })</li>
             </ul>
         </li>
+        @if (branchId==9)
+        {
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-product-hunt"></i>
+                    <span>Policy Setup</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li>@Html.ActionLink("  Warranty Battery", "ProductWarrantyPolicy", "PolicySetup", new { area = "Services" }, new { @class = "fa fa-plus" })</li>
+                </ul>
+            </li>
+        }
+   
         @*<li class="treeview">
             <a href="#">
                 <i class="fa fa-product-hunt"></i>

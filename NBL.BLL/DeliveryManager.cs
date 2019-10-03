@@ -7,6 +7,7 @@ using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
+using NBL.Models.ViewModels.Products;
 
 namespace NBL.BLL
 {
@@ -132,6 +133,11 @@ namespace NBL.BLL
         {
             var deliveredOrders =_iDeliveryGateway.GetAllDeliveredOrdersByBranchAndCompany(branchId, companyId, orderByUserId);
             return deliveredOrders.ToList();
+        }
+
+        public ICollection<ViewClientStockProduct> GetClientStockProductAgeByDeliveryId(long deliveryId)
+        {
+            return _iDeliveryGateway.GetClientStockProductAgeByDeliveryId(deliveryId);
         }
 
         public ICollection<ViewDeliveredOrderModel> GetDeliveredOrderByClientId(int clientId)

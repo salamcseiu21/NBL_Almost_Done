@@ -16,6 +16,7 @@ using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
+using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.Corporate.Controllers
@@ -43,7 +44,8 @@ namespace NBL.Areas.Corporate.Controllers
         private readonly UserManager _userManager=new UserManager();
         private readonly IFactoryDeliveryManager _iFactoryDeliveryManager;
         private readonly IDeliveryManager _iDeliveryManager;
-        public HomeController(IVatManager iVatManager,IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IReportManager iReportManager,IDepartmentManager iDepartmentManager,IEmployeeManager iEmployeeManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager,IDiscountManager iDiscountManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IAccountsManager iAccountsManager,IInvoiceManager iInvoiceManager,IDivisionGateway iDivisionGateway,IProductManager iProductManager,IFactoryDeliveryManager iFactoryDeliveryManager,IDeliveryManager iDeliveryManager)
+        private readonly IServiceManager _iServiceManager;
+        public HomeController(IVatManager iVatManager,IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IReportManager iReportManager,IDepartmentManager iDepartmentManager,IEmployeeManager iEmployeeManager,IInventoryManager iInventoryManager,ICommonManager iCommonManager,IDiscountManager iDiscountManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IAccountsManager iAccountsManager,IInvoiceManager iInvoiceManager,IDivisionGateway iDivisionGateway,IProductManager iProductManager,IFactoryDeliveryManager iFactoryDeliveryManager,IDeliveryManager iDeliveryManager,IServiceManager iServiceManager)
         {
             _iVatManager = iVatManager;
             _iBranchManager = iBranchManager;
@@ -63,6 +65,7 @@ namespace NBL.Areas.Corporate.Controllers
             _iProductManager = iProductManager;
             _iFactoryDeliveryManager = iFactoryDeliveryManager;
             _iDeliveryManager = iDeliveryManager;
+            _iServiceManager = iServiceManager;
         }
 
         // GET: Corporate/Home
@@ -76,8 +79,6 @@ namespace NBL.Areas.Corporate.Controllers
 
                 var totalProduction = _iReportManager.GetTotalProductionCompanyIdAndYear(companyId, DateTime.Now.Year);
                 var totalDispatch = _iReportManager.GetTotalDispatchCompanyIdAndYear(companyId, DateTime.Now.Year);
-                Session.Remove("BranchId");
-                Session.Remove("Branch");
                 var torders= _iReportManager.GetTotalOrdersByYear(DateTime.Now.Year);
                 var accountSummary = _iAccountsManager.GetAccountSummaryofCurrentMonthByCompanyId(companyId);
                 var branches = _iBranchManager.GetAllBranches().ToList().FindAll(n => n.BranchId != 13).ToList();
@@ -111,7 +112,49 @@ namespace NBL.Areas.Corporate.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
-       
+
+        public ActionResult SalesSummary()
+        {
+            var companyId = Convert.ToInt32(Session["CompanyId"]);
+            //int branchId = Convert.ToInt32(Session["BranchId"]);
+           // var topClients = _iReportManager.GetTopClientsByYear(DateTime.Now.Year);
+           // var topProducts = _iReportManager.GetPopularBatteriesByYear(DateTime.Now.Year).ToList();
+            ViewTotalOrder totalOrder = _iReportManager.GetTotalOrdersByCompanyIdAndYear(companyId, DateTime.Now.Year);
+            //var accountSummary = _iAccountsManager.GetAccountSummaryofCurrentMonthByCompanyId(companyId);
+            //var clients = _iClientManager.GetAllClientDetailsByBranchId(branchId);
+            //var orders = _iOrderManager.GetTotalOrdersByCompanyIdAndYear(companyId,DateTime.Now.Year);
+            //var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId);
+            //var pendingOrders = _iOrderManager.GetPendingOrdersByBranchAndCompanyId(branchId,companyId).ToList();
+            //var employees = _iEmployeeManager.GetAllEmployeeWithFullInfo();
+            //var branches = _iBranchManager.GetAllBranches();
+            var totalProduction = _iReportManager.GetTotalProductionCompanyIdAndYear(companyId, DateTime.Now.Year);
+            var totalDispatch = _iReportManager.GetTotalDispatchCompanyIdAndYear(companyId, DateTime.Now.Year);
+            var viewTotalCollection = _iReportManager.GetTotalCollectionByYear(DateTime.Now.Year);
+            var viewTotalSaleValue = _iReportManager.GetTotalSaleValueByYear(DateTime.Now.Year);
+           // accountSummary.TotalSaleValue = _iReportManager.GetTotalSaleValueByYearAndMonth(DateTime.Now.Year, DateTime.Now.Month);
+            SummaryModel aModel = new SummaryModel
+            {
+                // Branches = branches.ToList(),
+                //BranchId = branchId,
+                CompanyId = companyId,
+                TotalOrder = totalOrder,
+                //TopClients = topClients,
+                //TopProducts = topProducts,
+                //Clients = clients,
+                // Products = products,
+                // Orders = orders,
+                //PendingOrders = pendingOrders,
+                //Employees = employees,
+               // AccountSummary = accountSummary,
+                Dispatch = totalDispatch,
+                Production = totalProduction,
+                ViewTotalCollection = viewTotalCollection,
+                ViewTotalSaleValue = viewTotalSaleValue,
+                TotalDeliveredQuantity = _iReportManager.GetTotalDeliveredQuantityByYear(DateTime.Now.Year)
+
+            };
+            return View(aModel);
+        }
         public PartialViewResult AllOrders()
         {
             try
@@ -563,5 +606,61 @@ namespace NBL.Areas.Corporate.Controllers
 
         }
 
+        public ActionResult DeliveryDetails(long id)
+        {
+            try
+            {
+                var deliveryDetails = _iDeliveryManager.GetDeliveredOrderDetailsByDeliveryId(id);
+                var delivery = _iDeliveryManager.GetOrderByDeliveryId(id);
+                ICollection<ViewClientStockProduct> products = _iDeliveryManager.GetClientStockProductAgeByDeliveryId(id);
+                ViewDeliveryModel model = new ViewDeliveryModel
+                {
+                    DeliveryDetailses = deliveryDetails.ToList(),
+                    Delivery = delivery,
+                    Client = _iClientManager.GetById(delivery.Client.ClientId),
+                    ClientStockProducts = products.ToList()
+                };
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        public ActionResult ProductDetails()
+        {
+            try
+            {
+                var products = _iReportManager.GetAllProductDetails().ToList();
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        public ActionResult SoldProducts()
+        {
+            try
+            {
+                var products = _iServiceManager.GetAllSoldProducts().ToList();
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
+
+        public ActionResult ClientSummary()
+        {
+            var summary = _iClientManager.GetClientSummary();
+            return View(summary);
+        }
     }
 }

@@ -95,11 +95,13 @@
     <Compile Include="ClientManager.cs" />
     <Compile Include="CommonManager.cs" />
     <Compile Include="CompanyManager.cs" />
+    <Compile Include="Contracts\IPolicyManager.cs" />
     <Compile Include="Contracts\IProductionQcManager.cs" />
     <Compile Include="Contracts\IProductReplaceManager.cs" />
     <Compile Include="Contracts\IProductReturnManager.cs" />
     <Compile Include="Contracts\IScrapManager.cs" />
     <Compile Include="Contracts\IServiceManager.cs" />
+    <Compile Include="Contracts\PolicyManager.cs" />
     <Compile Include="ProductReplaceManager.cs" />
     <Compile Include="DeliveryManager.cs" />
     <Compile Include="Contracts\IBarCodeManager.cs" />

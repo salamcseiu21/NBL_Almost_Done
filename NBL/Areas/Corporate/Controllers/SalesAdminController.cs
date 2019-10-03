@@ -12,8 +12,7 @@ namespace NBL.Areas.Corporate.Controllers
         // GET: Corporate/SalesAdmin
         public ActionResult Home() 
         {
-            Session.Remove("BranchId");
-            Session.Remove("Branch");
+          
             return View();
         }
     }

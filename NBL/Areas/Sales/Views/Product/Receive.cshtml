@@ -8,81 +8,84 @@
 }
 
 <section class="content">
+     
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Receiveable Product List</div>
+        <div class="panel panel-body">
+            @if (TempData["ReceiveMessage"] != null)
+            {
+                <div class="alert-success text-center">
+                    @TempData["ReceiveMessage"]
+                </div>
+            }
+            <div class="alert-success text-center">
 
-    <h3 class="text-center" style="margin-top: 0; font-weight: bold;color: green"> Receiveable Product List</h3>
-    @if (TempData["ReceiveMessage"] != null)
-    {
-        <div class="alert-success text-center">
-            @TempData["ReceiveMessage"]
+            </div>
+            <table class="display table-bordered table-hover table-responsive" id="table_receivable_list" style="border: 1px solid black">
+                <thead>
+                    <tr>
+                        <th>
+                            Dispatch  Reference
+                        </th>
+                        <th class="text-center">
+                            Quantity
+                        </th>
+                        <th class="text-center">
+                            Receive Qty
+                        </th>
+                        <th class="text-center">
+                            Pending Qty
+                        </th>
+                        <th class="text-center">
+                            Date
+                        </th>
+                        <th class="text-center" style="width: 50px">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (IGrouping<string, ReceiveProductViewModel> item in Model.GroupBy(n => n.DispatchRef))
+                    {
+                        <tr>
+
+                            <td>@item.Key</td>
+                            <td class="text-center">@item.Sum(n => n.Quantity)</td>
+                            <td class="text-center">@item.Sum(n => n.ReceiveQty)</td>
+                            <td class="text-center">@(item.Sum(n => n.Quantity) - item.Sum(n => n.ReceiveQty))</td>
+                            <td class="text-center">@item.First().SystemDateTime.ToString("dd-MMMM-yyyy")</td>
+                            <td class="text-center">
+                                @Html.ActionLink("Details", "ReceiveableDetails", new { id = item.First().DispatchId }, new { @class = "btn btn-info" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <th>
+                            Dispatch  Reference
+                        </th>
+                        <th class="text-center">
+                            Quantity
+                        </th>
+                        <th class="text-center">
+                            Receive Qty
+                        </th>
+                        <th class="text-center">
+                            Pending Qty
+                        </th>
+                        <th class="text-center">
+                            Date
+                        </th>
+                        <th class="text-center" style="width: 50px">
+                            Action
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
-    }
-    <div class="alert-success text-center">
-        
     </div>
-    <table class="display table-bordered table-hover table-responsive" id="table_receivable_list" style="border: 1px solid black">
-        <thead>
-        <tr>
-            <th>
-              Dispatch  Reference
-            </th>
-            <th class="text-center">
-                Quantity
-            </th>
-            <th class="text-center">
-               Receive Qty
-            </th>
-            <th class="text-center">
-                Pending Qty
-            </th>
-            <th class="text-center">
-              Date
-            </th>
-            <th class="text-center" style="width: 50px">
-                Action
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-      @foreach (IGrouping<string,ReceiveProductViewModel> item in Model.GroupBy(n=>n.DispatchRef))
-      {
-          <tr>
-              
-              <td>@item.Key</td>
-              <td class="text-center">@item.Sum(n=>n.Quantity)</td>
-              <td class="text-center">@item.Sum(n=>n.ReceiveQty)</td>
-              <td class="text-center">@(item.Sum(n => n.Quantity)-item.Sum(n=>n.ReceiveQty))</td>
-              <td class="text-center">@item.First().SystemDateTime.ToString("dd-MMMM-yyyy")</td>
-              <td class="text-center">
-                  @Html.ActionLink("Details","ReceiveableDetails",new {id=item.First().DispatchId},new {@class="btn btn-info"})
-              </td>
-          </tr>
-      }
-        </tbody>
-        
-        <tfoot>
-        <tr>
-            <th>
-                Dispatch  Reference
-            </th>
-            <th class="text-center">
-                Quantity
-            </th>
-            <th class="text-center">
-                Receive Qty
-            </th>
-            <th class="text-center">
-                Pending Qty
-            </th>
-            <th class="text-center">
-                Date
-            </th>
-            <th class="text-center" style="width: 50px">
-                Action
-            </th>
-        </tr>
-        </tfoot>
-    </table>
-    
 </section>
     
 @section Scripts

@@ -16,7 +16,9 @@ using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.Enums;
 using NBL.Models.ViewModels;
 using NBL.Models.Logs;
+using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.Sales.Controllers
@@ -33,8 +35,9 @@ namespace NBL.Areas.Sales.Controllers
         private readonly UserManager _userManager = new UserManager();
         private readonly IAccountsManager _iAccountsManager;
         private readonly IReportManager _iReportManager;
+        private readonly IDeliveryManager _iDeliveryManager;
 
-        public HomeController(IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IEmployeeManager iEmployeeManager,IInventoryManager iInventoryManager, ICommonManager iCommonManager,IAccountsManager iAccountsManager,IReportManager iReportManager)
+        public HomeController(IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IEmployeeManager iEmployeeManager,IInventoryManager iInventoryManager, ICommonManager iCommonManager,IAccountsManager iAccountsManager,IReportManager iReportManager,IDeliveryManager iDeliveryManager)
         {
             _iBranchManager = iBranchManager;
             _iClientManager = iClientManager;
@@ -44,6 +47,7 @@ namespace NBL.Areas.Sales.Controllers
             _iInventoryManager = iInventoryManager;
             _iAccountsManager = iAccountsManager;
             _iReportManager = iReportManager;
+            _iDeliveryManager = iDeliveryManager;
         }
         // GET: User/Home
 
@@ -293,6 +297,30 @@ namespace NBL.Areas.Sales.Controllers
             }
         }
 
+
+        public ActionResult DeliveryDetails(long id)
+        {
+            try
+            {
+                var deliveryDetails = _iDeliveryManager.GetDeliveredOrderDetailsByDeliveryId(id);
+                var delivery = _iDeliveryManager.GetOrderByDeliveryId(id);
+                ICollection<ViewClientStockProduct> products = _iDeliveryManager.GetClientStockProductAgeByDeliveryId(id);
+                ViewDeliveryModel model = new ViewDeliveryModel
+                {
+                    DeliveryDetailses = deliveryDetails.ToList(),
+                    Delivery = delivery,
+                    Client = _iClientManager.GetById(delivery.Client.ClientId),
+                    ClientStockProducts = products.ToList()
+                };
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
         public ActionResult WarrantyCheck()
         {
 
@@ -307,6 +335,7 @@ namespace NBL.Areas.Sales.Controllers
             }
            
         }
+
 
 
         //---------------------Order History----

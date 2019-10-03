@@ -397,8 +397,10 @@
     <Compile Include="Areas\Sales\SalesAreaRegistration.cs" />
     <Compile Include="Areas\SCM\Controllers\HomeController.cs" />
     <Compile Include="Areas\SCM\Controllers\OrderController.cs" />
+    <Compile Include="Areas\SCM\Controllers\ProductController.cs" />
     <Compile Include="Areas\SCM\SCMAreaRegistration.cs" />
     <Compile Include="Areas\Services\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Services\Controllers\PolicySetupController.cs" />
     <Compile Include="Areas\Services\Controllers\ReplaceController.cs" />
     <Compile Include="Areas\Services\Controllers\ScrapController.cs" />
     <Compile Include="Areas\Services\Controllers\ServiceManagementController.cs" />
@@ -8258,6 +8260,15 @@
     <Content Include="Areas\SuperAdmin\Views\Assign\AssignForwardPermission.cshtml" />
     <Content Include="Areas\SCM\Views\Shared\_MenuScmExecutivePartialPage.cshtml" />
     <Content Include="Areas\SCM\Views\Shared\_CommonMenuPartialPage.cshtml" />
+    <Content Include="Areas\SCM\Views\Product\ReplaceList.cshtml" />
+    <Content Include="Areas\Management\Views\Home\CollectionList.cshtml" />
+    <Content Include="Areas\Services\Views\PolicySetup\ProductWarrantyPolicy.cshtml" />
+    <Content Include="Areas\Sales\Views\Home\DeliveryDetails.cshtml" />
+    <Content Include="Areas\Corporate\Views\Home\DeliveryDetails.cshtml" />
+    <Content Include="Areas\Corporate\Views\Home\ProductDetails.cshtml" />
+    <Content Include="Areas\Corporate\Views\Home\SoldProducts.cshtml" />
+    <Content Include="Areas\Corporate\Views\Home\ClientSummary.cshtml" />
+    <Content Include="Areas\Corporate\Views\Home\SalesSummary.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
@@ -8411,6 +8422,7 @@
     <Content Include="Views\Shared\_RptViewOrderListBydatePartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewCollectionListPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewStockProductBarcodePartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewFolioPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

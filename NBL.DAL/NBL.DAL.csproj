@@ -64,6 +64,7 @@
     <Compile Include="Contracts\IGateway.cs" />
     <Compile Include="Contracts\IInventoryGateway.cs" />
     <Compile Include="Contracts\IOrderGateway.cs" />
+    <Compile Include="Contracts\IPolicyGateway.cs" />
     <Compile Include="Contracts\IPostOfficeGateway.cs" />
     <Compile Include="Contracts\IProductGateway.cs" />
     <Compile Include="Contracts\IProductionQcGateway.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="FactoryDeliveryGateway.cs" />
     <Compile Include="InventoryGateway.cs" />
     <Compile Include="OrderGateway.cs" />
+    <Compile Include="PolicyGateway.cs" />
     <Compile Include="PostOfficeGateway.cs" />
     <Compile Include="ProductGateway.cs" />
     <Compile Include="ProductionQcGateway.cs" />

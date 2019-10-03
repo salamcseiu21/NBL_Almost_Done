@@ -12,6 +12,7 @@ using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Replaces;
 
 namespace NBL.DAL
@@ -1145,6 +1146,53 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Delivered Orders by branch,Company and order by UserId", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<ViewClientStockProduct> GetClientStockProductAgeByDeliveryId(long deliveryId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetClientStockProductAgeByDeliveryId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DeliveryId", deliveryId);
+                List<ViewClientStockProduct> models = new List<ViewClientStockProduct>();
+                ConnectionObj.Open();
+
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ViewClientStockProduct
+                    {
+   
+                        Quantity = Convert.ToInt32(reader["TotalQuantity"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductCategory = reader["ProductCategoryName"].ToString(),
+                        AgeInDealerStock = Convert.ToInt32(reader["AgeInDealerStock"]),
+                        AgeLimitInDealerStock = Convert.ToInt32(reader["AgeLimitInDealerStock"]),
+                        LifeTime = Convert.ToInt32(reader["LifeTime"])
+                    });
+                }
+                reader.Close();
+                return models;
+
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Client stock product age by delivery id due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Client stock product age by delivery id", exception);
             }
             finally
             {

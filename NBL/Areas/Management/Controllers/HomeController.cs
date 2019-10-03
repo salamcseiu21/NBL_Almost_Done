@@ -309,5 +309,22 @@ namespace NBL.Areas.Management.Controllers
             //ViewBag.BranchId = _iBranchManager.GetBranchSelectList();
             return View(model);
         }
+
+        [HttpGet]
+        public ActionResult CollectionList()
+        {
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var collections = _iAccountsManager.GetAllReceivableChequeByCompanyIdAndStatus(companyId, 1).ToList().FindAll(n=>Convert.ToDateTime(n.ActiveDate).Year==DateTime.Now.Year);
+                return View(collections);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
     }
 }

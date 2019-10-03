@@ -130,6 +130,7 @@
     <Compile Include="EntityModels\Productions\ProductVerificationModel.cs" />
     <Compile Include="EntityModels\Productions\RejectedProduct.cs" />
     <Compile Include="EntityModels\Productions\RejectionReason.cs" />
+    <Compile Include="EntityModels\ProductWarranty\WarrantyPolicy.cs" />
     <Compile Include="EntityModels\ReplaceModel.cs" />
     <Compile Include="EntityModels\Requisitions\GeneralRequisitionModel.cs" />
     <Compile Include="EntityModels\Requisitions\RequisitionFor.cs" />
@@ -221,9 +222,11 @@
     <Compile Include="ViewModels\Productions\ViewTotalProduction.cs" />
     <Compile Include="ViewModels\Products\Inventory.cs" />
     <Compile Include="ViewModels\Products\ProductStatusModel.cs" />
+    <Compile Include="ViewModels\Products\ViewClientStockProduct.cs" />
     <Compile Include="ViewModels\Products\ViewCreateProductDetailsModel.cs" />
     <Compile Include="ViewModels\Products\ViewProductHistory.cs" />
     <Compile Include="ViewModels\Products\ViewProductTransactionDetails.cs" />
+    <Compile Include="ViewModels\ProductWarranty\ViewWarrantyPolicy.cs" />
     <Compile Include="ViewModels\Replaces\ReplaceReport.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceDetailsModel.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceModel.cs" />

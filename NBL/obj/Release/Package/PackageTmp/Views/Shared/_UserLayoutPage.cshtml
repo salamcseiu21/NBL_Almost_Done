@@ -116,16 +116,21 @@
         roleName = "SCM Manager";
         areas = "SCM";
     }
+    else if (User.IsInRole("SCMExecutive"))
+    {
+        roleName = "SCM Executive";
+        areas = "SCM";
+    }
     else if (User.IsInRole("ServiceExecutive"))
     {
-        
-           roleName = "Service Executive";
+
+        roleName = "Service Executive";
         areas = "services";
     }
     else if (User.IsInRole("ServiceManager"))
     {
-        
-            roleName = "Service Manager";
+
+        roleName = "Service Manager";
         areas = "services";
     }
     else if (User.IsInRole("ServiceManagement"))
@@ -295,6 +300,9 @@
                         break;
                     case "R&DManager":
                         Html.RenderPartial("~/Areas/ResearchAndDevelopment/Views/Shared/_MenuRndManagerPartialPage.cshtml");
+                        break;
+                    case "SCMExecutive":
+                        Html.RenderPartial("~/Areas/SCM/Views/Shared/_MenuScmExecutivePartialPage.cshtml");
                         break;
                     case "SCMManager":
                         Html.RenderPartial("~/Areas/SCM/Views/Shared/_MenuScmManagerPartialPage.cshtml");

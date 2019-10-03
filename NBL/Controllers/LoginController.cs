@@ -125,9 +125,7 @@ namespace NBL.Controllers
 
                         case "Management":
                             return RedirectToAction("Home", "Home", new { area = "Management" });
-                        case "Corporate":
-                        case "CorporateSalesAdmin":
-                            return RedirectToAction("Home", "Home", new { area = "Corporate" });
+
                         default:
                             return RedirectToAction("Goto", "LogIn", new { area = "" });
                     }
@@ -217,6 +215,9 @@ namespace NBL.Controllers
                     return RedirectToAction("Home", "Home", new { area = "SCM" });
                 case "HRExecutive":
                     return RedirectToAction("Home", "Home", new { area = "HR" });
+                case "Corporate":
+                case "CorporateSalesAdmin":
+                    return RedirectToAction("Home", "Home", new { area = "Corporate" });
                 default:
                     return RedirectToAction("LogIn", "LogIn", new { area = "" });
             }

@@ -58,15 +58,12 @@ namespace NBL.Areas.Corporate.Controllers
         public ActionResult Home()
         {
 
-            Session.Remove("BranchId");
-            Session.Remove("Branch");
-
             int companyId = Convert.ToInt32(Session["CompanyId"]);
             var branches = _iBranchManager.GetAllBranches();
             ViewTotalOrder totalOrder = _iReportManager.GetTotalOrdersByCompanyIdAndYear(companyId, DateTime.Now.Year);
             var accountSummary = _iAccountsManager.GetAccountSummaryofCurrentMonthByCompanyId(companyId);
             var products = _iInventoryManager.GetStockProductByCompanyId(companyId);
-            var orders = _iOrderManager.GetOrdersByCompanyId(companyId).ToList();
+            //var orders = _iOrderManager.GetOrdersByCompanyId(companyId).ToList();
             var topClients = _iReportManager.GetTopClientsByYear(DateTime.Now.Year).ToList();
             var clients = _iClientManager.GetAllClientDetails();
             var topProducts = _iReportManager.GetPopularBatteriesByYear(DateTime.Now.Year).ToList();
@@ -77,12 +74,13 @@ namespace NBL.Areas.Corporate.Controllers
                 CompanyId = companyId,
                 TotalOrder = totalOrder,
                 TopClients = topClients,
-                Orders = orders,
+                Orders = new List<ViewOrder>(),
                 TopProducts = topProducts,
                 Clients = clients,
                 Employees = employees,
                 Products = products,
-                AccountSummary = accountSummary
+                AccountSummary = accountSummary,
+                ViewEntityCount = _iReportManager.GetTotalEntityCount()
 
             };
             return View(summary);
@@ -91,7 +89,7 @@ namespace NBL.Areas.Corporate.Controllers
         public PartialViewResult BranchWiseSummary()
         {
             var branches = _iBranchManager.GetAllBranches().ToList().FindAll(n => n.BranchId != 13).ToList();
-            foreach (ViewBranch branch in branches)
+            foreach (ViewBranch branch in branches.ToList().FindAll(n => n.BranchId != 14))
             {
                 branch.Orders = _iOrderManager.GetOrdersByBranchId(branch.BranchId).ToList();
             }
@@ -99,7 +97,7 @@ namespace NBL.Areas.Corporate.Controllers
             var invoicedOrders = _iInvoiceManager.GetAllInvoicedOrdersByCompanyId(companyId).ToList();
             SummaryModel model = new SummaryModel
             {
-                Branches = branches,
+                Branches = branches.ToList().FindAll(n => n.BranchId != 14),
                 InvoicedOrderList = invoicedOrders
             };
             return PartialView("_ViewOrderSummaryPartialPage", model);

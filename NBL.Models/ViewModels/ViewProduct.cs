@@ -50,6 +50,11 @@ namespace NBL.Models.ViewModels
         public ProductType ProductType { get; set; }
         public ProductCategory ProductCategory { get; set; }
         public int Age { get; set; }
+        public int AgeLimitInDealerStock { get; set; }     
+        public int AgeLimitInSelfStock { get; set; }    
+        public int AgeInStock { get; set; }     
+        public int LifeTime { get; set; }   
+
         public int IsSold { get; set; } 
 
     }

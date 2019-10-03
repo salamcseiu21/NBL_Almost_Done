@@ -2,6 +2,7 @@
 @*Sales Menu*@
 @{
     var user = (ViewUser)Session["user"];
+    var branchId = Convert.ToInt32(Session["BranchId"]);
 }
 @if (!user.IsPasswordChangeRequired)
 {
@@ -93,6 +94,22 @@
                 <li>@Html.ActionLink("  Replace List", "ReplaceList", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-eye" })</li>
             </ul>
         </li>
+        @if (branchId==9)
+        {
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-product-hunt"></i>
+                    <span>Policy Setup</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li>@Html.ActionLink("  Warranty Battery", "ProductWarrantyPolicy", "PolicySetup", new { area = "Services" }, new { @class = "fa fa-plus" })</li>
+                </ul>
+            </li>
+        }
+   
         @*<li class="treeview">
             <a href="#">
                 <i class="fa fa-product-hunt"></i>

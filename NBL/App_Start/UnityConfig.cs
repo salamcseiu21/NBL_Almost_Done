@@ -67,6 +67,9 @@ namespace NBL
             container.RegisterType<IRegionGateway, RegionGateway>();
             container.RegisterType<IRegionManager, RegionManager>();
 
+            container.RegisterType<IPolicyManager, PolicyManager>();
+            container.RegisterType<IPolicyGateway, PolicyGateway>();
+
             container.RegisterType<IReportGateway, ReportGateway>();
             container.RegisterType<IReportManager, ReportManager>();
             container.RegisterType<ITerritoryGateway, TerritoryGateway>();

@@ -5,6 +5,7 @@ using NBL.Models.EntityModels.Orders;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Replaces;
 
 namespace NBL.DAL.Contracts
@@ -33,6 +34,7 @@ namespace NBL.DAL.Contracts
         IEnumerable<Delivery> GetAllDeliveredOrdersByDistributionPointAndCompanyId(int branchId, int companyId);
         ICollection<ViewProduct> GetDeliveredProductListByTransactionRef(string deliveryRef);
         IEnumerable<ViewDeliveredOrderModel> GetDeliveredGeneralReqById(long deliveryId);
-        ICollection<Delivery> GetAllDeliveredOrdersByBranchAndCompany(int branchId, int companyId, int orderByUserId);  
+        ICollection<Delivery> GetAllDeliveredOrdersByBranchAndCompany(int branchId, int companyId, int orderByUserId);
+        ICollection<ViewClientStockProduct> GetClientStockProductAgeByDeliveryId(long deliveryId);
     }
 }
