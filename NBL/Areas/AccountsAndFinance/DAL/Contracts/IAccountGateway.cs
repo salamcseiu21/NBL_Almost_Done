@@ -108,5 +108,6 @@ namespace NBL.Areas.AccountsAndFinance.DAL.Contracts
        int ApproveProductPrice(ViewUser anUser, int productDetailsId,int productId);
        int CancelUnitPriceAmount(ViewUser anUser, int productDetailsId);
        int UpdateReceivableCheque(ChequeDetails oldChequeByDetails, ChequeDetails newChequeDetails);
+       ICollection<ChequeDetails> GetAllReceivableChequeByMonthYearAndStatus(int month, int year, int status);
    }
 }

@@ -351,7 +351,64 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
         }
 
-       
+        public ICollection<ChequeDetails> GetAllReceivableChequeByMonthYearAndStatus(int month, int year, int status)
+        {
+            try
+            {
+                List<ChequeDetails> details = new List<ChequeDetails>();
+                CommandObj.CommandText = "spGetAllReceivableChequeByMonthYearAndStatus";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Status", status);
+                CommandObj.Parameters.AddWithValue("@Month", month);
+                CommandObj.Parameters.AddWithValue("@Year", year);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    ChequeDetails aPayment = new ChequeDetails
+                    {
+                        ChequeDetailsId = Convert.ToInt32(reader["ChequeDetailsId"]),
+                        ReceivableId = Convert.ToInt32(reader["ReceivableId"]),
+                        SourceBankName = reader["SourceBankName"].ToString(),
+                        BankAccountNo = reader["BankAccountNo"].ToString(),
+                        ChequeNo = reader["ChequeNo"].ToString(),
+                        ChequeDate = Convert.ToDateTime(reader["ChequeDate"]),
+                        ChequeAmount = Convert.ToDecimal(reader["ChequeAmount"]),
+                        PaymentTypeId = Convert.ToInt32(reader["PaymentTypeId"]),
+                        SysDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        ReceivableRef = reader["ReceivableRef"].ToString(),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        ActiveStatus = Convert.ToInt32(reader["IsActivated"]),
+                        ClientInfo = reader["ClientInfo"].ToString(),
+                        ReceivableDateTime = Convert.ToDateTime(reader["ReceivableDateTime"]),
+                        Remarks = DBNull.Value.Equals(reader["RRemarks"]) ? null : reader["RRemarks"].ToString(),
+                        CancelRemarks = DBNull.Value.Equals(reader["CancelRemarks"]) ? null : reader["CancelRemarks"].ToString(),
+                        EntryByEmp = DBNull.Value.Equals(reader["EntryBy"]) ? null : reader["EntryBy"].ToString(),
+                        CollectionByBranch = reader["BranchName"].ToString(),
+                        Cancel = Convert.ToInt32(reader["Cancel"]),
+                        CancelByUserId = DBNull.Value.Equals(reader["CancelByUserId"]) ? (int?)null : Convert.ToInt32(reader["CancelByUserId"]),
+                        ActiveDate = DBNull.Value.Equals(reader["ActiveDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ActiveDate"])
+
+
+                    };
+                    details.Add(aPayment);
+                }
+                reader.Close();
+                return details;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect receivable cheques by month ,year and status", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
 
         public ICollection<ChequeDetails> GetAllReceivableChequeByBranchAndCompanyIdUserId(int branchId, int companyId, int userId)
         {
@@ -1857,6 +1914,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
 
         }
+
 
         public int ApproveDiscount(Discount discount)
         {

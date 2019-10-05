@@ -57,3 +57,4 @@ E:\API\NBL\NBL.Models\bin\Debug\System.Web.WebPages.Deployment.xml
 E:\API\NBL\NBL.Models\bin\Debug\System.Web.WebPages.Razor.xml
 E:\API\NBL\NBL.Models\obj\Debug\NBL.Models.dll
 E:\API\NBL\NBL.Models\obj\Debug\NBL.Models.pdb
+E:\API\NBL\NBL.Models\obj\Debug\NBL.Models.csprojResolveAssemblyReference.cache

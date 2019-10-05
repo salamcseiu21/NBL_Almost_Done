@@ -142,6 +142,11 @@ namespace NBL.Areas.AccountsAndFinance.BLL
             return rowAffected > 0;
         }
 
+        public ICollection<ChequeDetails> GetAllReceivableChequeByMonthYearAndStatus(int month, int year, int status)
+        {
+            return  _iAccountGateway.GetAllReceivableChequeByMonthYearAndStatus(month,year,status);
+        }
+
         public ChequeDetails GetReceivableChequeByDetailsId(int chequeDetailsId)
         {
             return _iAccountGateway.GetReceivableChequeByDetailsId(chequeDetailsId);

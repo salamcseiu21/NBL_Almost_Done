@@ -7,6 +7,7 @@ using System.Web.Mvc;
 namespace NBL.Areas.Corporate.Controllers
 {
 
+    [Authorize]
     public class SalesAdminController : Controller
     {
         // GET: Corporate/SalesAdmin

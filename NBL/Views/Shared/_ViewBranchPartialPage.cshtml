@@ -5,50 +5,55 @@
     var i = 0;
 }
 <section class="content">
-    <h3 class="text-center text-green headingStyle">Branch List</h3>
-    <table id="table_branch_list" class="display table table-bordered" style="border:1px solid black">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Branch List</div>
+        <div class="panel panel-body">
+            <table id="table_branch_list" class="display table table-bordered table-responsive" style="border: 1px solid black;width: 100%">
        
-        <thead>
-        <tr>
-            <th>S.N</th>
-            <th>Branch Name</th>
-            <th>Address</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th class="text-center">Opening Date</th>
-        </tr>
-        </thead>
+                <thead>
+                <tr>
+                    <th>S.N</th>
+                    <th>Branch Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th class="text-center">Opening Date</th>
+                </tr>
+                </thead>
 
-        <tbody>
+                <tbody>
 
-        @foreach (var item in Model)
-        {
-            i++;
-            <tr>
-                <td>@i</td>
-                <td>
-                    <h4>@item.BranchName</h4>
-                    <h5>@item.Title</h5>
-                </td>
-                <td>@item.BranchAddress</td>
-                <td>@item.BranchPhone</td>
-                <td>@item.BranchEmail</td>
-                <td class="text-center">@item.BranchOpenigDate.ToString("D")</td>
-            </tr>
-        }
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>
+                            <h4>@item.BranchName</h4>
+                            <h5>@item.Title</h5>
+                        </td>
+                        <td>@item.BranchAddress</td>
+                        <td>@item.BranchPhone</td>
+                        <td>@item.BranchEmail</td>
+                        <td class="text-center">@item.BranchOpenigDate.ToString("D")</td>
+                    </tr>
+                }
 
-        </tbody>
-        <tfoot>
-        <tr>
-            <th>S.N</th>
-            <th>Branch Name</th>
-            <th>Address</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th class="text-center">Opening Date</th>
-        </tr>
-        </tfoot>
-    </table>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>S.N</th>
+                    <th>Branch Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th class="text-center">Opening Date</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+  
 
 </section>
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>

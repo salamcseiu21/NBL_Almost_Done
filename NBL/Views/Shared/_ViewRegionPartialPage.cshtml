@@ -4,48 +4,53 @@
     ViewBag.Title = "Region List";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
 }
-<section class="content">
-    <h3 class="text-center text-green headingStyle">Region List</h3>
-    <table id="table_region_list" class="display table table-bordered" style="border:1px solid black">
+<section class="content"> 
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Region List</div>
+        <div class="panel panel-body">
+            <table id="table_region_list" class="display table table-bordered table-responsive" style="border: 1px solid black;width: 100%">
 
 
-        <thead>
-        <tr>
-            <th>Region Name</th>
-            <th>Territory List</th>
-        </tr>
-        </thead>
+                <thead>
+                <tr>
+                    <th>Region Name</th>
+                    <th>Territory List</th>
+                </tr>
+                </thead>
 
-        <tbody>
+                <tbody>
 
-        @foreach (var item in Model)
-        {
-            <tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
 
-                <td width="20%">
+                        <td width="20%">
                   
-                    <h4 style="font-weight:bolder;color:green;">@item.RegionName</h4>
-                </td>
-                <td>
-                    <ol>
-                        @foreach (var t in item.Territories)
-                        {
-                            <li>@t.TerritoryName</li>
-                        }
-                    </ol>
+                            <h4 style="font-weight:bolder;color:green;">@item.RegionName</h4>
+                        </td>
+                        <td>
+                            <ol>
+                                @foreach (var t in item.Territories)
+                                {
+                                    <li>@t.TerritoryName</li>
+                                }
+                            </ol>
 
-                </td>
-            </tr>
-        }
+                        </td>
+                    </tr>
+                }
 
-        </tbody>
-        <tfoot>
-        <tr>
-            <th>Region Name</th>
-            <th>Territory List</th>
-        </tr>
-        </tfoot>
-    </table>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Region Name</th>
+                    <th>Territory List</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+  
 </section>
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
 

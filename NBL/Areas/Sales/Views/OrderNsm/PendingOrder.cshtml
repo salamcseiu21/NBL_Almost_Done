@@ -6,60 +6,62 @@
    
 }
 <section class="content">
-    <h3 class="text-center text-green headingStyle">Pending Orders</h3>
-
-    <table id="table_pending_order_list" class="table table-bordered" style="border:1px solid black">
-        <thead>
-            <tr>
-                <th>Client Info</th>
-                <th>Order Slip No</th>
-                <th class="text-center">Qty</th>
-                <th class="text-center">Amount (&#2547;)</th>
-                <th class="text-center">Order Date</th>
-                <th class="text-center">Order By</th>
-                <th class="text-center">Action</th>
-            </tr>
-        </thead>
-
-        <tbody>
-
-            @foreach (var item in Model)
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Pending Orders</div>
+        <div class="panel panel-body">
+            <table id="table_pending_order_list" class="table table-bordered table-responsive" style="border: 1px solid black;width: 100%">
+                <thead>
+                    <tr>
+                        <th>Client Info</th>
+                        <th>Order Ref</th>
+                        <th class="text-center">Qty</th>
+                        <th class="text-center">Amount (&#2547;)</th>
+                        <th class="text-center">Order Date</th>
+                        <th class="text-center">Order By</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
             {
-                <tr>
-                   
-                    <td>
-                       @Html.Raw(item.Client.GetBasicInformation())
-                   </td>
-                    <td>@item.OrderSlipNo</td>
-                    <td class="text-right">@item.Quantity</td>
-                    <td class="text-right">@item.Amounts</td>
-                    <td class="text-center">@item.SysDate.ToShortTimeString(),@item.SysDate.ToString("dd-MMM-yyyy")
-                        @*<br/>
-                       @{
-                         @Calculator.TimeDuration(item.SysDate, DateTime.Now)
-                       }*@
-                    </td>
-                    <td>@(item.User?.EmployeeName?? "N/A")</td>
-                    <td class="text-center">
-                        @Html.ActionLink(" Cancel", "Cancel", "OrderNsm", new { id = item.OrderId }, new { @class = "fa fa-times" ,style="color:red;"}) &nbsp;|
-                        @Html.ActionLink(" Details", "Edit", "OrderNsm", new { area = "Sales", id = item.OrderId }, new { @class = "fa fa-eye" })
-                    </td>
-                </tr>
-            }
+                        <tr>
 
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Client Info</th>
-                <th>Order Slip No</th>
-                <th class="text-center">Qty</th>
-                <th class="text-center">Amount (&#2547;)</th>
-                <th class="text-center">Order Date</th>
-                <th class="text-center">Order By</th>
-                <th class="text-center">Action</th>
-            </tr>
-        </tfoot>
-    </table>
+                            <td>
+                                @Html.Raw(item.Client.GetBasicInformation())
+                            </td>
+                            <td>@item.OrderSlipNo</td>
+                            <td class="text-right">@item.Quantity</td>
+                            <td class="text-right">@item.Amounts</td>
+                            <td class="text-center">
+                                @item.SysDate.ToShortTimeString(),@item.SysDate.ToString("dd-MMM-yyyy")
+                                @*<br/>
+                            @{
+                              @Calculator.TimeDuration(item.SysDate, DateTime.Now)
+                            }*@
+                            </td>
+                            <td>@(item.User?.EmployeeName ?? "N/A")</td>
+                            <td class="text-center">
+                                @Html.ActionLink(" Cancel", "Cancel", "OrderNsm", new { id = item.OrderId }, new { @class = "fa fa-times", style = "color:red;" }) &nbsp;|
+                                @Html.ActionLink(" Details", "Edit", "OrderNsm", new { area = "Sales", id = item.OrderId }, new { @class = "fa fa-eye" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Client Info</th>
+                        <th>Order Ref</th>
+                        <th class="text-center">Qty</th>
+                        <th class="text-center">Amount (&#2547;)</th>
+                        <th class="text-center">Order Date</th>
+                        <th class="text-center">Order By</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+   
    
 </section>
 @section Scripts

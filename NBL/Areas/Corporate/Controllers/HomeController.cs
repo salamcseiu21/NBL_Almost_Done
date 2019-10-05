@@ -9,6 +9,7 @@ using NBL.Areas.Sales.BLL.Contracts;
 using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
+using NBL.Models;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Logs;
 using NBL.Models.Searchs;
@@ -550,7 +551,9 @@ namespace NBL.Areas.Corporate.Controllers
             try
             {
                 var client = _iClientManager.GetClientDeailsById(id);
-                return PartialView("_ViewClientProfilePartialPage", client);
+                var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+                client.LedgerModels = ledgers.ToList();
+                return PartialView("_ViewClientDetailsPartialPage", client);
             }
             catch (Exception exception)
             {
@@ -661,6 +664,72 @@ namespace NBL.Areas.Corporate.Controllers
         {
             var summary = _iClientManager.GetClientSummary();
             return View(summary);
+        }
+
+        public PartialViewResult Supplier()
+        {
+
+            try
+            {
+                var suppliers = _iCommonManager.GetAllSupplier().ToList();
+                return PartialView("_ViewSupplierPartialPage", suppliers);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
+
+
+        [HttpGet]
+        public ActionResult CollectionList() 
+        {
+            try
+            {
+                ICollection<ChequeDetails> collections = _iAccountsManager.GetAllReceivableChequeByCompanyIdAndStatus(1,1);
+                return View(collections);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpGet]
+        public ActionResult CurrentMonthCollection()
+        {
+            try
+            {
+                ICollection<ChequeDetails> collections = _iAccountsManager.GetAllReceivableChequeByMonthYearAndStatus(DateTime.Now.Month,DateTime.Now.Year,1);
+                return View(collections);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult CollectionSummary()
+        {
+            try
+            {
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                var collections = _iAccountsManager.GetAllReceivableChequeByCompanyIdAndStatus(companyId, 1);
+                return View(collections);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
     }
 }

@@ -8269,6 +8269,10 @@
     <Content Include="Areas\Corporate\Views\Home\SoldProducts.cshtml" />
     <Content Include="Areas\Corporate\Views\Home\ClientSummary.cshtml" />
     <Content Include="Areas\Corporate\Views\Home\SalesSummary.cshtml" />
+    <Content Include="Areas\Corporate\Views\Home\CollectionList.cshtml" />
+    <Content Include="Areas\Corporate\Views\Shared\_ViewCollectionListPartialPage.cshtml" />
+    <Content Include="Areas\Corporate\Views\Home\CurrentMonthCollection.cshtml" />
+    <Content Include="Areas\Corporate\Views\Home\CollectionSummary.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />

@@ -71,6 +71,7 @@ namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
        bool CancelVat(Vat vat);
        bool ApproveProductPrice(ViewUser anUser, int productDetailsId, int productId);
        bool CancelUnitPriceAmount(ViewUser anUser, int productDetailsId);
-       bool UpdateReceivableCheque(ChequeDetails oldChequeByDetails, ChequeDetails newChequeDetails); 
+       bool UpdateReceivableCheque(ChequeDetails oldChequeByDetails, ChequeDetails newChequeDetails);
+       ICollection<ChequeDetails> GetAllReceivableChequeByMonthYearAndStatus(int month, int year, int status); 
    }
 }

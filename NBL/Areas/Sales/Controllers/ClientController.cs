@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.BLL.Contracts;
 using NBL.DAL;
 using NBL.DAL.Contracts;
@@ -30,8 +31,9 @@ namespace NBL.Areas.Sales.Controllers
         private readonly ITerritoryGateway _iTerritoryGateway;
         private readonly IDistrictManager _iDistrictManager;
         private readonly IBranchManager _iBranchManager;
+        private readonly IAccountsManager _iAccountsManager;
         // GET: Sales/Client
-        public ClientController(IClientManager iClientManager,ICommonManager iCommonManager,IRegionManager iRegionManager,ITerritoryGateway iTerritoryGateway,IDistrictManager iDistrictManager,IBranchManager iBranchManager)
+        public ClientController(IClientManager iClientManager,ICommonManager iCommonManager,IRegionManager iRegionManager,ITerritoryGateway iTerritoryGateway,IDistrictManager iDistrictManager,IBranchManager iBranchManager,IAccountsManager iAccountsManager)
         {
             _iClientManager = iClientManager;
             _iCommonManager = iCommonManager;
@@ -39,6 +41,7 @@ namespace NBL.Areas.Sales.Controllers
             _iTerritoryGateway = iTerritoryGateway;
             _iDistrictManager = iDistrictManager;
             _iBranchManager = iBranchManager;
+            _iAccountsManager = iAccountsManager;
         }
         public ActionResult All()
         {
@@ -254,7 +257,9 @@ namespace NBL.Areas.Sales.Controllers
             try
             {
                 var client = _iClientManager.GetClientDeailsById(id);
-                return View(client);
+                var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+                client.LedgerModels = ledgers.ToList();
+                return PartialView("_ViewClientDetailsPartialPage", client);
             }
             catch (Exception exception)
             {

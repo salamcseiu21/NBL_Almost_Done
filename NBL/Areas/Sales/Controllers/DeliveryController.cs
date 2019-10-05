@@ -726,7 +726,7 @@ namespace NBL.Areas.Sales.Controllers
         }
 
         //---------------------Order History----
-        [Authorize(Roles = "SalesAdmin,SalesManager,SalesExecutive")]
+        [Authorize(Roles = "SalesAdmin,SalesManager,SalesExecutive,CorporateSalesManager")]
         public ActionResult OrderHistory()
         {
             try
@@ -742,7 +742,7 @@ namespace NBL.Areas.Sales.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
-        [Authorize(Roles = "SalesAdmin,SalesManager,SalesExecutive")]
+        [Authorize(Roles = "SalesAdmin,SalesManager,SalesExecutive,CorporateSalesManager")]
 
         public ActionResult OrderHistoryDetails(int id)
         {
