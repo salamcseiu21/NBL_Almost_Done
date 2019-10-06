@@ -146,7 +146,9 @@ namespace NBL.Areas.Sales.Controllers
             try
             {
                 var client = _iClientManager.GetClientDeailsById(id);
-                return PartialView("_ViewClientProfilePartialPage", client);
+                var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+                client.LedgerModels = ledgers.ToList();
+                return PartialView("_ViewClientDetailsPartialPage", client);
             }
             catch (Exception exception)
             {

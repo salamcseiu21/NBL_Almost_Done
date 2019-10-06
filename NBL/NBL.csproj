@@ -322,6 +322,7 @@
     <Compile Include="Areas\CommonArea\Controllers\ShowInfoController.cs" />
     <Compile Include="Areas\Corporate\Controllers\HomeController.cs" />
     <Compile Include="Areas\Corporate\Controllers\OperationHeadController.cs" />
+    <Compile Include="Areas\Corporate\Controllers\ReportsController.cs" />
     <Compile Include="Areas\Corporate\Controllers\SalesAdminController.cs" />
     <Compile Include="Areas\Corporate\Controllers\SummariesController.cs" />
     <Compile Include="Areas\Corporate\CorporateAreaRegistration.cs" />
@@ -8273,6 +8274,11 @@
     <Content Include="Areas\Corporate\Views\Shared\_ViewCollectionListPartialPage.cshtml" />
     <Content Include="Areas\Corporate\Views\Home\CurrentMonthCollection.cshtml" />
     <Content Include="Areas\Corporate\Views\Home\CollectionSummary.cshtml" />
+    <Content Include="Areas\Corporate\Views\Home\CurrentYearCollection.cshtml" />
+    <Content Include="Areas\Corporate\Views\Reports\MonthlyReport.cshtml" />
+    <Content Include="Areas\Corporate\Views\Reports\DailyReport.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Home\DeliveryDetails.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\SuperReport\ClientStock.cshtml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />

@@ -8,6 +8,7 @@ using NBL.Models.EntityModels.Orders;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Products;
+using NBL.Models.ViewModels.Reports;
 
 namespace NBL.BLL
 {
@@ -140,9 +141,19 @@ namespace NBL.BLL
             return _iDeliveryGateway.GetClientStockProductAgeByDeliveryId(deliveryId);
         }
 
+        public ICollection<ViewClientStockReport> GetAllClientsByClientTypeId(int clientTypeId)
+        {
+            return _iDeliveryGateway.GetAllClientsByClientTypeId(clientTypeId);
+        }
+
         public ICollection<ViewDeliveredOrderModel> GetDeliveredOrderByClientId(int clientId)
         {
-            return _iDeliveryGateway.GetDeliveredOrderByClientId(clientId);
+            var deliveredOrderList = _iDeliveryGateway.GetDeliveredOrderByClientId(clientId);   
+            foreach (var item in deliveredOrderList)
+            {
+                item.ClientStockProducts=_iDeliveryGateway.GetClientStockProductAgeByDeliveryId(item.DeliveryId);
+            }
+            return deliveredOrderList;
         }
 
         public ICollection<ViewDeliveredOrderModel> GetDeliveryDetailsInfoByDeliveryId(long deliveryId)

@@ -18,7 +18,9 @@ using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Logs;
 using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
+using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Summaries;
 
 namespace NBL.Areas.SuperAdmin.Controllers
@@ -298,7 +300,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
 
         public ActionResult DeliveredOrders()
         {
-          var orders= _iDeliveryManager.GetAllDeliveredOrders();
+            var orders= _iDeliveryManager.GetAllDeliveredOrders();
             return View(orders);
         }
 
@@ -366,8 +368,29 @@ namespace NBL.Areas.SuperAdmin.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
-        
-       
+
+        public ActionResult DeliveryDetails(long id)
+        {
+            try
+            {
+                var deliveryDetails = _iDeliveryManager.GetDeliveredOrderDetailsByDeliveryId(id);
+                var delivery = _iDeliveryManager.GetOrderByDeliveryId(id);
+                ICollection<ViewClientStockProduct> products = _iDeliveryManager.GetClientStockProductAgeByDeliveryId(id);
+                ViewDeliveryModel model = new ViewDeliveryModel
+                {
+                    DeliveryDetailses = deliveryDetails.ToList(),
+                    Delivery = delivery,
+                    Client = _iClientManager.GetById(delivery.Client.ClientId),
+                    ClientStockProducts = products.ToList()
+                };
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         public ActionResult Clients()
         {
             try

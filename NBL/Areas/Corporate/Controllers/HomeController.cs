@@ -714,6 +714,21 @@ namespace NBL.Areas.Corporate.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+        [HttpGet]
+        public ActionResult CurrentYearCollection()
+        {
+            try
+            {
+                ICollection<ChequeDetails> collections = _iAccountsManager.GetAllReceivableChequeByYearAndStatus(DateTime.Now.Year, 1);
+                return View(collections);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
 
         [HttpGet]
         public ActionResult CollectionSummary()

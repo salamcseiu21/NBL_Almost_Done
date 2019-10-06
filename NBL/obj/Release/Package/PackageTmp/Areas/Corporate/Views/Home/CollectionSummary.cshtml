@@ -1,0 +1,54 @@
+﻿@model IEnumerable<NBL.Models.ChequeDetails>
+@{
+    ViewBag.Title = "Collection Summary";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <div class="panel panel-success">
+        <div class="panel panel-info">
+            <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Collection Summary</div>
+            <div class="panel panel-body">
+                <div class="panel panel-body">
+                    <table class="display table-bordered" id="tbl_Collection_List" style="border: 1px solid">
+                        <thead>
+                        <tr>
+                            <th>Branch Name</th>
+                            <th class="text-right">Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model.GroupBy(n => n.CollectionByBranch))
+                        {
+                            <tr>
+                                <td>@item.Key</td>
+                                <td class="text-right">@item.Sum(n => n.ChequeAmount).ToString("N2")</td>
+                            </tr>
+                        }
+                        </tbody>
+                        <tfoot>
+
+                        <tr>
+                            <th class="text-right">Total :</th>
+                            <th class="text-right">@Model.Sum(n => n.ChequeAmount).ToString("N2")</th>
+                        </tr>
+                        <tr>
+                            <th>Branch Name</th>
+                            <th class="text-right">Amount</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+     
+    </div>
+
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_Collection_List").DataTable();
+    </script>
+}

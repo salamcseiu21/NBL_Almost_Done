@@ -14,6 +14,7 @@ using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Replaces;
+using NBL.Models.ViewModels.Reports;
 
 namespace NBL.DAL
 {
@@ -1164,7 +1165,6 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@DeliveryId", deliveryId);
                 List<ViewClientStockProduct> models = new List<ViewClientStockProduct>();
                 ConnectionObj.Open();
-
                 SqlDataReader reader = CommandObj.ExecuteReader();
                 while (reader.Read())
                 {
@@ -1177,7 +1177,8 @@ namespace NBL.DAL
                         ProductCategory = reader["ProductCategoryName"].ToString(),
                         AgeInDealerStock = Convert.ToInt32(reader["AgeInDealerStock"]),
                         AgeLimitInDealerStock = Convert.ToInt32(reader["AgeLimitInDealerStock"]),
-                        LifeTime = Convert.ToInt32(reader["LifeTime"])
+                        LifeTime = Convert.ToInt32(reader["LifeTime"]),
+                        ReceiveQuantity = Convert.ToInt32(reader["ReceiveQuantity"])
                     });
                 }
                 reader.Close();
@@ -1193,6 +1194,47 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Client stock product age by delivery id", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<ViewClientStockReport> GetAllClientsByClientTypeId(int clientTypeId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetAllClientsByClientTypeId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ClientTypeId", clientTypeId);
+                List<ViewClientStockReport> models = new List<ViewClientStockReport>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ViewClientStockReport 
+                    {
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        ClientName = reader["ClientName"].ToString(),
+                        ClientCode = reader["SubSubSubAccountCode"].ToString()
+                    });
+                }
+                reader.Close();
+                return models;
+
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Client by client type id due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Client by client type id", exception);
             }
             finally
             {

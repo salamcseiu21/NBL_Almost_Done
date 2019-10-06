@@ -521,7 +521,7 @@ namespace NBL.Areas.Sales.Controllers
 
 
 
-        [Authorize(Roles = "SalesManager")]
+        [Authorize(Roles = "SalesManager,CorporateSalesManager")]
         public ActionResult Requisition()
         {
 

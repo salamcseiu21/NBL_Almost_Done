@@ -43,6 +43,7 @@ namespace NBL.Models.EntityModels.Deliveries
         public Client Client { get; set; }
         public ViewTripModel TripModel { get; set; }
         public FinancialTransactionModel FinancialTransactionModel { get; set; }    
+        
         public Delivery()
         {
             Transport=new Transport();

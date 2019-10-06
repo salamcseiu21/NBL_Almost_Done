@@ -322,7 +322,7 @@ namespace NBL.Areas.Sales.Controllers
             }
             else if (user.IsCorporateUser == 1)
             {
-                collections = _iAccountsManager.GetAllReceivableCheque(companyId, 0).ToList();
+                collections = _iAccountsManager.GetAllReceivableCheque(companyId,0).ToList();
             }
             else
             {

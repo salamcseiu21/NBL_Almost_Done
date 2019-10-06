@@ -10,97 +10,101 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-green">Order History Details</h3>
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Order History Details</div>
+        <div class="panel panel-body">
+            <div style="border: 1px dotted; padding: 10px; font-size: 18px">
+                @Html.Partial("_OrderDetailsHeaderPartialPage", Model)
+                <div class="row">
+                    <div class="col-md-4">
+                        <fieldset>
+                            <legend>Order By</legend>
+                            @userManager.GetUserInformationByUserId(Model.UserId).EmployeeName<br />
+                            At:  @Model.SysDate.ToShortTimeString(),@Model.SysDate.ToString("dd-MMM-yyyy")
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset>
+                            <legend>Sales Manager</legend>
+                            @if (Model.NsmUserId != null)
+                            {
+                                <p>
+                                    @userManager.GetUserInformationByUserId(Convert.ToInt32(Model.NsmUserId)).EmployeeName<br />
+                                    Approve At : @(Model.ApprovedByNsmDateTime?.ToShortTimeString()),@(Model.ApprovedByNsmDateTime?.ToString("dd-MMM-yyyy"))
+                                </p>
+                            }
+                            else
+                            {
+                                <p>N/A</p>
+                            }
 
-    <div style="border: 1px dotted; padding: 10px; font-size: 18px">
-        @Html.Partial("_OrderDetailsHeaderPartialPage", Model)
-        <div class="row">
-            <div class="col-md-4">
-                <fieldset>
-                    <legend>Order By</legend>
-                    @userManager.GetUserInformationByUserId(Model.UserId).EmployeeName<br />
-                    At:  @Model.SysDate.ToShortTimeString(),@Model.SysDate.ToString("dd-MMM-yyyy")
-                </fieldset>
-            </div>
-            <div class="col-md-4">
-                <fieldset>
-                    <legend>Sales Manager</legend>
-                    @if (Model.NsmUserId != null)
-                    {
-                        <p>
-                            @userManager.GetUserInformationByUserId(Convert.ToInt32(Model.NsmUserId)).EmployeeName<br />
-                            Approve At : @(Model.ApprovedByNsmDateTime?.ToShortTimeString()),@(Model.ApprovedByNsmDateTime?.ToString("dd-MMM-yyyy"))
-                        </p>
-                    }
-                    else
-                    {
-                        <p>N/A</p>
-                    }
 
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset>
+                            <legend>Sales Admin</legend>
+                            @if (Model.AdminUserId != null)
+                            {
+                                <p>
+                                    @userManager.GetUserInformationByUserId(Convert.ToInt32(Model.AdminUserId)).EmployeeName<br />
+                                    Approve At : @(Model.ApprovedByAdminDateTime?.ToShortTimeString()),@(Model.ApprovedByAdminDateTime?.ToString("dd-MMM-yyyy"))
+                                </p>
+                            }
+                            else
+                            {
+                                <p>N/A</p>
+                            }
+                        </fieldset>
+                    </div>
+                </div><hr />
+                <div class="row">
+                    <div class="col-md-3"><label>Net Amount:</label> @Model.NetAmounts (&#2547;)</div>
+                    <div class="col-md-3"><label>Discount:</label> @Model.Discount (&#2547;)</div>
+                    <div class="col-md-2"><label>Special Discount: </label> @Model.SpecialDiscount (&#2547;)</div>
+                    <div class="col-md-2"><label>Vat: </label>@Model.Vat (&#2547;)</div>
+                    <div class="col-md-2"><label>Quantity: </label>@Model.OrderItems.Sum(n => n.Quantity)</div>
+                </div>
+                <hr />
+                <h3 class="text-center text-green headingStyle">Ordered Product List</h3>
+                <table id="table_product_list" class="display table-bordered" style="border:1px solid black;font-size:14px">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
 
-                </fieldset>
-            </div>
-            <div class="col-md-4">
-                <fieldset>
-                    <legend>Sales Admin</legend>
-                    @if (Model.AdminUserId != null)
-                    {
-                        <p>
-                            @userManager.GetUserInformationByUserId(Convert.ToInt32(Model.AdminUserId)).EmployeeName<br />
-                            Approve At : @(Model.ApprovedByAdminDateTime?.ToShortTimeString()),@(Model.ApprovedByAdminDateTime?.ToString("dd-MMM-yyyy"))
-                        </p>
-                    }
-                    else
-                    {
-                        <p>N/A</p>
-                    }
-                </fieldset>
-            </div>
-        </div><hr />
-        <div class="row">
-            <div class="col-md-3"><label>Net Amount:</label> @Model.NetAmounts (&#2547;)</div>
-            <div class="col-md-3"><label>Discount:</label> @Model.Discount (&#2547;)</div>
-            <div class="col-md-2"><label>Special Discount: </label> @Model.SpecialDiscount (&#2547;)</div>
-            <div class="col-md-2"><label>Vat: </label>@Model.Vat (&#2547;)</div>
-            <div class="col-md-2"><label>Quantity: </label>@Model.OrderItems.Sum(n => n.Quantity)</div>
-        </div>
-        <hr />
-        <h3 class="text-center text-green headingStyle">Ordered Product List</h3>
-        <table id="table_product_list" class="display table-bordered" style="border:1px solid black;font-size:14px">
-            <thead>
-                <tr>
-                    <th>Product Name</th>
-
-                    <th class="text-right">Unit Price (&#2547;)</th>
-                    <th class="text-right">Discount (&#2547;)</th>
-                    <th class="text-right">Vat (&#2547;)</th>
-                    <th class="text-right">Sale Price (&#2547;)</th>
-                    <th class="text-center">Quantity</th>
-                    <th class="text-right">Sub Total (&#2547;)</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.OrderItems)
+                            <th class="text-right">Unit Price (&#2547;)</th>
+                            <th class="text-right">Discount (&#2547;)</th>
+                            <th class="text-right">Vat (&#2547;)</th>
+                            <th class="text-right">Sale Price (&#2547;)</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-right">Sub Total (&#2547;)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderItems)
             {
-                    <tr>
-                        <td>@item.ProductName</td>
+                            <tr>
+                                <td>@item.ProductName</td>
 
-                        <td class="text-right">@item.UnitPrice</td>
-                        <td class="text-right">@item.DiscountAmount</td>
-                        <td class="text-right">@item.Vat</td>
-                        <td class="text-right">@item.SalePrice</td>
-                        <td class="text-right">@item.Quantity</td>
-                        <td class="text-right">
-                            @(item.Quantity * item.SalePrice)
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                                <td class="text-right">@item.UnitPrice</td>
+                                <td class="text-right">@item.DiscountAmount</td>
+                                <td class="text-right">@item.Vat</td>
+                                <td class="text-right">@item.SalePrice</td>
+                                <td class="text-right">@item.Quantity</td>
+                                <td class="text-right">
+                                    @(item.Quantity * item.SalePrice)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
 
 
-        @Html.ActionLink("Back to List", "OrderHistory", null, null, new { @class = "btn btn-info" })
+                @Html.ActionLink("Back to List", "OrderHistory", null, null, new { @class = "btn btn-info" })
+            </div>
+        </div>
     </div>
+   
 </section>
 
 @section Scripts

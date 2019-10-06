@@ -34,16 +34,16 @@
             <ul class="treeview-menu">
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-circle-o"></i> Sales
+                        <i class="fa fa-circle-o"></i> Collection
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li>@Html.ActionLink(" All", "SuperSalesReport", "SuperReport", new {area = "Corporate"}, new {@class = "fa fa-file", style = "font-weight: bolder"})</li>
-                        <li><a href="#"><i class="fa fa-file"></i> Daily Reports</a></li>
-                        <li><a href="#"><i class="fa fa-file"></i>Monthly Reports</a></li>
-                        <li><a href="#"><i class="fa fa-file"></i> Yearly Reports</a></li>
+                        <li>@Html.ActionLink(" Daily Reports", "DailyReport", "Reports", new { area = "Corporate" }, new { @class = "fa fa-file", style = "font-weight: bolder" })</li>
+                        <li>@Html.ActionLink(" Monthly Reports", "MonthlyReport", "Reports", new {area = "Corporate"}, new {@class = "fa fa-file", style = "font-weight: bolder"})</li>
+                        <li>@Html.ActionLink(" Yearly Reports", "CollectionList", "Home", new {area = "Corporate"}, new {@class = "fa fa-file", style = "font-weight: bolder"})</li>
+                        <li>@Html.ActionLink(" Collection Summary", "CollectionSummary", "Home", new {area = "Corporate"}, new {@class = "fa fa-file", style = "font-weight: bolder"})</li>
                     </ul>
                 </li>
                 <li class="treeview">

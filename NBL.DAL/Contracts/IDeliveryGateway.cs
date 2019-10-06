@@ -7,6 +7,7 @@ using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Replaces;
+using NBL.Models.ViewModels.Reports;
 
 namespace NBL.DAL.Contracts
 {
@@ -36,5 +37,6 @@ namespace NBL.DAL.Contracts
         IEnumerable<ViewDeliveredOrderModel> GetDeliveredGeneralReqById(long deliveryId);
         ICollection<Delivery> GetAllDeliveredOrdersByBranchAndCompany(int branchId, int companyId, int orderByUserId);
         ICollection<ViewClientStockProduct> GetClientStockProductAgeByDeliveryId(long deliveryId);
+        ICollection<ViewClientStockReport> GetAllClientsByClientTypeId(int clientTypeId);
     }
 }

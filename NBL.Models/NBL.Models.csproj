@@ -234,6 +234,7 @@
     <Compile Include="ViewModels\Reports\OrderHistory.cs" />
     <Compile Include="ViewModels\Reports\TerritoryWiseDeliveredQty.cs" />
     <Compile Include="ViewModels\Reports\UserWiseOrder.cs" />
+    <Compile Include="ViewModels\Reports\ViewClientStockReport.cs" />
     <Compile Include="ViewModels\Requisitions\ViewCreateGeneralRequsitionModel.cs" />
     <Compile Include="ViewModels\Requisitions\ViewGeneralRequisitionModel.cs" />
     <Compile Include="ViewModels\Requisitions\ViewGeneralRequistionDetailsModel.cs" />

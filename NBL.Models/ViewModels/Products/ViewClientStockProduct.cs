@@ -12,6 +12,7 @@ namespace NBL.Models.ViewModels.Products
         public string ProductName { get; set; }
         public string ProductCategory { get; set; }
         public int Quantity { get; set; }
+        public int ReceiveQuantity { get; set; }    
         public int AgeInDealerStock { get; set; }
         public int AgeLimitInDealerStock { get; set; } 
         public int LifeTime { get; set; }    

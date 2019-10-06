@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using NBL.Models.ViewModels.Products;
+
 namespace NBL.Models.ViewModels.Deliveries
 {
    public class ViewDeliveredOrderModel
@@ -44,5 +47,6 @@ namespace NBL.Models.ViewModels.Deliveries
         public decimal SalePrice { get; set; }
         public decimal VatAmount { get; set; }
         public decimal UnitDiscount { get; set; }
+        public ICollection<ViewClientStockProduct> ClientStockProducts { get; set; }
     }
 }

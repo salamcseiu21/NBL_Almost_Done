@@ -238,4 +238,21 @@
     <LogDateTime>2019-10-05T09:47:28.922892+06:00</LogDateTime>
     <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
   </Error>
+  <Error LogId="19-Oct-060df410e0-5aa0-4ad0-9f75-12c8507be254">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   at System.Convert.ToDateTime(Object value)
+   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllReceivableCheque(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 755</LogMessage>
+    <LogDateTime>2019-10-06T10:36:39.1059982+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Oct-060f936cdd-4770-40a5-9f50-26c7abdc7aba">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.DeliveryGateway.GetAllClientsByClientTypeId(Int32 clientTypeId) in E:\API\NBL\NBL.DAL\DeliveryGateway.cs:line 1218</LogMessage>
+    <LogDateTime>2019-10-06T15:17:37.5664654+06:00</LogDateTime>
+    <CustomeMessage>DeliveryId</CustomeMessage>
+  </Error>
 </Errors>

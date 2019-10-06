@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.Models.ViewModels.Products;
+using NBL.Models.ViewModels.Reports;
 
 namespace NBL.Areas.SuperAdmin.Controllers
 {
@@ -16,12 +18,14 @@ namespace NBL.Areas.SuperAdmin.Controllers
         private readonly  IOrderManager _iOrderManager;
         private readonly IReportManager _iReportManager;
         private readonly IInventoryManager _iInventoryManager;
+        private readonly IDeliveryManager _iDeliveryManager;
 
-        public SuperReportController(IOrderManager iOrderManager,IReportManager iReportManager,IInventoryManager iInventoryManager)
+        public SuperReportController(IOrderManager iOrderManager,IReportManager iReportManager,IInventoryManager iInventoryManager,IDeliveryManager iDeliveryManager)
         {
             _iOrderManager = iOrderManager;
             _iReportManager = iReportManager;
             _iInventoryManager = iInventoryManager;
+            _iDeliveryManager = iDeliveryManager;
         }
         public ActionResult SuperSalesReport()
         {
@@ -120,6 +124,16 @@ namespace NBL.Areas.SuperAdmin.Controllers
             }
             TempData["T"] = model;
             return View();
+        }
+
+        public ActionResult ClientStock()
+        {
+            ICollection<ViewClientStockReport>  reports= _iDeliveryManager.GetAllClientsByClientTypeId(3);
+            foreach (var report in reports)
+            {
+                report.DeliveredOrderModels = _iDeliveryManager.GetDeliveredOrderByClientId(report.ClientId);
+            }
+            return View(reports);
         }
     }
 }

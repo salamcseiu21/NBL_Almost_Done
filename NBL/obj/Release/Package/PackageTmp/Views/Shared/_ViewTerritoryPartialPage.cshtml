@@ -6,45 +6,51 @@
    
 }
 <section class="content">
-    <h3 class="text-center text-green headingStyle">Territory List</h3>
-    <table id="table_territory_list" class="display table table-bordered" style="border:1px solid black">
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Territory List</div>
+        <div class="panel panel-body">
+            <table id="table_territory_list" class="display table table-bordered table-responsive" style="border: 1px solid black;width: 100%">
 
 
-        <thead>
-        <tr>
-            <th width="20%">Territory Name</th>
-            <th>Description</th>
+                <thead>
+                <tr>
+                    <th width="20%">Territory Name</th>
+                    <th>Description</th>
 
-        </tr>
-        </thead>
+                </tr>
+                </thead>
 
-        <tbody>
+                <tbody>
 
-        @foreach (var item in Model)
-        {
-            <tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
 
-                <td>
-                    <h4 style="font-weight:bolder;color:green;">@item.TerritoryName</h4>
+                        <td>
+                            <h4 style="font-weight:bolder;color:green;">@item.TerritoryName</h4>
 
-                </td>
-                <td>
-                    @(item.Description?? "N/A")
+                        </td>
+                        <td>
+                            @(item.Description?? "N/A")
 
-                </td>
+                        </td>
 
-            </tr>
-        }
+                    </tr>
+                }
 
-        </tbody>
-        <tfoot>
-        <tr>
-            <th>Territory Name</th>
-            <th>Description</th>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Territory Name</th>
+                    <th>Description</th>
 
-        </tr>
-        </tfoot>
-    </table>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+   
 
 </section>
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>

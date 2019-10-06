@@ -72,6 +72,8 @@ namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
        bool ApproveProductPrice(ViewUser anUser, int productDetailsId, int productId);
        bool CancelUnitPriceAmount(ViewUser anUser, int productDetailsId);
        bool UpdateReceivableCheque(ChequeDetails oldChequeByDetails, ChequeDetails newChequeDetails);
-       ICollection<ChequeDetails> GetAllReceivableChequeByMonthYearAndStatus(int month, int year, int status); 
+       ICollection<ChequeDetails> GetAllReceivableChequeByMonthYearAndStatus(int month, int year, int status);
+       ICollection<ChequeDetails> GetAllReceivableChequeByYearAndStatus(int year, int status);
+       IEnumerable<ChequeDetails> GetAllReceivableChequeBySearchCriteriaAndStatus(SearchCriteria searchCriteria, int status);
    }
 }

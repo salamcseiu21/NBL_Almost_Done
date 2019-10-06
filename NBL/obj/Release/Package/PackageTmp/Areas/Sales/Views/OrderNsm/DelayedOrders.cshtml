@@ -6,76 +6,72 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-red headingStyle">Delayed Order List</h3>
-    <table id="table_Order_list" class="table table-bordered" style="border:1px solid black">
+ 
+    <div class="panel panel-info">
+        <div class="panel panel-heading text-red" style="font-size: 22px;font-weight: bolder">Delayed Order List</div>
+        <div class="panel panel-body">
+            <table id="table_Order_list" class="table table-bordered table-responsive" style="border: 1px solid black;width: 100%">
 
-
-        <thead>
-            <tr>
-                <th>Client Info</th>
-                <th>Order Slip No</th>
-                <th class="text-right">Amount (&#2547;)</th>
-                <th class="text-right">Vat (&#2547;)</th>
-                <th class="text-right">Discount (&#2547;)</th>
-                <th class="text-right">S.D (&#2547;)</th>
-                <th class="text-right">Net Amount (&#2547;)</th>
-                <th class="text-right">Qty</th>
-                <th class="text-center">Date</th>
-                <th class="text-center">Status</th>
-
-                <th class="text-center">View</th>
-            </tr>
-        </thead>
-
-        <tbody>
-
-            @foreach (var order in Model)
+                <thead>
+                    <tr>
+                        <th>Client Info</th>
+                        <th>Order Ref</th>
+                        <th class="text-right">Amount (&#2547;)</th>
+                        <th class="text-right">Vat (&#2547;)</th>
+                        <th class="text-right">Discount (&#2547;)</th>
+                        <th class="text-right">S.D (&#2547;)</th>
+                        <th class="text-right">Net Amount (&#2547;)</th>
+                        <th class="text-right">Qty</th>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">View</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
             {
 
 
-                <tr>
-
-                    <td>@Html.Raw(order.Client.GetBasicInformation())</td>
-                    <td>@order.OrderSlipNo</td>
-                    <td class="text-right">@(order.Amounts - order.Vat)</td>
-                    <td class="text-right">@order.Vat</td>
-                    <td class="text-right">@order.Discount</td>
-                    <td class="text-right">@order.SpecialDiscount</td>
-
-                    <td class="text-right">@order.NetAmounts</td>
-                    <td class="text-right">@order.Quantity</td>
-                    <td class="text-center">
-
-                        @order.OrderDate.ToString("dd-MMM-yyyy")
-                    </td>
-                    <td class="text-center">
-                        <label class="text-danger"><i class="fa fa-spinner"></i> Pending</label>
-
-                    </td>
-
-                    <td class="text-center">
-                        <button type="button" value="@order.OrderId" class="btn btn-success btn-sm" onclick="viewDetails(this)"><i class="fa fa-eye"></i> Details</button>
-                    </td>
-                </tr>
-            }
-
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Client Info</th>
-                <th>Order Slip No</th>
-                <th class="text-right">Amount (&#2547;)</th>
-                <th class="text-right">Vat (&#2547;)</th>
-                <th class="text-right">Discount (&#2547;)</th>
-                <th class="text-right">S.D (&#2547;)</th>
-                <th class="text-right">Net Amount (&#2547;)</th>
-                <th class="text-right">Qty</th>
-                <th class="text-center">Date</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">View</th>
-            </tr>
-        </tfoot>
-    </table>
+                        <tr>
+                            <td>@Html.Raw(order.Client.GetBasicInformation())</td>
+                            <td>@order.OrderSlipNo</td>
+                            <td class="text-right">@(order.Amounts - order.Vat)</td>
+                            <td class="text-right">@order.Vat</td>
+                            <td class="text-right">@order.Discount</td>
+                            <td class="text-right">@order.SpecialDiscount</td>
+                            <td class="text-right">@order.NetAmounts</td>
+                            <td class="text-right">@order.Quantity</td>
+                            <td class="text-center">
+                                @order.OrderDate.ToString("dd-MMM-yyyy")
+                            </td>
+                            <td class="text-center">
+                                <label class="text-danger"><i class="fa fa-spinner"></i> Pending</label>
+                            </td>
+                            <td class="text-center">
+                                <button type="button" value="@order.OrderId" class="btn btn-success btn-sm" onclick="viewDetails(this)"><i class="fa fa-eye"></i> Details</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Client Info</th>
+                        <th>Order Ref</th>
+                        <th class="text-right">Amount (&#2547;)</th>
+                        <th class="text-right">Vat (&#2547;)</th>
+                        <th class="text-right">Discount (&#2547;)</th>
+                        <th class="text-right">S.D (&#2547;)</th>
+                        <th class="text-right">Net Amount (&#2547;)</th>
+                        <th class="text-right">Qty</th>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">View</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+  
     @Html.Partial("_ModalPartialPage")
 </section>
 @section Scripts

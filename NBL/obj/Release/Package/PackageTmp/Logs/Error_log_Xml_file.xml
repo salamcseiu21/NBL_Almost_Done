@@ -198,4 +198,44 @@
     <LogDateTime>2019-10-03T10:32:45.5333332+06:00</LogDateTime>
     <CustomeMessage>Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, &lt;, &lt;= , &gt;, &gt;= or when the subquery is used as an expression.</CustomeMessage>
   </Error>
+  <Error LogId="19-Oct-05c051b91b-0641-42cb-91dd-03ddeab9865e">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at NBL.DAL.ClientGateway.GetClientByOrderCountAndBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 982</LogMessage>
+    <LogDateTime>2019-10-05T09:46:54.5997156+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Oct-050d3a814d-80b3-48b2-b766-819052008b19">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ClientGateway.GetClientByOrderCountAndBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 1023
+   at NBL.BLL.ClientManager.GetClientByOrderCountAndBranchId(Int32 branchId) in E:\API\NBL\NBL.BLL\ClientManager.cs:line 108
+   at NBL.Areas.Sales.Controllers.ClientController.All() in E:\API\NBL\NBL\Areas\Sales\Controllers\ClientController.cs:line 49</LogMessage>
+    <LogDateTime>2019-10-05T09:46:54.65756+06:00</LogDateTime>
+    <CustomeMessage>Unable to collect Clients by Branch Id</CustomeMessage>
+  </Error>
+  <Error LogId="19-Oct-052c165855-a69a-4737-9adc-7bb8198e3fdc">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at NBL.DAL.ClientGateway.GetClientByOrderCountAndBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 982</LogMessage>
+    <LogDateTime>2019-10-05T09:47:01.0049483+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Oct-0574839e27-8522-4072-82d8-4ae103486f0b">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ClientGateway.GetClientByOrderCountAndBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 1023
+   at NBL.BLL.ClientManager.GetClientByOrderCountAndBranchId(Int32 branchId) in E:\API\NBL\NBL.BLL\ClientManager.cs:line 108
+   at NBL.Areas.Sales.Controllers.ClientController.All() in E:\API\NBL\NBL\Areas\Sales\Controllers\ClientController.cs:line 49</LogMessage>
+    <LogDateTime>2019-10-05T09:47:01.0508107+06:00</LogDateTime>
+    <CustomeMessage>Unable to collect Clients by Branch Id</CustomeMessage>
+  </Error>
+  <Error LogId="19-Oct-0543450e33-5263-47fb-94dc-be9915f1074c">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at NBL.DAL.ClientGateway.GetClientByOrderCountAndBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 982</LogMessage>
+    <LogDateTime>2019-10-05T09:47:28.922892+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
 </Errors>

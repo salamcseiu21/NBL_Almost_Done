@@ -6,45 +6,50 @@
     var i = 0;
 }
 <section class="content">
-    <h3 class="text-center text-green headingStyle">Supplier List</h3>
-    <table id="table_supplier_list" class="display table table-bordered" style="border:1px solid black">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Supplier List</div>
+        <div class="panel panel-body">
+            <table id="table_supplier_list" class="display table table-bordered table-responsive" style="border: 1px solid black;width: 100%">
 
 
-        <thead>
-        <tr>
-            <th>S.N</th>
-            <th>Company Name</th>
-            <th>Contact Person</th>
-            <th>Address</th>
-            <th>City</th>
-        </tr>
-        </thead>
-        <tbody>
+                <thead>
+                <tr>
+                    <th>S.N</th>
+                    <th>Company Name</th>
+                    <th>Contact Person</th>
+                    <th>Address</th>
+                    <th>City</th>
+                </tr>
+                </thead>
+                <tbody>
 
-        @foreach (var item in Model)
-        {
-            i++;
-            <tr>
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
 
-                <td>@i</td>
-                <td>@item.CompanyName</td>
-                <td>@item.ContactPersonName</td>
-                <td>@item.Address</td>
-                <td>@item.City</td>
-            </tr>
-        }
+                        <td>@i</td>
+                        <td>@item.CompanyName</td>
+                        <td>@item.ContactPersonName</td>
+                        <td>@item.Address</td>
+                        <td>@item.City</td>
+                    </tr>
+                }
 
-        </tbody>
-        <tfoot>
-        <tr>
-            <th>S.N</th>
-            <th>Company Name</th>
-            <th>Contact Person</th>
-            <th>Address</th>
-            <th>City</th>
-        </tr>
-        </tfoot>
-    </table>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>S.N</th>
+                    <th>Company Name</th>
+                    <th>Contact Person</th>
+                    <th>Address</th>
+                    <th>City</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+  
 
 </section>
 

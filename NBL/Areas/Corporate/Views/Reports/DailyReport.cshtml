@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Title = "Collection List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+   
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Date Wise Collection List</div>
+        <div class="panel panel-body">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new {id = "salesSummaryForm"}))
+            {
+                <div class="form-horizontal">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Date range</label>
+
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                                        <span>
+                                            <i class="fa fa-calendar"></i> Select a Date range
+                                        </span>
+
+                                        <i class="fa fa-caret-down"></i>
+                                    </button>
+                                    <input type="hidden" id="DateFrom" name="DateFrom"/>
+                                    <input type="hidden" id="DateTo" name="DateTo"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div id="divCollectionList"></div>
+        </div>
+    </div>
+
+</section>
+
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            CollectionList(new Date());
+            $("form").bind("keypress", function (e) {
+                if (e.keyCode === 13) {
+                    return false;
+                }
+            });
+        });
+
+    </script>
+
+    <script>
+        function GetCollectionListByDate(event) {
+            CollectionList(event.value);
+        }
+
+
+        function CollectionList(value) {
+            var date =value;
+            var json = { collectionDate: date };
+            $.ajax({
+                type: 'Post',
+                url: RootUrl + "corporate/reports/GetCollectionListByDate",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("#divCollectionList").html(data);
+                }
+            });
+        }
+    </script>
+
+    <script>
+        $('#daterange-btn').daterangepicker(
+            {
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                startDate: moment().subtract(29, 'days'),
+                endDate: moment()
+            },
+            function (start, end) {
+                $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                $("#DateFrom").val(start.format('MMMM D, YYYY'));
+                $("#DateTo").val(end.format('MMMM D, YYYY'));
+                ViewFilteredCollectionList();
+            }
+        )
+
+
+    </script>
+    <script>
+        function ViewFilteredCollectionList() {
+            var startDate = null;
+            var endDate = null;
+            if ($("#DateFrom").val() !== "") {
+                startDate = new Date($("#DateFrom").val()).format("%Y-%m-%d");
+            }
+            if ($("#DateTo").val() !== "") {
+                endDate = new Date($("#DateTo").val()).format("%Y-%m-%d");
+            }
+            var branchId = $("#BranchId").val();
+            var clientName = $("#ClientName").val();
+            var json = { branchId: branchId, clientName: clientName, startDate: startDate, endDate: endDate };
+            $.ajax({
+
+                type: 'Post',
+                url: RootUrl + "corporate/reports/GetCollectionListByDateRange",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("#divCollectionList").html(data);
+                }
+            });
+        }
+    </script>
+}

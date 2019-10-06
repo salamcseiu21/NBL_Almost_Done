@@ -15,9 +15,9 @@
                         <th>Product Name</th>
                         <th>Category</th>
                         <th class="text-right">UnitPrice</th>
-                        <th class="text-right">Dealer Discount (%)</th>
-                        <th class="text-right">Corporate Discount (%)</th>
-                        <th class="text-right">Individual Discount (%)</th>
+                        <th class="text-right">Dealer Discount</th>
+                        <th class="text-right">Corporate Discount</th>
+                        <th class="text-right">Individual Discount</th>
                         <th class="text-right">Vat Amount</th>
                     </tr>
                 </thead>
@@ -30,8 +30,8 @@
                             <td>@item.ProductName</td>
                             <td>@item.CategoryName</td>
                             <td class="text-right">@item.UnitPrice</td>
-                            <td class="text-right">@(item.DealerDiscount)</td>
-                            <td class="text-right">@(item.CorporateDiscount)</td>
+                            <td class="text-right">@(Convert.ToDecimal((item.UnitPrice * item.DealerDiscount) / 100).ToString("N2"))</td>
+                            <td class="text-right">@(Convert.ToDecimal((item.UnitPrice * item.CorporateDiscount) / 100).ToString("N2"))</td>
                             <td class="text-right">
                                 @{
                                     if (item.IndividualDiscount == null)
@@ -40,7 +40,7 @@
                                     }
                                     else
                                     {
-                                        @item.IndividualDiscount
+                                        @(Convert.ToDecimal((item.UnitPrice * item.IndividualDiscount) / 100).ToString("N2"))
                                     }
                                 }
                             </td>
@@ -54,9 +54,9 @@
                         <th>Product Name</th>
                         <th>Category</th>
                         <th class="text-right">UnitPrice</th>
-                        <th class="text-right">Dealer Discount (%)</th>
-                        <th class="text-right">Corporate Discount (%)</th>
-                        <th class="text-right">Individual Discount (%)</th>
+                        <th class="text-right">Dealer Discount</th>
+                        <th class="text-right">Corporate Discount</th>
+                        <th class="text-right">Individual Discount</th>
                         <th class="text-right">Vat Amount</th>
                     </tr>
                 </tfoot>
