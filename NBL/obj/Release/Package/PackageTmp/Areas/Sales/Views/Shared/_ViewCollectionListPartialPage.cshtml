@@ -58,6 +58,8 @@
                     else if (item.ActiveStatus == 1)
                     {
                         <p class="fa fa-check text-success"> Approved</p>
+                        <br/>
+                        @item.ActiveDate
                     }
                 </td>
             </tr>
@@ -84,7 +86,7 @@
 
 <script>
     $('#table_receivable_list').DataTable({
-        "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+        "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "All"]],
         "oLanguage": {
             "sEmptyTable": "<h4 style='color:green;font-weight:bolder;'>There is no receivable cheque or cash to active right now !</h4>"
         }

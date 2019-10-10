@@ -11,6 +11,7 @@ using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
 using NBL.Models;
+using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.EntityModels.Securities;
@@ -553,6 +554,8 @@ namespace NBL.Areas.SuperAdmin.Controllers
         {
             try
             {
+
+               
                 return View();
             }
             catch (Exception exception)
@@ -562,10 +565,21 @@ namespace NBL.Areas.SuperAdmin.Controllers
             };
         }
         [HttpPost]
-        public ActionResult SetOpeningBalance(FormCollection collection)
+        public ActionResult SetOpeningBalance(OpeningBalanceModel model)
         {
             try
             {
+                var user = (ViewUser)Session["user"];
+                model.UserId = user.UserId;
+                if (model.TransactionType.Equals("Cr"))
+                {
+                    model.Amount = model.Amount * -1;
+                }
+                bool result = _iAccountsManager.SetClientOpeningBalance(model);
+                if (result)
+                {
+                    ModelState.Clear();
+                }
                 return View();
             }
             catch (Exception exception)

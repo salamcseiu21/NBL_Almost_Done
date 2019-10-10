@@ -526,6 +526,94 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
         }
 
+        public long GetMaxOpeningBalanceRefNoOfCurrentYear()
+        {
+            try
+            {
+                CommandObj.CommandText = "spGetMaxOpeningRefNoOfCurrentYear";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                int slNo = 0;
+                if (reader.Read())
+                {
+                    slNo = Convert.ToInt32(reader["MaxSlNo"]);
+                }
+                reader.Close();
+                return slNo;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect max serial no of opening balance ref no of current Year", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public int SetClientOpeningBalance(OpeningBalanceModel model)
+        {
+            ConnectionObj.Open();
+            SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
+            try
+            {
+
+                CommandObj.Transaction = sqlTransaction;
+                CommandObj.CommandText = "UDSP_SetClientOpeningBalance";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@UserId", model.UserId);
+                CommandObj.Parameters.AddWithValue("@OpeningRef", model.OpeningRef);
+                CommandObj.Parameters.AddWithValue("@Remarks", model.Remarks);
+                CommandObj.Parameters.AddWithValue("@TransactionDate", model.OpeningBalanceDate);
+                CommandObj.Parameters.Add("@MasterId", SqlDbType.Int);
+                CommandObj.Parameters["@MasterId"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                long masterId = Convert.ToInt32(CommandObj.Parameters["@MasterId"].Value); 
+                int rowAffected = SaveClientOpeningBalanceDetails(masterId, model);
+                if (rowAffected > 0)
+                {
+                   sqlTransaction.Commit();
+                }
+                
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                sqlTransaction.Rollback();
+                throw new Exception("Could not set opening balance informaiton", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        private int SaveClientOpeningBalanceDetails(long masterId, OpeningBalanceModel model)
+        {
+            int i = 0;
+            CommandObj.CommandText = "UDSP_SaveClientOpeningBalanceDetails";
+            CommandObj.CommandType = CommandType.StoredProcedure;
+            CommandObj.Parameters.Clear();
+            CommandObj.Parameters.AddWithValue("@MasterId", masterId);
+            CommandObj.Parameters.AddWithValue("@Amount",model.Amount);
+            CommandObj.Parameters.AddWithValue("@TransactionType",model.TransactionType);
+            CommandObj.Parameters.AddWithValue("@AccountCode",model.SubSubSubAccountCode); 
+            CommandObj.Parameters.AddWithValue("@Remarks",model.Remarks); 
+            CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+            CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+            CommandObj.ExecuteNonQuery();
+            i = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            return i;
+        }
+
         public ICollection<ChequeDetails> GetAllReceivableChequeByBranchAndCompanyIdUserId(int branchId, int companyId, int userId)
         {
             try

@@ -1,4 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ViewReport.aspx.cs" Inherits="NBL.Areas.SuperAdmin.Reports.ViewReport" %>
+
+<%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
 
 <!DOCTYPE html>
@@ -7,8 +9,6 @@
 <head runat="server">
     <meta name="viewport" content="width=device-width"/>
     <title>Report</title>
-    <link href="../Content/bootstrap.css" rel="stylesheet" />
-  
 </head>
 <body>
    
@@ -18,7 +18,6 @@
       <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
            <div style="text-align:center">
 
-  
                <rsweb:ReportViewer ID="ReportViewer1" runat="server" AsyncRendering="false" Width="100%" Height="900" CssClass="text-center" SizeToReportContent="false">
     </rsweb:ReportViewer>
     </div>
@@ -27,7 +26,7 @@
    </div>
     </form>
    
-    <script src="../Scripts/bootstrap.js"></script>
+   
 </body>
 </html>
 

@@ -54,7 +54,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 //    receivableCheques = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId).ToList();
                 //}
 
-                ICollection<ChequeDetails> receivableCheques = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId).ToList();
+                ICollection<ChequeDetails> receivableCheques = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId).ToList().FindAll(n=>n.ActiveStatus==0);
                 foreach (ChequeDetails cheque in receivableCheques)
                 {
                     cheque.Client = _iClientManager.GetById(cheque.ClientId);

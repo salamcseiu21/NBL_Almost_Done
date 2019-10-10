@@ -161,8 +161,8 @@ E:\API\NBL\NBL\bin\Microsoft.Owin.Security.OAuth.dll
 E:\API\NBL\NBL\bin\Microsoft.Owin.Security.Twitter.dll
 E:\API\NBL\NBL\bin\Microsoft.ReportViewer.Common.dll
 E:\API\NBL\NBL\bin\Microsoft.ReportViewer.DataVisualization.dll
-E:\API\NBL\NBL\bin\Microsoft.ReportViewer.ProcessingObjectModel.DLL
-E:\API\NBL\NBL\bin\Microsoft.ReportViewer.WebForms.DLL
+E:\API\NBL\NBL\bin\Microsoft.ReportViewer.ProcessingObjectModel.dll
+E:\API\NBL\NBL\bin\Microsoft.ReportViewer.WebForms.dll
 E:\API\NBL\NBL\bin\Microsoft.Web.Infrastructure.dll
 E:\API\NBL\NBL\bin\NBL.BLL.dll
 E:\API\NBL\NBL\bin\NBL.DAL.dll
@@ -197,6 +197,7 @@ E:\API\NBL\NBL\bin\WebApiContrib.Formatting.Jsonp.dll
 E:\API\NBL\NBL\bin\WebGrease.dll
 E:\API\NBL\NBL\bin\zxing.dll
 E:\API\NBL\NBL\bin\zxing.presentation.dll
+E:\API\NBL\NBL\bin\Microsoft.SqlServer.Types.dll
 E:\API\NBL\NBL\bin\NBL.BLL.pdb
 E:\API\NBL\NBL\bin\NBL.DAL.pdb
 E:\API\NBL\NBL\bin\NBL.Models.pdb
@@ -246,8 +247,16 @@ E:\API\NBL\NBL\bin\Microsoft.Owin.Security.OAuth.xml
 E:\API\NBL\NBL\bin\Microsoft.Owin.Security.Google.xml
 E:\API\NBL\NBL\bin\Microsoft.Owin.Security.Twitter.xml
 E:\API\NBL\NBL\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+E:\API\NBL\NBL\bin\de\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\es\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\fr\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\it\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\ja\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\ko\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\pt\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\ru\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\zh-Hans\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\zh-Hant\Microsoft.SqlServer.Types.resources.dll
 E:\API\NBL\NBL\obj\Debug\NBL.csprojResolveAssemblyReference.cache
-E:\API\NBL\NBL\obj\Debug\RdlCompile.cache
-E:\API\NBL\NBL\obj\Debug\RdlCompile.compiled
 E:\API\NBL\NBL\obj\Debug\NBL.dll
 E:\API\NBL\NBL\obj\Debug\NBL.pdb

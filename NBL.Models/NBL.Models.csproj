@@ -117,6 +117,7 @@
     <Compile Include="EntityModels\FinanceModels\CollectionModel.cs" />
     <Compile Include="EntityModels\FinanceModels\FinancialTransactionModel.cs" />
     <Compile Include="EntityModels\FinanceModels\LedgerModel.cs" />
+    <Compile Include="EntityModels\FinanceModels\OpeningBalanceModel.cs" />
     <Compile Include="EntityModels\Identities\UserLocation.cs" />
     <Compile Include="EntityModels\Masters\ClientType.cs" />
     <Compile Include="EntityModels\Companies\Company.cs" />

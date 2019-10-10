@@ -111,5 +111,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL.Contracts
        ICollection<ChequeDetails> GetAllReceivableChequeByMonthYearAndStatus(int month, int year, int status);
        ICollection<ChequeDetails> GetAllReceivableChequeByYearAndStatus(int year, int status);
        IEnumerable<ChequeDetails> GetAllReceivableChequeBySearchCriteriaAndStatus(SearchCriteria searchCriteria, int status);
+       long GetMaxOpeningBalanceRefNoOfCurrentYear();
+       int SetClientOpeningBalance(OpeningBalanceModel model); 
    }
 }

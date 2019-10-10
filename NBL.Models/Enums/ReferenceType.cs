@@ -23,7 +23,8 @@ namespace NBL.Models.Enums
         Replace=18,
         GeneralRequisition=19,
         Scrap=20,
-        WarrantyBatteryReceive=21
+        WarrantyBatteryReceive=21,
+        ClientOpeningBalance=22
     }
 
   

@@ -251,3 +251,14 @@ G:\Salam\NBL\NBL\obj\Release\NBL.csprojResolveAssemblyReference.cache
 G:\Salam\NBL\NBL\obj\Release\NBL.dll
 G:\Salam\NBL\NBL\obj\Release\NBL.pdb
 E:\API\NBL\NBL\bin\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\API\NBL\NBL\bin\Microsoft.SqlServer.Types.dll
+E:\API\NBL\NBL\bin\de\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\es\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\fr\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\it\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\ja\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\ko\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\pt\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\ru\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\zh-Hans\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\zh-Hant\Microsoft.SqlServer.Types.resources.dll

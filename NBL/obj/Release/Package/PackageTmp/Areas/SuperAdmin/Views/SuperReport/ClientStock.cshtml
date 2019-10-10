@@ -1,0 +1,105 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Reports.ViewClientStockReport>
+@{
+    ViewBag.Title = "ClientStock";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
+}
+
+ 
+<div class="panel panel-info">
+    <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Client Stock Report</div>
+    <div class="panel panel-body">
+        <table class="display table-responsive table-bordered" id="table_client_summary" style="border: 1px solid black;width: 100%">
+            <thead>
+                
+                <tr>
+                   <th>S.N</th>
+                   <th>Client Name</th>
+                   <th>Delivery Count</th>
+                </tr>
+               
+            </thead>
+            <tbody>
+            
+                
+            @foreach (var client in Model)
+            {
+                i++;
+                <tr>
+                    <td>@i</td>
+                    <td>@(Html.ActionLink(client.ClientName, "ClientDetails", "Home", new {id = client.ClientId}, null))</td>
+                    <td class="text-right">
+                        @foreach (var item in client.DeliveredOrderModels.GroupBy(n=>n.DeliveryRef))
+                        {
+                            
+                            
+                                foreach(var product in item)
+                                {
+                                    <table class="table table-bordered">
+                                        <caption>@item.Key</caption>
+                                        @foreach (var aProduct in product.ClientStockProducts)
+                                        {
+                                            <tr>
+                                                <td>@aProduct.ProductName </td>
+                                                <td>@aProduct.ReceiveQuantity</td>
+                                                <td>@aProduct.Quantity</td>
+                                            </tr>
+                                            
+                                        }
+                                    </table>
+                                    
+                                    
+                                }
+                            
+                        }
+                    </td>
+
+                </tr>
+            }
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>S.N</th>
+                <th>Client Name</th>
+                <th>Delivery Count</th>
+            </tr>
+                </tfoot>
+        </table>
+
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        $('#table_client_summary').DataTable({
+            "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "All"]],
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    text: 'Download as Excel',
+                    title: 'Collection',
+                    exportOptions: {
+                        columns: [0, 1,2]
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: 'Print',
+                    exportOptions: {
+                        columns: [0, 1,2]
+                    },
+                    title: 'Collection',
+                    customize: function (win) {
+                        $(win.document.body)
+                            .css('font-size', '10pt');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ]
+        });
+    </script>
+}

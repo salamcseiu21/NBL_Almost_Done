@@ -157,6 +157,26 @@ namespace NBL.Areas.AccountsAndFinance.BLL
             return _iAccountGateway.GetAllReceivableChequeBySearchCriteriaAndStatus(searchCriteria,status);
         }
 
+        public long GetMaxOpeningBalanceRefNoOfCurrentYear()
+        {
+            return _iAccountGateway.GetMaxOpeningBalanceRefNoOfCurrentYear(); 
+        }
+
+        public bool SetClientOpeningBalance(OpeningBalanceModel model)
+        {
+            long maxSl=GetMaxOpeningBalanceRefNoOfCurrentYear();
+            model.OpeningRef = GenerateOpeningBalanceRef(maxSl);
+            int rowAffected = _iAccountGateway.SetClientOpeningBalance(model);
+            return rowAffected > 0;
+        }
+
+        private string GenerateOpeningBalanceRef(long maxSl)
+        {
+            var refCode = _iCommonManager.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(ReferenceType.ClientOpeningBalance)).Code;
+            string reference = $"{DateTime.Now.Year.ToString().Substring(2, 2)}{refCode}{maxSl + 1}";
+            return reference;
+        }
+
         public ChequeDetails GetReceivableChequeByDetailsId(int chequeDetailsId)
         {
             return _iAccountGateway.GetReceivableChequeByDetailsId(chequeDetailsId);
