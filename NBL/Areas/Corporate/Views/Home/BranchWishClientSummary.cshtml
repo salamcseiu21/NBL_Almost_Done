@@ -1,0 +1,53 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.ViewClientSummaryModel>
+@{
+    ViewBag.Title = "Client Summary";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
+}
+
+<section class="content">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder"> Client Summary Report (@ViewBag.BranchName)</div>
+        <div class="panel panel-body">
+            @Html.Partial("_ClientSummaryPartialPage", Model)
+        </div>
+    </div>
+
+</section>
+
+
+@section Scripts
+{
+    <script>
+        $('#table_client_summary').DataTable({
+            "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "All"]],
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    text: 'Download as Excel',
+                    title: 'Client Summary',
+                    exportOptions: {
+                        columns: [0, 1, 2,3,4,5]
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: 'Print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5]
+                    },
+                    title: 'Client Summary',
+                    customize: function (win) {
+                        $(win.document.body)
+                            .css('font-size', '10pt');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ]
+        });
+    </script>
+}

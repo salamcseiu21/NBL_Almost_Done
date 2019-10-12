@@ -139,8 +139,9 @@ namespace NBL.Controllers
         {
             Session["Orders"] = null;
             Session["ProductList"]= null;
-            ViewClient client = _iClientManager.GetClientDeailsById(clientId);
-            return Json(client, JsonRequestBehavior.AllowGet);
+            //ViewClient client = _iClientManager.GetClientDeailsById(clientId);
+            ViewClient client1 = _iClientManager.GetClientById(clientId);
+            return Json(client1, JsonRequestBehavior.AllowGet);
         }
 
      

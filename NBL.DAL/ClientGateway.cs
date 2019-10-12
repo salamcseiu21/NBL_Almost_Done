@@ -479,7 +479,8 @@ namespace NBL.DAL
                     client.ClientType = _iCommonGateway.GetAllClientType().ToList()
                         .Find(n => n.ClientTypeId == Convert.ToInt32(reader["ClientTypeId"]));
                     client.Outstanding = DBNull.Value.Equals(reader["Outstanding"])? (decimal?) null: Convert.ToDecimal(reader["Outstanding"]);
-                   
+                    client.IsConsiderCreditLimit = Convert.ToInt32(reader["IsConsiderCreditLimit"]);
+
 
                 }
                 reader.Close();
@@ -1133,6 +1134,53 @@ namespace NBL.DAL
             }
         }
 
+        public ICollection<ViewClientSummaryModel> GetClientSummaryByBranchId(int branchId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetClientSummaryByBranchId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<ViewClientSummaryModel> summary = new List<ViewClientSummaryModel>();
+                while (reader.Read())
+                {
+                    summary.Add(new ViewClientSummaryModel
+                    {
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        ClientName = reader["Name"].ToString(),
+                        CommercialName = reader["CommercialName"].ToString(),
+                        Debit = Convert.ToDecimal(reader["DebitAmount"]),
+                        Credit = Convert.ToDecimal(reader["CreditAmount"]),
+                        Outstanding = Convert.ToDecimal(reader["OutStanding"]),
+                        TotalOrder = Convert.ToInt32(reader["TotalOrder"]),
+                        CreditLimit = Convert.ToDecimal(reader["CreditLimit"])
+                        
+                    });
+                }
+
+                return summary;
+            }
+            catch (SqlException sqlException)
+            {
+                Log.WriteErrorLog(sqlException);
+                throw new Exception("Could not upload client summary by branch id due to sql Exception", sqlException);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not upload client summary by brnachId", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         public int ApproveClient(Client aClient, ViewUser anUser)
         {
             try
@@ -1259,7 +1307,8 @@ namespace NBL.DAL
                         Debit = Convert.ToDecimal(reader["DebitAmount"]),
                         Credit = Convert.ToDecimal(reader["CreditAmount"]),
                         Outstanding = Convert.ToDecimal(reader["OutStanding"]),
-                        TotalOrder = Convert.ToInt32(reader["TotalOrder"])
+                        TotalOrder = Convert.ToInt32(reader["TotalOrder"]),
+                        CreditLimit = Convert.ToDecimal(reader["CreditLimit"])
                     });
                 }
 

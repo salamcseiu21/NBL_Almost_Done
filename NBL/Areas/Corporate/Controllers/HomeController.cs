@@ -11,6 +11,7 @@ using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.VatDiscounts;
+using NBL.Models.Enums;
 using NBL.Models.Logs;
 using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
@@ -663,6 +664,13 @@ namespace NBL.Areas.Corporate.Controllers
         public ActionResult ClientSummary()
         {
             var summary = _iClientManager.GetClientSummary();
+            return View(summary);
+        }
+
+        public ActionResult BranchWishClientSummary(int id)
+        {
+            ViewBag.BranchName = Enum.GetName(typeof(BranchEnum), id);
+            ICollection<ViewClientSummaryModel> summary = _iClientManager.GetClientSummaryByBranchId(id);
             return View(summary);
         }
 

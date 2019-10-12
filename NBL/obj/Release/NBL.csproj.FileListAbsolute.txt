@@ -106,8 +106,6 @@ E:\API\NBL\NBL\bin\Microsoft.Owin.Security.Google.xml
 E:\API\NBL\NBL\bin\Microsoft.Owin.Security.Twitter.xml
 E:\API\NBL\NBL\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 E:\API\NBL\NBL\obj\Release\NBL.csprojResolveAssemblyReference.cache
-E:\API\NBL\NBL\obj\Release\RdlCompile.cache
-E:\API\NBL\NBL\obj\Release\RdlCompile.compiled
 E:\API\NBL\NBL\obj\Release\NBL.dll
 E:\API\NBL\NBL\obj\Release\NBL.pdb
 E:\API\NBL\NBL\bin\System.Web.Cors.dll

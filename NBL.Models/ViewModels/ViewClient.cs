@@ -118,8 +118,8 @@ namespace NBL.Models.ViewModels
         public int TotalOrder { get; set; }
         public int? AssignedEmpId { get; set; }
         public string AssignedEmpName { get; set; }
-        public string AssignedEmpDesignation{ get; set; } 
-
+        public string AssignedEmpDesignation{ get; set; }
+        public int IsConsiderCreditLimit { get; set; }  
         public int GetTotalOrder()
         {
             return Orders.Count;

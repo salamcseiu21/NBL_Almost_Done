@@ -9,7 +9,9 @@ namespace NBL.Models.ViewModels
         public decimal Debit { get; set; }
         public decimal Credit { get; set; }
         public decimal Outstanding { get; set; }
-        public int TotalOrder { get; set; } 
+        public int TotalOrder { get; set; }
+        public decimal CreditLimit { get; set; }
+
 
     }
 }

@@ -2,14 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 using System.Xml.Linq;
-using AutoMapper;
 using NBL.BLL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Clients;
-using NBL.Models.EntityModels.Invoices;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.Enums;
@@ -17,8 +14,6 @@ using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Logs;
 using NBL.Models.ViewModels.Orders;
-using NBL.Models.ViewModels.Productions;
-using NBL.Models.ViewModels.Sales;
 
 namespace NBL.Areas.Sales.Controllers
 {
@@ -234,7 +229,8 @@ namespace NBL.Areas.Sales.Controllers
                 int clientId = Convert.ToInt32(collection["ClientId"]);
                 var clientInfo= _iClientManager.GetClientDeailsById(clientId);
                 int orderByUserId = user.UserId;
-                decimal amount = Convert.ToDecimal(collection["Total"]);
+                // decimal amount = Convert.ToDecimal(collection["Total"]);
+                 decimal netAamount = Convert.ToDecimal(collection["NetAmount"]); 
                 DateTime orderDate = Convert.ToDateTime(collection["OrderDate"]);
                 List<Product> productList = GetTempOrderedProducts(filePath).ToList();
                 var vat = productList.Sum(n => n.Vat * n.Quantity);
@@ -254,61 +250,61 @@ namespace NBL.Areas.Sales.Controllers
                 };
 
 
-                var result = _iOrderManager.Save(order);
-                if (result > 0)
-                {
-                    Session["Orders"] = null;
-                    RemoveAll();
-                    aModel.Message = "<p class='text-green'>Order Submitted Successfully!!</p>";
-                }
-
-                else
-                {
-                    aModel.Message = "<p class='text-danger'>Failed to Submit!!</p>";
-
-                }
-
-                //if (clientInfo.BranchId == 10)
+                //var result = _iOrderManager.Save(order);
+                //if (result > 0)
                 //{
-                //    if (clientInfo.CreditLimit >= order.Amounts)
-                //    {
-                //        var result = _iOrderManager.Save(order);
-                //        if (result > 0)
-                //        {
-                //            Session["Orders"] = null;
-                //            RemoveAll();
-                //            aModel.Message = "<p class='text-green'>Order Submitted Successfully!!</p>";
-                //        }
-
-                //        else
-                //        {
-                //            aModel.Message = "<p class='text-danger'>Failed to Submit!!</p>";
-
-                //        }
-                //    }
-                //    else
-                //    {
-                //        aModel.Message = "<p class='text-danger'> Credit limit exceed!! </p>";
-                //    }
+                //    Session["Orders"] = null;
+                //    RemoveAll();
+                //    aModel.Message = "<p class='text-green'>Order Submitted Successfully!!</p>";
                 //}
+
                 //else
                 //{
-                //    var result = _iOrderManager.Save(order);
-                //    if (result > 0)
-                //    {
-                //        Session["Orders"] = null;
-                //        RemoveAll();
-                //        aModel.Message = "<p class='text-green'>Order Submitted Successfully!!</p>";
-                //    }
+                //    aModel.Message = "<p class='text-danger'>Failed to Submit!!</p>";
 
-                //    else
-                //    {
-                //        aModel.Message = "<p class='text-danger'>Failed to Submit!!</p>";
-
-                //    }
                 //}
-               
 
+                if (Convert.ToBoolean(clientInfo.IsConsiderCreditLimit))
+                {
+                    var outstanging = Convert.ToDecimal(clientInfo.Outstanding);
+                    
+                    if (outstanging + netAamount <= clientInfo.CreditLimit)
+                    {
+                        var result = _iOrderManager.Save(order);
+                        if (result > 0)
+                        {
+                            Session["Orders"] = null;
+                            RemoveAll();
+                            aModel.Message = "<p class='text-green'>Order Submitted Successfully!!</p>";
+                        }
+
+                        else
+                        {
+                            aModel.Message = "<p class='text-danger'>Failed to Submit!!</p>";
+
+                        }
+                    }
+                    else
+                    {
+                        aModel.Message = "<p class='text-danger'> Credit limit exceed!! </p>";
+                    }
+                }
+                else
+                {
+                    var result = _iOrderManager.Save(order);
+                    if (result > 0)
+                    {
+                        Session["Orders"] = null;
+                        RemoveAll();
+                        aModel.Message = "<p class='text-green'>Order Submitted Successfully!!</p>";
+                    }
+
+                    else
+                    {
+                        aModel.Message = "<p class='text-danger'>Failed to Submit!!</p>";
+
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -702,7 +698,7 @@ namespace NBL.Areas.Sales.Controllers
         {
            //------------Remove all product added before on client select----
             RemoveAll();
-            ViewClient client = _iClientManager.GetClientDeailsById(clientId);
+            ViewClient client = _iClientManager.GetClientById(clientId);
             return Json(client, JsonRequestBehavior.AllowGet);
         }
 

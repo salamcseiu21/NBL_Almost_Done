@@ -424,7 +424,7 @@
                             var cl = data.CreditLimit;
                             var ct = data.ClientTypeId;
                             var outstd = data.Outstanding;
-                            var clientBranchId = data.BranchId;
+                            //var clientBranchId = data.BranchId;
                             $("#Address").val(address);
                             $("#ClientPhone").val(phone);
                             $("#ClientEmail").val(email);
@@ -434,14 +434,14 @@
                             $("#CreditLimit").val(cl);
                             $("#Outstandging").val(outstd);
                             $("#ClientTypeId").val(ct);
-                            //if (clientBranchId === 10) {
-                            //    if (cl > outstd) {
-                            //        $("#addItemButton1").removeAttr("disabled");
-                            //    } else {
+                            if (data.IsConsiderCreditLimit === 1) {
+                                if (cl > outstd) {
+                                    $("#addItemButton1").removeAttr("disabled");
+                                } else {
 
-                            //        $("#addItemButton1").attr("disabled", true);
-                            //    }
-                            //}
+                                    $("#addItemButton1").attr("disabled", true);
+                                }
+                            }
                             
 
                         }

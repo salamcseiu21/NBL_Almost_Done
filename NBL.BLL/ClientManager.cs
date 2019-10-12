@@ -119,6 +119,16 @@ namespace NBL.BLL
             return rowAffected > 0;
         }
 
+        public ICollection<ViewClientSummaryModel> GetClientSummaryByBranchId(int branchId)
+        {
+            return _iClientGateway.GetClientSummaryByBranchId(branchId);
+        }
+
+        public ViewClient GetClientById(int clientId)
+        {
+            return _iClientGateway.GetClientDeailsById(clientId);
+        }
+
         public bool Delete(Client model)
         {
             throw new System.NotImplementedException();

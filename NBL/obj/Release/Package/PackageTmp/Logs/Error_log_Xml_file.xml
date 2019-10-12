@@ -255,4 +255,30 @@
     <LogDateTime>2019-10-06T15:17:37.5664654+06:00</LogDateTime>
     <CustomeMessage>DeliveryId</CustomeMessage>
   </Error>
+  <Error LogId="19-Oct-108baf4451-aa77-46d2-9e26-2b18ee6ce745">
+    <Heading>System.FormatException</Heading>
+    <LogMessage>   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseDecimal(String value, NumberStyles options, NumberFormatInfo numfmt)
+   at System.Convert.ToDecimal(String value)
+   at NBL.Areas.Sales.Controllers.OrderController.Confirm(FormCollection collection) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 237</LogMessage>
+    <LogDateTime>2019-10-10T14:59:27.8318449+06:00</LogDateTime>
+    <CustomeMessage>Input string was not in a correct format.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Oct-108619a145-0725-49d0-8964-9442bb47ff99">
+    <Heading>System.FormatException</Heading>
+    <LogMessage>   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseDecimal(String value, NumberStyles options, NumberFormatInfo numfmt)
+   at System.Convert.ToDecimal(String value)
+   at NBL.Areas.Sales.Controllers.OrderController.Confirm(FormCollection collection) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 237</LogMessage>
+    <LogDateTime>2019-10-10T14:59:31.2860734+06:00</LogDateTime>
+    <CustomeMessage>Input string was not in a correct format.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Oct-12b9f54c06-2f7c-44ea-99ce-8ae0305d7966">
+    <Heading>System.NullReferenceException</Heading>
+    <LogMessage>   at NBL.Areas.Sales.Controllers.SalesCollectionController.GetTempReceivableXmlFilePath() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 245
+   at NBL.Areas.Sales.Controllers.SalesCollectionController.RemoveAll() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 193
+   at NBL.Areas.Sales.Controllers.SalesCollectionController.Receivable() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 40</LogMessage>
+    <LogDateTime>2019-10-12T10:35:18.5473781+06:00</LogDateTime>
+    <CustomeMessage>Object reference not set to an instance of an object.</CustomeMessage>
+  </Error>
 </Errors>
