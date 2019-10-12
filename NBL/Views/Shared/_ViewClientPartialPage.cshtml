@@ -1,4 +1,5 @@
 ﻿
+@using NBL.Models.Enums
 @model IEnumerable<NBL.Models.ViewModels.ViewClient>
 @{
     ViewBag.Title = "Client List";
@@ -18,6 +19,7 @@
                     <th class="text-center">Basic Information</th>
                     <th class="text-center">Contact Info</th>
                     <th class="text-center">Total Order</th>
+                    <th class="text-center">Has Credit Limit?</th>
                     <th class="text-center">Executive</th>
                     <th class="text-center">View</th>
                 </tr>
@@ -36,6 +38,7 @@
                         </td>
                         <td>@Html.Raw(item.GetContactInformation())</td>
                         <td class="text-center">@item.TotalOrder</td>
+                        <td class="text-center">@(Enum.GetName(typeof(FlagEnum),item.IsConsiderCreditLimit))</td>
                         <td class="text-center">@(item.AssignedEmpName)</td>
                         <td class="text-center">
                             @Html.ActionLink(" Profile", "ViewClientProfile", null, new { id = item.ClientId }, new { @class = "fa fa-eye" })
@@ -51,6 +54,7 @@
                     <th class="text-center">Basic Information</th>
                     <th class="text-center">Contact Info</th>
                     <th class="text-center">Total Order</th>
+                    <th class="text-center">Has Credit Limit?</th>
                     <th class="text-center">Executive</th>
                     <th class="text-center">View</th>
                 </tr>

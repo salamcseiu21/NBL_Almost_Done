@@ -29,5 +29,6 @@ namespace NBL.DAL.Contracts
         ICollection<Client> GetActiveClient();
         int SetCreditLimit(int clientId, decimal creditLimit);
         ICollection<ViewClientSummaryModel> GetClientSummaryByBranchId(int branchId);
+        int SetCreditLimitConsiderationTrue(int clientId);
     }
 }

@@ -424,6 +424,21 @@ namespace NBL.Areas.SuperAdmin.Controllers
 
         }
 
+        [HttpPost]
+        public JsonResult SetCreditLimitConsiderationTrue(int id)
+        {
+            SuccessErrorModel aModel = new SuccessErrorModel();
+            bool result = _iClientManager.SetCreditLimitConsiderationTrue(id);
+            if (result)
+            {
+                aModel.Message = "Set CreditLimit Consideration True Successfully!";
+            }
+            else
+            {
+                aModel.Message = "Failed to Set CreditLimit Consideration";
+            }
+            return Json(aModel, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpGet]
         public ActionResult TodaysCollectionList()

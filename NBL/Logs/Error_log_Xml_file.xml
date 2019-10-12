@@ -1,284 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Errors>
-  <Error LogId="19-Sep-29db523b99-ee44-49c9-a6bf-0e2090448fbd">
-    <Heading>System.InvalidOperationException</Heading>
-    <LogMessage>   at System.Data.SqlClient.SqlCommand.ValidateCommand(String method, Boolean async)
-   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
-   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
-   at NBL.DAL.ClientGateway.SetCreditLimit(Int32 clientId, Decimal creditLimit) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 1110</LogMessage>
-    <LogDateTime>2019-09-29T15:58:29.3971996+06:00</LogDateTime>
-    <CustomeMessage>ExecuteNonQuery requires an open and available Connection. The connection's current state is closed.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Sep-2905dae8d7-5299-4c90-ad00-366b6d2bfd9c">
-    <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.DAL.ClientGateway.SetCreditLimit(Int32 clientId, Decimal creditLimit) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 1123
-   at NBL.BLL.ClientManager.SetCreditLimit(Int32 clientId, Decimal creditLimit) in E:\API\NBL\NBL.BLL\ClientManager.cs:line 118
-   at NBL.Areas.SuperAdmin.Controllers.HomeController.SetCreditLimit(FormCollection collection) in E:\API\NBL\NBL\Areas\SuperAdmin\Controllers\HomeController.cs:line 569</LogMessage>
-    <LogDateTime>2019-09-29T15:58:29.4775024+06:00</LogDateTime>
-    <CustomeMessage>Unable to set credit limit</CustomeMessage>
-  </Error>
-  <Error LogId="19-Sep-30d0416ed1-a082-44f2-a5f5-07075548c021">
+  <Error LogId="19-Oct-12a8a34bc5-fac1-423d-8da7-284faa31c418">
     <Heading>System.IndexOutOfRangeException</Heading>
     <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
    at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
    at System.Data.SqlClient.SqlDataReader.get_Item(String name)
-   at NBL.DAL.ReportGateway.GetTotalDeliveredQtyByBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 1202</LogMessage>
-    <LogDateTime>2019-09-30T12:13:36.3247369+06:00</LogDateTime>
-    <CustomeMessage>Quantity</CustomeMessage>
+   at NBL.DAL.ReportGateway.GetClientList() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 1326</LogMessage>
+    <LogDateTime>2019-10-12T14:02:03.6514393+06:00</LogDateTime>
+    <CustomeMessage>IsConsiderCreditLimit</CustomeMessage>
   </Error>
-  <Error LogId="19-Sep-306f46ecbb-94a5-464e-a873-fde012789a97">
+  <Error LogId="19-Oct-12f6ccf2b5-35cb-40cc-a587-70f9ca4734c8">
     <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.DAL.ReportGateway.GetTotalDeliveredQtyByBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 1220
-   at NBL.BLL.ReportManager.GetTotalDeliveredQtyByBranchId(Int32 branchId) in E:\API\NBL\NBL.BLL\ReportManager.cs:line 256
-   at NBL.Areas.Sales.Controllers.ReportController.AllDeliveredQtyForOrder() in E:\API\NBL\NBL\Areas\Sales\Controllers\ReportController.cs:line 26</LogMessage>
-    <LogDateTime>2019-09-30T12:13:36.3706665+06:00</LogDateTime>
-    <CustomeMessage>Could not Collect total delivered Qty by branch id</CustomeMessage>
+    <LogMessage>   at NBL.DAL.ReportGateway.GetClientList() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 1359
+   at NBL.BLL.ReportManager.GetClientList() in E:\API\NBL\NBL.BLL\ReportManager.cs:line 365
+   at NBL.Areas.SuperAdmin.Controllers.HomeController.Clients() in E:\API\NBL\NBL\Areas\SuperAdmin\Controllers\HomeController.cs:line 399</LogMessage>
+    <LogDateTime>2019-10-12T14:02:03.7526396+06:00</LogDateTime>
+    <CustomeMessage>Could not collect  client list</CustomeMessage>
   </Error>
-  <Error LogId="19-Oct-01c65a1954-a44f-4aa8-8363-08cddfb57c78">
-    <Heading>System.Data.SqlClient.SqlException</Heading>
-    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
-   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
-   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
-   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
-   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
-   at NBL.DAL.ServiceGateway.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 76</LogMessage>
-    <LogDateTime>2019-10-01T11:29:48.2794045+06:00</LogDateTime>
-    <CustomeMessage>Procedure or function 'UDSP_ReceiveServiceProduct' expects parameter '@VoltageRemarks', which was not supplied.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-019310a8df-892c-438a-9382-ea3e3c7150bc">
-    <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.DAL.ServiceGateway.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 90
-   at NBL.BLL.ServiceManager.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.BLL\ServiceManager.cs:line 32
-   at NBL.Areas.Services.Controllers.WarrantyBatteryController.Receive(WarrantyBatteryModel model) in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 370</LogMessage>
-    <LogDateTime>2019-10-01T11:29:48.3212953+06:00</LogDateTime>
-    <CustomeMessage>Could not Receive service product</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-010f81b5ae-65f7-4082-9d58-cb47f691f5a9">
-    <Heading>System.Data.SqlClient.SqlException</Heading>
-    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
-   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
-   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
-   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
-   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
-   at NBL.DAL.ServiceGateway.SaveForwardDetails(ForwardDetails item, Int64 receiveId) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 113
-   at NBL.DAL.ServiceGateway.ReceiveServiceProduct(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 78</LogMessage>
-    <LogDateTime>2019-10-01T11:35:14.6937207+06:00</LogDateTime>
-    <CustomeMessage>Procedure or function 'UDSP_SaveForwardDetails' expects parameter '@Remarks', which was not supplied.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-011b7734fa-69a2-4daa-b0e7-679a2f264de7">
-    <Heading>System.Data.SqlClient.SqlException</Heading>
-    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
-   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
-   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
-   at System.Data.SqlClient.SqlDataReader.get_MetaData()
-   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
-   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
-   at System.Data.SqlClient.SqlCommand.ExecuteReader()
-   at NBL.DAL.InventoryGateway.GetProductHistoryByBarcode(String barcode) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 3077</LogMessage>
-    <LogDateTime>2019-10-01T11:55:43.2679606+06:00</LogDateTime>
-    <CustomeMessage>Procedure or function 'UDSP_GetProductHistoryByBarcode' expects parameter '@SearchCode', which was not supplied.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-01b77cb448-8b4b-43e1-b02f-69bdad9eaa03">
-    <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.DAL.InventoryGateway.GetProductHistoryByBarcode(String barcode) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 3114
-   at NBL.BLL.InventoryManager.GetProductHistoryByBarcode(String barcode) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 366
-   at NBL.Areas.Services.Controllers.WarrantyBatteryController.Forward(Int64 id) in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 265</LogMessage>
-    <LogDateTime>2019-10-01T11:55:43.3198526+06:00</LogDateTime>
-    <CustomeMessage>Could not get product history by barcode</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-01a31bf391-96fd-4934-af3f-a489617bff6a">
-    <Heading>System.Data.SqlClient.SqlException</Heading>
-    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
-   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
-   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
-   at System.Data.SqlClient.SqlDataReader.get_MetaData()
-   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
-   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
-   at System.Data.SqlClient.SqlCommand.ExecuteReader()
-   at NBL.DAL.InventoryGateway.GetProductHistoryByBarcode(String barcode) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 3077</LogMessage>
-    <LogDateTime>2019-10-01T12:03:41.1613985+06:00</LogDateTime>
-    <CustomeMessage>Procedure or function 'UDSP_GetProductHistoryByBarcode' expects parameter '@SearchCode', which was not supplied.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-01dc78726f-2fc0-4419-b291-7e64482842e6">
-    <Heading>System.Data.SqlClient.SqlException</Heading>
-    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
-   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
-   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
-   at System.Data.SqlClient.SqlDataReader.get_MetaData()
-   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
-   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
-   at System.Data.SqlClient.SqlCommand.ExecuteReader()
-   at NBL.DAL.InventoryGateway.GetProductHistoryByBarcode(String barcode) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 3077</LogMessage>
-    <LogDateTime>2019-10-01T12:03:56.221057+06:00</LogDateTime>
-    <CustomeMessage>Procedure or function 'UDSP_GetProductHistoryByBarcode' expects parameter '@SearchCode', which was not supplied.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-01fa858730-c338-4052-a908-12da31f8a7bb">
-    <Heading>System.Data.SqlClient.SqlException</Heading>
-    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
-   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
-   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
-   at System.Data.SqlClient.SqlDataReader.get_MetaData()
-   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
-   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
-   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
-   at System.Data.SqlClient.SqlCommand.ExecuteReader()
-   at NBL.DAL.InventoryGateway.GetProductHistoryByBarcode(String barcode) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 3077</LogMessage>
-    <LogDateTime>2019-10-01T12:09:11.1475186+06:00</LogDateTime>
-    <CustomeMessage>Procedure or function 'UDSP_GetProductHistoryByBarcode' expects parameter '@SearchCode', which was not supplied.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-01d1acdfb8-0ec3-4644-b305-df57b55ca2ec">
-    <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.DAL.InventoryGateway.GetProductHistoryByBarcode(String barcode) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 3114
-   at NBL.BLL.InventoryManager.GetProductHistoryByBarcode(String barcode) in E:\API\NBL\NBL.BLL\InventoryManager.cs:line 366
-   at NBL.Areas.Services.Controllers.WarrantyBatteryController.Forward(Int64 id) in E:\API\NBL\NBL\Areas\Services\Controllers\WarrantyBatteryController.cs:line 265</LogMessage>
-    <LogDateTime>2019-10-01T12:09:11.1864145+06:00</LogDateTime>
-    <CustomeMessage>Could not get product history by barcode</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-01aed7b5a8-b3f3-4335-8a27-bd26c15535fd">
-    <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.DAL.ProductReturnGateway.GetAllVerifiedSalesReturnProducts() in E:\API\NBL\NBL.DAL\ProductReturnGateway.cs:line 305
-   at NBL.BLL.ProductReturnManager.GetAllVerifiedSalesReturnProducts() in E:\API\NBL\NBL.BLL\ProductReturnManager.cs:line 144
-   at NBL.Areas.AccountsAndFinance.Controllers.AccountController.ViewAllSalesReturn() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\AccountController.cs:line 278</LogMessage>
-    <LogDateTime>2019-10-01T15:15:49.5827484+06:00</LogDateTime>
-    <CustomeMessage>Could not collect verified Sales return product list</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-026fda2c31-86ed-4183-ab68-6b1de3e8006f">
-    <Heading>System.InvalidCastException</Heading>
-    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
-   at System.Convert.ToInt32(Object value)
-   at NBL.DAL.ReportGateway.GetStockProductBarcodeByBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 968</LogMessage>
-    <LogDateTime>2019-10-02T14:47:29.1518991+06:00</LogDateTime>
-    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-0260de3a3f-b29a-4b3f-b0a5-cc94dbe90cfa">
-    <Heading>System.InvalidCastException</Heading>
-    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
-   at System.Convert.ToInt32(Object value)
-   at NBL.DAL.ReportGateway.GetStockProductBarcodeByBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 968</LogMessage>
-    <LogDateTime>2019-10-02T14:49:18.5169764+06:00</LogDateTime>
-    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-03939a7051-791b-439f-833b-7b1809c6ad6d">
-    <Heading>System.Data.SqlClient.SqlException</Heading>
-    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
-   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
-   at System.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean&amp; moreRows)
-   at System.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean&amp; more)
-   at System.Data.SqlClient.SqlDataReader.Read()
-   at NBL.DAL.ReportGateway.GetStockProductBarcodeByBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 966</LogMessage>
-    <LogDateTime>2019-10-03T10:32:45.5333332+06:00</LogDateTime>
-    <CustomeMessage>Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, &lt;, &lt;= , &gt;, &gt;= or when the subquery is used as an expression.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-05c051b91b-0641-42cb-91dd-03ddeab9865e">
-    <Heading>System.InvalidCastException</Heading>
-    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
-   at System.Convert.ToInt32(Object value)
-   at NBL.DAL.ClientGateway.GetClientByOrderCountAndBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 982</LogMessage>
-    <LogDateTime>2019-10-05T09:46:54.5997156+06:00</LogDateTime>
-    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-050d3a814d-80b3-48b2-b766-819052008b19">
-    <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.DAL.ClientGateway.GetClientByOrderCountAndBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 1023
-   at NBL.BLL.ClientManager.GetClientByOrderCountAndBranchId(Int32 branchId) in E:\API\NBL\NBL.BLL\ClientManager.cs:line 108
-   at NBL.Areas.Sales.Controllers.ClientController.All() in E:\API\NBL\NBL\Areas\Sales\Controllers\ClientController.cs:line 49</LogMessage>
-    <LogDateTime>2019-10-05T09:46:54.65756+06:00</LogDateTime>
-    <CustomeMessage>Unable to collect Clients by Branch Id</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-052c165855-a69a-4737-9adc-7bb8198e3fdc">
-    <Heading>System.InvalidCastException</Heading>
-    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
-   at System.Convert.ToInt32(Object value)
-   at NBL.DAL.ClientGateway.GetClientByOrderCountAndBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 982</LogMessage>
-    <LogDateTime>2019-10-05T09:47:01.0049483+06:00</LogDateTime>
-    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-0574839e27-8522-4072-82d8-4ae103486f0b">
-    <Heading>System.Exception</Heading>
-    <LogMessage>   at NBL.DAL.ClientGateway.GetClientByOrderCountAndBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 1023
-   at NBL.BLL.ClientManager.GetClientByOrderCountAndBranchId(Int32 branchId) in E:\API\NBL\NBL.BLL\ClientManager.cs:line 108
-   at NBL.Areas.Sales.Controllers.ClientController.All() in E:\API\NBL\NBL\Areas\Sales\Controllers\ClientController.cs:line 49</LogMessage>
-    <LogDateTime>2019-10-05T09:47:01.0508107+06:00</LogDateTime>
-    <CustomeMessage>Unable to collect Clients by Branch Id</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-0543450e33-5263-47fb-94dc-be9915f1074c">
-    <Heading>System.InvalidCastException</Heading>
-    <LogMessage>   at System.DBNull.System.IConvertible.ToInt32(IFormatProvider provider)
-   at System.Convert.ToInt32(Object value)
-   at NBL.DAL.ClientGateway.GetClientByOrderCountAndBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\ClientGateway.cs:line 982</LogMessage>
-    <LogDateTime>2019-10-05T09:47:28.922892+06:00</LogDateTime>
-    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-060df410e0-5aa0-4ad0-9f75-12c8507be254">
-    <Heading>System.InvalidCastException</Heading>
-    <LogMessage>   at System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
-   at System.Convert.ToDateTime(Object value)
-   at NBL.Areas.AccountsAndFinance.DAL.AccountsGateway.GetAllReceivableCheque(Int32 companyId, Int32 status) in E:\API\NBL\NBL\Areas\AccountsAndFinance\DAL\AccountsGateway.cs:line 755</LogMessage>
-    <LogDateTime>2019-10-06T10:36:39.1059982+06:00</LogDateTime>
-    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
-  </Error>
-  <Error LogId="19-Oct-060f936cdd-4770-40a5-9f50-26c7abdc7aba">
+  <Error LogId="19-Oct-12c08b6359-d744-4826-9bf2-22fab03e0cd7">
     <Heading>System.IndexOutOfRangeException</Heading>
     <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
    at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
    at System.Data.SqlClient.SqlDataReader.get_Item(String name)
-   at NBL.DAL.DeliveryGateway.GetAllClientsByClientTypeId(Int32 clientTypeId) in E:\API\NBL\NBL.DAL\DeliveryGateway.cs:line 1218</LogMessage>
-    <LogDateTime>2019-10-06T15:17:37.5664654+06:00</LogDateTime>
-    <CustomeMessage>DeliveryId</CustomeMessage>
+   at NBL.DAL.ReportGateway.GetClientList() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 1326</LogMessage>
+    <LogDateTime>2019-10-12T14:02:15.8346157+06:00</LogDateTime>
+    <CustomeMessage>IsConsiderCreditLimit</CustomeMessage>
   </Error>
-  <Error LogId="19-Oct-108baf4451-aa77-46d2-9e26-2b18ee6ce745">
-    <Heading>System.FormatException</Heading>
-    <LogMessage>   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
-   at System.Number.ParseDecimal(String value, NumberStyles options, NumberFormatInfo numfmt)
-   at System.Convert.ToDecimal(String value)
-   at NBL.Areas.Sales.Controllers.OrderController.Confirm(FormCollection collection) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 237</LogMessage>
-    <LogDateTime>2019-10-10T14:59:27.8318449+06:00</LogDateTime>
-    <CustomeMessage>Input string was not in a correct format.</CustomeMessage>
+  <Error LogId="19-Oct-121fec9c0b-015e-49bd-9303-3b51c7ef738c">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ReportGateway.GetClientList() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 1359
+   at NBL.BLL.ReportManager.GetClientList() in E:\API\NBL\NBL.BLL\ReportManager.cs:line 365
+   at NBL.Areas.SuperAdmin.Controllers.HomeController.Clients() in E:\API\NBL\NBL\Areas\SuperAdmin\Controllers\HomeController.cs:line 399</LogMessage>
+    <LogDateTime>2019-10-12T14:02:15.9094324+06:00</LogDateTime>
+    <CustomeMessage>Could not collect  client list</CustomeMessage>
   </Error>
-  <Error LogId="19-Oct-108619a145-0725-49d0-8964-9442bb47ff99">
-    <Heading>System.FormatException</Heading>
-    <LogMessage>   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
-   at System.Number.ParseDecimal(String value, NumberStyles options, NumberFormatInfo numfmt)
-   at System.Convert.ToDecimal(String value)
-   at NBL.Areas.Sales.Controllers.OrderController.Confirm(FormCollection collection) in E:\API\NBL\NBL\Areas\Sales\Controllers\OrderController.cs:line 237</LogMessage>
-    <LogDateTime>2019-10-10T14:59:31.2860734+06:00</LogDateTime>
-    <CustomeMessage>Input string was not in a correct format.</CustomeMessage>
+  <Error LogId="19-Oct-1278ea46cd-1c2d-4518-aa34-11b991336c5a">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ReportGateway.GetClientList() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 1326</LogMessage>
+    <LogDateTime>2019-10-12T14:02:46.1759969+06:00</LogDateTime>
+    <CustomeMessage>IsConsiderCreditLimit</CustomeMessage>
   </Error>
-  <Error LogId="19-Oct-12b9f54c06-2f7c-44ea-99ce-8ae0305d7966">
-    <Heading>System.NullReferenceException</Heading>
-    <LogMessage>   at NBL.Areas.Sales.Controllers.SalesCollectionController.GetTempReceivableXmlFilePath() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 245
-   at NBL.Areas.Sales.Controllers.SalesCollectionController.RemoveAll() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 193
-   at NBL.Areas.Sales.Controllers.SalesCollectionController.Receivable() in E:\API\NBL\NBL\Areas\Sales\Controllers\SalesCollectionController.cs:line 40</LogMessage>
-    <LogDateTime>2019-10-12T10:35:18.5473781+06:00</LogDateTime>
-    <CustomeMessage>Object reference not set to an instance of an object.</CustomeMessage>
+  <Error LogId="19-Oct-12dec0f659-1fa6-4dea-9119-d9af7c4826df">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ReportGateway.GetClientList() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 1359
+   at NBL.BLL.ReportManager.GetClientList() in E:\API\NBL\NBL.BLL\ReportManager.cs:line 365
+   at NBL.Areas.SuperAdmin.Controllers.HomeController.Clients() in E:\API\NBL\NBL\Areas\SuperAdmin\Controllers\HomeController.cs:line 399</LogMessage>
+    <LogDateTime>2019-10-12T14:02:46.2766961+06:00</LogDateTime>
+    <CustomeMessage>Could not collect  client list</CustomeMessage>
+  </Error>
+  <Error LogId="19-Oct-127530a8da-58ff-425a-b46c-d191e2fd550a">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ReportGateway.GetClientList() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 1326</LogMessage>
+    <LogDateTime>2019-10-12T14:03:12.6751702+06:00</LogDateTime>
+    <CustomeMessage>IsConsiderCreditLimit</CustomeMessage>
   </Error>
 </Errors>

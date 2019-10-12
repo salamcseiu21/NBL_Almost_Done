@@ -129,6 +129,12 @@ namespace NBL.BLL
             return _iClientGateway.GetClientDeailsById(clientId);
         }
 
+        public bool SetCreditLimitConsiderationTrue(int clientId)
+        {
+            int rowAffected = _iClientGateway.SetCreditLimitConsiderationTrue(clientId);
+            return rowAffected > 0;
+        }
+
         public bool Delete(Client model)
         {
             throw new System.NotImplementedException();

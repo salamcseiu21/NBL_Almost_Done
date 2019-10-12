@@ -1345,7 +1345,8 @@ namespace NBL.DAL
                         BranchId = Convert.ToInt32(reader["BranchId"]),
                         CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
                         MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"]),
-                        BranchName = DBNull.Value.Equals(reader["BranchName"]) ? null : reader["BranchName"].ToString()
+                        BranchName = DBNull.Value.Equals(reader["BranchName"]) ? null : reader["BranchName"].ToString(),
+                        IsConsiderCreditLimit = Convert.ToInt32(reader["IsConsiderCreditLimit"])
                     });
                 }
                 reader.Close();

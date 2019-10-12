@@ -561,7 +561,8 @@ namespace NBL.DAL
                         CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
                         MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"]),
                         BranchName = DBNull.Value.Equals(reader["NBranchName"])?null:reader["NBranchName"].ToString(),
-                        TotalOrder = Convert.ToInt32(reader["TotalOrder"])
+                        TotalOrder = Convert.ToInt32(reader["TotalOrder"]),
+                        IsConsiderCreditLimit = Convert.ToInt32(reader["IsConsiderCreditLimit"])
                         
                     });
 
@@ -1006,7 +1007,8 @@ namespace NBL.DAL
                             n.ClientTypeId == Convert.ToInt32(reader["ClientTypeId"])),
                         AssignedEmpId = DBNull.Value.Equals(reader["AssignedEmpId"]) ? default(int) : Convert.ToInt32(reader["AssignedEmpId"]),
                         AssignedEmpName = DBNull.Value.Equals(reader["EmployeeName"]) ? null : reader["EmployeeName"].ToString(),
-                        Outstanding = DBNull.Value.Equals(reader["Outstanding"]) ? (decimal?)null : Convert.ToDecimal(reader["Outstanding"])
+                        Outstanding = DBNull.Value.Equals(reader["Outstanding"]) ? (decimal?)null : Convert.ToDecimal(reader["Outstanding"]),
+                        IsConsiderCreditLimit = Convert.ToInt32(reader["IsConsiderCreditLimit"])
                 });
                 }
                 reader.Close();
@@ -1172,6 +1174,39 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not upload client summary by brnachId", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int SetCreditLimitConsiderationTrue(int clientId)
+        {
+            try
+            {
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Open();
+                CommandObj.CommandText = "UDSP_SetCreditLimitConsiderationTrue";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ClientId", clientId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                int rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (SqlException sqlException)
+            {
+                Log.WriteErrorLog(sqlException);
+                throw new Exception("Could not set Credit Limit Consideration True due to Sql Exception", sqlException);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not set Credit Limit Consideration True", exception);
             }
             finally
             {

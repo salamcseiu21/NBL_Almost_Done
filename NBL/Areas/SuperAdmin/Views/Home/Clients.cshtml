@@ -1,4 +1,5 @@
 ﻿
+@using NBL.Models.Enums
 @model IEnumerable<NBL.Models.ViewModels.ViewClient>
 @{
     ViewBag.Title = "Client List";
@@ -6,41 +7,60 @@
 
 }
 <section class="content">
-    <h3 class="text-center text-green headingStyle">Client List</h3>
-    <table id="table_client_list" class="display table table-bordered" style="border:1px solid black">
+    
 
-        <thead>
-        <tr>
-            <th class="text-center">Basic Information</th>
-            <th class="text-center">Contact Info</th>
-            <th class="text-center">View</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td class="text-center">
-                    <img class="img-circle" src="~/@(item.ClientImage?? "Images/User.jpg")" alt="Client Image" title="@item.ClientName" width="60" height="60"><br />
-                    @Html.Raw(item.ClientName)
-                   
-                </td>
-                <td>@Html.Raw(item.GetContactInformation())</td>
-                <td class="text-center">
-                    @Html.ActionLink(" Profile", "ViewClientProfile", null, new { id = item.ClientId }, new { @class = "fa fa-eye" })
-                    @*@Html.ActionLink(" Ledger", "ClientLedger", null, new { id = item.ClientId }, new { @class = "fa fa-eye" })*@
-                </td>
-            </tr>
-        }
-        </tbody>
-        <tfoot>
-        <tr>
-            <th class="text-center">Basic Information</th>
-            <th class="text-center">Contact Info</th>
-            <th class="text-center">View</th>
-        </tr>
-        </tfoot>
-    </table>
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Client List</div>
+        <div class="panel panel-body">
+            <table id="table_client_list" class="display table table-bordered" style="border: 1px solid black">
+
+                <thead>
+                <tr>
+                    <th class="text-center">Basic Information</th>
+                    <th class="text-center">Contact Info</th>
+                    <th class="text-center">Is Active?</th>
+                    <th class="text-center">Credit Limit</th>
+                    <th class="text-center">View</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">
+                            <img class="img-circle" src="~/@(item.ClientImage ?? "Images/User.jpg")" alt="Client Image" title="@item.ClientName" width="60" height="60"><br/>
+                            @Html.Raw(item.ClientName)-(@item.ClientTypeName)
+                          
+
+                        </td>
+                        <td>@Html.Raw(item.GetContactInformation())</td>
+                        <td class="text-center">@item.Active</td>
+                        <td class="text-right">@item.CreditLimit</td>
+                        <td class="text-center">
+                            @if (!Convert.ToBoolean(item.IsConsiderCreditLimit))
+                            {
+                                <input type="button" id="@item.ClientId" class="btn btn-success fa fa-edit" value="Set Credit Limit True" onclick="SetCreditLimitTrue(this)"/>
+                            }
+                           
+                            @Html.ActionLink(" Profile", "ViewClientProfile", null, new {id = item.ClientId}, new {@class = "fa fa-eye btn btn-info"})
+                            @*@Html.ActionLink(" Ledger", "ClientLedger", null, new { id = item.ClientId }, new { @class = "fa fa-eye" })*@
+                        </td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th class="text-center">Basic Information</th>
+                    <th class="text-center">Contact Info</th>
+                    <th class="text-center">Is Active?</th>
+                    <th class="text-center">Credit Limit</th>
+                    <th class="text-center">View</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+   
 </section>
 
 @section Scripts
@@ -53,6 +73,21 @@
            
         });
 
+        function SetCreditLimitTrue(btnClick) {
+            if (confirm("Are you sure to set credit limit consideration for  this client ??")) {
+                var id = btnClick.id;
+                var json = { id: id };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("SetCreditLimitConsiderationTrue", "Home",new {area="SuperAdmin"})',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (response) {
+                        location.reload();
+                    }
+                });
+            }
+        }
     </script>
 
 }
