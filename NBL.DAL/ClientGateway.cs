@@ -1158,7 +1158,8 @@ namespace NBL.DAL
                         Credit = Convert.ToDecimal(reader["CreditAmount"]),
                         Outstanding = Convert.ToDecimal(reader["OutStanding"]),
                         TotalOrder = Convert.ToInt32(reader["TotalOrder"]),
-                        CreditLimit = Convert.ToDecimal(reader["CreditLimit"])
+                        CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
+                        TotalQuantity = Convert.ToInt32(reader["TotalQuantity"])
                         
                     });
                 }
@@ -1343,7 +1344,8 @@ namespace NBL.DAL
                         Credit = Convert.ToDecimal(reader["CreditAmount"]),
                         Outstanding = Convert.ToDecimal(reader["OutStanding"]),
                         TotalOrder = Convert.ToInt32(reader["TotalOrder"]),
-                        CreditLimit = Convert.ToDecimal(reader["CreditLimit"])
+                        CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
+                        TotalQuantity = Convert.ToInt32(reader["TotalQuantity"])
                     });
                 }
 

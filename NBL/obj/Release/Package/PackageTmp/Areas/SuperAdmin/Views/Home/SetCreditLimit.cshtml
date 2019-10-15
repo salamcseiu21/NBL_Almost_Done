@@ -16,11 +16,10 @@
         @using (Html.BeginForm())
             {
             <div class="form-horizontal">
-                <div class="row">
 
 
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="ClientName" class="control-label col-md-3">Name</label>
                                 <div class="col-md-9">
@@ -35,15 +34,11 @@
                                     <textarea id="Address" name="Address" class="form-control" readonly="readonly" rows="2" style="resize: none"></textarea>
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="col-md-4">
-
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="SubSubSubAccountCode" class="control-label col-md-4">Code</label>
-                                        <div class="col-md-8">
+                                        <label for="SubSubSubAccountCode" class="control-label col-md-6">Code</label>
+                                        <div class="col-md-6">
                                             <input type="text" id="SubSubSubAccountCode" name="SubSubSubAccountCode" class="form-control" placeholder="Client Code" readonly="readonly" />
                                         </div>
                                     </div>
@@ -51,13 +46,17 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="ClientTypeName" class="control-label col-md-4">Type</label>
-                                        <div class="col-md-8">
+                                        <label for="ClientTypeName" class="control-label col-md-6">Type</label>
+                                        <div class="col-md-6">
                                             <input type="text" id="ClientTypeName" name="ClientTypeName" class="form-control" readonly />
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-6">
+
+                            
                             <div class="form-group">
                                 <label for="ClientPhone" class="control-label col-md-2">Phone</label>
                                 <div class="col-md-10">
@@ -70,22 +69,19 @@
                                     <input type="text" id="ClientEmail" name="ClientEmail" value="" class="form-control" readonly />
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                           
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="CreditLimit" class="control-label col-md-5">Cr. Limit</label>
-                                        <div class="col-md-7">
+                                        <label for="CreditLimit" class="control-label col-md-4">Cr. Limit</label>
+                                        <div class="col-md-8">
                                             <input type="text" id="CreditLimit" name="CreditLimit" value="" class="form-control text-right" readonly />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="Outstandging" class="control-label col-md-5"> Outstandging</label>
-                                        <div class="col-md-7">
+                                        <label for="Outstandging" class="control-label col-md-6"> Outstandging</label>
+                                        <div class="col-md-6">
                                             <input type="text" id="Outstandging" name="Outstandging" value="0" class="form-control text-right" readonly />
                                         </div>
                                     </div>
@@ -94,20 +90,19 @@
                             <div class="form-group">
                                 <label for="NewCreditLimit" class="control-label col-md-3">New Credit Limit</label>
                                 <div class="col-md-9">
-                                    <input type="number" id="NewCreditLimit" name="NewCreditLimit" placeholder="Enter new Credit limit.." class="form-control"  required/>
+                                    <input type="number" id="NewCreditLimit" name="NewCreditLimit" placeholder="Enter new Credit limit.." class="form-control" required />
                                 </div>
                             </div>
                             <div class="form-group">
-                               
-                                <div class="col-md-10 col-md-offset-2">
-                                   <input type="submit" value="Submit" class="btn btn-info"/>
+
+                                <div class="col-md-9 col-md-offset-3">
+                                    @Html.ActionLink("Back", "Home", null, new { @class = "btn btn-danger" })
+                                    <input type="submit" value="Submit" class="btn btn-info" />
                                 </div>
                             </div>
-
                         </div>
+                       
                     </div>
-
-                </div>
             </div>
         }
     </div>

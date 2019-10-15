@@ -434,16 +434,15 @@
                             $("#CreditLimit").val(cl);
                             $("#Outstandging").val(outstd);
                             $("#ClientTypeId").val(ct);
-                            if (data.IsConsiderCreditLimit === 1) {
-                                if (cl > outstd) {
-                                    $("#addItemButton1").removeAttr("disabled");
-                                } else {
 
-                                    $("#addItemButton1").attr("disabled", true);
-                                }
-                            }
-                            
+                            //if (data.IsConsiderCreditLimit === 1) {
+                            //    if (cl > outstd) {
+                            //        $("#addItemButton1").removeAttr("disabled");
+                            //    } else {
 
+                            //        $("#addItemButton1").attr("disabled", true);
+                            //    }
+                            //}
                         }
                     });
                 },

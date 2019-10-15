@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Services;
@@ -9,12 +7,11 @@ using NBL.Models.Enums;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Products;
-using NBL.Models.ViewModels.Services;
 
 namespace NBL.Areas.Services.Controllers
 {
 
-    [Authorize(Roles = "ServiceManagement")]
+    [Authorize(Roles = "ServiceManagement,GeneralServiceManagement")]
     public class ServiceManagementController : Controller
     {
 
@@ -31,12 +28,22 @@ namespace NBL.Areas.Services.Controllers
         }
 
         // GET: Services/ServiceManagement
+        [Authorize(Roles = "ServiceManagement,GeneralServiceManagement")]
         public ActionResult PendingList()
         {
             try
             {
-               var products=_iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.ApprovalCommittee));
-                return View(products);
+                var user = (ViewUser) Session["user"];
+                if (user.Roles.Equals("ServiceManagement"))
+                {
+                    var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.ServiceManagement));
+                    return View(products);
+                }
+                else
+                {
+                    var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.GeneralServiceManagement));
+                    return View(products);
+                }
             }
             catch (Exception exception)
             {
@@ -44,7 +51,7 @@ namespace NBL.Areas.Services.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
-
+       
 
         public ActionResult Details(long id)
         {

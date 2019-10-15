@@ -249,62 +249,61 @@ namespace NBL.Areas.Sales.Controllers
                     Amounts = productList.Sum(n=>(n.UnitPrice+n.Vat)*n.Quantity)
                 };
 
-
-                //var result = _iOrderManager.Save(order);
-                //if (result > 0)
-                //{
-                //    Session["Orders"] = null;
-                //    RemoveAll();
-                //    aModel.Message = "<p class='text-green'>Order Submitted Successfully!!</p>";
-                //}
-
-                //else
-                //{
-                //    aModel.Message = "<p class='text-danger'>Failed to Submit!!</p>";
-
-                //}
-
-                if (Convert.ToBoolean(clientInfo.IsConsiderCreditLimit))
+                var result = _iOrderManager.Save(order);
+                if (result > 0)
                 {
-                    var outstanging = Convert.ToDecimal(clientInfo.Outstanding);
-                    
-                    if (outstanging + netAamount <= clientInfo.CreditLimit)
-                    {
-                        var result = _iOrderManager.Save(order);
-                        if (result > 0)
-                        {
-                            Session["Orders"] = null;
-                            RemoveAll();
-                            aModel.Message = "<p class='text-green'>Order Submitted Successfully!!</p>";
-                        }
-
-                        else
-                        {
-                            aModel.Message = "<p class='text-danger'>Failed to Submit!!</p>";
-
-                        }
-                    }
-                    else
-                    {
-                        aModel.Message = "<p class='text-danger'> Credit limit exceed!! </p>";
-                    }
+                    Session["Orders"] = null;
+                    RemoveAll();
+                    aModel.Message = "<p class='text-green'>Order Submitted Successfully!!</p>";
                 }
+
                 else
                 {
-                    var result = _iOrderManager.Save(order);
-                    if (result > 0)
-                    {
-                        Session["Orders"] = null;
-                        RemoveAll();
-                        aModel.Message = "<p class='text-green'>Order Submitted Successfully!!</p>";
-                    }
+                    aModel.Message = "<p class='text-danger'>Failed to Submit!!</p>";
 
-                    else
-                    {
-                        aModel.Message = "<p class='text-danger'>Failed to Submit!!</p>";
-
-                    }
                 }
+
+                //if (Convert.ToBoolean(clientInfo.IsConsiderCreditLimit))
+                //{
+                //    var outstanging = Convert.ToDecimal(clientInfo.Outstanding);
+
+                //    if (outstanging + netAamount <= clientInfo.CreditLimit)
+                //    {
+                //        var result = _iOrderManager.Save(order);
+                //        if (result > 0)
+                //        {
+                //            Session["Orders"] = null;
+                //            RemoveAll();
+                //            aModel.Message = "<p class='text-green'>Order Submitted Successfully!!</p>";
+                //        }
+
+                //        else
+                //        {
+                //            aModel.Message = "<p class='text-danger'>Failed to Submit!!</p>";
+
+                //        }
+                //    }
+                //    else
+                //    {
+                //        aModel.Message = "<p class='text-danger'> Credit limit exceed!! </p>";
+                //    }
+                //}
+                //else
+                //{
+                //    var result = _iOrderManager.Save(order);
+                //    if (result > 0)
+                //    {
+                //        Session["Orders"] = null;
+                //        RemoveAll();
+                //        aModel.Message = "<p class='text-green'>Order Submitted Successfully!!</p>";
+                //    }
+
+                //    else
+                //    {
+                //        aModel.Message = "<p class='text-danger'>Failed to Submit!!</p>";
+
+                //    }
+                //}
             }
             catch (Exception e)
             {

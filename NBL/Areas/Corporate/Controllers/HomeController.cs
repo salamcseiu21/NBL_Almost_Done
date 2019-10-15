@@ -10,12 +10,12 @@ using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
 using NBL.Models;
-using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Enums;
 using NBL.Models.Logs;
 using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
+using NBL.Models.ViewModels.FinanceModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
@@ -263,12 +263,8 @@ namespace NBL.Areas.Corporate.Controllers
 
         public PartialViewResult ProductWishVat()
         {
-            IEnumerable<Vat> vats = _iVatManager.GetProductWishVat();
-            foreach (var vat in vats)
-            {
-                vat.Product = _iProductManager.GetProductByProductId(vat.ProductId);
-            }
 
+            var vats= _iVatManager.GetProductLatestVat();
             return PartialView("_ViewProductWishVatPartialPage",vats);
         }
 

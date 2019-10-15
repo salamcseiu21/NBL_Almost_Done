@@ -1,4 +1,5 @@
 ﻿
+@using NBL.Models.Enums
 @model IEnumerable<NBL.Models.ViewModels.ViewClient>
 @{
     ViewBag.Title = "Client List";
@@ -16,6 +17,7 @@
                     <th class="text-center">Basic Information</th>
                     <th class="text-center">Contact Info</th>
                     <th class="text-center">Total Order</th>
+                    <th class="text-center">Has Credit Limit ?</th>
                     <th class="text-center">Outstanding</th>
                     <th class="text-center">Executive</th>
                     <th class="text-center">View</th>
@@ -40,6 +42,7 @@
                         </td>
                         <td>@Html.Raw(item.GetContactInformation())</td>
                         <td class="text-center">@item.TotalOrder</td>
+                        <td class="text-center">@(Enum.GetName(typeof(FlagEnum),item.IsConsiderCreditLimit))</td>
                         <td class="text-center">
                             @if (item.Outstanding < 0)
                             {
@@ -63,6 +66,7 @@
                     <th class="text-center">Basic Information</th>
                     <th class="text-center">Contact Info</th>
                     <th class="text-center">Total Order</th>
+                    <th class="text-center">Has Credit Limit ?</th>
                     <th class="text-center">Outstanding</th>
                     <th class="text-center">Executive</th>
                     <th class="text-center">View</th>
@@ -78,7 +82,7 @@
 
     $('#table_client_list').DataTable({
         "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
-        "order":[["3","desc"]]
+        "order":[["4","desc"]]
     });
 
 </script>

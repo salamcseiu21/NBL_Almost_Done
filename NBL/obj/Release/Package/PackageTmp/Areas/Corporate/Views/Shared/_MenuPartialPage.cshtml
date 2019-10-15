@@ -38,6 +38,137 @@
         <li>@Html.ActionLink(" Total Receive By Branch", "TotalReceiveByBranch", "Home", new { area = "Corporate" }, new { @class = "fa fa-eye" })</li>
     </ul>
 </li>
+
+<li class="treeview">
+    <a href="#">
+        <i class="fa fa-book"></i> <span>Reports</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-circle-o"></i> Collection
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Daily Reports", "DailyReport", "Reports", new { area = "Corporate" }, new { @class = "fa fa-file", style = "font-weight: bolder" })</li>
+                <li>@Html.ActionLink(" Monthly Reports", "MonthlyReport", "Reports", new { area = "Corporate" }, new { @class = "fa fa-file", style = "font-weight: bolder" })</li>
+                <li>@Html.ActionLink(" Yearly Reports", "CollectionList", "Home", new { area = "Corporate" }, new { @class = "fa fa-file", style = "font-weight: bolder" })</li>
+                <li>@Html.ActionLink(" Collection Summary", "CollectionSummary", "Home", new { area = "Corporate" }, new { @class = "fa fa-file", style = "font-weight: bolder" })</li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-circle-o"></i> Clients
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-circle-o"></i> Summary
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>@Html.ActionLink(" Dhaka", "BranchWishClientSummary", "Home", new { id = 9, area = "Corporate" }, new { @class = "fa fa-file", style = "font-weight: bolder" })</li>
+                        <li>@Html.ActionLink(" Barisal", "BranchWishClientSummary", "Home", new { id = 8, area = "Corporate" }, new { @class = "fa fa-file", style = "font-weight: bolder" })</li>
+                        <li>@Html.ActionLink(" Bogura", "BranchWishClientSummary", "Home", new { id = 10, area = "Corporate" }, new { @class = "fa fa-file", style = "font-weight: bolder" })</li>
+                        <li>@Html.ActionLink(" Chattogram", "BranchWishClientSummary", "Home", new { id = 12, area = "Corporate" }, new { @class = "fa fa-file", style = "font-weight: bolder" })</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-circle-o"></i> Daily Reports
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>@Html.ActionLink(" Client Report by Date", "ClientReoprt", "Reports", new { area = "Corporate" }, new { @class = "fa fa-circle-o", style = "font-weight: bolder" })</li>
+                <li>@Html.ActionLink(" Client Ledger", "ClientLedger", "Reports", new { area = "Corporate" }, new { @class = "fa fa-circle-o", style = "font-weight: bolder" })</li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-circle-o"></i> Monthly Reports
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-circle-o"></i> Level Two
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-circle-o"></i> Yearly Reports
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-circle-o"></i> Level Two
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-circle-o"></i> Stocks
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-circle-o"></i> Level Two
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</li>
 <li class="treeview">
     <a href="#">
         <i class="fa fa-eye"></i>
@@ -47,33 +178,14 @@
         </span>
     </a>
     <ul class="treeview-menu">
-        @*<li class="treeview">
-            <a href="#">
-                <i class="fa fa-circle-o"></i> Orders
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-            </a>
-            <ul class="treeview-menu">
-                <li>@Html.ActionLink(" Latest Orders", "LatestOrders", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-                <li>@Html.ActionLink(" Current Month Orders", "CurrentMonthOrders", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-                <li>@Html.ActionLink(" All Orders", "AllOrders", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-
-                <li>@Html.ActionLink(" Test", "Test", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-            </ul>
-        </li>*@
-        @*<li>@Html.ActionLink(" Employee List", "ViewEmployee", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>*@
+      
         <li>@Html.ActionLink(" Client List", "ViewClient", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-     
-        @*<li>@Html.ActionLink(" Branch List", "ViewBranch", "ShowInfo", new { area = "CommonArea" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-        <li>@Html.ActionLink(" Division List", "ViewDivision", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>*@
         <li>@Html.ActionLink(" Region List", "ViewRegion", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
         <li>@Html.ActionLink(" Territory List", "ViewTerritory", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
         <li>@Html.ActionLink(" Supplier List", "Supplier", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-        @*<li>@Html.ActionLink(" Departments", "ViewDepartment", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>*@
+       
         <li>@Html.ActionLink(" Product Details", "ProductDetails", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
         <li>@Html.ActionLink(" Product Wish Vat", "ProductWishVat", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
         <li>@Html.ActionLink(" Folio", "SoldProducts", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>
-        @*<li>@Html.ActionLink(" Charts", "SalesChart", "Home", new { area = "Corporate" }, new { @class = "fa fa-list", style = "font-weight: bolder" })</li>*@
     </ul>
 </li>

@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<NBL.Models.EntityModels.VatDiscounts.Vat>
+@model IEnumerable<NBL.Models.ViewModels.VatDiscounts.ViewVat>
     @{
         ViewBag.Title = "Vats";
         Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
@@ -26,8 +26,8 @@
                     i++;
                     <tr>
                         <td>@i</td>
-                        <td>@Html.Raw(item.Product.ProductName)</td>
-                        <td>@item.Product.ProductCategory.ProductCategoryName</td>
+                        <td>@Html.Raw(item.ProductName)</td>
+                        <td>@item.Segment</td>
                         <td class="text-right">@item.VatAmount</td>
                         <td class="text-center">@item.UpdateDate.ToString("dd-MMMM-yyyy")</td>
                     </tr>

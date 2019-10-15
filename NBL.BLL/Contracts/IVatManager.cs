@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NBL.Models;
 using NBL.Models.EntityModels.VatDiscounts;
+using NBL.Models.ViewModels.VatDiscounts;
 
 namespace NBL.BLL.Contracts
 {
@@ -13,5 +14,6 @@ namespace NBL.BLL.Contracts
          IEnumerable<Vat> GetAllPendingVats();
          IEnumerable<Vat> GetProductWishVat();
 
+       IEnumerable<ViewVat> GetProductLatestVat();
    }
 }

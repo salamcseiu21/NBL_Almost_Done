@@ -170,6 +170,8 @@ namespace NBL.Areas.AccountsAndFinance.BLL
             return rowAffected > 0;
         }
 
+        
+
         private string GenerateOpeningBalanceRef(long maxSl)
         {
             var refCode = _iCommonManager.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(ReferenceType.ClientOpeningBalance)).Code;
@@ -200,7 +202,10 @@ namespace NBL.Areas.AccountsAndFinance.BLL
             int rowAffected= _iAccountGateway.ActiveReceivableCheque(chequeDetails, aReceivable, aClient);
             return rowAffected > 0;
         }
-
+        public IEnumerable<ViewLedgerModel> GetClientLedgerBySearchCriteria(SearchCriteria searchCriteria)
+        {
+            return _iAccountGateway.GetClientLedgerBySearchCriteria(searchCriteria);
+        }
         public ICollection<ViewLedgerModel> GetClientLedgerBySubSubSubAccountCode(string clientSubSubSubAccountCode)
         {
             return _iAccountGateway.GetClientLedgerBySubSubSubAccountCode(clientSubSubSubAccountCode);

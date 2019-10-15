@@ -1,0 +1,85 @@
+﻿@using NBL.Models.ViewModels
+
+@{
+    ViewBag.Title = "Client Reoprt";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+}
+
+<section class="content">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Client Reoprt</div>
+        <div class="panel panel-body">
+            @using (Html.BeginForm())
+            {
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="FromDate" class="control-label col-md-2">From Date</label>
+                        <div class="col-md-10">
+                            <input type="text" id="FromDate" name="FromDate" value="@date" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ToDate" class="control-label col-md-2">To Date</label>
+                        <div class="col-md-10">
+                            <input type="text" id="ToDate" name="ToDate" value="@date" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10 col-md-offset-2">
+                            @Html.ActionLink("Back", "Home", "Home", new { area = "AccountsAndFinance" }, new { @class = "btn btn-danger fa fa-arrow-left" })
+                            <button type="button" class="btn btn-success fa fa-eye" onclick="ViewReport(this)"> View Report</button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div id="divClientReport"></div>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+        $(function () {
+
+            $("#FromDate").datepicker({
+                dateFormat: 'dd-MM-yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "2019:+@DateTime.Now.Year",
+                maxDate: '0D'
+            });
+            $("#ToDate").datepicker({
+                dateFormat: 'dd-MM-yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "2019:+@DateTime.Now.Year",
+                maxDate: '0D'
+            });
+        });
+
+    </script>
+
+    <script>
+        function ViewReport(btnClick) {
+
+            var startDate = $("#FromDate").val();
+            var endDate = $("#ToDate").val();
+            var clientId = $("#ClientId").val();
+            var json = { startDate: startDate, endDate: endDate, clientId:clientId };
+            $.ajax({
+
+                type: 'Post',
+                url: RootUrl + "accountsAndFinance/reports/GetClientReportBySearchCriteria",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("#divClientReport").html(data);
+                }
+            });
+        }
+    </script>
+}
+

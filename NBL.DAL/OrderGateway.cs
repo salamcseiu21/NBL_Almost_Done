@@ -483,7 +483,10 @@ namespace NBL.DAL
                             {
                                 ClientTypeId = Convert.ToInt32(reader["ClientTypeId"]),
                                 ClientTypeName = reader["ClientTypeName"].ToString()
-                            }
+                            },
+                            CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
+                            IsConsiderCreditLimit = Convert.ToInt32(reader["IsConsiderCreditLimit"])
+
                         },
                        
                         ApprovedByNsmDateTime = Convert.ToDateTime(reader["ApprovedByNsmDateTime"]),

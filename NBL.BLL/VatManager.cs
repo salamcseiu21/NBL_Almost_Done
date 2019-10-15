@@ -2,6 +2,7 @@
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.VatDiscounts;
+using NBL.Models.ViewModels.VatDiscounts;
 
 namespace NBL.BLL
 {
@@ -24,6 +25,11 @@ namespace NBL.BLL
         public IEnumerable<Vat> GetProductWishVat()
         {
             return _iVatGateway.GetProductWishVat();
+        }
+
+        public IEnumerable<ViewVat> GetProductLatestVat()
+        {
+            return _iVatGateway.GetProductLatestVat();
         }
 
         public bool Add(Vat model)

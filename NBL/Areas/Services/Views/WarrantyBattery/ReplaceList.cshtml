@@ -16,7 +16,7 @@
                     <th>  Product Name</th>
                     <th>  Barcode</th>
                     <th>  Client</th>
-         
+                    <th class="text-center">  Action</th>
                 </tr>
                 </thead>
                 @foreach (var item in Model)
@@ -29,6 +29,9 @@
 
                         <td>@item.Barcode</td>
                         <td>@item.ClientInfo</td>
+                        <td class="">
+                            <input type="button" value="Add To Chalan"/>
+                        </td>
                
                     </tr>
                 }
@@ -40,6 +43,7 @@
                     <th>  Product Name</th>
                     <th>  Barcode</th>
                     <th>  Client</th>
+                    <th class="text-center">Action</th>
                 </tr>
                 </tfoot>
             </table>

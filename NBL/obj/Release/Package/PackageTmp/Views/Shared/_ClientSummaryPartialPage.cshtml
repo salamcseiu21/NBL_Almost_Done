@@ -1,0 +1,131 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.ViewClientSummaryModel>
+@{
+    var i = 0;
+}
+<table class="display table-responsive table-bordered" id="table_client_summary" style="border: 1px solid black;width: 100%">
+    <thead>
+    <tr>
+        <th colspan="8" class="text-center text-green headingStyle">
+            Client Summary
+        </th>
+    </tr>
+    <tr>
+        <th rowspan="2" style="padding:25px 10px">S.N</th>
+        <th rowspan="2" style="padding:25px 10px"> Client info</th>
+        <th rowspan="2" style="padding:25px 10px" class="text-right">Total Quantity</th>
+        <th rowspan="2" style="padding:25px 10px" class="text-right">Opening</th>
+        <th colspan="2" class="text-center">Transaction</th>
+        <th rowspan="2" style="padding:25px 10px" class="text-right">   Outstanding  (&#2547;)</th>
+        <th rowspan="2" style="padding:25px 10px" class="text-right">   Credit Limit  (&#2547;)</th>
+    </tr>
+    <tr>
+
+        <th class="text-right">
+            Debit (&#2547;)
+        </th>
+        <th class="text-right">
+            Credit (&#2547;)
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var client in Model)
+    {
+        i++;
+        <tr>
+            <td>@i</td>
+            <td>@(Html.ActionLink(client.CommercialName, "ClientDetails", "Home", new { id = client.ClientId }, null))</td>
+            <td class="text-right">
+                @client.TotalQuantity
+            </td>
+            <td class="text-right">
+                <b>@client.OpeningBalance</b>
+            </td>
+            <td class="text-right">
+                <b>@client.Debit</b>
+            </td>
+            <td class="text-right">
+                <b> @(client.Credit * -1)</b>
+            </td>
+            <td class="text-right">
+                @{
+                    if (client.Outstanding < 0)
+                    {
+                        <b>(@(client.Outstanding * (-1)))</b>
+                    }
+                    else
+                    {
+                        <b>
+                            @client.Outstanding
+                        </b>
+                    }
+                }
+            </td>
+            <td class="text-right">
+                <b>@client.CreditLimit</b>
+            </td>
+        </tr>
+    }
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>
+            S.N
+        </th>
+        <th>
+            Client info
+        </th>
+        <th class="text-right">
+            Total Quantity
+        </th>
+        <th class="text-right">
+           Opening
+        </th>
+        <th class="text-right">
+            Debit (&#2547;)
+        </th>
+        <th class="text-right">
+            Credit (&#2547;)
+        </th>
+        <th class="text-right">
+            Outstanding (&#2547;)
+        </th>
+        <th class="text-right">
+            Credit Limit (&#2547;)
+        </th>
+    </tr>
+    </tfoot>
+</table>
+    
+<script>
+    $('#table_client_summary').DataTable({
+        "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "All"]],
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excel',
+                text: 'Download as Excel',
+                title: 'Client Summary',
+                exportOptions: {
+                    columns: [0, 1, 2,3,4,5,6]
+                }
+            },
+            {
+                extend: 'print',
+                text: 'Print',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5,6]
+                },
+                title: 'Client Summary',
+                customize: function (win) {
+                    $(win.document.body)
+                        .css('font-size', '10pt');
+
+                    $(win.document.body).find('table')
+                        .addClass('compact')
+                        .css('font-size', 'inherit');
+                }
+            }
+        ]
+    });
+</script>

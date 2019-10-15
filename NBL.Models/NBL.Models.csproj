@@ -291,6 +291,7 @@
     <Compile Include="ViewModels\TransferProducts\ViewTransferRequisition.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewTripDetailsModel.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewTripModel.cs" />
+    <Compile Include="ViewModels\VatDiscounts\ViewVat.cs" />
     <Compile Include="ViewModels\ViewAssignedRegion.cs" />
     <Compile Include="ViewModels\ViewAssignedUpazilla.cs" />
     <Compile Include="ViewModels\ViewAssignedUserRole.cs" />

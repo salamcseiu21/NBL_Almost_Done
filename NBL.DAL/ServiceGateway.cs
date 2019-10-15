@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using NBL.DAL.Contracts;
+using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Services;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels.Orders;
@@ -290,7 +291,9 @@ namespace NBL.DAL
                         ReceiveRemarks = reader["ReceiveReport"].ToString(),
                         DischargeReport = DBNull.Value.Equals(reader["DischargeReport"]) ? null : reader["DischargeReport"].ToString(),
                         ChargerReport = DBNull.Value.Equals(reader["ChargeReport"]) ? null : reader["ChargeReport"].ToString(),
-                        ClientInfo = reader["ClientInfo"].ToString()
+                        ClientInfo = reader["ClientInfo"].ToString(),
+                        ClientId = Convert.ToInt32(reader["ClientId"])
+                        
                     });
                 }
                 reader.Close();
@@ -300,6 +303,41 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not collect Receive service product by forwardid", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+        public ICollection<Client> GetClientListByServiceForwardId(int forwardId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetClientListByServiceForwardId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ForwardToId", forwardId);
+                ConnectionObj.Open();
+                List<Client> clients = new List<Client>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    clients.Add(new Client
+                    {
+                        
+                        ClientName = reader["ClientName"].ToString(),
+                        ClientId = Convert.ToInt32(reader["ClientId"])
+
+                    });
+                }
+                reader.Close();
+                return clients;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect ClientList By Service  forwardid", exception);
             }
             finally
             {
@@ -621,6 +659,7 @@ namespace NBL.DAL
             }
         }
 
+      
         public int Add(WarrantyBatteryModel model)
         {
             throw new NotImplementedException();

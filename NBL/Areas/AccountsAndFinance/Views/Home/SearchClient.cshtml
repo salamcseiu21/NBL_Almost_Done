@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "Search Client";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<div class="content">
+
+    <h3 class="text-center text-green">Search Client</h3>
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="form-group">
+                    <label for="ClientName" class="control-label col-md-3">Client Name</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="ClientName" id="ClientName" placeholder="Type client name ..." required />
+                        <input type="hidden" name="ClientId" id="ClientId" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ClientName" class="control-label col-md-3"></label>
+                    <div class="col-md-9 text-right">
+                        <div class="btn-toolbar">
+                            @Html.ActionLink(" Back", "Home", "Home", new { area = "AccountsAndFinance" }, new { @class = "btn btn-danger" })
+                            <input type="submit" value="Search" class="btn btn-info" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts
+{
+    @*Client Name Auto Complete*@
+    <script type="text/javascript">
+    $(function () {
+        $("#ClientName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/Common/ClientNameAutoComplete/',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data,
+                            function(item) {
+                                return item;
+                            }));
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#ClientId").val(i.item.val);
+                $("#CId").val(i.item.val);
+                $("#orders").html("");
+                $("#Total").val('');
+                $("#Net").val('');
+                $("#SpecialDiscount").val('');
+                //alert(i.item.val);
+
+                $("#Discount").val('');
+                $("#Address").val('');
+                $("#ClientPhone").val('');
+                $("#ClientEmail").val('');
+                 $("#CreditLimit").val('');
+                var cId = i.item.val;
+                var json = { clientId: cId };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetClientById", "Common", new { area = "" })',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+
+                        var address = data.Address;
+                        var phone = data.Phone;
+                        var email = data.Email;
+                        var discount = data.Discount;
+                        var code = data.SubSubSubAccountCode;
+                        var ctype = data.ClientTypeName;
+                        var cl = data.CreditLimit;
+                        $("#Address").val(address);
+                        $("#ClientPhone").val(phone);
+                        $("#ClientEmail").val(email);
+                        $("#Discount").val(discount);
+                        $("#SubSubSubAccountCode").val(code);
+                        $("#ClientTypeName").val(ctype);
+                        $("#CreditLimit").val(cl);
+
+
+                    }
+                });
+            },
+            minLength: 1
+        });
+    });
+    </script>
+}

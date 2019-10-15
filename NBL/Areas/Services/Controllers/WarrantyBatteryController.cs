@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NBL.BLL.Contracts;
+using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Services;
 using NBL.Models.Enums;
 using NBL.Models.Logs;
@@ -55,6 +57,13 @@ namespace NBL.Areas.Services.Controllers
                 Log.WriteErrorLog(exception);
                 return PartialView("_ErrorPartial", exception);
             }
+        }
+
+        public ActionResult MakeRplaceChalan()
+        {
+            ICollection<Client> clients = _iServiceManager.GetClientListByServiceForwardId(Convert.ToInt32(ForwardTo.Replace));
+            ViewBag.ClientId = clients;
+            return View();
         }
         public ActionResult ReturnList()
         {
@@ -175,7 +184,7 @@ namespace NBL.Areas.Services.Controllers
                 var user = (ViewUser)Session["user"];
                 var actionModel =
                     _iCommonManager.GetActionListModelByAreaControllerActionName("Services", "WarrantyBattery",
-                        "ChargeReport");
+                        "DisChargeReport");
 
                 var product = _iServiceManager.GetReceivedServiceProductById(id);
                 product.ProductHistory = _iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();
@@ -363,6 +372,7 @@ namespace NBL.Areas.Services.Controllers
                 model.ReceiveDatetime=DateTime.Now;
                 model.DelivaryRef = product.DeliveryRef;
                 model.TransactionRef = product.OrderRef;
+                model.Barcode = product.ProductBarCode;
                 model.Status = 0;
                 var result = _iServiceManager.ReceiveServiceProduct(model);
                 if (result)

@@ -194,6 +194,7 @@ namespace NBL.Controllers
                 case "ServiceManager":
                     return RedirectToAction("Home", "Home", new { area = "Services" });
                 case "ServiceManagement":
+                case "GeneralServiceManagement":
                     return RedirectToAction("PendingList", "ServiceManagement", new { area = "Services" });
                 case "StoreManagerFactory":
                     return RedirectToAction("Home", "Home", new { area = "Production" });

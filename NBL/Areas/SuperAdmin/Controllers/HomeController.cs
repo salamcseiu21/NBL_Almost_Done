@@ -23,6 +23,7 @@ using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Summaries;
+using NBL.Models.ViewModels.VatDiscounts;
 
 namespace NBL.Areas.SuperAdmin.Controllers
 {
@@ -278,8 +279,9 @@ namespace NBL.Areas.SuperAdmin.Controllers
 
         public PartialViewResult ProductWishVat()
         {
-            IEnumerable<Vat> vats = _iVatManager.GetProductWishVat();
-            return PartialView("_ViewProductWishVatPartialPage", vats);
+           
+            IEnumerable<ViewVat> productVats = _iVatManager.GetProductLatestVat();
+            return PartialView("_ViewProductWishVatPartialPage", productVats);
         }
 
 
@@ -413,7 +415,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
                 var client = _iClientManager.GetClientDeailsById(id);
                 var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
                 client.LedgerModels = ledgers.ToList();
-                return View(client);
+                return PartialView("_ViewClientDetailsPartialPage", client);
             }
             catch (Exception exception)
             {

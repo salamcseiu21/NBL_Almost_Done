@@ -15,7 +15,10 @@ namespace NBL.Models.ViewModels.FinanceModels
         public string Credit { get; set; }
         public decimal CreditAmount { get; set; }
         public string CreditExplanation { get; set; }   
-        public DateTime TransactionDate { get; set; }
-        public decimal Balance { get; set; }    
+        public DateTime? TransactionDate { get; set; }
+        public decimal Balance { get; set; }
+        public string Explanation { get; set; }
+        public long? VoucherNo { get; set; }
+
     }
 }

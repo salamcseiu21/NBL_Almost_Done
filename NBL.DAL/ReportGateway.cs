@@ -8,6 +8,7 @@ using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.Logs;
+using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Products;
@@ -1270,6 +1271,55 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
                 CommandObj.Dispose();
                 ConnectionObj.Close();
+            }
+        }
+        //----------------------Find cliet report by search criteria...........
+        public ICollection<ViewClientSummaryModel> GetClientReportBySearchCriteria(SearchCriteria searchCriteria)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetClientReportBySearchCriteria";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", searchCriteria.BranchId);
+                CommandObj.Parameters.AddWithValue("@StartDate", searchCriteria.StartDate);
+                CommandObj.Parameters.AddWithValue("@EndDate", searchCriteria.EndDate);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<ViewClientSummaryModel> summary = new List<ViewClientSummaryModel>();
+                while (reader.Read())
+                {
+                    summary.Add(new ViewClientSummaryModel
+                    {
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        ClientName = reader["Name"].ToString(),
+                        CommercialName = reader["CommercialName"].ToString(),
+                        Debit = Convert.ToDecimal(reader["DebitAmount"]),
+                        Credit = Convert.ToDecimal(reader["CreditAmount"]),
+                        Outstanding = Convert.ToDecimal(reader["OutStanding"]),
+                        TotalOrder = Convert.ToInt32(reader["TotalOrder"]),
+                        CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
+                        TotalQuantity = Convert.ToInt32(reader["TotalQuantity"]),
+                        OpeningBalance = Convert.ToDecimal(reader["OpeningBalance"])
+                    });
+                }
+
+                return summary;
+            }
+            catch (SqlException sqlException)
+            {
+                Log.WriteErrorLog(sqlException);
+                throw new Exception("Could not get client reoprt due to sql Exception", sqlException);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get client report", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
             }
         }
 

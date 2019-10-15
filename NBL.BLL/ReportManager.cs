@@ -6,6 +6,7 @@ using NBL.DAL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Securities;
+using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.FinanceModels;
 using NBL.Models.ViewModels.Orders;
@@ -276,6 +277,11 @@ namespace NBL.BLL
                 December = totalDelivery?.ToList().Find(n => n.MonthName.StartsWith("Dec"))?.TotalDeliveredQty
             };
             return delivered;
+        }
+
+        public ICollection<ViewClientSummaryModel> GetClientReportBySearchCriteria(SearchCriteria searchCriteria)
+        {
+            return _iReportGateway.GetClientReportBySearchCriteria(searchCriteria);
         }
 
         public bool IsValiedBarcode(string barcode)

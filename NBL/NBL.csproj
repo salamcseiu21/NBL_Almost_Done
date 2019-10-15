@@ -304,6 +304,7 @@
     <Compile Include="Areas\AccountsAndFinance\Controllers\ChartOfAccountController.cs" />
     <Compile Include="Areas\AccountsAndFinance\Controllers\HomeController.cs" />
     <Compile Include="Areas\AccountsAndFinance\Controllers\ProductController.cs" />
+    <Compile Include="Areas\AccountsAndFinance\Controllers\ReportsController.cs" />
     <Compile Include="Areas\AccountsAndFinance\Controllers\VoucherController.cs" />
     <Compile Include="Areas\AccountsAndFinance\DAL\AccountsGateway.cs" />
     <Compile Include="Areas\AccountsAndFinance\DAL\Contracts\IAccountGateway.cs" />
@@ -8284,10 +8285,17 @@
     <Content Include="Areas\SuperAdmin\Views\SuperReport\ClientStock.cshtml" />
     <Content Include="WebForm1.aspx" />
     <Content Include="Areas\Corporate\Views\Home\BranchWishClientSummary.cshtml" />
-    <Content Include="Areas\Corporate\Views\Shared\_ClientSummaryPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ClientSummaryPartialPage.cshtml" />
     <Content Include="DataSet1.xsc">
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Content>
+    <Content Include="Areas\Services\Views\WarrantyBattery\MakeRplaceChalan.cshtml" />
+    <Content Include="Areas\Corporate\Views\Reports\ClientReoprt.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Home\ClientSummary.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Home\SearchClient.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Reports\ClientReoprt.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Reports\ClientLedger.cshtml" />
+    <Content Include="Areas\Corporate\Views\Reports\ClientLedger.cshtml" />
     <None Include="DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -8450,6 +8458,7 @@
     <Content Include="Views\Shared\_ViewCollectionListPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewStockProductBarcodePartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewFolioPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ClientLedgerPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -115,6 +115,7 @@ namespace NBL.Models.EntityModels.Clients
         public string AddedBy { get; set; }
         public DateTime SystemDateTime { get; set; }    
         public MailingAddress MailingAddress { get; set; }
+        public int IsConsiderCreditLimit { get; set; }
         public Client()
         {
             ClientType = new ClientType();

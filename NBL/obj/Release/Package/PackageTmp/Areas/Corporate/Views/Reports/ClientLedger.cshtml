@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "Client Ledger";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+}
+
+<section class="content">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Client Reoprt</div>
+        <div class="panel panel-body">
+            @using (Html.BeginForm())
+            {
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="FromDate" class="control-label col-md-2">From Date</label>
+                        <div class="col-md-10">
+                            <input type="text" id="FromDate" name="FromDate" value="@date" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ToDate" class="control-label col-md-2">To Date</label>
+                        <div class="col-md-10">
+                            <input type="text" id="ToDate" name="ToDate" value="@date" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ClientName" class="control-label col-md-2">Client Name</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="ClientName" id="ClientName" placeholder="Type client name ..." required />
+                            <input type="hidden" name="ClientId" id="ClientId" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10 col-md-offset-2">
+                            @Html.ActionLink("Back", "Home", "Home", new { area = "AccountsAndFinance" }, new { @class = "btn btn-danger fa fa-arrow-left" })
+                            <button type="button" class="btn btn-success fa fa-eye" onclick="ViewReport(this)"> View Report</button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div id="divClientLedgerReport"></div>
+            <div id="Loading" class="text-center" style="font-size:25px"><i class="fa fa-spinner"></i> I'm loading,whatever you want!</div>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+        $(function () {
+
+            $("#Loading").hide();
+            $("#FromDate").datepicker({
+                dateFormat: 'dd-MM-yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "2019:+@DateTime.Now.Year",
+                maxDate: '0D'
+            });
+            $("#ToDate").datepicker({
+                dateFormat: 'dd-MM-yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "2019:+@DateTime.Now.Year",
+                maxDate: '0D'
+            });
+        });
+
+    </script>
+
+    <script>
+        function ViewReport(btnClick) {
+
+            $("#divClientLedgerReport").html("");
+            $("#Loading").show();
+            var startDate = $("#FromDate").val();
+            var endDate = $("#ToDate").val();
+            var clientId = $("#ClientId").val();
+            if (clientId !== "") {
+                var json = { startDate: startDate, endDate: endDate, clientId: clientId };
+                $.ajax({
+                    type: 'Post',
+                    url: RootUrl + "corporate/reports/GetClientLedgerReportBySearchCriteria",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $("#Loading").hide();
+                      
+                        $("#divClientLedgerReport").html(data);
+                    }
+                });
+            } else {
+                alert("Please type a valid Clied name!");
+                $("#Loading").hide();
+            }
+          
+        }
+    </script>
+
+    @*Client Name Auto Complete*@
+    <script type="text/javascript">
+    $(function () {
+        $("#ClientName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/Common/GetAllClientNameForAutoComplete/',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data,
+                            function(item) {
+                                return item;
+                            }));
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#ClientId").val(i.item.val);
+            },
+            minLength: 1
+        });
+    });
+    </script>
+}
+

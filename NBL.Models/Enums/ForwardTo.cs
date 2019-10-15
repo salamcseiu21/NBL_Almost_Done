@@ -14,7 +14,9 @@ namespace NBL.Models.Enums
         Repair=4,
         Return=5,
         Replace=6,
-        ApprovalCommittee=7,
-        Charge=8
+        ServiceManagement=7, 
+        Charge=8,
+        GeneralServiceManagement=9
+
     }
 }

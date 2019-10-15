@@ -138,6 +138,12 @@
         roleName = "Service Management";
         areas = "services";
     }
+    else if (User.IsInRole("GeneralServiceManagement"))
+    {
+        roleName = "Service Management";
+        areas = "services";
+    }
+   
     else if (User.IsInRole("HRExecutive"))
     {
         roleName = "HR Executive";
@@ -313,6 +319,7 @@
                     case "ServiceManager":
                         Html.RenderPartial("~/Areas/Services/Views/Shared/_ServiceManagerMenuPartialPage.cshtml");
                         break;
+                    case "GeneralServiceManagement":
                     case "ServiceManagement":
                         Html.RenderPartial("~/Areas/Services/Views/Shared/_ServiceManagementMenuPartialPage.cshtml");
                         break;

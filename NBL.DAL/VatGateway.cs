@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.VatDiscounts;
+using NBL.Models.ViewModels.VatDiscounts;
 
 namespace NBL.DAL
 {
@@ -72,6 +73,42 @@ namespace NBL.DAL
                         VatAmount = Convert.ToDecimal(reader["VatAmount"]),
                         UpdateDate = Convert.ToDateTime(reader["UpdateDate"]),
                         UpdateByUserId = Convert.ToInt32(reader["UpdateByUserId"])
+
+                    });
+                }
+                reader.Close();
+                return vats;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect Vat info", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public IEnumerable<ViewVat> GetProductLatestVat()
+        {
+            try
+            {
+                List<ViewVat> vats = new List<ViewVat>();
+                CommandObj.CommandText = "UDSP_GetProductLatestVat";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    vats.Add(new ViewVat
+                    {
+                        ProductName = reader["ProductName"].ToString(),
+                        Segment = reader["Segment"].ToString(),
+                        VatAmount = Convert.ToDecimal(reader["VatAmount"]),
+                        UpdateDate = Convert.ToDateTime(reader["UpdateDate"])
 
                     });
                 }

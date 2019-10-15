@@ -61,16 +61,17 @@
         <!-- /.col -->
         <div class="col-md-10">
             <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#orders" data-toggle="tab">Orders</a></li>
-                    <li><a href="#delivery_info" data-toggle="tab">Delivery</a></li>
-                    <li><a href="#personal_info" data-toggle="tab">Personal Information</a></li>
-                    <li><a href="#files" data-toggle="tab">Files</a></li>
-                    <li><a href="#StockProducts" data-toggle="tab">Stock Products</a></li>
-                    <li><a href="#Ledger" data-toggle="tab">Ledger</a></li>
-                </ul>
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#Ledger" data-toggle="tab">Ledger</a></li>
+                <li><a href="#orders" data-toggle="tab">Orders</a></li>
+                <li><a href="#delivery_info" data-toggle="tab">Delivery</a></li>
+                <li><a href="#personal_info" data-toggle="tab">Personal Information</a></li>
+                <li><a href="#files" data-toggle="tab">Files</a></li>
+                <li><a href="#StockProducts" data-toggle="tab">Stock Products</a></li>
+
+            </ul>
                 <div class="tab-content">
-                    <div class="active tab-pane" id="orders">
+                    <div class="tab-pane" id="orders">
                         <!-- Post -->
                         <div class="post">
                             <table id="table_Order_list" class="display table-bordered" style="border:1px solid black">
@@ -314,15 +315,17 @@
                     <!-- /.post -->
                 </div>
                     
-                <div class="tab-pane" id="Ledger">
+                <div class="active tab-pane" id="Ledger">
                     <table id="tbl_Client_Ledger" class="display table-bordered" style="border: 1px solid">
                         <thead>
                         <tr>
                             <th>S.N</th>
                             <th>Date</th>
-                            <th class="text-center">Debit(Dr)</th>
-                            <th class="text-center">Credit (Cr)</th>
-                            <th class="text-center">Balance</th>
+                            <th>Voucher No</th>
+                            <th>Explanation</th>
+                            <th class="text-right">Dr</th>
+                            <th class="text-right">Cr</th>
+                            <th class="text-right">Balance</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -331,10 +334,18 @@
                             e++;
                             <tr>
                                 <td>@e</td>
-                                <td>@item.TransactionDate.ToString("dd-MMMM-yyyy")</td>
+                                <td>@{
+                                    if (item.TransactionDate != null)
+                                    {
+                                        @Convert.ToDateTime(item.TransactionDate).ToString("dd-MMMM-yyyy")
+                                    }
+                                   
+                                }</td>
+                                <td>@item.VoucherNo</td>
+                                <td>@item.Explanation</td>
                                 <td class="text-right">@item.DebitAmount</td>
                                 <td class="text-right">
-                                    <b>(@(item.CreditAmount * -1))</b>
+                                    <b>@(item.CreditAmount * -1)</b>
 
                                 </td>
 
@@ -355,9 +366,11 @@
                         <tr>
                             <th>S.N</th>
                             <th>Date</th>
-                            <th class="text-center">Debit(Dr)</th>
-                            <th class="text-center">Credit (Cr)</th>
-                            <th class="text-center">Balance</th>
+                            <th>Voucher No</th>
+                            <th>Explanation</th>
+                            <th class="text-right">Dr</th>
+                            <th class="text-right">Cr</th>
+                            <th class="text-right">Balance</th>
                         </tr>
                         </tfoot>
                     </table>

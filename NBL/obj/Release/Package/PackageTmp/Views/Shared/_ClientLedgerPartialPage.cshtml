@@ -1,0 +1,107 @@
+﻿
+@model NBL.Models.ViewModels.ViewClient
+    @{
+        var e = 0;
+
+    }
+
+<table id="tbl_Client_Ledger" class="display table-bordered" style="border: 1px solid">
+    <thead>
+        <tr>
+            <th>S.N</th>
+            <th>Date</th>
+            <th>Voucher No</th>
+            <th>Explanation</th>
+            <th class="text-right">Dr</th>
+            <th class="text-right">Cr</th>
+            <th class="text-right">Balance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LedgerModels.ToList())
+        {
+            e++;
+            <tr>
+                <td>@e</td>
+                <td>
+                    @{
+                        if (item.TransactionDate != null)
+                        {
+                            @Convert.ToDateTime(item.TransactionDate).ToString("dd-MMMM-yyyy")
+                        }
+
+                    }
+                </td>
+                <td>@item.VoucherNo</td>
+                <td>@item.Explanation</td>
+                <td class="text-right">@item.DebitAmount</td>
+                <td class="text-right">
+                    <b>@(item.CreditAmount * -1)</b>
+
+                </td>
+
+                <td class="text-right">
+                    @{
+                        if (item.Balance < 0)
+                        {
+                            <b>(@(item.Balance * -1))</b>
+                        }
+                        else
+                        {
+                            <b>@item.Balance</b>
+                        }
+                    }
+                </td>
+            </tr>
+                        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>S.N</th>
+            <th>Date</th>
+            <th>Voucher No</th>
+            <th>Explanation</th>
+            <th class="text-right">Dr</th>
+            <th class="text-right">Cr</th>
+            <th class="text-right">Balance</th>
+        </tr>
+    </tfoot>
+</table>
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#tbl_Client_Ledger').DataTable({
+            "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    text: 'Download As Excel',
+                    title: $("#client_Name").val()
+
+                },
+
+                {
+                    extend: 'pdf',
+                    text: 'Download As Pdf',
+                    title: $("#client_Name").val()
+
+                },
+                {
+                    extend: 'print',
+                    title: $("#client_Name").val(),
+                    customize: function (win) {
+                        $(win.document.body)
+                            .css('font-size', '10pt');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ]
+        });
+    });
+</script>

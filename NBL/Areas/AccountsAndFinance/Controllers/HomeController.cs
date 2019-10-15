@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.FinanceModels;
+using NBL.Models.Enums;
 using NBL.Models.Logs;
+using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Summaries;
 
@@ -106,6 +109,57 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
 
+        }
+        public ActionResult SearchClient()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public PartialViewResult SearchClient(int clientId)
+        {
+            try
+            {
+                var client = _iClientManager.GetClientDeailsById(clientId);
+                var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+                client.LedgerModels = ledgers.ToList();
+                return PartialView("_ViewClientDetailsPartialPage", client);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        public PartialViewResult ClientDetails(int id)
+        {
+            try
+            {
+                var client = _iClientManager.GetClientDeailsById(id);
+                var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+                client.LedgerModels = ledgers.ToList();
+                return PartialView("_ViewClientDetailsPartialPage", client);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
+        public ActionResult ClientSummary()
+        {
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            ICollection<ViewClientSummaryModel> summary = _iClientManager.GetClientSummaryByBranchId(branchId);
+            return View(summary);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Securities;
+using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.FinanceModels;
 using NBL.Models.ViewModels.Orders;
@@ -64,5 +65,6 @@ namespace NBL.BLL.Contracts
         decimal GetTotalSaleValueByYearAndMonth(int year, int month);
         ICollection<ViewDeliveredQuantityModel> GetTotalDeliveredQtyByBranchId(int branchId);
         ViewTotalDeliveredQuantity GetTotalDeliveredQuantityByYear(int year);
+        ICollection<ViewClientSummaryModel> GetClientReportBySearchCriteria(SearchCriteria searchCriteria);
     }
 }

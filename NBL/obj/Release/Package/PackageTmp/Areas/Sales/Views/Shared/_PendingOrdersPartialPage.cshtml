@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<NBL.Models.ViewModels.Orders.ViewOrder>
+    
 <h3 class="text-center text-green headingStyle">Pending Orders</h3>
 <table id="table_pending_order_list" class="table table-bordered" style="border:1px solid black">
     <thead>
@@ -43,8 +44,25 @@
                     {
                         <i class="fa fa-spinner fa-spin" aria-hidden="true"></i><span> &nbsp;Verifing</span>
                     }&nbsp;|
-                    @Html.ActionLink(" Cancel", "Cancel", "OrderSalesAdmin", new {id = item.OrderId}, new {@class = "fa fa-times", style = "color:red;"}) &nbsp;|
-                    @Html.ActionLink(" Details", "Approve", "OrderSalesAdmin", new {area = "Sales", id = item.OrderId}, new {@class = "fa fa-eye"})
+                    @Html.ActionLink(" Cancel", "Cancel", "OrderSalesAdmin", new {id = item.OrderId}, new {@class = "fa fa-times", style = "color:red;"}) 
+                    @if (item.Client.IsConsiderCreditLimit == 1)
+                    {
+                        
+                        var hasValid = item.NetAmounts + item.Client.Outstanding;
+                        if (hasValid <=item.Client.CreditLimit)
+                        {
+                            <span> &nbsp;| </span>  @Html.ActionLink(" Details", "Approve", "OrderSalesAdmin", new {area = "Sales", id = item.OrderId}, new {@class = "fa fa-eye"})
+                        }
+                        else
+                        {
+                            <span style="color: red">&nbsp;| Credit Limit Exeed!</span>
+                        }
+                    }
+                    else
+                    {
+                       <span> &nbsp;| </span>  @Html.ActionLink(" Details", "Approve", "OrderSalesAdmin", new {area = "Sales", id = item.OrderId}, new {@class = "fa fa-eye"})
+                    }
+                   
                 </td>
             </tr>
         }

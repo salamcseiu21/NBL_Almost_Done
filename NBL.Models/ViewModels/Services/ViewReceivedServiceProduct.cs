@@ -63,7 +63,8 @@ namespace NBL.Models.ViewModels.Services
         public string ReceiveRemarks { get; set; }
         public string DischargeReport { get; set; }
         public string ChargerReport { get; set; }
-        public string ClientInfo { get; set; } 
+        public string ClientInfo { get; set; }
+        public int ClientId { get; set; }   
         public string ReportByEmployee { get; set; }
         public string EntryByUser { get; set; }
         public string BranchName { get; set; }  

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
+using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Services;
 using NBL.Models.Enums;
 using NBL.Models.ViewModels.Orders;
@@ -51,8 +52,11 @@ namespace NBL.BLL
        {
            return _iServiceGateway.GetReceivedServiceProductsByForwarId(forwardId);
         }
-
-       public bool ForwardServiceBattery(ForwardDetails model)
+       public ICollection<Client> GetClientListByServiceForwardId(int forwardId)
+       {
+           return _iServiceGateway.GetClientListByServiceForwardId(forwardId);
+       }
+        public bool ForwardServiceBattery(ForwardDetails model)
        {
            int rowAffected = _iServiceGateway.ForwardServiceBattery(model);
            return rowAffected > 0;
@@ -90,6 +94,8 @@ namespace NBL.BLL
            int rowAffected = _iServiceGateway.SaveApprovalInformation(userId,forwardDetails);
            return rowAffected > 0;
         }
+
+      
 
 
        public bool Add(WarrantyBatteryModel model)

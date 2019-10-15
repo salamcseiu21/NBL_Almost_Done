@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Services;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Services;
@@ -22,5 +23,6 @@ namespace NBL.BLL.Contracts
         DischargeReportModel GetDisChargeReprortByReceiveId(long id);
         ICollection<ViewSoldProduct> GetAllSoldProducts();
         bool SaveApprovalInformation(int userId, ForwardDetails forwardDetails);
+        ICollection<Client> GetClientListByServiceForwardId(int forwardId); 
     }
 }
