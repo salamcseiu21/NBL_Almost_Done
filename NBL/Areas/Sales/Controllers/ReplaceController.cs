@@ -64,7 +64,7 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
-
+                int branchId = Convert.ToInt32(Session["BranchId"]);
                 var transport = collection["ownTransport"];
                 bool isOwnTransport = transport != null;
                 int deliverebyUserId = ((ViewUser)Session["user"]).UserId;
@@ -106,6 +106,7 @@ namespace NBL.Areas.Sales.Controllers
                     DeliveryDate = Convert.ToDateTime(collection["DeliveryDate"]).Date,
                     CompanyId = replace.CompanyId,
                     ToBranchId = replace.BranchId,
+                    DistributionPointId = branchId,
                     InvoiceId = replaceId,
                     FromBranchId = replace.BranchId 
                 };

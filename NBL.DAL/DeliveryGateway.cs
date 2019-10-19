@@ -9,6 +9,7 @@ using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.EntityModels.Transports;
 using NBL.Models.Logs;
+using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
@@ -1235,6 +1236,73 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Client by client type id", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<ViewDeliveredOrderModel> GetDeliveredOrderBySearchCriteria(SearchCriteria aCriteria)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetDeliveredOrderBySearchCriteria";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ClientId", aCriteria.ClientId);
+                CommandObj.Parameters.AddWithValue("@MonthNo", aCriteria.MonthNo);
+                List<ViewDeliveredOrderModel> refModels = new List<ViewDeliveredOrderModel>();
+                ConnectionObj.Open();
+
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    refModels.Add(new ViewDeliveredOrderModel
+                    {
+                        DeliveryId = Convert.ToInt64(reader["DeliveryId"]),
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        InvoiceRef = reader["InvoiceRef"].ToString(),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        InvoiceId = Convert.ToInt64(reader["InvoiceId"]),
+                        DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
+                        DeliveredDateTime = Convert.ToDateTime(reader["DeliveredDateTime"]),
+                        DistributorName = reader["DistributorName"].ToString(),
+                        DeliveredQty = Convert.ToInt32(reader["DeliveredQuantity"]),
+                        DeliveryStatus = Convert.ToInt32(reader["DeliveryStatus"]),
+                        DriverName = reader["DriverName"].ToString(),
+                        DriverPhone = reader["DriverPhone"].ToString(),
+                        ApproveByNsmDateTime = Convert.ToDateTime(reader["ApprovedByNsmDateTime"]),
+                        NsmUserId = Convert.ToInt32(reader["NsmUserId"]),
+                        NsmName = reader["NsmName"].ToString(),
+                        SalesAdminName = reader["SalesAdminName"].ToString(),
+                        ApproveBySalesAdminDateTime = Convert.ToDateTime(reader["ApprovedByAdminDateTime"]),
+                        SalesAdminUserId = Convert.ToInt32(reader["AdminUserId"]),
+                        OrderByUserId = Convert.ToInt32(reader["OrderByUserId"]),
+                        SalesPersonName = reader["SalesPersonName"].ToString(),
+                        OrderDateTime = Convert.ToDateTime(reader["OrderDateTime"]),
+                        OrderId = Convert.ToInt64(reader["OrderId"]),
+                        Amounts = Convert.ToDecimal(reader["Amounts"]),
+                        ClientName = reader["ClientName"].ToString(),
+                        ClientCode = DBNull.Value.Equals(reader["ClientCode"]) ? null : reader["ClientCode"].ToString(),
+                        ClientId = aCriteria.ClientId,
+                        TransportationCost = Convert.ToDecimal(reader["TransportationCost"])
+                    });
+                }
+                reader.Close();
+                return refModels;
+
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Delivered Order by Search Criteria due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Delivered Collect Order by Search Criteria", exception);
             }
             finally
             {

@@ -66,5 +66,7 @@ namespace NBL.BLL.Contracts
         ICollection<ViewDeliveredQuantityModel> GetTotalDeliveredQtyByBranchId(int branchId);
         ViewTotalDeliveredQuantity GetTotalDeliveredQuantityByYear(int year);
         ICollection<ViewClientSummaryModel> GetClientReportBySearchCriteria(SearchCriteria searchCriteria);
+        ICollection<ViewStockProduct> GetStockProductBarcodeByBranchAndProductIdTemp(int branchId, int productId);
+        bool InActiveProduct(int i, List<ViewStockProduct> stockBarcodList);
     }
 }

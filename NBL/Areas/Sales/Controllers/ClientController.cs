@@ -15,7 +15,6 @@ using NBL.Models.EntityModels.Locations;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Clients;
-using NBL.Models.ViewModels.Logs;
 
 namespace NBL.Areas.Sales.Controllers
 {
@@ -50,6 +49,7 @@ namespace NBL.Areas.Sales.Controllers
             {
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 ICollection<ViewClient> clients = _iClientManager.GetClientByOrderCountAndBranchId(branchId);
+             
                 return View(clients);
             }
             catch (Exception exception)

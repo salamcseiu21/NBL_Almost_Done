@@ -284,6 +284,17 @@ namespace NBL.BLL
             return _iReportGateway.GetClientReportBySearchCriteria(searchCriteria);
         }
 
+        public ICollection<ViewStockProduct> GetStockProductBarcodeByBranchAndProductIdTemp(int branchId, int productId)
+        {
+            return _iReportGateway.GetStockProductBarcodeByBranchAndProductIdTemp(branchId, productId);
+        }
+
+        public bool InActiveProduct(int branchId, List<ViewStockProduct> stockBarcodList)
+        {
+            int rowAffected = _iReportGateway.InActiveProduct(branchId,stockBarcodList);
+            return rowAffected > 0;
+        }
+
         public bool IsValiedBarcode(string barcode)
         {
             var model = _iBarCodeManager.GetAll().ToList().Select(n=>n.Barcode).ToList().Contains(barcode);

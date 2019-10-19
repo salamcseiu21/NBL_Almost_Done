@@ -51,5 +51,7 @@ namespace NBL.DAL.Contracts
        ICollection<ViewDeliveredQuantityModel> GetTotalDeliveredQtyByBranchId(int branchId);
        ICollection<ChartModel> GetTotalDeliveredQuantityByYear(int year);
        ICollection<ViewClientSummaryModel> GetClientReportBySearchCriteria(SearchCriteria searchCriteria);
+       ICollection<ViewStockProduct> GetStockProductBarcodeByBranchAndProductIdTemp(int branchId, int productId);
+       int InActiveProduct(int branchId, List<ViewStockProduct> stockBarcodList);
    }
 }

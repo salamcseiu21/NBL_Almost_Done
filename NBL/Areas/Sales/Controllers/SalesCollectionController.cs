@@ -365,11 +365,15 @@ namespace NBL.Areas.Sales.Controllers
                 {
                     collections=_iAccountsManager.GetAllReceivableCheque(companyId, 0).ToList();
                 }
+                else if(user.Roles.Equals("SalesExecutive"))
+                {
+                    collections = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyIdUserId(branchId, companyId,user.UserId).ToList().FindAll(n => n.ActiveStatus == 0);
+                }
                 else
                 {
-                    collections = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId).ToList().FindAll(n => n.ActiveStatus == 0);
+                    collections = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId)
+                        .ToList().FindAll(n => n.ActiveStatus == 0);
                 }
-              
                 return View(collections);
             }
             catch (Exception exception)

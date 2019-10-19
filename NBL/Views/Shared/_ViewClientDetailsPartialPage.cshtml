@@ -80,8 +80,8 @@
                                         <th>S.N</th>
                                         <th>Order Slip No</th>
 
-                                        <th class="text-center">Qty</th>
-                                        <th class="text-center">Net Amount (&#2547;)</th>
+                                        <th class="text-right">Quantity</th>
+                                        <th class="text-right">Net Amount (&#2547;)</th>
                                         <th class="text-center">Date</th>
                                         <th class="text-center">Status</th>
                                         <th class="text-center">Details</th>
@@ -107,7 +107,7 @@
                                                 @Enum.GetName(typeof(OrderStatus), item.Status)
                                             </td>
                                             <td class="text-center">
-                                                <button type="button" value="@item.OrderId" onclick="viewDetails(this)" class="btn btn-success btn-sm"><i class="fa fa-eye"></i>&nbsp;Details</button>
+                                                <button type="button" value="@item.OrderId" onclick="ViewOrderDetails(this)" class="btn btn-success btn-sm"><i class="fa fa-eye"></i>&nbsp;Details</button>
                                             </td>
                                         </tr>
                                                     }
@@ -126,8 +126,8 @@
                                     <tr>
                                         <th>S.N</th>
                                         <th>Order Slip No</th>
-                                        <th class="text-center">Qty</th>
-                                        <th class="text-center">Net Amount (&#2547;)</th>
+                                        <th class="text-right">Quantity</th>
+                                        <th class="text-right">Net Amount (&#2547;)</th>
                                         <th class="text-center">Date</th>
                                         <th class="text-center">Status</th>
                                         <th class="text-center">Details</th>
@@ -151,7 +151,7 @@
                                         <th>Order Ref</th>
                                         <th>Delivery Ref</th>
 
-                                        <th class="text-center">Qty</th>
+                                        <th class="text-right">Quantity</th>
                                         <th class="text-center">Date</th>
 
                                         <th class="text-center">Details</th>
@@ -170,8 +170,8 @@
                                             <td class="text-right">@item.DeliveredQty</td>
                                             <td class="text-center">@item.DeliveredDateTime.ToString("F")</td>
                                             <td class="text-center">
-                                                
-                                                @Html.ActionLink(" Details","DeliveryDetails","Home",new {id=item.DeliveryId},new {@class="fa fa-eye"})
+                                                <button type="button" value="@item.DeliveryId" onclick="ViewDeliveryDetails(this)" class="btn btn-success btn-sm"><i class="fa fa-eye"></i>&nbsp;Details</button>
+                                                @*@Html.ActionLink(" Details","DeliveryDetails","Home",new {id=item.DeliveryId},new {@class="fa fa-eye"})*@
                                             </td>
                                         </tr>
                                     }
@@ -188,7 +188,7 @@
                                     <th>Order Ref</th>
                                     <th>Delivery Ref</th>
 
-                                    <th class="text-center">Qty</th>
+                                    <th class="text-right">Quantity</th>
                                     <th class="text-center">Date</th>
 
                                     <th class="text-center">Details</th>
@@ -323,6 +323,7 @@
                             <th>Date</th>
                             <th>Voucher No</th>
                             <th>Explanation</th>
+                            <th class="text-right">Quantity</th>
                             <th class="text-right">Dr</th>
                             <th class="text-right">Cr</th>
                             <th class="text-right">Balance</th>
@@ -343,6 +344,17 @@
                                 }</td>
                                 <td>@item.VoucherNo</td>
                                 <td>@item.Explanation</td>
+                                @if (item.Quantity == 0)
+                                {
+                                    <td class="text-right">0</td>
+                                }
+                                else
+                                {
+                                    <td class="text-right">
+                                        <button type="button" value="@item.DeliveryId" class="btn btn-sm" onclick="ViewDeliveryDetails(this)">@item.Quantity</button>
+                       
+                                    </td> 
+                                }
                                 <td class="text-right">@item.DebitAmount</td>
                                 <td class="text-right">
                                     <b>@(item.CreditAmount * -1)</b>
@@ -364,10 +376,22 @@
                         </tbody>
                         <tfoot>
                         <tr>
+                            <td class="text-center">-</td>
+                            <td class="text-center">-</td>
+                            <td class="text-center">-</td>
+                            <td class="text-right">Total</td>
+                            <th class="text-right">@Model.LedgerModels.Sum(n => n.Quantity)</th>
+                            <td class="text-right">@Model.LedgerModels.Sum(n => n.DebitAmount)</td>
+                            <td class="text-right">@Model.LedgerModels.Sum(n => n.CreditAmount *-1)</td>
+                            <td class="text-center">-</td>
+
+                        </tr>
+                        <tr>
                             <th>S.N</th>
                             <th>Date</th>
                             <th>Voucher No</th>
                             <th>Explanation</th>
+                            <th class="text-right">Quantity</th>
                             <th class="text-right">Dr</th>
                             <th class="text-right">Cr</th>
                             <th class="text-right">Balance</th>
@@ -394,7 +418,8 @@
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
 <script>
 
-    var t= $('#table_Order_list').DataTable({
+    var t = $('#table_Order_list').DataTable({
+        "ordering": false,
         "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "All"]]
     });
     var t2= $('#table_client_file_list').DataTable({
@@ -402,6 +427,7 @@
     });
 
     var t3 = $('#table_delivery_Order_list').DataTable({
+        "ordering": false,
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     });
     var t4 = $('#tbl_StockProducts').DataTable({
@@ -415,6 +441,7 @@
 
             $('#tbl_Client_Ledger').DataTable({
                 "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+                "ordering": false,
                 dom: 'Bfrtip',
                 buttons: [
                     {
@@ -449,7 +476,7 @@
 
 <script>
 
-    function viewDetails(orderId) {
+    function ViewOrderDetails(orderId) {
 
         $.ajax({
             type: "POST",
@@ -461,23 +488,16 @@
             }
         });
     }
-
-</script>
-
-
-<script>
-
-    function viewDeliveryDetails(deliveryId) {
+    function ViewDeliveryDetails(deliveryId) {
 
         $.ajax({
             type: "POST",
             url: "@Url.Action("ViewDeliveryDetails", "Common", new { area = "" })",
             data: { deliveryId: deliveryId.value },
             success: function (response) {
-                $('#DeliveryDetailModalBody').html(response);
-                $('#showDeliveredOrderDetailsModal').modal('show');
+                $('#modalBody').html(response);
+                $('#showOrderDetailsModal').modal('show');
             }
         });
     }
-
 </script>

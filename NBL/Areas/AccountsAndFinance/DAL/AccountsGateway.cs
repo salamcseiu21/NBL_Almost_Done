@@ -619,6 +619,9 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                         Balance = DBNull.Value.Equals(reader["Balance"]) ? default(decimal) : Convert.ToDecimal(reader["Balance"]),
                         VoucherNo = DBNull.Value.Equals(reader["VoucherNo"]) ? default(long?) : Convert.ToInt64(reader["VoucherNo"]),
                         Explanation = reader["Explanation"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        DeliveryId = Convert.ToInt64(reader["DeliveryId"])
 
                     });
                 }
@@ -2318,6 +2321,9 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                         Balance = DBNull.Value.Equals(reader["Balance"]) ? default(decimal) : Convert.ToDecimal(reader["Balance"]),
                         VoucherNo = DBNull.Value.Equals(reader["VoucherNo"]) ? default(long?) : Convert.ToInt64(reader["VoucherNo"]),
                         Explanation = reader["Explanation"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        DeliveryId = Convert.ToInt64(reader["DeliveryId"])
                     });
                 }
                 reader.Close();

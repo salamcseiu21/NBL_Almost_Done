@@ -7,6 +7,7 @@ using NBL.Models.EntityModels.Companies;
 using NBL.Models.EntityModels.Locations;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Orders;
+using NBL.Models.ViewModels.FinanceModels;
 
 namespace NBL.Models.EntityModels.Clients
 {

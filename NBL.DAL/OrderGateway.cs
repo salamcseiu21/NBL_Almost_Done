@@ -485,7 +485,8 @@ namespace NBL.DAL
                                 ClientTypeName = reader["ClientTypeName"].ToString()
                             },
                             CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
-                            IsConsiderCreditLimit = Convert.ToInt32(reader["IsConsiderCreditLimit"])
+                            IsConsiderCreditLimit = Convert.ToInt32(reader["IsConsiderCreditLimit"]),
+                            Outstanding = Convert.ToDecimal(reader["Outstanding"])
 
                         },
                        
@@ -1426,6 +1427,121 @@ ConnectionObj.Close();
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not Collect Orders by branch,company and client type id", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ViewOrder GetOrderByDeliveryId(long deliveryId)
+        {
+            try
+            {
+
+                CommandObj.CommandText = "UDSP_GetOrderByDeliveryId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DeliveryId", deliveryId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                ViewOrder order = new ViewOrder();
+                if(reader.Read())
+                {
+                      order = new ViewOrder
+                    {
+                        OrderId = Convert.ToInt32(reader["OrderId"]),
+                        OrderDate = Convert.ToDateTime(reader["OrderDate"]),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        OrderSlipNo = reader["OrderSlipNo"].ToString(),
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        Amounts = Convert.ToDecimal(reader["Amounts"]),
+                        Status = Convert.ToInt32(reader["OrderStatus"]),
+                        SysDate = Convert.ToDateTime(reader["SysDateTime"])
+                    };
+                }
+
+                reader.Close();
+                return order;
+            }
+            catch (SqlException sqlException)
+            {
+                Log.WriteErrorLog(sqlException);
+                throw new Exception("Could not get Order by delivery id due to sql Exception", sqlException);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get Order by delivery id", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ICollection<Order> GetOrdersBySearchCriteria(SearchCriteria aCriteria)
+        {
+            try
+            {
+                CommandObj.CommandText = "spGetOrdersBySearchCriteria";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ClientId", aCriteria.ClientId);
+                CommandObj.Parameters.AddWithValue("@MonthNo", aCriteria.MonthNo);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<Order> orders = new List<Order>();
+                while (reader.Read())
+                {
+
+                    orders.Add(new Order
+                    {
+                        OrderId = Convert.ToInt32(reader["OrderId"]),
+                        OrderDate = Convert.ToDateTime(reader["OrderDate"]),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        OrderSlipNo = reader["OrderSlipNo"].ToString(),
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        BranchId = Convert.ToInt32(reader["Branchid"]),
+                        Amounts = Convert.ToDecimal(reader["Amounts"]),
+                        Vat = Convert.ToDecimal(reader["Vat"]),
+                        Discount = Convert.ToDecimal(reader["Discount"]),
+                        SpecialDiscount = Convert.ToDecimal(reader["SpecialDiscount"]),
+                        NetAmounts = Convert.ToDecimal(reader["NetAmounts"]),
+                        Status = Convert.ToInt32(reader["OrderStatus"]),
+                        SysDate = Convert.ToDateTime(reader["SysDateTime"]),
+                        ApprovedByNsmDateTime = Convert.ToDateTime(reader["ApprovedByNsmDateTime"]),
+                        ApprovedByAdminDateTime = Convert.ToDateTime(reader["ApprovedByAdminDateTime"]),
+                        AdminUserId = Convert.ToInt32(reader["AdminUserId"]),
+                        NsmUserId = Convert.ToInt32(reader["NsmUserId"]),
+                        Cancel = Convert.ToChar(reader["Cancel"]),
+                        CancelByUserId = Convert.ToInt32(reader["CancelByUserId"]),
+                        CancelDateTime = Convert.ToDateTime(reader["CancelDateTime"]),
+                        ResonOfCancel = reader["ReasonOfCancel"].ToString(),
+                        StatusDescription = reader["StatusDescription"].ToString(),
+                        DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
+                        DeliveryDateTime = Convert.ToDateTime(reader["DeliveredDateTime"]),
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        OrederRef = reader["OrderRef"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"])
+
+                    });
+                }
+
+                reader.Close();
+                return orders;
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Orders by Search Cretiria due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Orders by Search Cretiria", exception);
             }
             finally
             {

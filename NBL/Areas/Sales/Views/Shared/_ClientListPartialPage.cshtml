@@ -1,0 +1,74 @@
+﻿@using NBL.Models.Enums
+@model NBL.Models.ViewModels.Summaries.SummaryModel
+<table id="table_client_list" class="display table table-bordered" style="border: 1px solid black">
+
+    <thead>
+        <tr>
+            <th class="text-center">Basic Information</th>
+            <th class="text-center">Contact Info</th>
+            <th class="text-center">Total Order</th>
+            <th class="text-center">Has Credit Limit ?</th>
+            <th class="text-center">Outstanding</th>
+            <th class="text-center">Executive</th>
+            <th class="text-center">View</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Clients)
+        {
+            <tr>
+                <td class="text-center">
+                    <img class="img-circle" src="~/@(item.ClientImage ?? "Images/User.jpg")" alt="Client Image" title="@item.ClientName" width="60" height="60"><br />
+                    @Html.Raw(item.GetBasicInformation())<br />
+                    @if (item.Outstanding < 0)
+                    {
+                        <span>Outstanding : ( @(item.Outstanding?.ToString("N2")) )</span>
+                    }
+                    else
+                    {
+                        <span style="color: green; font-weight: bolder">Outstanding : @(item.Outstanding?.ToString("N2"))</span>
+                    }
+
+                </td>
+                <td>@Html.Raw(item.GetContactInformation())</td>
+                <td class="text-center">@item.TotalOrder</td>
+                <td class="text-center">@(Enum.GetName(typeof(FlagEnum), item.IsConsiderCreditLimit))</td>
+                <td class="text-center">
+                    @if (item.Outstanding < 0)
+                    {
+                        <span>( @(item.Outstanding?.ToString("N2")) )</span>
+                    }
+                    else
+                    {
+                        <span style="color: green; font-weight: bolder">@(item.Outstanding?.ToString("N2"))</span>
+                    }
+                </td>
+                <td class="text-center">@(item.AssignedEmpName)</td>
+                <td class="text-center">
+                    @Html.ActionLink(" Profile", "ViewClientProfile", "Client", new { area = "Sales", id = item.ClientId }, new { @class = "fa fa-eye" })
+                    @Html.ActionLink(" Ledger", "ClientLedger", "Home", new { id = item.ClientId, area = "Sales" }, new { @class = "fa fa-eye" })
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th class="text-center">Basic Information</th>
+            <th class="text-center">Contact Info</th>
+            <th class="text-center">Total Order</th>
+            <th class="text-center">Has Credit Limit ?</th>
+            <th class="text-center">Outstanding</th>
+            <th class="text-center">Executive</th>
+            <th class="text-center">View</th>
+        </tr>
+    </tfoot>
+</table>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+<script>
+
+    $('#table_client_list').DataTable({
+        "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
+        "order":[["4","desc"]]
+    });
+
+</script>

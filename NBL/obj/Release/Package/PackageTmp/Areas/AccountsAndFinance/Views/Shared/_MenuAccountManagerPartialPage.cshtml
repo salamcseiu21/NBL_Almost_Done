@@ -61,9 +61,11 @@
                         @Html.ActionLink(" Today's Collection List", "TodaysCollectionList", "SalesCollection", new { area = "Sales" }, new { @class = "fa fa-eye", style = "font-weight: bolder" })
                     </li>
                 }
-           
                 <li>
-                    @Html.ActionLink(" Collection List", "CollectionList", "SalesCollection", new { area = "Sales" }, new { @class = "fa fa-eye", style = "font-weight: bolder" })
+                    @Html.ActionLink(" Pending Collection List", "PendingCollectionList", "AccountManager", new { area = "AccountsAndFinance" }, new { @class = "fa fa-eye", style = "font-weight: bolder" })
+                </li>
+                <li>
+                    @Html.ActionLink(" Collection List", "CollectionList", "AccountManager", new { area = "AccountsAndFinance" }, new { @class = "fa fa-eye", style = "font-weight: bolder" })
                 </li>
            
             </ul>

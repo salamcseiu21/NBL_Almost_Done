@@ -2,10 +2,14 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Net.Mail;
+using System.Web;
 using NBL.Areas.SuperAdmin.BLL;
 using System.Web.Helpers;
-using Microsoft.ReportingServices.Interfaces;
+using ExcelDataReader;
+using Microsoft.ReportingServices.Diagnostics.Internal;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.BLL;
 using NBL.BLL.Contracts;
@@ -15,7 +19,6 @@ using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Orders;
 using NBL.Models.EntityModels.Securities;
-using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Logs;
 using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
@@ -427,17 +430,17 @@ namespace NBL.Areas.SuperAdmin.Controllers
         }
 
         [HttpPost]
-        public JsonResult SetCreditLimitConsiderationTrue(int id)
+        public JsonResult UpdateCreditLimitConsideationStatus(int id,int status)
         {
             SuccessErrorModel aModel = new SuccessErrorModel();
-            bool result = _iClientManager.SetCreditLimitConsiderationTrue(id);
+            bool result = _iClientManager.UpdateCreditLimitConsideationStatus(id,status);
             if (result)
             {
-                aModel.Message = "Set CreditLimit Consideration True Successfully!";
+                aModel.Message = "Set CreditLimit Consideration updated Successfully!";
             }
             else
             {
-                aModel.Message = "Failed to Set CreditLimit Consideration";
+                aModel.Message = "Failed to update CreditLimit Consideration";
             }
             return Json(aModel, JsonRequestBehavior.AllowGet);
         }
@@ -636,6 +639,70 @@ namespace NBL.Areas.SuperAdmin.Controllers
                 Log.WriteErrorLog(exception);
                 return PartialView("_ErrorPartial", exception);
             };
+        }
+
+
+        public ActionResult ReadExcelData()
+        {
+            var filePath = Server.MapPath("~/Files/Stock_Bogura.xlsx");
+            using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
+            {
+
+                List<string> actualStockBarcodList=new List<string>();
+                List<ViewStockProduct> stockBarcodList=new List<ViewStockProduct>();
+                for (int i = 1; i < 180; i++)
+                {
+                  var products= _iReportManager.GetStockProductBarcodeByBranchAndProductIdTemp(10, i).ToList();
+                    foreach (ViewStockProduct viewStockProduct in products)
+                    {
+                        stockBarcodList.Add(viewStockProduct);
+                    }
+                }
+
+               
+                // Auto-detect format, supports:
+                //  - Binary Excel files (2.0-2003 format; *.xls)
+                //  - OpenXml Excel files (2007 format; *.xlsx)
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    // Choose one of either 1 or 2:
+
+                    // 1. Use the reader methods
+                    do
+                    {
+                        while (reader.Read())
+                        {
+
+                            for (int i = 0; i <= 26; i++)
+                            {
+                                var data = Convert.ToString(reader.GetValue(i));
+                                if (data != "")
+                                {
+                                    var model = stockBarcodList.ToList().Find(n => n.ProductBarcode == data);
+                                    if (model != null)
+                                    {
+                                        stockBarcodList.Remove(model);
+                                    }
+                                    actualStockBarcodList.Add(data);
+                                }
+                            }
+                           
+                           
+                        }
+                    } while (reader.NextResult());
+
+                    var count = stockBarcodList.Count;
+                    var count1 = actualStockBarcodList.Count;
+                    bool removeResulat = _iReportManager.InActiveProduct(10,stockBarcodList);
+
+                    
+                    // 2. Use the AsDataSet extension method
+                   // var result = reader.AsDataSet();
+
+                    // The result of each spreadsheet is in result.Tables
+                }
+            }
+            return RedirectToAction("Home");
         }
         //------------------ Change password------------------------
         public ActionResult ChangePassword()

@@ -60,5 +60,7 @@ namespace NBL.DAL.Contracts
        ViewOrder GetOrderHistoryByOrderId(int orderId);
        List<ViewOrder> GetOrdersByBranchCompanyAndUserId(int branchId, int companyId, int userId);
        List<ViewOrder> GetAllOrderByBranchAndCompanyAndClientTypeId(int branchId, int companyId, int clientTypeId);
+       ViewOrder GetOrderByDeliveryId(long deliveryId);
+       ICollection<Order> GetOrdersBySearchCriteria(SearchCriteria aCriteria);
    }
 }

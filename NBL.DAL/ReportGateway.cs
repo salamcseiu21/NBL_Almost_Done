@@ -953,6 +953,84 @@ namespace NBL.DAL
                 ConnectionObj.Close();
             }
         }
+        public ICollection<ViewStockProduct> GetStockProductBarcodeByBranchAndProductIdTemp(int branchId, int productId)
+        {
+            try
+            {
+
+                CommandObj.CommandText = "UDSP_RptGetStockProductBarcodeByBranchAndProductIdTemp";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                CommandObj.Parameters.AddWithValue("@ProductId", productId);
+                ConnectionObj.Open();
+                List<ViewStockProduct> products = new List<ViewStockProduct>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while(reader.Read())
+                {
+                    products.Add(new ViewStockProduct
+                    {
+                       ProductBarcode = reader["ProductBarcode"].ToString(),
+                       InventoryMasterId = Convert.ToInt64(reader["InventoryId"])
+                  
+                    });
+                }
+                reader.Close();
+                return products;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get stock product barcodes by barnch and productid", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public int InActiveProduct(int branchId, List<ViewStockProduct> stockBarcodList)
+        {
+           
+           
+            try
+            {
+
+                int rowAffected = 0;
+                foreach (var item in stockBarcodList)
+                {
+
+                   
+                    CommandObj.CommandText = "UDSP_InActiveProductByBranchIdAndBarcode";
+                    CommandObj.CommandType = CommandType.StoredProcedure;
+                    CommandObj.Parameters.AddWithValue("@Barcode", item.ProductBarcode);
+                    CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                    CommandObj.Parameters.AddWithValue("@InventoryId", item.InventoryMasterId);
+                    CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                    CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                    ConnectionObj.Open();
+                    CommandObj.ExecuteNonQuery();
+                    rowAffected += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                    ConnectionObj.Close();
+                    CommandObj.Parameters.Clear();
+                }
+              
+                return rowAffected;
+            }
+            catch (Exception e)
+            {
+                Log.WriteErrorLog(e);
+                throw new Exception("Could not Inactive product", e);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
 
         public ICollection<ViewProduct> GetStockProductBarcodeByBranchId(int branchId)
         {
@@ -1322,6 +1400,8 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+       
 
         public ICollection<TerritoryWiseDeliveredQty> GetTerritoryWishTotalSaleQtyByBranchId(int branchId)
         {

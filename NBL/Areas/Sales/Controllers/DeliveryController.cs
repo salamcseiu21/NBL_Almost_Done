@@ -193,7 +193,7 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
-              
+                int branchId = Convert.ToInt32(Session["BranchId"]);
                 var transport = collection["ownTransport"];
                 bool isOwnTransport =transport!=null;
                 int deliverebyUserId = ((ViewUser)Session["user"]).UserId;
@@ -281,12 +281,22 @@ namespace NBL.Areas.Sales.Controllers
                     DeliveryDate = Convert.ToDateTime(collection["DeliveryDate"]).Date,
                     CompanyId = invoice.CompanyId,
                     ToBranchId = invoice.BranchId,
+                    DistributionPointId=branchId,
                     InvoiceId = invoiceId,
                     FromBranchId = invoice.BranchId,
                     FinancialTransactionModel = financialModel,
                     SpecialDiscount = invoiceDiscount
                 };
-                string result = _iInventoryManager.SaveDeliveredOrder(barcodeList, aDelivery, invoiceStatus,orderStatus);
+                //var netAmount = grossAmount - grossDiscount;
+                //if (client.CreditLimit >= netAmount)
+                //{
+
+                //}
+                //else
+                //{
+                //    TempData["CreditLimt"] = "Credit Limit Exceed";
+                //}
+                string result = _iInventoryManager.SaveDeliveredOrder(barcodeList, aDelivery, invoiceStatus, orderStatus);
                 if (result.StartsWith("S"))
                 {
                     System.IO.File.Create(filePath).Close();
@@ -317,7 +327,7 @@ namespace NBL.Areas.Sales.Controllers
                 string fileName = "Scanned_Ordered_Product_List_For_" + id;
                 var filePath = Server.MapPath("~/Files/" + fileName);
                 var barcodeList = _iProductManager.ScannedProducts(filePath);
-
+               
                 if (barcodeList.Count != 0)
                 {
                     foreach (ScannedProduct scannedProduct in barcodeList)
@@ -328,8 +338,9 @@ namespace NBL.Areas.Sales.Controllers
                     }
                 }
 
-               // DateTime date = _iCommonManager.GenerateDateFromBarCode(scannedBarCode);
-               // var oldestProducts = products.ToList().FindAll(n => n.ProductionDate < date && n.ProductId == productId).ToList();
+
+                // DateTime date = _iCommonManager.GenerateDateFromBarCode(scannedBarCode);
+                // var oldestProducts = products.ToList().FindAll(n => n.ProductionDate < date && n.ProductId == productId).ToList();
                 bool isInInventory = products.Select(n => n.ProductBarCode).Contains(scannedBarCode);
                 bool isScannedBefore = _iProductManager.IsScannedBefore(barcodeList, scannedBarCode);
 

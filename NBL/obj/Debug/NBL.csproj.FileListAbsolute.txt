@@ -143,6 +143,8 @@ E:\API\NBL\NBL\bin\AutoMapper.dll
 E:\API\NBL\NBL\bin\CommonServiceLocator.dll
 E:\API\NBL\NBL\bin\EntityFramework.dll
 E:\API\NBL\NBL\bin\EntityFramework.SqlServer.dll
+E:\API\NBL\NBL\bin\ExcelDataReader.DataSet.dll
+E:\API\NBL\NBL\bin\ExcelDataReader.dll
 E:\API\NBL\NBL\bin\JQDT.dll
 E:\API\NBL\NBL\bin\JQDT.MVC.dll
 E:\API\NBL\NBL\bin\LowercaseRoutesMVC.dll
@@ -204,6 +206,10 @@ E:\API\NBL\NBL\bin\NBL.Models.pdb
 E:\API\NBL\NBL\bin\AutoMapper.pdb
 E:\API\NBL\NBL\bin\AutoMapper.xml
 E:\API\NBL\NBL\bin\CommonServiceLocator.pdb
+E:\API\NBL\NBL\bin\ExcelDataReader.pdb
+E:\API\NBL\NBL\bin\ExcelDataReader.xml
+E:\API\NBL\NBL\bin\ExcelDataReader.DataSet.pdb
+E:\API\NBL\NBL\bin\ExcelDataReader.DataSet.xml
 E:\API\NBL\NBL\bin\LowercaseRoutesMVC.pdb
 E:\API\NBL\NBL\bin\LowercaseRoutesMVC.xml
 E:\API\NBL\NBL\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml

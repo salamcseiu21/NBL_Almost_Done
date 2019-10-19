@@ -2,7 +2,6 @@
 @model IEnumerable<NBL.Models.ChequeDetails>
 
 <table id="table_receivable_list" class="table table-bordered" style="border: 1px solid black">
-    <caption><h3 class="text-center text-green headingStyle">Collection List</h3></caption>
     <thead>
 
         <tr>
@@ -71,7 +70,7 @@
         </tr>
     </tfoot>
 </table>
-
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
 <script>
     $('#table_receivable_list').DataTable({
         "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],

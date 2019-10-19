@@ -178,6 +178,45 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             }
             return View(oldChequeByDetails);
         }
+
+        public ActionResult CancelReceivable(int id) 
+        {
+            try
+            {
+                var receivableCheques = _iAccountsManager.GetReceivableChequeByDetailsId(id);
+                receivableCheques.Client = _iClientManager.GetById(receivableCheques.ClientId);
+                return View(receivableCheques);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public ActionResult CancelReceivable(int id, FormCollection collection) 
+        {
+            try
+            {
+                var receivableCheques = _iAccountsManager.GetReceivableChequeByDetailsId(id);
+                receivableCheques.Client = _iClientManager.GetById(receivableCheques.ClientId);
+                string reason = collection["CancelRemarks"];
+                var anUser = (ViewUser)Session["user"];
+                bool result = _iAccountsManager.CancelReceivable(id, reason, anUser.UserId);
+                if (result)
+                {
+                    return RedirectToAction("ActiveReceivable");
+                }
+                return RedirectToAction("Cancel", "SalesCollection", receivableCheques);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+
         [HttpPost]
         public JsonResult ApproveCashAmount(FormCollection collection)
         {
@@ -621,9 +660,31 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             try
             {
                 int branchId = Convert.ToInt32(Session["BranchId"]);
-                List<CollectionModel> collection= _iAccountsManager.GetTotalCollectionByBranch(branchId).ToList();
-                
-                return View(collection);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                // List<CollectionModel> collection= _iAccountsManager.GetTotalCollectionByBranch(branchId).ToList();
+                List<ChequeDetails> collections;
+                collections = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId).ToList();
+
+                return View(collections);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        public ActionResult PendingCollectionList()
+        {
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                int companyId = Convert.ToInt32(Session["CompanyId"]);
+                // List<CollectionModel> collection= _iAccountsManager.GetTotalCollectionByBranch(branchId).ToList();
+                List<ChequeDetails> collections;
+                collections = _iAccountsManager.GetAllReceivableChequeByBranchAndCompanyId(branchId, companyId).ToList().FindAll(n=>n.ActiveStatus==0);
+
+                return View(collections);
             }
             catch (Exception exception)
             {
@@ -633,23 +694,22 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             }
         }
 
-
         public PartialViewResult ActivetedReceivableList()  
         {
             try
             {
-                int companyId = Convert.ToInt32(Session["CompanyId"]);
+               // int companyId = Convert.ToInt32(Session["CompanyId"]);
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 List<ViewReceivableDetails> collection;
-                if (branchId == 9)
-                {
-                  collection= _iAccountsManager.GetActivetedReceivableListByCompany(companyId).ToList();
-                }
-                else
-                {
-                    collection = _iAccountsManager.GetActivetedReceivableListByBranch(branchId).ToList();
-                }
-              
+                //if (branchId == 9)
+                //{
+                //  collection= _iAccountsManager.GetActivetedReceivableListByCompany(companyId).ToList();
+                //}
+                //else
+                //{
+                //    collection = _iAccountsManager.GetActivetedReceivableListByBranch(branchId).ToList();
+                //}
+                collection = _iAccountsManager.GetActivetedReceivableListByBranch(branchId).ToList();
 
                 return PartialView("_ViewActivatedReceivableListPartialPage",collection);
             }

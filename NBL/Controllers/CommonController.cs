@@ -569,12 +569,15 @@ namespace NBL.Controllers
 
         public PartialViewResult ViewDeliveryDetails(long deliveryId)
         {
-            var deliveryDetails = _iDeliveryManager.GetDeliveredOrderDetailsByDeliveryId(deliveryId); 
+            var deliveryDetails = _iDeliveryManager.GetDeliveredOrderDetailsByDeliveryId(deliveryId);
+            //_iDeliveryManager.GetChalanByDeliveryId(Convert.ToInt32(deliveryId));
             var delivery= _iDeliveryManager.GetOrderByDeliveryId(deliveryId);
-            ViewDeliveryModel model=new ViewDeliveryModel();
-            model.DeliveryDetailses = deliveryDetails.ToList();
-            model.Delivery = delivery;
-            model.Client = _iClientManager.GetById(delivery.Client.ClientId);
+            ViewDeliveryModel model = new ViewDeliveryModel
+            {
+                DeliveryDetailses = deliveryDetails.ToList(),
+                Delivery = delivery,
+                Client = _iClientManager.GetById(delivery.Client.ClientId)
+            };
             return PartialView("_ViewDeliveryOrderDetailsModalPartialPage", model);
         }
         public ActionResult GetAllOrders()

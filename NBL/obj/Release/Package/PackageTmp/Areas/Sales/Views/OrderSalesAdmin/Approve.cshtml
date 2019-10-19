@@ -60,7 +60,26 @@
                                 <label class="control-label col-md-2"></label>
                                 <div class="col-md-10 text-right">
                                     @Html.ActionLink("Back", "PendingOrder", "OrderSalesAdmin", new { area = "Sales" }, new { @class = "btn btn-info" })
-                                    <input type="button" value="Approve" class="btn btn-success" onclick="ApproveOrder(this)" />
+                                    
+                                    @if (Model.Client.IsConsiderCreditLimit == 1)
+                                    {
+                        
+                                        var hasValid = amounts+ Model.Client.Outstanding;
+                                        if (hasValid <=Model.Client.CreditLimit)
+                                        {
+
+                                            <input type="button" value="Approve" class="btn btn-success" onclick="ApproveOrder(this)" />
+                                        }
+                                        else
+                                        {
+                                            <span style="color: red">&nbsp;| Credit Limit Exeed!</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <input type="button" value="Approve" class="btn btn-success" onclick="ApproveOrder(this)" />
+                                    }
+                                   
                                 </div>
                             </div>
                         </div>

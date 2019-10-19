@@ -26,7 +26,9 @@ namespace NBL.Models.EntityModels.Deliveries
         public int Status { get; set; }
         public int DeliveredByUserId { get; set; }
         public DateTime SysDateTime { get; set; }
-        public int ToBranchId { get; set; }
+        
+        public int ToBranchId { get; set; } 
+        public int DistributionPointId { get; set; }
         public int FromBranchId { get; set; }
         public Transport Transport { get; set; }
         public int ProductId { get; set; }

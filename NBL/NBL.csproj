@@ -54,6 +54,14 @@
       <HintPath>..\packages\Unity.5.2.0\lib\net45\CommonServiceLocator.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="JQDT, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\jQDataTables.ServerSide.MVC5.1.1.1\lib\JQDTServerSide\MVC\JQDT.dll</HintPath>
       <Private>True</Private>
@@ -8296,6 +8304,11 @@
     <Content Include="Areas\AccountsAndFinance\Views\Reports\ClientReoprt.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Reports\ClientLedger.cshtml" />
     <Content Include="Areas\Corporate\Views\Reports\ClientLedger.cshtml" />
+    <Content Include="Areas\Corporate\Views\Home\PendingCollectionList.cshtml" />
+    <Content Include="Areas\Sales\Views\Shared\_ClientListPartialPage.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\AccountManager\CancelReceivable.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Shared\_ViewCollectionPartialPage.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\AccountManager\PendingCollectionList.cshtml" />
     <None Include="DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -8304,6 +8317,8 @@
     <Content Include="DataSet1.xss">
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Content>
+    <Content Include="Files\test.xlsx" />
+    <Content Include="Files\Stock_Bogura.xlsx" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
@@ -8459,6 +8474,7 @@
     <Content Include="Views\Shared\_ViewStockProductBarcodePartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewFolioPartialPage.cshtml" />
     <Content Include="Views\Shared\_ClientLedgerPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewOrderHistoryPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

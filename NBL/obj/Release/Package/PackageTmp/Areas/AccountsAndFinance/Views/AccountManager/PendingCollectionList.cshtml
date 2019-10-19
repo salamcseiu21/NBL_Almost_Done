@@ -1,0 +1,17 @@
+﻿@model IEnumerable<NBL.Models.ChequeDetails>
+@{
+    ViewBag.Title = "Collection List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder"><i class="fa fa-money"></i> Pending Collection List</div>
+        <div class="panel panel-body">
+            @Html.Partial("_ViewCollectionListPartialPage",Model)
+        </div>
+    </div>
+
+
+</section>

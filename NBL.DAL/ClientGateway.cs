@@ -1033,6 +1033,73 @@ namespace NBL.DAL
 
             }
         }
+        public ICollection<ViewClient> GetClientByOrderCountBranchAndClientTypeId(int branchId, int clientTypeId)
+        {
+            try
+            {
+
+                List<ViewClient> clients = new List<ViewClient>();
+                ConnectionObj.Open();
+                CommandObj.CommandText = "UDSP_GetClientByOrderCountBranchAndClientTypeId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                CommandObj.Parameters.AddWithValue("@ClientTypeId", clientTypeId);
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+
+                    clients.Add(new ViewClient
+                    {
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        ClientName = reader["Name"].ToString(),
+                        CommercialName = reader["CommercialName"].ToString(),
+                        ClientImage = DBNull.Value.Equals(reader["ClientImage"]) ? null : reader["ClientImage"].ToString(),
+                        ClientSignature = DBNull.Value.Equals(reader["ClientSignature"]) ? null : reader["ClientSignature"].ToString(),
+                        PostOfficeId = DBNull.Value.Equals(reader["PostOfficeId"]) ? default(int) : Convert.ToInt32(reader["PostOfficeId"]),
+                        Phone = reader["Phone"].ToString(),
+                        AlternatePhone = DBNull.Value.Equals(reader["AltPhone"]) ? null : reader["AltPhone"].ToString(),
+                        Email = DBNull.Value.Equals(reader["Email"]) ? null : reader["Email"].ToString(),
+                        Address = reader["Address"].ToString(),
+                        Gender = reader["Gender"].ToString(),
+                        SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        ClientTypeId = Convert.ToInt32(reader["ClientTypeId"]),
+                        Active = reader["Active"].ToString(),
+                        CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
+                        MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"]),
+                        TerritoryId = Convert.ToInt32(reader["TerritoryId"]),
+                        RegionId = Convert.ToInt32(reader["RegionId"]),
+                        TotalOrder = Convert.ToInt32(reader["TotalOrder"]),
+                        ClientType = _iCommonGateway.GetAllClientType().ToList().Find(n =>
+                            n.ClientTypeId == Convert.ToInt32(reader["ClientTypeId"])),
+                        AssignedEmpId = DBNull.Value.Equals(reader["AssignedEmpId"]) ? default(int) : Convert.ToInt32(reader["AssignedEmpId"]),
+                        AssignedEmpName = DBNull.Value.Equals(reader["EmployeeName"]) ? null : reader["EmployeeName"].ToString(),
+                        Outstanding = DBNull.Value.Equals(reader["Outstanding"]) ? (decimal?)null : Convert.ToDecimal(reader["Outstanding"]),
+                        IsConsiderCreditLimit = Convert.ToInt32(reader["IsConsiderCreditLimit"])
+                    });
+                }
+                reader.Close();
+                return clients;
+            }
+            catch (SqlException sqlException)
+            {
+                Log.WriteErrorLog(sqlException);
+                throw new Exception("Unable to collect Clients by Branch and dealer type Id due to sql exception", sqlException);
+            }
+            catch (Exception exception)
+
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Unable to collect Clients by Branch and dealer type Id", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+
+            }
+        }
 
         public ICollection<Client> GetActiveClient()
         {
@@ -1184,15 +1251,16 @@ namespace NBL.DAL
             }
         }
 
-        public int SetCreditLimitConsiderationTrue(int clientId)
+        public int UpdateCreditLimitConsideationStatus(int clientId,int status) 
         {
             try
             {
                 CommandObj.Parameters.Clear();
                 ConnectionObj.Open();
-                CommandObj.CommandText = "UDSP_SetCreditLimitConsiderationTrue";
+                CommandObj.CommandText = "UDSP_UpdateCreditLimitConsideationStatus";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@ClientId", clientId);
+                CommandObj.Parameters.AddWithValue("@Status", status);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
@@ -1217,6 +1285,7 @@ namespace NBL.DAL
             }
         }
 
+      
         public int ApproveClient(Client aClient, ViewUser anUser)
         {
             try

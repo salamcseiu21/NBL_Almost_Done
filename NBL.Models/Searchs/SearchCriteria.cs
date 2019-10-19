@@ -11,6 +11,8 @@ namespace NBL.Models.Searchs
         public DateTime? EndDate { get; set; }
         public int UserId { get; set; }
         public int ClientId { get; set; }
-        public string SubSubSubAccountCode { get; set; } 
+        public string SubSubSubAccountCode { get; set; }
+        public int MonthNo { get; set; }
+        public int Year { get; set; }   
     }
 }

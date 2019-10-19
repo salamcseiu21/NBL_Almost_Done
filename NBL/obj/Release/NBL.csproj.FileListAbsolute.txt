@@ -260,3 +260,9 @@ E:\API\NBL\NBL\bin\pt\Microsoft.SqlServer.Types.resources.dll
 E:\API\NBL\NBL\bin\ru\Microsoft.SqlServer.Types.resources.dll
 E:\API\NBL\NBL\bin\zh-Hans\Microsoft.SqlServer.Types.resources.dll
 E:\API\NBL\NBL\bin\zh-Hant\Microsoft.SqlServer.Types.resources.dll
+E:\API\NBL\NBL\bin\ExcelDataReader.DataSet.dll
+E:\API\NBL\NBL\bin\ExcelDataReader.dll
+E:\API\NBL\NBL\bin\ExcelDataReader.pdb
+E:\API\NBL\NBL\bin\ExcelDataReader.xml
+E:\API\NBL\NBL\bin\ExcelDataReader.DataSet.pdb
+E:\API\NBL\NBL\bin\ExcelDataReader.DataSet.xml

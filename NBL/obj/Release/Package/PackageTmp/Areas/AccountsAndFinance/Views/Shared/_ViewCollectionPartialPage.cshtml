@@ -1,0 +1,91 @@
+﻿@model IEnumerable<NBL.Models.ChequeDetails>
+@{
+    var i = 0;
+}
+<table id="tbl_Collection_List" class="table table-bordered" style="border: 1px solid black">
+    <thead>
+
+        <tr>
+            <th>S.N</th>
+            <th>Collection Ref</th>
+            <th>Client Name</th>
+            <th>Collection Info</th>
+            <th class="text-right">Amount (&#2547;) </th>
+            <th class="text-center">Entry Date </th>
+            <th class="text-center">Entry By </th>
+            <th class="text-center">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            i++;
+
+            <tr>
+                <td>@i</td>
+                <td>
+                    @item.ReceivableRef<br />
+                    <b style="color: green">@item.CollectionByBranch</b>
+                </td>
+                <td>@Html.ActionLink(item.ClientInfo, "ViewClientProfile", "Home", new { id = item.ClientId }, null) </td>
+                <td>
+                    @{
+                        <label>Bank Name:</label>
+                                    @item.SourceBankName<br />
+                                    <label>Account No:</label>@item.BankAccountNo<br />
+                                    <label>Cheque No:</label>@item.ChequeNo<br />
+                                    <label>Cheque Date:</label>
+
+                        if (Convert.ToDateTime(item.ChequeDate).Date >= DateTime.Now.Date)
+                        {
+                            <b style="color: green">@item.ChequeDate.Date.ToString("dd-MMM-yyyy")</b>
+                        }
+                        else
+                        {
+                            <b style="color: red">@item.ChequeDate.Date.ToString("dd-MMM-yyyy")</b>
+                        }
+
+
+
+                    }
+                </td>
+                <td class="text-right">@item.ChequeAmount.ToString("N2")</td>
+                <th class="text-center">@item.ReceivableDateTime.Date.ToString("dd-MMM-yyyy") </th>
+                <th class="text-center">@item.EntryByEmp </th>
+                <td class="text-center">
+                    @if (item.ActiveStatus == 0)
+                    {
+                        <p class="fa fa-spinner text-warning"> Pending</p>
+                    }
+                    else if (item.ActiveStatus == 1)
+                    {
+                        <p class="fa fa-check text-success"> Approved</p>
+                                    <br />
+                                    @item.ActiveDate
+                    }
+                </td>
+            </tr>
+                        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="4" class="text-right">Total </th>
+            <th class="text-right">@Model.Sum(n => n.ChequeAmount).ToString("N2")</th>
+            <th colspan="3"></th>
+        </tr>
+        <tr>
+            <th>S.N</th>
+            <th>Collection Ref</th>
+            <th>Client Name</th>
+            <th>Collection Info</th>
+            <th class="text-right">Amount (&#2547;) </th>
+            <th class="text-center">Entry Date </th>
+            <th class="text-center">Entry By </th>
+            <th class="text-center">Status</th>
+        </tr>
+    </tfoot>
+</table>
+
+<script>
+    $("#tbl_Collection_List").DataTable();
+</script>

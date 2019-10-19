@@ -750,5 +750,30 @@ namespace NBL.Areas.Corporate.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+        [HttpGet]
+        public ActionResult PendingCollectionList()
+        {
+            try
+            {
+                ICollection<ChequeDetails> collections = _iAccountsManager.GetAllReceivableChequeByCompanyIdAndStatus(1, 0);
+                return View(collections);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        public ActionResult OrderHistoryDetails(long id)
+        {
+
+           
+            ViewOrder viewOrder=_iOrderManager.GetOrderByDeliveryId(id);
+            var order = _iOrderManager.GetOrderHistoryByOrderId(viewOrder.OrderId);
+            order.Client = _iClientManager.GetById(order.ClientId);
+            return PartialView("_ViewOrderHistoryPartialPage", order);
+        }
     }
 }

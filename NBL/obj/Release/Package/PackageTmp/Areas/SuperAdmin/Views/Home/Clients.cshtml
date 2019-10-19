@@ -39,9 +39,13 @@
                         <td class="text-center">
                             @if (!Convert.ToBoolean(item.IsConsiderCreditLimit))
                             {
-                                <input type="button" id="@item.ClientId" class="btn btn-success fa fa-edit" value="Set Credit Limit True" onclick="SetCreditLimitTrue(this)"/>
+                                <input type="button"  class="btn btn-success fa fa-edit" value="Set Credit Limit True" onclick="UpdateCreditLimitConsideationStatus(@item.ClientId,1)"/>
                             }
-                           
+                            else if(Convert.ToBoolean(item.IsConsiderCreditLimit))
+                            {
+                                <input type="button" id="@item.ClientId" class="btn btn-danger fa fa-edit" value="Set Credit Limit False" onclick="UpdateCreditLimitConsideationStatus(@item.ClientId,0)" />
+                            }
+                          
                             @Html.ActionLink(" Profile", "ViewClientProfile", null, new {id = item.ClientId}, new {@class = "fa fa-eye btn btn-info"})
                             @*@Html.ActionLink(" Ledger", "ClientLedger", null, new { id = item.ClientId }, new { @class = "fa fa-eye" })*@
                         </td>
@@ -73,13 +77,21 @@
            
         });
 
-        function SetCreditLimitTrue(btnClick) {
-            if (confirm("Are you sure to set credit limit consideration for  this client ??")) {
-                var id = btnClick.id;
-                var json = { id: id };
+        function UpdateCreditLimitConsideationStatus(clitntId,statusValue) {
+           // alert(btnClick);
+            var message = "";
+            var status = parseInt(statusValue);
+            if (status === 1) {
+                message = "Are you sure to set credit limit consideration for  this client ??";
+            } else {
+                message = "Are you sure to remove credit limit consideration for  this client ??";
+            }
+            if (confirm(message)) {
+                var id = clitntId;
+                var json = { id: id, status: status };
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("SetCreditLimitConsiderationTrue", "Home",new {area="SuperAdmin"})',
+                    url: '@Url.Action("UpdateCreditLimitConsideationStatus", "Home",new {area="SuperAdmin"})',
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(json),
                     success: function (response) {

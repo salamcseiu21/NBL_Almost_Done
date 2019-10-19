@@ -177,6 +177,16 @@ namespace NBL.BLL
             return _iOrderGateway.GetAllOrderByBranchAndCompanyAndClientTypeId(branchId,companyId,clientTypeId);
         }
 
+        public ViewOrder GetOrderByDeliveryId(long deliveryId)
+        {
+            return _iOrderGateway.GetOrderByDeliveryId(deliveryId);
+        }
+
+        public ICollection<Order> GetOrdersBySearchCriteria(SearchCriteria aCriteria)
+        {
+            return _iOrderGateway.GetOrdersBySearchCriteria(aCriteria);
+        }
+
         public bool CancelOrder(ViewOrder order)
         {
             return _iOrderGateway.CancelOrder(order)>0;

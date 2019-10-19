@@ -19,6 +19,9 @@ namespace NBL.Models.ViewModels.FinanceModels
         public decimal Balance { get; set; }
         public string Explanation { get; set; }
         public long? VoucherNo { get; set; }
+        public int Quantity { get; set; }
+        public string TransactionRef { get; set; }  
+        public long DeliveryId { get; set; }  
 
     }
 }

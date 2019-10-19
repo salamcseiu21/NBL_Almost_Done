@@ -1,11 +1,16 @@
 ﻿
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Clients;
+using NBL.Models.EntityModels.Orders;
+using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Deliveries;
 
 namespace NBL.BLL
 {
@@ -129,10 +134,15 @@ namespace NBL.BLL
             return _iClientGateway.GetClientDeailsById(clientId);
         }
 
-        public bool SetCreditLimitConsiderationTrue(int clientId)
+        public bool UpdateCreditLimitConsideationStatus(int clientId,int status)
         {
-            int rowAffected = _iClientGateway.SetCreditLimitConsiderationTrue(clientId);
+            int rowAffected = _iClientGateway.UpdateCreditLimitConsideationStatus(clientId,status);
             return rowAffected > 0;
+        }
+
+        public ICollection<ViewClient> GetClientByOrderCountBranchAndClientTypeId(int branchId, int clientTypeId)
+        {
+            return _iClientGateway.GetClientByOrderCountBranchAndClientTypeId(branchId, clientTypeId);
         }
 
         public bool Delete(Client model)
@@ -148,10 +158,17 @@ namespace NBL.BLL
         }
         public ViewClient GetClientDeailsById(int clientId)
         {
-              var client = _iClientGateway.GetClientDeailsById(clientId);
-              client.Orders = _iOrderManager.GetOrdersByClientId(clientId).ToList();
-              client.DeliveredOrderModels = _iDeliveryGateway.GetDeliveredOrderByClientId(clientId);
-             // client.StockProducts = _iClientGateway.GetStockProductToclient(clientId);
+            var client = _iClientGateway.GetClientDeailsById(clientId);
+            SearchCriteria aCriteria = new SearchCriteria
+            {
+                ClientId = clientId,
+                MonthNo = DateTime.Now.Month
+            };
+            ICollection<Order> orders=_iOrderManager.GetOrdersBySearchCriteria(aCriteria);
+              client.Orders = orders.ToList();
+             // client.DeliveredOrderModels = _iDeliveryGateway.GetDeliveredOrderByClientId(clientId);
+             ICollection<ViewDeliveredOrderModel> deliveredOrderModels = _iDeliveryGateway.GetDeliveredOrderBySearchCriteria(aCriteria);
+             client.DeliveredOrderModels = deliveredOrderModels;
               client.StockProducts = _iReportManager.GetStockProductToclientByClientIdWithBarcode(clientId);
 
              return client;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.Orders;
+using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
@@ -38,5 +39,6 @@ namespace NBL.DAL.Contracts
         ICollection<Delivery> GetAllDeliveredOrdersByBranchAndCompany(int branchId, int companyId, int orderByUserId);
         ICollection<ViewClientStockProduct> GetClientStockProductAgeByDeliveryId(long deliveryId);
         ICollection<ViewClientStockReport> GetAllClientsByClientTypeId(int clientTypeId);
+        ICollection<ViewDeliveredOrderModel> GetDeliveredOrderBySearchCriteria(SearchCriteria aCriteria);
     }
 }

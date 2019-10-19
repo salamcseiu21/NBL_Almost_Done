@@ -56,29 +56,29 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
-                int companyId = Convert.ToInt32(Session["CompanyId"]);
+               // int companyId = Convert.ToInt32(Session["CompanyId"]);
                 int branchId = Convert.ToInt32(Session["BranchId"]);
               //  var branches = _iBranchManager.GetAllBranches();
-                ViewTotalOrder totalOrder = _iReportManager.GetTotalOrdersByBranchCompanyAndYear(branchId, companyId, DateTime.Now.Year);
+              //  ViewTotalOrder totalOrder = _iReportManager.GetTotalOrdersByBranchCompanyAndYear(branchId, companyId, DateTime.Now.Year);
                 //var accountSummary = _iAccountsManager.GetAccountSummaryofCurrentMonthByCompanyId(companyId);
                 //var products = _iInventoryManager.GetStockProductByCompanyId(companyId);
                 //var orders = _iOrderManager.GetOrdersByCompanyId(companyId).ToList();
                 //var topClients = _iReportManager.GetTopClientsByYear(DateTime.Now.Year).ToList();
-                //var clients = _iClientManager.GetAllClientDetails();
+                  ICollection<ViewClient> dealers = _iClientManager.GetClientByOrderCountBranchAndClientTypeId(branchId,3).ToList(); 
                 //var topProducts = _iReportManager.GetPopularBatteriesByYear(DateTime.Now.Year).ToList();
                 //var employees = _iEmployeeManager.GetAllEmployeeWithFullInfo().ToList();
-                var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).ToList();
+                //var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branchId, companyId).ToList();
                 SummaryModel summary = new SummaryModel
                 {
                    // Branches = branches.ToList(),
                    // CompanyId = companyId,
-                    TotalOrder = totalOrder,
+                    //TotalOrder = totalOrder,
                     //TopClients = topClients,
                     //Orders = orders,
                    // TopProducts = topProducts,
-                   // Clients = clients,
+                     Clients = dealers,
                    // Employees = employees,
-                     Products = products,
+                    // Products = products,
                    // AccountSummary = accountSummary
 
                 };
@@ -162,14 +162,11 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
-                var client = _iClientManager.GetById(id);
+               
+                var client = _iClientManager.GetClientDeailsById(id);
                 var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
-                LedgerModel model = new LedgerModel
-                {
-                    Client = client,
-                    LedgerModels = ledgers
-                };
-                return View(model);
+                client.LedgerModels = ledgers.ToList();
+                return View(client);
             }
             catch (Exception exception)
             {

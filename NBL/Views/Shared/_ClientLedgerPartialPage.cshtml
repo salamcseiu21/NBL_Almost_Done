@@ -2,7 +2,7 @@
 @model NBL.Models.ViewModels.ViewClient
     @{
         var e = 0;
-
+        var ledgers = Model.LedgerModels;
     }
 
 <table id="tbl_Client_Ledger" class="display table-bordered" style="border: 1px solid">
@@ -10,15 +10,16 @@
         <tr>
             <th>S.N</th>
             <th>Date</th>
-            <th>Voucher No</th>
+            <th class="text-center">Voucher No</th>
             <th>Explanation</th>
+            <th class="text-right">Quantity</th>
             <th class="text-right">Dr</th>
             <th class="text-right">Cr</th>
             <th class="text-right">Balance</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.LedgerModels.ToList())
+        @foreach (var item in ledgers)
         {
             e++;
             <tr>
@@ -32,8 +33,20 @@
 
                     }
                 </td>
-                <td>@item.VoucherNo</td>
+                <td class="text-center">@item.VoucherNo</td>
                 <td>@item.Explanation</td>
+                @if (item.Quantity == 0)
+                {
+                    <td class="text-right">0</td>
+                }
+                else
+                {
+                    <td class="text-right">
+                        <button type="button" value="@item.DeliveryId" class="btn btn-sm" onclick="viewDetails(this)">@item.Quantity</button>
+                       
+                    </td> 
+                }
+                
                 <td class="text-right">@item.DebitAmount</td>
                 <td class="text-right">
                     <b>@(item.CreditAmount * -1)</b>
@@ -54,44 +67,63 @@
                 </td>
             </tr>
                         }
+   
     </tbody>
     <tfoot>
-        <tr>
-            <th>S.N</th>
-            <th>Date</th>
-            <th>Voucher No</th>
-            <th>Explanation</th>
-            <th class="text-right">Dr</th>
-            <th class="text-right">Cr</th>
-            <th class="text-right">Balance</th>
-        </tr>
+    <tr>
+        <td class="text-center">-</td>
+        <td class="text-center">-</td>
+        <td class="text-center">-</td>
+        <td class="text-right">Total</td>
+        <th class="text-right">@ledgers.Sum(n => n.Quantity)</th>
+        <td class="text-right">@ledgers.Sum(n => n.DebitAmount)</td>
+        <td class="text-right">@ledgers.Sum(n => n.CreditAmount *-1)</td>
+        <td class="text-center">-</td>
+
+    </tr>
+    <tr>
+        <th>S.N</th>
+        <th>Date</th>
+        <th class="text-center">Voucher No</th>
+        <th>Explanation</th>
+        <th class="text-right">Quantity</th>
+        <th class="text-right">Dr</th>
+        <th class="text-right">Cr</th>
+        <th class="text-right">Balance</th>
+    </tr>
     </tfoot>
 </table>
-
+<!--load modal partial here...-->
+@Html.Partial("_ModalPartialPage")
+@Html.Partial("_ModalDeliveryOrderDetailsPartialPage")
 
 <script>
     $(document).ready(function () {
 
         $('#tbl_Client_Ledger').DataTable({
             "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+            "ordering": false,
             dom: 'Bfrtip',
             buttons: [
                 {
                     extend: 'excel',
                     text: 'Download As Excel',
-                    title: $("#client_Name").val()
+                    title: $("#client_Name").val(),
+                    footer: true
 
                 },
 
                 {
                     extend: 'pdf',
                     text: 'Download As Pdf',
-                    title: $("#client_Name").val()
+                    title: $("#client_Name").val(),
+                    footer: true
 
                 },
                 {
                     extend: 'print',
                     title: $("#client_Name").val(),
+                    footer: true,
                     customize: function (win) {
                         $(win.document.body)
                             .css('font-size', '10pt');
@@ -104,4 +136,21 @@
             ]
         });
     });
+</script>
+
+<script>
+
+    function viewDetails(deliveryId) {
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewDeliveryDetails", "Common", new { area = "" })",
+            data: { deliveryId: deliveryId.value },
+            success: function (response) {
+                $('#modalBody').html(response);
+                $('#showOrderDetailsModal').modal('show');
+            }
+        });
+    }
+
 </script>
