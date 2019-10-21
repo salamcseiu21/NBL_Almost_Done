@@ -7,16 +7,18 @@
     <div class="panel panel-info">
         <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Service Battery List For Replace</div>
         <div class="panel panel-body">
+            <div id="message" style="display: none; font-weight: bold; font-size: 20px" class="text-center">
+            </div>
             <table id="tbl_Service_Products" class="display table-bordered" style="border: 1px solid">
                 <thead>
                 <tr>
-                    <th>  Receive Ref</th>
-                    <th>  Receive At</th>
-                    <th>  Receive Date</th>
-                    <th>  Product Name</th>
-                    <th>  Barcode</th>
-                    <th>  Client</th>
-                    <th class="text-center">  Action</th>
+                    <th> Receive Ref</th>
+                    <th> Receive At</th>
+                    <th> Receive Date</th>
+                    <th> Product Name</th>
+                    <th> Barcode</th>
+                    <th> Client</th>
+                    <th class="text-center"> Action</th>
                 </tr>
                 </thead>
                 @foreach (var item in Model)
@@ -26,23 +28,24 @@
                         <td>@item.ReceiveByBranch</td>
                         <td>@item.ReceiveDatetime.ToString("dd-MMM-yyyy")</td>
                         <td>@item.ProductName - (@item.ProductCategoryName)</td>
-
                         <td>@item.Barcode</td>
                         <td>@item.ClientInfo</td>
-                        <td class="">
-                            <input type="button" value="Add To Chalan"/>
+                        <td class="text-center">
+
+
+                            <button type="button" onclick="ForwardToDistributionCenter(@item.ReceiveId)" class="btn btn-info btn-sm">Make Rplace Chalan</button>
                         </td>
-               
+
                     </tr>
                 }
                 <tfoot>
                 <tr>
-                    <th>  Receive Ref</th>
-                    <th>  Receive At</th>
-                    <th>  Receive Date</th>
-                    <th>  Product Name</th>
-                    <th>  Barcode</th>
-                    <th>  Client</th>
+                    <th> Receive Ref</th>
+                    <th> Receive At</th>
+                    <th> Receive Date</th>
+                    <th> Product Name</th>
+                    <th> Barcode</th>
+                    <th> Client</th>
                     <th class="text-center">Action</th>
                 </tr>
                 </tfoot>
@@ -55,5 +58,25 @@
 {
     <script>
         $("#tbl_Service_Products").DataTable();
+        function ForwardToDistributionCenter(receiveId) {
+            if (confirm("Are you sure to Forward to Distribution center??")) {
+               // alert("Success!");
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ForwardServiceBatteryToDeistributionPoint", "WarrantyBattery", new { area = "Services" })",
+                    data: { receiveId: receiveId },
+                    success: function (response) {
+                        var result = response.Message;
+                        $('#message').html(response).fadeIn('slow');
+                        $('#message').html(result).fadeIn('slow'); //also show a success message
+                        $('#message').delay(1000).fadeOut('slow');
+                        setTimeout(function () { location.reload(); }, 2000);
+                    }
+                });
+            } else {
+              
+            }
+           
+        }
     </script>
 }

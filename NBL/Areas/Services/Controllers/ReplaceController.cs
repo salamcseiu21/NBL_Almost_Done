@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels;
 using NBL.Models.EntityModels.Products;
+using NBL.Models.EntityModels.Services;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Replaces;
@@ -19,11 +20,13 @@ namespace NBL.Areas.Services.Controllers
         private readonly IProductManager _iProductManager;
         private readonly IProductReplaceManager _iProductReplaceManager;
         private readonly IBranchManager _iBranchManager;
-        public ReplaceController(IProductManager iProductManager, IProductReplaceManager iProductReplaceManager,IBranchManager iBranchManager)
+        private readonly IServiceManager _iServiceManager;
+        public ReplaceController(IProductManager iProductManager, IProductReplaceManager iProductReplaceManager,IBranchManager iBranchManager,IServiceManager iServiceManager)
         {
             _iProductManager = iProductManager;
             _iProductReplaceManager = iProductReplaceManager;
             _iBranchManager = iBranchManager;
+            _iServiceManager = iServiceManager;
         }
         // GET: Services/Replace
         public ActionResult Entry()
@@ -31,6 +34,31 @@ namespace NBL.Areas.Services.Controllers
             // CreateTempReplaceProductXmlFile();
             try
             {
+                //var user = (ViewUser)Session["user"];
+
+                //var replace = _iProductReplaceManager.GetAllPendingReplaceListByBranchAndCompany(12, 1).ToList();
+                //foreach (var item in replace)
+                //{
+
+                //    var warrantyBatteryModel = new WarrantyBatteryModel
+                //    {
+                //        ReceiveDatetime = item.EntryDate,
+                //        ClientId = item.ClientId,
+                //        ReceiveByBranchId = item.BranchId,
+                //        EntryByUserId = item.UserId,
+                //        DelivaryRef = DateTime.Now.Year.ToString().Substring(2, 2) + "FAKE",
+                //        TransactionRef = Guid.NewGuid().ToString().ToUpper().Substring(0, 8),
+                //        ReportByEmployeeId = user.EmployeeId,
+                //        ReceiveRemarks = item.Remarks,
+                //        ProductId = item.ProductId,
+                //        IsManualEntry = "Y",
+                //        Status = 1,
+                //        ExpiryDate = item.ExpiryDate,
+                //        Barcode = "FAKE" + Guid.NewGuid().ToString().ToUpper().Substring(0, 9)
+                //    };
+
+                //    var resultTest = _iServiceManager.ReceiveServiceProductTemp(warrantyBatteryModel);
+                //}
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", branchId);
                 return View();
@@ -48,11 +76,14 @@ namespace NBL.Areas.Services.Controllers
         {
             try
             {
+               
+
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
                 var clientId = Convert.ToInt32(collection["clientId"]);
                 var user = (ViewUser)Session["user"];
                 var productId = Convert.ToInt32(collection["ProductId"]);
+                
                 var qty = Convert.ToInt32(collection["Quantity"]);
                 var aProduct = _iProductManager.GetProductByProductId(productId);
                 aProduct.Quantity = qty;
@@ -64,8 +95,37 @@ namespace NBL.Areas.Services.Controllers
                 model.UserId = user.UserId;
                 model.CompanyId = companyId;
                 model.Remarks = collection["Remarks"];
-                var result = _iProductReplaceManager.SaveReplacementInfo(model);
-                if (result)
+
+                //var result = _iProductReplaceManager.SaveReplacementInfo(model);
+
+
+                var warrantyBatteryModel = new WarrantyBatteryModel
+                {
+                    ReceiveDatetime = DateTime.Now,
+                    ClientId = clientId,
+                    ReceiveByBranchId = branchId,
+                    EntryByUserId = user.UserId,
+                    DelivaryRef = DateTime.Now.Year.ToString().Substring(2, 2) + "FAKE",
+                    TransactionRef = Guid.NewGuid().ToString().ToUpper().Substring(0, 8),
+                    ReportByEmployeeId = user.EmployeeId,
+                    ReceiveRemarks = model.Remarks,
+                    ProductId = productId,
+                    IsManualEntry = "Y",
+                    Status = 1,
+                    ExpiryDate = Convert.ToDateTime(collection["ExpiryDate"])
+                };
+
+                if (collection["Barcode"] == "")
+                {
+                    warrantyBatteryModel.Barcode = "FAKE" + Guid.NewGuid().ToString().ToUpper().Substring(0, 9);
+                }
+                else
+                {
+                    warrantyBatteryModel.Barcode = collection["Barcode"];
+                }
+                var resultTest = _iServiceManager.ReceiveServiceProductTemp(warrantyBatteryModel);
+
+                if (true)
                 {
                     ModelState.Clear();
                     ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", branchId);
@@ -281,7 +341,7 @@ namespace NBL.Areas.Services.Controllers
         {
             try
             {
-                ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(replaceModel.ReplaceId);
+                ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(replaceModel.ReceiveId);
                 var user = (ViewUser)Session["user"];
                 
                 int rowAffected= _iProductReplaceManager.Cancel(replaceModel,user.UserId);

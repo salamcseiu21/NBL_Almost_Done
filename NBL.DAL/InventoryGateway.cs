@@ -3087,6 +3087,7 @@ namespace NBL.DAL
                         ProductCategoryName = reader["Segment"].ToString(),
                         ProductBarCode = reader["ProductBarcode"].ToString(),
                         LifeTime = Convert.ToInt32(reader["LifeTime"]),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
                         ClientName = reader["ClientName"].ToString(),
                         ClientType = reader["ClientTypeName"].ToString(),
                         ClientCode = reader["SubSubSubAccountCode"].ToString(),

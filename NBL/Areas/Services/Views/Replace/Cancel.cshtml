@@ -20,7 +20,7 @@
                     <label class="control-label col-md-3">Client Name</label>
                     <div class="col-md-9">
                         <input type="text" readonly="readonly" class="form-control" value="@Model.ClientName" />
-                        <input type="hidden" id="ReplaceId" name="ReplaceId" value="@Model.ReplaceId" />
+                        <input type="hidden" id="ReceiveId" name="ReceiveId" value="@Model.ReceiveId" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -71,7 +71,7 @@
         <thead>
         <tr>
             <th>Product Name</th>
-            <th class="text-right">Quantity</th>
+         
             <th class="text-center">Expiry Date</th>
         </tr>
         </thead>
@@ -80,15 +80,15 @@
         {
             <tr>
                 <td>@item.ProductName</td>
-                <td class="text-right">@item.Quantity</td>
-                <td class="text-center">@item.ExpiryDate.ToString("dd-MMMM-yyyy")</td>
+               
+                <td class="text-center">@Convert.ToDateTime(item.ExpiryDate).ToString("dd-MMMM-yyyy")</td>
             </tr>
         }
         </tbody>
         <tfoot>
         <tr>
             <th>Product Name</th>
-            <th class="text-right">Quantity</th>
+           
             <th class="text-center">Expiry Date</th>
         </tr>
         </tfoot>

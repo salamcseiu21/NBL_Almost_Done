@@ -374,6 +374,7 @@ namespace NBL.DAL
                     client.SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString();
                     client.BranchId = Convert.ToInt32(reader["BranchId"]);
                     client.Outstanding = DBNull.Value.Equals(reader["Outstanding"]) ? default(decimal) : Convert.ToDecimal(reader["Outstanding"]);
+                    client.IsConsiderCreditLimit = Convert.ToInt32(reader["IsConsiderCreditLimit"]);
                     client.ClientType = new ClientType
                     {
                         ClientTypeName = reader["ClientTypeName"].ToString(),

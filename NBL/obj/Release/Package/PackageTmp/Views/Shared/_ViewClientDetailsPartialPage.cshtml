@@ -170,7 +170,7 @@
                                             <td class="text-right">@item.DeliveredQty</td>
                                             <td class="text-center">@item.DeliveredDateTime.ToString("F")</td>
                                             <td class="text-center">
-                                                <button type="button" value="@item.DeliveryId" onclick="ViewDeliveryDetails(this)" class="btn btn-success btn-sm"><i class="fa fa-eye"></i>&nbsp;Details</button>
+                                                <button type="button" value="@item.DeliveryId" onclick="viewInvoiceDetails(this)" class="btn btn-success btn-sm"><i class="fa fa-eye"></i>&nbsp;Details</button>
                                                 @*@Html.ActionLink(" Details","DeliveryDetails","Home",new {id=item.DeliveryId},new {@class="fa fa-eye"})*@
                                             </td>
                                         </tr>
@@ -351,7 +351,7 @@
                                 else
                                 {
                                     <td class="text-right">
-                                        <button type="button" value="@item.DeliveryId" class="btn btn-sm" onclick="ViewDeliveryDetails(this)">@item.Quantity</button>
+                                        <button type="button" value="@item.DeliveryId" class="btn btn-sm" onclick="viewInvoiceDetails(this)">@item.Quantity</button>
                        
                                     </td> 
                                 }
@@ -412,7 +412,8 @@
     </div>
     <!--load modal partial here...-->
     @Html.Partial("_ModalPartialPage")
-    @Html.Partial("_ModalDeliveryOrderDetailsPartialPage")
+    @*@Html.Partial("_ModalDeliveryOrderDetailsPartialPage")*@
+    @Html.Partial("_ModalInvoiceDetailsPartialPage")
 </section>
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
@@ -488,7 +489,7 @@
             }
         });
     }
-    function ViewDeliveryDetails(deliveryId) {
+    @*function ViewDeliveryDetails(deliveryId) {
 
         $.ajax({
             type: "POST",
@@ -497,6 +498,19 @@
             success: function (response) {
                 $('#modalBody').html(response);
                 $('#showOrderDetailsModal').modal('show');
+            }
+        });
+    }*@
+
+    function viewInvoiceDetails(deliveryId) {
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewInvoiceDetails", "Common", new { area = "" })",
+            data: { deliveryId: deliveryId.value },
+            success: function (response) {
+                $('#InvoiceDetailModalBody').html(response);
+                $('#showInvoiceDetailsModal').modal('show');
             }
         });
     }

@@ -1,7 +1,9 @@
-﻿
+﻿@using NBL.Models.EntityModels.Clients
+
 @{
-    ViewBag.Title = "MakeRplaceChalan";
+    ViewBag.Title = "Make Rplace Chalan";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var clients = (List<Client>) ViewBag.ClientId;
 }
 
  
@@ -11,7 +13,26 @@
         <div class="panel panel-body">
             @using (Html.BeginForm())
             {
-            
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="ClientId" class="control-label col-md-2">Client</label>
+                        <div class="col-md-10">
+                            <select name="ClientId" id="ClientId" required class="form-control">
+                                <option value="">--Select--</option>
+                                @foreach (var item in clients)
+                                {
+                                    <option value="@item.ClientId">@item.ClientName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10 col-md-offset-2">
+                            @Html.ActionLink("Back","Home","Home",new {area="Services"},new {@class="btn btn-danger"})
+                            <input type="submit" value="Forward To Distribution" class="btn btn-info"/>
+                        </div>
+                    </div>
+                </div>
             }
         </div>
     </div>

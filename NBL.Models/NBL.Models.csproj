@@ -229,6 +229,7 @@
     <Compile Include="ViewModels\Products\ViewProductTransactionDetails.cs" />
     <Compile Include="ViewModels\Products\ViewStockProduct.cs" />
     <Compile Include="ViewModels\ProductWarranty\ViewWarrantyPolicy.cs" />
+    <Compile Include="ViewModels\Replaces\ReplaceProductModel.cs" />
     <Compile Include="ViewModels\Replaces\ReplaceReport.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceDetailsModel.cs" />
     <Compile Include="ViewModels\Replaces\ViewReplaceModel.cs" />

@@ -16,7 +16,7 @@ namespace NBL.Models.EntityModels.Deliveries
         public string TransactionRef { get; set; }
         public long VoucherNo { get; set; }   
         public string InvoiceRef { get; set; }
-        public int InvoiceId { get; set; }
+        public long InvoiceId { get; set; }
         public bool? IsOwnTransport { get; set; }
         public string Transportation { set; get; }
         public string DriverName { get; set; }
@@ -42,6 +42,7 @@ namespace NBL.Models.EntityModels.Deliveries
         public int Quantity { get; set; }
         public decimal SpecialDiscount { get; set; } 
         public string ClientInfo { get; set; }
+        public int ClientId { get; set; }   
         public Client Client { get; set; }
         public ViewTripModel TripModel { get; set; }
         public FinancialTransactionModel FinancialTransactionModel { get; set; }    

@@ -8309,6 +8309,8 @@
     <Content Include="Areas\AccountsAndFinance\Views\AccountManager\CancelReceivable.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Shared\_ViewCollectionPartialPage.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\AccountManager\PendingCollectionList.cshtml" />
+    <Content Include="Areas\Sales\Views\Replace\WarrantyReplaceList.cshtml" />
+    <Content Include="Areas\Sales\Views\Replace\WarrantyDelivery.cshtml" />
     <None Include="DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -8475,6 +8477,8 @@
     <Content Include="Views\Shared\_ViewFolioPartialPage.cshtml" />
     <Content Include="Views\Shared\_ClientLedgerPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewOrderHistoryPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ModalInvoiceDetailsPartialPage.cshtml" />
+    <Content Include="Views\Shared\_InvoiceDetailPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

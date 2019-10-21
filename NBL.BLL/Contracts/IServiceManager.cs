@@ -23,6 +23,10 @@ namespace NBL.BLL.Contracts
         DischargeReportModel GetDisChargeReprortByReceiveId(long id);
         ICollection<ViewSoldProduct> GetAllSoldProducts();
         bool SaveApprovalInformation(int userId, ForwardDetails forwardDetails);
-        ICollection<Client> GetClientListByServiceForwardId(int forwardId); 
+        ICollection<Client> GetClientListByServiceForwardId(int forwardId);
+        bool ForwardServiceBatteryToDeistributionPoint(long receiveId);
+        ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByStatusAndBranchId(int status, int branchId);
+        bool ReceiveServiceProductTemp(WarrantyBatteryModel warrantyBatteryModel);
+        ViewReceivedServiceProduct GetDeliverableServiceProductById(long receivedId); 
     }
 }

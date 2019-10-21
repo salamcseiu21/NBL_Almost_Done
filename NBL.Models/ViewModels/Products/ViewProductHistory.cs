@@ -18,6 +18,7 @@ namespace NBL.Models.ViewModels.Products
         public DateTime? SaleDate { get; set; }
         public DateTime ReturnDate { get; set; }
         public DateTime ReceiveDate { get; set; }
+        public int ClientId { get; set; }   
         public string ClientName { get; set; }
         public string ClientType { get; set; }
         public string ClientCode { get; set; }

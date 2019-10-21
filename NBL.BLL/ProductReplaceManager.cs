@@ -15,15 +15,18 @@ namespace NBL.BLL
     {
         private readonly ICommonGateway _iCommonGateway;
         private readonly IProductReplaceGateway _iProductReplaceGateway;
+        private readonly IServiceGateway _iServiceGateway;
 
-        public ProductReplaceManager(IProductReplaceGateway iProductReplaceGateway,ICommonGateway iCommonGateway)
+        public ProductReplaceManager(IProductReplaceGateway iProductReplaceGateway,ICommonGateway iCommonGateway,IServiceGateway iServiceGateway)
         {
             _iProductReplaceGateway = iProductReplaceGateway;
             _iCommonGateway = iCommonGateway;
+            _iServiceGateway = iServiceGateway;
         }
 
         public bool SaveReplacementInfo(ReplaceModel model)
         {
+
             int maxSl = _iProductReplaceGateway.GetMaxReplaceSerialNoByYear(DateTime.Now.Year);
             model.ReplaceNo = maxSl + 1;
             model.ReplaceRef = GenerateOrderRefNo(maxSl);

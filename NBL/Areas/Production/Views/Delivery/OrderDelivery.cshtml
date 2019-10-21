@@ -11,9 +11,14 @@
 
 <section class="content">
     <div class="row text-center text-danger">
-        @if (TempData["Error"] != null)
+        @if(TempData["Error"] != null)
         {
             @TempData["Error"]
+        }
+
+        @if(TempData["CreditLimit"] != null)
+        {
+            @TempData["CreditLimit"]
         }
     </div>
     <div class="row">

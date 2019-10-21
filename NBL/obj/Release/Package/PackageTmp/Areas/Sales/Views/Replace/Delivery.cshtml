@@ -18,7 +18,7 @@
                     <label class="control-label col-md-3">Client Name</label>
                     <div class="col-md-9">
                         <input type="text" readonly="readonly" class="form-control" value="@Model.ClientName"/>
-                        <input type="hidden" id="ReplaceId" name="ReplaceId" value="@Model.ReplaceId"/>
+                        <input type="hidden" id="ReceiveId" name="ReceiveId" value="@Model.ReceiveId"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -52,8 +52,8 @@
                         <div class="col-md-3"></div>
                         <div class="col-md-9">
                             <div class="btn toolbar">
-                                <button type="button" id="btnDelivery" class="btn btn-success" value="@Model.ReplaceId" onclick="Delivery(this)"> Delivery</button>
-                                @Html.ActionLink("Back", "ViewAll", "Replace", null, new { @class = "btn btn-danger" })
+                                <button type="button" id="btnDelivery" class="btn btn-success" value="@Model.ReceiveId" onclick="Delivery(this)"> Delivery</button>
+                                @Html.ActionLink("Back", "WarrantyReplaceList", "Replace", null, new { @class = "btn btn-danger" })
                             </div>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                 <tr>
                     <th>Product Name</th>
                     <th class="text-right">Quantity</th>
-                    <th class="text-center">Expiry Date</th>
+                    @*<th class="text-center">Expiry Date</th>*@
                 </tr>
                 </thead>
                 <tbody>
@@ -79,7 +79,7 @@
                     <tr>
                         <td>@item.ProductName</td>
                         <td class="text-right">@item.Quantity</td>
-                        <td class="text-center">@item.ExpiryDate.ToString("dd-MMMM-yyyy")</td>
+                        @*<td class="text-center">@Convert.ToDateTime(item.ExpiryDate).ToString("dd-MMMM-yyyy")</td>*@
                     </tr>
                 }
                 </tbody>
@@ -87,7 +87,7 @@
                 <tr>
                     <th>Product Name</th>
                     <th class="text-right">Quantity</th>
-                    <th class="text-center">Expiry Date</th>
+                    @*<th class="text-center">Expiry Date</th>*@
                 </tr>
                 </tfoot>
             </table>
@@ -120,12 +120,12 @@
     </script>
     <script>
 
-        function Delivery(replace) {
+        function Delivery(receive) {
 
             $.ajax({
                 type: "POST",
                 url: "@Url.Action("ViewReplaceDetails", "Replace", new { area = "Sales" })",
-                data: { replaceId: replace.value },
+                data: { receiveId: receive.value },
                 success: function (response) {
                     $('#modalBody').html(response);
                     $('#showDeliveryModal').modal('show');
@@ -138,11 +138,11 @@
         function SaveScannedBarcodeToTextFile(btnClicked) {
             //var $form = $(btnClicked).parents('form');
             var code = $("#ProductCode").val();
-            var replaceId = $("#ReplaceId").val();
+            var receiveId = $("#ReceiveId").val();
             $.ajax({
                 type: "POST",
                 url: RootUrl + 'sales/replace/SaveScannedBarcodeToTextFile',
-                data: { barcode: code, replaceId: replaceId },
+                data: { barcode: code, receiveId: receiveId },
                 error: function (xhr, status, error) {
                     alert(error);
                 },
@@ -166,8 +166,8 @@
       
     
         function loadAllScannedProducts() {
-            var replaceId = $("#ReplaceId").val();
-            var json = { replaceId: replaceId };
+            var receiveId = $("#ReceiveId").val();
+            var json = { receiveId: receiveId };
             $.ajax({
                 type: 'Post',
                 url: RootUrl + "sales/Replace/LoadScannedProduct",

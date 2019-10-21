@@ -42,7 +42,7 @@
                 else
                 {
                     <td class="text-right">
-                        <button type="button" value="@item.DeliveryId" class="btn btn-sm" onclick="viewDetails(this)">@item.Quantity</button>
+                        <button type="button" value="@item.DeliveryId" class="btn btn-sm" onclick="viewInvoiceDetails(this)">@item.Quantity</button>
                        
                     </td> 
                 }
@@ -95,8 +95,8 @@
 </table>
 <!--load modal partial here...-->
 @Html.Partial("_ModalPartialPage")
-@Html.Partial("_ModalDeliveryOrderDetailsPartialPage")
-
+@*@Html.Partial("_ModalDeliveryOrderDetailsPartialPage")*@
+@Html.Partial("_ModalInvoiceDetailsPartialPage")
 <script>
     $(document).ready(function () {
 
@@ -138,17 +138,33 @@
     });
 </script>
 
+@*<script>
+
+        function viewDetails(deliveryId) {
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ViewDeliveryDetails", "Common", new { area = "" })",
+                data: { deliveryId: deliveryId.value },
+                success: function (response) {
+                    $('#modalBody').html(response);
+                    $('#showOrderDetailsModal').modal('show');
+                }
+            });
+        }
+
+    </script>*@
 <script>
 
-    function viewDetails(deliveryId) {
+    function viewInvoiceDetails(deliveryId) {
 
         $.ajax({
             type: "POST",
-            url: "@Url.Action("ViewDeliveryDetails", "Common", new { area = "" })",
+            url: "@Url.Action("ViewInvoiceDetails", "Common", new { area = "" })",
             data: { deliveryId: deliveryId.value },
             success: function (response) {
-                $('#modalBody').html(response);
-                $('#showOrderDetailsModal').modal('show');
+                $('#InvoiceDetailModalBody').html(response);
+                $('#showInvoiceDetailsModal').modal('show');
             }
         });
     }

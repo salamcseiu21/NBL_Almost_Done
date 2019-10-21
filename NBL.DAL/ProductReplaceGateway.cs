@@ -21,7 +21,6 @@ namespace NBL.DAL
             SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
             try
             {
-                int rowAffected = 0;
                 CommandObj.Transaction = sqlTransaction;
                 CommandObj.CommandText = "UDSP_SaveReplacementInfo";
                 CommandObj.CommandType = CommandType.StoredProcedure;
@@ -38,7 +37,7 @@ namespace NBL.DAL
                 CommandObj.Parameters["@ReplaceMasterId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
                 var masterId = Convert.ToInt64(CommandObj.Parameters["@ReplaceMasterId"].Value);
-                rowAffected = SaveReplacementDetails(model, masterId);
+                var rowAffected = SaveReplacementDetails(model, masterId);
                 if (rowAffected > 0)
                 {
                     sqlTransaction.Commit();
@@ -150,17 +149,21 @@ namespace NBL.DAL
                 {
                     models.Add(new ViewReplaceModel
                     {
-                        ReplaceId = Convert.ToInt64(reader["ReplaceId"]),
+                        ReceiveId = Convert.ToInt64(reader["ReceiveId"]),
                         ClientCode = reader["ClientCode"].ToString(),
                         ClientId = Convert.ToInt32(reader["ClientId"]),
                         ClientName = reader["ClientName"].ToString(),
                         ClientAddress = reader["ClientAddress"].ToString(),
                         EntryDate = Convert.ToDateTime(reader["SysDateTime"]),
                         Quantity = Convert.ToInt32(reader["Quantity"]),
-                        ReplaceRef = reader["ReplaceRef"].ToString(),
-                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        ReceiveRef = reader["ReceiveRef"].ToString(),
+                        BranchId = Convert.ToInt32(reader["ReceiveByBranchId"]),
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
-                        Remarks = reader["Remarks"].ToString()
+                        Remarks = reader["ReceiveReport"].ToString(),
+                        UserId = Convert.ToInt32(reader["EntryByUserId"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ExpiryDate = Convert.ToDateTime(reader["ExpiryDate"]),
+                        ProductName = reader["ProductName"].ToString()
                         
                     });
                 }
@@ -309,22 +312,21 @@ namespace NBL.DAL
                 ViewReplaceModel model=null;
                 CommandObj.CommandText = "UDSP_GetReplaceById";
                 CommandObj.CommandType = CommandType.StoredProcedure;
-                CommandObj.Parameters.AddWithValue("@ReplaceId", id);
+                CommandObj.Parameters.AddWithValue("@ReceiveId", id);
                 ConnectionObj.Open();
                 SqlDataReader reader = CommandObj.ExecuteReader();
                 if (reader.Read())
                 {
                     model=new ViewReplaceModel
                     {
-                        ReplaceId = Convert.ToInt64(reader["ReplaceId"]),
+                        ReceiveId = id,
                         ClientCode = reader["ClientCode"].ToString(),
                         ClientId = Convert.ToInt32(reader["ClientId"]),
                         ClientName = reader["ClientName"].ToString(),
                         ClientAddress = reader["ClientAddress"].ToString(),
                         EntryDate = Convert.ToDateTime(reader["SysDateTime"]),
-                        Quantity = Convert.ToInt32(reader["Quantity"]),
-                        ReplaceRef = reader["ReplaceRef"].ToString(),
-                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        ReceiveRef = reader["ReceiveRef"].ToString(),
+                        BranchId = Convert.ToInt32(reader["ReceiveByBranchId"]),
                         CompanyId = Convert.ToInt32(reader["CompanyId"])
                     };
                 }
@@ -350,7 +352,7 @@ namespace NBL.DAL
             {
                 CommandObj.CommandText = "UDSP_GetReplaceProductListById";
                 CommandObj.CommandType = CommandType.StoredProcedure;
-                CommandObj.Parameters.AddWithValue("@ReplaceId", id);
+                CommandObj.Parameters.AddWithValue("@ReceiveId", id);
                 List<ViewReplaceDetailsModel> products=new List<ViewReplaceDetailsModel>();
                 ConnectionObj.Open();
                 SqlDataReader reader = CommandObj.ExecuteReader();
@@ -358,10 +360,9 @@ namespace NBL.DAL
                 {
                     products.Add(new ViewReplaceDetailsModel
                     {
-                        ReplaceDetailsId = Convert.ToInt64(reader["ReplaceDetailsId"]),
+                        ReceiveId = id,
                         ProductName = reader["ProductName"].ToString(),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
-                        Quantity = Convert.ToInt32(reader["Quantity"]),
                         ExpiryDate = Convert.ToDateTime(reader["ExpiryDate"])
                     });
                 }
@@ -429,7 +430,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
                 CommandObj.Parameters.AddWithValue("@UserId", userId);
                 CommandObj.Parameters.AddWithValue("@Remarks", replaceModel.CancelRemarks);
-                CommandObj.Parameters.AddWithValue("@ReplaceId", replaceModel.ReplaceId);
+                CommandObj.Parameters.AddWithValue("@ReceiveId", replaceModel.ReceiveId);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 ConnectionObj.Open();

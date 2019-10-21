@@ -24,6 +24,10 @@ namespace NBL.DAL.Contracts
         DischargeReportModel GetDisChargeReprortByReceiveId(long id);
         ICollection<ViewSoldProduct> GetAllSoldProducts();
         int SaveApprovalInformation(int userId, ForwardDetails forwardDetails);
-        ICollection<Client> GetClientListByServiceForwardId(int forwardId); 
+        ICollection<Client> GetClientListByServiceForwardId(int forwardId);
+        int ForwardServiceBatteryToDeistributionPoint(long receiveId);
+        ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByStatusAndBranchId(int status, int branchId);
+        int ReceiveServiceProductTemp(WarrantyBatteryModel product);
+        ViewReceivedServiceProduct GetDeliverableServiceProductById(long receivedId);
     }
 }

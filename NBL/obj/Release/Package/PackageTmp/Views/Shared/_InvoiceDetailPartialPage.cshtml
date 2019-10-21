@@ -1,0 +1,133 @@
+﻿@using NBL.Models.ViewModels.Deliveries
+@model NBL.Models.ViewModels.ViewInvoiceModel
+    @{
+        var aClient = Model.Client;
+    }
+<div class="row">
+    <div class="col-xs-12">
+        <h2 class="page-header">
+            Invoice Ref : @Model.Delivery.DeliveryRef
+            <small class="pull-right">Date: @Model.Delivery.DeliveryDate.ToString("D")</small>
+        </h2>
+    </div>
+    <!-- /.col -->
+</div>
+<!-- info row -->
+<div class="row" style="border: 1px dotted">
+    <!-- /.col -->
+    <div class="col-md-6 invoice-col">
+        <address>
+            @Html.Raw(Model.Client?.GetMailingAddress())
+        </address>
+    </div>
+    <!-- /.col -->
+    <div class="col-md-6 invoice-col">
+        <label>Credit Limit:</label> @aClient.CreditLimit<br />
+        <label>Outstanding:</label> @aClient.Outstanding
+
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+<!-- Table row -->
+<div class="row">
+    <div class="col-xs-12 table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 10px">SL</th>
+                    <th>Type </th>
+                    <th class="text-right">Unit Price (&#2547;)</th>
+                    <th class="text-right">Unit Discount (&#2547;)</th>
+                    <th class="text-right">Vat (&#2547;)</th>
+                    <th class="text-right">Sale Price (&#2547;)</th>
+                    <th class="text-right">Quantity</th>
+                    <th class="text-right">Invoice Amount (&#2547;)</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int rowNo = 0;
+                    foreach (IGrouping<string, ViewDeliveredOrderModel> details in Model.DeliveryDetails.ToList().GroupBy(n => n.ProductCategoryName))
+                    {
+                        foreach (ViewDeliveredOrderModel item in details)
+                        {
+
+                            <tr>
+                                <td>  @(rowNo += 1)</td>
+                                <td>@item.ProductName</td>
+
+                                <td class="text-right">@item.UnitPrice.ToString("N2")</td>
+                                <td class="text-right">@item.UnitDiscount.ToString("N2")</td>
+                                <td class="text-right">@item.VatAmount.ToString("N2")</td>
+                                <td class="text-right">@item.SalePrice.ToString("N2")</td>
+                                <td class="text-right">@item.Quantity</td>
+                                <td class="text-right">
+                                    @((item.Quantity * (item.UnitPrice - item.UnitDiscount)).ToString("N2"))
+                                </td>
+                            </tr>
+                        }
+
+                    }
+
+
+                }
+                <tr>
+                    <th colspan="6" class="text-right">
+                        Invocie Quantity & Amount
+                    </th>
+
+                    <th class="text-right">
+                        @Model.DeliveryDetails.ToList().Sum(n => n.Quantity)
+                    </th>
+
+                    <th class="text-right">
+                        @Model.DeliveryDetails.ToList().Sum(n => (n.Quantity * n.SalePrice) - (n.Quantity * n.VatAmount)).ToString("N2")
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="6" class="text-right">
+                        Gross Discount
+                    </th>
+                    <th class="text-right">
+                        =
+                    </th>
+                    <th class="text-right">
+                        @(((Model.Order.SpecialDiscount / Model.Order.Quantity) * Model.DeliveryDetails.Count).ToString("N2"))
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="6" class="text-right">
+                        Vat
+                    </th>
+                    <th class="text-right">
+                        =
+                    </th>
+                    <th class="text-right">
+                        @Model.DeliveryDetails.Sum(n => n.VatAmount * n.Quantity)
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="6" class="text-right">
+                        Net Amount
+                    </th>
+
+                    <th class="text-right">
+                        =
+                    </th>
+                    <th class="text-right">
+                        @{
+                            var sd = (Model.Order.SpecialDiscount / Model.Order.Quantity) * Model.DeliveryDetails.Count;
+                            var amount = Model.DeliveryDetails.Sum(n => n.SalePrice * n.Quantity);
+                            @((amount - sd).ToString("N2"))
+                        }
+                    </th>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <!-- /.col -->
+</div>
+

@@ -54,8 +54,8 @@
                     <ul class="treeview-menu">
                         <li>@Html.ActionLink(" Entry", "Entry", "Replace", new {area = "Services"}, new {@class = "fa fa-plus", style = "font-weight: bolder"})</li>
                         <li>@Html.ActionLink(" Pending List", "ViewAll", "Replace", new {area = "Services"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
-                        <li>@Html.ActionLink(" Delivered List", "ReplaceList", "Replace", new {area = "Services"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
-                        <li>@Html.ActionLink(" Overal replace Summary", "ReplaceSummary", "Home", new {area = "Services"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+                        @*<li>@Html.ActionLink(" Delivered List", "ReplaceList", "Replace", new {area = "Services"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+                        <li>@Html.ActionLink(" Overal replace Summary", "ReplaceSummary", "Home", new {area = "Services"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>*@
                     </ul>
                 </li>
             </ul>
@@ -92,7 +92,7 @@
                 
                 <li>@Html.ActionLink("  Return List", "ReturnList", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-eye" })</li>
                 <li>@Html.ActionLink("  Replace List", "ReplaceList", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-eye" })</li>
-                <li>@Html.ActionLink("  Make Replace Challan", "MakeRplaceChalan", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-eye" })</li>
+                @*<li>@Html.ActionLink("  Make Replace Challan", "MakeRplaceChalan", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-eye" })</li>*@
             </ul>
         </li>
         @if (branchId==9)

@@ -33,6 +33,18 @@ namespace NBL.BLL
            int rowAffected = _iServiceGateway.ReceiveServiceProduct(product);
            return rowAffected > 0;
        }
+       public bool ReceiveServiceProductTemp(WarrantyBatteryModel product)
+       {
+           var maxSl = _iServiceGateway.GetMaxWarrantyProductReceiveSlNoByYear(DateTime.Now.Year);
+           product.ReceiveRef = DateTime.Now.Year.ToString().Substring(2, 2) +
+                                GetReferenceAccountCodeById(Convert.ToInt32(ReferenceType.WarrantyBatteryReceive)) +
+                                (maxSl + 1);
+           int rowAffected = _iServiceGateway.ReceiveServiceProductTemp(product); 
+           return rowAffected > 0;
+        }
+
+     
+
        private string GetReferenceAccountCodeById(int subReferenceAccountId)
        {
            var code = _iCommonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id.Equals(subReferenceAccountId)).Code;
@@ -47,8 +59,11 @@ namespace NBL.BLL
        {
            return _iServiceGateway.GetReceivedServiceProductById(receiveId);
        }
-
-       public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarId(int forwardId)
+       public ViewReceivedServiceProduct GetDeliverableServiceProductById(long receivedId)
+       {
+           return _iServiceGateway.GetDeliverableServiceProductById(receivedId);
+       }
+        public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarId(int forwardId)
        {
            return _iServiceGateway.GetReceivedServiceProductsByForwarId(forwardId);
         }
@@ -56,7 +71,21 @@ namespace NBL.BLL
        {
            return _iServiceGateway.GetClientListByServiceForwardId(forwardId);
        }
-        public bool ForwardServiceBattery(ForwardDetails model)
+
+       public bool ForwardServiceBatteryToDeistributionPoint(long receiveId)
+       {
+           int rowAffected = _iServiceGateway.ForwardServiceBatteryToDeistributionPoint(receiveId);
+           return rowAffected > 0;
+       }
+
+       public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByStatusAndBranchId(int status, int branchId)
+       {
+           return _iServiceGateway.GetReceivedServiceProductsByStatusAndBranchId(status,branchId);
+        }
+
+      
+
+       public bool ForwardServiceBattery(ForwardDetails model)
        {
            int rowAffected = _iServiceGateway.ForwardServiceBattery(model);
            return rowAffected > 0;

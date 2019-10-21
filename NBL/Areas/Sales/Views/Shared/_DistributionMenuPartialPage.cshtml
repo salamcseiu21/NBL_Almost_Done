@@ -85,9 +85,10 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li>@Html.ActionLink(" Pending List", "ViewAll", "Replace", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+                        <li>@Html.ActionLink(" Pending List", "WarrantyReplaceList", "Replace", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
                         <li>@Html.ActionLink("  Today's Replace List", "ReplaceList", "Replace", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
-                        <li>@Html.ActionLink(" All Replace List", "AllReplaceLsit", "Replace", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+                        @*<li>@Html.ActionLink(" All Replace List", "AllReplaceLsit", "Replace", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>
+    <li>@Html.ActionLink(" Warranty Replace List", "WarrantyReplaceList", "Replace", new {area = "Sales"}, new {@class = "fa fa-eye", style = "font-weight: bolder"})</li>*@
                     </ul>
                 </li>
                 

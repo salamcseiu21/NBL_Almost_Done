@@ -67,7 +67,9 @@ namespace NBL.Models.ViewModels.Services
         public int ClientId { get; set; }   
         public string ReportByEmployee { get; set; }
         public string EntryByUser { get; set; }
-        public string BranchName { get; set; }  
+        public string BranchName { get; set; }
+        public int BranchId { get; set; }
+        public int CompanyId { get; set; }
         public int Status { get; set; }
         public string IsActive { get; set; }
         public DateTime SysDatetime { get; set; }
@@ -75,6 +77,9 @@ namespace NBL.Models.ViewModels.Services
         public int ForwardedToId { get; set; }
         public int ReportByEmployeeId { get; set; }
         public int EntryByUserId { get; set; }
+        public DateTime? ExpiryDate { get; set; }
+        public int ProductId { get; set; }
+
         public ViewProductHistory ProductHistory { get; set; }
         public ChargeReportModel ChargeReportModel { get; set; }
         public DischargeReportModel DischargeReportModel { get; set; }

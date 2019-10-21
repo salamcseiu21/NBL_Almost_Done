@@ -59,6 +59,10 @@ namespace NBL.Models.EntityModels.Services
         public string DistributionPoint { get; set; }
         public DateTime ForwardDatetime { get; set; } 
         public DateTime SysDatetime { get; set; }
+        public int ClientId { get; set; }
+        public int ProductId { get; set; }
+        public DateTime ExpiryDate { get; set; }
+        public string IsManualEntry { get; set; } 
         public List<PhysicalConditionModel> PhysicalConditions { set; get; }
         public List<ServicingModel> ServicingModels { set; get; }   
         public List<ChargingStatusModel> ChargingStatus { set; get; }

@@ -1,4 +1,4 @@
-﻿@model NBL.Models.ViewModels.Replaces.ViewReplaceModel
+﻿@model NBL.Models.ViewModels.Services.ViewReceivedServiceProduct
 @{
     var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
 }
@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    @Html.HiddenFor(m => m.ReplaceId)
+                    @Html.HiddenFor(m => m.ReceiveId)
                     <label for="Transportation" class="control-label col-md-4">Transportation :</label>
                     <div class="col-md-8">
                         <input type="text" id="Transportation" name="Transportation" class="form-control" value="Transport" placeholder="Transportation Name" required />

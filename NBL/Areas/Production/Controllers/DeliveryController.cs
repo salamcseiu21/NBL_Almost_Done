@@ -416,6 +416,7 @@ namespace NBL.Areas.Production.Controllers
         {
             try
             {
+                var branchId = Convert.ToInt32(Session["BranchId"]);
                 var user = (ViewUser)Session["user"];
                 var transport = collection["ownTransport"];
                 bool isOwnTransport = transport != null;
@@ -423,7 +424,7 @@ namespace NBL.Areas.Production.Controllers
                 int invoiceId = Convert.ToInt32(collection["InvoiceId"]);
                 var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
                 IEnumerable<InvoiceDetails> details = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceId(invoiceId);
-                var client = _iClientManager.GetClientDeailsById(invoice.ClientId);
+                var client = _iClientManager.GetById(invoice.ClientId);
                 var deliveredQty = _iInvoiceManager.GetDeliveredProductsByInvoiceRef(invoice.InvoiceRef).Count;
                 var remainingToDeliverQty = invoice.Quantity - deliveredQty;
                 string fileName = "Scanned_Ordered_Product_List_For_" +user.UserId+"_"+ invoiceId;
@@ -504,17 +505,45 @@ namespace NBL.Areas.Production.Controllers
                     DeliveryDate = Convert.ToDateTime(collection["DeliveryDate"]).Date,
                     CompanyId = invoice.CompanyId,
                     ToBranchId = invoice.BranchId,
+                    DistributionPointId = branchId,
                     InvoiceId = invoiceId,
                     FromBranchId = invoice.BranchId,
                     FinancialTransactionModel = financialModel,
                     SpecialDiscount = invoiceDiscount
                 };
-                string result = _iInventoryManager.SaveDeliveredOrderFromFactory(barcodeList, aDelivery, invoiceStatus, orderStatus);
-                if (result.StartsWith("S"))
+
+
+                if (client.IsConsiderCreditLimit == 1)
                 {
-                    System.IO.File.Create(filePath).Close();
-                    return RedirectToAction("DeliverableOrderList");
+                    var netAmount = grossAmount - grossDiscount;
+                    if (netAmount <= client.CreditLimit)
+                    {
+                        string result = _iInventoryManager.SaveDeliveredOrderFromFactory(barcodeList, aDelivery, invoiceStatus, orderStatus);
+                        if (result.StartsWith("S"))
+                        {
+                            System.IO.File.Create(filePath).Close();
+                            return RedirectToAction("DeliverableOrderList");
+                        }
+                    }
+                    else
+                    {
+                        TempData["CreditLimit"] = "Credit Limit exceed!!";
+                        return View();
+                    }
                 }
+                else
+                {
+
+                    string result = _iInventoryManager.SaveDeliveredOrderFromFactory(barcodeList, aDelivery, invoiceStatus, orderStatus);
+                    if (result.StartsWith("S"))
+                    {
+                        System.IO.File.Create(filePath).Close();
+                        return RedirectToAction("DeliverableOrderList");
+                    }
+                    return View();
+                }
+
+               
                 return View();
             }
             catch (Exception exception)

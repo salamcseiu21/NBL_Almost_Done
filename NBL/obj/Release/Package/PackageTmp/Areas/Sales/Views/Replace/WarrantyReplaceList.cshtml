@@ -1,0 +1,60 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Services.ViewReceivedServiceProduct>
+@{
+    ViewBag.Title = "ReplaceList";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
+}
+<section class="content">
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Pending Replace List</div>
+        <div class="panel panel-body">
+            <table id="tbl_replace_list" class="display table-bordered" style="border: 1px solid">
+                <thead>
+                <tr>
+                    <th>S.N</th>
+                    <th>Refference No</th>
+                    <th>Client Info</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.ToList())
+                {
+                    i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.ReceiveRef</td>
+                        <td>
+                            @item.ClientInfo
+                        </td>
+                        <td class="text-center">@item.ReceiveDatetime.ToString("dd-MMMM-yyyy")</td>
+                        <td class="text-center">
+                            @Html.ActionLink(" Delivery", "Delivery", new {id = item.ReceiveId}, null)
+                        </td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>S.N</th>
+                    <th>Refference No</th>
+                    <th>Client Info</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+   
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_replace_list").DataTable();
+    </script>
+}

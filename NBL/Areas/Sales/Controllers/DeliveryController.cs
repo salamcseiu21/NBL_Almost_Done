@@ -200,7 +200,7 @@ namespace NBL.Areas.Sales.Controllers
                 int invoiceId = Convert.ToInt32(collection["InvoiceId"]);
                 var invoice = _iInvoiceManager.GetInvoicedOrderByInvoiceId(invoiceId);
                 IEnumerable<InvoiceDetails> details = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceId(invoiceId);
-                var client = _iClientManager.GetClientDeailsById(invoice.ClientId);
+                var client = _iClientManager.GetById(invoice.ClientId);
                 var deliveredQty = _iInvoiceManager.GetDeliveredProductsByInvoiceRef(invoice.InvoiceRef).Count;
                 var remainingToDeliverQty = invoice.Quantity - deliveredQty;
                 string fileName = "Scanned_Ordered_Product_List_For_" + invoiceId;
@@ -287,21 +287,37 @@ namespace NBL.Areas.Sales.Controllers
                     FinancialTransactionModel = financialModel,
                     SpecialDiscount = invoiceDiscount
                 };
-                //var netAmount = grossAmount - grossDiscount;
-                //if (client.CreditLimit >= netAmount)
-                //{
-
-                //}
-                //else
-                //{
-                //    TempData["CreditLimt"] = "Credit Limit Exceed";
-                //}
-                string result = _iInventoryManager.SaveDeliveredOrder(barcodeList, aDelivery, invoiceStatus, orderStatus);
-                if (result.StartsWith("S"))
+              
+                if (client.IsConsiderCreditLimit==1)
                 {
-                    System.IO.File.Create(filePath).Close();
-                    return RedirectToAction("LatestOrderList");
+                    var netAmount = grossAmount - grossDiscount;
+                    if (netAmount+client.Outstanding <= client.CreditLimit)
+                    {
+                        string result = _iInventoryManager.SaveDeliveredOrder(barcodeList, aDelivery, invoiceStatus, orderStatus);
+                        if (result.StartsWith("S"))
+                        {
+                            System.IO.File.Create(filePath).Close();
+                            return RedirectToAction("LatestOrderList");
+                        }
+                    }
+                    else
+                    {
+                        TempData["CreditLimit"] = "Credit Limit exceed!!";
+                        return View();
+                    }
                 }
+                else
+                {
+
+                    string result = _iInventoryManager.SaveDeliveredOrder(barcodeList, aDelivery, invoiceStatus, orderStatus);
+                    if (result.StartsWith("S"))
+                    {
+                        System.IO.File.Create(filePath).Close();
+                        return RedirectToAction("LatestOrderList");
+                    }
+                    return View();
+                }
+                
                 return View();
             }
             catch (Exception exception)
@@ -492,15 +508,11 @@ namespace NBL.Areas.Sales.Controllers
         public ActionResult Invoice(int deliveryId)
         {
             var delivery= _iDeliveryManager.GetOrderByDeliveryId(deliveryId);
-            //var chalan = _iDeliveryManager.GetChalanByDeliveryId(deliveryId);
             var deliveryDetails = _iDeliveryManager.GetDeliveryDetailsInfoByDeliveryId(deliveryId); 
-
-           // var invocedOrder = _iInvoiceManager.GetInvoicedOrderByInvoiceId(deliveryId);
             var orderInfo = _iOrderManager.GetOrderInfoByTransactionRef(delivery.TransactionRef);
-           //IEnumerable<InvoiceDetails> details = _iInvoiceManager.GetInvoicedOrderDetailsByInvoiceId(deliveryId);
-            var client = _iClientManager.GetClientDeailsById(orderInfo.ClientId);
+            var client = _iClientManager.GetClientDeailsById(delivery.ClientId);
 
-            ViewInvoiceModel model = new ViewInvoiceModel
+            var model = new ViewInvoiceModel
             {
                 Client = client,
                 Order = orderInfo,

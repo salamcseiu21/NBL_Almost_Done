@@ -81,6 +81,7 @@ namespace NBL.DAL
                         Transportation = reader["Transportation"].ToString(),
                         VehicleNo = reader["VehicleNo"].ToString(),
                         InvoiceId = Convert.ToInt32(reader["InvoiceId"]),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
                         Client = new Client
                         {
                             ClientId = Convert.ToInt32(reader["ClientId"])
@@ -93,12 +94,12 @@ namespace NBL.DAL
             catch (SqlException exception)
             {
                 Log.WriteErrorLog(exception);
-                throw new Exception("Could not Collect Delivered Orders due to Db Exception", exception);
+                throw new Exception("Could not Collect Delivered Order by delivery Id due to Db Exception", exception);
             }
             catch (Exception exception)
             {
                 Log.WriteErrorLog(exception);
-                throw new Exception("Could not Collect Delivered Orders", exception);
+                throw new Exception("Could not Collect Delivered Order by delivery Id", exception);
             }
             finally
             {

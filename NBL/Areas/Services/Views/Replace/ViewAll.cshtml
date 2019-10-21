@@ -5,46 +5,54 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-green">Replace List</h3>
-    <table id="tbl_replace_list" class="display table-bordered" style="border: 1px solid">
-        <thead>
-        <tr>
-            <th>Ref no</th>
-            <th>Client Info</th>
-            <th class="text-right">Quantity</th>
-            <th class="text-center">Entry Date</th>
-            <th class="text-center">Remarks</th>
-            <th class="text-center">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.ReplaceRef</td>
-                <td>@item.ClientName<br/>
-                    @item.ClientCode</td>
-                <td class="text-right">@item.Quantity</td>
-              
-                <td class="text-center">@item.EntryDate.ToString("dd-MMMM-yyyy")</td>
-                <td class="text-right">@item.Remarks</td>
-                <td class="text-center">
-                    @Html.ActionLink(" Cancel", "Cancel", "Replace",new {id=item.ReplaceId, area="services"},new {@class="btn btn-danger fa fa-times"})
-                </td>
-            </tr>
-        }
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Ref no</th>
-                <th>Client Info</th>
-                <th class="text-right">Quantity</th>
-                <th class="text-center">Entry Date</th>
-                <th class="text-center">Remarks</th>
-                <th class="text-center">Action</th>
-            </tr>
-        </tfoot>
-    </table>
+    
+    
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Replace List</div>
+        <div class="panel panel-body">
+            <table id="tbl_replace_list" class="display table-bordered" style="border: 1px solid">
+                <thead>
+                <tr>
+                    <th>Ref no</th>
+                    <th>Client Info</th>
+                    <th class="text-center">Product Name</th>
+                    <th class="text-center">Entry Date</th>
+                    <th class="text-center">Remarks</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ReceiveRef</td>
+                        <td>@item.ClientName<br/>
+                            @item.ClientCode</td>
+                        <td class="text-center">@item.ProductName</td>
+
+                        <td class="text-center">@item.EntryDate.ToString("dd-MMMM-yyyy")</td>
+                        <td class="text-right">@item.Remarks</td>
+                        <td class="text-center">
+                            @Html.ActionLink(" Cancel", "Cancel", "Replace", new {id = item.ReceiveId, area = "services"}, new {@class = "btn btn-danger fa fa-times"})
+                        </td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Ref no</th>
+                    <th>Client Info</th>
+                    <th class="text-center">Product Name</th>
+                    <th class="text-center">Entry Date</th>
+                    <th class="text-center">Remarks</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+     
 </section>
 @section Scripts
 {

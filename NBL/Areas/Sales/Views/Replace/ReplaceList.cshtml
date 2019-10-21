@@ -5,36 +5,42 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-green">Today's Replace List</h3>
-    <table id="tbl_replace_list" class="display table-bordered" style="border: 1px solid">
-        <thead>
-        <tr>
-            <th>Reference</th>
-            <th>Barcode</th>
-            <th>Product Name</th>
-            <th>Client Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.TransactionRef</td>
-                <td>@item.Barcode</td>
-                <td>@item.ProductName</td>
-                <td>@item.ClientName</td>
-            </tr>
-        }
-        </tbody>
-        <tfoot>
-        <tr>
-            <th>Reference</th>
-            <th>Barcode</th>
-            <th>Product Name</th>
-            <th>Client Name</th>
-        </tr>
-        </tfoot>
-    </table>
+    
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Today's Replace List</div>
+        <div class="panel panel-body">
+            <table id="tbl_replace_list" class="display table-bordered" style="border: 1px solid">
+                <thead>
+                <tr>
+                    <th>Reference</th>
+                    <th>Barcode</th>
+                    <th>Product Name</th>
+                    <th>Client Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.TransactionRef</td>
+                        <td>@item.Barcode</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.ClientName</td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Reference</th>
+                    <th>Barcode</th>
+                    <th>Product Name</th>
+                    <th>Client Name</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+   
 </section>
 @section Scripts
 {

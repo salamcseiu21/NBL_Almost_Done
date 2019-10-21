@@ -5,7 +5,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NBL.BLL.Contracts;
+using NBL.Models;
+using NBL.Models.EntityModels;
 using NBL.Models.EntityModels.Clients;
+using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Services;
 using NBL.Models.Enums;
 using NBL.Models.Logs;
@@ -21,12 +24,14 @@ namespace NBL.Areas.Services.Controllers
         private readonly ICommonManager _iCommonManager;
         private readonly IServiceManager _iServiceManager;
         private readonly IBranchManager _iBranchManager;
-        public WarrantyBatteryController(IInventoryManager iInventoryManager,ICommonManager iCommonManager,IServiceManager iServiceManager,IBranchManager iBranchManager)
+        private readonly IProductManager _iProductManager;
+        public WarrantyBatteryController(IInventoryManager iInventoryManager,ICommonManager iCommonManager,IServiceManager iServiceManager,IBranchManager iBranchManager,IProductManager iProductManager)
         {
             _iInventoryManager = iInventoryManager;
             _iCommonManager = iCommonManager;
-            _iServiceManager = iServiceManager;
+            _iServiceManager = iServiceManager; 
             _iBranchManager = iBranchManager;
+            _iProductManager = iProductManager;
         }
 
         public ActionResult All()
@@ -64,6 +69,29 @@ namespace NBL.Areas.Services.Controllers
             ICollection<Client> clients = _iServiceManager.GetClientListByServiceForwardId(Convert.ToInt32(ForwardTo.Replace));
             ViewBag.ClientId = clients;
             return View();
+        }
+        [HttpPost]
+        public ActionResult MakeRplaceChalan(FormCollection collection)
+        {
+
+            ICollection<Client> clients = _iServiceManager.GetClientListByServiceForwardId(Convert.ToInt32(ForwardTo.Replace));
+            ViewBag.ClientId = clients;
+            return View();
+        }
+
+        public JsonResult ForwardServiceBatteryToDeistributionPoint(long receiveId)
+        {
+            SuccessErrorModel model=new SuccessErrorModel();
+            bool result = _iServiceManager.ForwardServiceBatteryToDeistributionPoint(receiveId);
+            if(result)
+            {
+                model.Message= "<p class='text-green'>Successfully! Forward to Disribution Point</p>";
+            }
+            else
+            {
+                model.Message = "<p class='text-danger'>Failed to Forward to Disribution Point</p>";
+            }
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
         public ActionResult ReturnList()
         {
@@ -373,6 +401,8 @@ namespace NBL.Areas.Services.Controllers
                 model.DelivaryRef = product.DeliveryRef;
                 model.TransactionRef = product.OrderRef;
                 model.Barcode = product.ProductBarCode;
+                model.ClientId = product.ClientId;
+                model.ProductId = product.ProductId;
                 model.Status = 0;
                 var result = _iServiceManager.ReceiveServiceProduct(model);
                 if (result)
