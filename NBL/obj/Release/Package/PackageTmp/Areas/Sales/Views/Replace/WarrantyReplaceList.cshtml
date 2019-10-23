@@ -15,6 +15,7 @@
                     <th>S.N</th>
                     <th>Refference No</th>
                     <th>Client Info</th>
+                    <th>Product Name</th>
                     <th class="text-center">Date</th>
                     <th class="text-center">Action</th>
                 </tr>
@@ -29,6 +30,9 @@
                         <td>
                             @item.ClientInfo
                         </td>
+                        <td>
+                            @item.ProductName
+                        </td>
                         <td class="text-center">@item.ReceiveDatetime.ToString("dd-MMMM-yyyy")</td>
                         <td class="text-center">
                             @Html.ActionLink(" Delivery", "Delivery", new {id = item.ReceiveId}, null)
@@ -41,6 +45,7 @@
                     <th>S.N</th>
                     <th>Refference No</th>
                     <th>Client Info</th>
+                    <th>Product Name</th>
                     <th class="text-center">Date</th>
                     <th class="text-center">Action</th>
                 </tr>

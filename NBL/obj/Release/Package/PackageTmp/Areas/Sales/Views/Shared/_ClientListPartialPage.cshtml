@@ -1,5 +1,5 @@
 ﻿@using NBL.Models.Enums
-@model NBL.Models.ViewModels.Summaries.SummaryModel
+@model IEnumerable<NBL.Models.ViewModels.ViewClient>
 <table id="table_client_list" class="display table table-bordered" style="border: 1px solid black">
 
     <thead>
@@ -14,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Clients)
+        @foreach (var item in Model)
         {
             <tr>
                 <td class="text-center">
@@ -22,7 +22,8 @@
                     @Html.Raw(item.GetBasicInformation())<br />
                     @if (item.Outstanding < 0)
                     {
-                        <span>Outstanding : ( @(item.Outstanding?.ToString("N2")) )</span>
+                        var r = (item.Outstanding * -1);
+                        <span>Outstanding : ( <span>@(Convert.ToDecimal(r).ToString("N2"))</span> )</span>
                     }
                     else
                     {
@@ -36,7 +37,8 @@
                 <td class="text-center">
                     @if (item.Outstanding < 0)
                     {
-                        <span>( @(item.Outstanding?.ToString("N2")) )</span>
+                        var r = item.Outstanding * -1;
+                        <span>(@(Convert.ToDecimal(r).ToString("N2")) )</span>
                     }
                     else
                     {

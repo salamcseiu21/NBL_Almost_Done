@@ -17,11 +17,13 @@ namespace NBL.BLL
    {
        private readonly IServiceGateway _iServiceGateway;
        private readonly ICommonGateway _iCommonGateway;
+       private readonly IProductReplaceGateway _iProductReplaceGateway;
 
-       public ServiceManager(IServiceGateway iServiceGateway,ICommonGateway iCommonGateway)
+       public ServiceManager(IServiceGateway iServiceGateway,ICommonGateway iCommonGateway,IProductReplaceGateway iProductReplaceGateway)
        {
            _iServiceGateway = iServiceGateway;
            _iCommonGateway = iCommonGateway;
+           _iProductReplaceGateway = iProductReplaceGateway;
        }
      
        public bool ReceiveServiceProduct(WarrantyBatteryModel product)
@@ -39,13 +41,24 @@ namespace NBL.BLL
            product.ReceiveRef = DateTime.Now.Year.ToString().Substring(2, 2) +
                                 GetReferenceAccountCodeById(Convert.ToInt32(ReferenceType.WarrantyBatteryReceive)) +
                                 (maxSl + 1);
-           int rowAffected = _iServiceGateway.ReceiveServiceProductTemp(product); 
-           return rowAffected > 0;
+            int replaceNo = _iProductReplaceGateway.GetMaxReplaceSerialNoByYear(DateTime.Now.Year);
+            product.ReplaceRef = GenerateReplaceRef(replaceNo);
+
+            int rowAffected = _iServiceGateway.ReceiveServiceProductTemp(product);
+
+          
+            return rowAffected > 0;
         }
 
-     
+       private string GenerateReplaceRef(int maxsl) 
+       {
+           string refCode = GetReferenceAccountCodeById(Convert.ToInt32(ReferenceType.Replace));
+           int sN = maxsl + 1;
+           string reference = DateTime.Now.Date.Year.ToString().Substring(2, 2) + refCode + sN;
+           return reference;
+       }
 
-       private string GetReferenceAccountCodeById(int subReferenceAccountId)
+        private string GetReferenceAccountCodeById(int subReferenceAccountId)
        {
            var code = _iCommonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id.Equals(subReferenceAccountId)).Code;
            return code;

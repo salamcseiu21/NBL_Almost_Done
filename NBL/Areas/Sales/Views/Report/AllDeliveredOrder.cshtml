@@ -1,0 +1,95 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Deliveries.ViewDeliveredOrderModel>
+@{
+    ViewBag.Title = "All Delivered Order";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var b = 0;
+}
+
+<section class="content">
+    
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">All Delivered Order (@ViewBag.BranchName)</div>
+        <div class="panel panel-body">
+            <table id="table_delivery_Order_list" class="display table-bordered" style="border:1px solid black">
+                <thead>
+                <tr>
+                    <th>S.N</th>
+                    <th>Order Ref</th>
+                    <th>Delivery Ref</th>
+                    <th>Client</th>
+
+                    <th class="text-right">Quantity</th>
+                    <th class="text-center">Date</th>
+
+                    <th class="text-center">Details</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.ToList())
+                {
+                    b++;
+                    <tr>
+
+                        <td>@b</td>
+                        <td>@item.TransactionRef</td>
+                        <td>@item.DeliveryRef</td>
+                        <td>
+                            @Html.ActionLink(item.ClientName, "ViewClientProfile", "Home", new { id = item.ClientId },null)
+                           
+                        </td>
+
+                        <td class="text-right">@item.DeliveredQty</td>
+                        <td class="text-center">@item.DeliveredDateTime.ToString("dd-MMM-yyyy")</td>
+                        <td class="text-center">
+                            <button type="button" value="@item.DeliveryId" onclick="ViewDeliveryDetails(this)" class="btn btn-success btn-sm"><i class="fa fa-eye"></i>&nbsp;Details</button>
+                            @*@Html.ActionLink(" Details","DeliveryDetails","Home",new {id=item.DeliveryId},new {@class="fa fa-eye"})*@
+                        </td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+
+                    <th colspan="4" class="text-right">Total</th>
+                    <th class="text-right">@Model.Sum(n => n.DeliveredQty)</th>
+                    <th colspan="2"></th>
+                </tr>
+                <tr>
+                    <th>S.N</th>
+                    <th>Order Ref</th>
+                    <th>Delivery Ref</th>
+                    <th>Client</th>
+                    <th class="text-right">Quantity</th>
+                    <th class="text-center">Date</th>
+
+                    <th class="text-center">Details</th>
+                </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </div>
+    @Html.Partial("_ModalDeliveryOrderDetailsPartialPage")
+</section>
+@section Scripts
+{
+    <script>
+        $('#table_delivery_Order_list').DataTable({
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+        });
+
+        function ViewDeliveryDetails(deliveryId) {
+
+             $.ajax({
+                 type: "POST",
+                 url: "@Url.Action("ViewDeliveryDetails", "Common", new { area = "" })",
+                 data: { deliveryId: deliveryId.value },
+             success: function (response) {
+                 $('#DeliveryDetailModalBody').html(response);
+                 $('#showDeliveredOrderDetailsModal').modal('show');
+             }
+         });
+        }
+    </script>
+}

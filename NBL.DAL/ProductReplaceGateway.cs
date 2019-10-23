@@ -305,6 +305,42 @@ namespace NBL.DAL
             }
         }
 
+        public ICollection<ViewReplaceModel> GetAllReplaceList(int status)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllReplaceListTemp";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Status", status);
+                List<ViewReplaceModel> models = new List<ViewReplaceModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ViewReplaceModel
+                    {
+                      
+                       ReplaceRef = reader["ReplaceRef"].ToString(),
+                       ReceiveRef = reader["ReceiveRef"].ToString()
+                    });
+                }
+                reader.Close();
+                return models;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect delivered Replace list by branch and Company Id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         public ViewReplaceModel GetReplaceById(long id)
         {
             try

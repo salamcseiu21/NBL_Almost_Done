@@ -91,7 +91,22 @@
                 </span>
             </a>
             <ul class="treeview-menu">
+                <li><a href="#"><i class="fa fa-file"></i> Daily Reports</a></li>
+                <li><a href="#"><i class="fa fa-file"></i>Monthly Reports</a></li>
+                <li><a href="#"><i class="fa fa-file"></i> Yearly Reports</a></li>
+            </ul>
+        </li>
+        
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-circle-o"></i> Delivery
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
                 <li>@Html.ActionLink(" All", "AllDeliveredQtyForOrder", "Report", new { area = "Sales" }, new { @class = "fa fa-file", style = "font-weight: bolder;" })</li>
+                <li>@Html.ActionLink(" All Delivered Order", "AllDeliveredOrder", "Report", new { area = "Sales" }, new { @class = "fa fa-file", style = "font-weight: bolder;" })</li>
                 <li><a href="#"><i class="fa fa-file"></i> Daily Reports</a></li>
                 <li><a href="#"><i class="fa fa-file"></i>Monthly Reports</a></li>
                 <li><a href="#"><i class="fa fa-file"></i> Yearly Reports</a></li>

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using System.Xml;
 using System.Xml.Linq;
+using NBL.BLL.Contracts;
 using NBL.Models;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels.Logs;
@@ -19,6 +20,26 @@ namespace NBL.Controllers
 {
     public class DemoController : Controller
     {
+
+        private readonly ICommonManager _iCommonManager;
+        private readonly IProductReplaceManager _iProductReplaceManager;
+
+        public DemoController(ICommonManager iCommonManager,IProductReplaceManager iProductReplaceManager)
+        {
+            _iCommonManager = iCommonManager;
+            _iProductReplaceManager = iProductReplaceManager;
+        }
+
+        public ActionResult Test()
+        {
+            var replace = _iProductReplaceManager.GetAllReplaceList(2).ToList();
+            foreach (var item in replace)
+            {
+                bool result = _iCommonManager.UpdateReplaceTransactionRef(item.ReceiveRef, item.ReplaceRef);
+            }
+            
+            return View();
+        }
         // GET: Demo
         public ActionResult Index()
         {

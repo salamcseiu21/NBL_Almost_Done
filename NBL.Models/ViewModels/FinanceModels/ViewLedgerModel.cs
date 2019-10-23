@@ -10,6 +10,8 @@ namespace NBL.Models.ViewModels.FinanceModels
     public class ViewLedgerModel 
     {
         public string Debit { get; set; }
+
+        public decimal Amount { get; set; }
         public decimal DebitAmount { get; set; }
         public string DebitExplanation { get; set; }    
         public string Credit { get; set; }

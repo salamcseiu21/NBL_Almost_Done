@@ -242,5 +242,11 @@ namespace NBL.BLL
        {
            return _iCommonGateway.GetAllActionList();
        }
+
+       public bool UpdateReplaceTransactionRef(string receiveref, string replaceref)
+       {
+           int rowAffected = _iCommonGateway.UpdateReplaceTransactionRef(receiveref, replaceref);
+           return rowAffected > 0;
+        }
    }
 }

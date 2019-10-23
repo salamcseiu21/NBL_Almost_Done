@@ -2195,6 +2195,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@TransportationCost", aDelivery.TransportationCost);
                 CommandObj.Parameters.AddWithValue("@VehicleNo", aDelivery.VehicleNo ?? "N/A");
                 CommandObj.Parameters.AddWithValue("@ToBranchId", aDelivery.ToBranchId);
+                CommandObj.Parameters.AddWithValue("@DistributionPointId", aDelivery.DistributionPointId);
                 CommandObj.Parameters.AddWithValue("@CompanyId", aDelivery.CompanyId);
                 CommandObj.Parameters.AddWithValue("@UserId", aDelivery.DeliveredByUserId);
                 CommandObj.Parameters.AddWithValue("@Quantity", scannedProducts.Count);

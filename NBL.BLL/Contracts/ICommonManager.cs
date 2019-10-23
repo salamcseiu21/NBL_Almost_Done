@@ -67,5 +67,6 @@ namespace NBL.BLL.Contracts
         ViewActionListModel GetActionListModelByAreaControllerActionName(string area,string controller,string action);
         ICollection<ViewActionListModel> GetAllActionList();
 
+        bool UpdateReplaceTransactionRef(string receiveref, string replaceref);
     }
 }

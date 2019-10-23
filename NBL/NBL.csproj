@@ -8311,6 +8311,10 @@
     <Content Include="Areas\AccountsAndFinance\Views\AccountManager\PendingCollectionList.cshtml" />
     <Content Include="Areas\Sales\Views\Replace\WarrantyReplaceList.cshtml" />
     <Content Include="Areas\Sales\Views\Replace\WarrantyDelivery.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Home\ViewClient.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Home\ViewProduct.cshtml" />
+    <Content Include="Areas\Sales\Views\Report\AllDeliveredOrder.cshtml" />
+    <Content Include="Areas\HR\Views\Employee\Employees.cshtml" />
     <None Include="DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -8479,6 +8483,8 @@
     <Content Include="Views\Shared\_ViewOrderHistoryPartialPage.cshtml" />
     <Content Include="Views\Shared\_ModalInvoiceDetailsPartialPage.cshtml" />
     <Content Include="Views\Shared\_InvoiceDetailPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewProductDetailsPartialPage.cshtml" />
+    <Content Include="Views\Demo\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

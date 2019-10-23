@@ -60,6 +60,7 @@ namespace NBL.DAL.Contracts
        ICollection<ForwardToModel> GetAllForwardToModels();
        ICollection<ForwardToModel> GetAllForwardToModelsByUserAndActionId(int userId, long actionId);
        ViewActionListModel GetActionListModelByAreaControllerActionName(string area, string controller, string action);
-       ICollection<ViewActionListModel> GetAllActionList(); 
+       ICollection<ViewActionListModel> GetAllActionList();
+       int UpdateReplaceTransactionRef(string receiveref, string replaceref);
    }
 }

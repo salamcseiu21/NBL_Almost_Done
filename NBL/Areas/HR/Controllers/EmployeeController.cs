@@ -94,7 +94,20 @@ namespace NBL.Areas.HR.Controllers
               }
         }
 
+        public ActionResult Employees()
+        {
+            try
+            {
+                var employees = _iEmployeeManager.GetAllEmployeeWithFullInfo();
+                return View(employees);
 
+            }
+            catch (Exception exception)
+            {
+               Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         public ActionResult GetAllEmployee()
         {
             var employees = _iEmployeeManager.GetAllEmployeeWithFullInfo();

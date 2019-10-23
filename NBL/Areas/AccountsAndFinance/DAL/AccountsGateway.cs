@@ -621,7 +621,8 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                         Explanation = reader["Explanation"].ToString(),
                         Quantity = Convert.ToInt32(reader["Quantity"]),
                         TransactionRef = reader["TransactionRef"].ToString(),
-                        DeliveryId = Convert.ToInt64(reader["DeliveryId"])
+                        DeliveryId = Convert.ToInt64(reader["DeliveryId"]),
+                        Amount = Convert.ToDecimal(reader["Amount"])
 
                     });
                 }
@@ -2323,7 +2324,8 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                         Explanation = reader["Explanation"].ToString(),
                         Quantity = Convert.ToInt32(reader["Quantity"]),
                         TransactionRef = reader["TransactionRef"].ToString(),
-                        DeliveryId = Convert.ToInt64(reader["DeliveryId"])
+                        DeliveryId = Convert.ToInt64(reader["DeliveryId"]),
+                        Amount = Convert.ToDecimal(reader["Amount"])
                     });
                 }
                 reader.Close();

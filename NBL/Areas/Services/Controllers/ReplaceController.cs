@@ -36,7 +36,7 @@ namespace NBL.Areas.Services.Controllers
             {
                 //var user = (ViewUser)Session["user"];
 
-                //var replace = _iProductReplaceManager.GetAllPendingReplaceListByBranchAndCompany(12, 1).ToList();
+                //var replace = _iProductReplaceManager.GetAllReplaceList(2).ToList();
                 //foreach (var item in replace)
                 //{
 
@@ -47,12 +47,13 @@ namespace NBL.Areas.Services.Controllers
                 //        ReceiveByBranchId = item.BranchId,
                 //        EntryByUserId = item.UserId,
                 //        DelivaryRef = DateTime.Now.Year.ToString().Substring(2, 2) + "FAKE",
-                //        TransactionRef = Guid.NewGuid().ToString().ToUpper().Substring(0, 8),
+                //        TransactionRef = item.ReplaceRef,
+                //        ReplaceRef = item.ReplaceRef,
                 //        ReportByEmployeeId = user.EmployeeId,
                 //        ReceiveRemarks = item.Remarks,
                 //        ProductId = item.ProductId,
                 //        IsManualEntry = "Y",
-                //        Status = 1,
+                //        Status = 2,
                 //        ExpiryDate = item.ExpiryDate,
                 //        Barcode = "FAKE" + Guid.NewGuid().ToString().ToUpper().Substring(0, 9)
                 //    };
@@ -125,7 +126,7 @@ namespace NBL.Areas.Services.Controllers
                 }
                 var resultTest = _iServiceManager.ReceiveServiceProductTemp(warrantyBatteryModel);
 
-                if (true)
+                if (resultTest)
                 {
                     ModelState.Clear();
                     ViewBag.DistributionPointId = new SelectList(_iBranchManager.GetAllBranches(), "BranchId", "BranchName", branchId);

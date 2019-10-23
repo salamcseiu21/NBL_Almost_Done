@@ -1,0 +1,51 @@
+﻿@model IEnumerable<NBL.Models.EntityModels.Products.ProductDetails>
+@{
+    ViewBag.Title = "Product Details";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <div class="panel panel-info">
+        @Html.Partial("_ViewProductDetailsPartialPage",Model)
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_Product_details").DataTable({
+            "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+            "ordering": false,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    text: 'Download As Excel',
+                    title: $("#client_Name").val(),
+                    footer: true
+
+                },
+
+                {
+                    extend: 'pdf',
+                    text: 'Download As Pdf',
+                    title: $("#client_Name").val(),
+                    footer: true
+
+                },
+                {
+                    extend: 'print',
+                    title: $("#client_Name").val(),
+                    footer: true,
+                    customize: function (win) {
+                        $(win.document.body)
+                            .css('font-size', '10pt');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ]
+        });
+    </script>
+}

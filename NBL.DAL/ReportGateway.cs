@@ -4,12 +4,12 @@ using System.Data;
 using System.Data.SqlClient;
 using NBL.DAL.Contracts;
 using NBL.Models;
-using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.Logs;
 using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Replaces;
@@ -212,7 +212,53 @@ namespace NBL.DAL
                 ConnectionObj.Close();
             }
         }
+        public ICollection<ViewDeliveredOrderModel> GetTotalDeliveredOrderListByDistributionPointId(int branchId)
+        {
 
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetTotalDeliveredOrderListByDistributionPointId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DistributionPointId", branchId);
+                List<ViewDeliveredOrderModel> refModels = new List<ViewDeliveredOrderModel>();
+                ConnectionObj.Open();
+
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    refModels.Add(new ViewDeliveredOrderModel
+                    {
+                        DeliveryId = Convert.ToInt64(reader["DeliveryId"]),
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        DeliveredQty = Convert.ToInt32(reader["DeliveredQuantity"]),
+                        ClientName = reader["ClientName"].ToString(),
+                        ClientCode = DBNull.Value.Equals(reader["ClientCode"]) ? null : reader["ClientCode"].ToString(),
+                        DeliveredDateTime = Convert.ToDateTime(reader["DeliveryDate"]),
+                        ClientId = Convert.ToInt32(reader["ClientId"])
+                    });
+                }
+                reader.Close();
+                return refModels;
+
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Delivered Order due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Delivered Order", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
         public IEnumerable<ViewProduct> GetPopularBatteriesByYear(int year)
         {
             try
@@ -1031,6 +1077,8 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+       
 
         public ICollection<ViewProduct> GetStockProductBarcodeByBranchId(int branchId)
         {

@@ -1499,5 +1499,33 @@ CommandObj.Parameters.Clear();
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public int UpdateReplaceTransactionRef(string receiveref, string replaceref)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_UpdateReplaceTransactionRef";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Receiveref", receiveref);
+                CommandObj.Parameters.AddWithValue("@Replaceref", replaceref);
+                CommandObj.Parameters.Add("@RowAffeted", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffeted"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffeted"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not save current user role", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }

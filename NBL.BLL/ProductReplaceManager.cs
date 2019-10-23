@@ -59,6 +59,11 @@ namespace NBL.BLL
             return _iProductReplaceGateway.GetAllReplaceListByBranchId(branchId);
         }
 
+        public ICollection<ViewReplaceModel> GetAllReplaceList(int status)
+        {
+            return _iProductReplaceGateway.GetAllReplaceList(status);
+        }
+
         public ViewReplaceModel GetReplaceById(long id)
         {
             return _iProductReplaceGateway.GetReplaceById(id);

@@ -78,14 +78,11 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         {
             try
             {
-                var client = _iClientManager.GetById(id);
+                var client = _iClientManager.GetClientDeailsById(id);
                 var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
-                LedgerModel model = new LedgerModel
-                {
-                    Client = client,
-                    LedgerModels = ledgers
-                };
-                return View(model);
+                client.LedgerModels = ledgers.ToList();
+                return View(client);
+              
             }
             catch (Exception exception)
             {
@@ -95,12 +92,13 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             }
 
         }
-        public PartialViewResult ViewProduct()
+        public ActionResult ViewProduct()
         {
             try
             {
-                var products = _iProductManager.GetAll().ToList();
-                return PartialView("_ViewProductPartialPage", products);
+                var products = _iReportManager.GetAllProductDetails().ToList();
+                // return View(products);
+                return View(products);
             }
             catch (Exception exception)
             {
@@ -160,6 +158,22 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             int branchId = Convert.ToInt32(Session["BranchId"]);
             ICollection<ViewClientSummaryModel> summary = _iClientManager.GetClientSummaryByBranchId(branchId);
             return View(summary);
+        }
+        public ActionResult ViewClient()
+        {
+            try
+            {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
+                ICollection<ViewClient> dealers = _iClientManager.GetClientByOrderCountBranchAndClientTypeId(branchId, 3).ToList();
+                return View(dealers);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
         }
     }
 }

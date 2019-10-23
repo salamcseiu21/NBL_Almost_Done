@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using NBL.BLL.Contracts;
 using NBL.Models.Logs;
@@ -12,10 +9,12 @@ namespace NBL.Areas.Sales.Controllers
     public class ReportController : Controller
     {
         private readonly IReportManager _iReportManager;
+        private readonly IBranchManager _iBranchManager;
 
-        public ReportController(IReportManager iReportManager)
+        public ReportController(IReportManager iReportManager,IBranchManager iBranchManager)
         {
             _iReportManager = iReportManager;
+            _iBranchManager = iBranchManager;
         }
         // GET: Sales/Report
         public ActionResult AllDeliveredQtyForOrder()
@@ -31,6 +30,24 @@ namespace NBL.Areas.Sales.Controllers
                 Log.WriteErrorLog(exception);
                 return PartialView("_ErrorPartial", exception);
             }
+        }
+
+        public ActionResult AllDeliveredOrder()
+        {
+            try
+            {
+               
+                var branchId = Convert.ToInt32(Session["BranchId"]);
+                ViewBag.BranchName=_iBranchManager.GetById(branchId).BranchName;
+                var results = _iReportManager.GetTotalDeliveredOrderListByDistributionPointId(branchId);
+                return View(results);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
         }
     }
 }

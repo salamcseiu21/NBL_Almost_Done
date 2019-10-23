@@ -10,6 +10,7 @@ namespace NBL.Models.EntityModels.Services
         public DateTime ReceiveDatetime { get; set; }
         public string Barcode { get; set; }
         public string ReceiveRef { get; set; }
+        public string ReplaceRef { get; set; } 
         public int ReceiveByBranchId { get; set; }   
         public string DelivaryRef { get; set; }
         public string TransactionRef { get; set; }

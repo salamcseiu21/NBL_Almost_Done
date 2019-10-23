@@ -5,6 +5,7 @@ using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Replaces;
@@ -53,5 +54,6 @@ namespace NBL.DAL.Contracts
        ICollection<ViewClientSummaryModel> GetClientReportBySearchCriteria(SearchCriteria searchCriteria);
        ICollection<ViewStockProduct> GetStockProductBarcodeByBranchAndProductIdTemp(int branchId, int productId);
        int InActiveProduct(int branchId, List<ViewStockProduct> stockBarcodList);
+       ICollection<ViewDeliveredOrderModel> GetTotalDeliveredOrderListByDistributionPointId(int branchId); 
    }
 }

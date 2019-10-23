@@ -355,9 +355,25 @@
                        
                                     </td> 
                                 }
-                                <td class="text-right">@item.DebitAmount</td>
                                 <td class="text-right">
-                                    <b>@(item.CreditAmount * -1)</b>
+                                    @if (item.Amount >= 0)
+                                    {
+                                        @item.Amount
+                                    }
+                                    else
+                                    {
+                                        <b>0</b>
+                                    }
+                                </td>
+                                <td class="text-right">
+                                    <b>@if (item.Amount < 0)
+                                       {
+                                           @(item.Amount*-1)
+                                       }
+                                       else
+                                       {
+                                           <b>0</b>
+                                       }</b>
 
                                 </td>
 
@@ -381,8 +397,8 @@
                             <td class="text-center">-</td>
                             <td class="text-right">Total</td>
                             <th class="text-right">@Model.LedgerModels.Sum(n => n.Quantity)</th>
-                            <td class="text-right">@Model.LedgerModels.Sum(n => n.DebitAmount)</td>
-                            <td class="text-right">@Model.LedgerModels.Sum(n => n.CreditAmount *-1)</td>
+                            <td class="text-right">@Model.LedgerModels.FindAll(n=>n.Amount>=0).Sum(n=>n.Amount)</td>
+                            <td class="text-right">@Model.LedgerModels.FindAll(n => n.Amount < 0).Sum(n => n.Amount*-1)</td>
                             <td class="text-center">-</td>
 
                         </tr>

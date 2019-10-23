@@ -131,6 +131,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@ReceiveRef", product.ReceiveRef);
                 CommandObj.Parameters.AddWithValue("@ReceiveByBranchId", product.ReceiveByBranchId);
                 CommandObj.Parameters.AddWithValue("@TransactionRef", product.TransactionRef);
+                CommandObj.Parameters.AddWithValue("@ReplaceRef", product.ReplaceRef);
                 CommandObj.Parameters.AddWithValue("@ReportByEmployeeId", product.ReportByEmployeeId);
                 CommandObj.Parameters.AddWithValue("@EntryByUserId", product.EntryByUserId);
                 CommandObj.Parameters.AddWithValue("@Status", product.Status);
