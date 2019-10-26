@@ -488,6 +488,12 @@ namespace NBL.BLL
             return _iProductGateway.GetAllPendingProductPriceListByStatus(status);
         }
 
+        public bool UpdateProductActivationStatus(int productId, string status)
+        {
+            int rowAffected = _iProductGateway.UpdateProductActivationStatus(productId, status);
+            return rowAffected > 0;
+        }
+
         private string GenerateTransferRequisitionRef(int maxTrNo)
         {
 

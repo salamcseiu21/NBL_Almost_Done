@@ -425,7 +425,23 @@ namespace NBL.Areas.SuperAdmin.Controllers
             }
 
         }
+        public PartialViewResult ClientDetails(int id)
+        {
+            try
+            {
+                var client = _iClientManager.GetClientDeailsById(id);
+                var ledgers = _iAccountsManager.GetClientLedgerBySubSubSubAccountCode(client.SubSubSubAccountCode);
+                client.LedgerModels = ledgers.ToList();
+                return PartialView("_ViewClientDetailsPartialPage", client);
+            }
+            catch (Exception exception)
+            {
 
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+
+        }
         [HttpPost]
         public JsonResult UpdateCreditLimitConsideationStatus(int id,int status)
         {
@@ -438,6 +454,22 @@ namespace NBL.Areas.SuperAdmin.Controllers
             else
             {
                 aModel.Message = "Failed to update CreditLimit Consideration";
+            }
+            return Json(aModel, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateProductActivationStatus(int id, string status) 
+        {
+            SuccessErrorModel aModel = new SuccessErrorModel();
+            bool result = _iProductManager.UpdateProductActivationStatus(id, status);
+            if (result)
+            {
+                aModel.Message = "Product Activation Status updated Successfully!";
+            }
+            else
+            {
+                aModel.Message = "Failed to Update Product Activation Status";
             }
             return Json(aModel, JsonRequestBehavior.AllowGet);
         }

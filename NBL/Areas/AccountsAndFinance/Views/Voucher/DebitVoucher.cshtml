@@ -6,173 +6,165 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-green headingStyle">Debit/Payment Voucher</h3>
-    <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
-    </div>
-    <hr />
-    @using (Html.BeginForm("DebitVoucher", "Voucher", FormMethod.Post, new { id = "DebitVoucherForm" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="form-horizontal">
 
-
-            <div class="panel panel-default">
-                <div class="panel-body">
-
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Debit/Payment Voucher</div>
+        <div class="panel panel-body">
+            <div id="message" style="display: none; font-weight: bold; font-size: 20px" class="text-center">
+            </div>
+            @using (Html.BeginForm("DebitVoucher", "Voucher", FormMethod.Post, new {id = "DebitVoucherForm"}))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
                     <div class="row">
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="Date" class="control-label col-md-3">Date</label>
-                                <div class="col-md-9">
+                        <div class="col-md-6">
+                            <div class="panel panel-info">
+                                <div class="panel-body">
 
-                                    <input type="text" id="Date" name="Date" value="@date" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="row">
-
-                                <div class="col-md-9">
-                                    <div class="form-group">
-                                        <label for="TransactionTypeId" class="control-label col-md-4">Transaction Type</label>
-                                        <div class="col-md-8">
-
-                                            <select class="form-control" id="TransactionTypeId" name="TransactionTypeId" required>
-                                                @*@foreach (var item in paymentTypes)
-                                                    {
-                                                        <option value="@item.PaymentTypeId">@item.PaymentTypeName</option>
-                                                    }*@
-                                                <option value="">--Select--</option>
-                                                <option value="1">Cash</option>
-                                                <option value="2">Bank</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-
-                                        <div class="col-md-9">
-                                            <input id="isItContra" name="isItContra"type="checkbox" /> <label>Contra</label>
-                                            <input type="hidden" id="contraValue" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            
-                            
-                        </div>
-
-                        <div class="col-md-7">
-                          
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Bank Name</label>
-                                <div class="col-md-9">
-                                    <input type="text" class="form-control" id="BankName" name="BankName" placeholder="Type bank name here!!" />
-                                    <input type="hidden" id="BankId" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                
-                                <div class="col-md-8">
-
-                                    <div class="form-group">
-                                        <label class="col-md-5 control-label">Account Name</label>
-                                        <div class="col-md-7">
-                                            <select id="BankBranchId" name="BankBranchId" class="form-control">
-                                                <option value="">--Select--</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                            
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="col-md-6 control-label">Account Code</label>
+                                    <div class="row">
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control" id="AccountCode" name="AccountCode" readonly />
+                                            <div class="form-group">
+                                               
+                                                <div class="col-md-12">
+                                                    <label for="Date" class="control-label">Date</label>
+                                                    <input type="text" id="Date" name="Date" value="@date" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                       
+                                                <div class="col-md-12">
+                                                    <label for="TransactionTypeId" class="control-label">Transaction Type</label>
+                                                    <select class="form-control" id="TransactionTypeId" name="TransactionTypeId" required>
+
+                                                        <option value="">--Select--</option>
+                                                        <option value="1">Cash</option>
+                                                        <option value="2">Bank</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+
+                                                <div class="col-md-12">
+                                                    <input id="isItContra" name="isItContra" type="checkbox" /> <label>Is It Contra?</label>
+                                                    <input type="hidden" id="contraValue" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+
+                                            <div class="form-group">
+                                              
+                                                <div class="col-md-12">
+                                                    <label class="control-label">Bank Name</label>
+                                                    <input type="text" class="form-control" id="BankName" name="BankName" placeholder="Type bank name here!!"/>
+                                                    <input type="hidden" id="BankId"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                              
+                                                <div class="col-md-12">
+                                                    <label class="control-label">Account Name</label>
+                                                    <select id="BankBranchId" name="BankBranchId" class="form-control">
+                                                        <option value="">--Select--</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                           
+                                            <div class="form-group">
+                                               
+                                                <div class="col-md-12">
+                                                    <label class="control-label">Account Code</label>
+                                                    <input type="text" class="form-control" id="AccountCode" name="AccountCode" readonly/>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                               
-                            </div>
-                            
-                        </div>
-                    </div>
 
 
-                </div>
-            </div>
-
-            <div class="row" style="padding: 10px 15px">
-                <div class="col-md-6">
-
-                    <div class="form-group">
-                        <label class="control-label col-md-3" for="PurposeName">Account Name</label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Account Name" id="PurposeName" name="PurposeName" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Amount</label>
-                        <div class="col-md-9">
-                            <input type="number" class="form-control text-right" placeholder="Amounts" id="PurposeAmounts" name="PurposeAmounts" />
-                        </div>
-                    </div>
-                   
-                </div>
-                <div class="col-md-6">
-
-
-                    <div class="row">
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-6">Account Code</label>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" placeholder="Account code" id="PurposeCode" name="PurposeCode" readonly />
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
+                            <div class="panel panel-info">
+                                <div class="panel panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
 
-                            <div class="form-group">
-                                <label for="Balance" class="control-label col-md-5">Ledger Balance</label>
-                                <div class="col-md-7">
-                                    <input type="text" id="Balance" name="Balance" placeholder="Ledger Balance" class="form-control" readonly />
+                                            <div class="form-group">
+                                               
+                                                <div class="col-md-12">
+                                                    <label class="control-label" for="PurposeName">Account Name</label>
+                                                    <input type="text" class="form-control" placeholder="Account Name" id="PurposeName" name="PurposeName"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                              
+                                                <div class="col-md-12">
+                                                    <label class="control-label">Amount</label>
+                                                    <input type="number" class="form-control text-right" placeholder="Amounts" id="PurposeAmounts" name="PurposeAmounts"/>
+                                                </div>
+                                            </div>
 
+                                        </div>
+                                        <div class="col-md-6">
+
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                      
+                                                        <div class="col-md-12">
+                                                            <label class="control-label">Account Code</label>
+                                                            <input type="text" class="form-control" placeholder="Account code" id="PurposeCode" name="PurposeCode" readonly/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+
+                                                    <div class="form-group">
+                                                       
+                                                        <div class="col-md-12">
+                                                            <label for="Balance" class="control-label">Ledger Balance</label>
+                                                            <input type="text" id="Balance" name="Balance" placeholder="Ledger Balance" class="form-control" readonly/>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                               
+                                                <div class="col-md-12">
+                                                    <label for="Remarks" class="control-label">Remarks</label>
+                                                    <textarea id="Remarks" name="Remarks" class="form-control" rows="2" placeholder="Remarks" style="resize: none"></textarea>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <div class="col-md-12 text-right">
+                                                    <input type="button" id="removeAllButton" value="Remove All" onclick="RemoveAll(this)" class="btn btn-danger " />
+                                                    <input type="button" value="Add to List" onclick="AddPurposeInfoToList(this)" class="btn btn-info" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="Remarks" class="control-label col-md-3">Remarks</label>
-                        <div class="col-md-9">
-                            <textarea id="Remarks" name="Remarks" class="form-control" rows="2" placeholder="Remarks" style="resize:none"></textarea>
-                        </div>
-                    </div>
+
                    
 
-                    <div class="form-group">
-                        <div class="col-md-9 col-md-offset-3">
-                            <div class="row">
-                                <div class="col-md-6">
+                   
 
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <input type="button" id="removeAllButton" value="Remove All" onclick="RemoveAll(this)" class="btn btn-danger " />
-                                    <input type="button" value="Add to List" onclick="AddPurposeInfoToList(this)" class="btn btn-info"/>
-                                </div>
-                                <br />
-                            </div>
-                        </div>
-                    </div>
+                    <div id="divTempDebitVoucherList"></div>
                 </div>
-
-            </div>
-
-         <div id="divTempDebitVoucherList"></div>
+            }
         </div>
-    }
+    </div>
 </section>
 @section Scripts
 {
@@ -379,9 +371,8 @@
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(json),
                     success: function (data) {
-
-                        var code = data.SubSubSubAccountCode;
-                        $("#PurposeCode").val(code);
+                        $("#PurposeCode").val(data.SubSubSubAccountCode);
+                        $("#Balance").val(data.LedgerBalance);
                     }
                 });
             },

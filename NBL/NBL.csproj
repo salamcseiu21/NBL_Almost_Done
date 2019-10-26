@@ -8315,6 +8315,9 @@
     <Content Include="Areas\AccountsAndFinance\Views\Home\ViewProduct.cshtml" />
     <Content Include="Areas\Sales\Views\Report\AllDeliveredOrder.cshtml" />
     <Content Include="Areas\HR\Views\Employee\Employees.cshtml" />
+    <Content Include="Areas\Corporate\Views\Reports\BankStatement.cshtml" />
+    <Content Include="Areas\Corporate\Views\Shared\_ViewBankStatementPartialPage.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Reports\DailyReport.cshtml" />
     <None Include="DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>

@@ -62,5 +62,6 @@ namespace NBL.DAL.Contracts
        ViewActionListModel GetActionListModelByAreaControllerActionName(string area, string controller, string action);
        ICollection<ViewActionListModel> GetAllActionList();
        int UpdateReplaceTransactionRef(string receiveref, string replaceref);
+       SubSubSubAccount GetSubSubSubAccountById(int subSubSubAccountId);
    }
 }

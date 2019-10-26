@@ -68,5 +68,6 @@ namespace NBL.BLL.Contracts
         ICollection<ViewActionListModel> GetAllActionList();
 
         bool UpdateReplaceTransactionRef(string receiveref, string replaceref);
+        SubSubSubAccount GetSubSubSubAccountById(int subSubSubAccountId);
     }
 }

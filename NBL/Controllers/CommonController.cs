@@ -196,15 +196,6 @@ namespace NBL.Controllers
         public JsonResult ProductNameAutoComplete(string prefix)
         {
             ICollection<object> productList = _iProductManager.GetAllProductBySearchTerm(prefix);
-            //var products = _iProductManager.GetAllProducts().ToList();
-            //var productList = (from c in products
-            //    where c.ProductName.ToLower().Contains(prefix.ToLower())
-            //    select new
-            //    {
-            //        label = c.ProductName,
-            //        val = c.ProductId
-            //    }).ToList();
-
             return Json(productList);
         }
 
@@ -394,7 +385,8 @@ namespace NBL.Controllers
 
        public JsonResult GetSubSubSubAccountById(int subSubSubAccountId)
         {
-            SubSubSubAccount account = _iCommonManager.GetAllSubSubSubAccounts().ToList().Find(n=>n.SubSubSubAccountId==subSubSubAccountId);
+
+            SubSubSubAccount account =_iCommonManager.GetSubSubSubAccountById(subSubSubAccountId);
             return Json(account, JsonRequestBehavior.AllowGet);
         }
 

@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "BankStatement";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Bank Statemen</div>
+        <div class="panel panel-body">
+            <div class="form-horizontal">
+               
+                <div class="col-md-offset-4 col-md-4">
+                    <div class="form-group">
+                        <label for="YearId" class="control-label col-md-3">Select Year</label>
+                        <div class="col-md-9">
+                            <select id="YearId" name="YearId" class="form-control">
+                                <option value="">--Select--</option>
+                                @for (int i = 2018; i <= DateTime.Now.Year; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                        </div>
+                   
+                    </div>
+                </div>
+            </div>
+            <div id="div_Bank_Statement"></div>
+        </div>
+    </div>
+</section>
+ 
+@section Scripts
+{
+    
+       
+    <script>
+        
+        $(document).ready(function () {
+
+            LoadBankStatementByYear(@DateTime.Now.Year);
+
+        });
+
+        $("#YearId").change(function () {
+            //var divId = $(this).val();
+            var year = $(this).val();
+            LoadBankStatementByYear(year);
+        });
+
+        function LoadBankStatementByYear(year) {
+            var json = { year: year };
+            //alert(yearId);
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("BankStatementByYear", "Reports", new { area = "Corporate" })',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $('#div_Bank_Statement').html(data);
+                }
+            });
+        }
+    </script>
+}

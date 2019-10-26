@@ -6,124 +6,115 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-green headingStyle">Cheque Payment Voucher</h3>
-    <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
-    </div>
-    @using (Html.BeginForm("ChequePaymentVoucher", "Voucher", FormMethod.Post, new { id = "ChequePaymentVoucherForm" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="form-horizontal">
+    
+    
+    
+     
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Cheque Payment Voucher</div>
+        <div class="panel panel-body">
+            <div id="message" style="display: none; font-weight: bold; font-size: 20px" class="text-center">
+            </div>
+            @using (Html.BeginForm("ChequePaymentVoucher", "Voucher", FormMethod.Post, new { id = "ChequePaymentVoucherForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
 
-
-            <div class="panel panel-info">
-                <div class="panel-body">
-
-                    <div class="row">
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="Date" class="control-label col-md-3">Date</label>
-                                <div class="col-md-9">
-
-                                    <input type="text" id="Date" name="Date" value="@date" class="form-control" />
-                                </div>
-                            </div>
-                           
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Bank Name</label>
-                                <div class="col-md-9">
-                                    <input type="text" class="form-control" id="BankName" name="BankName" placeholder="Type bank name here!!" />
-                                    <input type="hidden" id="BankId" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Branch Name</label>
-                                <div class="col-md-9">
-                                    <select id="BankBranchId" name="BankBranchId" class="form-control">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Branch Code</label>
-                                <div class="col-md-9">
-                                    <input type="text" class="form-control" id="BankCode" name="BankCode" readonly />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-3">Account Name</label>
-                                <div class="col-md-9">
-                                    <input type="text" class="form-control" placeholder="Account Name" id="PurposeName" name="PurposeName" />
-                                </div>
-                            </div>
-
-
-
-
-
+                    <div class="panel panel-info">
+                        <div class="panel-body">
                             <div class="row">
-
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label col-md-6">Account Code</label>
-                                        <div class="col-md-6">
-                                            <input type="text" class="form-control" placeholder="Account code" id="PurposeCode" name="PurposeCode" readonly />
+                                        <label for="Date" class="control-label col-md-3">Date</label>
+                                        <div class="col-md-9">
+                                            <input type="text" id="Date" name="Date" value="@date" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Bank Name</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" id="BankName" name="BankName" placeholder="Type bank name here!!" />
+                                            <input type="hidden" id="BankId" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Branch Name</label>
+                                        <div class="col-md-9">
+                                            <select id="BankBranchId" name="BankBranchId" class="form-control">
+                                                <option value="">--Select--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Branch Code</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" id="BankCode" name="BankCode" readonly />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-
                                     <div class="form-group">
-                                        <label for="Balance" class="control-label col-md-5">Ledger Balance (&#2547;)</label>
-                                        <div class="col-md-7">
-                                            <input type="text" id="Balance" name="Balance" style="text-align:right" placeholder="Ledger Balance" class="form-control" readonly />
-
+                                        <label class="control-label col-md-3">Account Name</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="Account Name" id="PurposeName" name="PurposeName" />
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="Amount" class="control-label col-md-3">Amount (&#2547;)</label>
-                                <div class="col-md-9">
 
-                                    <input type="number" id="Amount" name="Amount" placeholder="Amount" style="text-align:right" class="form-control" min="0" required />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="Remarks" class="control-label col-md-3">Remarks</label>
-                                <div class="col-md-9">
-                                    <textarea id="Remarks" name="Remarks" class="form-control" rows="2" placeholder="Remarks" style="resize:none"></textarea>
-                                </div>
-                            </div>
 
-                            <div class="form-group">
-                                <div class="col-md-9 col-md-offset-3">
                                     <div class="row">
                                         <div class="col-md-6">
-
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6">Account Code</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" placeholder="Account code" id="PurposeCode" name="PurposeCode" readonly />
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-6 text-right">
-
-                                            @Html.ActionLink("Cancel", "Home", "Home", new { area = "Accounts" }, new { @class = "btn btn-danger" })
-                                            <input type="button" value="Save" id="submitButton" onclick="SaveChequePaymentVoucher(this)" class="btn btn-primary" />
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="Balance" class="control-label col-md-5">Ledger Balance (&#2547;)</label>
+                                                <div class="col-md-7">
+                                                    <input type="text" id="Balance" name="Balance" style="text-align: right" placeholder="Ledger Balance" class="form-control" readonly />
+                                                </div>
+                                            </div>
                                         </div>
-                                        <br />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Amount" class="control-label col-md-3">Amount (&#2547;)</label>
+                                        <div class="col-md-9">
+                                            <input type="number" id="Amount" name="Amount" placeholder="Amount" style="text-align: right" class="form-control" min="0" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Remarks" class="control-label col-md-3">Remarks</label>
+                                        <div class="col-md-9">
+                                            <textarea id="Remarks" name="Remarks" class="form-control" rows="2" placeholder="Remarks" style="resize: none"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-9 col-md-offset-3">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                </div>
+                                                <div class="col-md-6 text-right">
+                                                    @Html.ActionLink("Cancel", "Home", "Home", new { area = "Accounts" }, new { @class = "btn btn-danger" })
+                                                    <input type="button" value="Save" id="submitButton" onclick="SaveChequePaymentVoucher(this)" class="btn btn-primary" />
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
-
-
                 </div>
-            </div>
-
+            }
         </div>
-    }
+    </div>
+  
+   
 </section>
 
 @section Scripts
@@ -234,8 +225,8 @@
                     data: JSON.stringify(json),
                     success: function (data) {
 
-                        var code = data.SubSubSubAccountCode;
-                        $("#PurposeCode").val(code);
+                        $("#PurposeCode").val(data.SubSubSubAccountCode);
+                        $("#Balance").val(data.LedgerBalance);
                     }
                 });
             },

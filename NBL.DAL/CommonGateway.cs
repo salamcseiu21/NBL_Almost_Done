@@ -1527,5 +1527,42 @@ CommandObj.Parameters.Clear();
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public SubSubSubAccount GetSubSubSubAccountById(int subSubSubAccountId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetSubSubSubAccountById";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@SubSubSubAccountId", subSubSubAccountId);
+                SubSubSubAccount account=new SubSubSubAccount();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+
+
+                    account.SubSubSubAccountType = Convert.ToString(reader["SubSubSubAccountType"]);
+                    account.SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString();
+                    account.SubSubSubAccountId = subSubSubAccountId;
+                    account.SubSubSubAccountName = reader["SubSubSubAccountName"].ToString();
+                    account.LedgerBalance = Convert.ToDecimal(reader["LedgerBalance"]);
+                }
+                reader.Close();
+                return account;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get sub sub sub account by id", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }

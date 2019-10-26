@@ -10,11 +10,15 @@ namespace NBL.Models.EntityModels
         public string ReplaceRef { get; set; }
         public string TransactionRef { get; set; }  
         public int ClientId { get; set; }
+        public int ClientName { get; set; } 
         public string Remarks { get; set; }
         public int UserId { get; set; }
         public int BranchId { get; set; }
         public int CompanyId { get; set; }
         public long ReplaceNo { get; set; }
+        public string Barcode { get; set; }
+        public string ProductName { get; set; } 
+
         public int Status { get; set; }
         public int DistributionPointId { get; set; }    
         public DateTime SystemDateTime { get; set; }

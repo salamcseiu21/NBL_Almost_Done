@@ -89,5 +89,6 @@ namespace NBL.DAL.Contracts
         ICollection<ViewGeneralRequisitionModel> GetGeneralRequisitionByUserId(int userId);
         ICollection<ViewGeneralRequisitionModel> GetAllDeliveredGRequsition();
         IEnumerable<ViewProduct> GetAllPendingProductPriceListByStatus(int status);
+        int UpdateProductActivationStatus(int productId, string status);
     }
 }

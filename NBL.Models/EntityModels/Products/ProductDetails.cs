@@ -25,7 +25,8 @@ namespace NBL.Models.EntityModels.Products
         public decimal? IndividualDiscount { get; set; }
         public decimal? CorporateDiscount { get; set; }
         public string CategoryName { get; set; }
-        public bool HasWarrenty { get; set; }    
+        public bool HasWarrenty { get; set; }
+        public string IsActive { get; set; } 
 
     }
 }

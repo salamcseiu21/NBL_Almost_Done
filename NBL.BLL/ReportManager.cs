@@ -301,6 +301,11 @@ namespace NBL.BLL
             return _iReportGateway.GetTotalDeliveredOrderListByDistributionPointId(branchId);
         }
 
+        public ICollection<SubSubSubAccount> GetBankStatementByYear(int year)
+        {
+            return _iReportGateway.GetBankStatementByYear(year);
+        }
+
         public bool IsValiedBarcode(string barcode)
         {
             var model = _iBarCodeManager.GetAll().ToList().Select(n=>n.Barcode).ToList().Contains(barcode);

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using NBL.Areas.Accounts.Models.ViewModels;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
@@ -9,8 +8,6 @@ using NBL.Areas.AccountsAndFinance.Models;
 using NBL.BLL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Clients;
-using NBL.Models.EntityModels.FinanceModels;
-using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
@@ -229,7 +226,9 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 var chequeDetails = _iAccountsManager.GetReceivableChequeByDetailsId(detailsId);
                 Client aClient = _iClientManager.GetById(chequeDetails.ClientId);
                 DateTime date = DateTime.Now;
-                string bankCode = "3308011";
+                //Demo  bankCode = "3308011";
+                string bankCode = "3105011";
+
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
                 Receivable aReceivable = new Receivable

@@ -12,6 +12,8 @@ namespace NBL.Models
         public string SubSubSubAccountName { get; set; }
         public string SubSubSubAccountType { get; set; }
         public string SubSubAccountCode { get; set; } 
+        public string SubSubAccountName { get; set; }  
+        public decimal LedgerBalance { get; set; }  
 
 
         public string GetBasicInformation()

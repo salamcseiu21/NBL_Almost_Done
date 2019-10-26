@@ -32,9 +32,11 @@
                     <th>Category</th>
                     <th class="text-center">HW</th>
                     <th class="text-right">UnitPrice</th>
+                    <th class="text-right">Vat</th>
                     <th class="text-right">DD (%)</th>
                     <th class="text-right">CD (%)</th>
                     <th class="text-right">ID (%)</th>
+                    <th class="text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,6 +50,7 @@
                         <td>@item.CategoryName</td>
                         <td class="text-center">@Enum.GetName(typeof(FlagEnum), item.HasWarrenty)</td>
                         <td class="text-right">@item.UnitPrice</td>
+                        <td class="text-right">@item.VatAmount</td>
                         <td class="text-right">@(item.DealerDiscount)</td>
                         <td class="text-right">@(item.CorporateDiscount)</td>
                         <td class="text-right">@{
@@ -60,6 +63,16 @@
                                                        @item.IndividualDiscount
                                                    }
                                                }</td>
+                        <td class="text-center">@{
+                                if (item.IsActive == "Y")
+                                {
+                                    <button onclick="DeactiveProduct(@item.ProductId)">Deactive</button>
+                                }
+                                else
+                                {
+                                    <button>Active</button>
+                                }
+                            }</td>
                     </tr>
                 }
                 </tbody>
@@ -71,9 +84,11 @@
                     <th>Category</th>
                     <th class="text-center">HW</th>
                     <th class="text-right">UnitPrice</th>
+                    <th class="text-right">Vat</th>
                     <th class="text-right">DD (%)</th>
                     <th class="text-right">CD (%)</th>
                     <th class="text-right">ID (%)</th>
+                    <th class="text-center">Action</th>
                 </tr>
                 </tfoot>
             </table>
@@ -85,5 +100,24 @@
 {
     <script>
         $("#tbl_Product_details").DataTable();
+    </script>
+    <script>
+        function DeactiveProduct(productId) {
+            var result = confirm('Are you sure to Deactive this Product?');
+            if (result) {
+                var id = productId;
+                var status = 'N';
+                var json = { id: id, status: status };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("UpdateProductActivationStatus", "Home",new {area="SuperAdmin"})',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (response) {
+                        location.reload();
+                    }
+                });
+            }
+        }
     </script>
 }

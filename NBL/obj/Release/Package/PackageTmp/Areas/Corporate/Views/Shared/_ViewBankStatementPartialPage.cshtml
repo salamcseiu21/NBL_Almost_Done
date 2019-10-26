@@ -1,0 +1,78 @@
+﻿@model IEnumerable<NBL.Models.SubSubSubAccount>
+           @{
+               var i = 0;
+           }
+<table id="tbl_Bank_Statement" class="display table-bordered table-responsive" style="border: 1px solid">
+    <thead>
+    <tr>
+        <th>S.N</th>
+        <th>Account Head</th>
+        <th>Account Name</th>
+        <th>Account Code</th>
+        <th class="text-right">Balance</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        i++;
+        <tr>
+            <td>@i</td>
+            <td>@item.SubSubAccountName</td>
+            <td>@item.SubSubSubAccountName</td>
+            <td>@item.SubSubSubAccountCode</td>
+            <td class="text-right">@item.LedgerBalance</td>
+        </tr>
+    }
+    </tbody>
+    <tfoot>
+    <tr>
+        <th colspan="4" class="text-right">Total</th>
+        <th class="text-right">@Model.Sum(n => n.LedgerBalance)</th>
+    </tr>
+    <tr>
+        <th>S.N</th>
+        <th>Account Head</th>
+        <th>Account Name</th>
+        <th>Account Code</th>
+        <th class="text-right">Balance</th>
+    </tr>
+    </tfoot>
+</table>
+
+<script>
+    $("#tbl_Bank_Statement").DataTable({
+        "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excel',
+                text: 'Download As Excel',
+                title: 'Bank_Statement',
+                footer: true
+
+            },
+
+            {
+                extend: 'pdf',
+                text: 'Download As Pdf',
+                title: 'Bank_Statement',
+                footer: true
+
+            },
+            {
+                extend: 'print',
+                title: 'Bank_Statement',
+                footer: true,
+                customize: function (win) {
+                    $(win.document.body)
+                        .css('font-size', '10pt');
+
+                    $(win.document.body).find('table')
+                        .addClass('compact')
+                        .css('font-size', 'inherit');
+                }
+            }
+        ]
+    });
+</script>

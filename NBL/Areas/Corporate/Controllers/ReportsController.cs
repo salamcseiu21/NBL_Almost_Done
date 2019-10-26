@@ -33,6 +33,17 @@ namespace NBL.Areas.Corporate.Controllers
             ICollection<ChequeDetails> collections = _iAccountsManager.GetAllReceivableChequeByYearAndStatus(year, 1);
             return PartialView("_ViewCollectionListPartialPage", collections);
         }
+         
+        public ActionResult BankStatement()
+        {
+           
+            return View();
+        }
+        public PartialViewResult BankStatementByYear(int year)
+        {
+            var bankStatements = _iReportManager.GetBankStatementByYear(year);
+            return PartialView("_ViewBankStatementPartialPage", bankStatements);
+        }
 
         public ActionResult MonthlyReport()
         {
@@ -133,5 +144,7 @@ namespace NBL.Areas.Corporate.Controllers
             client.LedgerModels = ledgers.ToList();
             return PartialView("_ClientLedgerPartialPage", client);
         }
+
+        
     }
 }

@@ -248,5 +248,10 @@ namespace NBL.BLL
            int rowAffected = _iCommonGateway.UpdateReplaceTransactionRef(receiveref, replaceref);
            return rowAffected > 0;
         }
+
+       public SubSubSubAccount GetSubSubSubAccountById(int subSubSubAccountId)
+       {
+           return _iCommonGateway.GetSubSubSubAccountById(subSubSubAccountId);
+       }
    }
 }

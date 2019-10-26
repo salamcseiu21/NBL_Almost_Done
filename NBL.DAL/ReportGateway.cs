@@ -259,6 +259,47 @@ namespace NBL.DAL
                 ConnectionObj.Close();
             }
         }
+
+        public ICollection<SubSubSubAccount> GetBankStatementByYear(int year)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetBankStatementByYear";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@Year", year);
+               List<SubSubSubAccount> accounts=new List<SubSubSubAccount>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    accounts.Add(new SubSubSubAccount
+                    {
+                        SubSubSubAccountType = Convert.ToString(reader["SubSubSubAccountType"]),
+                        SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                        SubSubSubAccountId = Convert.ToInt32(reader["SubSubSubAccountListId"]),
+                        SubSubSubAccountName = reader["SubSubSubAccountName"].ToString(),
+                        LedgerBalance = Convert.ToDecimal(reader["LedgerBalance"]),
+                        SubSubAccountName = reader["SubSubAccountName"].ToString()
+                });
+                }
+               
+                reader.Close();
+                return accounts;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get sub sub sub account list by id", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         public IEnumerable<ViewProduct> GetPopularBatteriesByYear(int year)
         {
             try
@@ -1566,7 +1607,8 @@ namespace NBL.DAL
                        CorporateDiscount = DBNull.Value.Equals(reader["CorporateDiscount"])? (decimal?)null:Convert.ToDecimal(reader["CorporateDiscount"]),
                        IndividualDiscount = DBNull.Value.Equals(reader["IndividualDiscount"])? (decimal?)null:Convert.ToDecimal(reader["IndividualDiscount"]),
                        VatAmount = DBNull.Value.Equals(reader["VatAmount"])? (decimal?)null:Convert.ToDecimal(reader["VatAmount"]),
-                       HasWarrenty = Convert.ToBoolean(reader["HasWarrenty"])
+                       HasWarrenty = Convert.ToBoolean(reader["HasWarrenty"]),
+                       IsActive = Convert.ToString(reader["IsActive"])
 
                     });
                 }

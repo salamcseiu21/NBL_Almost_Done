@@ -820,4 +820,20 @@ Parameter name: length</CustomeMessage>
     <LogDateTime>2019-10-23T15:24:08.4087812+06:00</LogDateTime>
     <CustomeMessage>Could not Get Client Ledger by account code</CustomeMessage>
   </Error>
+  <Error LogId="19-Oct-244e02722e-860d-4f6d-a3e6-9f2d45883d7d">
+    <Heading>System.NullReferenceException</Heading>
+    <LogMessage>   at NBL.Areas.AccountsAndFinance.Controllers.VoucherController.GetTempCreditVoucherXmlFilePath() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\VoucherController.cs:line 63
+   at NBL.Areas.AccountsAndFinance.Controllers.VoucherController.CreateCreditVoucherXmlFile() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\VoucherController.cs:line 45
+   at NBL.Areas.AccountsAndFinance.Controllers.VoucherController.CreditVoucher() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\VoucherController.cs:line 33</LogMessage>
+    <LogDateTime>2019-10-24T11:11:16.5506696+06:00</LogDateTime>
+    <CustomeMessage>Object reference not set to an instance of an object.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Oct-2401a10aae-4ae8-4a8a-a426-6fdb680944d4">
+    <Heading>System.NullReferenceException</Heading>
+    <LogMessage>   at NBL.Areas.AccountsAndFinance.Controllers.VoucherController.GetTempDebitVoucherXmlFilePath() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\VoucherController.cs:line 223
+   at NBL.Areas.AccountsAndFinance.Controllers.VoucherController.CreateDebittVoucherXmlFile() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\VoucherController.cs:line 206
+   at NBL.Areas.AccountsAndFinance.Controllers.VoucherController.DebitVoucher() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\VoucherController.cs:line 193</LogMessage>
+    <LogDateTime>2019-10-24T11:49:50.938496+06:00</LogDateTime>
+    <CustomeMessage>Object reference not set to an instance of an object.</CustomeMessage>
+  </Error>
 </Errors>

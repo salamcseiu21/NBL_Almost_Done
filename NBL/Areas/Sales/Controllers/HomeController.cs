@@ -362,7 +362,7 @@ namespace NBL.Areas.Sales.Controllers
             return PartialView("_OrderHistoryDetailsPartialPage",order);
         }
 
-        [Authorize(Roles = "SalesAdmin,SalesManager")]
+        [Authorize(Roles = "SalesAdmin,SalesManager,SalesExecutive")]
 
         public ActionResult ProductDetails()
         {

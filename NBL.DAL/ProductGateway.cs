@@ -1389,6 +1389,35 @@ namespace NBL.DAL
             }
         }
 
+        public int UpdateProductActivationStatus(int productId, string status)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_UpdateProductActivationStatus";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ProductId", productId);
+                CommandObj.Parameters.AddWithValue("@Status", status);
+                ConnectionObj.Open();
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not update product activation status", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
         public int UpdateGeneralRequisitionQuantity(string id, int quantity)
         {
             try
@@ -1407,6 +1436,7 @@ namespace NBL.DAL
             }
             catch (Exception exception)
             {
+                Log.WriteErrorLog(exception);
                 throw new Exception("Could not update general requisition qty", exception);
             }
             finally

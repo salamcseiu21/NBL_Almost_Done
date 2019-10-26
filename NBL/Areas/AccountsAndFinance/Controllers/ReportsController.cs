@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.BLL.Contracts;
+using NBL.Models;
 using NBL.Models.Logs;
 using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
@@ -77,6 +78,39 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             client.LedgerModels = ledgers.ToList();
             return PartialView("_ClientLedgerPartialPage", client);
         }
+        public ActionResult DailyReport()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        public PartialViewResult GetCollectionListByDate(DateTime collectionDate)
+        {
+            SearchCriteria searchCriteria=new SearchCriteria();
+            var companyId = Convert.ToInt32(Session["CompanyId"]);
+            searchCriteria.BranchId = Convert.ToInt32(Session["BranchId"]);
+            searchCriteria.CompanyId = companyId;
+            searchCriteria.UserId = 0;
+            searchCriteria.StartDate = collectionDate;
+            searchCriteria.EndDate = collectionDate;
+            IEnumerable<ChequeDetails> collections = _iAccountsManager.GetAllReceivableChequeBySearchCriteriaAndStatus(searchCriteria, 1);
+            return PartialView("_ViewCollectionListPartialPage", collections);
+        }
+        public PartialViewResult GetCollectionListByDateRange(SearchCriteria searchCriteria)
+        {
 
+            var companyId = Convert.ToInt32(Session["CompanyId"]);
+            searchCriteria.BranchId = Convert.ToInt32(Session["BranchId"]);
+            searchCriteria.CompanyId = companyId;
+            searchCriteria.UserId = 0;
+            IEnumerable<ChequeDetails> collections = _iAccountsManager.GetAllReceivableChequeBySearchCriteriaAndStatus(searchCriteria, 1);
+            return PartialView("_ViewCollectionListPartialPage", collections);
+        }
     }
 }
