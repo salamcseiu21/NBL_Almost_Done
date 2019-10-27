@@ -588,7 +588,21 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             return Json(aModel, JsonRequestBehavior.AllowGet);
 
         }
-
+        [HttpPost]
+        public JsonResult CancelDiscount(int id)
+        {
+            SuccessErrorModel aModel = new SuccessErrorModel();
+            bool result = _iAccountsManager.CancelDiscount(id);
+            if (result)
+            {
+                aModel.Message = "Product Discount Amount canclled Successfully!";
+            }
+            else
+            {
+                aModel.Message = "Failed to Cancel Product Discount Amount";
+            }
+            return Json(aModel, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult ProductPriceList()
         {
             try

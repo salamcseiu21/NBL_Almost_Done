@@ -206,6 +206,13 @@ namespace NBL.Areas.AccountsAndFinance.BLL
         {
             return _iAccountGateway.GetClientLedgerBySearchCriteria(searchCriteria);
         }
+
+        public bool CancelDiscount(int discountId)
+        {
+            int rowAffected = _iAccountGateway.CancelDiscount(discountId);
+            return rowAffected > 0;
+        }
+
         public ICollection<ViewLedgerModel> GetClientLedgerBySubSubSubAccountCode(string clientSubSubSubAccountCode)
         {
             return _iAccountGateway.GetClientLedgerBySubSubSubAccountCode(clientSubSubSubAccountCode);

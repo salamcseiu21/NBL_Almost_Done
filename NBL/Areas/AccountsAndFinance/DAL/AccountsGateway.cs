@@ -643,6 +643,8 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
         }
 
+        
+
         private int SaveClientOpeningBalanceDetails(long masterId, OpeningBalanceModel model)
         {
             int i = 0;
@@ -2194,6 +2196,33 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Unable to approve Discount info", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+        public int CancelDiscount(int discountId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_CancelDiscount";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DiscountId", discountId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                int rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Unable to Cancel Discount", exception);
             }
             finally
             {

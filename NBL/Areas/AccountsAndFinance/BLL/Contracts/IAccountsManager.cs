@@ -78,5 +78,6 @@ namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
        long GetMaxOpeningBalanceRefNoOfCurrentYear();
        bool SetClientOpeningBalance(OpeningBalanceModel model);
        IEnumerable<ViewLedgerModel> GetClientLedgerBySearchCriteria(SearchCriteria searchCriteria);
+       bool CancelDiscount(int discountId); 
    }
 }

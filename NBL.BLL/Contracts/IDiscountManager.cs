@@ -12,6 +12,5 @@ namespace NBL.BLL.Contracts
    {
        IEnumerable<Discount> GetAllDiscountsByClientTypeId(int clientTypeId);
        IEnumerable<Discount> GetAllPendingDiscounts();
-
    }
 }
