@@ -320,6 +320,7 @@
     <Compile Include="ViewModels\ViewUser.cs" />
     <Compile Include="ViewModels\Orders\ViewVerifiedOrderModel.cs" />
     <Compile Include="ViewModels\ViewActionListModel.cs" />
+    <Compile Include="ViewSubSubSubAccount.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

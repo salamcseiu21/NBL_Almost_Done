@@ -6,34 +6,40 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-green">Account Head List</h3>
-    <table id="tbl_account_HeadList" class="display table-bordered" style="border: 1px solid">
-        <thead>
-            <tr>
-                <th>S.N</th>
-                <th>Account Name</th>
-                <th>Account Code</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                i++;
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Account Head List</div>
+        <div class="panel panel-body">
+            <table id="tbl_account_HeadList" class="display table-bordered" style="border: 1px solid">
+                <thead>
                 <tr>
-                    <td>@i</td>
-                    <td>@item.AccountHeadName</td>
-                    <td>@item.AccountHeadCode</td>
+                    <th>S.N</th>
+                    <th>Account Name</th>
+                    <th>Account Code</th>
                 </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>S.N</th>
-                <th>Account Name</th>
-                <th>Account Code</th>
-            </tr>
-        </tfoot>
-    </table>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.AccountHeadName</td>
+                        <td>@item.AccountHeadCode</td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>S.N</th>
+                    <th>Account Name</th>
+                    <th>Account Code</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    
 </section>
 
 @section Scripts

@@ -5,7 +5,6 @@
     var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
 
 }
-
 <section class="content">
     
 
@@ -156,10 +155,6 @@
                         </div>
                     </div>
 
-                   
-
-                  
-
                     <div id="divTempCreditVoucherList"></div>
 
 
@@ -268,7 +263,7 @@
         var day = currentTime.getDate();
         var year = currentTime.getFullYear();
         var date = day + "-" + month[mm] + "-" + year;
-        return date// Function returns the date
+        return date; // Function returns the date
     }
 
     function RemovePurposeInfo(btnClicked) {
@@ -346,7 +341,7 @@
             $("#BankName").val('Cash');
             $('#BankName').prop('readonly', true);
             $('#BankBranchId').prop('readonly', true);
-            $('#AccountCode').val('3308011');
+            $('#AccountCode').val('3105011');
 
         }
         else if (ptId === 3) {

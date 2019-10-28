@@ -246,7 +246,10 @@ namespace NBL.DAL
                         ClientName = reader["ClientName"].ToString(),
                         Barcode = reader["ProductBarcode"].ToString(),
                         TransactionRef = reader["TransactionRef"].ToString(),
-                        ProductName = reader["ProductName"].ToString()
+                        ProductName = reader["ProductName"].ToString(),
+                        SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        ReplaceForBarcode = reader["ReplaceFor"].ToString(),
+                        EntryDateTime = Convert.ToDateTime(reader["ReceiveDatetime"])
                     });
                 }
                 reader.Close();
@@ -285,7 +288,10 @@ namespace NBL.DAL
                         Barcode = reader["ProductBarcode"].ToString(),
                         TransactionRef = reader["TransactionRef"].ToString(),
                         ProductName = reader["ProductName"].ToString(),
-                        SystemDateTime = Convert.ToDateTime(reader["SysDateTime"])
+                        SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        ReplaceForBarcode = reader["ReplaceFor"].ToString(),
+                        EntryDateTime = Convert.ToDateTime(reader["ReceiveDatetime"])
+                        
                     });
                 }
                 reader.Close();

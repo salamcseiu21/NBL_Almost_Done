@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NBL.Models.EntityModels.ChartOfAccounts.SubSubSubAccount>
+﻿@model IEnumerable<NBL.Models.ViewSubSubSubAccount>
 @{
     ViewBag.Title = "Sub Sub Sub AccountList";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
@@ -6,43 +6,80 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-green">Sub Sub Sub Account List</h3>
-    <table id="tbl_sub_sub_sub_account_List" class="display table-bordered" style="border: 1px solid">
-        <thead>
-        <tr>
-            <th>S.N</th>
-            <th>Account Code</th>
-            <th>Account Name</th>
-            <th>Account Head Code</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model)
-        {
-            i++;
-            <tr>
-                <td>@i</td>
-                <td>@item.SubSubSubAccountCode</td>
-                <td>@item.SubSubSubAccountName</td>
-                <td>@item.SubSubAccountCode</td>
-            </tr>
-        }
-        </tbody>
-        <tfoot>
-        <tr>
-            <th>S.N</th>
-            <th>Account Code</th>
-            <th>Account Name</th>
-            <th>Account Head Code</th>
-        </tr>
-        </tfoot>
-    </table>
+    
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Sub Sub Sub Account List</div>
+        <div class="panel panel-body">
+            <table id="tbl_sub_sub_sub_account_List" class="display table-bordered" style="border: 1px solid">
+                <thead>
+                <tr>
+                    <th>S.N</th>
+                    <th>A.C</th>
+                    <th>Account Name</th>
+                    <th>S.A.C</th>
+                    <th>Sub Account Name</th>
+                    <th>S.S.A.C</th>
+                    <th>S.S.A.N</th>
+                    <th>S.S.S.A.C</th>
+                    <th>S.S.S.A.N</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.AccountCode</td>
+                        <td>@item.AccountName</td>
+                        <td>@item.SubAccountCode</td>
+                        <td>@item.SubAccountName</td>
+                        <td>@(item.SubSubAccountCode?? "N/A")</td>
+                        <td>@(item.SubSubAccountName?? "N/A")</td>
+                        <td>@(item.SubSubSubAccountCode?? "N/A")</td>
+                        <td>@(item.SubSubSubAccountName?? "N/A")</td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>S.N</th>
+                    <th>A.C</th>
+                    <th>Account Name</th>
+                    <th>S.A.C</th>
+                    <th>Sub Account Name</th>
+                    <th>S.S.A.C</th>
+                    <th>S.S.A.N</th>
+                    <th>S.S.S.A.C</th>
+                    <th>S.S.S.A.N</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+  
+   
 </section>
 
 @section Scripts
 {
     <script>
-        $("#tbl_sub_sub_sub_account_List").DataTable();
+
+        $('#tbl_sub_sub_sub_account_List').DataTable({
+            "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    text: 'Download As Excel',
+                    title: 'SubSubSubAccountList',
+                    footer: true
+
+                }
+
+            ]
+        });
     </script>
 }
 

@@ -920,4 +920,64 @@ Parameter name: length</CustomeMessage>
     <LogDateTime>2019-10-27T17:20:32.2730572+06:00</LogDateTime>
     <CustomeMessage>Could not collect product Details</CustomeMessage>
   </Error>
+  <Error LogId="19-Oct-286bcf10c8-7c25-458e-a3e7-b0d7df9ab5a1">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ReportGateway.GetAllSubSubSubAccountList() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 314</LogMessage>
+    <LogDateTime>2019-10-28T13:37:27.0259806+06:00</LogDateTime>
+    <CustomeMessage>SubAccountName</CustomeMessage>
+  </Error>
+  <Error LogId="19-Oct-288231950f-67fb-46d7-bc3e-c55d82ec0459">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ReportGateway.GetAllSubSubSubAccountList() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 333
+   at NBL.BLL.ReportManager.GetAllSubSubSubAccountList() in E:\API\NBL\NBL.BLL\ReportManager.cs:line 311
+   at NBL.Areas.AccountsAndFinance.Controllers.ChartOfAccountController.SubSubSubAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\ChartOfAccountController.cs:line 93</LogMessage>
+    <LogDateTime>2019-10-28T13:37:27.1076032+06:00</LogDateTime>
+    <CustomeMessage>Could not collect sub sub sub account list</CustomeMessage>
+  </Error>
+  <Error LogId="19-Oct-28b4a44f33-8042-47f9-ab60-c1c1da30a100">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ReportGateway.GetAllSubSubSubAccountList() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 314</LogMessage>
+    <LogDateTime>2019-10-28T13:38:22.3757637+06:00</LogDateTime>
+    <CustomeMessage>SubAccountName</CustomeMessage>
+  </Error>
+  <Error LogId="19-Oct-286bc26560-ef5c-4c2f-9308-696b3f2e31b2">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ReportGateway.GetAllSubSubSubAccountList() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 333
+   at NBL.BLL.ReportManager.GetAllSubSubSubAccountList() in E:\API\NBL\NBL.BLL\ReportManager.cs:line 311
+   at NBL.Areas.AccountsAndFinance.Controllers.ChartOfAccountController.SubSubSubAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\ChartOfAccountController.cs:line 93</LogMessage>
+    <LogDateTime>2019-10-28T13:38:22.4565789+06:00</LogDateTime>
+    <CustomeMessage>Could not collect sub sub sub account list</CustomeMessage>
+  </Error>
+  <Error LogId="19-Oct-2810adc926-53d5-480e-8ec7-5f98f91a7409">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ReportGateway.GetAllSubSubSubAccountList() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 314</LogMessage>
+    <LogDateTime>2019-10-28T14:00:57.9795876+06:00</LogDateTime>
+    <CustomeMessage>SubAccountName</CustomeMessage>
+  </Error>
+  <Error LogId="19-Oct-28d7bd3878-42d3-4c11-90d0-c1cc0bedd830">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ReportGateway.GetAllSubSubSubAccountList() in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 333
+   at NBL.BLL.ReportManager.GetAllSubSubSubAccountList() in E:\API\NBL\NBL.BLL\ReportManager.cs:line 311
+   at NBL.Areas.AccountsAndFinance.Controllers.ChartOfAccountController.SubSubSubAccountList() in E:\API\NBL\NBL\Areas\AccountsAndFinance\Controllers\ChartOfAccountController.cs:line 93</LogMessage>
+    <LogDateTime>2019-10-28T14:00:58.0294541+06:00</LogDateTime>
+    <CustomeMessage>Could not collect sub sub sub account list</CustomeMessage>
+  </Error>
+  <Error LogId="19-Oct-28a072d9fa-334f-4e96-8f8f-e2cb82cc7aab">
+    <Heading>System.IndexOutOfRangeException</Heading>
+    <LogMessage>   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at NBL.DAL.ProductReplaceGateway.GetTodaysReplaceListByBranchId(Int32 branchId) in E:\API\NBL\NBL.DAL\ProductReplaceGateway.cs:line 243</LogMessage>
+    <LogDateTime>2019-10-28T17:04:12.4810054+06:00</LogDateTime>
+    <CustomeMessage>SysDateTime</CustomeMessage>
+  </Error>
 </Errors>

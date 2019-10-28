@@ -10,96 +10,93 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-green headingStyle">@ViewBag.VoucherName</h3>
-    <table id="table_Credit_Voucher" class="table table-bordered" style="border: 1px solid black">
+     
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">@ViewBag.VoucherName</div>
+        <div class="panel panel-body">
+            <table id="table_Credit_Voucher" class="table table-bordered" style="border: 1px solid black">
+                <thead>
+                    <tr>
+                        <th class="text-center">S.N </th>
+                        <th class="text-center">Voucher Name </th>
+                        <th class="text-center">Transaction Type </th>
+                        <th class="text-center">Date </th>
+                        <th class="text-right" style="width: 10%">Amount (&#2547;)</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        i++;
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.VoucherName</td>
+                            <td class="text-center">
+                                @{
+                                    if (item.TransactionTypeId == 1)
+                                    {
+                                        <label>Cash</label>
+                                    }
+                                    else
+                                    {
+                                        <label>Bank</label>
+                                    }
+                                }
+                            </td>
+                            <td class="text-center">@item.VoucherDate.ToString("dd-MMM-yyyy")</td>
+                            <td class="text-right">@item.Amounts</td>
+                            <td class="text-center">
+                                @{
+                                    switch (item.Status)
+                                    {
+                                        case 0:<label class="fa fa-spinner text-warning"> Pending</label>
+                                            break;
+                                        case 1:<label class="text-green fa fa-check">Approved</label>
+                                            break;
+                                        case 3:
+                                            <label class="fa fa-times text-danger">Cancelled</label>
+                                            break;
 
-        <thead>
-        <tr>
-            <th class="text-center">S.N </th>
-            <th class="text-center">Voucher Name </th>
-            <th class="text-center">Transaction Type </th>
-            <th class="text-center">Date </th>
-            <th class="text-right" style="width: 10%">Amount (&#2547;)</th>
-            <th class="text-center">Status</th>
-            <th class="text-center">Action</th>
-        </tr>
-        </thead>
-
-        <tbody>
-
-        @foreach (var item in Model)
-        {
-            i++;
-            <tr>
-
-                <td>@i</td>
-                <td>@item.VoucherName</td>
-                <td class="text-center">
-                    @{
-                        if (item.TransactionTypeId == 1)
-                        {
-                            <label>Cash</label>
-                        }
-                        else
-                        {
-                            <label>Bank</label>
-                        }
-                    }
-                </td>
-                <td class="text-center">@item.VoucherDate.ToString("dd-MMM-yyyy")</td>
-                <td class="text-right">@item.Amounts</td>
-                <td class="text-center">
-                    @{
-                        switch (item.Status)
-                        {
-                            case 0:<label class="fa fa-spinner text-warning"> Pending</label>
-                                break;
-                            case 1:<label class="text-green fa fa-check">Approved</label>
-                                break;
-                            case 3:
-                                <label class="fa fa-times text-danger">Cancelled</label>
-                                break;
-
-                        }
-                    }
-                </td>
-
-                @if (user.Roles.Equals("AccountManager"))
+                                    }
+                                }
+                            </td>
+                            @if (user.Roles.Equals("AccountManager"))
                 {
-                    <td class="text-center">
-                        @Html.ActionLink(" Details ", "VoucherDetails", "AccountManager", new {area = "AccountsAndFinance", id = item.VoucherId}, new {@class = "fa fa-eye"})
-                    </td>
-                }
-                else
-                {
-                    <td class="text-center">
-                        @if (item.Status == 0 && item.Cancel.Equals("N"))
-                        {
-                            @Html.ActionLink(" Edit ", "EditVoucher", "Voucher", new {area = "AccountsAndFinance", id = item.VoucherId}, new {@class = "fa fa-edit"})
-                            <span> &nbsp;|</span>
-                            @Html.ActionLink(" Details ", "VoucherDetails", "Voucher", new {area = "AccountsAndFinance", id = item.VoucherId}, new {@class = "fa fa-eye"})<span>&nbsp;| </span>
-                        }
-                        @Html.ActionLink(" Preview & Print", "VoucherPreview", "Voucher", new {area = "AccountsAndFinance", id = item.VoucherId}, new {target = "_blank", @class = "fa fa-eye"})
-                    </td>
-                }
-               
-            </tr>
-        }
-
-        </tbody>
-        <tfoot>
-        <tr>
-            <th class="text-center">S.N </th>
-            <th class="text-center">Voucher Name </th>
-            <th class="text-center">Transaction Type </th>
-            <th class="text-center">Date </th>
-            <th class="text-right" style="width: 10%">Amount (&#2547;)</th>
-            <th class="text-center">Status</th>
-            <th class="text-center">Action</th>
-        </tr>
-        </tfoot>
-    </table>
-
+                                <td class="text-center">
+                                    @Html.ActionLink(" Details ", "VoucherDetails", "AccountManager", new { area = "AccountsAndFinance", id = item.VoucherId }, new { @class = "fa fa-eye" })
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="text-center">
+                                    @if (item.Status == 0 && item.Cancel.Equals("N"))
+                                    {
+                                        @Html.ActionLink(" Edit ", "EditVoucher", "Voucher", new { area = "AccountsAndFinance", id = item.VoucherId }, new { @class = "fa fa-edit" })
+                                        <span> &nbsp;|</span>
+                                        @Html.ActionLink(" Details ", "VoucherDetails", "Voucher", new { area = "AccountsAndFinance", id = item.VoucherId }, new { @class = "fa fa-eye" })<span>&nbsp;| </span>
+                                    }
+                                    @Html.ActionLink(" Preview & Print", "VoucherPreview", "Voucher", new { area = "AccountsAndFinance", id = item.VoucherId }, new { target = "_blank", @class = "fa fa-eye" })
+                                </td>
+                            }
+                        </tr>
+                                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th class="text-center">S.N </th>
+                        <th class="text-center">Voucher Name </th>
+                        <th class="text-center">Transaction Type </th>
+                        <th class="text-center">Date </th>
+                        <th class="text-right" style="width: 10%">Amount (&#2547;)</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
 
 </section>
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>

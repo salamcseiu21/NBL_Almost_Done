@@ -9,50 +9,57 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-green headingStyle">Journal Voucher</h3>
-    <hr />
-    @if (ViewBag.ErrorMssage != null){
-       <p class="text-center text-danger">@ViewBag.ErrorMssage</p>
-    }
-    @using (Html.BeginForm())
-    {
-        <div class="form-horizontal">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>
-                            Account Code
-                        </th>
-                        <th style="width: 10%">
-                          Dr/Cr
-                        </th>
-                        <th style="width:15%">
-                         Amount (&#2547;)
-
-                        </th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var vd in voucherDetails)
-                {
+    
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Edit Journal Voucher</div>
+        <div class="panel panel-body">
+            
+            @if (ViewBag.ErrorMssage != null)
+            {
+                <p class="text-center text-danger">@ViewBag.ErrorMssage</p>
+            }
+            @using (Html.BeginForm())
+            {
+                <div class="form-horizontal">
+                    <table class="table table-bordered">
+                        <thead>
                         <tr>
-                            <td>@Html.Raw(commonGateway.GetSubSubSubAccountByCode(vd.AccountCode).GetFullInformation())</td>
-                            <td>@vd.DebitOrCredit</td>
-                            <td><input type="number" class="form-control" value="@vd.Amount" name="amount_of_@vd.JournalDetailsId" /> </td>
-                        </tr>
-                    }
-                    <tr>
-                        <td colspan="2"></td>
-                        <td>
-                            @Html.ActionLink(" Back to List", "ViewJournal", "Voucher", new { area = "Accounts" }, new { @class = "btn btn-danger" })
-                            <input type="submit" class="btn btn-primary" value="Update" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            <th>
+                                Account Code
+                            </th>
+                            <th style="width: 10%">
+                                Dr/Cr
+                            </th>
+                            <th style="width: 15%">
+                                Amount (&#2547;)
 
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var vd in voucherDetails)
+                        {
+                            <tr>
+                                <td>@Html.Raw(commonGateway.GetSubSubSubAccountByCode(vd.AccountCode).GetFullInformation())</td>
+                                <td>@vd.DebitOrCredit</td>
+                                <td><input type="number" class="form-control" value="@vd.Amount" name="amount_of_@vd.JournalDetailsId"/> </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="2"></td>
+                            <td>
+                                @Html.ActionLink(" Back to List", "ViewJournal", "Voucher", new {area = "AccountsAndFinance"}, new {@class = "btn btn-danger"})
+                                <input type="submit" class="btn btn-primary" value="Update"/>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            }
         </div>
-    }
+    </div>
+
 </section>
 

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Replaces.ReplaceReport>
+    @{
+        var i = 0;
+    }
+<table id="tbl_replace_list" class="display table-bordered" style="border: 1px solid">
+    <thead>
+    <tr>
+        <th>S.N</th>
+        <th>Reference</th>
+        <th class="text-center">Entry Date</th>
+        <th class="text-center">Delivery Date</th>
+        <th>Client Name</th>
+        <th>Product Name</th>
+        <th>Barcode</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        i++;
+        <tr>
+            <td>@i</td>
+            <td>@item.TransactionRef</td>
+
+            <td class="text-center">@item.EntryDateTime.ToString("dd-MMMM-yyyy")</td>
+            <td class="text-center">@item.SystemDateTime.ToString("dd-MMMM-yyyy")</td>
+            <td>@item.ClientName</td>
+            <td>@item.ProductName</td>
+            <td>@item.Barcode</td>
+        </tr>
+    }
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>S.N</th>
+        <th>Reference</th>
+        <th class="text-center">Entry Date</th>
+        <th class="text-center">Delivery Date</th>
+        <th>Client Name</th>
+        <th>Product Name</th>
+        <th>Barcode</th>
+    </tr>
+    </tfoot>
+</table>

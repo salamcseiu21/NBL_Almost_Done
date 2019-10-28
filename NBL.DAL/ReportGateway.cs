@@ -300,6 +300,46 @@ namespace NBL.DAL
             }
         }
 
+        public ICollection<ViewSubSubSubAccount> GetAllSubSubSubAccountList()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetAllSubSubSubAccountList";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<ViewSubSubSubAccount> subSubSubAccounts = new List<ViewSubSubSubAccount>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    subSubSubAccounts.Add(new ViewSubSubSubAccount
+                    {
+                        SubSubSubAccountName =DBNull.Value.Equals(reader["SubSubSubAccountName"])? null: reader["SubSubSubAccountName"].ToString(),
+                        SubSubSubAccountCode = DBNull.Value.Equals(reader["SubSubSubAccountCode"]) ? null: reader["SubSubSubAccountCode"].ToString(),
+                        SubSubAccountCode = DBNull.Value.Equals(reader["SubSubAccountCode"]) ? null: reader["SubSubAccountCode"].ToString(),
+                        SubSubAccountName = DBNull.Value.Equals(reader["SubSubAccountName"]) ? null : reader["SubSubAccountName"].ToString(),
+                        SubAccountName = DBNull.Value.Equals(reader["SubAccountName"]) ? null : reader["SubAccountName"].ToString(),
+                        SubAccountCode = DBNull.Value.Equals(reader["SubAccountCode"]) ? null : reader["SubAccountCode"].ToString(),
+                        AccountCode = DBNull.Value.Equals(reader["AccountCode"]) ? null : reader["AccountCode"].ToString(),
+                        AccountName = DBNull.Value.Equals(reader["AccountName"]) ? null : reader["AccountName"].ToString()
+                    });
+                }
+                reader.Close();
+                return subSubSubAccounts;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect sub sub sub account list", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
         public IEnumerable<ViewProduct> GetPopularBatteriesByYear(int year)
         {
             try

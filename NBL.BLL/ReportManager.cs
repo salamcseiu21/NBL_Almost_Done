@@ -306,6 +306,11 @@ namespace NBL.BLL
             return _iReportGateway.GetBankStatementByYear(year);
         }
 
+        public ICollection<ViewSubSubSubAccount> GetAllSubSubSubAccountList()
+        {
+            return _iReportGateway.GetAllSubSubSubAccountList();
+        }
+
         public bool IsValiedBarcode(string barcode)
         {
             var model = _iBarCodeManager.GetAll().ToList().Select(n=>n.Barcode).ToList().Contains(barcode);

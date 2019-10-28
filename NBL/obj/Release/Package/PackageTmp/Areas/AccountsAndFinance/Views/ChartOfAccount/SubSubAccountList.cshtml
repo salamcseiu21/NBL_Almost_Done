@@ -7,37 +7,47 @@
 
 
 <section class="content">
-    <h3 class="text-center text-green">Sub Sub Account List</h3>
-    <table id="tbl_sub_sub_account_List" class="display table-bordered" style="border: 1px solid">
-        <thead>
-            <tr>
-                <th>S.N</th>
-                <th>Account Code</th>
-                <th>Account Name</th>
-                <th>Account Head Code</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                i++;
+    
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Sub Sub Account List</div>
+        <div class="panel panel-body">
+            <table id="tbl_sub_sub_account_List" class="display table-bordered" style="border: 1px solid">
+                <thead>
                 <tr>
-                    <td>@i</td>
-                    <td>@item.SubSubAccountCode</td>
-                    <td>@item.SubSubAccountName</td>
-                    <td>@item.SubAccountCode</td>
+                    <th>S.N</th>
+                    <th>Sub Sub Account Code</th>
+                    <th>Sub Sub Account Name</th>
+                    <th>Sub Account Code</th>
+                    <th>Sub Account Name</th>
                 </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>S.N</th>
-                <th>Account Code</th>
-                <th>Account Name</th>
-                <th>Account Head Code</th>
-            </tr>
-        </tfoot>
-    </table>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.SubSubAccountCode</td>
+                        <td>@item.SubSubAccountName</td>
+                        <td>@item.SubAccountCode</td>
+                        <td>@item.SubAccountName</td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>S.N</th>
+                    <th>Sub Sub Account Code</th>
+                    <th>Sub Sub Account Name</th>
+                    <th>Sub Account Code</th>
+                    <th>Sub Account Name</th> 
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+   
 </section>
 
 @section Scripts

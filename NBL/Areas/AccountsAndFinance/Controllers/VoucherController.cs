@@ -73,7 +73,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             try
             {
 
-                Purpose aPurpose = new Purpose
+                var aPurpose = new Purpose
                 {
                     PurposeCode = collection["PurposeCode"],
                     Amounts = Convert.ToDecimal(collection["PurposeAmounts"]),

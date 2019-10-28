@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "View All";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
 }
 
 <section class="content">
@@ -14,6 +15,7 @@
             <table id="tbl_replace_list" class="display table-bordered" style="border: 1px solid">
                 <thead>
                 <tr>
+                    <th>S.N</th>
                     <th>Ref no</th>
                     <th>Client Info</th>
                     <th class="text-center">Product Name</th>
@@ -25,10 +27,11 @@
                 <tbody>
                 @foreach (var item in Model)
                 {
+                    i++;
                     <tr>
+                        <td>@i</td>
                         <td>@item.ReceiveRef</td>
-                        <td>@item.ClientName<br/>
-                            @item.ClientCode</td>
+                        <td>@item.ClientName</td>
                         <td class="text-center">@item.ProductName</td>
 
                         <td class="text-center">@item.EntryDate.ToString("dd-MMMM-yyyy")</td>
@@ -41,6 +44,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
+                    <th>S.N</th>
                     <th>Ref no</th>
                     <th>Client Info</th>
                     <th class="text-center">Product Name</th>

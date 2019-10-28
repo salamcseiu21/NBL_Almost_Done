@@ -4,9 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NBL.Areas.AccountsAndFinance.BLL.Contracts;
+using NBL.Areas.AccountsAndFinance.Models;
 using NBL.BLL.Contracts;
+using NBL.Models;
 using NBL.Models.EntityModels.ChartOfAccounts;
 using NBL.Models.Logs;
+using SubSubSubAccount = NBL.Models.EntityModels.ChartOfAccounts.SubSubSubAccount;
 
 namespace NBL.Areas.AccountsAndFinance.Controllers
 {
@@ -15,12 +18,14 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
     {
 
         private readonly IAccountsManager _iAccountsManager;
+        private readonly IReportManager _iReportManager;
 
         // GET: Accounts/Account
-        public ChartOfAccountController(IAccountsManager iAccountsManager)
+        public ChartOfAccountController(IAccountsManager iAccountsManager,IReportManager iReportManager)
         {
             
             _iAccountsManager = iAccountsManager;
+            _iReportManager = iReportManager;
         }
 
 
@@ -84,8 +89,9 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         {
             try
             {
-                List<SubSubSubAccount> subSubSubAccountnts = _iAccountsManager.GetAllSubSubSubAccountList().ToList();
-                return View(subSubSubAccountnts);
+               // List<SubSubSubAccount> subSubSubAccountnts = _iAccountsManager.GetAllSubSubSubAccountList().ToList();
+                ICollection<ViewSubSubSubAccount> accounts = _iReportManager.GetAllSubSubSubAccountList().ToList();
+                return View(accounts);
             }
             catch (Exception exception)
             {

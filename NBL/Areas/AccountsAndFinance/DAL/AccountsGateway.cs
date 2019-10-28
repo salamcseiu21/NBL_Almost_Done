@@ -1595,7 +1595,6 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
             try
             {
-                int rowAffected=0;
                 CommandObj.Transaction = sqlTransaction;
                 CommandObj.CommandText = "UDSP_ApproveVoucher";
                 CommandObj.CommandType = CommandType.StoredProcedure;
@@ -1609,7 +1608,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                 CommandObj.Parameters["@AccountMasterId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
                 int accountId = Convert.ToInt32(CommandObj.Parameters["@AccountMasterId"].Value); 
-                rowAffected = SaveVoucherDetailsIntoAccountDetails(voucherDetails, accountId);
+                var rowAffected = SaveVoucherDetailsIntoAccountDetails(voucherDetails, accountId);
                 if (rowAffected > 0)
                 {
                     sqlTransaction.Commit();
@@ -2654,7 +2653,8 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                     {
                         SubAccountName = reader["SubAccountName"].ToString(),
                         SubAccountCode = reader["SubAccountCode"].ToString(),
-                        AccountHeadCode = reader["AccountCode"].ToString()
+                        AccountHeadCode = reader["AccountCode"].ToString(),
+                         AccountHeadName= reader["AccountHeadName"].ToString()
                     });
                 }
                 reader.Close();
@@ -2689,6 +2689,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                     {
                         SubSubAccountName = reader["SubSubAccountName"].ToString(),
                         SubAccountCode = reader["SubAccountCode"].ToString(),
+                        SubAccountName = reader["SubAccountName"].ToString(),
                         SubSubAccountCode = reader["SubSubAccountCode"].ToString()
                     });
                 }

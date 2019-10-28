@@ -14,106 +14,101 @@
 }
 
 <section class="content">
-    <div style="border: 1px dotted; padding: 10px; font-size: 14px">
-        <div class="row">
-            <div class="col-md-4">
-                <label>Voucher Ref: @Model.VoucherRef </label><br />
-                <label>Voucher No: @Model.VoucherNo</label>
+    
+     
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Journal Details</div>
+        <div class="panel panel-body">
+            <div style="border: 1px dotted; padding: 10px; font-size: 14px">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Voucher Ref: @Model.VoucherRef </label><br />
+                        <label>Voucher No: @Model.VoucherNo</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Voucher by: @user.EmployeeName</label><br />
+                        <label>Voucher At: @Model.SysDateTime</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Status : @Model.Status</label><br />
+                        <label>Remarks:&nbsp;</label><i>@Model.Remarks</i>
+                    </div>
+                </div>
+                <hr />
+                <table id="table_Voucher_details" class="table table-bordered" style="border: 1px solid black">
 
-            </div>
-            <div class="col-md-4">
-                <label>Voucher by: @user.EmployeeName</label><br />
-                <label>Voucher At: @Model.SysDateTime</label>
-            </div>
-            <div class="col-md-4">
-                <label>Status : @Model.Status</label><br />
-                <label>Remarks:&nbsp;</label><i>@Model.Remarks</i>
-            </div>
-        </div>
-        <hr />
-        <table id="table_Voucher_details" class="table table-bordered" style="border:1px solid black">
-
-
-            <thead>
-                <tr>
-                    <th>Account Info</th>
-                    <th class="text-center" style="width:10%">Dr/Cr</th>
-                    <th class="text-right" style="width:10%">Amount (&#2547;)</th>
-                </tr>
-            </thead>
-
-            <tbody>
-
-                @foreach (var item in voucherDetails)
+                    <thead>
+                        <tr>
+                            <th>Account Info</th>
+                            <th class="text-center" style="width: 10%">Dr/Cr</th>
+                            <th class="text-right" style="width: 10%">Amount (&#2547;)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in voucherDetails)
             {
 
-                    <tr>
-
-                        <td>@Html.Raw(commonGateway.GetSubSubSubAccountByCode(item.AccountCode).GetFullInformation())</td>
-                        <td class="text-center">@item.DebitOrCredit</td>
-                        <td class="text-right">@item.Amount</td>
-                    </tr>
-                }
-
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>Account Info</th>
-                    <th class="text-center" style="width:10%">Dr/Cr</th>
-                    <th class="text-right" style="width:10%">Amount (&#2547;)</th>
-                </tr>
-            </tfoot>
-        </table>
+                            <tr>
+                                <td>@Html.Raw(commonGateway.GetSubSubSubAccountByCode(item.AccountCode).GetFullInformation())</td>
+                                <td class="text-center">@item.DebitOrCredit</td>
+                                <td class="text-right">@item.Amount</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Account Info</th>
+                            <th class="text-center" style="width: 10%">Dr/Cr</th>
+                            <th class="text-right" style="width: 10%">Amount (&#2547;)</th>
+                        </tr>
+                    </tfoot>
+                </table>
 
 
-
-
-        @using (Html.BeginForm("Approve", "Voucher", FormMethod.Post, new { id = "ApproveVoucherForm" }))
-        {
-            <div class="form-horizontal">
-                <div class="row text-right" style="padding: 10px 15px">
-                    <input type="hidden" value="@Model.VoucherId" name="VoucherIdToApprove" />
-                    @Html.ActionLink(" Back to List", "ViewJournal", "Voucher", new { area = "Accounts" }, new { @class = "btn btn-info" })
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@Model.VoucherRef">Cancel</button>
-                </div>
-            </div>
-        }
-    </div>
-    @*Cancel modal*@
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Cancel Voucher : @Model.VoucherRef</h4>
-                </div>
-                <div class="modal-body">
-
-                    @using (Html.BeginForm("CancelJournalVoucher", "Voucher", FormMethod.Post))
-                    {
-                        <div class="form-horizontal">
-
-                            <div class="row text-right" style="padding: 10px 15px">
-                                <div class="form-group">
-                                    <input type="hidden" value="@Model.JournalId" name="VoucherId" />
-                                    <label for="Reason" class="control-label col-md-2">Reason:</label>
-                                    <div class="col-md-10">
-                                        <textarea class="form-control" id="Reason" placeholder="Please! write the reason of Cancel" name="Reason" rows="3" style="resize: none" required></textarea>
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-                                    <input type="submit" class="btn btn-danger" value="Submit" />
-                                </div>
-                            </div>
+                @using (Html.BeginForm("Approve", "Voucher", FormMethod.Post, new { id = "ApproveVoucherForm" }))
+                {
+                    <div class="form-horizontal">
+                        <div class="row text-right" style="padding: 10px 15px">
+                            <input type="hidden" value="@Model.VoucherId" name="VoucherIdToApprove" />
+                            @Html.ActionLink(" Back to List", "ViewJournal", "Voucher", new { area = "AccountsAndFinance" }, new { @class = "btn btn-info" })
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@Model.VoucherRef">Cancel</button>
                         </div>
-                    }
-
+                    </div>
+                }
+            </div>
+            @*Cancel modal*@
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="exampleModalLabel">Cancel Voucher : @Model.VoucherRef</h4>
+                        </div>
+                        <div class="modal-body">
+                            @using (Html.BeginForm("CancelJournalVoucher", "Voucher", FormMethod.Post))
+                            {
+                                <div class="form-horizontal">
+                                    <div class="row text-right" style="padding: 10px 15px">
+                                        <div class="form-group">
+                                            <input type="hidden" value="@Model.JournalId" name="VoucherId" />
+                                            <label for="Reason" class="control-label col-md-2">Reason:</label>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control" id="Reason" placeholder="Please! write the reason of Cancel" name="Reason" rows="3" style="resize: none" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                                            <input type="submit" class="btn btn-danger" value="Submit" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
+  
 </section>
 
 @section Scripts

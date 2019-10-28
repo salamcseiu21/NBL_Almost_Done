@@ -71,6 +71,7 @@ namespace NBL.BLL.Contracts
         ICollection<ViewStockProduct> GetStockProductBarcodeByBranchAndProductIdTemp(int branchId, int productId);
         bool InActiveProduct(int i, List<ViewStockProduct> stockBarcodList);
         ICollection<ViewDeliveredOrderModel> GetTotalDeliveredOrderListByDistributionPointId(int branchId);
-        ICollection<SubSubSubAccount> GetBankStatementByYear(int year); 
+        ICollection<SubSubSubAccount> GetBankStatementByYear(int year);
+        ICollection<ViewSubSubSubAccount> GetAllSubSubSubAccountList(); 
     }
 }
