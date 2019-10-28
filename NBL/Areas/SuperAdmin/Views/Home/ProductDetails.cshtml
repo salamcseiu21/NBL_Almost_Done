@@ -36,6 +36,7 @@
                     <th class="text-right">DD (%)</th>
                     <th class="text-right">CD (%)</th>
                     <th class="text-right">ID (%)</th>
+                    <th class="text-center">IsActive?</th>
                     <th class="text-center">Action</th>
                 </tr>
                 </thead>
@@ -63,16 +64,18 @@
                                                        @item.IndividualDiscount
                                                    }
                                                }</td>
+                        <td class="text-center">@item.IsActive</td> 
                         <td class="text-center">@{
-                                if (item.IsActive == "Y")
-                                {
-                                    <button onclick="DeactiveProduct(@item.ProductId)">Deactive</button>
-                                }
-                                else
-                                {
-                                    <button>Active</button>
-                                }
-                            }</td>
+                                                    if (item.IsActive == "Y")
+                                                    {
+                                                        <button class="btn btn-sm btn-danger" onclick="UpdateProductActivationStatus(@item.ProductId,'N')"><i class="fa fa-times"></i> Deactive</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="btn btn-sm btn-info"  onclick="UpdateProductActivationStatus(@item.ProductId,'Y')"><i class="fa fa-check"></i> Active</button>
+                                                    } <span>|</span>
+                                                    <button class="btn btn-sm btn-info"  onclick="UpdateProduct(@item.ProductId)"><i class="fa fa-edit"></i> Edit</button>
+                                                }</td>
                     </tr>
                 }
                 </tbody>
@@ -88,12 +91,15 @@
                     <th class="text-right">DD (%)</th>
                     <th class="text-right">CD (%)</th>
                     <th class="text-right">ID (%)</th>
+                    <th class="text-center">IsActive?</th>
                     <th class="text-center">Action</th>
                 </tr>
                 </tfoot>
             </table>
         </div>
     </div>
+    <!--load modal partial here...-->
+    @Html.Partial("_ModalUpdateProductInfoPartialPage")
 </section>
 
 @section Scripts
@@ -102,11 +108,17 @@
         $("#tbl_Product_details").DataTable();
     </script>
     <script>
-        function DeactiveProduct(productId) {
-            var result = confirm('Are you sure to Deactive this Product?');
+        function UpdateProductActivationStatus(productId, status) {
+            var msg = '';
+            if (status === 'Y') {
+                msg = 'Are you sure to Active this Product?';
+            }
+            else if (status === 'N') {
+                msg = 'Are you sure to DeActive this Product?';
+            }
+            var result = confirm(msg);
             if (result) {
                 var id = productId;
-                var status = 'N';
                 var json = { id: id, status: status };
                 $.ajax({
                     type: "POST",
@@ -118,6 +130,18 @@
                     }
                 });
             }
+        }
+
+        function UpdateProduct(productId) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("UpdateProductDetails", "Home", new { area = "SuperAdmin" })",
+                data: { productId: productId },
+                success: function (response) {
+                    $('#UpdateProductModalBody').html(response);
+                    $('#showUpdateProductModal').modal('show');
+                }
+            });
         }
     </script>
 }

@@ -18,5 +18,10 @@ namespace NBL.Models.EntityModels.Payments
         public int PaymentTypeId { get; set; }
         public PaymentType PaymentType { get; set; }
 
+        public string PaymentDetails()
+        {
+            return $"Bank Name:{SourceBankName},Account No:{BankAccountNo},Cheque No:{ChequeNo},Amount:{ChequeAmount},Date:{ChequeDate.ToString("dd-MMMM-yyyy")}";
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using NBL.Models.EntityModels.VatDiscounts;
 
 namespace NBL.Models.EntityModels.Products
 {
@@ -20,6 +21,7 @@ namespace NBL.Models.EntityModels.Products
         public decimal UnitPrice { get; set; }
         public decimal DealerPrice { get; set; }
         public ICollection<Product> Products { get; set; }
+        public ICollection<Discount> Discounts { get; set; } 
         public decimal? VatAmount { get; set; }
         public decimal? DealerDiscount { get; set; }
         public decimal? IndividualDiscount { get; set; }
@@ -27,6 +29,6 @@ namespace NBL.Models.EntityModels.Products
         public string CategoryName { get; set; }
         public bool HasWarrenty { get; set; }
         public string IsActive { get; set; } 
-
+       
     }
 }

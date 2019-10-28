@@ -7,7 +7,7 @@
         <tr>
             <th>Collection Ref</th>
             <th>Client Name</th>
-            <th>Collection Info</th>
+            <th>Payment Details</th>
             <th class="text-right">Amount (&#2547;) </th>
             <th class="text-center">Entry Date </th>
             <th class="text-center">Active Date </th>
@@ -19,18 +19,29 @@
         @foreach (var item in Model)
         {
 
-            var info = $"Source Bank :{item.SourceBankName},Account No:{item.BankAccountNo},Cheque No:{item.ChequeNo},Cheque Date:{item.ChequeDate.Date.ToString("dd-MMMM-yyyy")}";
+           
             <tr>
                 <td>@item.ReceivableRef (@item.CollectionByBranch)</td>
                 <td>@Html.ActionLink(item.ClientInfo,"ClientDetails","Home",new {id= item.ClientId},null) </td>
-                <td class="text-center" title="@info">@{
+                <td class="text-center" title="@item.PaymentDetails()">@{
                         <a href="#">
-                            <i class="fa fa-eye"></i>  View Details
+                             View Details
                         </a>
                     }</td>
                 <td class="text-right">@item.ChequeAmount.ToString("N2")</td>
                 <th class="text-center">@item.ReceivableDateTime.Date.ToString("dd-MMM-yyyy") </th>
-                <th class="text-center">@Convert.ToDateTime(item.ActiveDate).ToString("dd-MMM-yyyy") </th>
+                <th class="text-center">
+                    @{
+                        if (item.ActiveDate == null)
+                        {
+                            <span>N/A</span>
+                        }
+                        else
+                        {
+                            @Convert.ToDateTime(item.ActiveDate).ToString("dd-MMM-yyyy")
+                        }
+                }
+                </th>
                 <th class="text-center">@item.EntryByEmp </th>
                 <td class="text-center">
                     @if (item.ActiveStatus == 0)
@@ -40,6 +51,8 @@
                     else if (item.ActiveStatus == 1)
                     {
                         <p class="fa fa-check text-success"> Approved</p>
+                        <br />
+                        <span>@item.ActiveDate</span>
                     }
                 </td>
             </tr>
@@ -54,7 +67,7 @@
         <tr>
             <th>Collection Ref</th>
             <th>Client Name</th>
-            <th>Collection Info</th>
+            <th>Payment Details</th>
             <th class="text-right">Amount (&#2547;) </th>
             <th class="text-center">Entry Date </th>
             <th class="text-center">Active Date </th>

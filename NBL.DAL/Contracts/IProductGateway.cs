@@ -90,5 +90,7 @@ namespace NBL.DAL.Contracts
         ICollection<ViewGeneralRequisitionModel> GetAllDeliveredGRequsition();
         IEnumerable<ViewProduct> GetAllPendingProductPriceListByStatus(int status);
         int UpdateProductActivationStatus(int productId, string status);
+        ICollection<ProductDetails> GetAllProductDetails();
+        int UpdateProductPriceVatDiscount(ProductDetails newProduct,ProductDetails oldProductDetails, int userId); 
     }
 }

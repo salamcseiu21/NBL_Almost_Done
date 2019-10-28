@@ -123,11 +123,11 @@ G:\Salam\NBL\NBL\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 G:\Salam\NBL\NBL\obj\Debug\NBL.csprojResolveAssemblyReference.cache
 G:\Salam\NBL\NBL\obj\Debug\NBL.dll
 G:\Salam\NBL\NBL\obj\Debug\NBL.pdb
-E:\API\NBL\NBL\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
 E:\API\NBL\NBL\bin\roslyn\csc.exe
 E:\API\NBL\NBL\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 E:\API\NBL\NBL\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
 E:\API\NBL\NBL\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\API\NBL\NBL\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
 E:\API\NBL\NBL\bin\roslyn\Microsoft.CSharp.Core.targets
 E:\API\NBL\NBL\bin\roslyn\Microsoft.VisualBasic.Core.targets
 E:\API\NBL\NBL\bin\roslyn\System.Collections.Immutable.dll

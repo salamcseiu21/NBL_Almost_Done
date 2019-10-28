@@ -494,6 +494,17 @@ namespace NBL.BLL
             return rowAffected > 0;
         }
 
+        public ICollection<ProductDetails> GetAllProductDetails()
+        {
+            return _iProductGateway.GetAllProductDetails();
+        }
+
+        public bool UpdateProductPriceVatDiscount(ProductDetails newProductDetails, ProductDetails oldProductDetails, int userId) 
+        {
+            int rowAffected = _iProductGateway.UpdateProductPriceVatDiscount(newProductDetails,oldProductDetails, userId);
+            return rowAffected > 0;
+        }
+
         private string GenerateTransferRequisitionRef(int maxTrNo)
         {
 

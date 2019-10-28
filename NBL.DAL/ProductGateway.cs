@@ -683,6 +683,10 @@ namespace NBL.DAL
                     product.UpdatedDate = Convert.ToDateTime(reader["UpdatedDate"]);
                     product.UnitPrice = Convert.ToDecimal(reader["UnitPrice"]);
                     product.DealerPrice =DBNull.Value.Equals(reader["DealerPrice"])? default(decimal): Convert.ToDecimal(reader["DealerPrice"]);
+                    product.ProductName = reader["ProductName"].ToString();
+                    product.CategoryName = reader["ProductCategoryName"].ToString();
+                    product.VatAmount = Convert.ToDecimal(reader["VatAmount"]);
+                    product.ProductId = productId;
                 }
 
                 reader.Close();
@@ -1136,6 +1140,81 @@ namespace NBL.DAL
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
                 i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            }
+            return i;
+        }
+
+
+
+        public int UpdateProductPriceVatDiscount(ProductDetails newProduct,ProductDetails oldProductDetails, int userId)
+        {
+            ConnectionObj.Open();
+            SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
+            try
+            {
+                int rowAffected = 0;
+                CommandObj.Parameters.Clear();
+                CommandObj.Transaction = sqlTransaction; 
+                CommandObj.CommandText = "UDSP_SaveProductPriceVat";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ProductId", newProduct.ProductId);
+                CommandObj.Parameters.AddWithValue("@OldVat", oldProductDetails.VatAmount);
+                CommandObj.Parameters.AddWithValue("@NewVat", newProduct.VatAmount);
+                CommandObj.Parameters.AddWithValue("@OldUnitPrice", oldProductDetails.UnitPrice);
+                CommandObj.Parameters.AddWithValue("@NewUnitPrice", newProduct.UnitPrice);
+                CommandObj.Parameters.AddWithValue("@UserId", userId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                int rowCount = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                if (rowCount == 0 || rowCount > 0)
+                {
+                   rowAffected= SaveDiscountDetails(newProduct, oldProductDetails, userId);
+                }
+              
+                if (rowAffected > 0 || rowAffected==0)
+                {
+                    sqlTransaction.Commit();
+                }
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                sqlTransaction.Rollback();
+                throw new Exception("Could not Update Product Details..", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        private int SaveDiscountDetails(ProductDetails newProduct, ProductDetails oldProductDetails, int userId)
+        {
+            int i = 0;
+            foreach (var product in newProduct.Discounts)
+            {
+
+                var result = oldProductDetails.Discounts.ToList().Find(n =>
+                    n.ClientTypeId == product.ClientTypeId && n.ProductId == product.ProductId);
+                if (result!=null && product.DiscountPercent != result.DiscountPercent)
+                {
+                    CommandObj.CommandText = "UDSP_SaveDiscountDetails";
+                    CommandObj.CommandType = CommandType.StoredProcedure;
+                    CommandObj.Parameters.Clear();
+                    CommandObj.Parameters.AddWithValue("@ProductId", product.ProductId);
+                    CommandObj.Parameters.AddWithValue("@DiscountPercent", product.DiscountPercent);
+                    CommandObj.Parameters.AddWithValue("@ClientTypeId", product.ClientTypeId);
+                    CommandObj.Parameters.AddWithValue("@UserId", userId);
+                    CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                    CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                    CommandObj.ExecuteNonQuery();
+                    i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                }
+               
             }
             return i;
         }
@@ -2088,7 +2167,8 @@ namespace NBL.DAL
                         ProductName = reader["ProductName"].ToString(),
                         SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
                         CategoryId = Convert.ToInt32(reader["CategoryId"]),
-                        CompanyId = Convert.ToInt32(reader["CompanyId"])
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+
                     });
                 }
 
@@ -2107,6 +2187,51 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+        public ICollection<ProductDetails> GetAllProductDetails()
+        {
+            try
+            {
+
+                CommandObj.CommandText = "spGetAllProductList";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<ProductDetails> detailses = new List<ProductDetails>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    detailses.Add(new ProductDetails
+                    {
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        CategoryName = reader["CategoryName"].ToString(),
+                        UnitPrice = DBNull.Value.Equals(reader["UnitPrice"]) ? 0 : Convert.ToDecimal(reader["UnitPrice"]),
+                        DealerDiscount = DBNull.Value.Equals(reader["DealerDiscount"]) ? (decimal?)null : Convert.ToDecimal(reader["DealerDiscount"]),
+                        CorporateDiscount = DBNull.Value.Equals(reader["CorporateDiscount"]) ? (decimal?)null : Convert.ToDecimal(reader["CorporateDiscount"]),
+                        IndividualDiscount = DBNull.Value.Equals(reader["IndividualDiscount"]) ? (decimal?)null : Convert.ToDecimal(reader["IndividualDiscount"]),
+                        VatAmount = DBNull.Value.Equals(reader["VatAmount"]) ? (decimal?)null : Convert.ToDecimal(reader["VatAmount"]),
+                        HasWarrenty = Convert.ToBoolean(reader["HasWarrenty"]),
+                        IsActive = Convert.ToString(reader["IsActive"])
+
+                    });
+                }
+                reader.Close();
+                return detailses;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect product Details", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+      
 
         public int SaveProductDetails(ViewCreateProductDetailsModel model)
         {

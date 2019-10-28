@@ -8488,6 +8488,8 @@
     <Content Include="Views\Shared\_InvoiceDetailPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewProductDetailsPartialPage.cshtml" />
     <Content Include="Views\Demo\Test.cshtml" />
+    <Content Include="Views\Shared\_ModalUpdateProductInfoPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewUpdateProductPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

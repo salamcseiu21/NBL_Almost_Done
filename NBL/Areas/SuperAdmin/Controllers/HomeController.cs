@@ -15,7 +15,9 @@ using NBL.Models;
 using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Orders;
+using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Securities;
+using NBL.Models.EntityModels.VatDiscounts;
 using NBL.Models.Logs;
 using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
@@ -48,7 +50,8 @@ namespace NBL.Areas.SuperAdmin.Controllers
         private readonly IVatManager _iVatManager;
         private readonly IDeliveryManager _iDeliveryManager;
         private readonly IServiceManager _iServiceManager;
-        public HomeController(IVatManager iVatManager,IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IReportManager iReportManager,IEmployeeManager iEmployeeManager,ICommonManager iCommonManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IProductManager iProductManager,IAccountsManager iAccountsManager,IDivisionGateway iDivisionGateway,IDeliveryManager iDeliveryManager,IServiceManager iServiceManager)
+        private readonly IDiscountManager _iDiscountManager;
+        public HomeController(IVatManager iVatManager,IBranchManager iBranchManager,IClientManager iClientManager,IOrderManager iOrderManager,IReportManager iReportManager,IEmployeeManager iEmployeeManager,ICommonManager iCommonManager,IRegionManager iRegionManager,ITerritoryManager iTerritoryManager,IProductManager iProductManager,IAccountsManager iAccountsManager,IDivisionGateway iDivisionGateway,IDeliveryManager iDeliveryManager,IServiceManager iServiceManager,IDiscountManager iDiscountManager)
         {
             _iVatManager = iVatManager;
             _iBranchManager = iBranchManager;
@@ -64,6 +67,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
             _iDivisionGateway = iDivisionGateway;
             _iDeliveryManager = iDeliveryManager;
             _iServiceManager = iServiceManager;
+            _iDiscountManager = iDiscountManager;
         }
         public ActionResult Home()
         {
@@ -527,7 +531,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
         {
             try
             {
-                var products = _iReportManager.GetAllProductDetails().ToList();
+                var products = _iProductManager.GetAllProductDetails().ToList();
                 return View(products);
             }
             catch (Exception exception)
@@ -537,7 +541,48 @@ namespace NBL.Areas.SuperAdmin.Controllers
             }
 
         }
+        //---------------UPdate product details-----------
+        public PartialViewResult UpdateProductDetails(int productId)
+        {
 
+            var product= _iProductManager.GetProductDetailsByProductId(productId);
+            product.Discounts = _iDiscountManager.GetDiscountsByProductId(productId);
+            return PartialView("_ViewUpdateProductPartialPage", product);
+        }
+        [HttpPost]
+        public ActionResult UpdateProductInfo(ProductDetails newProduct)
+        {
+            List<Discount> discounts = new List<Discount>
+            {
+                new Discount
+                {
+                    ClientTypeId = 1,
+                    DiscountPercent = Convert.ToDecimal(newProduct.IndividualDiscount),
+                    ProductId = newProduct.ProductId
+                },
+                new Discount
+                {
+                ClientTypeId = 2,
+                DiscountPercent = Convert.ToDecimal(newProduct.CorporateDiscount),
+                ProductId = newProduct.ProductId
+               }
+                ,
+                new Discount
+                {
+                    ClientTypeId = 3,
+                    DiscountPercent = Convert.ToDecimal(newProduct.DealerDiscount),
+                    ProductId = newProduct.ProductId
+                }
+            };
+            newProduct.Discounts = discounts;
+
+            var user = (ViewUser) Session["user"];
+            var oldProduct = _iProductManager.GetProductDetailsByProductId(newProduct.ProductId);
+            oldProduct.Discounts = _iDiscountManager.GetDiscountsByProductId(newProduct.ProductId);
+          
+            bool result= _iProductManager.UpdateProductPriceVatDiscount(newProduct,oldProduct, user.UserId); 
+            return RedirectToAction("ProductDetails");
+        }
         //--------------------Sold Product list------------
         public ActionResult SoldProducts()
         {

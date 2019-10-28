@@ -7,11 +7,10 @@
         <tr>
             <th>Collection Ref</th>
             <th>Client Name</th>
-            <th>Collection Info</th>
+            <th>Payment Details</th>
             <th class="text-right">Amount (&#2547;) </th>
             <th class="text-center">Entry Date </th>
             <th class="text-center">Entry By </th>
-            <th class="text-center">Collection By </th>
             <th class="text-center">Status</th>
         </tr>
     </thead>
@@ -23,20 +22,16 @@
                 <td>@item.ReceivableRef (@item.CollectionByBranch)</td>
                 <td>@Html.ActionLink(item.ClientInfo, "ViewClientProfile", "Home", new { id = item.ClientId }, null) </td>
 
-                <td>
+                <td class="text-center" title="@item.PaymentDetails())">
                     @{
-                        <p>
-                            <label>Source Bank :</label> @item.SourceBankName<br />
-                            <label>Account No: </label> @item.BankAccountNo<br />
-                            <label>Cheque No: </label> @item.ChequeNo<br />
-                            <label>Date: </label> @item.ChequeDate.Date.ToString("dd-MMMM-yyyy")
-                        </p>
+                        <a href="#">
+                           View Details 
+                        </a>
                     }
                 </td>
                 <td class="text-right">@item.ChequeAmount.ToString("N2")</td>
                 <th class="text-center">@item.ReceivableDateTime.Date.ToString("dd-MMM-yyyy") </th>
                 <th class="text-center">@item.EntryByEmp </th>
-                <th class="text-center">@(item.CollectionByEmp ?? "N/A") </th>
                 <td class="text-center">
                     @if (item.ActiveStatus == 0)
                     {
@@ -58,16 +53,15 @@
         <tr>
             <th colspan="3" class="text-right">Total </th>
             <th class="text-right">@Model.Sum(n => n.ChequeAmount).ToString("N2")</th>
-            <th colspan="4"></th>
+            <th colspan="3"></th>
         </tr>
         <tr>
             <th>Collection Ref</th>
             <th>Client Name</th>
-            <th>Collection Info</th>
+            <th>Payment Details</th>
             <th class="text-right">Amount (&#2547;) </th>
             <th class="text-center">Entry Date </th>
             <th class="text-center">Entry By </th>
-            <th class="text-center">Collection By </th>
             <th class="text-center">Status</th>
         </tr>
     </tfoot>

@@ -12,5 +12,6 @@ namespace NBL.DAL.Contracts
     {
         IEnumerable<Discount> GetAllDiscountsByClientTypeId(int clientTypeId);
         IEnumerable<Discount> GetAllPendingDiscounts();
+        ICollection<Discount> GetDiscountsByProductId(int productId); 
     }
 }

@@ -81,5 +81,8 @@ namespace NBL.BLL.Contracts
         ICollection<ViewGeneralRequisitionModel> GetAllDeliveredGRequsition();
         IEnumerable<ViewProduct> GetAllPendingProductPriceListByStatus(int status);
         bool UpdateProductActivationStatus(int productId, string status);
+
+        ICollection<ProductDetails> GetAllProductDetails();
+        bool UpdateProductPriceVatDiscount(ProductDetails newProductDetails,ProductDetails oldProductDetails, int userId); 
     }
 }

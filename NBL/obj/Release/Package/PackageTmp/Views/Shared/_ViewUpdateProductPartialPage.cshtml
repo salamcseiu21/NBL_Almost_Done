@@ -1,0 +1,66 @@
+﻿@model NBL.Models.EntityModels.Products.ProductDetails
+    @{
+      var discounts= Model.Discounts;
+    }
+@using (Html.BeginForm("UpdateProductInfo", "Home",new {area="SuperAdmin"} ,FormMethod.Post, new { id = "UpdateProductInfoForm" }))
+{
+    <section class="content">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Product Name</label>
+                        <div class="col-md-8">
+                            <input type="text" readonly="readonly" value="@Model.ProductName" class="form-control"/>
+                            <input type="hidden" name="ProductId" value="@Model.ProductId"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Product Category</label>
+                        <div class="col-md-8">
+                            <input type="text" readonly="readonly" value="@Model.CategoryName" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Unitprice</label>
+                        <div class="col-md-8">
+                            <input type="number" required name="UnitPrice"  step="any" value="@Model.UnitPrice" class="form-control text-right"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Vat</label>
+                        <div class="col-md-8">
+                            <input type="number" required  name="VatAmount" step="any" value="@Model.VatAmount" class="form-control text-right"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">DD (%)</label>
+                        <div class="col-md-8">
+                            <input type="number" required name="DealerDiscount" step="any" value="@discounts.First(n=>n.ClientTypeId==3).DiscountPercent" class="form-control text-right"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">CD (%)</label>
+                        <div class="col-md-8">
+                            <input type="number" required name="CorporateDiscount" step="any" value="@discounts.First(n => n.ClientTypeId == 2).DiscountPercent" class="form-control text-right"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">ID (%)</label>
+                        <div class="col-md-8">
+                            <input type="number" required name="IndividualDiscount" step="any" value="@discounts.First(n=>n.ClientTypeId==1).DiscountPercent" class="form-control text-right"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                       
+                        <div class="col-md-8 col-md-offset-4">
+                           <input type="submit" value="Update" class="btn btn-info"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

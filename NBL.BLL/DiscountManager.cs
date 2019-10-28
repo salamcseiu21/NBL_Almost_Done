@@ -26,6 +26,11 @@ namespace NBL.BLL
             return _iDiscountGateway.GetAllPendingDiscounts();
         }
 
+        public ICollection<Discount> GetDiscountsByProductId(int productId)
+        {
+            return _iDiscountGateway.GetDiscountsByProductId(productId);
+        }
+
         public bool Add(Discount model)
         {
             return _iDiscountGateway.Add(model) > 0;

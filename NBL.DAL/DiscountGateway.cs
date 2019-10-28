@@ -100,6 +100,46 @@ namespace NBL.DAL
             }
         }
 
+        public ICollection<Discount> GetDiscountsByProductId(int productId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetDiscountsByProductId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ProductId", productId);
+                List<Discount> discounts = new List<Discount>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    discounts.Add(new Discount
+                    {
+                        DiscountId = Convert.ToInt32(reader["DiscountId"]),
+                        DiscountPercent = Convert.ToDecimal(reader["DiscountPercent"]),
+                        ClientTypeId = Convert.ToInt32(reader["ClientTypeId"]),
+                        ProductId = productId,
+                        ClientType = new ClientType
+                        {
+                            ClientTypeName = reader["ClientTypeName"].ToString(),
+                            ClientTypeId = Convert.ToInt32(reader["ClientTypeId"])
+                        }
+                    });
+                }
+                reader.Close();
+                return discounts;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect Discounts by Product Id", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         public int Add(Discount discount)
         {
             try
