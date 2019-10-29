@@ -322,6 +322,14 @@ namespace NBL.Areas.Services.Controllers
             }
         }
 
+        public ActionResult PrintChallan(long id)
+        {
+            ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(id);
+            List<ViewReplaceDetailsModel> products = _iProductReplaceManager.GetReplaceProductListById(id).ToList();
+            model.Products = products;
+            return View(model);
+        }
+
         public ActionResult ReplaceList()
         {
             var branchId = Convert.ToInt32(Session["BranchId"]);

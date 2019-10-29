@@ -2,23 +2,15 @@
 @using NBL.Models
 @using NBL.Models.EntityModels.Branches
 @using NBL.Models.EntityModels.Companies
-<table>
-    <tr>
-        <td class="text-left" style="width: 75%">
-            @{
-                var branch = (Branch) Session["Branch"];
-                var company = (Company) Session["Company"];
-                <p style="font-size: 25px; font-weight: bolder; margin: 0; padding: 0; color: green !important">Navana Batteries Ltd</p>
-                <address>
-                    @(branch?.BranchAddress ?? "N/A")<br/>
-                    Phone: @(branch?.BranchPhone ?? "N/A"),E-mail: @(branch?.BranchEmail ?? "N/A")
-                </address>
-
-            }
-        </td>
-        
-        <td class="text-right">
-            <img src="~/Images/@company.Logo" style="margin: 0; padding: 0;"/>
-        </td>
-    </tr>
-</table>
+@{
+    var branch = (Branch) Session["Branch"];
+    var company = (Company) Session["Company"];
+}
+<div class="text-center">
+    <img src="~/Images/@company.Logo" style="margin: 0; padding: 0;"/>
+    <p style="font-size: 25px; font-weight: bolder; margin: 0; padding: 0; color: green !important">Navana Batteries Ltd</p>
+    <address>
+        @(branch?.BranchAddress ?? "N/A")<br/>
+        Phone: @(branch?.BranchPhone ?? "N/A"),E-mail: @(branch?.BranchEmail ?? "N/A")
+    </address>
+</div>

@@ -1,5 +1,4 @@
 ﻿
-@using NBL.Areas.Accounts.Models
 @using NBL.Models.ViewModels
 @model IEnumerable<NBL.Areas.AccountsAndFinance.Models.Voucher>
 @{
@@ -12,7 +11,7 @@
 <section class="content">
      
     <div class="panel panel-info">
-        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">@ViewBag.VoucherName</div>
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">@(ViewBag.VoucherName?? "Vouchers")</div>
         <div class="panel panel-body">
             <table id="table_Credit_Voucher" class="table table-bordered" style="border: 1px solid black">
                 <thead>

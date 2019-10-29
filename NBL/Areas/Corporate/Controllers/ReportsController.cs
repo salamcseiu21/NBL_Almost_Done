@@ -45,6 +45,7 @@ namespace NBL.Areas.Corporate.Controllers
             return PartialView("_ViewBankStatementPartialPage", bankStatements);
         }
 
+      
         public ActionResult MonthlyReport()
         {
             try

@@ -397,7 +397,18 @@ namespace NBL.Areas.Corporate.Controllers
             }
         }
 
+        public ActionResult BranchWishStock()
+        {
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
 
+            var branches = _iBranchManager.GetAllBranches().ToList().FindAll(n => n.BranchId != 13).ToList();
+            foreach (ViewBranch branch in branches)
+            {
+                branch.Orders = _iOrderManager.GetOrdersByBranchId(branch.BranchId).ToList();
+                branch.Products = _iInventoryManager.GetStockProductByBranchAndCompanyId(branch.BranchId, companyId).ToList();
+            }
+            return View(branches);
+        }
         public PartialViewResult ProductionSummary()
         {
             try
@@ -419,7 +430,7 @@ namespace NBL.Areas.Corporate.Controllers
             try
             {
                 int companyId = Convert.ToInt32(Session["CompanyId"]);
-                var products = _iInventoryManager.GetStockProductByBranchAndCompanyId(id, companyId).ToList();
+                var products = _iInventoryManager.GetRequsitionVeStockProductQtyByDistributionCenter(id, companyId).ToList();
                 var branch = _iBranchManager.GetAllBranches().ToList().Find(n => n.BranchId == id);
                 SummaryModel model = new SummaryModel
                 {

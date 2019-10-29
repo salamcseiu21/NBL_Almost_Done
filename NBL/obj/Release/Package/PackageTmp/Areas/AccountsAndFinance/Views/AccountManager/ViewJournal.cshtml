@@ -6,47 +6,52 @@
 }
 
 <section class="content">
-    <h3 class="text-green text-center headingStyle">Journals</h3>
+    
+     
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Journals</div>
+        <div class="panel panel-body">
+            <table id="table_journal" class="table table-bordered" style="border: 1px solid black">
 
-    <table id="table_journal" class="table table-bordered" style="border:1px solid black">
 
-
-        <thead>
-            <tr>
-                <th>Voucher Ref</th>
-                <th class="text-center">Date </th>
-                <th class="text-right" style="width:10%"> Amount (&#2547;)</th>
-                <th class="text-center">Action</th>
-            </tr>
-        </thead>
-
-        <tbody>
-
-            @foreach (var item in Model)
-            {
-
+                <thead>
                 <tr>
-
-                    <td>@item.VoucherRef</td>
-                    <td class="text-center">@item.VoucherDate.ToString("dd-MMM-yyyy")</td>
-                    <td class="text-right">@item.Amounts</td>
-                    <td class="text-center">
-                        @Html.ActionLink(" Details", "JournalDetails", "AccountManager", new { id = item.JournalId, area = "AccountsAndFinance" }, new { @class = "fa fa-eye" })
-                      
-                    </td>
+                    <th>Voucher Ref</th>
+                    <th class="text-center">Date </th>
+                    <th class="text-right" style="width: 10%"> Amount (&#2547;)</th>
+                    <th class="text-center">Action</th>
                 </tr>
-            }
+                </thead>
 
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Voucher Ref</th>
-                <th class="text-center">Date </th>
-                <th class="text-right" style="width:10%"> Amount (&#2547;)</th>
-                <th class="text-center">Action</th>
-            </tr>
-        </tfoot>
-    </table>
+                <tbody>
+
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+
+                        <td>@item.VoucherRef</td>
+                        <td class="text-center">@item.VoucherDate.ToString("dd-MMM-yyyy")</td>
+                        <td class="text-right">@item.Amounts</td>
+                        <td class="text-center">
+                            @Html.ActionLink(" Details", "JournalDetails", "AccountManager", new {id = item.JournalId, area = "AccountsAndFinance"}, new {@class = "fa fa-eye"})
+
+                        </td>
+                    </tr>
+                }
+
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Voucher Ref</th>
+                    <th class="text-center">Date </th>
+                    <th class="text-right" style="width: 10%"> Amount (&#2547;)</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
 
 </section>
 @section Scripts

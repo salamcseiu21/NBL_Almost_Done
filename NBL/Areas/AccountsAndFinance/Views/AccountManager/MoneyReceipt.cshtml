@@ -49,61 +49,61 @@
         }
     </style>
 </head>
-<body style="height:auto;width:auto;font-family: 'Times New Roman', Times, serif; font-size: 16px;padding: 25px">
-    <div class="wrapper">
-        <!-- Main content -->
-        <section class="invoice">
-            <!-- title row -->
-            @Html.Partial("_PrintHeaderPartialPage")
-           
-            <h3 class="text-center text-green headingStyle">
-                <span class="inline-border"> Money Receipt</span>
-               
-            </h3><br />
-            <!-- /.row -->
-            <!-- Table row -->
-            <div class="row">
-                <!-- accepted payments column -->
-                <div class="col-xs-6">
-                    <strong>M.R.No.:</strong>@details.ReceiveableNo.ToString("D")
-                </div>
-               
-                <!-- /.col -->
-                <div class="col-xs-6 text-right">
-                    <strong>Date :</strong> @details.ActiveDate.ToString("dd-MMM-yyyy") 
-                </div>
-                <!-- /.col -->
+<body style="height: auto; width: auto; font-family: 'Times New Roman', Times, serif; font-size: 16px; padding: 25px" onload="window.print();">
+<div class="wrapper">
+    <!-- Main content -->
+    <section class="invoice">
+        <!-- title row -->
+        @Html.Partial("_PrintHeaderPartialPage")
+
+        <h3 class="text-center text-green headingStyle">
+            <span class="inline-border"> Money Receipt</span>
+
+        </h3><br/>
+        <!-- /.row -->
+        <!-- Table row -->
+        <div class="row">
+            <!-- accepted payments column -->
+            <div class="col-xs-6">
+                <strong>M.R.No.:</strong>@details.ReceiveableNo.ToString("D")
             </div>
-            
-            <p style="line-height: 1.6;">
-                Received with thanks from Mr./Mrs./Messrs  <strong> <i><u class="dotted">@client.CommercialName</u></i> </strong><br/>
-                Address: <u class="dotted"><i>@client.Address</i></u>, Contact No: <u class="dotted">@client.Phone</u><br/><strong>Payment :</strong> @details.Amount.ToString("N2")<br/>
-                INWORDS : @Generator.NumberToWords(Convert.ToInt32(details.Amount)) TAKA ONLY by <u class="dotted">@details.SourceBankName</u> Date : <u class="dotted">@details.ActiveDate.ToString("dd-MMM-yyyy")</u>,<br /> Cheque No: <u class="dotted">@details.ChequeNo</u>,  Bank : <u class="dotted">@details.SourceBankName</u>,  Account No : <u class="dotted">@details.BankAccountNo</u><br/>
-                On accounts of Battery sales.
-            </p>
-            <div class="row" style="margin-top: 50px">
-                <!-- accepted payments column -->
-                <div class="col-xs-6 text-center">
-                    <p style="margin: 0; padding: 0;"> ................................................</p>
-                     Coustomer's Signature
-                </div>
-               
-                <!-- /.col -->
-                <div class="col-xs-6 text-center">
-                    <p style="margin: 0; padding: 0;"> ........................................................</p>
-                    For Navana Batteries Limited       
-                </div>
-                <!-- /.col -->
+
+            <!-- /.col -->
+            <div class="col-xs-6 text-right">
+                <strong>Date :</strong> @details.ActiveDate.ToString("dd-MMM-yyyy")
             </div>
-            <br/>
-            <p>
-                N.B. This money receipt is valid subject to realization of cheque/Dft./P.O./T.T
-            </p>
-            <hr style="padding: 0; margin: 0;"/>
-            This is a Computer generated report.
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- ./wrapper -->
+            <!-- /.col -->
+        </div>
+
+        <p style="line-height: 1.6;">
+            Received with thanks from Mr./Mrs./Messrs <strong> <i><u class="dotted">@client.CommercialName</u></i> </strong><br/>
+            Address: <u class="dotted"><i>@client.Address</i></u>, Contact No: <u class="dotted">@client.Phone</u><br/><strong>Payment :</strong> @details.Amount.ToString("N2")<br/>
+            INWORDS : @Generator.NumberToWords(Convert.ToInt32(details.Amount)) TAKA ONLY by <u class="dotted">@details.SourceBankName</u> Date : <u class="dotted">@details.ActiveDate.ToString("dd-MMM-yyyy")</u>,<br/> Cheque No: <u class="dotted">@details.ChequeNo</u>, Bank : <u class="dotted">@details.SourceBankName</u>, Account No : <u class="dotted">@details.BankAccountNo</u><br/>
+            On accounts of Battery sales.
+        </p>
+        <div class="row" style="margin-top: 50px">
+            <!-- accepted payments column -->
+            <div class="col-xs-6 text-center">
+                <p style="margin: 0; padding: 0;"> ................................................</p>
+                Coustomer's Signature
+            </div>
+
+            <!-- /.col -->
+            <div class="col-xs-6 text-center">
+                <p style="margin: 0; padding: 0;"> ........................................................</p>
+                For Navana Batteries Limited
+            </div>
+            <!-- /.col -->
+        </div>
+        <br/>
+        <p>
+            N.B. This money receipt is valid subject to realization of cheque/Dft./P.O./T.T
+        </p>
+        <hr style="padding: 0; margin: 0;"/>
+        This is a Computer generated report.
+    </section>
+    <!-- /.content -->
+</div>
+<!-- ./wrapper -->
 </body>
 </html>

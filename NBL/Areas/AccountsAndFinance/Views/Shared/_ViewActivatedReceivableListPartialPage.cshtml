@@ -8,45 +8,52 @@
 
 
 <section class="content">
-    <h3 class="text-center text-green">Activated Receivable List</h3>
-    <table class="display table-bordered" id="tbl_Receivable_List" style="border: 1px solid">
-        <thead>
-            <tr>
-                <th>S.N</th>
-                <th>Account Info</th>
-                <th>Account Code</th>
-                <th class="text-right">Amount</th>
-                <th class="text-center">Date</th>
-                <th class="text-center">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ToList())
-            {
-                i++;
+    
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder"><i class="fa fa-money"></i> Activated Money Receipt</div>
+        <div class="panel panel-body">
+            <table class="display table-bordered" id="tbl_Receivable_List" style="border: 1px solid">
+                <thead>
                 <tr>
-                    <td>@i</td>
-                    <td>@item.ClientInfo</td>
-                    <td>@item.AccountCode</td>
-                    <td class="text-right">@item.Amount.ToString("N2")</td>
-                    <td class="text-center">@item.ActiveDate.ToString("dd-MMM-yyyy")</td>
-                    <td class="text-center">
-                        @Html.ActionLink(" Money Receipt", "MoneyReceipt", new { id = item.ChequeDetailsId }, new { target = "_blank", @class = "fa fa-print" })
-                    </td>
+                    <th>S.N</th>
+                    <th>Account Info</th>
+                    <th>Account Code</th>
+                    <th class="text-right">Amount</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Action</th>
                 </tr>
-            }
-        </tbody>
-        <tfoot>
-        <tr>
-            <th>S.N</th>
-            <th>Account Info</th>
-            <th>Account Code</th>
-            <th class="text-right">Amount</th>
-            <th class="text-center">Date</th>
-            <th class="text-center">Action</th>
-        </tr>
-        </tfoot>
-    </table>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.ToList())
+                {
+                    i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.ClientInfo</td>
+                        <td>@item.AccountCode</td>
+                        <td class="text-right">@item.Amount.ToString("N2")</td>
+                        <td class="text-center">@item.ActiveDate.ToString("dd-MMM-yyyy")</td>
+                        <td class="text-center">
+                            @Html.ActionLink(" Money Receipt", "MoneyReceipt", "AccountManager", new {id = item.ChequeDetailsId}, new {target = "_blank", @class = "fa fa-print"})
+                        </td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>S.N</th>
+                    <th>Account Info</th>
+                    <th>Account Code</th>
+                    <th class="text-right">Amount</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+ 
 </section>
 
 @section Scripts

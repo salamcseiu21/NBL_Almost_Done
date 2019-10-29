@@ -369,7 +369,8 @@ namespace NBL.DAL
                         EntryDate = Convert.ToDateTime(reader["SysDateTime"]),
                         ReceiveRef = reader["ReceiveRef"].ToString(),
                         BranchId = Convert.ToInt32(reader["ReceiveByBranchId"]),
-                        CompanyId = Convert.ToInt32(reader["CompanyId"])
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        UserId = Convert.ToInt32(reader["EntryByUserId"])
                     };
                 }
                 reader.Close();
@@ -405,7 +406,10 @@ namespace NBL.DAL
                         ReceiveId = id,
                         ProductName = reader["ProductName"].ToString(),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
-                        ExpiryDate = Convert.ToDateTime(reader["ExpiryDate"])
+                        ExpiryDate = Convert.ToDateTime(reader["ExpiryDate"]),
+                        CategoryName = reader["ProductCategoryName"].ToString(),
+                        ReplaceForBarcode = reader["BarcodeNo"].ToString()
+                        
                     });
                 }
                 reader.Close();

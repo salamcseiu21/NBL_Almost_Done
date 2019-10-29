@@ -7,8 +7,6 @@ using System.Web.Mvc;
 using NBL.BLL;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.Employees;
-using NBL.Models.EntityModels.Identities;
-using NBL.Models.EntityModels.Securities;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Products;
