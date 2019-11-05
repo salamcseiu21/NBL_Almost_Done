@@ -1067,8 +1067,6 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
             try
             {
-                int rowAffected = 0;
-                int journalId = 0;
                 CommandObj.Transaction = sqlTransaction;
                 CommandObj.CommandText = "UDSP_SaveJournalVoucher";
                 CommandObj.CommandType = CommandType.StoredProcedure;
@@ -1082,8 +1080,8 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                 CommandObj.Parameters.Add("@JournalId", SqlDbType.Int);
                 CommandObj.Parameters["@JournalId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
-                journalId = Convert.ToInt32(CommandObj.Parameters["@JournalId"].Value);
-                rowAffected = SaveJournalVoucherDetails(journals, journalId);
+                var journalId = Convert.ToInt32(CommandObj.Parameters["@JournalId"].Value);
+                var rowAffected = SaveJournalVoucherDetails(journals, journalId);
                 if (rowAffected > 0)
                 {
                     sqlTransaction.Commit();
@@ -1109,10 +1107,10 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             int i = 0;
             foreach (var item in journals)
             {
-                if (item.DebitOrCredit.Equals("Cr"))
-                {
-                    item.Amounts = item.Amounts * -1;
-                }
+                //if (item.DebitOrCredit.Equals("Cr"))
+                //{
+                //    item.Amounts = item.Amounts * -1;
+                //}
                 CommandObj.CommandText = "UDSP_SaveJournalVoucherDetails";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.Clear();
@@ -1957,6 +1955,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@VoucherId", aVoucher.JournalId);
                 CommandObj.Parameters.AddWithValue("@TransactionRef", aVoucher.VoucherRef);
+                CommandObj.Parameters.AddWithValue("@Remarks", aVoucher.Remarks);
                 CommandObj.Parameters.AddWithValue("@VoucherNo", aVoucher.VoucherNo);
                 CommandObj.Parameters.AddWithValue("@BranchId", aVoucher.BranchId);
                 CommandObj.Parameters.AddWithValue("@CompanyId", aVoucher.CompanyId);
@@ -1990,16 +1989,17 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             var i = 0;
             foreach (var detail in voucherDetails)
             {
-                if (detail.DebitOrCredit.Equals("Cr"))
-                {
-                    detail.Amount = detail.Amount * -1;
-                }
+                //if (detail.DebitOrCredit.Equals("Cr"))
+                //{
+                //    detail.Amount = detail.Amount * -1;
+                //}
                 CommandObj.CommandText = "UDSP_SaveJournalVoucherDetailsIntoAccountDetails";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.Clear();
                 CommandObj.Parameters.AddWithValue("@AccountMasterId", accountId);
                 CommandObj.Parameters.AddWithValue("@SubSubSubAccountCode", detail.AccountCode);
                 CommandObj.Parameters.AddWithValue("@TransactionType", detail.DebitOrCredit);
+                CommandObj.Parameters.AddWithValue("@Remarks", detail.Remarks);
                 CommandObj.Parameters.AddWithValue("@Amount", detail.Amount);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;

@@ -12,6 +12,7 @@ using NBL.Models.EntityModels.Approval;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Requisitions;
 using NBL.Models.EntityModels.Securities;
+using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Requisitions;
 
@@ -76,6 +77,7 @@ namespace NBL.Areas.CommonArea.Controllers
                     ApprovalActionId = actionId,
                     ApproverUserId = user.UserId,
                     Remarks = remarks,
+                   
                     GeneralRequisitionId = id
                 };
                 GeneralRequisitionModel model = _iProductManager.GetGeneralRequisitionById(id);
@@ -107,6 +109,7 @@ namespace NBL.Areas.CommonArea.Controllers
             catch (Exception exception)
             {
                
+                Log.WriteErrorLog(exception);
                 ICollection<ViewGeneralRequisitionModel> requisitions = _iProductManager.GetAllGeneralRequisitions()
                     .ToList().FindAll(n => n.CurrentApproverUserId == user.UserId);
                 return PartialView("_ViewGeneralRequisitionListPartialPage", requisitions);

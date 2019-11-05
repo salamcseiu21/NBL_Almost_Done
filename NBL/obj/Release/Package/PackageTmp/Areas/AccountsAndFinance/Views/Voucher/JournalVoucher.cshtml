@@ -7,94 +7,92 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-green headingStyle">Journal Voucher</h3>
-    <div id="message" style="display:none;font-weight:bold;font-size:20px" class="text-center">
-    </div>
-    @using (Html.BeginForm("JournalVoucher", "Voucher", FormMethod.Post, new { id = "journalVoucherForm" }))
-    {
-        <div class="form-horizontal">
-
-            <div class="panel panel-info">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-6">
+    
+     
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Journal Voucher</div>
+        <div class="panel panel-body">
+            <div id="message" style="display: none; font-weight: bold; font-size: 20px" class="text-center">
+            </div>
+            @using (Html.BeginForm("JournalVoucher", "Voucher", FormMethod.Post, new { id = "journalVoucherForm" }))
+            {
+                <div class="form-horizontal">
+                    <div class="panel panel-info">
+                        <div class="panel-body">
                             <div class="row">
-
-                                <div class="col-md-8">
-                                    <div class="form-group">
-                                        <label for="PurposeName" class="control-label col-md-4">Account Name</label>
+                                <div class="col-md-6">
+                                    <div class="row">
                                         <div class="col-md-8">
-                                            <input type="text" id="PurposeName" name="PurposeName" placeholder="Purpose Name" class="form-control" autofocus/>
-                                            <input  type="hidden" id="SubSubSubAccountId"/>
+                                            <div class="form-group">
+                                                <label for="PurposeName" class="control-label col-md-4">Account Name</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" id="PurposeName" name="PurposeName" placeholder="Purpose Name" class="form-control" autofocus />
+                                                    <input type="hidden" id="SubSubSubAccountId" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="PurposeCode" class="control-label col-md-5">Account Code</label>
+                                                <div class="col-md-7">
+                                                    <input type="text" id="PurposeCode" name="PurposeCode" placeholder="PurposeCode" class="form-control" readonly />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="PurposeCode" class="control-label col-md-5">Account Code</label>
-                                        <div class="col-md-7">
-                                            <input type="text" id="PurposeCode" name="PurposeCode" placeholder="PurposeCode" class="form-control" readonly />
+                                        <label class="control-label col-md-2">Remarks</label>
+                                        <div class="col-md-10">
+                                            <textarea class="form-control" id="Remarks" name="Remarks" style="resize: none;" rows="2" placeholder="Remarks" required></textarea>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Remarks</label>
-                                <div class="col-md-10">
-                                    <textarea class="form-control" id="Remarks" name="Remarks" style="resize:none;" rows="2" placeholder="Remarks"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                         <div class="row">
-                             <div class="col-md-6">
-                                 <div class="form-group">
-                                     <label class="control-label col-md-5">Transaction Type</label>
-                                     <div class="col-md-7">
-                                         <select id="TransactionType" name="TransactionType" class="form-control">
-                                             <option value="Dr">Dr</option>
-                                             <option value="Cr">Cr</option>
-                                         </select>
-                                     </div>
-                                 </div>
-                             </div>
-                             <div class="col-md-6">
-                                 <div class="form-group">
-                                     <label for="PurposeCode" class="control-label col-md-4">Amount (&#2547;)</label>
-                                     <div class="col-md-8">
-                                         <input type="number" id="Amount" name="Amount" style="text-align:right" placeholder="Amount" class="form-control" min="0" />
-                                     </div>
-                                 </div>
-                             </div>
-
-                         </div>
-                          
-
-
-                            <div class="form-group">
-                                <div class="col-md-9 col-md-offset-3">
+                                <div class="col-md-6">
                                     <div class="row">
                                         <div class="col-md-6">
-
+                                            <div class="form-group">
+                                                <label class="control-label col-md-5">Transaction Type</label>
+                                                <div class="col-md-7">
+                                                    <select id="TransactionType" name="TransactionType" class="form-control">
+                                                        <option value="Dr">Dr</option>
+                                                        <option value="Cr">Cr</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-6 text-right">
-
-                                            <input type="button" value="Add to List" onclick="AddJournalInfoToList(this)" class="btn btn-info" id="addInfoButton" />
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="PurposeCode" class="control-label col-md-4">Amount (&#2547;)</label>
+                                                <div class="col-md-8">
+                                                    <input type="number" id="Amount" name="Amount" style="text-align: right" placeholder="Amount" class="form-control" min="0" />
+                                                </div>
+                                            </div>
                                         </div>
-                                        <br />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-9 col-md-offset-3">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                </div>
+                                                <div class="col-md-6 text-right">
+                                                    <input type="button" value="Add to List" onclick="AddJournalInfoToList(this)" class="btn btn-info" id="addInfoButton" />
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
-
-              
+                    <div id="divTempjournalVoucherList"></div>
                 </div>
-            </div>
-            <div id="divTempjournalVoucherList"></div>
-
+            }
         </div>
-    }
+    </div>
+    
 </section>
 @section Scripts
 {
@@ -167,8 +165,12 @@
         if ($("#PurposeName").val() === "") {
             alert("Please enter purpose name..");
         }
+
         else if ($("#Amount").val() === "") {
             alert("Please Enter amount");
+        }
+        else if ($("#Remarks").val() === "") {
+            alert("Please Enter Journal Remarks");
         }
         else {
             var $form = $(btnClicked).parents('form');

@@ -48,10 +48,12 @@ namespace NBL.BLL.Contracts
         ViewChalanModel GetChalanByDeliveryIdFromFactory(int deliveryId);
        ViewChalanModel GetDeliveredReplaceBarcodeListbyDeliveryId(int deliveryId);
        ICollection<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(int branchId, int companyId, DateTime now, int userId);
+       IEnumerable<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyDate(int branchId, int companyId, DateTime deliveryDate);
        ICollection<ViewProduct> GetDeliveredProductListByTransactionRef(string deliveryRef);
        IEnumerable<ViewDeliveredOrderModel> GetDeliveredGeneralReqById(long deliveryId);
        List<Delivery> GetAllDeliveredOrdersByBranchAndCompany(int branchId, int companyId, int uorderByUserId);
        ICollection<ViewClientStockProduct> GetClientStockProductAgeByDeliveryId(long deliveryId);
-       ICollection<ViewClientStockReport> GetAllClientsByClientTypeId(int clientTypeId); 
+       ICollection<ViewClientStockReport> GetAllClientsByClientTypeId(int clientTypeId);
+      
    }
 }

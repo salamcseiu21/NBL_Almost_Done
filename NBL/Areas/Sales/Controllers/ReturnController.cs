@@ -846,8 +846,9 @@ namespace NBL.Areas.Sales.Controllers
         {
             try
             {
+                int branchId = Convert.ToInt32(Session["BranchId"]);
                 // var products = _iProductReturnManager.GetAllReturnsByStatus(2).ToList();
-                ICollection<ReturnModel> products = _iProductReturnManager.GetAllFinalApprovedGeneralReturnsList();
+                ICollection<ReturnModel> products = _iProductReturnManager.GetAllFinalApprovedGeneralReturnsList().ToList().FindAll(n=>n.BranchId==branchId);
                 return View(products);
             }
             catch (Exception exception)

@@ -8138,7 +8138,7 @@
     <Content Include="Areas\Sales\Views\Replace\ReplaceList.cshtml" />
     <Content Include="Areas\Services\Views\Replace\ReplaceList.cshtml" />
     <Content Include="Areas\Sales\Views\Replace\AllReplaceLsit.cshtml" />
-    <Content Include="Areas\Sales\Views\Delivery\OrderListByDate.cshtml" />
+    <Content Include="Areas\Sales\Views\Report\OrderListByDate.cshtml" />
     <Content Include="Areas\Services\Views\WarrantyBattery\Receive.cshtml" />
     <Content Include="Areas\Services\Views\Shared\_ViewProductHistoryPartialPage.cshtml" />
     <Content Include="Areas\Sales\Views\Requisition\DeliveredGRequsition.cshtml" />

@@ -474,6 +474,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 JournalVoucher aVoucher = _iAccountsManager.GetJournalVoucherById(voucherId);
                 var anUser = (ViewUser)Session["user"];
                 var voucherDetails = _iAccountsManager.GetJournalVoucherDetailsById(voucherId).ToList();
+                aVoucher.Remarks = "Journal entry";
                 bool result = _iAccountsManager.ApproveJournalVoucher(aVoucher, voucherDetails, anUser.UserId);
                 return result ? RedirectToAction("ViewJournal") : RedirectToAction("JournalDetails", "AccountManager", aVoucher);
             }

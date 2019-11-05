@@ -109,11 +109,7 @@ namespace NBL.Areas.Sales.Controllers
             return PartialView("_OrderListPartialPage", model);
 
         }
-        [Authorize(Roles = "DistributionManager")]
-        public ActionResult OrderListByDate()
-        {
-            return View();
-        }
+       
         public ActionResult OrderSummary()
         {
             ViewOrderSearchModel model = new ViewOrderSearchModel();
@@ -160,16 +156,8 @@ namespace NBL.Areas.Sales.Controllers
                 IEnumerable<ViewOrder> orders = _iOrderManager.GetOrdersByBranchCompanyAndDateRange(searchCriteria);
             return PartialView("_RptViewOrderListBydatePartialPage", orders);
         }
-        [Authorize(Roles = "DistributionManager")]
-        public PartialViewResult LoadOrderListByDate(DateTime deliveryDate)
-        {
 
-            int branchId = Convert.ToInt32(Session["BranchId"]);
-            int companyId = Convert.ToInt32(Session["CompanyId"]);
-            var user = (ViewUser)Session["user"];
-            var orders = _iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(branchId, companyId, deliveryDate, user.UserId);
-            return PartialView("_ViewDeliveredOrdersPartialPage", orders);
-        }
+       
         [HttpGet]
         public ActionResult Delivery(int id)
         {

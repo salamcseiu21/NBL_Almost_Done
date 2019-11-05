@@ -12,7 +12,7 @@ namespace NBL.Models.EntityModels.Transports
         public string VehicleNo { get; set; }
         public string GetBasicInformation()
         {
-            return Transportation;
+            return $"Transporation:{Transportation},Driver Name:{DriverName},Driver Phone:{DriverPhone},Vehicle No: {VehicleNo},Cost:{TransportationCost}";
         }
 
         public string GetFullInformation()

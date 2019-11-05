@@ -96,34 +96,34 @@ namespace NBL.DAL
 
         public IEnumerable<ProductType> GetAllProductType()
         {
-        try
-        {
-            CommandObj.CommandText = "spGetAllProductType";
-            CommandObj.CommandType = CommandType.StoredProcedure;
-            ConnectionObj.Open();
-            List<ProductType> types = new List<ProductType>();
-            SqlDataReader reader = CommandObj.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                types.Add(new ProductType
+                CommandObj.CommandText = "spGetAllProductType";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                List<ProductType> types = new List<ProductType>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
                 {
-                    ProductTypeId = Convert.ToInt32(reader["ProductTypeId"]),
-                    ProductTypeName = reader["ProductTypeName"].ToString()
-                });
+                    types.Add(new ProductType
+                    {
+                        ProductTypeId = Convert.ToInt32(reader["ProductTypeId"]),
+                        ProductTypeName = reader["ProductTypeName"].ToString()
+                    });
+                }
+                reader.Close();
+                return types.OrderBy(n => n.ProductTypeName).ToList();
             }
-            reader.Close();
-            return types.OrderBy(n => n.ProductTypeName).ToList();
-        }
-    catch (Exception exception)
-    {
-    throw new Exception("Could not Collect Product Category", exception);
-}
-finally
-{
-ConnectionObj.Close();
-CommandObj.Dispose();
-CommandObj.Parameters.Clear();
-}
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Collect Product Category", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
         }
 
         public IEnumerable<Branch> GetAssignedBranchesToUserByUserId(int userId)

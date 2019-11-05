@@ -33,6 +33,7 @@ namespace NBL.DAL.Contracts
         IEnumerable<ViewProduct> GetDeliveredProductsByDeliveryIdAndProductIdFromFactory(int deliveryId, int productId);
         IEnumerable<ViewReplaceDetailsModel> GetDeliveredReplaceDetailsByDeliveryId(int deliveryId);
         IEnumerable<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(int branchId, int companyId, DateTime date, int userId);
+        IEnumerable<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyDate(int branchId, int companyId, DateTime deliveryDate); 
         IEnumerable<Delivery> GetAllDeliveredOrdersByDistributionPointAndCompanyId(int branchId, int companyId);
         ICollection<ViewProduct> GetDeliveredProductListByTransactionRef(string deliveryRef);
         IEnumerable<ViewDeliveredOrderModel> GetDeliveredGeneralReqById(long deliveryId);
@@ -40,5 +41,6 @@ namespace NBL.DAL.Contracts
         ICollection<ViewClientStockProduct> GetClientStockProductAgeByDeliveryId(long deliveryId);
         ICollection<ViewClientStockReport> GetAllClientsByClientTypeId(int clientTypeId);
         ICollection<ViewDeliveredOrderModel> GetDeliveredOrderBySearchCriteria(SearchCriteria aCriteria);
+      
     }
 }

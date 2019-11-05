@@ -96,6 +96,7 @@ namespace NBL.Areas.Production.Controllers
                 {
                     maxSl = 5000;
                 }
+
                 var user = (ViewUser)Session["user"];
                 model.GenerateByUserId = user.UserId;
                 for (int i = 1; i <= model.Total; i++)

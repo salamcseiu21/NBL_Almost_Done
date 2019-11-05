@@ -853,6 +853,7 @@ namespace NBL.DAL
                         ToBranchId = Convert.ToInt32(reader["ToBranchId"]),
                         FromBranchId = Convert.ToInt32(reader["ToBranchId"]),
                         CompanyId = companyId,
+                        Quantity = Convert.ToInt32(reader["DeliveredQuantity"]),
                         DeliveryRef = reader["DeliveryRef"].ToString(),
                         DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
                         TransactionRef = reader["TransactionRef"].ToString(),
@@ -869,6 +870,7 @@ namespace NBL.DAL
                         },
                         Client = new Client
                         {
+                            ClientId = Convert.ToInt32(reader["ClientId"]),
                             ClientName = reader["Name"].ToString(),
                             CommercialName = reader["CommercialName"].ToString(),
                             Address = reader["Address"].ToString(),
@@ -907,7 +909,93 @@ namespace NBL.DAL
             catch (Exception exception)
             {
                 Log.WriteErrorLog(exception);
-                throw new Exception("Could not Collect Delivered Orders by branch,Company and User Id", exception);
+                throw new Exception("Could not Collect Delivered Orders by branch,Company,date and User Id", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public IEnumerable<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyDate(int branchId, int companyId, DateTime deliveryDate)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllDeliveredOrdersByDistributionPointCompanyDate";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DistributionPointId", branchId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", companyId);
+                CommandObj.Parameters.AddWithValue("@DeliveryDate", deliveryDate);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<Delivery> orders = new List<Delivery>();
+                while (reader.Read())
+                {
+                    Delivery aModel = new Delivery
+                    {
+                        DeliveryId = Convert.ToInt32(reader["DeliveryId"]),
+                        ToBranchId = Convert.ToInt32(reader["ToBranchId"]),
+                        FromBranchId = Convert.ToInt32(reader["ToBranchId"]),
+                        CompanyId = companyId,
+                        Quantity = Convert.ToInt32(reader["DeliveredQuantity"]),
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        DeliveredByUserId = Convert.ToInt32(reader["DeliveredByUserId"]),
+                        Status = Convert.ToInt32(reader["Status"]),
+                        SysDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        Transport = new Transport
+                        {
+                            DriverName = reader["DriverName"].ToString(),
+                            DriverPhone = reader["DriverPhone"].ToString(),
+                            Transportation = reader["Transportation"].ToString(),
+                            TransportationCost = Convert.ToDecimal(reader["TransportationCost"]),
+                            VehicleNo = reader["VehicleNo"].ToString()
+                        },
+                        Client = new Client
+                        {
+                            ClientId = Convert.ToInt32(reader["ClientId"]),
+                            ClientName = reader["Name"].ToString(),
+                            CommercialName = reader["CommercialName"].ToString(),
+                            Address = reader["Address"].ToString(),
+                            Phone = reader["Phone"].ToString(),
+                            AlternatePhone = DBNull.Value.Equals(reader["AltPhone"]) ? null : reader["AltPhone"].ToString(),
+                            Email = DBNull.Value.Equals(reader["Email"]) ? null : reader["Email"].ToString(),
+                            ClientImage = DBNull.Value.Equals(reader["ClientImage"]) ? null : reader["ClientImage"].ToString(),
+                            ClientSignature = DBNull.Value.Equals(reader["ClientSignature"]) ? null : reader["ClientSignature"].ToString(),
+                            NationalIdNo = DBNull.Value.Equals(reader["NationalIdNo"]) ? null : reader["NationalIdNo"].ToString(),
+                            Active = reader["Active"].ToString(),
+                            CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
+                            MaxCreditDay = Convert.ToInt32(reader["MaxCreditDay"]),
+                            TerritoryId = Convert.ToInt32(reader["TerritoryId"]),
+                            RegionId = Convert.ToInt32(reader["RegionId"]),
+                            SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
+                            BranchId = Convert.ToInt32(reader["BranchId"]),
+                            Outstanding = DBNull.Value.Equals(reader["Outstanding"]) ? default(decimal) : Convert.ToDecimal(reader["Outstanding"]),
+                            ClientType = new ClientType
+                            {
+                                ClientTypeName = reader["ClientTypeName"].ToString(),
+                                ClientTypeId = Convert.ToInt32(reader["ClientTypeId"])
+                            }
+                        }
+                    };
+                    orders.Add(aModel);
+                }
+                reader.Close();
+                return orders;
+
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Delivered Orders due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Collect Delivered Orders by branch,Company and date", exception);
             }
             finally
             {

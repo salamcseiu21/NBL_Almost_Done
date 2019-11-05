@@ -10,11 +10,13 @@ namespace NBL.Areas.Sales.Controllers
     {
         private readonly IReportManager _iReportManager;
         private readonly IBranchManager _iBranchManager;
+        private readonly IDeliveryManager _iDeliveryManager;
 
-        public ReportController(IReportManager iReportManager,IBranchManager iBranchManager)
+        public ReportController(IReportManager iReportManager,IBranchManager iBranchManager,IDeliveryManager iDeliveryManager)
         {
             _iReportManager = iReportManager;
             _iBranchManager = iBranchManager;
+            _iDeliveryManager = iDeliveryManager;
         }
         // GET: Sales/Report
         public ActionResult AllDeliveredQtyForOrder()
@@ -48,6 +50,23 @@ namespace NBL.Areas.Sales.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
 
+        }
+
+       
+        public ActionResult OrderListByDate()
+        {
+            return View();
+        }
+      
+        public PartialViewResult LoadOrderListByDate(DateTime deliveryDate)
+        {
+
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            int companyId = Convert.ToInt32(Session["CompanyId"]);
+            //var user = (ViewUser)Session["user"];
+            // var orders = _iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(branchId, companyId, deliveryDate, user.UserId);
+            var orders = _iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyDate(branchId, companyId, deliveryDate);
+            return PartialView("_ViewDeliveredOrdersPartialPage", orders);
         }
     }
 }

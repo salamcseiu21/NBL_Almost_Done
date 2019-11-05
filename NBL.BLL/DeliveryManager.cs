@@ -112,10 +112,17 @@ namespace NBL.BLL
             return chalan;
         }
 
-        public ICollection<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(int branchId, int companyId, DateTime date,
+        public ICollection<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(int branchId,int companyId,DateTime date,
             int userId)
         {
             var deliveredOrders = _iDeliveryGateway.GetAllDeliveredOrdersByDistributionPointCompanyDateAndUserId(branchId, companyId,date, userId);
+
+            return deliveredOrders.ToList();
+        }
+
+        public IEnumerable<Delivery> GetAllDeliveredOrdersByDistributionPointCompanyDate(int branchId, int companyId, DateTime deliveryDate)
+        {
+            var deliveredOrders = _iDeliveryGateway.GetAllDeliveredOrdersByDistributionPointCompanyDate(branchId, companyId, deliveryDate);
 
             return deliveredOrders.ToList();
         }
