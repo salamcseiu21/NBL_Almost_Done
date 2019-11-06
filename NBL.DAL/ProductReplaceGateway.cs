@@ -310,6 +310,48 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+        public ICollection<ReplaceReport> GetReplaceListByDateAndDistributionPoint(DateTime date,int distributionPoint)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetReplaceListByDateAndDistributionPoint";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@DistributionPoint", distributionPoint);
+                CommandObj.Parameters.AddWithValue("@Date", date);
+                List<ReplaceReport> models = new List<ReplaceReport>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    models.Add(new ReplaceReport
+                    {
+
+                        ClientName = reader["ClientName"].ToString(),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        ProductName = reader["ProductName"].ToString(),
+                        DeliveryDateTime = Convert.ToDateTime(reader["DeliveryDate"]),
+                        ReplaceForBarcode = reader["ReplaceFor"].ToString(),
+                        EntryDateTime = Convert.ToDateTime(reader["ReceiveDatetime"]),
+                        Quantity = Convert.ToInt32(reader["Quantity"])
+
+                    });
+                }
+                reader.Close();
+                return models;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect delivered Replace list by branch Id and date", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
 
         public ICollection<ViewReplaceModel> GetAllReplaceList(int status)
         {

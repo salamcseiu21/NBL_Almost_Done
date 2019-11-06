@@ -2231,6 +2231,132 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             }
         }
 
+        public int GetMaxSubSubSubAccountNoBySubSubAccountCode(string subSubAccountCode)
+        {
+            try
+            {
+                int maxSlno = 0;
+                CommandObj.CommandText = "UDSP_GetMaxSubSubSubAccountNoBySubSubAccountCode";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@SubSubAccountCode", subSubAccountCode); 
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    maxSlno = Convert.ToInt32(reader["MaxNo"]);
+                }
+                reader.Close();
+                return maxSlno;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Colud not get max serial by sub Sub sub Account Code", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+        public int GetMaxSubSubAccountNoBySubAccountCode(string subAccountCode)
+        {
+            try
+            {
+                int maxSlno = 0;
+                CommandObj.CommandText = "UDSP_GetMaxSubSubAccountNoBySubAccountCode";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@SubAccountCode", subAccountCode);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    maxSlno = Convert.ToInt32(reader["MaxNo"]);
+                }
+                reader.Close();
+                return maxSlno;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Colud not get max serial by Sub sub Account Code", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int AddSubSubAccount(SubSubAccount account)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_AddSubSubAccount";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@SubAccountCode", account.SubAccountCode);
+                CommandObj.Parameters.AddWithValue("@SubSubAccountCode", account.SubSubAccountCode);
+                CommandObj.Parameters.AddWithValue("@SubSubAccountName", account.SubSubAccountName);
+                CommandObj.Parameters.AddWithValue("@UserId", account.UserId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                int rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Unable to add Sub Sub Sub Account", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int AddSubSubSubAccount(SubSubSubAccount account)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_AddSubSubSubAccount";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@SubSubAccountCode", account.SubSubAccountCode);
+                CommandObj.Parameters.AddWithValue("@SubSubSubAccountCode", account.SubSubSubAccountCode);
+                CommandObj.Parameters.AddWithValue("@SubSubSubAccountName", account.SubSubSubAccountName);
+                CommandObj.Parameters.AddWithValue("@SubSubSubAccountType", account.SubSubSubAccountType);
+                CommandObj.Parameters.AddWithValue("@UserId", account.UserId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                int rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Unable to add Sub Sub Sub Account", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+       
+
         public AccountSummary GetAccountSummaryOfCurrentMonth()
         {
             try

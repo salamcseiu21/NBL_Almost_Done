@@ -6,45 +6,50 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-green">Requisition Details</h3>
 
-    <table class="display table-bordered" id="tbl_requisition_details_list" style="border:  1px solid">
-        <thead>
-            <tr>
-                <td>
-                    <strong>@branch.BranchName</strong><br />
-                    @branch.BranchAddress
-                </td>
-                <td colspan="2">
-                    @Html.ActionLink(" Back", "PendingRequisition", "Product", null, new { @class = "btn btn-danger" })
-                </td>
-            </tr>
-            <tr>
-                <th>Product Name</th>
-                <th class="text-right">Quantity</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.TtransferRequisitions)
-            {
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Requisition Details</div>
+        <div class="panel panel-body">
+            <table class="display table-bordered" id="tbl_requisition_details_list" style="border: 1px solid">
+                <thead>
                 <tr>
-                    <td>@item.ProductName </td>
-                    <td class="text-right">
-                        @item.Quantity
-                       
+                    <td>
+                        <strong>@branch.BranchName</strong><br/>
+                        @branch.BranchAddress
                     </td>
-                  
+                    <td colspan="2">
+                        @Html.ActionLink(" Back", "PendingRequisition", "Product", null, new {@class = "btn btn-danger"})
+                    </td>
                 </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Product Name</th>
-                <th class="text-right">Quantity</th>
-               
-            </tr>
-        </tfoot>
-    </table>
+                <tr>
+                    <th>Product Name</th>
+                    <th class="text-right">Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.TtransferRequisitions)
+                {
+                    <tr>
+                        <td>@item.ProductName </td>
+                        <td class="text-right">
+                            @item.Quantity
+
+                        </td>
+
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Product Name</th>
+                    <th class="text-right">Quantity</th>
+
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+ 
 </section>
 
 @section Scripts

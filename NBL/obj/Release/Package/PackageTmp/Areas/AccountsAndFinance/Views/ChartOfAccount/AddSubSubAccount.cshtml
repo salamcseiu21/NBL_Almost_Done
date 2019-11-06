@@ -1,0 +1,114 @@
+﻿@model NBL.Models.EntityModels.ChartOfAccounts.SubSubAccount
+@{
+    ViewBag.Title = "Add Sub Sub Account";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+<section class="content">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Add Sub Sub Account</div>
+        <div class="panel panel-body">
+            @using (Html.BeginForm())
+            {
+                <div class="form-horizontal">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AccountHeadCode, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(model => model.AccountHeadCode, null, "--Select--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AccountHeadCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SubAccountCode, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(model => model.SubAccountCode, null, "--Select--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.SubAccountCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SubSubAccountCode, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(model => model.SubSubAccountCode, null, "--View Existing Account--", new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.SubSubAccountCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SubSubAccountName, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.SubSubAccountName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Sub Sub Account Name" } })
+                                @Html.ValidationMessageFor(model => model.SubSubAccountName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-md-9 col-md-offset-3">
+                                <input type="submit" class="btn btn-info" />
+                                @Html.ActionLink("Back","SubSubAccountList",new {area="AccountsAndFinance"},new {@class="btn btn-danger"})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+
+@section Scripts
+{
+    @* Cascading dropdons implementations *@
+    <script>
+
+        $("#AccountHeadCode").change(function () {
+        //var divId = $(this).val();
+            var accountHeadCode = $(this).val();
+
+        $("#SubAccountCode").empty();
+        $("#SubSubAccountCode").empty();
+        $("#SubAccountCode").append('<option value="">--Select--</option>');
+        $("#SubSubAccountCode").append('<option value="">--View Existing Account--</option>');
+        //var json = { divisionId: divId };
+        var json = { accountHeadCode: accountHeadCode };
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetSubAccountByheadCode", "ChartOfAccount", new { area = "AccountsAndFinance" })',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(json),
+            success: function (data) {
+
+
+                $.each(data, function (key, value) {
+                    //alert(key);
+                    $("#SubAccountCode").append('<option value=' + value.SubAccountCode + '>' + value.SubAccountName + '</option>');
+
+                });
+            }
+        });
+    });
+
+        $("#SubAccountCode").change(function () {
+         var subAccountCode = $("#SubAccountCode").val();
+         $("#SubSubAccountCode").empty();
+            $("#SubSubAccountCode").append('<option value="">--View Existing Account--</option>');
+        var json = { subAccountCode: subAccountCode };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetSubSubAccountByheadCode", "ChartOfAccount", new { area = "AccountsAndFinance" })',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(json),
+            success: function (data) {
+
+
+                $.each(data, function (key, value) {
+                    //alert(key);
+                    $("#SubSubAccountCode").append('<option value=' + value.SubSubAccountCode + '>' + value.SubSubAccountName + '</option>');
+
+                });
+            }
+        });
+
+        });
+
+    </script>
+}

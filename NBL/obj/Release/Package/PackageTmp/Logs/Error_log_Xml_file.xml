@@ -997,4 +997,30 @@ Parameter name: length</CustomeMessage>
     <CustomeMessage>The INSERT statement conflicted with the FOREIGN KEY constraint "FK_FactoryInventoryDetails_Barcodes". The conflict occurred in database "dbUniversalBusinessSolution1", table "dbo.Barcodes", column 'Barcode'.
 The statement has been terminated.</CustomeMessage>
   </Error>
+  <Error LogId="19-Nov-06fe6a3cd3-9895-45d9-81f8-d2e313baabd2">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductGateway.CancelRequisition(Int64 requisitionId, ViewUser user) in E:\API\NBL\NBL.DAL\ProductGateway.cs:line 2647
+   at NBL.BLL.ProductManager.CancelRequisition(Int64 requisitionId, ViewUser user) in E:\API\NBL\NBL.BLL\ProductManager.cs:line 510
+   at NBL.Areas.Sales.Controllers.ProductController.CancelRequisition(Int64 id) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 844</LogMessage>
+    <LogDateTime>2019-11-06T12:45:37.593246+06:00</LogDateTime>
+    <CustomeMessage>Could not Cancel requisition</CustomeMessage>
+  </Error>
+  <Error LogId="19-Nov-0698df8c43-580f-45e2-8524-4dc3eb0dd6a7">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ProductGateway.CancelRequisition(Int64 requisitionId, ViewUser user) in E:\API\NBL\NBL.DAL\ProductGateway.cs:line 2647
+   at NBL.BLL.ProductManager.CancelRequisition(Int64 requisitionId, ViewUser user) in E:\API\NBL\NBL.BLL\ProductManager.cs:line 510
+   at NBL.Areas.Sales.Controllers.ProductController.CancelRequisition(Int64 id) in E:\API\NBL\NBL\Areas\Sales\Controllers\ProductController.cs:line 844</LogMessage>
+    <LogDateTime>2019-11-06T12:46:52.1449445+06:00</LogDateTime>
+    <CustomeMessage>Could not Cancel requisition</CustomeMessage>
+  </Error>
+  <Error LogId="19-Nov-06c94a6abc-85b8-4483-8b83-3536218784d3">
+    <Heading>System.FormatException</Heading>
+    <LogMessage>   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value, IFormatProvider provider)
+   at System.String.System.IConvertible.ToDateTime(IFormatProvider provider)
+   at System.Convert.ToDateTime(Object value)
+   at NBL.DAL.ProductReplaceGateway.GetReplaceListByDateAndDistributionPoint(DateTime date, Int32 distributionPoint) in E:\API\NBL\NBL.DAL\ProductReplaceGateway.cs:line 326</LogMessage>
+    <LogDateTime>2019-11-06T15:29:02.7773883+06:00</LogDateTime>
+    <CustomeMessage>The string was not recognized as a valid DateTime. There is an unknown word starting at index 0.</CustomeMessage>
+  </Error>
 </Errors>

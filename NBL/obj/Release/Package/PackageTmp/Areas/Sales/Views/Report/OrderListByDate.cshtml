@@ -40,7 +40,7 @@
         $(function () {
 
             $("#OrderDate").datepicker({ dateFormat: 'dd-MM-yy' });
-            OrderListList(new Date());
+            OrderList(new Date());
 
             $("form").bind("keypress", function (e) {
                 if (e.keyCode === 13) {
@@ -53,11 +53,11 @@
     
     <script>
         function GetOrderListByDate(event) {
-            OrderListList(event.value);
+            OrderList(event.value);
         }
 
 
-        function OrderListList(value) {
+        function OrderList(value) {
             var date =value;
             var json = { deliveryDate: date };
             $.ajax({

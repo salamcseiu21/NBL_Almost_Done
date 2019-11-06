@@ -107,6 +107,8 @@ namespace NBL.Areas.AccountsAndFinance.BLL
             return _iAccountGateway.GetAllSubSubAccountList();
         }
 
+       
+
         public ICollection<SubSubSubAccount> GetAllSubSubSubAccountList()
         {
             return _iAccountGateway.GetAllSubSubSubAccountList();
@@ -210,6 +212,22 @@ namespace NBL.Areas.AccountsAndFinance.BLL
         public bool CancelDiscount(int discountId)
         {
             int rowAffected = _iAccountGateway.CancelDiscount(discountId);
+            return rowAffected > 0;
+        }
+
+        public bool AddSubSubSubAccount(SubSubSubAccount account)
+        {
+            int maxAccountNo = _iAccountGateway.GetMaxSubSubSubAccountNoBySubSubAccountCode(account.SubSubAccountCode);
+            account.SubSubSubAccountCode = account.SubSubAccountCode + (maxAccountNo + 1);
+            int rowAffected = _iAccountGateway.AddSubSubSubAccount(account);
+            return rowAffected > 0;
+        }
+
+        public bool AddSubSubAccount(SubSubAccount account)
+        {
+            int maxAccountNo = _iAccountGateway.GetMaxSubSubAccountNoBySubAccountCode(account.SubAccountCode);
+            account.SubSubAccountCode = account.SubAccountCode + (maxAccountNo + 1); 
+            int rowAffected = _iAccountGateway.AddSubSubAccount(account);
             return rowAffected > 0;
         }
 

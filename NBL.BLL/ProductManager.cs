@@ -505,6 +505,12 @@ namespace NBL.BLL
             return rowAffected > 0;
         }
 
+        public bool CancelRequisition(long requisitionId, ViewUser user)
+        {
+            int rowAffected = _iProductGateway.CancelRequisition(requisitionId, user);
+            return rowAffected > 0;
+        }
+
         private string GenerateTransferRequisitionRef(int maxTrNo)
         {
 

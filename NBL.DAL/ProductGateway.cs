@@ -2627,6 +2627,33 @@ namespace NBL.DAL
             }
         }
 
+        public int CancelRequisition(long requisitionId, ViewUser user)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_CancelRequisition";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@TrId", requisitionId);
+                CommandObj.Parameters.AddWithValue("@UserId", user.UserId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not Cancel requisition", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         public List<ViewTransferProductDetails> TransferReceiveableDetails(long transferId)
         {
             try

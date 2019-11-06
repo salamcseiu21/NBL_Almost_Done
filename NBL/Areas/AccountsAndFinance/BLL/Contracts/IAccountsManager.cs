@@ -11,6 +11,7 @@ using NBL.Models.Searchs;
 using NBL.Models.SummaryModels;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.FinanceModels;
+using SubSubSubAccount = NBL.Models.EntityModels.ChartOfAccounts.SubSubSubAccount;
 
 namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
 {
@@ -66,7 +67,8 @@ namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
        ICollection<AccountHead> GetAllChartOfAccountList();
        ICollection<SubAccount> GetAllSubAccountList();
        ICollection<SubSubAccount> GetAllSubSubAccountList();
-       ICollection<NBL.Models.EntityModels.ChartOfAccounts.SubSubSubAccount> GetAllSubSubSubAccountList();
+        bool AddSubSubAccount(SubSubAccount account);
+        ICollection<NBL.Models.EntityModels.ChartOfAccounts.SubSubSubAccount> GetAllSubSubSubAccountList();
        ICollection<ChequeDetails> GetAllReceivableChequeByCompanyIdAndStatus(int companyId, int status);
        bool CancelVat(Vat vat);
        bool ApproveProductPrice(ViewUser anUser, int productDetailsId, int productId);
@@ -79,6 +81,7 @@ namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
        bool SetClientOpeningBalance(OpeningBalanceModel model);
        IEnumerable<ViewLedgerModel> GetClientLedgerBySearchCriteria(SearchCriteria searchCriteria);
        bool CancelDiscount(int discountId);
-      
+
+       bool AddSubSubSubAccount(SubSubSubAccount account); 
    }
 }

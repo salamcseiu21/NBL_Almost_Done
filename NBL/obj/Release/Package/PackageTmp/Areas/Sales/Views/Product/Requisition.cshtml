@@ -5,106 +5,112 @@
     var tdate = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
 }
 <section class="content">
-    <p class="text-center text-green" style="margin: 0;font-weight:bolder;font-size:20px">Branch Wise Requisition</p>
-    <hr />
-    @using (Html.BeginForm("AddRequisitionProductToXmlFile", "Product", FormMethod.Post))
-    {
-        <div class="form-horizontal">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-3">To Branch :</label>
-                        <div class="col-md-9">
-                            <input type="text" name="RequisitionToBranchName" id="RequisitionToBranchName" class="form-control" placeholder="Branch Name...." autofocus required />
-                            <input type="hidden" id="RequisitionToBranchId" name="RequisitionToBranchId" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Address :</label>
-                        <div class="col-md-9">
-                            <textarea id="BranchAddress" name="BranchAddress" class="form-control" readonly="readonly" rows="2" placeholder="Branch address...." style="resize: none"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Product Name : </label>
-                        <div class="col-md-9">
-                            <input type="text" name="ProductName" id="ProductName" class="form-control" placeholder="Type Product Name" required />
-                            <input type="hidden" id="ProductId" name="ProductId" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Quantity : </label>
-                        <div class="col-md-9">
-                            <input type="number" name="Quantity" id="Quantity" class="form-control" placeholder="Quantity" required min="1" value="1" />
 
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-9 col-md-offset-3">
-                            <div class="btn-toolbar">
-                                <input type="button" id="addItemButton" value="Add Item" onclick="AddProduct(this)" class="btn btn-primary " />
-                                <input type="button" id="removeAllButton" value="Remove All" onclick="RemoveAll(this)" class="btn btn-danger " />
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder"> Request For Battery From Another Branch</div>
+        <div class="panel panel-body">
+            @using (Html.BeginForm("AddRequisitionProductToXmlFile", "Product", FormMethod.Post))
+            {
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">To Branch :</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="RequisitionToBranchName" id="RequisitionToBranchName" class="form-control" placeholder="Branch Name...." autofocus required />
+                                    <input type="hidden" id="RequisitionToBranchId" name="RequisitionToBranchId" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Address :</label>
+                                <div class="col-md-9">
+                                    <textarea id="BranchAddress" name="BranchAddress" class="form-control" readonly="readonly" rows="2" placeholder="Branch address...." style="resize: none"></textarea>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Product Name : </label>
+                                <div class="col-md-9">
+                                    <input type="text" name="ProductName" id="ProductName" class="form-control" placeholder="Type Product Name" required />
+                                    <input type="hidden" id="ProductId" name="ProductId" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Quantity : </label>
+                                <div class="col-md-9">
+                                    <input type="number" name="Quantity" id="Quantity" class="form-control" placeholder="Quantity" required min="1" value="1" />
 
-    <p style="font-weight: bolder;font-size: 20px" class="text-center text-green">Product List</p>
-    <table class="table table-bordered" style="margin: 0; padding: 0;">
-        <thead>
-            <tr>
-                <th style="border: 1px solid black;" class="text-center">Product Name</th>
-                <th style="border: 1px solid black; width: 10%" class="text-center">Quantity</th>
-                <th style="border: 1px solid black;" class="text-center">Action</th>
-            </tr>
-        </thead>
-        <tbody id="requisitions"></tbody>
-    </table>
-    <hr />
-    @using (Html.BeginForm("Requisition", "Product", FormMethod.Post, new { id = "saveRequisitionForm" }))
-    {
-        <div class="form-horizontal">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="TotalQty" class="control-label col-md-3"> Quantity :</label>
-                        <div class="col-md-9">
-                            <input type="number" id="TotalQty" name="TotalQty" class="form-control" value="0" readonly="readonly" />
-                            <input type="hidden" id="ToBranchId" name="ToBranchId" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="RequisitionDate" class="control-label col-md-3">Date</label>
-                        <div class="col-md-9">
-                            <input type="text" id="RequisitionDate" name="RequisitionDate" value="@tdate" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-
-
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-9 col-md-offset-3">
-                                <div class="btn-toolbar">
-                                    @Html.ActionLink(" Cancel", "Home", "Nsm", null, new { @class = "btn btn-danger" })
-                                    <input type="button" value="Save" onclick="ConfirmRequisition(this)" class="btn btn-success" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-9 col-md-offset-3">
+                                    <div class="btn-toolbar">
+                                        <input type="button" id="addItemButton" value="Add Item" onclick="AddProduct(this)" class="btn btn-primary " />
+                                        <input type="button" id="removeAllButton" value="Remove All" onclick="RemoveAll(this)" class="btn btn-danger " />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
+
+            <p style="font-weight: bolder; font-size: 20px" class="text-center text-green">Product List</p>
+            <table class="table table-bordered" style="margin: 0; padding: 0;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid black;" class="text-center">Product Name</th>
+                        <th style="border: 1px solid black; width: 10%" class="text-center">Quantity</th>
+                        <th style="border: 1px solid black;" class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="requisitions"></tbody>
+            </table>
+            <hr />
+            @using (Html.BeginForm("Requisition", "Product", FormMethod.Post, new { id = "saveRequisitionForm" }))
+            {
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="TotalQty" class="control-label col-md-3"> Quantity :</label>
+                                <div class="col-md-9">
+                                    <input type="number" id="TotalQty" name="TotalQty" class="form-control" value="0" readonly="readonly" />
+                                    <input type="hidden" id="ToBranchId" name="ToBranchId" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="RequisitionDate" class="control-label col-md-3">Date</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="RequisitionDate" name="RequisitionDate" value="@tdate" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-9 col-md-offset-3">
+                                        <div class="btn-toolbar">
+                                            @Html.ActionLink(" Cancel", "Home", "Nsm", null, new { @class = "btn btn-danger" })
+                                            <input type="button" value="Save" onclick="ConfirmRequisition(this)" class="btn btn-success" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
-    }
+    </div>
+    
+  
 </section>
 @section Scripts
 {

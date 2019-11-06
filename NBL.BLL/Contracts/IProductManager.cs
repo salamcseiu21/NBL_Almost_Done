@@ -83,6 +83,7 @@ namespace NBL.BLL.Contracts
         bool UpdateProductActivationStatus(int productId, string status);
 
         ICollection<ProductDetails> GetAllProductDetails();
-        bool UpdateProductPriceVatDiscount(ProductDetails newProductDetails,ProductDetails oldProductDetails, int userId); 
+        bool UpdateProductPriceVatDiscount(ProductDetails newProductDetails,ProductDetails oldProductDetails, int userId);
+        bool CancelRequisition(long requisitionId, ViewUser user);
     }
 }

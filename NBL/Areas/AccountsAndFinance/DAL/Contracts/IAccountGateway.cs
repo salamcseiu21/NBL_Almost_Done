@@ -115,5 +115,9 @@ namespace NBL.Areas.AccountsAndFinance.DAL.Contracts
        int SetClientOpeningBalance(OpeningBalanceModel model);
        IEnumerable<ViewLedgerModel> GetClientLedgerBySearchCriteria(SearchCriteria searchCriteria);
        int CancelDiscount(int discountId);
+       int GetMaxSubSubSubAccountNoBySubSubAccountCode(string subSubAccountCode); 
+       int AddSubSubSubAccount(SubSubSubAccount account);
+       int GetMaxSubSubAccountNoBySubAccountCode(string subAccountCode);
+       int AddSubSubAccount(SubSubAccount account);
    }
 }

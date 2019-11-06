@@ -35,10 +35,10 @@
                         <td>@item.AccountName</td>
                         <td>@item.SubAccountCode</td>
                         <td>@item.SubAccountName</td>
-                        <td>@(item.SubSubAccountCode?? "N/A")</td>
-                        <td>@(item.SubSubAccountName?? "N/A")</td>
-                        <td>@(item.SubSubSubAccountCode?? "N/A")</td>
-                        <td>@(item.SubSubSubAccountName?? "N/A")</td>
+                        <td>@(item.SubSubAccountCode ?? "N/A")</td>
+                        <td>@(item.SubSubAccountName ?? "N/A")</td>
+                        <td>@(item.SubSubSubAccountCode ?? "N/A")</td>
+                        <td>@(item.SubSubSubAccountName ?? "N/A")</td>
                     </tr>
                 }
                 </tbody>

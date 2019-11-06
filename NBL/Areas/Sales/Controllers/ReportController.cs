@@ -68,5 +68,17 @@ namespace NBL.Areas.Sales.Controllers
             var orders = _iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyDate(branchId, companyId, deliveryDate);
             return PartialView("_ViewDeliveredOrdersPartialPage", orders);
         }
+
+        public ActionResult ReplaceListByDate()
+        {
+            return View();
+        }
+        public PartialViewResult LoadReplaceListByDate(DateTime deliveryDate) 
+        {
+
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            var replaceList = _iReportManager.GetReplaceListByDateAndDistributionPoint(deliveryDate,branchId);
+            return PartialView("_ViewReplaceListPartialPage", replaceList);
+        }
     }
 }

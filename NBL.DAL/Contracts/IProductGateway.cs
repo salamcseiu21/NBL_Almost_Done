@@ -72,6 +72,7 @@ namespace NBL.DAL.Contracts
         int RemoveProductRequisitionProductById(long id);
         int UpdateRequisitionQuantity(long id, int quantity);
         int ApproveRequisition(long id, ViewUser user);
+        int CancelRequisition(long requisitionId, ViewUser user);
         List<ViewTransferProductDetails> TransferReceiveableDetails(long transferId);
         int SaveGeneralRequisitionInfo(GeneralRequisitionModel requisition);
         int GetMaxGeneralRequisitionNoOfCurrentYear();
@@ -91,6 +92,7 @@ namespace NBL.DAL.Contracts
         IEnumerable<ViewProduct> GetAllPendingProductPriceListByStatus(int status);
         int UpdateProductActivationStatus(int productId, string status);
         ICollection<ProductDetails> GetAllProductDetails();
-        int UpdateProductPriceVatDiscount(ProductDetails newProduct,ProductDetails oldProductDetails, int userId); 
+        int UpdateProductPriceVatDiscount(ProductDetails newProduct,ProductDetails oldProductDetails, int userId);
+      
     }
 }

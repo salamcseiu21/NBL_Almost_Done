@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "Replace List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+}
+
+<section class="content">
+
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Replace Delivery List By Date</div>
+        <div class="panel panel-body">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="ReplaceDate" class="control-label col-md-3"> Select Date</label>
+                            <div class="col-md-9">
+
+                                <input type="text" id="ReplaceDate" name="ReplaceDate" value="@date" class="form-control" onchange="GetReplaceListByDate(this)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="divDeliveredList"></div>
+        </div>
+    </div>
+
+
+</section>
+
+@section Scripts
+{
+
+
+    <script>
+        $(function () {
+
+            $("#ReplaceDate").datepicker({ dateFormat: 'dd-MM-yy' });
+            GetReplaceList(new Date());
+
+            $("form").bind("keypress", function (e) {
+                if (e.keyCode === 13) {
+                    return false;
+                }
+            });
+        });
+
+    </script>
+
+    <script>
+        function GetReplaceListByDate(event) {
+            GetReplaceList(event.value);
+        }
+        function GetReplaceList(value) {
+            var date =value;
+            var json = { deliveryDate: date };
+            $.ajax({
+                type: 'Post',
+                url: RootUrl + "sales/report/LoadReplaceListByDate",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("#divDeliveredList").html(data);
+                }
+            });
+        }
+    </script>
+
+
+
+}
+
+
+
+

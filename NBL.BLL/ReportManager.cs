@@ -26,13 +26,15 @@ namespace NBL.BLL
        private readonly IOrderManager _iOrderManager;
         private readonly IInventoryManager _iInventoryManager;
         private readonly IBarCodeManager _iBarCodeManager;
+        private readonly IProductReplaceGateway _iProductReplaceGateway;
 
-        public ReportManager(IOrderManager iOrderManager, IReportGateway iReportGateway, IInventoryManager iInventoryManager,IBarCodeManager iBarCodeManager)
+        public ReportManager(IOrderManager iOrderManager, IReportGateway iReportGateway, IInventoryManager iInventoryManager,IBarCodeManager iBarCodeManager,IProductReplaceGateway iProductReplaceGateway)
         {
             _iOrderManager = iOrderManager;
             _iReportGateway = iReportGateway;
             _iInventoryManager = iInventoryManager;
             _iBarCodeManager = iBarCodeManager;
+            _iProductReplaceGateway = iProductReplaceGateway;
         }
         public IEnumerable<ViewClient> GetTopClients()
         {
@@ -309,6 +311,11 @@ namespace NBL.BLL
         public ICollection<ViewSubSubSubAccount> GetAllSubSubSubAccountList()
         {
             return _iReportGateway.GetAllSubSubSubAccountList();
+        }
+
+        public IEnumerable<ReplaceReport> GetReplaceListByDateAndDistributionPoint(DateTime deliveryDate, int distributionPoint)
+        {
+            return _iProductReplaceGateway.GetReplaceListByDateAndDistributionPoint(deliveryDate,distributionPoint);
         }
 
         public bool IsValiedBarcode(string barcode)

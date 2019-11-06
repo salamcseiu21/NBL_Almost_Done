@@ -1,0 +1,26 @@
+﻿@{
+    var branchId = Convert.ToInt32(Session["BranchId"]);
+}
+<li class="treeview">
+    <a href="#">
+        <i class="fa fa-money"></i>
+        <span>Chart of Account</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        @if (branchId == 9)
+        {
+                    @*<li>@Html.ActionLink(" Add Sub Account", "AddSubAccount", "ChartOfAccount", new { area = "AccountsAndFinance" }, new { @class = "fa fa-plus", style = "font-weight: bolder;" })</li>*@
+                    <li>@Html.ActionLink(" Add Sub Sub Account", "AddSubSubAccount", "ChartOfAccount", new { area = "AccountsAndFinance" }, new { @class = "fa fa-plus", style = "font-weight: bolder;" })</li>
+                    <li>@Html.ActionLink(" Add Sub Sub Sub Account", "AddSubSubSubAccount", "ChartOfAccount", new { area = "AccountsAndFinance" }, new { @class = "fa fa-plus", style = "font-weight: bolder;" })</li>
+        }
+        <li>@Html.ActionLink(" Account Types", "AccountType", "ChartOfAccount", new { area = "AccountsAndFinance" }, new { @class = "fa fa-eye", style = "font-weight: bolder;" })</li>
+        <li>@Html.ActionLink(" Account List", "AccountList", "ChartOfAccount", new { area = "AccountsAndFinance" }, new { @class = "fa fa-eye", style = "font-weight: bolder;" })</li>
+        <li>@Html.ActionLink(" Sub AccountList", "SubAccountList", "ChartOfAccount", new { area = "AccountsAndFinance" }, new { @class = "fa fa-eye", style = "font-weight: bolder;" })</li>
+        <li>@Html.ActionLink(" Sub Sub AccountList", "SubSubAccountList", "ChartOfAccount", new { area = "AccountsAndFinance" }, new { @class = "fa fa-eye", style = "font-weight: bolder;" })</li>
+        <li>@Html.ActionLink(" Sub Sub Sub AccountList", "SubSubSubAccountList", "ChartOfAccount", new { area = "AccountsAndFinance" }, new { @class = "fa fa-eye", style = "font-weight: bolder;" })</li>
+
+    </ul>
+</li>

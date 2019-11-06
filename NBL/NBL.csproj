@@ -8320,6 +8320,11 @@
     <Content Include="Areas\AccountsAndFinance\Views\Reports\DailyReport.cshtml" />
     <Content Include="Areas\Services\Views\Replace\PrintChallan.cshtml" />
     <Content Include="Areas\Corporate\Views\Home\BranchWishStock.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\ChartOfAccount\AddSubAccount.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\ChartOfAccount\AddSubSubAccount.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\ChartOfAccount\AddSubSubSubAccount.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Shared\_CAMenuPartialPage.cshtml" />
+    <Content Include="Areas\Sales\Views\Report\ReplaceListByDate.cshtml" />
     <None Include="DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -8493,6 +8498,7 @@
     <Content Include="Views\Shared\_ModalUpdateProductInfoPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewUpdateProductPartialPage.cshtml" />
     <Content Include="Views\Shared\_DeliveredReplaceListPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewReplaceListPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

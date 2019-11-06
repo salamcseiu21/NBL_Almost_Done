@@ -836,6 +836,23 @@ namespace NBL.Areas.Sales.Controllers
             }
         }
         [HttpPost]
+        public ActionResult CancelRequisition(long id)
+        {
+            try
+            {
+                var user = (ViewUser)Session["user"];
+                bool result = _iProductManager.CancelRequisition(id, user);
+                return RedirectToAction("RequestedRequisition");
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        
+        [HttpPost]
         public void RemoveProductRequisitionProductById(long id)
         {
          

@@ -3,49 +3,60 @@
     ViewBag.Title = "RequisitionDetails";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
     var branch = Model.RequisitionFromBranch;
+    var i = 0;
 }
 
 <section class="content">
-    <h3 class="text-center text-green">Requisition Details</h3>
-    
-    <table class="display table-bordered" id="tbl_requisition_details_list" style="border:  1px solid">
-        <thead>
-        <tr>
-            <td>
-                <strong>Requisition From :<i> @branch.BranchName , @branch.BranchAddress</i></strong><br/>
-                
-            </td>
-            <td colspan="2">
-                <button type="button" value="@Model.TransferRequisition.TransferRequisitionId" id="@Model.TransferRequisition.TransferRequisitionId" onclick="ApproveRequisition(this)"  class="btn btn-info">Approve</button>
-                @Html.ActionLink(" Back", "RequestedRequisition", "Product", null, new {@class = "btn btn-danger"})
-            </td>
-        </tr>
-        <tr>
-            <th>Product Name</th>
-            <th>Quantity</th>
-            <th class="text-center">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model.TtransferRequisitions)
-        {
-            <tr>
-                <td>@item.ProductName </td>
-                <td>
-                    <input type="number" value="@item.Quantity"  id="@item.TransferRequisitionDetailsId" class="form-control" onchange="UpdateRequisitionQuantity(this)" required/>
-                </td>
-                <td class="text-center"><button class="btn btn-danger" id="@item.TransferRequisitionDetailsId" onclick="RemoveProductRequisitionProductById(this)"><i class="fa fa-times"></i></button></td>
-            </tr>
-        }
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Product Name</th>
-                <th>Quantity</th>
-                <th class="text-center">Action</th>
-            </tr>
-        </tfoot>
-    </table>
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Requisition Details</div>
+        <div class="panel panel-body">
+            <table class="display table-bordered" id="tbl_requisition_details_list" style="border: 1px solid">
+                <thead>
+                <tr>
+                    <td>
+                        <strong>Requisition From :<i> @branch.BranchName , @branch.BranchAddress</i></strong><br/>
+
+                    </td>
+                    <td colspan="3">
+                        <button type="button" value="@Model.TransferRequisition.TransferRequisitionId" id="@Model.TransferRequisition.TransferRequisitionId" onclick="ApproveRequisition(this)" class="btn btn-info">Approve</button>
+                        <button type="button" value="@Model.TransferRequisition.TransferRequisitionId" id="@Model.TransferRequisition.TransferRequisitionId" onclick="CancelRequisition(this)" class="btn btn-danger">Cancel</button>
+                        @Html.ActionLink(" Back", "RequestedRequisition", "Product", null, new {@class = "btn btn-primary"})
+                    </td>
+                </tr>
+                <tr>
+                    <th>S.N</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.TtransferRequisitions)
+                {
+                    i++;
+                    <tr>
+                        <td>@i </td>
+                        <td>@item.ProductName </td>
+                        <td>
+                            <input type="number" value="@item.Quantity" id="@item.TransferRequisitionDetailsId" class="form-control" onchange="UpdateRequisitionQuantity(this)" required/>
+                        </td>
+                        <td class="text-center"><button class="btn btn-danger" id="@item.TransferRequisitionDetailsId" onclick="RemoveProductRequisitionProductById(this)"><i class="fa fa-times"></i></button></td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>S.N</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+   
 </section>
 
 @section Scripts
@@ -62,6 +73,32 @@
                 $.ajax({
                     type: "POST",
                     url: '@Url.Action("ApproveRequisition", "Product",new {area="Sales"})',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        location.href = RootUrl + "sales/product/requestedrequisition";
+                    }
+                });
+            } else {
+                return false;// if it's a link to prevent post
+            }
+
+            return false;// if it's a link to prevent post
+
+
+        }
+
+        
+        function CancelRequisition(btnClicked) {
+
+            if (confirm("Are you confirm to Cancel this Requisition?")) {
+
+                var id = btnClicked.id;
+                // alert(id);
+                var json = { id: id };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("CancelRequisition", "Product",new {area="Sales"})',
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(json),
                     success: function (data) {

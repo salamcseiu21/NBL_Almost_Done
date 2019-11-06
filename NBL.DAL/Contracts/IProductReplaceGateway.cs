@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NBL.Models.EntityModels;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.ViewModels;
@@ -21,5 +22,6 @@ namespace NBL.DAL.Contracts
         ICollection<ReplaceReport> GetTodaysReplaceListByBranchId(int branchId);
         ICollection<ReplaceReport> GetAllReplaceListByBranchId(int branchId);
         ICollection<ViewReplaceModel> GetAllReplaceList(int status);
+        ICollection<ReplaceReport> GetReplaceListByDateAndDistributionPoint(DateTime deliveryDate, int distributionPoint);
     }
 }

@@ -5,42 +5,47 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-green">Requested Requisition List</h3>
-    <table id="tbl_requisition_list" class="display table-bordered" style="border: 1px solid">
-        <thead>
-        <Tr>
-            <th>Requisition Ref</th>
-            <th class="text-center">Requisition From</th>
-            <th class="text-center">Quantity</th>
-            <th class="text-center">Date</th>
-            <th class="text-center">Action</th>
-        </Tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.TransferRequisitionRef</td>
-                <td>@item.RequisitionByBranch.BranchName, @item.RequisitionByBranch.Title</td>
-                <td class="text-right">@item.Quantity</td>
-                <td class="text-center">@item.TransferRequisitionDate.ToString("dd-MMMM-yyyy")</td>
-                
-                <td class="text-center">
-                    @Html.ActionLink("View Details", "RequisitionDetails", "Product", new { id = item.TransferRequisitionId }, new { @class = "btn-sm btn btn-info" })
-                </td>
-            </tr>
-        }
-        </tbody>
-        <tfoot>
-        <Tr>
-            <th>Requisition Ref</th>
-            <th class="text-center">Requisition From</th>
-            <th class="text-center">Quantity</th>
-            <th class="text-center">Date</th>
-            <th class="text-center">Action</th>
-        </Tr>
-        </tfoot>
-    </table>
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Requested Requisition List</div>
+        <div class="panel panel-body">
+            <table id="tbl_requisition_list" class="display table-bordered" style="border: 1px solid">
+                <thead>
+                <Tr>
+                    <th>Requisition Ref</th>
+                    <th class="text-center">Requisition From</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Action</th>
+                </Tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.TransferRequisitionRef</td>
+                        <td>@item.RequisitionByBranch.BranchName, @item.RequisitionByBranch.Title</td>
+                        <td class="text-right">@item.Quantity</td>
+                        <td class="text-center">@item.TransferRequisitionDate.ToString("dd-MMMM-yyyy")</td>
+
+                        <td class="text-center">
+                            @Html.ActionLink("View Details", "RequisitionDetails", "Product", new {id = item.TransferRequisitionId}, new {@class = "btn-sm btn btn-info"})
+                        </td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <Tr>
+                    <th>Requisition Ref</th>
+                    <th class="text-center">Requisition From</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Action</th>
+                </Tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
 </section>
 
 @section Scripts
