@@ -1564,5 +1564,39 @@ CommandObj.Parameters.Clear();
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public ICollection<TestCategory> GetAllTestCategories()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetAllTestCategories";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                List<TestCategory> categories = new List<TestCategory>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    categories.Add(new TestCategory
+                    {
+                        Name = reader["TestName"].ToString(),
+                        Id = Convert.ToInt32(reader["Id"])
+                    });
+                }
+
+                reader.Close();
+                return categories;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Colud not collect action list ", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
     }
 }

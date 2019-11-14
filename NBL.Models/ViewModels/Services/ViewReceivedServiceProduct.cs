@@ -26,6 +26,7 @@ namespace NBL.Models.ViewModels.Services
         public decimal SpGrCellSix { get; set; }
         public decimal SpGrCellValueDifference { get; set; }    
         public string SpGrRemarks { get; set; } 
+        public string PrimaryTestResult { get; set; }  
         public int CellOneConditionId { get; set; }
         public int CellTwoConditionId { get; set; }
         public int CellThreeConditionId { get; set; }
@@ -48,7 +49,7 @@ namespace NBL.Models.ViewModels.Services
         public DateTime ServiceBatteryDeliveryDate { get; set; }
         public string ServiceBatteryBarcode { get; set; }
         public DateTime ServiceBatteryReturnDate { get; set; }
-
+        public decimal RecBackupTime { get; set; } 
 
 
         public int CoverStatusId { get; set; }
@@ -86,6 +87,7 @@ namespace NBL.Models.ViewModels.Services
         public List<ForwardToModel> ForwardToModels { set; get; }
         public DateTime ForwardDatetime { get; set; }
         public string ReceiveByBranch { get; set; } 
+        public int ReceiveByBranchId { get; set; } 
         public ViewReceivedServiceProduct()
         {
             ForwardToModels=new List<ForwardToModel>();

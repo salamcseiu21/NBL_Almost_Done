@@ -667,7 +667,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/15/2019 14:49:55</publishTime>
     </File>
     <File Include="Areas/Corporate/Views/Requisition/Create.cshtml">
-      <publishTime>06/16/2019 12:33:22</publishTime>
+      <publishTime>11/13/2019 12:28:06</publishTime>
     </File>
     <File Include="Areas/Corporate/Views/Requisition/MonthlyRequisition.cshtml">
       <publishTime>03/27/2019 22:12:12</publishTime>
@@ -1594,7 +1594,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/28/2019 10:55:12</publishTime>
     </File>
     <File Include="Areas/Sales/Scripts/productNameAutoComplete.js">
-      <publishTime>06/16/2019 10:04:28</publishTime>
+      <publishTime>11/13/2019 12:29:47</publishTime>
     </File>
     <File Include="Areas/Sales/Scripts/ReceiveProduct/loadAllReceivableList.js">
       <publishTime>03/25/2019 17:37:04</publishTime>
@@ -1618,7 +1618,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Client/AddNewClient.cshtml">
-      <publishTime>09/19/2019 10:15:12</publishTime>
+      <publishTime>11/13/2019 12:26:55</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Client/All.cshtml">
       <publishTime>10/22/2019 17:15:34</publishTime>
@@ -1795,7 +1795,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/06/2019 12:48:31</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Product/ProductHistory.cshtml">
-      <publishTime>11/04/2019 16:09:50</publishTime>
+      <publishTime>11/14/2019 11:47:39</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Product/Receive.cshtml">
       <publishTime>10/02/2019 09:20:17</publishTime>
@@ -1921,7 +1921,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/04/2019 16:04:46</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Return/PendingReturnList.cshtml">
-      <publishTime>08/01/2019 10:30:38</publishTime>
+      <publishTime>11/07/2019 15:29:42</publishTime>
     </File>
     <File Include="Areas/Sales/Views/Return/PendingSalesReturns.cshtml">
       <publishTime>07/31/2019 12:37:49</publishTime>
@@ -2148,8 +2148,20 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Areas/Services/Views/Home/UpdateEducationalInfo.cshtml">
       <publishTime>08/01/2019 11:32:10</publishTime>
     </File>
+    <File Include="Areas/Services/Views/PolicySetup/EditPolicy.cshtml">
+      <publishTime>11/12/2019 13:59:37</publishTime>
+    </File>
     <File Include="Areas/Services/Views/PolicySetup/ProductWarrantyPolicy.cshtml">
-      <publishTime>10/26/2019 10:22:25</publishTime>
+      <publishTime>11/12/2019 14:52:37</publishTime>
+    </File>
+    <File Include="Areas/Services/Views/PolicySetup/TestPolicy.cshtml">
+      <publishTime>11/14/2019 10:40:46</publishTime>
+    </File>
+    <File Include="Areas/Services/Views/PolicySetup/ViewAllWarrantyPolicy.cshtml">
+      <publishTime>11/12/2019 13:55:52</publishTime>
+    </File>
+    <File Include="Areas/Services/Views/PolicySetup/ViewTestPolicy.cshtml">
+      <publishTime>11/13/2019 13:06:11</publishTime>
     </File>
     <File Include="Areas/Services/Views/Replace/Cancel.cshtml">
       <publishTime>10/21/2019 15:18:26</publishTime>
@@ -2170,13 +2182,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/30/2019 16:21:43</publishTime>
     </File>
     <File Include="Areas/Services/Views/ServiceManagement/Details.cshtml">
-      <publishTime>08/21/2019 12:38:35</publishTime>
+      <publishTime>11/14/2019 10:17:19</publishTime>
     </File>
     <File Include="Areas/Services/Views/ServiceManagement/PendingList.cshtml">
-      <publishTime>07/23/2019 11:34:31</publishTime>
+      <publishTime>11/14/2019 10:14:06</publishTime>
     </File>
     <File Include="Areas/Services/Views/Shared/_ServiceExecutiveMenuPartialPage.cshtml">
-      <publishTime>10/23/2019 11:53:52</publishTime>
+      <publishTime>11/13/2019 12:57:43</publishTime>
     </File>
     <File Include="Areas/Services/Views/Shared/_ServiceManagementMenuPartialPage.cshtml">
       <publishTime>09/24/2019 14:06:51</publishTime>
@@ -2191,31 +2203,34 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/30/2019 15:49:04</publishTime>
     </File>
     <File Include="Areas/Services/Views/WarrantyBattery/All.cshtml">
-      <publishTime>07/16/2019 13:32:24</publishTime>
+      <publishTime>11/13/2019 11:41:11</publishTime>
     </File>
     <File Include="Areas/Services/Views/WarrantyBattery/ChargeReport.cshtml">
-      <publishTime>07/20/2019 09:43:43</publishTime>
+      <publishTime>11/12/2019 16:27:08</publishTime>
     </File>
     <File Include="Areas/Services/Views/WarrantyBattery/Details.cshtml">
       <publishTime>10/05/2019 12:38:55</publishTime>
     </File>
     <File Include="Areas/Services/Views/WarrantyBattery/DisChargeReport.cshtml">
-      <publishTime>07/20/2019 09:47:04</publishTime>
+      <publishTime>11/14/2019 09:56:31</publishTime>
     </File>
     <File Include="Areas/Services/Views/WarrantyBattery/Forward.cshtml">
-      <publishTime>07/18/2019 14:56:57</publishTime>
+      <publishTime>11/12/2019 16:21:31</publishTime>
     </File>
     <File Include="Areas/Services/Views/WarrantyBattery/MakeRplaceChalan.cshtml">
       <publishTime>10/20/2019 12:19:04</publishTime>
     </File>
+    <File Include="Areas/Services/Views/WarrantyBattery/PrintChallan.cshtml">
+      <publishTime>11/13/2019 11:34:14</publishTime>
+    </File>
     <File Include="Areas/Services/Views/WarrantyBattery/ProductInChargeSection.cshtml">
-      <publishTime>07/20/2019 10:20:47</publishTime>
+      <publishTime>11/12/2019 16:25:37</publishTime>
     </File>
     <File Include="Areas/Services/Views/WarrantyBattery/ProductInDisChargeSection.cshtml">
-      <publishTime>07/20/2019 10:20:26</publishTime>
+      <publishTime>11/13/2019 11:41:59</publishTime>
     </File>
     <File Include="Areas/Services/Views/WarrantyBattery/Receive.cshtml">
-      <publishTime>10/01/2019 15:52:17</publishTime>
+      <publishTime>11/13/2019 10:08:03</publishTime>
     </File>
     <File Include="Areas/Services/Views/WarrantyBattery/ReplaceList.cshtml">
       <publishTime>10/20/2019 14:48:32</publishTime>
@@ -23665,16 +23680,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="bin/NBL.BLL.dll">
-      <publishTime>11/06/2019 15:51:31</publishTime>
+      <publishTime>11/14/2019 12:18:56</publishTime>
     </File>
     <File Include="bin/NBL.DAL.dll">
-      <publishTime>11/06/2019 15:51:30</publishTime>
+      <publishTime>11/14/2019 12:18:55</publishTime>
     </File>
     <File Include="bin/NBL.dll">
-      <publishTime>11/06/2019 15:51:36</publishTime>
+      <publishTime>11/14/2019 12:19:01</publishTime>
     </File>
     <File Include="bin/NBL.Models.dll">
-      <publishTime>11/06/2019 15:51:28</publishTime>
+      <publishTime>11/14/2019 12:18:54</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>04/22/2019 01:06:16</publishTime>
@@ -24403,7 +24418,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/17/2019 10:05:07</publishTime>
     </File>
     <File Include="Logs/Error_log_Xml_file.xml">
-      <publishTime>11/06/2019 15:29:02</publishTime>
+      <publishTime>11/14/2019 11:20:27</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>10/15/2019 16:05:32</publishTime>
@@ -24640,7 +24655,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/06/2019 15:15:34</publishTime>
     </File>
     <File Include="Views/Shared/_ErrorPartial.cshtml">
-      <publishTime>05/29/2019 10:57:12</publishTime>
+      <publishTime>11/06/2019 17:22:10</publishTime>
     </File>
     <File Include="Views/Shared/_InvoiceDetailPartialPage.cshtml">
       <publishTime>10/20/2019 10:54:55</publishTime>

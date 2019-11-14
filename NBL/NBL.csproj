@@ -8325,6 +8325,11 @@
     <Content Include="Areas\AccountsAndFinance\Views\ChartOfAccount\AddSubSubSubAccount.cshtml" />
     <Content Include="Areas\AccountsAndFinance\Views\Shared\_CAMenuPartialPage.cshtml" />
     <Content Include="Areas\Sales\Views\Report\ReplaceListByDate.cshtml" />
+    <Content Include="Areas\Services\Views\PolicySetup\ViewAllWarrantyPolicy.cshtml" />
+    <Content Include="Areas\Services\Views\PolicySetup\EditPolicy.cshtml" />
+    <Content Include="Areas\Services\Views\WarrantyBattery\PrintChallan.cshtml" />
+    <Content Include="Areas\Services\Views\PolicySetup\TestPolicy.cshtml" />
+    <Content Include="Areas\Services\Views\PolicySetup\ViewTestPolicy.cshtml" />
     <None Include="DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>

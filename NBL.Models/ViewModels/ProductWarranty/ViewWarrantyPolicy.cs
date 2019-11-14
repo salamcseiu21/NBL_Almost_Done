@@ -18,6 +18,9 @@ namespace NBL.Models.ViewModels.ProductWarranty
         [Display(Name = "Warranty Period InDays")]
         [Range(0, 3000)]
         public int WarrantyPeriodInDays { get; set; }
+        [Range(0, 3000)]
+        [Display(Name = "Age Limit In Dealer Stock")]
+        public int AgeLimitInDealerStock { get; set; } 
         [Required]
         [Display(Name = "Warranty From")]
         public string WarrantyFrom { get; set; }

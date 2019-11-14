@@ -82,7 +82,7 @@ namespace NBL.Models.Logs
 
         public static void WriteErrorLog(Exception model)
         {
-
+            
             var filePath = HttpContext.Current.Server.MapPath("~/Logs/" + "Error_log_Xml_file.xml");
             var xmlDocument = XDocument.Load(filePath);
             xmlDocument.Element("Errors")?.Add(

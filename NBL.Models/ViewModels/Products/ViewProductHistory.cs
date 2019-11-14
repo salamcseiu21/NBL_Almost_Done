@@ -37,6 +37,7 @@ namespace NBL.Models.ViewModels.Products
         public string DeliveryFromBranch { get; set; }
         public int ProductAge { get; set; }
         public int LifeTime { get; set; }
+        public int AgeLimitInDealerStock { get; set; } 
         public int RemainingLifeTime => LifeTime - ProductAge;
 
         public int StoreDuration => Convert.ToInt32((DeliveryDate - ProductionDate).TotalDays-1);

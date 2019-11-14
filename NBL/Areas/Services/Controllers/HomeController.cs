@@ -22,12 +22,14 @@ namespace NBL.Areas.Services.Controllers
         private readonly IEmployeeManager _iEmployeeManager;
         private readonly IInventoryManager _iInventoryManager;
         private readonly IReportManager _iReportManager;
-        public HomeController(IServiceManager iServiceManager,IEmployeeManager iEmployeeManager, IInventoryManager iInventoryManager,IReportManager iReportManager)
+        private readonly IBarCodeManager _iBarCodeManager;
+        public HomeController(IServiceManager iServiceManager,IEmployeeManager iEmployeeManager, IInventoryManager iInventoryManager,IReportManager iReportManager,IBarCodeManager iBarCodeManager)
         {
             _iServiceManager = iServiceManager;
             _iEmployeeManager = iEmployeeManager;
             _iInventoryManager = iInventoryManager;
             _iReportManager = iReportManager;
+            _iBarCodeManager = iBarCodeManager;
         }
         // GET: Services/Home
         public ActionResult Home()
@@ -82,7 +84,12 @@ namespace NBL.Areas.Services.Controllers
         [HttpPost]
         public ActionResult ProductHistory(ViewProductHistory model)
         {
-            //ViewProductHistory product = _iReportManager.GetProductHistoryByBarCode(model.ProductBarCode) ?? new ViewProductHistory {Remarks = "Not Receive by branch..."};
+            //ViewProductHistory product = _iReportManager.GetProductHistoryByBarCode(model.ProductBarCode) ?? new ViewProductHistory { Remarks = "Not Receive by branch..." };
+            //if (model.ProductBarCode.Length == 8)
+            //{
+            //    var barcodeModel = _iBarCodeManager.GetBarcodeByBatchCode(model.ProductBarCode);
+            //    model.ProductBarCode = barcodeModel.Barcode;
+            //}
             ViewProductHistory product = new ViewProductHistory();
             var fromBranch = _iReportManager.GetDistributedProductFromBranch(model.ProductBarCode);
             if (fromBranch != null)

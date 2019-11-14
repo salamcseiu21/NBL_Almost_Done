@@ -14,6 +14,8 @@ using NBL.Models.Enums;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Products;
+using NBL.Models.ViewModels.Replaces;
+using NBL.Models.ViewModels.Services;
 
 namespace NBL.Areas.Services.Controllers
 {
@@ -25,13 +27,15 @@ namespace NBL.Areas.Services.Controllers
         private readonly IServiceManager _iServiceManager;
         private readonly IBranchManager _iBranchManager;
         private readonly IProductManager _iProductManager;
-        public WarrantyBatteryController(IInventoryManager iInventoryManager,ICommonManager iCommonManager,IServiceManager iServiceManager,IBranchManager iBranchManager,IProductManager iProductManager)
+        private readonly IPolicyManager _iPolicyManager;
+        public WarrantyBatteryController(IInventoryManager iInventoryManager,ICommonManager iCommonManager,IServiceManager iServiceManager,IBranchManager iBranchManager,IProductManager iProductManager,IPolicyManager iPolicyManager)
         {
             _iInventoryManager = iInventoryManager;
             _iCommonManager = iCommonManager;
             _iServiceManager = iServiceManager; 
             _iBranchManager = iBranchManager;
             _iProductManager = iProductManager;
+            _iPolicyManager = iPolicyManager;
         }
 
         public ActionResult All()
@@ -39,7 +43,9 @@ namespace NBL.Areas.Services.Controllers
 
             try
             {
-                var products = _iServiceManager.GetReceivedServiceProducts();
+                var branchId = Convert.ToInt32(Session["BranchId"]);
+                var products = _iServiceManager.GetReceivedServiceProductsByForwarIdAndBranchId(Convert.ToInt32(ForwardTo.Received),branchId).ToList();
+
                 return View(products);
             }
             catch (Exception exception)
@@ -49,12 +55,17 @@ namespace NBL.Areas.Services.Controllers
             }
            
         }
-
+        public ActionResult PrintChallan(long id)
+        {
+            var product = _iServiceManager.GetReceivedServiceProductById(id);
+            return View(product);
+        }
         public ActionResult ReplaceList()
         {
             try
             {
-                var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.Replace));
+                var branchId = Convert.ToInt32(Session["BranchId"]);
+                var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.Replace)).ToList().FindAll(n=>n.ReceiveByBranchId==branchId);
                 return View(products);
             }
             catch (Exception exception)
@@ -215,8 +226,16 @@ namespace NBL.Areas.Services.Controllers
                         "DisChargeReport");
 
                 var product = _iServiceManager.GetReceivedServiceProductById(id);
-                product.ProductHistory = _iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();
+
+                var proudctHistory= _iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();
+                product.ProductHistory = proudctHistory;
                 product.ForwardToModels = _iCommonManager.GetAllForwardToModelsByUserAndActionId(user.UserId,actionModel.Id).ToList();
+
+                int month = GetMonthDifference(Convert.ToDateTime(proudctHistory.SaleDate), product.ReceiveDatetime);
+               
+
+                ViewTestPolicy policy= _iPolicyManager.DischargeTestPolicyByProductIdCategoryIdAndMonth(proudctHistory.ProductId,3,month);
+                product.RecBackupTime = policy.AcceptableValue;
                 return View(product);
             }
             catch (Exception exception)
@@ -227,6 +246,7 @@ namespace NBL.Areas.Services.Controllers
 
         }
 
+       
         [HttpPost]
         public ActionResult DisChargeReport(DischargeReportModel model, long id)
         {
@@ -253,8 +273,14 @@ namespace NBL.Areas.Services.Controllers
                 }
                 model.EntryByUserId = user.UserId;
                 model.ForwardDetails = forward;
-
-
+                if(model.BackUpTime>=model.RecommendedBackUpTime)
+                {
+                    model.DischargeReport = "The battery was passed the Discharge test or backup test";
+                }
+                else
+                {
+                    model.DischargeReport = "The battery was failed the Discharge test or backup test";
+                }
                 bool result = _iServiceManager.SaveDischargeReport(model);
                 if (result)
                 {
@@ -270,6 +296,11 @@ namespace NBL.Areas.Services.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
 
+        }
+        private static int GetMonthDifference(DateTime startDate, DateTime endDate)
+        {
+            int monthsApart = 12 * (startDate.Year - endDate.Year) + startDate.Month - endDate.Month;
+            return Math.Abs(monthsApart);
         }
         public ActionResult Details(long id)
         {

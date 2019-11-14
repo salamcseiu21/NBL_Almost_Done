@@ -27,6 +27,7 @@ namespace NBL.BLL.Contracts
         bool ForwardServiceBatteryToDeistributionPoint(long receiveId);
         ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByStatusAndBranchId(int status, int branchId);
         bool ReceiveServiceProductTemp(WarrantyBatteryModel warrantyBatteryModel);
-        ViewReceivedServiceProduct GetDeliverableServiceProductById(long receivedId); 
+        ViewReceivedServiceProduct GetDeliverableServiceProductById(long receivedId);
+        ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarIdAndBranchId(int forwardId, int branchId);
     }
 }

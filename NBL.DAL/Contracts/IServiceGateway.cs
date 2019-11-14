@@ -29,5 +29,7 @@ namespace NBL.DAL.Contracts
         ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByStatusAndBranchId(int status, int branchId);
         int ReceiveServiceProductTemp(WarrantyBatteryModel product);
         ViewReceivedServiceProduct GetDeliverableServiceProductById(long receivedId);
+        ViewTestPolicy GetTestPolicyByCategoryAndProductId(int testCategory, int productId);
+        ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarIdAndBranchId(int forwardId, int branchId);
     }
 }

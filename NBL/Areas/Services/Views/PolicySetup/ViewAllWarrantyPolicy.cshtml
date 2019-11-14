@@ -1,0 +1,54 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.ProductWarranty.ViewWarrantyPolicy>
+@{
+    ViewBag.Title = "All Warranty Policy";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
+}
+ 
+<div class="panel panel-info">
+    <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">All Warranty Policy</div>
+    <div class="panel panel-body">
+        <table id="tbl_view_Warranty_Policy" class="display table-bordered table-responsive" style="border: 1px solid">
+            <thead>
+            <tr>
+                <th> S.N</th>
+                <th> Product Name </th>
+                <th class="text-right"> Warranty Period </th>
+                <th class="text-right"> Grace Warranty Period </th>
+                <th class="text-center"> Action </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>@i</td>
+                    <td>@item.ProductName</td>
+                    <td  class="text-right">@item.WarrantyPeriodInDays</td>
+                    <td  class="text-right">@item.AgeLimitInDealerStock</td>
+                    <td class="text-center">@Html.ActionLink(" Edit","EditPolicy","PolicySetup",new {area="Services",id=item.Id},new {@class="fa fa-edit"})</td>
+                </tr>
+            }
+            </tbody>
+            <tfoot>
+            <tr>
+                <th> S.N</th>
+                <th> Product Name </th>
+                <th class="text-right"> Warranty Period </th>
+                <th class="text-right"> Grace Warranty Period </th>
+                <th class="text-center"> Action </th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_view_Warranty_Policy").DataTable({
+            "lengthMenu": [[15, 50,100, -1], [15, 50,100, "All"]]
+        });
+    </script>
+}

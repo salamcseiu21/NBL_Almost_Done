@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Clients;
@@ -18,12 +16,14 @@ namespace NBL.BLL
        private readonly IServiceGateway _iServiceGateway;
        private readonly ICommonGateway _iCommonGateway;
        private readonly IProductReplaceGateway _iProductReplaceGateway;
+       private readonly IPolicyGateway _iPolicyGateway;
 
-       public ServiceManager(IServiceGateway iServiceGateway,ICommonGateway iCommonGateway,IProductReplaceGateway iProductReplaceGateway)
+       public ServiceManager(IServiceGateway iServiceGateway,ICommonGateway iCommonGateway,IProductReplaceGateway iProductReplaceGateway,IPolicyGateway iPolicyGateway)
        {
            _iServiceGateway = iServiceGateway;
            _iCommonGateway = iCommonGateway;
            _iProductReplaceGateway = iProductReplaceGateway;
+           _iPolicyGateway = iPolicyGateway;
        }
      
        public bool ReceiveServiceProduct(WarrantyBatteryModel product)
@@ -32,9 +32,26 @@ namespace NBL.BLL
            product.ReceiveRef = DateTime.Now.Year.ToString().Substring(2, 2) +
                                 GetReferenceAccountCodeById(Convert.ToInt32(ReferenceType.WarrantyBatteryReceive)) +
                                 (maxSl + 1);
+           product.PrimaryTestResult = GetPrimaryTestResult(product);
            int rowAffected = _iServiceGateway.ReceiveServiceProduct(product);
            return rowAffected > 0;
        }
+
+       private string GetPrimaryTestResult(WarrantyBatteryModel product) 
+       {
+
+           var policy= _iServiceGateway.GetTestPolicyByCategoryAndProductId(1,product.ProductId);
+           if (product.OpenVoltage >policy.Ocv  && product.LoadVoltage >policy.LoadVoltage && product.SpGrCellValueDifference < policy.SgDifference)
+           {
+               product.IsPassPrimaryTest = 1;
+               return "The Battery was passed primary test,Please forward to next step (Chargeing stage)";
+
+           }
+           product.IsPassPrimaryTest = 0;
+           return
+               "The Battery was Failed primary test please send the battery to R&D for further Analysis or proceed to charging step";
+       }
+
        public bool ReceiveServiceProductTemp(WarrantyBatteryModel product)
        {
            var maxSl = _iServiceGateway.GetMaxWarrantyProductReceiveSlNoByYear(DateTime.Now.Year);
@@ -76,7 +93,13 @@ namespace NBL.BLL
        {
            return _iServiceGateway.GetDeliverableServiceProductById(receivedId);
        }
-        public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarId(int forwardId)
+
+       public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarIdAndBranchId(int forwardId, int branchId)
+       {
+           return _iServiceGateway.GetReceivedServiceProductsByForwarIdAndBranchId(forwardId,branchId);
+        }
+
+       public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarId(int forwardId)
        {
            return _iServiceGateway.GetReceivedServiceProductsByForwarId(forwardId);
         }
@@ -106,15 +129,34 @@ namespace NBL.BLL
 
        public bool SaveCharegeReport(ChargeReportModel model)
        {
+           model.Report = GetChargeTestResult(model);
            int rowAffected = _iServiceGateway.SaveCharegeReport(model);
            return rowAffected > 0;
         }
 
-       public bool SaveDischargeReport(DischargeReportModel model)
+       private string GetChargeTestResult(ChargeReportModel model)  
        {
+
+           var product = _iServiceGateway.GetReceivedServiceProductById(model.BatteryReceiveId);
+            var policy = _iServiceGateway.GetTestPolicyByCategoryAndProductId(2, product.ProductId);
+           if (model.OpenVoltage > policy.Ocv && model.LoadVoltage > policy.LoadVoltage && model.SpGrCellValueDifference < policy.SgDifference)
+           {
+               model.IsPassChargeTest = 1;
+               return "The Battery was passed Charge test,Please forward to next step for backup test process.";
+
+           }
+           model.IsPassChargeTest = 0;
+           return
+               "The Battery was Failed Charge test.";
+       }
+        public bool SaveDischargeReport(DischargeReportModel model)
+        {
+          
            int rowAffected = _iServiceGateway.SaveDischargeReport(model);
            return rowAffected > 0;
         }
+
+     
 
        public ChargeReportModel GetChargeReprortByReceiveId(long id)
        {

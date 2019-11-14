@@ -63,5 +63,6 @@ namespace NBL.DAL.Contracts
        ICollection<ViewActionListModel> GetAllActionList();
        int UpdateReplaceTransactionRef(string receiveref, string replaceref);
        SubSubSubAccount GetSubSubSubAccountById(int subSubSubAccountId);
+       ICollection<TestCategory> GetAllTestCategories();
    }
 }

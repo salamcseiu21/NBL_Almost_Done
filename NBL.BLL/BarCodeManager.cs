@@ -80,5 +80,10 @@ namespace NBL.BLL
         {
             return _iBarCodeGateway.GetAllBarCodeByInfix(infix);
         }
+
+        public BarCodeModel GetBarcodeByBatchCode(string batchCode)
+        {
+            return _iBarCodeGateway.GetBarcodeByBatchCode(batchCode);
+        }
     }
 }

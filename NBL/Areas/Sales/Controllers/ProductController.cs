@@ -31,13 +31,15 @@ namespace NBL.Areas.Sales.Controllers
         private readonly IInventoryManager _iInventoryManager;
         private readonly IBranchManager _iBranchManager;
         private readonly IReportManager _iReportManager;
+        private readonly IBarCodeManager _iBarCodeManager;
 
-        public ProductController(IInventoryManager iInventoryManager,IProductManager iProductManager,IBranchManager iBranchManager,IReportManager iReportManager)
+        public ProductController(IInventoryManager iInventoryManager,IProductManager iProductManager,IBranchManager iBranchManager,IReportManager iReportManager,IBarCodeManager iBarCodeManager)
         {
             _iInventoryManager = iInventoryManager;
             _iProductManager = iProductManager;
             _iBranchManager = iBranchManager;
             _iReportManager = iReportManager;
+            _iBarCodeManager = iBarCodeManager;
         }
         public ActionResult Stock()
         {
@@ -1079,7 +1081,13 @@ namespace NBL.Areas.Sales.Controllers
         public ActionResult ProductHistory(ViewProductHistory model)
         {
             //ViewProductHistory product = _iReportManager.GetProductHistoryByBarCode(model.ProductBarCode) ?? new ViewProductHistory {Remarks = "Not Receive by branch..."};
+            //if (model.ProductBarCode.Length == 8)
+            //{
+            //    var barcodeModel = _iBarCodeManager.GetBarcodeByBatchCode(model.ProductBarCode);
+            //    model.ProductBarCode = barcodeModel.Barcode;
+            //}
             ViewProductHistory product=new ViewProductHistory();
+           
             var fromBranch=_iReportManager.GetDistributedProductFromBranch(model.ProductBarCode);
             var fromFactory = _iReportManager.GetDistributedProductFromFactory(model.ProductBarCode);
             if (fromBranch != null)

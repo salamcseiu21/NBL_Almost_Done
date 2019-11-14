@@ -5,53 +5,59 @@
 }
 
 <section class="content">
-    <h3 class="text-center text-green"> Service Battery List For Approval</h3>
-    <table id="tbl_Service_Products" class="display table-bordered" style="border: 1px solid">
-        <thead>
-            <tr>
-                <th>  Receive Ref</th>
-                <th>  Receive At</th>
-                <th>  Receive Date</th>
-                <th>  Product Name</th>
-                <th>  Barcode</th>
-                <th>  Client</th>
-                <th>  Discharge Report</th>
-                <th>  Charge Report</th>
-                <th class="text-center">Action</th>
-            </tr>
-        </thead>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.ReceiveRef</td>
-                <td>@item.ReceiveByBranch</td>
-                <td>@item.ReceiveDatetime.ToString("dd-MMM-yyyy")</td>
-                <td>@item.ProductName - (@item.ProductCategoryName)</td>
-                
-                <td>@item.Barcode</td>
-                <td>@item.ClientInfo</td>
-                <td>@(item.DischargeReport?? "N/A")</td>
-                <td>@(item.ChargerReport?? "N/A")</td>
-             
-                <td class="text-center">
-                    @Html.ActionLink(" Details", "Details", "ServiceManagement", new { id = item.ReceiveId }, new { @class = "fa fa-eye btn btn-info" })
-                </td>
-            </tr>
-        }
-        <tfoot>
-            <tr>
-                <th>  Receive Ref</th>
-                <th>  Receive At</th>
-                <th>  Receive Date</th>
-                <th>  Product Name</th>
-                <th>  Barcode</th>
-                <th>  Client</th>
-                <th>  Discharge Report</th>
-                <th>  Charge Report</th>
-                <th class="text-center">Action</th>
-            </tr>
-        </tfoot>
-    </table>
+    
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Service Battery List For Approval</div>
+        <div class="panel panel-body">
+            <table id="tbl_Service_Products" class="display table-bordered" style="border: 1px solid">
+                <thead>
+                <tr>
+                    <th> Receive Ref</th>
+                    <th> Receive At</th>
+                    <th> Receive Date</th>
+                    <th> Product Name</th>
+                    <th> Barcode</th>
+                    <th> Client</th>
+                    <th> Discharge Report</th>
+                    <th> Charge Report</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ReceiveRef</td>
+                        <td>@item.ReceiveByBranch</td>
+                        <td>@item.ReceiveDatetime.ToString("dd-MMM-yyyy")</td>
+                        <td>@item.ProductName - (@item.ProductCategoryName)</td>
+
+                        <td>@item.Barcode</td>
+                        <td>@item.ClientInfo</td>
+                        <td>@(item.DischargeReport ?? "N/A")</td>
+                        <td>@(item.ChargerReport ?? "N/A")</td>
+
+                        <td class="text-center">
+                            @Html.ActionLink(" Details", "Details", "ServiceManagement", new {id = item.ReceiveId}, new {@class = "fa fa-eye btn btn-info"})
+                        </td>
+                    </tr>
+                }
+                <tfoot>
+                <tr>
+                    <th> Receive Ref</th>
+                    <th> Receive At</th>
+                    <th> Receive Date</th>
+                    <th> Product Name</th>
+                    <th> Barcode</th>
+                    <th> Client</th>
+                    <th> Discharge Report</th>
+                    <th> Charge Report</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
 </section>
 @section Scripts
 {

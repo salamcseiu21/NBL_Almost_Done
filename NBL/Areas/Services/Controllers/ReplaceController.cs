@@ -139,8 +139,8 @@ namespace NBL.Areas.Services.Controllers
             }
             catch (Exception exception)
             {
-
                 Log.WriteErrorLog(exception);
+                
                 return PartialView("_ErrorPartial", exception);
             }
 

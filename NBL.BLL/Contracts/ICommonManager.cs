@@ -69,5 +69,6 @@ namespace NBL.BLL.Contracts
 
         bool UpdateReplaceTransactionRef(string receiveref, string replaceref);
         SubSubSubAccount GetSubSubSubAccountById(int subSubSubAccountId);
+        ICollection<TestCategory> GetAllTestCategories();
     }
 }

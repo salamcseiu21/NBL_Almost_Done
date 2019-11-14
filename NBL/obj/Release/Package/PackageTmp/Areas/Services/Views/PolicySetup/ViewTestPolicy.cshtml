@@ -1,0 +1,53 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Services.ViewTestPolicy>
+@{
+    ViewBag.Title = "ViewTestPolicy";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+ 
+<div class="panel panel-info">
+    <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Test Policy List</div>
+    <div class="panel panel-body">
+        
+        @Html.ActionLink(" Add New","TestPolicy",new {area="Services"},new {@class="btn btn-info fa fa-plus"})
+        <hr/>
+        <table class="display table-bordered table-responsive" id="tbl_Test_Policy" style="border: 1px solid">
+            <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Test Name</th>
+                <th>Parameter Name</th>
+                <th>Acceptable Value</th>
+                <th>Remarks</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.TestCategory</td>
+                    <td>@item.ParameterName</td>
+                    <td>@item.AcceptableValue</td>
+                    <td>@item.Remarks</td>
+                </tr>
+            }
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>Product Name</th>
+                <th>Test Name</th>
+                <th>Parameter Name</th>
+                <th>Acceptable Value</th>
+                <th>Remarks</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $("#tbl_Test_Policy").DataTable();
+    </script>
+}

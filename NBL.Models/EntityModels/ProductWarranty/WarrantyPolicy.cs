@@ -8,6 +8,7 @@ namespace NBL.Models.EntityModels.ProductWarranty
         public long Id { get; set; }
         public int ProductId { get; set; }
         public int WarrantyPeriodInDays { get; set; }
+        public int AgeLimitInDealerStock { get; set; }
         public string WarrantyFrom { get; set; }
         public string FromBatch { get; set; }
         public string ToBatch { get; set; }

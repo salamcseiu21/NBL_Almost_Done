@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.BarCodes;
 using NBL.Models.EntityModels.Products;
+using NBL.Models.Logs;
 
 namespace NBL.DAL
 {
@@ -331,6 +332,38 @@ namespace NBL.DAL
             catch (Exception exception)
             {
                 throw new Exception("Could not collect barcodes", exception.InnerException);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+
+            }
+        }
+
+        public BarCodeModel GetBarcodeByBatchCode(string batchCode)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetBarcodeByBatchCode";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@BatchCode", batchCode);
+                ConnectionObj.Open();
+                BarCodeModel aModel=new BarCodeModel();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    aModel.Barcode = reader["Barcode"].ToString();
+                }
+                reader.Close();
+                return aModel;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get barcode by batchcode", exception.InnerException);
             }
             finally
             {

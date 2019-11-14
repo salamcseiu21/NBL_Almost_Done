@@ -253,5 +253,10 @@ namespace NBL.BLL
        {
            return _iCommonGateway.GetSubSubSubAccountById(subSubSubAccountId);
        }
+
+       public ICollection<TestCategory> GetAllTestCategories()
+       {
+           return _iCommonGateway.GetAllTestCategories();
+       }
    }
 }

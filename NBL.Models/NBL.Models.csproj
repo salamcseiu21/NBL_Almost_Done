@@ -151,6 +151,8 @@
     <Compile Include="EntityModels\Services\ForwardToModel.cs" />
     <Compile Include="EntityModels\Services\PhysicalConditionModel.cs" />
     <Compile Include="EntityModels\Services\ServicingModel.cs" />
+    <Compile Include="EntityModels\Services\TestCategory.cs" />
+    <Compile Include="EntityModels\Services\TestPolicyModel.cs" />
     <Compile Include="EntityModels\Services\WarrantyBatteryModel.cs" />
     <Compile Include="EntityModels\TransferProducts\TransferRequisition.cs" />
     <Compile Include="EntityModels\TransferProducts\Trip.cs" />
@@ -253,6 +255,7 @@
     <Compile Include="ViewModels\Sales\ViewTotalSaleValue.cs" />
     <Compile Include="ViewModels\Scraps\ViewCreateScrapModel.cs" />
     <Compile Include="ViewModels\Services\ViewReceivedServiceProduct.cs" />
+    <Compile Include="ViewModels\Services\ViewTestPolicy.cs" />
     <Compile Include="ViewModels\Summaries\FactorySummaryModel.cs" />
     <Compile Include="ViewModels\Summaries\SummaryModel.cs" />
     <Compile Include="EntityModels\Suppliers\Supplier.cs" />

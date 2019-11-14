@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.Services;
@@ -15,7 +11,7 @@ using NBL.Models.ViewModels.Services;
 
 namespace NBL.DAL
 {
-   public class ServiceGateway:DbGateway,IServiceGateway
+    public class ServiceGateway:DbGateway,IServiceGateway
     {
 
         public int ReceiveServiceProduct(WarrantyBatteryModel product)
@@ -70,6 +66,8 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@ForwardToId", product.ForwardToId);
                 CommandObj.Parameters.AddWithValue("@ForwardRemarks", product.ForwardRemarks?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@SpGrCellRemarks", product.SpGrCellRemarks ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@PrimaryTestResult", product.PrimaryTestResult ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@IsPassPrimaryTest", product.IsPassPrimaryTest);
                 CommandObj.Parameters.AddWithValue("@DistributionPointId", product.DistributionPointId);
                 CommandObj.Parameters.AddWithValue("@DistributionPoint", product.DistributionPoint ?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@ProductId", product.ProductId);
@@ -144,8 +142,14 @@ namespace NBL.DAL
                 ConnectionObj.Open();
                 CommandObj.ExecuteNonQuery();
                 var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
-            
+
                 return rowAffected;
+            }
+            catch (SqlException sqlException)
+            {
+               //var result= sqlException.Source;
+                Log.WriteErrorLog(sqlException);
+                throw new Exception("Could not Receive service product due to Sql Exception", sqlException);
             }
             catch (Exception exception)
             {
@@ -186,7 +190,8 @@ namespace NBL.DAL
                         TransactionRef = reader["TransactionRef"].ToString(),
                         ForwardedTo = reader["ForwardedTo"].ToString(),
                         ReceiveRef =DBNull.Value.Equals(reader["ReceiveRef"])? null:reader["ReceiveRef"].ToString(),
-                        ReceiveByBranch = reader["ReceiveByBranch"].ToString()
+                        ReceiveByBranch = reader["ReceiveByBranch"].ToString(),
+                        PrimaryTestResult = reader["PrimaryTestResult"].ToString()
                     });
                 }
                 reader.Close();
@@ -289,7 +294,9 @@ namespace NBL.DAL
                         EntryByUser = reader["EntryByUser"].ToString(),
                         ReceiveByBranch = reader["ReceiveByBranch"].ToString(),
                         SpGrRemarks =DBNull.Value.Equals(reader["SpGrCellRemarks"])? null:reader["SpGrCellRemarks"].ToString(),
-                        SpGrCellValueDifference=Convert.ToDecimal(reader["SpGrCellDiff"])
+                        SpGrCellValueDifference=Convert.ToDecimal(reader["SpGrCellDiff"]),
+                        ClientInfo = reader["ClientInfo"].ToString(),
+                        PrimaryTestResult = reader["PrimaryTestResult"].ToString()
                     };
                 }
                 reader.Close();
@@ -351,6 +358,96 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+
+        public ViewTestPolicy GetTestPolicyByCategoryAndProductId(int testCategory, int productId)
+        {
+            try
+            {
+
+
+                CommandObj.CommandText = "UDSP_GetTestPolicyByCategoryAndProductId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@CategoryId", testCategory);
+                CommandObj.Parameters.AddWithValue("@ProductId", productId);
+                ConnectionObj.Open();
+                ViewTestPolicy policy = new ViewTestPolicy();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if(reader.Read())
+                {
+                    policy.Ocv = Convert.ToDecimal(reader["OCV"]);
+                    policy.LoadVoltage = Convert.ToDecimal(reader["LoadVoltage"]);
+                    policy.SgDifference = Convert.ToDecimal(reader["SgDifference"]);
+                }
+                reader.Close();
+                return policy;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get test policy by product id and category Id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarIdAndBranchId(int forwardId, int branchId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetReceivedServiceProductsByForwarIdAndBranchId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ForwardId", forwardId);
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                ConnectionObj.Open();
+                List<ViewReceivedServiceProduct> products = new List<ViewReceivedServiceProduct>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    products.Add(new ViewReceivedServiceProduct
+                    {
+                        ReceiveId = Convert.ToInt64(reader["ReceiveId"]),
+                        ReceiveDatetime = Convert.ToDateTime(reader["ReceiveDatetime"]),
+                        AppCapacity = reader["AppCapacity"].ToString(),
+                        AppUsedFor = reader["AppUsedFor"].ToString(),
+                        Barcode = reader["BarcodeNo"].ToString(),
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        ForwardedTo = reader["ForwardedTo"].ToString(),
+                        DelivaryRef = reader["DelivaryRef"].ToString(),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        ReceiveRef = DBNull.Value.Equals(reader["ReceiveRef"]) ? null : reader["ReceiveRef"].ToString(),
+                        ReceiveByBranch = reader["ReceiveByBranch"].ToString(),
+                        ForwardDatetime = Convert.ToDateTime(reader["ForwardDatetime"]),
+                        ReceiveRemarks = reader["ReceiveReport"].ToString(),
+                        DischargeReport = DBNull.Value.Equals(reader["DischargeReport"]) ? null : reader["DischargeReport"].ToString(),
+                        ChargerReport = DBNull.Value.Equals(reader["ChargeReport"]) ? null : reader["ChargeReport"].ToString(),
+                        ClientInfo = reader["ClientInfo"].ToString(),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        ReceiveByBranchId = branchId
+
+                    });
+                }
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect Receive service product by forwardid and branchId", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarId(int forwardId)
         {
             try
@@ -382,7 +479,8 @@ namespace NBL.DAL
                         DischargeReport = DBNull.Value.Equals(reader["DischargeReport"]) ? null : reader["DischargeReport"].ToString(),
                         ChargerReport = DBNull.Value.Equals(reader["ChargeReport"]) ? null : reader["ChargeReport"].ToString(),
                         ClientInfo = reader["ClientInfo"].ToString(),
-                        ClientId = Convert.ToInt32(reader["ClientId"])
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        ReceiveByBranchId = Convert.ToInt32(reader["ReceiveByBranchId"])
                         
                     });
                 }
@@ -577,6 +675,8 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@ForwardToId", product.ForwardToId);
                 CommandObj.Parameters.AddWithValue("@ForwardRemarks", product.ForwardRemarks);
                 CommandObj.Parameters.AddWithValue("@SpGrCellRemarks", product.SpGrCellRemarks);
+                CommandObj.Parameters.AddWithValue("@IsPassChargeTest", product.IsPassChargeTest);
+                CommandObj.Parameters.AddWithValue("@Report", product.Report);
                 CommandObj.Parameters.Add("@ReportId", SqlDbType.Int);
                 CommandObj.Parameters["@ReportId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();

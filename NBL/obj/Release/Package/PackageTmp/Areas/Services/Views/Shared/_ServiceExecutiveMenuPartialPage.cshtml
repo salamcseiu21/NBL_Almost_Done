@@ -106,7 +106,10 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li>@Html.ActionLink("  Warranty Battery", "ProductWarrantyPolicy", "PolicySetup", new { area = "Services" }, new { @class = "fa fa-plus" })</li>
+                    <li>@Html.ActionLink("  Test Policy", "TestPolicy", "PolicySetup", new { area = "Services" }, new { @class = "fa fa-plus" })</li>
+                    <li>@Html.ActionLink("  View Test Policy", "ViewTestPolicy", "PolicySetup", new { area = "Services" }, new { @class = "fa fa-plus" })</li>
+                    <li>@Html.ActionLink("  Warranty Battery", "ProductWarrantyPolicy", "PolicySetup", new {area = "Services"}, new {@class = "fa fa-plus"})</li>
+                    <li>@Html.ActionLink("  View Warranty Policy", "ViewAllWarrantyPolicy", "PolicySetup", new {area = "Services"}, new {@class = "fa fa-eye"})</li>
                 </ul>
             </li>
         }

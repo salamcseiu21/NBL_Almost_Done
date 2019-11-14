@@ -32,6 +32,8 @@ namespace NBL.Models.EntityModels.Services
         public decimal LoadVoltage { get; set; }
         public string VoltageRemarks { get; set; } 
         public string SpGrCellRemarks { get; set; }
+        public string PrimaryTestResult { get; set; } 
+        public int IsPassPrimaryTest { get; set; } 
 
         public int CoverStatusId { get; set; }
         public int ContainerStatusId { get; set; }
