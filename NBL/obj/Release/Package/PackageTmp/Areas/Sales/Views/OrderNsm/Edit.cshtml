@@ -58,7 +58,9 @@
                                 <label class="control-label col-md-4"></label>
                                 <div class="col-md-8 text-right">
                                     @Html.ActionLink("Back", "PendingOrder", "OrderNsm", new {area = "Sales"}, new {@class = "btn btn-info"})
-                                    <input type="button" value="Approve" class="btn btn-success" onclick="ApproveOrder(this)"/>
+                                    <input type="button" value="Approve" class="btn btn-success" onclick="ApproveOrder(this)" />
+                                 
+                                   
                                 </div>
                             </div>
                         </div>
@@ -261,7 +263,6 @@
                     $("#Amount").val(total);
                     $("#TotalQuantity").val(tQty);
                     $("#payment").attr("max", total);
-                    var payment = $("#payment").val();
                     var net = total - discount;
                     $("#Net").val(net);
                 }

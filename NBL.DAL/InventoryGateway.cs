@@ -1331,6 +1331,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@InventoryId", inventoryId);
                 CommandObj.Parameters.AddWithValue("@ProductId", Convert.ToInt32(item.ProductCode.Substring(2,3)));
                 CommandObj.Parameters.AddWithValue("@ProductBarcode", item.ProductCode);
+                CommandObj.Parameters.AddWithValue("@UserId", aDelivery.DeliveredByUserId);
                 CommandObj.Parameters.AddWithValue("@Status", 1);
                 CommandObj.Parameters.AddWithValue("@DeliveryId", deliveryId);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);

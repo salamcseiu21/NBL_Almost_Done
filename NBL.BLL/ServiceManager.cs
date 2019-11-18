@@ -44,7 +44,7 @@ namespace NBL.BLL
            if (product.OpenVoltage >policy.Ocv  && product.LoadVoltage >policy.LoadVoltage && product.SpGrCellValueDifference < policy.SgDifference)
            {
                product.IsPassPrimaryTest = 1;
-               return "The Battery was passed primary test,Please forward to next step (Chargeing stage)";
+               return "The Battery was passed primary test,Please forward to next step (Charging stage)";
 
            }
            product.IsPassPrimaryTest = 0;

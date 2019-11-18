@@ -15,9 +15,9 @@ namespace NBL.DAL
             string connectionString =
                 WebConfigurationManager.ConnectionStrings["UniversalBusinessSolutionDbConnectionString"]
                     .ConnectionString;
-            var str = StringCipher.Decrypt(connectionString, "salam_cse_10_R");
-            _connectionObj = new SqlConnection(str);
-            //_connectionObj = new SqlConnection(connectionString);
+            //var str = StringCipher.Decrypt(connectionString, "salam_cse_10_R");
+            //_connectionObj = new SqlConnection(str);
+            _connectionObj = new SqlConnection(connectionString);
             _commandObj = new SqlCommand();
         }
 

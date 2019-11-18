@@ -66,6 +66,7 @@ namespace NBL.Models.ViewModels.Services
         public string ChargerReport { get; set; }
         public string ClientInfo { get; set; }
         public int ClientId { get; set; }   
+        public ViewClient Client { get; set; }   
         public string ReportByEmployee { get; set; }
         public string EntryByUser { get; set; }
         public string BranchName { get; set; }
@@ -93,6 +94,7 @@ namespace NBL.Models.ViewModels.Services
             ForwardToModels=new List<ForwardToModel>();
             ChargeReportModel=new ChargeReportModel();
             DischargeReportModel=new DischargeReportModel();
+            Client=new ViewClient();
         }
     }
 }

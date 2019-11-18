@@ -786,5 +786,7 @@ namespace NBL.Areas.Corporate.Controllers
             order.Client = _iClientManager.GetById(order.ClientId);
             return PartialView("_ViewOrderHistoryPartialPage", order);
         }
+
+       
     }
 }

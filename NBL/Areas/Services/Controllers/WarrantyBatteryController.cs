@@ -26,16 +26,16 @@ namespace NBL.Areas.Services.Controllers
         private readonly ICommonManager _iCommonManager;
         private readonly IServiceManager _iServiceManager;
         private readonly IBranchManager _iBranchManager;
-        private readonly IProductManager _iProductManager;
         private readonly IPolicyManager _iPolicyManager;
-        public WarrantyBatteryController(IInventoryManager iInventoryManager,ICommonManager iCommonManager,IServiceManager iServiceManager,IBranchManager iBranchManager,IProductManager iProductManager,IPolicyManager iPolicyManager)
+        private readonly IClientManager _iClientManager;
+        public WarrantyBatteryController(IInventoryManager iInventoryManager,ICommonManager iCommonManager,IServiceManager iServiceManager,IBranchManager iBranchManager,IPolicyManager iPolicyManager,IClientManager iClientManager)
         {
             _iInventoryManager = iInventoryManager;
             _iCommonManager = iCommonManager;
             _iServiceManager = iServiceManager; 
             _iBranchManager = iBranchManager;
-            _iProductManager = iProductManager;
             _iPolicyManager = iPolicyManager;
+            _iClientManager = iClientManager;
         }
 
         public ActionResult All()
@@ -57,7 +57,11 @@ namespace NBL.Areas.Services.Controllers
         }
         public ActionResult PrintChallan(long id)
         {
+
             var product = _iServiceManager.GetReceivedServiceProductById(id);
+           var client= _iClientManager.GetClientDeailsById(product.ClientId);
+            product.ProductHistory = _iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();
+            product.Client = client;
             return View(product);
         }
         public ActionResult ReplaceList()

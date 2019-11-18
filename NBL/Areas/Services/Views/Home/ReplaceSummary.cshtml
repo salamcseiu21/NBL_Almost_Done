@@ -48,7 +48,36 @@
 @section Scripts
 {
     <script>
-        $("#tbl_replace_list").DataTable();
+        $("#tbl_replace_list").DataTable({
+            "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "All"]],
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    text: 'Download as Excel',
+                    title: 'Replace List',
+                    exportOptions: {
+                        columns: [0, 1, 2,3]
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: 'Print',
+                    exportOptions: {
+                        columns: [0, 1, 2,3]
+                    },
+                    title: 'Replace List',
+                    customize: function (win) {
+                        $(win.document.body)
+                            .css('font-size', '10pt');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ]
+        });
     </script>
 }
 

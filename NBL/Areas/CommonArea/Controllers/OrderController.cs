@@ -21,11 +21,13 @@ namespace NBL.Areas.CommonArea.Controllers
         private readonly IOrderManager _iOrderManager;
         private readonly IProductManager _iProductManager;
         private readonly IReportManager _iReportManager;
-        public OrderController(IOrderManager iOrderManager,IProductManager iProductManager,IReportManager iReportManager)
+        private readonly IBarCodeManager _iBarCodeManager;
+        public OrderController(IOrderManager iOrderManager,IProductManager iProductManager,IReportManager iReportManager,IBarCodeManager iBarCodeManager)
         {
             _iProductManager = iProductManager;
             _iOrderManager = iOrderManager;
             _iReportManager = iReportManager;
+            _iBarCodeManager = iBarCodeManager;
         }
 
         // GET: CommonArea/Order
@@ -91,11 +93,15 @@ namespace NBL.Areas.CommonArea.Controllers
             SuccessErrorModel model = new SuccessErrorModel();
             try
             {
-
-
+                string scannedBarCode = barcode.ToUpper();
+                if (barcode.Length == 8)
+                {
+                    var barcodeModel = _iBarCodeManager.GetBarcodeByBatchCode(barcode);
+                    scannedBarCode = barcodeModel.Barcode;
+                }
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 var filePath = SoldProductXmlFilePath(branchId, userId);
-                string scannedBarCode = barcode.ToUpper();
+               // string scannedBarCode = barcode.ToUpper();
                 //var productId = Convert.ToInt32(barcode.Substring(2, 3));
                 //var product = _iProductManager.GetProductByProductId(productId);
                 //product.SaleDate = Convert.ToDateTime(saleDate);

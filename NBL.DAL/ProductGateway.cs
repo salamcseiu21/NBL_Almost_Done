@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Xml.Linq;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.Approval;
@@ -49,6 +48,7 @@ namespace NBL.DAL
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
                         LastPriceUpdateDate = Convert.ToDateTime(reader["PriceUpdateDate"]),
                         LastVatUpdateDate = Convert.ToDateTime(reader["VatUpdateDate"]),
+                        HasWarranty = Convert.ToInt32(reader["HasWarrenty"]),
                         ProductCategory = new ProductCategory
                         {
                             ProductCategoryId = Convert.ToInt32(reader["CategoryId"]),
@@ -723,6 +723,7 @@ namespace NBL.DAL
                         CategoryId = Convert.ToInt32(reader["CategoryId"]),
                         SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
                         ProductName = reader["ProductName"].ToString(),
+                        HasWarranty = Convert.ToInt32(reader["HasWarrenty"]),
                         ProductCategory = new ProductCategory
                         {
                             ProductCategoryId = Convert.ToInt32(reader["CategoryId"]),
@@ -876,7 +877,6 @@ namespace NBL.DAL
                     while ((line = sr.ReadLine()) != null)
                     {
                       var product= GetProductByProductId(Convert.ToInt32(line.Substring(2, 3)));
-                        
                         barCodes.Add(
                             new ScannedProduct
                             {
@@ -884,7 +884,9 @@ namespace NBL.DAL
                                 ProductName = product.ProductName,
                                 CategoryId = product.CategoryId,
                                 CategoryName = product.ProductCategory.ProductCategoryName,
-                                ProductId = Convert.ToInt32(line.Substring(2, 3))
+                                ProductId = Convert.ToInt32(line.Substring(2, 3)),
+                                
+                                
 
                             });
                     }

@@ -146,6 +146,19 @@ namespace NBL.Areas.Corporate.Controllers
             return PartialView("_ClientLedgerPartialPage", client);
         }
 
-        
+        public ActionResult ReplaceSummary()
+        {
+            try
+            {
+                var products = _iReportManager.GetTotalReplaceProductList().ToList();
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+
+            }
+        }
     }
 }

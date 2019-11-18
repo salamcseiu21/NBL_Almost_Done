@@ -516,19 +516,20 @@ namespace NBL.Areas.Sales.Controllers
             int companyId = Convert.ToInt32(Session["CompanyId"]);
             var user = (ViewUser) Session["user"];
             List<Delivery> orders;
-            if(user.Roles=="DistributionManager")
-            {
-                orders = _iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyAndUserId(branchId, companyId, user.UserId).ToList();
-            }
-            else if (user.Roles.Equals("SalesExecutive"))
-            {
-                orders = _iDeliveryManager.GetAllDeliveredOrdersByBranchAndCompany(branchId, companyId, user.UserId);
-            }
-            else
-            {
-                
-                orders = _iDeliveryManager.GetAllDeliveredOrdersByBranchAndCompanyId(branchId, companyId).ToList();
-            }
+            //if(user.Roles=="DistributionManager")
+            //{
+            //    orders = _iDeliveryManager.GetAllDeliveredOrdersByDistributionPointCompanyAndUserId(branchId, companyId, user.UserId).ToList();
+            //}
+            //else if (user.Roles.Equals("SalesExecutive"))
+            //{
+            //    orders = _iDeliveryManager.GetAllDeliveredOrdersByBranchAndCompany(branchId, companyId, user.UserId);
+            //}
+            //else
+            //{
+
+
+            //}
+            orders = _iDeliveryManager.GetAllDeliveredOrdersByBranchAndCompanyId(branchId, companyId).ToList();
             return View(orders);
         }
        

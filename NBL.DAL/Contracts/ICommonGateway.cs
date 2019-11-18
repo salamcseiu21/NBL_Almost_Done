@@ -43,7 +43,7 @@ namespace NBL.DAL.Contracts
        ICollection<ProductionDateCode> GetAllProductionDateCode();
        ICollection<ProductionLine> GetAllProductionLines();
        ICollection<ProductionDateCode> GetProductionDateCodeByMonthYear(string monthYear);
-       int SaveEncriptedConString(string chipartext);
+       int SaveEncriptedConString(string chipartext,string ip, string dbName, string userNmae, string password);
        ICollection<RejectionReason> GetAllRejectionReason();
        int UpdateCurrentUserRole(ViewUser user,int roleId);
        ICollection<RequisitionFor> GetAllRequisitionForList();

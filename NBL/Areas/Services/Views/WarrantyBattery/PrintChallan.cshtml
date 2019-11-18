@@ -1,18 +1,17 @@
 ﻿
-@using NBL.BLL
+@using NBL.Models.Enums
 @model NBL.Models.ViewModels.Services.ViewReceivedServiceProduct
 @{
     
-  
-    UserManager userManager = new UserManager();
-    var challanBy = userManager.GetUserInformationByUserId(Model.EntryByUserId); 
+
+    var aClient = Model.Client;
 }
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>BSR Challan</title>
+    <title>Battery Receive Invoice</title>
     <link rel='icon' href='~/Images/logo.png' type='image/x-icon' />
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -39,32 +38,104 @@
         <section class="invoice">
             <!-- title row -->
             @Html.Partial("_PrintHeaderPartialPage")
-            <h3 class="text-center text-green headingStyle">BSR Challan</h3>
-            <div class="row">
-                <div class="col-xs-12">
-                    <h2 class="page-header">
-                        Dealer Name: @Model.ClientInfo 
-                    </h2>
-                    <h2 class="page-header">
-                        Receive Ref : @Model.ReceiveRef
-                        <small class="pull-right">Date: @Model.ReceiveDatetime.ToString("D")</small>
-                    </h2>
-                </div>
-                <!-- /.col -->
-            </div>
-
+            <h3 class="text-center text-green headingStyle">Battery Receive Invoice</h3>
+            
             <!-- Table row -->
             <div class="row">
                 <div class="col-xs-12 table-responsive">
                     <table class="table">
                         <tr>
-                            <td>Product Name</td>
-                            <td>@Model.ProductName</td>
+                            <td> Receive Ref : @Model.ReceiveRef</td>
+                            <td>Receive Date:@Model.ReceiveDatetime.ToString("dd-MMM-yyyy") </td>
+                            <td>Sale Date:@Convert.ToDateTime(Model.ProductHistory.SaleDate).ToString("dd-MMM-yyyy") </td>
                         </tr>
                         <tr>
-                            <td>Primary Test Report</td>
-                            <td>@Model.PrimaryTestResult</td>
+                            <td>Product Name: @Model.ProductName</td>
+                            <td>BarCode:@Model.Barcode </td>
+                            <td>BatchCode:@Model.Barcode.Substring(5,8) </td>
                         </tr>
+                        <tr>
+                            <td colspan="2">Client Name: @aClient.ClientName</td>
+                            <td>Client Type:@aClient.ClientTypeName </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Client Address: @aClient.Address</td>
+                           
+                        </tr>
+                        <tr>
+                            <td colspan="2">Sales Duration: @Model.ProductHistory.SalesDuration</td>
+                            <td>Service Duration:@Model.ProductHistory.ServiceDuration </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Verificaiton: @Model.VerificationRemarks</td>
+                            <td>Remarks:@Model.ReceiveRemarks </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- /.col -->
+            </div>
+            <h4>Battery Status at Receive Time</h4>
+            <div class="row">
+                <div class="col-xs-12 table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Cell No</th>
+                            <th>Cell 1</th>
+                            <th>Cell 2</th>
+                            <th>Cell 3</th>
+                            <th>Cell 4</th>
+                            <th>Cell 5</th>
+                            <th>Cell 6</th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td>Sp.Gr</td>
+                            <td>@Model.SpGrCellOne</td>
+                            <td>@Model.SpGrCellTwo</td>
+                            <td>@Model.SpGrCellThree</td>
+                            <td>@Model.SpGrCellFour</td>
+                            <td>@Model.SpGrCellFive</td>
+                            <td>@Model.SpGrCellSix</td>
+                          
+                            
+                        </tr>
+                        <tr>
+                            <td>Condition</td>
+                            <td>@Enum.GetName(typeof(CellConditionEnum), Model.CellOneConditionId)</td>
+                            <td>@Enum.GetName(typeof(CellConditionEnum), Model.CellTwoConditionId)</td>
+                            <td>@Enum.GetName(typeof(CellConditionEnum), Model.CellThreeConditionId)</td>
+                            <td>@Enum.GetName(typeof(CellConditionEnum), Model.CellFourConditionId)</td>
+                            <td>@Enum.GetName(typeof(CellConditionEnum), Model.CellFiveConditionId)</td>
+                            <td>@Enum.GetName(typeof(CellConditionEnum), Model.CellSixConditionId)</td>
+                          
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="3">Open Voltage</td>
+                            <td>@Model.OpenVoltage</td>
+                            <td colspan="2">Load Voltage</td>
+                            <td>@Model.LoadVoltage</td>
+                            
+
+                        </tr>
+                    </table>
+                </div>
+                <!-- /.col -->
+            </div>
+            
+            <h4>Physical Status</h4>
+            <div class="row">
+                <div class="col-xs-12 table-responsive">
+                    <table class="table">
+                        
+                        <tr>
+                            <td>Cover: @Enum.GetName(typeof(PhysicalConditionEnum), Model.CoverStatusId)</td>
+                            <td>Post: @Enum.GetName(typeof(PhysicalConditionEnum), Model.PostStatusId)</td>
+                            <td>Container: @Enum.GetName(typeof(PhysicalConditionEnum), Model.ContainerStatusId)</td>
+                            <td>Servicing: @Model.ServicingStatus</td>
+                        </tr>
+                       
                     </table>
                 </div>
                 <!-- /.col -->

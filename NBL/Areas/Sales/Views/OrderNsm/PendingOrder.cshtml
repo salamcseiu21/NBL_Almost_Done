@@ -41,8 +41,9 @@
                             </td>
                             <td>@(item.User?.EmployeeName ?? "N/A")</td>
                             <td class="text-center">
-                                @Html.ActionLink(" Cancel", "Cancel", "OrderNsm", new { id = item.OrderId }, new { @class = "fa fa-times", style = "color:red;" }) &nbsp;|
-                                @Html.ActionLink(" Details", "Edit", "OrderNsm", new { area = "Sales", id = item.OrderId }, new { @class = "fa fa-eye" })
+                                
+                                @Html.ActionLink(" Cancel", "Cancel", "OrderNsm", new {id = item.OrderId}, new {@class = "fa fa-times", style = "color:red;"}) &nbsp;|
+                                @Html.ActionLink(" Details", "Edit", "OrderNsm", new {area = "Sales", id = item.OrderId}, new {@class = "fa fa-eye"})
                             </td>
                         </tr>
                     }

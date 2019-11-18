@@ -44,7 +44,7 @@ namespace NBL.Models.EntityModels.Products
         public decimal DiscountAmount { get; set; }
         public Discount Discount { get; set; }
         public decimal SubTotal => Quantity * SalePrice;
-
+        public int HasWarranty { get; set; } 
         public ProductType ProductType { get; set; }
         public ProductCategory ProductCategory { get; set; }
 

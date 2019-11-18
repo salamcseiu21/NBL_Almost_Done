@@ -8330,6 +8330,7 @@
     <Content Include="Areas\Services\Views\WarrantyBattery\PrintChallan.cshtml" />
     <Content Include="Areas\Services\Views\PolicySetup\TestPolicy.cshtml" />
     <Content Include="Areas\Services\Views\PolicySetup\ViewTestPolicy.cshtml" />
+    <Content Include="Areas\Corporate\Views\Reports\ReplaceSummary.cshtml" />
     <None Include="DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>

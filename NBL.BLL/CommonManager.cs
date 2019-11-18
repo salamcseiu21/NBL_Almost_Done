@@ -142,9 +142,9 @@ namespace NBL.BLL
            return _iCommonGateway.GetProductionDateCodeByMonthYear(monthYear);
        }
 
-       public bool SaveEncriptedConString(string chipartext)
+       public bool SaveEncriptedConString(string chipartext,string ip,string dbName,string userNmae,string password)
        {
-           int rowAffected = _iCommonGateway.SaveEncriptedConString(chipartext);
+           int rowAffected = _iCommonGateway.SaveEncriptedConString(chipartext,ip,dbName,userNmae,password);
            return rowAffected > 0;
        }
 

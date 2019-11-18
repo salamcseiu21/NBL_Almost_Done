@@ -35,11 +35,16 @@ namespace NBL.Controllers
         // GET: LogIn
         public ActionResult LogIn()
         {
-           
+
             //var text = StringCipher.Encrypt(
             //     "Data Source=192.168.2.62; Initial Catalog=dbUniversalBusinessSolution1; User Id=sa; Password=Nbl&Cit&Navana;Integrated Security=false;MultipleActiveResultSets=true;",
             //     "salam_cse_10_R");
-            //_iCommonManager.SaveEncriptedConString(text);
+            //var ip = "192.168.2.62";
+            //var dbName = "dbUniversalBusinessSolution1";
+            //var userName = "sa";
+            //var password = "Nbl&Cit&Navana";
+            //_iCommonManager.SaveEncriptedConString(text,ip,dbName,userName,password);
+
             Session["user"] = null;
             Session["Branches"] = null;
             Session["Roles"] = null;

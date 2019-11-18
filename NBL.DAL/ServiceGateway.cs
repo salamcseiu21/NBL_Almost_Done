@@ -428,7 +428,8 @@ namespace NBL.DAL
                         ChargerReport = DBNull.Value.Equals(reader["ChargeReport"]) ? null : reader["ChargeReport"].ToString(),
                         ClientInfo = reader["ClientInfo"].ToString(),
                         ClientId = Convert.ToInt32(reader["ClientId"]),
-                        ReceiveByBranchId = branchId
+                        ReceiveByBranchId = branchId,
+                        PrimaryTestResult = reader["PrimaryTestResult"].ToString()
 
                     });
                 }

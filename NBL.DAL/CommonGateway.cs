@@ -886,13 +886,17 @@ CommandObj.Parameters.Clear();
             }
         }
 
-        public int SaveEncriptedConString(string chipartext)
+        public int SaveEncriptedConString(string chipartext,string ip, string dbName, string userNmae, string password)
         {
             try
             {
                 CommandObj.CommandText = "UDSP_SaveEncriptedConString";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.AddWithValue("@Text", chipartext);
+                CommandObj.Parameters.AddWithValue("@Ip", ip);
+                CommandObj.Parameters.AddWithValue("@DbName", dbName);
+                CommandObj.Parameters.AddWithValue("@UserName", userNmae);
+                CommandObj.Parameters.AddWithValue("@Password", password);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 ConnectionObj.Open();
