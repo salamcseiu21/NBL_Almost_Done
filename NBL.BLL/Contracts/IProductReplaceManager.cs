@@ -23,5 +23,6 @@ namespace NBL.BLL.Contracts
         ICollection<ReplaceReport> GetTodaysReplaceListByBranchId(int branchId);
         ICollection<ReplaceReport> GetAllReplaceListByBranchId(int branchId);
         ICollection<ViewReplaceModel> GetAllReplaceList(int status);
+        bool EditReplaceEntry(ViewReplaceModel model);
     }
 }

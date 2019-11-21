@@ -64,6 +64,12 @@ namespace NBL.BLL
             return _iProductReplaceGateway.GetAllReplaceList(status);
         }
 
+        public bool EditReplaceEntry(ViewReplaceModel model)
+        {
+            int rowAffected = _iProductReplaceGateway.EditReplaceEntry(model);
+            return rowAffected > 0;
+        }
+
         public ViewReplaceModel GetReplaceById(long id)
         {
             return _iProductReplaceGateway.GetReplaceById(id);

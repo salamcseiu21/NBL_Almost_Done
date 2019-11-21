@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using NBL.BLL.Contracts;
 using NBL.Models;
-using NBL.Models.EntityModels;
 using NBL.Models.EntityModels.Clients;
-using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Services;
 using NBL.Models.Enums;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Products;
-using NBL.Models.ViewModels.Replaces;
 using NBL.Models.ViewModels.Services;
 
 namespace NBL.Areas.Services.Controllers
@@ -378,7 +373,7 @@ namespace NBL.Areas.Services.Controllers
                 var actionModel =
                     _iCommonManager.GetActionListModelByAreaControllerActionName("Services", "WarrantyBattery",
                         "Receive");
-                WarrantyBatteryModel model = new WarrantyBatteryModel
+                var model = new WarrantyBatteryModel
                 {
                     PhysicalConditions = _iCommonManager.GetAllPhysicalConditions().ToList(),
                     ServicingModels = _iCommonManager.GetAllServicingStatus().ToList(),
@@ -428,7 +423,10 @@ namespace NBL.Areas.Services.Controllers
                 }
 
                 var product = _iInventoryManager.GetProductHistoryByBarcode(model.Barcode) ?? new ViewProductHistory();
-               
+                 var age= (DateTime.Now - Convert.ToDateTime(product.DeliveryDate)).TotalDays;
+                 var warrantyPeriod=  product.AgeLimitInDealerStock + product.LifeTime;
+
+                model.HasWarranty = age>warrantyPeriod ? "N" : "Y";
                 var branchId = Convert.ToInt32(Session["BranchId"]);
                 model.EntryByUserId = user.UserId;
                 model.ReceiveByBranchId = branchId;

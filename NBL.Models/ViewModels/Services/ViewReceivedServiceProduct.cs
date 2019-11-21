@@ -64,6 +64,7 @@ namespace NBL.Models.ViewModels.Services
         public string ReceiveRemarks { get; set; }
         public string DischargeReport { get; set; }
         public string ChargerReport { get; set; }
+        public string HasWarranty { get; set; } 
         public string ClientInfo { get; set; }
         public int ClientId { get; set; }   
         public ViewClient Client { get; set; }   

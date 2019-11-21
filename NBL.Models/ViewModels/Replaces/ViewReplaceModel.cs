@@ -24,6 +24,8 @@ namespace NBL.Models.ViewModels.Replaces
         public string CancelRemarks { get; set; }
         public string Remarks { get; set; }
         public int UserId { get; set; }
+        public string ReplaceForBarcode { get; set; }
+
         public ICollection<ViewReplaceDetailsModel> Products { set; get; }
     }
 }

@@ -23,5 +23,6 @@ namespace NBL.DAL.Contracts
         ICollection<ReplaceReport> GetAllReplaceListByBranchId(int branchId);
         ICollection<ViewReplaceModel> GetAllReplaceList(int status);
         ICollection<ReplaceReport> GetReplaceListByDateAndDistributionPoint(DateTime deliveryDate, int distributionPoint);
+        int EditReplaceEntry(ViewReplaceModel model);
     }
 }

@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.SqlClient;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels;
-using NBL.Models.EntityModels.Products;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Replaces;
@@ -353,6 +352,37 @@ namespace NBL.DAL
             }
         }
 
+        public int EditReplaceEntry(ViewReplaceModel model)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_EditReplaceEntry";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ReceiveId", model.ReceiveId);
+                CommandObj.Parameters.AddWithValue("@ProductId", model.ProductId);
+                CommandObj.Parameters.AddWithValue("@Remarks", model.Remarks);
+                CommandObj.Parameters.AddWithValue("@Barcode", model.ReplaceForBarcode);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not update replace entry..", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         public ICollection<ViewReplaceModel> GetAllReplaceList(int status)
         {
             try
@@ -412,7 +442,11 @@ namespace NBL.DAL
                         ReceiveRef = reader["ReceiveRef"].ToString(),
                         BranchId = Convert.ToInt32(reader["ReceiveByBranchId"]),
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
-                        UserId = Convert.ToInt32(reader["EntryByUserId"])
+                        UserId = Convert.ToInt32(reader["EntryByUserId"]),
+                        ReplaceForBarcode = reader["BarcodeNo"].ToString(),
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        Remarks = reader["ReceiveReport"].ToString()
                     };
                 }
                 reader.Close();

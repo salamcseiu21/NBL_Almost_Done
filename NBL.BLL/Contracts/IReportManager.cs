@@ -43,7 +43,8 @@ namespace NBL.BLL.Contracts
         bool IsDistributedFromFactory(string barcode);
         bool IsDistributedFromBranch(string barcode);
         bool IsAllreadyUpdatedSaleDateInFactory(string barcode);
-        bool IsAllreadyUpdatedSaleDateInBranch(string barcode); 
+        bool IsAllreadyUpdatedSaleDateInBranch(string barcode);
+        bool IsAllreadyUpdatedSaleDate(string barcode); 
         ViewDisributedProduct GetDistributedProductFromFactory(string barcode);
         ViewDisributedProduct GetDistributedProductFromBranch(string barcode);
         ICollection<ViewProduct> GetTotalStock();
@@ -73,6 +74,7 @@ namespace NBL.BLL.Contracts
         ICollection<ViewDeliveredOrderModel> GetTotalDeliveredOrderListByDistributionPointId(int branchId);
         ICollection<SubSubSubAccount> GetBankStatementByYear(int year);
         ICollection<ViewSubSubSubAccount> GetAllSubSubSubAccountList();
-        IEnumerable<ReplaceReport> GetReplaceListByDateAndDistributionPoint( DateTime deliveryDate, int distributionPoint); 
+        IEnumerable<ReplaceReport> GetReplaceListByDateAndDistributionPoint( DateTime deliveryDate, int distributionPoint);
+       
     }
 }

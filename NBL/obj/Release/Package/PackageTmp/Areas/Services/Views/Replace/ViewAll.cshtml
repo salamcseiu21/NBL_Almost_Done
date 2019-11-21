@@ -38,6 +38,7 @@
                         <td class="text-right">@item.Remarks</td>
                         <td class="text-center">
                             @Html.ActionLink(" Print Challan", "PrintChallan", "Replace", new {id = item.ReceiveId, area = "services"}, new { target = "_blank", @class = "btn btn-info fa fa-print"}) |
+                            @Html.ActionLink(" Edit", "Edit", "Replace", new {id = item.ReceiveId, area = "services"}, new {@class = "btn btn-primary fa fa-edit"}) |
                             @Html.ActionLink(" Cancel", "Cancel", "Replace", new {id = item.ReceiveId, area = "services"}, new {@class = "btn btn-danger fa fa-times"})
                         </td>
                     </tr>

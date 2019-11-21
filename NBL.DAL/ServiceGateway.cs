@@ -58,6 +58,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@EntryByUserId", product.EntryByUserId);
                 CommandObj.Parameters.AddWithValue("@Status", product.Status);
                 CommandObj.Parameters.AddWithValue("@IsActive", "Y");
+                CommandObj.Parameters.AddWithValue("@HasWarranty",product.HasWarranty);
                 CommandObj.Parameters.AddWithValue("@ServiceBatteryDeliveryDate", product.ServiceBatteryDeliveryDate);
                 CommandObj.Parameters.AddWithValue("@ServiceBatteryBarcode", product.ServiceBatteryBarcode?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@ServiceBatteryReturnDate", product.ServiceBatteryReturnDate);
@@ -288,15 +289,21 @@ namespace NBL.DAL
                         ReportByEmployee = reader["EmployeeName"].ToString(),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
                         ClientId = Convert.ToInt32(reader["ClientId"]),
-                        //ChargingSystem = reader["ChargingSystem"].ToString(),
-                        //ServicingStatus = reader["ServicingStatus"].ToString(),
-
+                        ChargingSystem = reader["ChargingSystem"].ToString(),
+                        ServicingStatus = reader["ServicingStatus"].ToString(),
                         EntryByUser = reader["EntryByUser"].ToString(),
                         ReceiveByBranch = reader["ReceiveByBranch"].ToString(),
                         SpGrRemarks =DBNull.Value.Equals(reader["SpGrCellRemarks"])? null:reader["SpGrCellRemarks"].ToString(),
                         SpGrCellValueDifference=Convert.ToDecimal(reader["SpGrCellDiff"]),
                         ClientInfo = reader["ClientInfo"].ToString(),
-                        PrimaryTestResult = reader["PrimaryTestResult"].ToString()
+                        PrimaryTestResult = reader["PrimaryTestResult"].ToString(),
+                        HasWarranty = reader["HasWarranty"].ToString(),
+                        RbdDate = Convert.ToDateTime(reader["RbdDate"]),
+                        RbdBarcode = reader["RbdBarcode"].ToString(),
+                        ServiceBatteryBarcode = reader["ServiceBatteryBarcode"].ToString(),
+                        ServiceBatteryDeliveryDate = Convert.ToDateTime(reader["ServiceBatteryDeliveryDate"]),
+                        ServiceBatteryReturnDate = Convert.ToDateTime(reader["ServiceBatteryReturnDate"])
+
                     };
                 }
                 reader.Close();
@@ -429,7 +436,8 @@ namespace NBL.DAL
                         ClientInfo = reader["ClientInfo"].ToString(),
                         ClientId = Convert.ToInt32(reader["ClientId"]),
                         ReceiveByBranchId = branchId,
-                        PrimaryTestResult = reader["PrimaryTestResult"].ToString()
+                        PrimaryTestResult = reader["PrimaryTestResult"].ToString(),
+                        HasWarranty = reader["HasWarranty"].ToString()
 
                     });
                 }
@@ -481,7 +489,8 @@ namespace NBL.DAL
                         ChargerReport = DBNull.Value.Equals(reader["ChargeReport"]) ? null : reader["ChargeReport"].ToString(),
                         ClientInfo = reader["ClientInfo"].ToString(),
                         ClientId = Convert.ToInt32(reader["ClientId"]),
-                        ReceiveByBranchId = Convert.ToInt32(reader["ReceiveByBranchId"])
+                        ReceiveByBranchId = Convert.ToInt32(reader["ReceiveByBranchId"]),
+                        HasWarranty = reader["HasWarranty"].ToString()
                         
                     });
                 }

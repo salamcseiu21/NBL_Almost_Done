@@ -56,6 +56,7 @@ namespace NBL.DAL.Contracts
        int InActiveProduct(int branchId, List<ViewStockProduct> stockBarcodList);
        ICollection<ViewDeliveredOrderModel> GetTotalDeliveredOrderListByDistributionPointId(int branchId);
        ICollection<SubSubSubAccount> GetBankStatementByYear(int year);
-       ICollection<ViewSubSubSubAccount> GetAllSubSubSubAccountList(); 
+       ICollection<ViewSubSubSubAccount> GetAllSubSubSubAccountList();
+       int IsAllreadyUpdatedSaleDate(string barcode);
    }
 }

@@ -355,6 +355,12 @@ namespace NBL.BLL
             return GetDistributedProductFromBranch().ToList().Find(n => n.BarCode == barcode && n.IsSaleDateUpdated) != null;
         }
 
+        public bool IsAllreadyUpdatedSaleDate(string barcode)
+        {
+            int rowAffected = _iReportGateway.IsAllreadyUpdatedSaleDate(barcode);
+            return rowAffected > 0;
+        }
+
         public ViewDisributedProduct GetDistributedProductFromFactory(string barcode)
         {
             return _iReportGateway.GetDistributedProductFromFactory(barcode); 

@@ -340,6 +340,36 @@ namespace NBL.DAL
             }
         }
 
+        public int IsAllreadyUpdatedSaleDate(string barcode)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_IsAllreadyUpdatedSaleDate";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Barcode", barcode);
+                int rowNo = 0;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    rowNo = Convert.ToInt32(reader["RowNo"]);
+                }
+                reader.Close();
+                return rowNo;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get sale date update status by barcode", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
         public IEnumerable<ViewProduct> GetPopularBatteriesByYear(int year)
         {
             try

@@ -101,24 +101,20 @@ namespace NBL.Areas.CommonArea.Controllers
                 }
                 int branchId = Convert.ToInt32(Session["BranchId"]);
                 var filePath = SoldProductXmlFilePath(branchId, userId);
-               // string scannedBarCode = barcode.ToUpper();
-                //var productId = Convert.ToInt32(barcode.Substring(2, 3));
-                //var product = _iProductManager.GetProductByProductId(productId);
-                //product.SaleDate = Convert.ToDateTime(saleDate);
                 var barcodeList = _iProductManager.GetTempSoldBarcodesFromXmlFile(filePath).Select(n => n.BarCode);
                 bool isScannedBefore = barcodeList.Contains(scannedBarCode);
                 ViewDisributedProduct product;
-                //bool isSold = _iInventoryManager.IsThisProductSold(scannedBarCode);
                 bool isSoldFromFactory = _iReportManager.IsDistributedFromFactory(scannedBarCode);
-                var updatedInFactory = _iReportManager.IsAllreadyUpdatedSaleDateInFactory(scannedBarCode);
-                var updatedInBranch = _iReportManager.IsAllreadyUpdatedSaleDateInBranch(scannedBarCode);
+                //var updatedInFactory = _iReportManager.IsAllreadyUpdatedSaleDateInFactory(scannedBarCode);
+                bool isUPdatedSaleDate= _iReportManager.IsAllreadyUpdatedSaleDate(scannedBarCode);
+                //var updatedInBranch = _iReportManager.IsAllreadyUpdatedSaleDateInBranch(scannedBarCode);
                 bool isSoldFromBranch = _iReportManager.IsDistributedFromBranch(barcode);
                 if (isScannedBefore)
                 {
                     model.Message = "<p style='color:red'> Already Added!</p>";
                     //return Json(model, JsonRequestBehavior.AllowGet);
                 }
-                else if (updatedInFactory || updatedInBranch)
+                else if (isUPdatedSaleDate)
                 {
                     model.Message = "<p style='color:red'>Sale date Already Updated!</p>";
                     //return Json(model, JsonRequestBehavior.AllowGet);

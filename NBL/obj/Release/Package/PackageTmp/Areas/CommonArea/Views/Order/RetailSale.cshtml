@@ -92,7 +92,7 @@
                     },
                     success: function (response) {
                         var result = response.Message;
-                        //alert("Saved Successfully");
+                        //alert(response);
                         $('#message').html(response).fadeIn('slow');
                         $('#message').html(result).fadeIn('slow'); //also show a success message
                         $('#message').delay(700).fadeOut('slow');

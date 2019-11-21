@@ -8331,6 +8331,7 @@
     <Content Include="Areas\Services\Views\PolicySetup\TestPolicy.cshtml" />
     <Content Include="Areas\Services\Views\PolicySetup\ViewTestPolicy.cshtml" />
     <Content Include="Areas\Corporate\Views\Reports\ReplaceSummary.cshtml" />
+    <Content Include="Areas\Services\Views\Replace\Edit.cshtml" />
     <None Include="DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>

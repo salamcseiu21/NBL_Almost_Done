@@ -65,7 +65,8 @@ namespace NBL.Models.EntityModels.Services
         public int ClientId { get; set; }
         public int ProductId { get; set; }
         public DateTime ExpiryDate { get; set; }
-        public string IsManualEntry { get; set; } 
+        public string IsManualEntry { get; set; }
+        public string HasWarranty { get; set; } 
         public List<PhysicalConditionModel> PhysicalConditions { set; get; }
         public List<ServicingModel> ServicingModels { set; get; }   
         public List<ChargingStatusModel> ChargingStatus { set; get; }

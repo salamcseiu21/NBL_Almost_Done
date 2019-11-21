@@ -132,7 +132,7 @@
                         <tr>
                             <td>
                                 <label for="DelearReceiveDate" class="control-label"> Delear Receive Date</label>
-                                <input type="text" id="DelearReceiveDate" name="DelearReceiveDate" value="@date" class="form-control" onchange="GetDuraitionByDate(this)"/>
+                                <input type="text" id="DelearReceiveDate" name="DelearReceiveDate" placeholder="dd-mm-yyyy"  class="form-control" onchange="GetDuraitionByDate(this)"/>
                             </td>
                             <td>
                                 <label for="DelearReceiveDate" class="control-label"> Service Duration</label><br/>
@@ -319,7 +319,7 @@
                                 <td>
                                     <strong>Issue Date:</strong>
 
-                                    <input type="text" id="ServiceBatteryDeliveryDate" name="ServiceBatteryDeliveryDate" value="@date" style="width: 100%" class="form-control" />
+                                    <input type="text" id="ServiceBatteryDeliveryDate" name="ServiceBatteryDeliveryDate" placeholder="dd-mm-yyyy"  style="width: 100%" class="form-control" />
 
                                 </td>
                                 <td>
@@ -327,7 +327,7 @@
                                 </td>
                                 <td>
                                     <strong>Return On:</strong>
-                                    <input type="text" id="ServiceBatteryReturnDate" name="ServiceBatteryReturnDate" value="@date" style="width: 100%" class="form-control" />
+                                    <input type="text" id="ServiceBatteryReturnDate" name="ServiceBatteryReturnDate" placeholder="dd-mm-yyyy"   style="width: 100%" class="form-control" />
                                 </td>
                                 <td>
                                     <strong>Remarks :</strong><input type="text" style="width: 100%" name="RbdRemarks" class="form-control"  placeholder="Remarks..."/>
@@ -336,11 +336,7 @@
 
 
                             </tr>
-                            <tr>
-
-                                <td colspan="2"> <strong>Replace by Dealer:</strong><input type="text" id="RbdDate" name="RbdDate" value="@date" class="form-control" /> </td>
-                                <td colspan="2"> <strong>Barcode :</strong><input type="text" name="RbdBarcode" style="width: 100%" class="form-control" placeholder="Replace battery barcode .."/></td>
-                            </tr>
+                        
                            
                         </tbody>
                     </table>
@@ -353,7 +349,7 @@
                         <tbody>
                             <tr>
 
-                                <td colspan="2"> <strong>Replace by Dealer:</strong><input type="text" id="RbdDate" name="RbdDate" value="@date" class="form-control" /> </td>
+                                <td colspan="2"> <strong>Replace by Dealer:</strong><input type="text" placeholder="dd-mm-yyyy"  id="RbdDate" name="RbdDate"  class="form-control" /> </td>
                                 <td colspan="2"> <strong>Barcode :</strong><input type="text" name="RbdBarcode" style="width: 100%" class="form-control" placeholder="Replace battery barcode .." /></td>
                             </tr>
 

@@ -21,6 +21,7 @@
                     <th> Product Name</th>
                     <th> Segment</th>
                     <th> Barcode</th>
+                    <th> Has Warranty</th>
                     <th> Status</th>
                     <th class="text-center">Action</th>
                 </tr>
@@ -36,7 +37,8 @@
                         <td>@item.ProductName</td>
                         <td>@item.ProductCategoryName</td>
                         <td>@item.Barcode</td>
-                        <td>@item.Status</td>
+                        <td class="text-center">@item.HasWarranty</td>
+                        <td  class="text-center">@item.Status</td>
                         <td class="text-center">
                             @Html.ActionLink(" Charge Report", "ChargeReport", "WarrantyBattery", new {id = item.ReceiveId}, new {@class = "fa fa-edit btn btn-info"})
                         </td>
@@ -52,6 +54,7 @@
                     <th> Product Name</th>
                     <th> Segment</th>
                     <th> Barcode</th>
+                    <th> Has Warranty</th>
                     <th> Status</th>
                     <th class="text-center">Action</th>
                 </tr>

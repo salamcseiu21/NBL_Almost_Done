@@ -31,6 +31,17 @@
     <![endif]-->
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <style type="text/css">
+       td {
+            padding: 0;
+            margin: 0;      
+        }
+        tr {
+            padding: 0;
+            margin: 0;
+        }
+       
+    </style>
 </head>
 <body onload="window.print();" style="height:auto;width:auto;">
     <div class="wrapper">
@@ -67,7 +78,15 @@
                             <td>Service Duration:@Model.ProductHistory.ServiceDuration </td>
                         </tr>
                         <tr>
-                            <td colspan="2">Verificaiton: @Model.VerificationRemarks</td>
+                            <td colspan="2">Verificaiton: @if (Model.HasWarranty == "Y")
+                                                          {
+                                                              <span>Warranty Available.</span>
+                                                          }
+                                                          else
+                                                          {
+                                                              <span>Warranty Void.</span>
+                                                          }
+                            </td>
                             <td>Remarks:@Model.ReceiveRemarks </td>
                         </tr>
                     </table>
@@ -124,22 +143,53 @@
                 <!-- /.col -->
             </div>
             
-            <h4>Physical Status</h4>
+         
             <div class="row">
                 <div class="col-xs-12 table-responsive">
                     <table class="table">
-                        
+                        <tr>
+                            <td colspan="4" style="font-weight: bolder">Physical Status</td>
+                        </tr>
                         <tr>
                             <td>Cover: @Enum.GetName(typeof(PhysicalConditionEnum), Model.CoverStatusId)</td>
                             <td>Post: @Enum.GetName(typeof(PhysicalConditionEnum), Model.PostStatusId)</td>
                             <td>Container: @Enum.GetName(typeof(PhysicalConditionEnum), Model.ContainerStatusId)</td>
                             <td>Servicing: @Model.ServicingStatus</td>
                         </tr>
-                       
+                        <tr>
+                            <td colspan="4" style="font-weight: bolder">Application</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">User For: @Model.AppUsedFor</td>
+                            <td>Capacity: @Model.AppCapacity</td>
+                            <td>Charging System: @Model.ChargingSystem</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="font-weight: bolder">Service Battery</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Product Name: @Model.RbdBarcode</td>
+                            <td>Barcode: @Model.ServiceBatteryBarcode</td>
+                            <td>Delivery Date: @Model.ServiceBatteryDeliveryDate.ToString("dd-MMM-yyyy")</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="font-weight: bolder">
+                                Replace By Dealer
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Product Name: @Model.RbdBarcode</td>
+                            <td>Barcode: @Model.RbdBarcode</td>
+                            <td>Delivery Date: @Model.RbdDate.ToString("dd-MMM-yyyy")</td>
+                        </tr>
                     </table>
                 </div>
                 <!-- /.col -->
             </div>
+
+           
+            
+          
             <div class="row" style="margin-top: 50px">
                 <!-- accepted payments column -->
                 <div class="col-xs-12 text-center">

@@ -322,6 +322,41 @@ namespace NBL.Areas.Services.Controllers
             }
         }
 
+        public ActionResult Edit(long id)
+        {
+            try
+            {
+                ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(id);
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Edit(long id, ViewReplaceModel model) 
+        {
+            try
+            {
+                model.ReceiveId = id;
+                bool result=_iProductReplaceManager.EditReplaceEntry(model);
+                if (result)
+                {
+                    return RedirectToAction("ViewAll");
+                }
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         public ActionResult PrintChallan(long id)
         {
             ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(id);

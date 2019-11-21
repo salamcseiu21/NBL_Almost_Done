@@ -19,6 +19,7 @@
                     <th> Forward Date</th>
                     <th> Forward Duration</th>
                     <th> Product Name</th>
+                    <th> Has Warranty</th>
                     <th> Barcode</th>
                     <th> Charge Report</th>
                     <th class="text-center">Action</th>
@@ -33,6 +34,7 @@
                         <td>@item.ForwardDatetime</td>
                         <td class="text-center"><strong>@((item.ForwardDatetime.Date - item.ReceiveDatetime.Date).Days) (Days)</strong></td>
                         <td>@item.ProductName (@item.ProductCategoryName)</td>
+                        <td class="text-center">@item.HasWarranty</td>
                         <td>@item.Barcode</td>
                         <td>@item.ChargerReport</td>
                         <td class="text-center">
@@ -48,6 +50,7 @@
                     <th> Forward Date</th>
                     <th> Forward Duration</th>
                     <th> Product Name</th>
+                    <th> Has Warranty</th>
                     <th> Barcode</th>
                     <th> Charge Report</th>
                     <th class="text-center">Action</th>
