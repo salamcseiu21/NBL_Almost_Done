@@ -69,7 +69,8 @@ namespace NBL.DAL
                         ProductName = reader["ProductName"].ToString(),
                         AgeLimitInDealerStock = Convert.ToInt32(reader["AgeLimitInDealerStock"]),
                         WarrantyPeriodInDays = Convert.ToInt32(reader["LifeTime"]),
-                        Id = Convert.ToInt64(reader["Id"])
+                        Id = Convert.ToInt64(reader["Id"]),
+                        HasWarrantyCard = Convert.ToInt32(reader["HasWarrenty"])
                         
                     });
                 }
@@ -209,6 +210,8 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@Id", model.Id);
                 CommandObj.Parameters.AddWithValue("@WarrantyPeriod", model.WarrantyPeriodInDays);
                 CommandObj.Parameters.AddWithValue("@AgeLimitInDealerStock", model.AgeLimitInDealerStock);
+                CommandObj.Parameters.AddWithValue("@HasWarrantyCard", model.HasWarrantyCard);
+                CommandObj.Parameters.AddWithValue("@ProductId", model.ProductId);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 ConnectionObj.Open();

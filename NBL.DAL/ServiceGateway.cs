@@ -59,10 +59,10 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@Status", product.Status);
                 CommandObj.Parameters.AddWithValue("@IsActive", "Y");
                 CommandObj.Parameters.AddWithValue("@HasWarranty",product.HasWarranty);
-                CommandObj.Parameters.AddWithValue("@ServiceBatteryDeliveryDate", product.ServiceBatteryDeliveryDate);
+                CommandObj.Parameters.AddWithValue("@ServiceBatteryDeliveryDate", product.ServiceBatteryDeliveryDate ?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@ServiceBatteryBarcode", product.ServiceBatteryBarcode?? (object)DBNull.Value);
-                CommandObj.Parameters.AddWithValue("@ServiceBatteryReturnDate", product.ServiceBatteryReturnDate);
-                CommandObj.Parameters.AddWithValue("@RbdDate", product.RbdDate);
+                CommandObj.Parameters.AddWithValue("@ServiceBatteryReturnDate", product.ServiceBatteryReturnDate ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@RbdDate", product.RbdDate ?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@RbdBarcode", product.RbdBarcode?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@ForwardToId", product.ForwardToId);
                 CommandObj.Parameters.AddWithValue("@ForwardRemarks", product.ForwardRemarks?? (object)DBNull.Value);
@@ -298,11 +298,11 @@ namespace NBL.DAL
                         ClientInfo = reader["ClientInfo"].ToString(),
                         PrimaryTestResult = reader["PrimaryTestResult"].ToString(),
                         HasWarranty = reader["HasWarranty"].ToString(),
-                        RbdDate = Convert.ToDateTime(reader["RbdDate"]),
+                        RbdDate = DBNull.Value.Equals(reader["RbdDate"]) ? (DateTime ?)null : Convert.ToDateTime(reader["RbdDate"]),
                         RbdBarcode = reader["RbdBarcode"].ToString(),
                         ServiceBatteryBarcode = reader["ServiceBatteryBarcode"].ToString(),
-                        ServiceBatteryDeliveryDate = Convert.ToDateTime(reader["ServiceBatteryDeliveryDate"]),
-                        ServiceBatteryReturnDate = Convert.ToDateTime(reader["ServiceBatteryReturnDate"])
+                        ServiceBatteryDeliveryDate = DBNull.Value.Equals(reader["ServiceBatteryDeliveryDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ServiceBatteryDeliveryDate"]),
+                        ServiceBatteryReturnDate = DBNull.Value.Equals(reader["ServiceBatteryReturnDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ServiceBatteryReturnDate"])
 
                     };
                 }

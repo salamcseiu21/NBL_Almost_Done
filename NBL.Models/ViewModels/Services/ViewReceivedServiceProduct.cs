@@ -46,9 +46,9 @@ namespace NBL.Models.ViewModels.Services
         public string ChargingSystem { get; set; }
         public string OtherInformationRemarks { get; set; }
         public string ReceiveReport { get; set; }
-        public DateTime ServiceBatteryDeliveryDate { get; set; }
+        public DateTime? ServiceBatteryDeliveryDate { get; set; }
         public string ServiceBatteryBarcode { get; set; }
-        public DateTime ServiceBatteryReturnDate { get; set; }
+        public DateTime? ServiceBatteryReturnDate { get; set; }
         public decimal RecBackupTime { get; set; } 
 
 
@@ -58,7 +58,7 @@ namespace NBL.Models.ViewModels.Services
         public int ServicingStatusId { get; set; }
         public int ChargingSystemId { get; set; }
       
-        public DateTime RbdDate { get; set; }
+        public DateTime? RbdDate { get; set; }
         public string RbdBarcode { get; set; }
         public string RbdRemarks { get; set; }
         public string ReceiveRemarks { get; set; }

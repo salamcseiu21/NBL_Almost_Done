@@ -15,6 +15,7 @@ namespace NBL.Models.EntityModels.ProductWarranty
         public int? ClientId { get; set; }
         public int IsActive { get; set; }
         public int UserId { get; set; }
+        public int HasWarrantyCard { get; set; }
         public DateTime SystemDateTime { get; set; }
     }
 }

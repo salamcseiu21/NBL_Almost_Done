@@ -30,6 +30,8 @@ namespace NBL.Models.ViewModels.ProductWarranty
         public int? ClientId { get; set; }
         public string ClientName { get; set; }
         public int IsActive { get; set; }
+        public int HasWarrantyCard { get; set; } 
         public DateTime SystemDateTime { get; set; }
+
     }
 }

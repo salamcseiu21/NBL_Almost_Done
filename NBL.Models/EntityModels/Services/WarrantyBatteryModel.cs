@@ -45,10 +45,10 @@ namespace NBL.Models.EntityModels.Services
         public string OtherInformationRemarks { get; set; }
         public string ReceiveReport { get; set; }
      
-        public DateTime ServiceBatteryDeliveryDate { get; set; }
+        public DateTime? ServiceBatteryDeliveryDate { get; set; }
         public string ServiceBatteryBarcode { get; set; }
-        public DateTime ServiceBatteryReturnDate { get; set; }
-        public DateTime RbdDate { get; set; }
+        public DateTime? ServiceBatteryReturnDate { get; set; }
+        public DateTime? RbdDate { get; set; }
         public string RbdBarcode { get; set; }
         public string RbdRemarks { get; set; }
         public string ReceiveRemarks { get; set; }
