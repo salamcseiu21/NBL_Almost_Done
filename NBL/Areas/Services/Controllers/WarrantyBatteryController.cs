@@ -423,9 +423,15 @@ namespace NBL.Areas.Services.Controllers
                 }
 
                 var product = _iInventoryManager.GetProductHistoryByBarcode(model.Barcode) ?? new ViewProductHistory();
-                 var age= (DateTime.Now - Convert.ToDateTime(product.DeliveryDate)).TotalDays;
+                 var age= (DateTime.Now - Convert.ToDateTime(product.DeliveryDate)).TotalDays; 
                  var warrantyPeriod=  product.AgeLimitInDealerStock + product.LifeTime;
+                //--------------02-Dec-2019 Begin---------
 
+                product.ServiceDuration = Convert.ToInt32((model.DelearReceiveDate - Convert.ToDateTime(product.SaleDate)).TotalDays - 1);
+                model.IsSoldInGracePeriod = product.AgeLimitInDealerStock < product.SalesDuration ? 0 : 1;
+                model.IsInWarrantyPeriod = product.ServiceDuration > product.LifeTime ? 0 : 1;
+
+                //-----------End-------
                 model.HasWarranty = age>warrantyPeriod ? "N" : "Y";
                 var branchId = Convert.ToInt32(Session["BranchId"]);
                 model.EntryByUserId = user.UserId;
@@ -469,7 +475,7 @@ namespace NBL.Areas.Services.Controllers
 
             var product = _iInventoryManager.GetProductHistoryByBarcode(barcode) ?? new ViewProductHistory();
             product.ServiceDuration = Convert.ToInt32((dealerReceiveDate - Convert.ToDateTime(product.SaleDate)).TotalDays-1);
-            product.CollectionDuration = Convert.ToInt32((Convert.ToDateTime(product.SaleDate)- dealerReceiveDate).TotalDays-1);
+            product.CollectionDuration = Convert.ToInt32((Convert.ToDateTime(DateTime.Now)-dealerReceiveDate).TotalDays-1);
             return Json(product, JsonRequestBehavior.AllowGet);
         }
 

@@ -56,8 +56,8 @@
                         </tr>
                         <tr style="">
                             <td>
-                                <strong>Product LifeTime : </strong><i><label id="LifeTime"></label></i>,
-                                <strong>Grace  LifeTime : </strong><i><label id="GraceLifeTime">0</label></i>
+                                <strong>Waarranty Period : </strong><i><label id="LifeTime"></label></i>,
+                                <strong>Grace  Period : </strong><i><label id="GraceLifeTime">0</label></i>
                             </td>
                             <td>
 
@@ -132,7 +132,7 @@
                         <tr>
                             <td>
                                 <label for="DelearReceiveDate" class="control-label"> Delear Receive Date</label>
-                                <input type="text" id="DelearReceiveDate" name="DelearReceiveDate" placeholder="dd-mm-yyyy"  class="form-control" onchange="GetDuraitionByDate(this)"/>
+                                <input type="text" id="DelearReceiveDate" value="@date" name="DelearReceiveDate" placeholder="dd-mm-yyyy"  class="form-control" onchange="GetDuraitionByDate(this)"/>
                             </td>
                             <td>
                                 <label for="DelearReceiveDate" class="control-label"> Service Duration</label><br/>
@@ -371,7 +371,7 @@
 
                     <td>
                         <strong>Forward To :</strong><select name="ForwardToId" required style="width: 100%" class="form-control">
-                            @*<option value="">---Select--</option>*@
+                           
                             @foreach (var item in Model.ForwardToModels)
                             {
                                 <option value="@item.Id">@item.ForwardType</option>
@@ -380,13 +380,6 @@
                     </td>
                     <td> <strong>Remarks :</strong><input type="text" name="ForwardRemarks" style="width: 100%" class="form-control" placeholder="Forward remarks.." /> </td>
                     <td>
-                        @*<strong>Distribution Point :</strong><select name="DistributionPointId" required style="width: 100%" class="form-control">
-                            <option value="">---Select--</option>
-                            @foreach (var item in Model.DistributionPoints)
-                            {
-                                <option value="@item.BranchId">@item.BranchName</option>
-                            }
-                        </select>*@
                         
                         <strong>Distribution Point  :</strong><input type="text" name="DistributionPoint" style="width: 100%" class="form-control" placeholder="Distribution Point .." />
                        

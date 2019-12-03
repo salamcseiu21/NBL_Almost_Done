@@ -58,5 +58,6 @@ namespace NBL.DAL.Contracts
        ICollection<SubSubSubAccount> GetBankStatementByYear(int year);
        ICollection<ViewSubSubSubAccount> GetAllSubSubSubAccountList();
        int IsAllreadyUpdatedSaleDate(string barcode);
+       ICollection<ViewProductionSalesRepalce> GetProductionSalesRepalcesByMonthYear(int monthNo, int year);
    }
 }

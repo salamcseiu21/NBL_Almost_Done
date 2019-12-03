@@ -8,6 +8,7 @@ namespace NBL.Models.EntityModels.Services
     {
         public long ReceiveId { get; set; }
         public DateTime ReceiveDatetime { get; set; }
+        public DateTime DelearReceiveDate { get; set; } 
         public string Barcode { get; set; }
         public string ReceiveRef { get; set; }
         public string ReplaceRef { get; set; } 
@@ -66,14 +67,16 @@ namespace NBL.Models.EntityModels.Services
         public int ProductId { get; set; }
         public DateTime ExpiryDate { get; set; }
         public string IsManualEntry { get; set; }
-        public string HasWarranty { get; set; } 
+        public string HasWarranty { get; set; }
+        public int IsSoldInGracePeriod { get; set; }
+        public int IsInWarrantyPeriod { get; set; }
+
         public List<PhysicalConditionModel> PhysicalConditions { set; get; }
         public List<ServicingModel> ServicingModels { set; get; }   
         public List<ChargingStatusModel> ChargingStatus { set; get; }
         public List<ForwardToModel> ForwardToModels { set; get; }
         public List<ViewBranch> DistributionPoints { get; set; }
         public ForwardDetails ForwardDetails { get; set; }
-
         public WarrantyBatteryModel()
         {
             PhysicalConditions=new List<PhysicalConditionModel>();

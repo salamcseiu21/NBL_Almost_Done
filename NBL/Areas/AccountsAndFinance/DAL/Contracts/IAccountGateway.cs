@@ -119,5 +119,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL.Contracts
        int AddSubSubSubAccount(SubSubSubAccount account);
        int GetMaxSubSubAccountNoBySubAccountCode(string subAccountCode);
        int AddSubSubAccount(SubSubAccount account);
+       int GetMaxVoucherNoOfCurrentMonthByVoucherType(int voucherType);
+       int GetMaxJournalVoucherNoOfCurrentMonth();
    }
 }

@@ -1,0 +1,125 @@
+﻿
+@model NBL.Models.ViewModels.ViewEmployee
+@{
+    ViewBag.Title = "My Profile";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    var i = 0;
+}
+<!-- Main content -->
+<section class="content" style="background-color: aliceblue;">
+    <h3 class="text-center text-green headingStyle">My Profile</h3>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Profile Image -->
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <img class="profile-user-img img-responsive img-circle" src="~/@(Model.EmployeeImage?? "Images/User.jpg")" alt="Employee Image" title="@Model.EmployeeName">
+                    <br />
+                    <img class="profile-user-img img-responsive" src="~/@(Model.EmployeeSignature?? "Images/sign.png")" alt="Employee Signature ">
+                    <p class="text-muted text-center">@Model.DesignationName</p>
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Joining Date</b> <a class="pull-right">@Model.JoiningDate.ToString("D")</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#personal_details" data-toggle="tab">Personal Details</a></li>
+                    <li><a href="#contact_details" data-toggle="tab">Contact Details</a></li>
+                    <li><a href="#Education" data-toggle="tab">Educational Info</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="active tab-pane" id="personal_details">
+                        <!-- Post -->
+                        <div class="post">
+                            <p><strong>Name:</strong> @Model.EmployeeName<br/>
+                                <strong>NID :</strong> @Model.NationalIdNo<br />
+                                <strong>Date Of Birth :</strong> @(Model.DoB?.Date.ToString("dd-MMM-yyyy"))<br />
+                            </p>
+                            <strong><i class="fa fa-map-marker margin-r-5"></i>Present Address</strong>
+                            <p class="text-muted">@Model.PresentAddress</p>
+                        </div>
+                        <!-- /.post -->
+                    </div>
+                    <div class="tab-pane" id="contact_details">
+                        <p class="text-muted">
+                            <strong>
+                                Phone : @Model.Phone<br />
+                                Alternate Phone: @Model.AlternatePhone<br />
+                                E-mail : @Model.Email<br />
+                              
+                            </strong>
+                            <hr>
+                            <strong><i class="fa fa-map-marker margin-r-5"></i>Present Address</strong>
+                            <p class="text-muted">@Model.PresentAddress</p>
+                        </p>
+                    </div>
+                    <div class="tab-pane" id="Education">
+                        <p class="text-muted">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>S.N</th>
+                                    <th>Qualification Name</th>
+                                    <th>Group/Subject</th>
+                                    <th>Board</th>
+                                    <th>Insitute Name</th>
+                                    <th>Result</th>
+                                    <th>Passing Year</th>
+                                </tr>
+
+                                </thead>
+                                <tbody>
+                                @foreach (var item in Model.EducationalInfos)
+                                {
+                                    i++;
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@item.QualificationName</td>
+                                        <td>@item.GroupSubject</td>
+                                        <td>@item.BoardName</td>
+                                        <td>@item.InstituteName</td>
+                                        <td>@item.Result</td>
+                                        <td>@item.PassingYear</td>
+                                    </tr>
+                                }
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>S.N</th>
+                                    <th>Qualification Name</th>
+                                    <th>Group/Subject</th>
+                                    <th>Board</th>
+                                    <th>Insitute Name</th>
+                                    <th>Result</th>
+                                    <th>Passing Year</th>
+                                </tr>
+
+                                </tfoot>
+                            </table>
+                            
+                        </p>
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+            <div>
+                @Html.ActionLink("Back", "Home", "Home", null, new { @class = "btn btn-info" })
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+

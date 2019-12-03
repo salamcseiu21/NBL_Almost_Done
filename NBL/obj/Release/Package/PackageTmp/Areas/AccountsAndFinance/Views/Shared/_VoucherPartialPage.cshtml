@@ -17,6 +17,7 @@
                 <thead>
                     <tr>
                         <th class="text-center">S.N </th>
+                        <th>Reference</th>
                         <th class="text-center">Voucher Name </th>
                         <th class="text-center">Transaction Type </th>
                         <th class="text-center">Date </th>
@@ -31,6 +32,7 @@
                         i++;
                         <tr>
                             <td>@i</td>
+                            <td>@item.VoucherRef</td>
                             <td>@item.VoucherName</td>
                             <td class="text-center">
                                 @{
@@ -85,6 +87,7 @@
                 <tfoot>
                     <tr>
                         <th class="text-center">S.N </th>
+                        <th>Reference</th>
                         <th class="text-center">Voucher Name </th>
                         <th class="text-center">Transaction Type </th>
                         <th class="text-center">Date </th>

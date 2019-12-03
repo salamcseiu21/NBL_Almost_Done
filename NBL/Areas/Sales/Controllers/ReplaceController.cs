@@ -144,7 +144,7 @@ namespace NBL.Areas.Sales.Controllers
                 if (result.StartsWith("S"))
                 {
                     System.IO.File.Create(filePath).Close();
-                    return RedirectToAction("ViewAll");
+                    return RedirectToAction("WarrantyReplaceList");
                 }
                 return View();
             }

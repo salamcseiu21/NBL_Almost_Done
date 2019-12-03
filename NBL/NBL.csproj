@@ -8332,6 +8332,9 @@
     <Content Include="Areas\Services\Views\PolicySetup\ViewTestPolicy.cshtml" />
     <Content Include="Areas\Corporate\Views\Reports\ReplaceSummary.cshtml" />
     <Content Include="Areas\Services\Views\Replace\Edit.cshtml" />
+    <Content Include="Areas\ResearchAndDevelopment\Views\Home\MyProfile.cshtml" />
+    <Content Include="Areas\ResearchAndDevelopment\Views\Home\UpdateBasicInfo.cshtml" />
+    <Content Include="Areas\ResearchAndDevelopment\Views\Home\UpdateEducationalInfo.cshtml" />
     <None Include="DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -8342,6 +8345,8 @@
     </Content>
     <Content Include="Files\test.xlsx" />
     <Content Include="Files\Stock_Bogura.xlsx" />
+    <Content Include="Files\Stock_Dhaka.xlsx" />
+    <Content Include="Files\Stock_Ctg.xlsx" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />

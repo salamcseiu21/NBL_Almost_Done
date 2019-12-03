@@ -282,6 +282,7 @@
     <Compile Include="ViewModels\Sales\ProductReceiveViewModel.cs" />
     <Compile Include="ViewModels\Sales\ViewBranchStockModel.cs" />
     <Compile Include="ViewModels\Summaries\ViewEntityCount.cs" />
+    <Compile Include="ViewModels\Summaries\ViewProductionSalesRepalce.cs" />
     <Compile Include="ViewModels\TransferProducts\CreateTransferIssueViewModel.cs" />
     <Compile Include="ViewModels\TransferProducts\TransferModel.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewCreateTransferRequisitionModel.cs" />

@@ -13,6 +13,7 @@
             <tr>
                 <th> S.N</th>
                 <th> Product Name </th>
+                <th class="text-center"> Warranty From </th>
                 <th class="text-right"> Warranty Period </th>
                 <th class="text-right"> Grace Warranty Period </th>
                 <th class="text-center"> Action </th>
@@ -25,6 +26,7 @@
                 <tr>
                     <td>@i</td>
                     <td>@item.ProductName</td>
+                    <td  class="text-center">@(Convert.ToBoolean(item.HasWarrantyCard) ? "Retails Sale Date":"Invoice Date")</td>
                     <td  class="text-right">@item.WarrantyPeriodInDays</td>
                     <td  class="text-right">@item.AgeLimitInDealerStock</td>
                     <td class="text-center">@Html.ActionLink(" Edit","EditPolicy","PolicySetup",new {area="Services",id=item.Id},new {@class="fa fa-edit"})</td>
@@ -35,6 +37,7 @@
             <tr>
                 <th> S.N</th>
                 <th> Product Name </th>
+                <th class="text-center"> Warranty From </th>
                 <th class="text-right"> Warranty Period </th>
                 <th class="text-right"> Grace Warranty Period </th>
                 <th class="text-center"> Action </th>

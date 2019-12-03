@@ -718,7 +718,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
 
         public ActionResult ReadExcelData()
         {
-            var filePath = Server.MapPath("~/Files/Stock_Bogura.xlsx");
+            var filePath = Server.MapPath("~/Files/Stock_Ctg.xlsx");
             using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
 
@@ -726,7 +726,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
                 List<ViewStockProduct> stockBarcodList=new List<ViewStockProduct>();
                 for (int i = 1; i < 180; i++)
                 {
-                  var products= _iReportManager.GetStockProductBarcodeByBranchAndProductIdTemp(10, i).ToList();
+                  var products= _iReportManager.GetStockProductBarcodeByBranchAndProductIdTemp(12, i).ToList();
                     foreach (ViewStockProduct viewStockProduct in products)
                     {
                         stockBarcodList.Add(viewStockProduct);
@@ -747,7 +747,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
                         while (reader.Read())
                         {
 
-                            for (int i = 0; i <= 26; i++)
+                            for (int i = 0; i <= 30; i++)
                             {
                                 var data = Convert.ToString(reader.GetValue(i));
                                 if (data != "")
@@ -767,7 +767,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
 
                     var count = stockBarcodList.Count;
                     var count1 = actualStockBarcodList.Count;
-                    bool removeResulat = _iReportManager.InActiveProduct(10,stockBarcodList);
+                    bool removeResulat = _iReportManager.InActiveProduct(12,stockBarcodList);
 
                     
                     // 2. Use the AsDataSet extension method

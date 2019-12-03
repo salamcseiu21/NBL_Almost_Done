@@ -28,6 +28,8 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@DelivaryRef", product.DelivaryRef);
                 CommandObj.Parameters.AddWithValue("@ReceiveRef", product.ReceiveRef);
                 CommandObj.Parameters.AddWithValue("@ReceiveByBranchId", product.ReceiveByBranchId);
+                CommandObj.Parameters.AddWithValue("@IsInWarrantyPeriod", product.IsInWarrantyPeriod);
+                CommandObj.Parameters.AddWithValue("@IsSoldInGracePeriod", product.IsSoldInGracePeriod);
                 CommandObj.Parameters.AddWithValue("@TransactionRef", product.TransactionRef);
                 CommandObj.Parameters.AddWithValue("@SpGrCellOne", product.SpGrCellOne);
                 CommandObj.Parameters.AddWithValue("@SpGrCellTwo", product.SpGrCellTwo);

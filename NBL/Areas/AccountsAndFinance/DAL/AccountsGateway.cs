@@ -1234,6 +1234,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                 CommandObj.Parameters.AddWithValue("@VoucherType", voucher.VoucherType);
                 CommandObj.Parameters.AddWithValue("@VoucherName", voucher.VoucherName);
                 CommandObj.Parameters.AddWithValue("@Amounts", voucher.Amounts);
+                CommandObj.Parameters.AddWithValue("@Remarks", voucher.Remarks);
                 CommandObj.Parameters.Add("@VoucherId", SqlDbType.Int);
                 CommandObj.Parameters["@VoucherId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
@@ -1399,7 +1400,8 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                         CompanyId = Convert.ToInt32(reader["CompanyId"]),
                         BranchId = Convert.ToInt32(reader["BranchId"]),
                         Status = Convert.ToInt32(reader["Status"]),
-                        Cancel = reader["Cancel"].ToString()
+                        Cancel = reader["Cancel"].ToString(),
+                        Remarks = reader["Remarks"].ToString()
                     };
                     vouchers.Add(voucher);
                 }
@@ -1538,7 +1540,8 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                         TransactionTypeId = Convert.ToInt32(reader["TransactionTypeId"]),
                         Status=Convert.ToInt32(reader["Status"]),
                         BranchId = Convert.ToInt32(reader["BranchId"]),
-                        CompanyId = Convert.ToInt32(reader["CompanyId"])
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        Remarks = reader["Remarks"].ToString()
                     };
                     
                 }
@@ -1963,7 +1966,7 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                 CommandObj.Parameters.Add("@AccountMasterId", SqlDbType.Int);
                 CommandObj.Parameters["@AccountMasterId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
-                int accountId = Convert.ToInt32(CommandObj.Parameters["@AccountMasterId"].Value);
+                var accountId = Convert.ToInt32(CommandObj.Parameters["@AccountMasterId"].Value);
                 rowAffected = SaveJournalVoucherDetailsIntoAccountDetails(voucherDetails, accountId);
                 if (rowAffected > 0)
                 {
@@ -1989,10 +1992,6 @@ namespace NBL.Areas.AccountsAndFinance.DAL
             var i = 0;
             foreach (var detail in voucherDetails)
             {
-                //if (detail.DebitOrCredit.Equals("Cr"))
-                //{
-                //    detail.Amount = detail.Amount * -1;
-                //}
                 CommandObj.CommandText = "UDSP_SaveJournalVoucherDetailsIntoAccountDetails";
                 CommandObj.CommandType = CommandType.StoredProcedure;
                 CommandObj.Parameters.Clear();
@@ -2320,6 +2319,65 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                 CommandObj.Dispose();
                 ConnectionObj.Close();
                 CommandObj.Parameters.Clear();
+            }
+        }
+
+        public int GetMaxVoucherNoOfCurrentMonthByVoucherType(int voucherType)
+        {
+            try
+            {
+                CommandObj.CommandText = "spGetMaxVoucherNoOfCurrentMonthByVoucherType";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@VoucherType", voucherType);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                int slNo = 0;
+                if (reader.Read())
+                {
+                    slNo = Convert.ToInt32(reader["MaxVoucherNo"]);
+                }
+                reader.Close();
+                return slNo;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect max serial no of  voucher of current month by voucher type", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
+        public int GetMaxJournalVoucherNoOfCurrentMonth()
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetMaxJournalVoucherNoOfCurrentMonth";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                int slNo = 0;
+                if (reader.Read())
+                {
+                    slNo = Convert.ToInt32(reader["MaxVoucherNo"]);
+                }
+                reader.Close();
+                return slNo;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect max voucher no of journal voucher of current month", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
             }
         }
 

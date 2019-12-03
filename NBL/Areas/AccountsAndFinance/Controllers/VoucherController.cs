@@ -364,20 +364,21 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 string bankCode = collection["BankCode"];
                 string purposeCode= collection["PurposeCode"];
                 
-                Purpose debitPurpose = new Purpose
+               var debitPurpose = new Purpose
                 {
                     PurposeCode = bankCode,
                     Amounts = amount,
-                    DebitOrCredit = "Dr"
+                    Remarks = collection["Remarks"],
+                   DebitOrCredit = "Dr"
                 };
                 purposeList.Add(debitPurpose);
                 var anUser = (ViewUser)Session["user"];
              
-             
-                Purpose creditPurpose = new Purpose
+                var creditPurpose = new Purpose
                 {
                     PurposeCode = purposeCode,
                     Amounts =amount,
+                   Remarks = collection["Remarks"],
                     DebitOrCredit = "Cr"
                 };
                 purposeList.Add(creditPurpose);
@@ -393,7 +394,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 voucher.BranchId = Convert.ToInt32(Session["BranchId"]);
                 voucher.CompanyId = Convert.ToInt32(Session["CompanyId"]);
 
-                int rowAffected = _iAccountsManager.SaveVoucher(voucher);
+                var rowAffected = _iAccountsManager.SaveVoucher(voucher);
                 if (rowAffected > 0)
                 {
                     aModel.Message = "<p class='text-green'>Saved Cheque payment voucher successfully!</p>";
@@ -443,20 +444,22 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 var amount = Convert.ToDecimal(collection["Amount"]);
                 string bankCode = collection["BankCode"];
                 string purposeCode = collection["PurposeCode"];
-                Purpose creditPurpose = new Purpose
+                var creditPurpose = new Purpose
                 {
                     PurposeCode = bankCode,
                     Amounts = amount,
+                    Remarks = collection["Remarks"],
                     DebitOrCredit = "Cr"
                 };
                 purposeList.Add(creditPurpose);
                 var anUser = (ViewUser)Session["user"];
 
 
-                Purpose debitPurpose  = new Purpose
+                var debitPurpose  = new Purpose
                 {
                     PurposeCode = purposeCode,
                     Amounts =amount,
+                    Remarks = collection["Remarks"],
                     DebitOrCredit = "Dr"
                 };
                 purposeList.Add(debitPurpose);

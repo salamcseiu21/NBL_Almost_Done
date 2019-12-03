@@ -291,7 +291,7 @@ namespace NBL.Areas.Sales.Controllers
                     else
                     {
                         TempData["CreditLimit"] = "Credit Limit exceed!!";
-                        return View();
+                        return RedirectToAction("Delivery", new { id = invoice.InvoiceId });
                     }
                 }
                 else

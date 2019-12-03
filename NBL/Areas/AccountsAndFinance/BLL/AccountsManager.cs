@@ -295,7 +295,7 @@ namespace NBL.Areas.AccountsAndFinance.BLL
             string refCode = _iCommonManager.GetAllSubReferenceAccounts().ToList()
                 .Find(n => n.Id == Convert.ToInt32(ReferenceType.JournalVoucher)).Code;
             aJournal.VoucherRef = DateTime.Now.Year.ToString().Substring(2, 2) + refCode + (maxSl + 1);
-            aJournal.VoucherNo = maxSl + 1;
+            aJournal.VoucherNo = _iAccountGateway.GetMaxJournalVoucherNoOfCurrentMonth() + 1;
             return _iAccountGateway.SaveJournalVoucher(aJournal,journals);
         }
 
@@ -318,7 +318,7 @@ namespace NBL.Areas.AccountsAndFinance.BLL
         {
             int maxSl = GetMaxVoucherNoOfCurrentYearByVoucherType(voucher.VoucherType);
             voucher.VoucherRef = GenerateVoucherRef(maxSl,voucher.VoucherType);
-            voucher.VoucherNo = maxSl+1;
+            voucher.VoucherNo = _iAccountGateway.GetMaxVoucherNoOfCurrentMonthByVoucherType(voucher.VoucherType)+1;
             return _iAccountGateway.SaveVoucher(voucher);
         }
         private int GetMaxVoucherNoOfCurrentYearByVoucherType(int voucherType)

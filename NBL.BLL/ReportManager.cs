@@ -318,6 +318,11 @@ namespace NBL.BLL
             return _iProductReplaceGateway.GetReplaceListByDateAndDistributionPoint(deliveryDate,distributionPoint);
         }
 
+        public ICollection<ViewProductionSalesRepalce> GetProductionSalesRepalcesByMonthYear(int monthNo, int year)
+        {
+            return _iReportGateway.GetProductionSalesRepalcesByMonthYear(monthNo,year);
+        }
+
         public bool IsValiedBarcode(string barcode)
         {
             var model = _iBarCodeManager.GetAll().ToList().Select(n=>n.Barcode).ToList().Contains(barcode);

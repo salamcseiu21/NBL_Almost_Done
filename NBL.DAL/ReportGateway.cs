@@ -370,6 +370,44 @@ namespace NBL.DAL
             }
         }
 
+        public ICollection<ViewProductionSalesRepalce> GetProductionSalesRepalcesByMonthYear(int monthNo, int year)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetProductionSalesRepalceByMonthYear";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@MonthNo", monthNo);
+                CommandObj.Parameters.AddWithValue("@Year", year);
+                ConnectionObj.Open();
+                List<ViewProductionSalesRepalce> productionSales = new List<ViewProductionSalesRepalce>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    productionSales.Add(new ViewProductionSalesRepalce 
+                    {
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductionQuantity = Convert.ToInt32(reader["ProductionQuantity"]),
+                        SalesQuantity = Convert.ToInt32(reader["SalesQuantity"]),
+                        ReplaceQuantity = Convert.ToInt32(reader["ReplaceQuantity"])
+                    });
+                }
+                reader.Close();
+                return productionSales;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get production,sales and repalce quantity by month and year", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
         public IEnumerable<ViewProduct> GetPopularBatteriesByYear(int year)
         {
             try
