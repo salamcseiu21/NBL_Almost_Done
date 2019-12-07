@@ -368,16 +368,17 @@ namespace NBL.BLL
             int rowAffected = 0;
             foreach (var item in retail.Products)
             {
-                var fromBranch = _iReportGateway.GetDistributedProductFromBranch(item.BarCode);
-                var fromFactory= _iReportGateway.GetDistributedProductFromFactory(item.BarCode);
-                if (fromBranch!=null)
-                {
-                    rowAffected += _iOrderGateway.UpdateSoldProductSaleDateInBranch(retail,item, fromBranch);
-                }
-                if(fromFactory != null)
-                {
-                    rowAffected += _iOrderGateway.UpdateSoldProductSaleDateInFactory(retail,item, fromFactory);  
-                }
+                //var fromBranch = _iReportGateway.GetDistributedProductFromBranch(item.BarCode);
+                //var fromFactory = _iReportGateway.GetDistributedProductFromFactory(item.BarCode);
+                //if (fromBranch != null)
+                //{
+                //    rowAffected += _iOrderGateway.UpdateSoldProductSaleDateInBranch(retail, item, fromBranch);
+                //}
+                //if (fromFactory != null)
+                //{
+                   //rowAffected += _iOrderGateway.UpdateSoldProductSaleDateInFactory(retail, item, fromFactory);
+                //}
+                rowAffected += _iOrderGateway.UpdateSoldProductSaleDateInFactory(retail, item);
             }
            
             return rowAffected > 0;

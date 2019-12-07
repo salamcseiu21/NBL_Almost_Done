@@ -11,6 +11,7 @@ using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
+using NBL.Models.ViewModels.Replaces;
 using NBL.Models.ViewModels.Sales;
 using NBL.Models.ViewModels.TransferProducts;
 
@@ -50,7 +51,7 @@ namespace NBL.DAL.Contracts
        long GetMaxVoucherNoByTransactionInfix(string infix);
        ICollection<ProductionSummary> GetProductionSummaries();
        ICollection<ProductionSummary> GetProductionSummaryByMonth(DateTime dateTime);
-       int SaveReplaceDeliveryInfo(List<ScannedProduct> scannedProducts, Delivery aDelivery, int replaceStatus);
+       int SaveReplaceDeliveryInfo(List<ScannedProduct> scannedProducts, Delivery aDelivery, int replaceStatus,ViewReplaceModel replaceModel);
        int SaveTransferDeliveredProduct(TransferModel aModel);
        ICollection<ViewTransferProductModel> GetAllTransferedListByBranchAndCompanyId(int branchId, int companyId);
        List<string> GetTransferReceiveableBarcodeList(long transferId);

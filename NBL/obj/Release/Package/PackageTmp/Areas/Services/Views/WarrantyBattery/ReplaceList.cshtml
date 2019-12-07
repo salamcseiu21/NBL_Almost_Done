@@ -32,8 +32,8 @@
                         <td>@item.ClientInfo</td>
                         <td class="text-center">
 
-
-                            <button type="button" onclick="ForwardToDistributionCenter(@item.ReceiveId)" class="btn btn-info btn-sm">Make Rplace Chalan</button>
+                            @Html.ActionLink(" Print Challan", "PrintChallan", "Replace", new {id = item.ReceiveId, area = "services"}, new { target = "_blank", @class = "btn btn-info fa fa-print"}) |
+                            <button type="button" onclick="ForwardToDistributionCenter(@item.ReceiveId)" class="btn btn-primary btn-sm"><i class="fa fa-share"></i> Send To Distribution</button>
                         </td>
 
                     </tr>

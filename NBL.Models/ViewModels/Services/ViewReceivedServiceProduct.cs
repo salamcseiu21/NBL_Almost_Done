@@ -81,6 +81,7 @@ namespace NBL.Models.ViewModels.Services
         public int ReportByEmployeeId { get; set; }
         public int EntryByUserId { get; set; }
         public DateTime? ExpiryDate { get; set; }
+        public DateTime? SaleDate { get; set; } 
         public int ProductId { get; set; }
 
         public ViewProductHistory ProductHistory { get; set; }

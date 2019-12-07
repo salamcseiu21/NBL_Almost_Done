@@ -323,6 +323,22 @@ namespace NBL.BLL
             return _iReportGateway.GetProductionSalesRepalcesByMonthYear(monthNo,year);
         }
 
+        public ViewDeliveryDetails GetDeliveryInfoByBarcode(string barcode)
+        {
+            return _iReportGateway.GetDeliveryInfoByBarcode(barcode);
+        }
+
+        public bool IsDeliveryForReplace(string barcode)
+        {
+            int rowCount = _iReportGateway.IsDeliveryForReplace(barcode);
+            return rowCount > 0;
+        }
+
+        public ViewDisributedProduct GetReplaceDistributedProduct(string barcode)
+        {
+            return _iReportGateway.GetReplaceDistributedProduct(barcode);
+        }
+
         public bool IsValiedBarcode(string barcode)
         {
             var model = _iBarCodeManager.GetAll().ToList().Select(n=>n.Barcode).ToList().Contains(barcode);

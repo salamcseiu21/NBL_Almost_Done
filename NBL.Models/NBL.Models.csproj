@@ -204,6 +204,7 @@
     <Compile Include="Validators\BarCodeValidator.cs" />
     <Compile Include="ViewModels\Clients\ViewCreateClientModel.cs" />
     <Compile Include="ViewModels\Deliveries\ViewDeliveredOrderModel.cs" />
+    <Compile Include="ViewModels\Deliveries\ViewDeliveryDetails.cs" />
     <Compile Include="ViewModels\FinanceModels\ViewLedgerModel.cs" />
     <Compile Include="ViewModels\FinanceModels\ViewMoneyReceiptModel.cs" />
     <Compile Include="ViewModels\FinanceModels\ViewReceivableDetails.cs" />

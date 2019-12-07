@@ -1551,6 +1551,8 @@ ConnectionObj.Close();
             }
         }
 
+       
+
         public int GetOrderMaxSerialNoByYear(int year)  
         {
             try
@@ -2536,7 +2538,41 @@ ConnectionObj.Close();
                 ConnectionObj.Close();
             }
         }
+        public int UpdateSoldProductSaleDateInFactory(RetailSale retail, ViewSoldProduct item)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_UpdateSoldProductSaleDate";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Barcode", item.BarCode);
+                CommandObj.Parameters.AddWithValue("@SaleDate", item.SaleDate);
+                CommandObj.Parameters.AddWithValue("@UpdatedByUserId", retail.UserId);
+                CommandObj.Parameters.AddWithValue("@InventoryDetailsId", item.InventoryDetailsId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
 
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not update Sale Date due to Db Exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not update Sale Date", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
         public int UpdateSoldProductSaleDateInFactory(RetailSale retail, ViewSoldProduct item,ViewDisributedProduct product)
         {
             try

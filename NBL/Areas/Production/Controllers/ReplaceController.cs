@@ -106,7 +106,7 @@ namespace NBL.Areas.Production.Controllers
                     InvoiceId = replaceId,
                     FromBranchId = replace.BranchId 
                 };
-                string result = _iInventoryManager.SaveReplaceDeliveryInfo(barcodeList, aDelivery,replaceStatus);
+                string result = _iInventoryManager.SaveReplaceDeliveryInfo(barcodeList, aDelivery,replaceStatus,replace);
                 if (result.StartsWith("S"))
                 {
                     System.IO.File.Create(filePath).Close();

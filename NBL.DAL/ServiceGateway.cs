@@ -65,6 +65,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@ServiceBatteryBarcode", product.ServiceBatteryBarcode?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@ServiceBatteryReturnDate", product.ServiceBatteryReturnDate ?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@RbdDate", product.RbdDate ?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@SaleDate", product.SaleDate);
                 CommandObj.Parameters.AddWithValue("@RbdBarcode", product.RbdBarcode?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@ForwardToId", product.ForwardToId);
                 CommandObj.Parameters.AddWithValue("@ForwardRemarks", product.ForwardRemarks?? (object)DBNull.Value);
@@ -139,7 +140,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@IsActive", "Y");
                 CommandObj.Parameters.AddWithValue("@Remarks", product.ReceiveRemarks);
                 CommandObj.Parameters.AddWithValue("@IsManualEntry", product.IsManualEntry);
-                CommandObj.Parameters.AddWithValue("@ExpiryDate", product.ExpiryDate);
+                CommandObj.Parameters.AddWithValue("@SaleDate", product.SaleDate);
                 CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
                 CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
                 ConnectionObj.Open();
@@ -348,6 +349,7 @@ namespace NBL.DAL
                         ProductId = Convert.ToInt32(reader["ProductId"]),
                         ClientId = Convert.ToInt32(reader["ClientId"]),
                         ExpiryDate = DBNull.Value.Equals(reader["ExpiryDate"]) ? default(DateTime?) : Convert.ToDateTime(reader["ExpiryDate"]),
+                        SaleDate = DBNull.Value.Equals(reader["SaleDate"]) ? default(DateTime?) : Convert.ToDateTime(reader["SaleDate"]),
                         BranchId = Convert.ToInt32(reader["ReceiveByBranchId"])
                         
                     };

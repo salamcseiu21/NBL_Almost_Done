@@ -86,42 +86,12 @@ namespace NBL.Areas.Sales.Controllers
                 bool isOwnTransport = transport != null;
                 int deliverebyUserId = ((ViewUser)Session["user"]).UserId;
                 int receiveId = Convert.ToInt32(collection["ReceiveId"]);   
-                // var replace = _iProductReplaceManager.GetReplaceById(replaceId);
+                var replace = _iProductReplaceManager.GetReplaceById(receiveId);
                 var received = _iServiceManager.GetDeliverableServiceProductById(receiveId);
                 received.CompanyId = Convert.ToInt32(Session["CompanyId"]);
-                // IEnumerable<ViewReplaceDetailsModel> details = _iProductReplaceManager.GetReplaceProductListById(replaceId);
-                //var deliveredQty = _iProductReplaceManager.GetDeliveredProductsByReplaceRef(replace.ReplaceRef).Count;
-               // var remainingToDeliverQty = replace.Quantity - deliveredQty;
                 var filePath =GetTempReplaceProductXmlFilePath(receiveId);
                 //if the file is exists read the file
                 var barcodeList = _iProductManager.GetScannedProductListFromTextFile(filePath).ToList();
-                int replaceStatus = 2;
-                //if (remainingToDeliverQty == barcodeList.Count)
-                //{
-                //    replaceStatus = 2;
-                   
-                //}
-
-                //List<ViewReplaceDetailsModel> deliveredProductList = new List<ViewReplaceDetailsModel>
-                //{
-                //    new ViewReplaceDetailsModel
-                //    {
-                //        ExpiryDate = received.ExpiryDate,
-                //        ProductId = received.ProductId,
-                //        ProductName = received.ProductName,
-                //        Quantity = 1
-                //    }
-                //};
-                //foreach (ScannedProduct product in barcodeList.DistinctBy(n => n.ProductId))
-                //{
-                //    var model = details.ToList().Find(n => n.ProductId.Equals(product.ProductId));
-                //    var qty = barcodeList.ToList().FindAll(n => n.ProductId == product.ProductId).Count;
-                //    model.Quantity = qty;
-                //    deliveredProductList.Add(model);
-                //}
-
-               
-
                 var aDelivery = new Delivery
                 {
                     IsOwnTransport = isOwnTransport,
@@ -140,7 +110,7 @@ namespace NBL.Areas.Sales.Controllers
                     InvoiceId = received.ReceiveId,
                     FromBranchId = received.BranchId 
                 };
-                string result = _iInventoryManager.SaveReplaceDeliveryInfo(barcodeList, aDelivery,replaceStatus);
+                string result = _iInventoryManager.SaveReplaceDeliveryInfo(barcodeList, aDelivery,2,replace);
                 if (result.StartsWith("S"))
                 {
                     System.IO.File.Create(filePath).Close();
@@ -198,6 +168,7 @@ namespace NBL.Areas.Sales.Controllers
                     {
                         ExpiryDate = product.ExpiryDate,
                         ProductId = product.ProductId,
+                        SaleDate = product.SaleDate,
                         ProductName = product.ProductName,
                         Quantity = 1
                     }

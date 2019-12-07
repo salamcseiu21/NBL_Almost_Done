@@ -21,6 +21,7 @@ namespace NBL.Models.ViewModels.Orders
         public string BranchName { get; set; }
         public int BranchId { get; set; } 
         public DateTime FolioEntryDate { get; set; }
-        public string FolioEntryBy { get; set; }    
+        public string FolioEntryBy { get; set; }
+        public long InventoryDetailsId { get; set; }    
     }
 }

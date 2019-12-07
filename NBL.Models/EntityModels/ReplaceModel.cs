@@ -22,7 +22,8 @@ namespace NBL.Models.EntityModels
         public int Status { get; set; }
         public int DistributionPointId { get; set; }    
         public DateTime SystemDateTime { get; set; }
-        public DateTime ExpiryDate { get; set; }
+        public DateTime ExpiryDate { get; set; } 
+        public DateTime SaleDate { get; set; }
         public List<Product> Products { get; set; } 
     }
 }

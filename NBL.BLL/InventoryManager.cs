@@ -16,6 +16,7 @@ using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
+using NBL.Models.ViewModels.Replaces;
 using NBL.Models.ViewModels.Sales;
 
 using NBL.Models.ViewModels.TransferProducts;
@@ -271,13 +272,13 @@ namespace NBL.BLL
             return _iInventoryGateway.GetProductionSummaryByMonth(dateTime);
         }
         //-----------------------Replace---------------------
-        public string SaveReplaceDeliveryInfo(List<ScannedProduct> scannedProducts, Delivery aDelivery, int replaceStatus)
+        public string SaveReplaceDeliveryInfo(List<ScannedProduct> scannedProducts, Delivery aDelivery, int replaceStatus,ViewReplaceModel replaceModel)
         {
             string refCode = _iCommonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(ReferenceType.Distribution)).Code;
             aDelivery.VoucherNo = GetMaxVoucherNoByTransactionInfix(refCode);
             int maxRefNo = _iInventoryGateway.GetMaxDeliveryRefNoOfCurrentYear();
             aDelivery.DeliveryRef = GenerateDeliveryReference(maxRefNo);
-            int rowAffected = _iInventoryGateway.SaveReplaceDeliveryInfo(scannedProducts, aDelivery, replaceStatus);
+            int rowAffected = _iInventoryGateway.SaveReplaceDeliveryInfo(scannedProducts, aDelivery, replaceStatus,replaceModel);
 
             return rowAffected > 0 ? "Saved Successfully!" : "Failed to Save";
         }

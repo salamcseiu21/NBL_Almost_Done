@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Set Opening Balance";
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
-    var date = DateTime.Now.Date.ToString("dd-MMMM-yyyy");
+    var date = DateTime.Now.Date.AddDays(-5).ToString("dd-MMMM-yyyy");
 }
 
 <section class="content">
@@ -57,7 +57,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-4">Remarks</label>
                                 <div class="col-md-8">
-                                    <textarea class="form-control" id="Remarks" name="Remarks" style="resize: none;" rows="2" placeholder="Remarks" required></textarea>
+                                    <textarea class="form-control" id="Remarks" name="Remarks" style="resize: none;" rows="2" placeholder="Remarks" required>Closing Balance of November-2019</textarea>
                                 </div>
                             </div>
                             <div class="form-group">

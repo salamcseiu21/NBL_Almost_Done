@@ -408,6 +408,118 @@ namespace NBL.DAL
             }
         }
 
+        public ViewDeliveryDetails GetDeliveryInfoByBarcode(string barcode)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetDeliveryInfoByBarcode";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@Barcode", barcode);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                ViewDeliveryDetails aDeliveryDetails=new ViewDeliveryDetails();
+                if (reader.Read())
+                {
+                    aDeliveryDetails.Barcode = reader["ProductBarCode"].ToString();
+                    aDeliveryDetails.InventoryId = Convert.ToInt64(reader["InventoryId"]);
+                    aDeliveryDetails.InventoryDetailsId = Convert.ToInt64(reader["InventoryDetailsId"]);
+                    aDeliveryDetails.TransactionDate = Convert.ToDateTime(reader["TransactionDate"]);
+                    aDeliveryDetails.TransactionRef = reader["TransactionRef"].ToString();
+                    aDeliveryDetails.SaleDate = DBNull.Value.Equals(reader["RbdDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["SaleDate"]);
+                    aDeliveryDetails.RbdBarcode = DBNull.Value.Equals(reader["RbdBarcode"]) ? null : reader["RbdBarcode"].ToString();
+                    aDeliveryDetails.RbdRemarks = DBNull.Value.Equals(reader["RbdRemarks"]) ? null : reader["RbdRemarks"].ToString();
+                    aDeliveryDetails.RbdDate = DBNull.Value.Equals(reader["RbdDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["RbdRemarks"]);
+
+                }
+                reader.Close();
+                return aDeliveryDetails;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get delivery info by barcode", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public int IsDeliveryForReplace(string barcode)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_IsDeliveryForReplace";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Barcode", barcode);
+                int rowNo = 0;
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    rowNo = Convert.ToInt32(reader["RowNo"]);
+                }
+                reader.Close();
+                return rowNo;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get info for replace", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
+        public ViewDisributedProduct GetReplaceDistributedProduct(string barcode)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetReplaceDistributedProduct";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@Barcode", barcode);
+                ViewDisributedProduct aProduct=new ViewDisributedProduct();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                if (reader.Read())
+                {
+                    aProduct.BarCode = reader["ProductBarCode"].ToString();
+                    aProduct.ClientAccountCode = reader["ClientCode"].ToString();
+                    aProduct.ClientName = reader["ClientName"].ToString();
+                    aProduct.ClientCommercialName = reader["CommercialName"].ToString();
+                    aProduct.DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]);
+                    aProduct.DeliveryRef = reader["TransactionRef"].ToString();
+                    aProduct.ProductId = Convert.ToInt32(reader["ProductId"]);
+                    aProduct.ProductName = reader["ProductName"].ToString();
+                    aProduct.ProductCategoryName = reader["ProductCategoryName"].ToString();
+                    aProduct.InventoryDetailsId = Convert.ToInt64(reader["InventoryDetailsId"]);
+
+                }
+                reader.Close();
+                return aProduct;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get replace product info by barcode", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
+
         public IEnumerable<ViewProduct> GetPopularBatteriesByYear(int year)
         {
             try

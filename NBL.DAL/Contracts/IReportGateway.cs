@@ -59,5 +59,8 @@ namespace NBL.DAL.Contracts
        ICollection<ViewSubSubSubAccount> GetAllSubSubSubAccountList();
        int IsAllreadyUpdatedSaleDate(string barcode);
        ICollection<ViewProductionSalesRepalce> GetProductionSalesRepalcesByMonthYear(int monthNo, int year);
+       ViewDeliveryDetails GetDeliveryInfoByBarcode(string barcode);
+       int IsDeliveryForReplace(string barcode);
+       ViewDisributedProduct GetReplaceDistributedProduct(string barcode);
    }
 }

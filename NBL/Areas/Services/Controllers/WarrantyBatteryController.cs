@@ -9,6 +9,7 @@ using NBL.Models.EntityModels.Services;
 using NBL.Models.Enums;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
+using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Services;
 
@@ -23,7 +24,8 @@ namespace NBL.Areas.Services.Controllers
         private readonly IBranchManager _iBranchManager;
         private readonly IPolicyManager _iPolicyManager;
         private readonly IClientManager _iClientManager;
-        public WarrantyBatteryController(IInventoryManager iInventoryManager,ICommonManager iCommonManager,IServiceManager iServiceManager,IBranchManager iBranchManager,IPolicyManager iPolicyManager,IClientManager iClientManager)
+        private readonly IReportManager _iReportManager;
+        public WarrantyBatteryController(IInventoryManager iInventoryManager,ICommonManager iCommonManager,IServiceManager iServiceManager,IBranchManager iBranchManager,IPolicyManager iPolicyManager,IClientManager iClientManager,IReportManager iReportManager)
         {
             _iInventoryManager = iInventoryManager;
             _iCommonManager = iCommonManager;
@@ -31,6 +33,7 @@ namespace NBL.Areas.Services.Controllers
             _iBranchManager = iBranchManager;
             _iPolicyManager = iPolicyManager;
             _iClientManager = iClientManager;
+            _iReportManager = iReportManager;
         }
 
         public ActionResult All()
@@ -388,7 +391,7 @@ namespace NBL.Areas.Services.Controllers
             catch (Exception exception)
             {
                Log.WriteErrorLog(exception);
-                throw;
+                return PartialView("_ErrorPartial", exception);
             }
 
         }
@@ -427,7 +430,11 @@ namespace NBL.Areas.Services.Controllers
                  var warrantyPeriod=  product.AgeLimitInDealerStock + product.LifeTime;
                 //--------------02-Dec-2019 Begin---------
 
-                product.ServiceDuration = Convert.ToInt32((model.DelearReceiveDate - Convert.ToDateTime(product.SaleDate)).TotalDays - 1);
+
+                
+                var serviceDuration= Convert.ToInt32((model.DelearReceiveDate - Convert.ToDateTime(product.SaleDate)).TotalDays - 1);
+
+                product.ServiceDuration = serviceDuration;
                 model.IsSoldInGracePeriod = product.AgeLimitInDealerStock < product.SalesDuration ? 0 : 1;
                 model.IsInWarrantyPeriod = product.ServiceDuration > product.LifeTime ? 0 : 1;
 
@@ -442,6 +449,7 @@ namespace NBL.Areas.Services.Controllers
                 model.Barcode = product.ProductBarCode;
                 model.ClientId = product.ClientId;
                 model.ProductId = product.ProductId;
+                model.SaleDate = Convert.ToDateTime(product.SaleDate);
                 model.Status = 0;
                 var result = _iServiceManager.ReceiveServiceProduct(model);
                 if (result)
@@ -457,7 +465,7 @@ namespace NBL.Areas.Services.Controllers
             catch (Exception exception)
             {
                 Log.WriteErrorLog(exception);
-                return View(model);
+                return PartialView("_ErrorPartial", exception);
             }
         }
 
@@ -465,7 +473,18 @@ namespace NBL.Areas.Services.Controllers
         [HttpPost]
         public JsonResult GetProductHistoryByBarcode(string barcode)
         {
+            //ViewDeliveryDetails aDeliveryDetails = _iReportManager.GetDeliveryInfoByBarcode(barcode);
             var product = _iInventoryManager.GetProductHistoryByBarcode(barcode) ?? new ViewProductHistory();
+            //var refCode = aDeliveryDetails.TransactionRef.Substring(2, 3);
+            //if (refCode.Equals("202"))
+            //{
+            //    var a = "Sales Delivery";
+            //}
+            //if (refCode.Equals("502"))
+            //{
+            //    var saleDate = aDeliveryDetails.SaleDate;
+            //}
+            //product.SaleDate = aDeliveryDetails.SaleDate;
             return Json(product, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]

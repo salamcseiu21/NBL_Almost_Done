@@ -89,6 +89,7 @@ namespace NBL.Areas.Services.Controllers
                 var aProduct = _iProductManager.GetProductByProductId(productId);
                 aProduct.Quantity = qty;
                 aProduct.ExpiryDate = model.ExpiryDate;
+                aProduct.SaleDate = model.SaleDate;
                 var products = new List<Product> { aProduct };
                 model.ClientId = clientId;
                 model.Products = products.ToList();
@@ -113,7 +114,8 @@ namespace NBL.Areas.Services.Controllers
                     ProductId = productId,
                     IsManualEntry = "Y",
                     Status = 1,
-                    ExpiryDate = model.ExpiryDate
+                    ExpiryDate = model.ExpiryDate,
+                    SaleDate = model.SaleDate
                 };
 
                 if (collection["Barcode"] == "")

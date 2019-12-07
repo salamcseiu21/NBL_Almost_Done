@@ -17,7 +17,7 @@
             <div class="form-group">
                 <label for="Barcode" class="col-md-5 control-label">BarCode/BatchCode</label>
                 <div class="col-md-7">
-                    <input type="text" class="form-control" name="Barcode" id="Barcode" maxlength="13" placeholder="Type or Scan barcode/Batchcode..." autofocus onchange="GetProductHistory(this)" required/>
+                    <input type="text" class="form-control" name="Barcode" id="Barcode" maxlength="13" placeholder="Type or Scan barcode/Batchcode..." autofocus onchange="GetProductHistory(this)" required/><span style="color: red">*</span>
                     @Html.HiddenFor(n=>n.DelivaryRef)
                 </div>
             </div>

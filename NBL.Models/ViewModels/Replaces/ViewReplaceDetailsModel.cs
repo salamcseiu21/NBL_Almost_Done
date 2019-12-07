@@ -16,5 +16,6 @@ namespace NBL.Models.ViewModels.Replaces
         public string ReplaceForBarcode { get; set; }  
         public int Quantity { get; set; }
         public DateTime? ExpiryDate { get; set; }    
+        public DateTime? SaleDate { get; set; }     
     }
 }

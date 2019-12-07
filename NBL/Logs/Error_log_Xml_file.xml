@@ -1635,4 +1635,152 @@ The statement has been terminated.</CustomeMessage>
     <LogDateTime>2019-11-28T13:13:08.776606+06:00</LogDateTime>
     <CustomeMessage>Could not Collect Delivered Orders due to Db Exception</CustomeMessage>
   </Error>
+  <Error LogId="19-Dec-036295a1c5-7a7e-4e29-9a9e-e4185d1f1b5b">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at NBL.DAL.ReportGateway.GetDistributedProductFromFactory(String barcode) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 680</LogMessage>
+    <LogDateTime>2019-12-03T11:00:26.4515305+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Dec-032a0c6439-377c-47d9-84e0-f78ac8de836b">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at NBL.DAL.ReportGateway.GetDistributedProductFromBranch(String barcode) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 737</LogMessage>
+    <LogDateTime>2019-12-03T11:04:05.5014654+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Dec-032cc6d123-2d56-4498-9983-06dc3d69ff2a">
+    <Heading>System.InvalidOperationException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlCommand.ValidateCommand(String method, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.ReportGateway.GetReplaceDistributedProduct(String barcode) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 487</LogMessage>
+    <LogDateTime>2019-12-03T12:19:19.6905398+06:00</LogDateTime>
+    <CustomeMessage>ExecuteReader requires an open and available Connection. The connection's current state is closed.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Dec-03df1532d2-dde8-4501-9726-52b8f02dc6e4">
+    <Heading>System.Exception</Heading>
+    <LogMessage>   at NBL.DAL.ReportGateway.GetReplaceDistributedProduct(String barcode) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 507
+   at NBL.BLL.ReportManager.GetReplaceDistributedProduct(String barcode) in E:\API\NBL\NBL.BLL\ReportManager.cs:line 339
+   at NBL.Areas.CommonArea.Controllers.OrderController.SaveScannedBarcodeToXmlFile(String barcode, Int32 userId, DateTime saleDate) in E:\API\NBL\NBL\Areas\CommonArea\Controllers\OrderController.cs:line 138</LogMessage>
+    <LogDateTime>2019-12-03T12:19:19.7409449+06:00</LogDateTime>
+    <CustomeMessage>Could not get replace product info by barcode</CustomeMessage>
+  </Error>
+  <Error LogId="19-Dec-039263f4a9-40ec-4eb4-8d45-f11d4e599287">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetProductHistoryByBarcode(String barcode) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 3080</LogMessage>
+    <LogDateTime>2019-12-03T14:21:10.8584881+06:00</LogDateTime>
+    <CustomeMessage>Conversion failed when converting date and/or time from character string.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Dec-03c9f55c63-0c79-49e9-9fb0-0b6dda151de8">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   at System.Convert.ToDateTime(Object value)
+   at NBL.DAL.ReportGateway.GetDeliveryInfoByBarcode(String barcode) in E:\API\NBL\NBL.DAL\ReportGateway.cs:line 429</LogMessage>
+    <LogDateTime>2019-12-03T14:22:02.4627832+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Dec-04d27d7608-f3c8-41cf-9ee4-30391d41396e">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NBL.DAL.ServiceGateway.ReceiveServiceProductTemp(WarrantyBatteryModel product) in E:\API\NBL\NBL.DAL\ServiceGateway.cs:line 146</LogMessage>
+    <LogDateTime>2019-12-04T12:35:54.2797184+06:00</LogDateTime>
+    <CustomeMessage>Cannot insert duplicate key row in object 'dbo.WarrantyBatteryReceive' with unique index 'IX_WarrantyBatteryReceive'. The duplicate key value is (16md0017).
+The statement has been terminated.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Dec-0449d6bf5e-b599-4d3c-834a-6a0e2cac8f64">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetProductHistoryByBarcode(String barcode) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 3072</LogMessage>
+    <LogDateTime>2019-12-04T14:21:21.924777+06:00</LogDateTime>
+    <CustomeMessage>Conversion failed when converting date and/or time from character string.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Dec-045f903939-b5e1-49a5-8dc8-8adb9b9186bd">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task&amp; task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task&amp; task, Boolean&amp; usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at NBL.DAL.InventoryGateway.GetProductHistoryByBarcode(String barcode) in E:\API\NBL\NBL.DAL\InventoryGateway.cs:line 3072</LogMessage>
+    <LogDateTime>2019-12-04T14:22:31.2464378+06:00</LogDateTime>
+    <CustomeMessage>Conversion failed when converting date and/or time from character string.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Dec-04dedf2455-bf90-45ea-87a4-99e27d32e4f9">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   at System.Convert.ToDateTime(Object value)
+   at NBL.DAL.ProductReplaceGateway.GetReplaceProductListById(Int64 id) in E:\API\NBL\NBL.DAL\ProductReplaceGateway.cs:line 487</LogMessage>
+    <LogDateTime>2019-12-04T15:51:59.9687871+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Dec-046392b6d8-036b-48dd-85b2-50dc54874552">
+    <Heading>System.InvalidCastException</Heading>
+    <LogMessage>   at System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   at System.Convert.ToDateTime(Object value)
+   at NBL.DAL.ProductReplaceGateway.GetReplaceProductListById(Int64 id) in E:\API\NBL\NBL.DAL\ProductReplaceGateway.cs:line 487</LogMessage>
+    <LogDateTime>2019-12-04T15:53:04.8858103+06:00</LogDateTime>
+    <CustomeMessage>Object cannot be cast from DBNull to other types.</CustomeMessage>
+  </Error>
+  <Error LogId="19-Dec-0564d4fd8d-cd5f-4392-bdb5-73d72ea31a34">
+    <Heading>System.Data.SqlClient.SqlException</Heading>
+    <LogMessage>   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling, SqlAuthenticationProviderManager sqlAuthProviderManager)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal&amp; connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal&amp; connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal&amp; connection)
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at NBL.DAL.UserGateway.GetUserByUserName(String userName) in E:\API\NBL\NBL.DAL\UserGateway.cs:line 161</LogMessage>
+    <LogDateTime>2019-12-05T15:45:47.35145+06:00</LogDateTime>
+    <CustomeMessage>Connection Timeout Expired.  The timeout period elapsed while attempting to consume the pre-login handshake acknowledgement.  This could be because the pre-login handshake failed or the server was unable to respond back in time.  The duration spent while attempting to connect to this server was - [Pre-Login] initialization=18770; handshake=1; </CustomeMessage>
+  </Error>
 </Errors>

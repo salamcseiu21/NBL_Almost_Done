@@ -17,6 +17,7 @@ using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
+using NBL.Models.ViewModels.Replaces;
 using NBL.Models.ViewModels.Sales;
 using NBL.Models.ViewModels.TransferProducts;
 
@@ -1253,47 +1254,6 @@ namespace NBL.DAL
                     }
                 }
 
-
-                //if (rowAffected > 0)
-                    //{
-
-                    //    for (int i = 1; i <= 2; i++)
-                    //    {
-                    //        if (i == 1)
-                    //        {
-                    //            anInvoice.TransactionType = "Dr";
-                    //            anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
-                    //        }
-                    //        else
-                    //        {
-                    //            anInvoice.TransactionType = "Cr";
-                    //            anInvoice.Amounts = anInvoice.Amounts * (-1);
-                    //            anInvoice.SubSubSubAccountCode = "1001021";
-                    //        }
-                    //        accountAffected += SaveFinancialTransactionToAccountsDetails(anInvoice, accountMasterId);
-                    //    }
-
-                    //    if (anInvoice.SpecialDiscount != 0)
-                    //    {
-                    //        for (int i = 1; i <= 2; i++)
-                    //        {
-                    //            if (i == 1)
-                    //            {
-                    //                anInvoice.TransactionType = "Dr";
-                    //                anInvoice.Amounts = anInvoice.SpecialDiscount;
-                    //                anInvoice.SubSubSubAccountCode = anInvoice.DiscountAccountCode;
-                    //            }
-                    //            else
-                    //            {
-                    //                anInvoice.TransactionType = "Cr";
-                    //                anInvoice.Amounts = anInvoice.SpecialDiscount * (-1);
-                    //                anInvoice.SubSubSubAccountCode = anInvoice.ClientAccountCode;
-                    //            }
-                    //            accountAffected += SaveFinancialTransactionToAccountsDetails(anInvoice, accountMasterId);
-                    //        }
-                    //    }
-
-
                  if (accountAffected > 0)
                 {
                     sqlTransaction.Commit();
@@ -2172,7 +2132,7 @@ namespace NBL.DAL
         }
 
         //--------------------------Replace----------------------
-        public int SaveReplaceDeliveryInfo(List<ScannedProduct> scannedProducts, Delivery aDelivery, int replaceStatus)
+        public int SaveReplaceDeliveryInfo(List<ScannedProduct> scannedProducts, Delivery aDelivery, int replaceStatus,ViewReplaceModel replaceModel)
         {
             ConnectionObj.Open();
             SqlTransaction sqlTransaction = ConnectionObj.BeginTransaction();
@@ -2208,7 +2168,8 @@ namespace NBL.DAL
                 CommandObj.ExecuteNonQuery();
                 int inventoryId = Convert.ToInt32(CommandObj.Parameters["@InventoryId"].Value);
                 int deliveryId = Convert.ToInt32(CommandObj.Parameters["@DeliveryId"].Value);
-                int rowAffected = SaveDeliveredOrderDetails(scannedProducts, aDelivery, inventoryId, deliveryId);
+                //int rowAffected = SaveDeliveredOrderDetails(scannedProducts, aDelivery, inventoryId, deliveryId);
+                int rowAffected = SaveDeliveredReplaceDetails(scannedProducts, aDelivery, inventoryId, deliveryId,replaceModel);
                 if (rowAffected > 0)
                 {
                     sqlTransaction.Commit();
@@ -2232,6 +2193,37 @@ namespace NBL.DAL
                 CommandObj.Dispose();
                 ConnectionObj.Close();
             }
+        }
+
+        private int SaveDeliveredReplaceDetails(List<ScannedProduct> scannedProducts, Delivery aDelivery, int inventoryId, int deliveryId,ViewReplaceModel replaceModel)
+        {
+            int i = 0;
+            int n = 0;
+            foreach (var item in scannedProducts)
+            {
+
+                CommandObj.CommandText = "spSaveDeliveredReplaceDetails";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@InventoryId", inventoryId);
+                CommandObj.Parameters.AddWithValue("@ProductId", Convert.ToInt32(item.ProductCode.Substring(2, 3)));
+                CommandObj.Parameters.AddWithValue("@ProductBarcode", item.ProductCode);
+                CommandObj.Parameters.AddWithValue("@UserId", aDelivery.DeliveredByUserId);
+                CommandObj.Parameters.AddWithValue("@Status", 1);
+                CommandObj.Parameters.AddWithValue("@DeliveryId", deliveryId);
+                CommandObj.Parameters.AddWithValue("@SaleDate", replaceModel.SaleDate?? (object)DBNull.Value);
+                CommandObj.Parameters.AddWithValue("@RbdBarCode", replaceModel.RbdBarcode ?? (object)DBNull.Value);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                CommandObj.ExecuteNonQuery();
+                i += Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+            }
+
+            if (i > 0)
+            {
+                n = SaveDeliveredItemWithQuantity(scannedProducts, inventoryId, aDelivery);
+            }
+            return n;
         }
 
         public int SaveTransferDeliveredProduct(TransferModel aModel)

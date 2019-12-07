@@ -161,7 +161,8 @@ namespace NBL.DAL
                         Remarks = reader["ReceiveReport"].ToString(),
                         UserId = Convert.ToInt32(reader["EntryByUserId"]),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
-                        ExpiryDate = Convert.ToDateTime(reader["ExpiryDate"]),
+                        ExpiryDate =DBNull.Value.Equals(reader["ExpiryDate"])? (DateTime?)null: Convert.ToDateTime(reader["ExpiryDate"]),
+                        SaleDate =DBNull.Value.Equals(reader["SaleDate"])? (DateTime?)null: Convert.ToDateTime(reader["SaleDate"]),
                         ProductName = reader["ProductName"].ToString()
                         
                     });
@@ -446,7 +447,13 @@ namespace NBL.DAL
                         ReplaceForBarcode = reader["BarcodeNo"].ToString(),
                         ProductName = reader["ProductName"].ToString(),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
-                        Remarks = reader["ReceiveReport"].ToString()
+                        Remarks = reader["ReceiveReport"].ToString(),
+                        SaleDate = DBNull.Value.Equals(reader["SaleDate"]) ? (DateTime?)null:Convert.ToDateTime(reader["SaleDate"]),
+                        ExpiryDate = DBNull.Value.Equals(reader["ExpiryDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ExpiryDate"]),
+                        RbdDate = DBNull.Value.Equals(reader["RbdDate"]) ? (DateTime?)null:Convert.ToDateTime(reader["RbdDate"]),
+                        RbdBarcode = DBNull.Value.Equals(reader["RbdBarcode"]) ? null:reader["RbdBarcode"].ToString(),
+                        RbdRemarks = DBNull.Value.Equals(reader["RbdRemarks"]) ?null:reader["RbdRemarks"].ToString()
+                        
                     };
                 }
                 reader.Close();
@@ -482,7 +489,8 @@ namespace NBL.DAL
                         ReceiveId = id,
                         ProductName = reader["ProductName"].ToString(),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
-                        ExpiryDate = Convert.ToDateTime(reader["ExpiryDate"]),
+                        ExpiryDate = DBNull.Value.Equals(reader["ExpiryDate"]) ? (DateTime?)null:Convert.ToDateTime(reader["ExpiryDate"]),
+                        SaleDate = DBNull.Value.Equals(reader["SaleDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["SaleDate"]),
                         CategoryName = reader["ProductCategoryName"].ToString(),
                         ReplaceForBarcode = reader["BarcodeNo"].ToString()
                         

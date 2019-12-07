@@ -2179,10 +2179,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/21/2019 15:18:26</publishTime>
     </File>
     <File Include="Areas/Services/Views/Replace/Edit.cshtml">
-      <publishTime>11/21/2019 15:02:15</publishTime>
+      <publishTime>12/03/2019 16:32:25</publishTime>
     </File>
     <File Include="Areas/Services/Views/Replace/Entry.cshtml">
-      <publishTime>12/03/2019 09:39:59</publishTime>
+      <publishTime>12/03/2019 16:26:18</publishTime>
     </File>
     <File Include="Areas/Services/Views/Replace/PrintChallan.cshtml">
       <publishTime>10/29/2019 13:48:29</publishTime>
@@ -2245,10 +2245,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2019 10:46:13</publishTime>
     </File>
     <File Include="Areas/Services/Views/WarrantyBattery/Receive.cshtml">
-      <publishTime>12/02/2019 12:58:48</publishTime>
+      <publishTime>12/04/2019 14:18:58</publishTime>
     </File>
     <File Include="Areas/Services/Views/WarrantyBattery/ReplaceList.cshtml">
-      <publishTime>10/20/2019 14:48:32</publishTime>
+      <publishTime>12/04/2019 16:13:10</publishTime>
     </File>
     <File Include="Areas/Services/Views/WarrantyBattery/ReturnList.cshtml">
       <publishTime>10/01/2019 14:15:53</publishTime>
@@ -2359,7 +2359,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/12/2019 12:01:36</publishTime>
     </File>
     <File Include="Areas/SuperAdmin/Views/Home/SetOpeningBalance.cshtml">
-      <publishTime>10/26/2019 11:34:45</publishTime>
+      <publishTime>12/05/2019 10:21:23</publishTime>
     </File>
     <File Include="Areas/SuperAdmin/Views/Home/SoldProducts.cshtml">
       <publishTime>10/03/2019 15:34:41</publishTime>
@@ -23695,16 +23695,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/25/2019 17:37:04</publishTime>
     </File>
     <File Include="bin/NBL.BLL.dll">
-      <publishTime>12/03/2019 09:47:21</publishTime>
+      <publishTime>12/04/2019 16:22:13</publishTime>
     </File>
     <File Include="bin/NBL.DAL.dll">
-      <publishTime>12/03/2019 09:47:20</publishTime>
+      <publishTime>12/04/2019 16:22:12</publishTime>
     </File>
     <File Include="bin/NBL.dll">
-      <publishTime>12/03/2019 09:47:27</publishTime>
+      <publishTime>12/05/2019 10:58:46</publishTime>
     </File>
     <File Include="bin/NBL.Models.dll">
-      <publishTime>12/03/2019 09:47:19</publishTime>
+      <publishTime>12/04/2019 10:32:11</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>04/22/2019 01:06:16</publishTime>
@@ -24439,7 +24439,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/17/2019 10:05:07</publishTime>
     </File>
     <File Include="Logs/Error_log_Xml_file.xml">
-      <publishTime>11/28/2019 13:13:08</publishTime>
+      <publishTime>12/04/2019 15:53:04</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>10/15/2019 16:05:32</publishTime>

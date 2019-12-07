@@ -19,7 +19,11 @@ namespace NBL.Models.ViewModels.Replaces
         public int CompanyId { get; set; }
         public string ReplaceRef { get; set; }
         public string ReceiveRef { get; set; }
-        public DateTime ExpiryDate { get; set; }
+        public DateTime? ExpiryDate { get; set; }
+        public DateTime? SaleDate { get; set; }
+        public DateTime? RbdDate { get; set; }
+        public string RbdBarcode { get; set; }
+        public string RbdRemarks { get; set; }
         public DateTime EntryDate { get; set; }
         public string CancelRemarks { get; set; }
         public string Remarks { get; set; }

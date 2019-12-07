@@ -11,6 +11,7 @@ using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
+using NBL.Models.ViewModels.Replaces;
 using NBL.Models.ViewModels.Sales;
 using NBL.Models.ViewModels.TransferProducts;
 
@@ -45,7 +46,7 @@ namespace NBL.BLL.Contracts
        ICollection<ViewDispatchModel> GetAllReceiveableItemsByDispatchAndBranchId(long dispatchId, int branchId);
        ICollection<ProductionSummary> GetProductionSummaries();
        ICollection<ProductionSummary> GetProductionSummaryByMonth(DateTime dateTime);
-       string SaveReplaceDeliveryInfo(List<ScannedProduct> barcodeList, Delivery aDelivery, int replaceStatus);
+       string SaveReplaceDeliveryInfo(List<ScannedProduct> barcodeList, Delivery aDelivery, int replaceStatus,ViewReplaceModel replaceModel);
 
        string SaveTransferDeliveredProduct(TransferModel aModel);
        ICollection<ViewTransferProductModel> GetAllTransferedListByBranchAndCompanyId(int branchId, int companyId);

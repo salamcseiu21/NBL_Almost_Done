@@ -183,16 +183,16 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 account.UserId = user.UserId;
                 account.SubSubSubAccountType = "Y";
                 bool result = _iAccountsManager.AddSubSubSubAccount(account);
-                if (result)
-                {
-                    return RedirectToAction("SubSubSubAccountList");
-                }
+                //if (result)
+                //{
+                //    return RedirectToAction("SubSubSubAccountList");
+                //}
                 List<AccountHead> accountHeads = _iAccountsManager.GetAllChartOfAccountList().ToList();
                 ViewBag.AccountHeadCode = new SelectList(accountHeads, "AccountHeadCode", "AccountHeadName");
                 ViewBag.SubAccountCode = new SelectList(new List<SubAccount>(), "SubAccountCode", "SubAccountName");
                 ViewBag.SubSubAccountCode = new SelectList(new List<SubSubAccount>(), "SubSubAccountCode", "SubSubAccountName");
                 ViewBag.SubSubSubAccountCode = new SelectList(new List<SubSubSubAccount>(), "SubSubSubAccountCode", "SubSubSubAccountName");
-                return View();
+                return RedirectToAction("AddSubSubSubAccount");
             }
             catch (Exception exception)
             {

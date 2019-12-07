@@ -108,7 +108,8 @@ namespace NBL.Areas.CommonArea.Controllers
                 //var updatedInFactory = _iReportManager.IsAllreadyUpdatedSaleDateInFactory(scannedBarCode);
                 bool isUPdatedSaleDate= _iReportManager.IsAllreadyUpdatedSaleDate(scannedBarCode);
                 //var updatedInBranch = _iReportManager.IsAllreadyUpdatedSaleDateInBranch(scannedBarCode);
-                bool isSoldFromBranch = _iReportManager.IsDistributedFromBranch(barcode);
+                bool isSoldFromBranch = _iReportManager.IsDistributedFromBranch(scannedBarCode);
+                bool isReplaceDelivery = _iReportManager.IsDeliveryForReplace(scannedBarCode);
                 if (isScannedBefore)
                 {
                     model.Message = "<p style='color:red'> Already Added!</p>";
@@ -122,15 +123,21 @@ namespace NBL.Areas.CommonArea.Controllers
                 else if (isSoldFromBranch)
                 {
 
-                    product = _iReportManager.GetDistributedProductFromBranch(barcode);
+                    product = _iReportManager.GetDistributedProductFromBranch(scannedBarCode);
                     product.SaleDate = saleDate;
-                    _iProductManager.AddBarCodeToTempSoldProductXmlFile(product, barcode, filePath);
+                    _iProductManager.AddBarCodeToTempSoldProductXmlFile(product, scannedBarCode, filePath);
                 }
                 else if (isSoldFromFactory)
                 {
-                    product = _iReportManager.GetDistributedProductFromFactory(barcode);
+                    product = _iReportManager.GetDistributedProductFromFactory(scannedBarCode);
                     product.SaleDate = saleDate;
-                    _iProductManager.AddBarCodeToTempSoldProductXmlFile(product, barcode, filePath);
+                    _iProductManager.AddBarCodeToTempSoldProductXmlFile(product, scannedBarCode, filePath);
+                }
+                else if (isReplaceDelivery)
+                {
+                    product = _iReportManager.GetReplaceDistributedProduct(scannedBarCode);
+                    product.SaleDate = saleDate;
+                    _iProductManager.AddBarCodeToTempSoldProductXmlFile(product, scannedBarCode, filePath);
                 }
             }
             catch (FormatException exception)

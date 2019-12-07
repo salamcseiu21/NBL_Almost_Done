@@ -65,6 +65,7 @@ namespace NBL.Models.EntityModels.Services
         public DateTime SysDatetime { get; set; }
         public int ClientId { get; set; }
         public int ProductId { get; set; }
+        public DateTime SaleDate { get; set; }
         public DateTime ExpiryDate { get; set; }
         public string IsManualEntry { get; set; }
         public string HasWarranty { get; set; }

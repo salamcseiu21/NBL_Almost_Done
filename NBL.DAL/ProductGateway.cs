@@ -885,9 +885,6 @@ namespace NBL.DAL
                                 CategoryId = product.CategoryId,
                                 CategoryName = product.ProductCategory.ProductCategoryName,
                                 ProductId = Convert.ToInt32(line.Substring(2, 3)),
-                                
-                                
-
                             });
                     }
                     sr.Close();
@@ -1754,6 +1751,7 @@ namespace NBL.DAL
                     product.ClientAccountCode = xElements[6].Value;
                     product.ClientCommercialName = xElements[7].Value;
                     product.DeliveryDate = Convert.ToDateTime(xElements[8].Value);
+                    product.InventoryDetailsId = Convert.ToInt64(xElements[9].Value);
                     products.Add(product);
                 }
                 return products;
@@ -1780,7 +1778,8 @@ namespace NBL.DAL
                         new XElement("ClientName", product.ClientName),
                         new XElement("ClientCode", product.ClientAccountCode),
                         new XElement("ClientCommercialName", product.ClientCommercialName),
-                        new XElement("DeliveryDate", product.DeliveryDate)
+                        new XElement("DeliveryDate", product.DeliveryDate),
+                        new XElement("InventoryDetailsId", product.InventoryDetailsId)
 
 
                     ));

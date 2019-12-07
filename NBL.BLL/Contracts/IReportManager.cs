@@ -75,7 +75,10 @@ namespace NBL.BLL.Contracts
         ICollection<SubSubSubAccount> GetBankStatementByYear(int year);
         ICollection<ViewSubSubSubAccount> GetAllSubSubSubAccountList();
         IEnumerable<ReplaceReport> GetReplaceListByDateAndDistributionPoint( DateTime deliveryDate, int distributionPoint);
-        ICollection<ViewProductionSalesRepalce> GetProductionSalesRepalcesByMonthYear(int monthNo,int year); 
+        ICollection<ViewProductionSalesRepalce> GetProductionSalesRepalcesByMonthYear(int monthNo,int year);
 
+        ViewDeliveryDetails GetDeliveryInfoByBarcode(string barcode);
+        bool IsDeliveryForReplace(string barcode);
+        ViewDisributedProduct GetReplaceDistributedProduct(string barcode); 
     }
 }
