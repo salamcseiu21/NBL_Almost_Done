@@ -63,5 +63,6 @@ namespace NBL.DAL.Contracts
        ViewOrder GetOrderByDeliveryId(long deliveryId);
        ICollection<Order> GetOrdersBySearchCriteria(SearchCriteria aCriteria);
         int UpdateSoldProductSaleDateInFactory(RetailSale retail, ViewSoldProduct item);
-    }
+       int HideOrderByInvoiceId(int invoiceId, int userid); 
+   }
 }

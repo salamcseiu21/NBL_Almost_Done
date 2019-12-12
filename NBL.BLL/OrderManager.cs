@@ -187,6 +187,12 @@ namespace NBL.BLL
             return _iOrderGateway.GetOrdersBySearchCriteria(aCriteria);
         }
 
+        public bool HideOrderByInvoiceId(int invoiceId, int userid)
+        {
+            int rowAffected = _iOrderGateway.HideOrderByInvoiceId(invoiceId,userid);
+            return rowAffected > 0;
+        }
+
         public bool CancelOrder(ViewOrder order)
         {
             return _iOrderGateway.CancelOrder(order)>0;

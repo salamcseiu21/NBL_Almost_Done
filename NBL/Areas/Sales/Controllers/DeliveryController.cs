@@ -737,6 +737,13 @@ namespace NBL.Areas.Sales.Controllers
             return PartialView("_ModalTransferDeliveryPartialPage", requisition);
         }
 
+        public ActionResult DeliveredTransferList() 
+        {
+            int branchId = Convert.ToInt32(Session["BranchId"]);
+            ICollection<ViewTransferModel> requisitions = _iProductManager.GetTransferListByBranchId(branchId).ToList();
+            return View(requisitions);
+        }
+
         //---------------------Order History----
         [Authorize(Roles = "SalesAdmin,SalesManager,SalesExecutive,CorporateSalesManager")]
         public ActionResult OrderHistory()
@@ -761,6 +768,16 @@ namespace NBL.Areas.Sales.Controllers
             var order = _iOrderManager.GetOrderHistoryByOrderId(id);
             order.Client = _iClientManager.GetById(order.ClientId);
             return PartialView("_OrderHistoryDetailsPartialPage", order);
+        }
+
+        [HttpPost]
+        public JsonResult HideOrder(int id) 
+        {
+            var user = ((ViewUser)Session["user"]);
+            SuccessErrorModel aModel = new SuccessErrorModel();
+            var result = _iOrderManager.HideOrderByInvoiceId(id,user.UserId);
+            aModel.Message = result ? "Hide order Successfully!" : "Failed to Hide order";
+            return Json(aModel, JsonRequestBehavior.AllowGet);
         }
     }
 }

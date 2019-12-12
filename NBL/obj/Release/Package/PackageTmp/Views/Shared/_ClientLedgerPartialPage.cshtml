@@ -155,22 +155,6 @@
     });
 </script>
 
-@*<script>
-
-        function viewDetails(deliveryId) {
-
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("ViewDeliveryDetails", "Common", new { area = "" })",
-                data: { deliveryId: deliveryId.value },
-                success: function (response) {
-                    $('#modalBody').html(response);
-                    $('#showOrderDetailsModal').modal('show');
-                }
-            });
-        }
-
-    </script>*@
 <script>
 
     function viewInvoiceDetails(deliveryId) {

@@ -38,10 +38,10 @@ namespace NBL.Models.ViewModels.Products
         public int ProductAge { get; set; }
         public int LifeTime { get; set; }
         public int AgeLimitInDealerStock { get; set; } 
-        public int RemainingLifeTime => LifeTime - ProductAge;
+        public int RemainingLifeTime => LifeTime - Convert.ToInt32((DateTime.Now.Date - Convert.ToDateTime(SaleDate).Date).TotalDays);
 
-        public int StoreDuration => Convert.ToInt32((DeliveryDate - ProductionDate).TotalDays-1);
-        public int SalesDuration => Convert.ToInt32((Convert.ToDateTime(SaleDate) - DeliveryDate).TotalDays-1);
+        public int StoreDuration => Convert.ToInt32((DeliveryDate.Date - ProductionDate.Date).TotalDays);
+        public int SalesDuration => Convert.ToInt32((Convert.ToDateTime(SaleDate).Date - DeliveryDate.Date).TotalDays);
 
         public int ServiceDuration { get; set; } 
         public int CollectionDuration { get; set; }

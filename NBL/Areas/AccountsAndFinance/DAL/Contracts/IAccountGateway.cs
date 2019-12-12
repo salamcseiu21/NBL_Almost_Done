@@ -121,5 +121,6 @@ namespace NBL.Areas.AccountsAndFinance.DAL.Contracts
        int AddSubSubAccount(SubSubAccount account);
        int GetMaxVoucherNoOfCurrentMonthByVoucherType(int voucherType);
        int GetMaxJournalVoucherNoOfCurrentMonth();
+       IEnumerable<Voucher> GetVoucherListByBranchIdAndStatus(int branchId,int status);
    }
 }

@@ -293,6 +293,7 @@
     <Compile Include="ViewModels\TransferProducts\ViewTransferIssueDetailsModel.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewTransferIssueModel.cs" />
     <Compile Include="ViewModels\TransferProducts\TransferRequisitionDetails.cs" />
+    <Compile Include="ViewModels\TransferProducts\ViewTransferModel.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewTransferProductDetails.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewTransferProductModel.cs" />
     <Compile Include="ViewModels\TransferProducts\ViewTransferRequisition.cs" />

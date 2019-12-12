@@ -82,6 +82,7 @@ namespace NBL.Areas.AccountsAndFinance.BLL.Contracts
        IEnumerable<ViewLedgerModel> GetClientLedgerBySearchCriteria(SearchCriteria searchCriteria);
        bool CancelDiscount(int discountId);
 
-       bool AddSubSubSubAccount(SubSubSubAccount account); 
+       bool AddSubSubSubAccount(SubSubSubAccount account);
+       IEnumerable<Voucher> GetVoucherListByBranchIdAndStatus(int branchId,int status); 
    }
 }

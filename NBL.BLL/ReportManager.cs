@@ -339,6 +339,11 @@ namespace NBL.BLL
             return _iReportGateway.GetReplaceDistributedProduct(barcode);
         }
 
+        public ICollection<ViewProduct> ProductWiseTotalStock(int productId)
+        {
+            return _iReportGateway.ProductWiseTotalStock(productId);
+        }
+
         public bool IsValiedBarcode(string barcode)
         {
             var model = _iBarCodeManager.GetAll().ToList().Select(n=>n.Barcode).ToList().Contains(barcode);

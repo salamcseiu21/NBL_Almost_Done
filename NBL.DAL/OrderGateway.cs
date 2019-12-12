@@ -2573,6 +2573,41 @@ ConnectionObj.Close();
                 ConnectionObj.Close();
             }
         }
+
+        public int HideOrderByInvoiceId(int invoiceId,int userid)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_HideOrderByInvoiceId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@InvoiceId", invoiceId);
+                CommandObj.Parameters.AddWithValue("@UserId", userid);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (SqlException exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not hide order due to db exception", exception);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not hide order", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
+
         public int UpdateSoldProductSaleDateInFactory(RetailSale retail, ViewSoldProduct item,ViewDisributedProduct product)
         {
             try

@@ -8335,6 +8335,12 @@
     <Content Include="Areas\ResearchAndDevelopment\Views\Home\MyProfile.cshtml" />
     <Content Include="Areas\ResearchAndDevelopment\Views\Home\UpdateBasicInfo.cshtml" />
     <Content Include="Areas\ResearchAndDevelopment\Views\Home\UpdateEducationalInfo.cshtml" />
+    <Content Include="Areas\Corporate\Views\Home\ProductWiseTotalStock.cshtml" />
+    <Content Include="Areas\Corporate\Views\Reports\ProductSummary.cshtml" />
+    <Content Include="Areas\Services\Views\WarrantyBattery\ReturnChallan.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\AccountManager\ActivatedVouchers.cshtml" />
+    <Content Include="Areas\Sales\Views\Delivery\DeliveredTransferList.cshtml" />
+    <Content Include="Areas\Services\Views\Shared\_ViewReceivedWarrantyProductPartialPage.cshtml" />
     <None Include="DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -8511,6 +8517,7 @@
     <Content Include="Views\Shared\_ViewUpdateProductPartialPage.cshtml" />
     <Content Include="Views\Shared\_DeliveredReplaceListPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewReplaceListPartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewProductionSalesReplacePartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

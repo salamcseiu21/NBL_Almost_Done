@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using NBL.Models.ViewModels;
 
 namespace NBL.Models.EntityModels.Services
@@ -16,32 +17,49 @@ namespace NBL.Models.EntityModels.Services
         public string DelivaryRef { get; set; }
         public string TransactionRef { get; set; }
         public string VerificationRemarks { get; set; }
+        [Required]
         public decimal SpGrCellOne { get; set; }
+        [Required]
         public decimal SpGrCellTwo { get; set; }
+        [Required]
         public decimal SpGrCellThree { get; set; }
+        [Required]
         public decimal SpGrCellFour { get; set; }
+        [Required]
         public decimal SpGrCellFive { get; set; }
+        [Required]
         public decimal SpGrCellSix { get; set; }
         public decimal SpGrCellValueDifference { get; set; }
+        [Required]
         public int CellOneConditionId { get; set; }
+        [Required]
         public int CellTwoConditionId { get; set; }
+        [Required]
         public int CellThreeConditionId { get; set; }
+        [Required]
         public int CellFourConditionId { get; set; }
+        [Required]
         public int CellFiveConditionId { get; set; }
+        [Required]
         public int CellSixConditionId { get; set; }
+        [Required]
         public decimal OpenVoltage { get; set; }
         public decimal LoadVoltage { get; set; }
         public string VoltageRemarks { get; set; } 
         public string SpGrCellRemarks { get; set; }
         public string PrimaryTestResult { get; set; } 
-        public int IsPassPrimaryTest { get; set; } 
-
+        public int IsPassPrimaryTest { get; set; }
+        [Required]
         public int CoverStatusId { get; set; }
+        [Required]
         public int ContainerStatusId { get; set; }
+        [Required]
         public int PostStatusId { get; set; }
+        [Required]
         public int ServicingStatusId { get; set; }
         public string AppUsedFor { get; set; }
         public string AppCapacity{ get; set; }
+        [Required]
         public int ChargingSystemId { get; set; }
         public string OtherInformationRemarks { get; set; }
         public string ReceiveReport { get; set; }
@@ -53,11 +71,13 @@ namespace NBL.Models.EntityModels.Services
         public string RbdBarcode { get; set; }
         public string RbdRemarks { get; set; }
         public string ReceiveRemarks { get; set; }
+
         public int ReportByEmployeeId { get; set; }
         public int EntryByUserId { get; set; }
         public int Status { get; set; }
         public string IsActive { get; set; }
-        public int ForwardToId { get; set; }    
+        public int ForwardToId { get; set; }
+        [Required]
         public string ForwardRemarks { get; set; }     
         public int DistributionPointId { get; set; }     
         public string DistributionPoint { get; set; }
@@ -71,7 +91,7 @@ namespace NBL.Models.EntityModels.Services
         public string HasWarranty { get; set; }
         public int IsSoldInGracePeriod { get; set; }
         public int IsInWarrantyPeriod { get; set; }
-
+        public int ServiceDuration { set; get; }
         public List<PhysicalConditionModel> PhysicalConditions { set; get; }
         public List<ServicingModel> ServicingModels { set; get; }   
         public List<ChargingStatusModel> ChargingStatus { set; get; }

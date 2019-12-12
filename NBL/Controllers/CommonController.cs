@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -307,38 +308,18 @@ namespace NBL.Controllers
 
             if (isContra.Equals("true") && transactionTypeId==1)
             {
-                var accountList = (from c in _iCommonManager.GetAllSubSubSubAccounts().ToList().FindAll(n=>n.SubSubSubAccountCode.StartsWith("3106")).ToList()
-                                   where c.SubSubSubAccountName.ToLower().Contains(prefix.ToLower())
-                                   select new
-                                   {
-                                       label = c.SubSubSubAccountName,
-                                       val = c.SubSubSubAccountId
-                                   }).ToList();
-
+                var accountList = _iCommonManager.GetAllSubSubSubAccountNameBySearchTermAndAccountPrefix(prefix, "3106");
                 return Json(accountList);
             }
             if(isContra.Equals("true") && transactionTypeId == 2)
             {
-                var accountList = (from c in _iCommonManager.GetAllSubSubSubAccounts().ToList().FindAll(n => n.SubSubSubAccountCode.StartsWith("3105")).ToList()
-                                   where c.SubSubSubAccountName.ToLower().Contains(prefix.ToLower())
-                                   select new
-                                   {
-                                       label = c.SubSubSubAccountName,
-                                       val = c.SubSubSubAccountId
-                                   }).ToList();
+                var accountList = _iCommonManager.GetAllSubSubSubAccountNameBySearchTermAndAccountPrefix(prefix, "3105");
 
                 return Json(accountList);
             }
             else
             {
-                var accountList = (from c in _iCommonManager.GetAllSubSubSubAccounts().ToList()
-                                   where c.SubSubSubAccountName.ToLower().Contains(prefix.ToLower())
-                                   select new
-                                   {
-                                       label = c.SubSubSubAccountName,
-                                       val = c.SubSubSubAccountId
-                                   }).ToList();
-
+                var accountList = _iCommonManager.GetAllSubSubSubAccountNameBySearchTerm(prefix);
                 return Json(accountList);
             }
         }
@@ -347,14 +328,7 @@ namespace NBL.Controllers
         public JsonResult SubSubSubAccountNameAutoComplete(string prefix)
         {
 
-            var accountList = (from c in _iCommonManager.GetAllSubSubSubAccounts().ToList()
-                               where c.SubSubSubAccountName.ToLower().Contains(prefix.ToLower())
-                               select new
-                               {
-                                   label = c.SubSubSubAccountName,
-                                   val = c.SubSubSubAccountId
-                               }).ToList();
-
+            ICollection <object> accountList = _iCommonManager.GetAllSubSubSubAccountNameBySearchTerm(prefix);
             return Json(accountList);
         }
 

@@ -13,7 +13,7 @@ using NBL.Models.ViewModels;
 
 namespace NBL.Areas.AccountsAndFinance.Controllers
 {
-    [Authorize(Roles = "AccountExecutive")]
+    [Authorize(Roles = "AccountExecutive,AccountManager")]
     public class VoucherController : Controller
     {
         private readonly ICommonManager _iCommonManager;
@@ -79,7 +79,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                     Amounts = Convert.ToDecimal(collection["PurposeAmounts"]),
                     PurposeName = collection["PurposeName"],
                     Remarks = collection["Remarks"],
-                    DebitOrCredit = "Dr"
+                    DebitOrCredit = "Cr"
                 };
 
                 var filePath = GetTempCreditVoucherXmlFilePath();
@@ -143,7 +143,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 {
                     PurposeCode = accontCode,
                     Amounts =amount,
-                    DebitOrCredit = "Cr"
+                    DebitOrCredit = "Dr"
                    
                 };
 
@@ -236,7 +236,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                     PurposeCode = collection["PurposeCode"],
                     Amounts = Convert.ToDecimal(collection["PurposeAmounts"]),
                     PurposeName = collection["PurposeName"],
-                    DebitOrCredit = "Cr",
+                    DebitOrCredit = "Dr",
                     Remarks = collection["Remarks"]
                 };
                 var filePath = GetTempDebitVoucherXmlFilePath();
@@ -293,7 +293,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 {
                     PurposeCode = accontCode,
                     Amounts =amount,
-                    DebitOrCredit = "Dr"
+                    DebitOrCredit = "Cr"
                 };
 
                 var anUser = (ViewUser)Session["user"];
@@ -369,7 +369,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                     PurposeCode = bankCode,
                     Amounts = amount,
                     Remarks = collection["Remarks"],
-                   DebitOrCredit = "Dr"
+                    DebitOrCredit = "Cr"
                 };
                 purposeList.Add(debitPurpose);
                 var anUser = (ViewUser)Session["user"];
@@ -378,8 +378,8 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 {
                     PurposeCode = purposeCode,
                     Amounts =amount,
-                   Remarks = collection["Remarks"],
-                    DebitOrCredit = "Cr"
+                    Remarks = collection["Remarks"],
+                    DebitOrCredit = "Dr"
                 };
                 purposeList.Add(creditPurpose);
                 //-------------Voucher type 3 = Cheque payment voucher,transcation type 2 = Bank
@@ -449,7 +449,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                     PurposeCode = bankCode,
                     Amounts = amount,
                     Remarks = collection["Remarks"],
-                    DebitOrCredit = "Cr"
+                    DebitOrCredit = "Dr"
                 };
                 purposeList.Add(creditPurpose);
                 var anUser = (ViewUser)Session["user"];
@@ -460,7 +460,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                     PurposeCode = purposeCode,
                     Amounts =amount,
                     Remarks = collection["Remarks"],
-                    DebitOrCredit = "Dr"
+                    DebitOrCredit = "Cr"
                 };
                 purposeList.Add(debitPurpose);
                 //-------------Voucher type  = Cheque receive voucher,transcation type 2 = Bank

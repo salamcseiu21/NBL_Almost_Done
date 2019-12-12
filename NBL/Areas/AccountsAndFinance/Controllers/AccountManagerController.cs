@@ -362,7 +362,23 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+        public ActionResult ActivatedVouchers() 
+        {
+            try
+            {
+                var branchId = Convert.ToInt32(Session["BranchId"]);
+                var vouchers = _iAccountsManager.GetVoucherListByBranchIdAndStatus(branchId,1);
+                ViewBag.VoucherName = "Activated Vouchers";
+               // return PartialView("_VoucherPartialPage", vouchers);
+                return View(vouchers);
+            }
+            catch (Exception exception)
+            {
 
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         [HttpPost]
         public ActionResult Cancel(FormCollection collection)
         {
@@ -770,5 +786,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             };
             return View(aModel);
         }
+
+        
     }
 }

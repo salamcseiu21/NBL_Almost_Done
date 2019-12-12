@@ -379,7 +379,23 @@ namespace NBL.Areas.Corporate.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult ProductWiseTotalStock(int id) 
+        {
+            try
+            {
+                var product= _iProductManager.GetProductByProductId(id);
+                ViewBag.Product = product;
+                var stock = _iReportManager.ProductWiseTotalStock(id);
+                return View(stock);
+            }
+            catch (Exception exception)
+            {
 
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         [HttpGet]
         public ActionResult TotalReceiveByBranch() 
         {

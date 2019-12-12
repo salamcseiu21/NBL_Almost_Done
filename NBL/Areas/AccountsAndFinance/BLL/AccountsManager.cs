@@ -223,6 +223,11 @@ namespace NBL.Areas.AccountsAndFinance.BLL
             return rowAffected > 0;
         }
 
+        public IEnumerable<Voucher> GetVoucherListByBranchIdAndStatus(int branchId,int status)
+        {
+            return _iAccountGateway.GetVoucherListByBranchIdAndStatus(branchId,status);
+        }
+
         public bool AddSubSubAccount(SubSubAccount account)
         {
             int maxAccountNo = _iAccountGateway.GetMaxSubSubAccountNoBySubAccountCode(account.SubAccountCode);

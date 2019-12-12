@@ -15,14 +15,18 @@ namespace NBL.Models.ViewModels.TransferProducts
     {
 
         public long TransferId { get; set; }
+        public string TransactionRef { get; set; } 
         public TransferRequisition TransferRequisition { get; set; } 
         public ICollection<TransferRequisitionDetails> Detailses { get; set; }
        
         public ICollection<ViewTransferProductDetails> Products { set; get; }
         public Delivery Delivery { get; set; } 
         public ICollection<ScannedProduct> ScannedBarCodes { get; set; }
-        public int BranchId { get; set; }
+        public int BranchId { get; set; }  
+        public int ToBranchId { get; set; }
         public int CompanyId { get; set; }
+        public int Quantity { get; set; } 
+        public DateTime TransferDate { get; set; } 
       
         public ViewUser User { get; set; }
         public ViewTransferProductModel ViewTransferProductModel { get; set; } 

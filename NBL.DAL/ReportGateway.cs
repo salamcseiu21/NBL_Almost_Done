@@ -520,6 +520,8 @@ namespace NBL.DAL
             }
         }
 
+       
+
         public IEnumerable<ViewProduct> GetPopularBatteriesByYear(int year)
         {
             try
@@ -892,7 +894,43 @@ namespace NBL.DAL
                 ConnectionObj.Close();
             }
         }
-
+        public ICollection<ViewProduct> ProductWiseTotalStock(int productId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetProductWiseTotalStockByProductId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ProductId", productId);
+                List<ViewProduct> products = new List<ViewProduct>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    products.Add(new ViewProduct
+                    {
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        ProductName = reader["ProductName"].ToString(),
+                        StockQuantity = Convert.ToInt32(reader["StockQty"]),
+                        Quantity = Convert.ToInt32(reader["StockQty"]),
+                        BranchName = reader["BranchName"].ToString(),
+                        BranchId = Convert.ToInt32(reader["BranchId"])
+                    });
+                }
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect total Stock  from branch & factory", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
         public ICollection<ViewLoginInfo> GetLoginHistoryByDate(DateTime date)
         {
             try

@@ -79,6 +79,7 @@ namespace NBL.BLL.Contracts
 
         ViewDeliveryDetails GetDeliveryInfoByBarcode(string barcode);
         bool IsDeliveryForReplace(string barcode);
-        ViewDisributedProduct GetReplaceDistributedProduct(string barcode); 
+        ViewDisributedProduct GetReplaceDistributedProduct(string barcode);
+        ICollection<ViewProduct> ProductWiseTotalStock(int productId); 
     }
 }

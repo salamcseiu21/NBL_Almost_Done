@@ -1,9 +1,12 @@
 ﻿
+@using NBL.Models.EntityModels.Branches
+@using NBL.Models.EntityModels.Companies
 @using NBL.Models.Enums
 @model NBL.Models.ViewModels.Services.ViewReceivedServiceProduct
 @{
     
-
+    var branch = (Branch) Session["Branch"];
+    var company = (Company) Session["Company"];
     var aClient = Model.Client;
 }
 <!DOCTYPE html>
@@ -48,37 +51,58 @@
         <!-- Main content -->
         <section class="invoice">
             <!-- title row -->
-            @Html.Partial("_PrintHeaderPartialPage")
-            <h3 class="text-center text-green headingStyle">Battery Receive Invoice</h3>
+            @* @Html.Partial("_PrintHeaderPartialPage")*@
+            
+            <div class="row">
+                <div class="col-md-9"></div>
+                <div class="col-md-3"></div>
+            </div>
+            <table style="width: 100%">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <p style="font-size: 25px; font-weight: bolder; margin: 0; padding: 0; color: green !important">Navana Batteries Ltd</p>
+                        <address>
+                            @(branch?.BranchAddress ?? "N/A")<br/>
+                            Phone: @(branch?.BranchPhone ?? "N/A"),E-mail: @(branch?.BranchEmail ?? "N/A")
+                        </address>
+                    </td>
+                    <td class="text-center">
+                        <img src="~/Images/@company.Logo" style="margin: 0; padding: 0;"/>
+                    </td>
+                </tr>
+            </table>
+            <p class="text-center text-green headingStyle">Battery Receive Invoice</p>
             
             <!-- Table row -->
-            <div class="row">
+            <div class="row" style="margin: 0 auto;padding: 0" >
                 <div class="col-xs-12 table-responsive">
                     <table class="table">
                         <tr>
-                            <td> Receive Ref : @Model.ReceiveRef</td>
+                            <td>Receive Ref : @Model.ReceiveRef</td>
                             <td>Receive Date:@Model.ReceiveDatetime.ToString("dd-MMM-yyyy") </td>
                             <td>Sale Date:@Convert.ToDateTime(Model.ProductHistory.SaleDate).ToString("dd-MMM-yyyy") </td>
+                            <td>Product Name: @Model.ProductName</td>
                         </tr>
                         <tr>
-                            <td>Product Name: @Model.ProductName</td>
+                            <td>Client Name: @aClient.ClientName</td>
+                            <td>Client Type:@aClient.ClientTypeName </td>
                             <td>BarCode:@Model.Barcode </td>
                             <td>BatchCode:@Model.Barcode.Substring(5,8) </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Client Name: @aClient.ClientName</td>
-                            <td>Client Type:@aClient.ClientTypeName </td>
                         </tr>
                         <tr>
                             <td colspan="3">Client Address: @aClient.Address</td>
                            
                         </tr>
                         <tr>
-                            <td colspan="2">Sales Duration: @Model.ProductHistory.SalesDuration</td>
+                            <td>Sales Duration: @Model.ProductHistory.SalesDuration <span>Days</span></td>
                             <td>Service Duration:@Model.ProductHistory.ServiceDuration </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Verificaiton: @if (Model.HasWarranty == "Y")
+                            <td>Verificaiton: @if (Model.HasWarranty == "Y")
                                                           {
                                                               <span>Warranty Available.</span>
                                                           }
@@ -87,17 +111,20 @@
                                                               <span>Warranty Void.</span>
                                                           }
                             </td>
-                            <td>Remarks:@Model.ReceiveRemarks </td>
+                            <td>Remarks:@(Model.ReceiveRemarks?? "N/A") </td>
                         </tr>
+                       
                     </table>
                 </div>
                 <!-- /.col -->
             </div>
-            <h4>Battery Status at Receive Time</h4>
-            <div class="row">
+            <div class="row" style="margin: 0 auto; padding: 0;">
                 <div class="col-xs-12 table-responsive">
                     <table class="table">
                         <thead>
+                            <tr>
+                                <td colspan="4" style="font-weight: bolder">Battery Status at Receive Time</td>
+                            </tr>
                         <tr>
                             <th>Cell No</th>
                             <th>Cell 1</th>
@@ -131,10 +158,12 @@
                         </tr>
                         
                         <tr>
-                            <td colspan="3">Open Voltage</td>
+                            <td>Open Voltage:</td>
                             <td>@Model.OpenVoltage</td>
-                            <td colspan="2">Load Voltage</td>
+                            <td>Load Voltage:</td>
                             <td>@Model.LoadVoltage</td>
+                            <td>Remarks:</td>
+                            <td colspan="2">@Model.VoltageRemarks</td>
                             
 
                         </tr>
@@ -142,45 +171,20 @@
                 </div>
                 <!-- /.col -->
             </div>
-            
-         
+
             <div class="row">
                 <div class="col-xs-12 table-responsive">
                     <table class="table">
                         <tr>
-                            <td colspan="4" style="font-weight: bolder">Physical Status</td>
+                            <td colspan="6" style="font-weight: bolder">Physical & Application Status</td>
                         </tr>
                         <tr>
                             <td>Cover: @Enum.GetName(typeof(PhysicalConditionEnum), Model.CoverStatusId)</td>
                             <td>Post: @Enum.GetName(typeof(PhysicalConditionEnum), Model.PostStatusId)</td>
                             <td>Container: @Enum.GetName(typeof(PhysicalConditionEnum), Model.ContainerStatusId)</td>
                             <td>Servicing: @Model.ServicingStatus</td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" style="font-weight: bolder">Application</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">User For: @Model.AppUsedFor</td>
-                            <td>Capacity: @Model.AppCapacity</td>
+                            <td>User For: @Model.AppUsedFor</td>
                             <td>Charging System: @Model.ChargingSystem</td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" style="font-weight: bolder">Service Battery</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Product Name: @Model.RbdBarcode</td>
-                            <td>Barcode: @Model.ServiceBatteryBarcode</td>
-                            <td>Delivery Date: @Model.ServiceBatteryDeliveryDate.ToString()</td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" style="font-weight: bolder">
-                                Replace By Dealer
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Product Name: @Model.RbdBarcode</td>
-                            <td>Barcode: @Model.RbdBarcode</td>
-                            <td>Delivery Date: @Model.RbdDate.ToString()</td>
                         </tr>
                     </table>
                 </div>

@@ -258,5 +258,15 @@ namespace NBL.BLL
        {
            return _iCommonGateway.GetAllTestCategories();
        }
+
+       public ICollection<object> GetAllSubSubSubAccountNameBySearchTerm(string prefix)
+       {
+           return _iCommonGateway.GetAllSubSubSubAccountNameBySearchTerm(prefix);
+       }
+
+       public ICollection<object> GetAllSubSubSubAccountNameBySearchTermAndAccountPrefix(string searchTerm, string accountPrefix)
+       {
+           return _iCommonGateway.GetAllSubSubSubAccountNameBySearchTermAndAccountPrefix(searchTerm,accountPrefix);
+       }
    }
 }

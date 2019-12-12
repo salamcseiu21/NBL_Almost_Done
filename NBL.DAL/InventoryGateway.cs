@@ -3099,7 +3099,6 @@ namespace NBL.DAL
                         DeliveryFromBranch = reader["DistributionCenter"].ToString(),
                         OrderFromBranch = reader["OrderByBranch"].ToString(),
                         SaleDate = DBNull.Value.Equals(reader["SaleDate"])? DateTime.Now: Convert.ToDateTime(reader["SaleDate"])
-                      
                     };
                 }
                 reader.Close();

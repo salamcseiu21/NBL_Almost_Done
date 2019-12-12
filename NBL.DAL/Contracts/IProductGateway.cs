@@ -93,6 +93,7 @@ namespace NBL.DAL.Contracts
         int UpdateProductActivationStatus(int productId, string status);
         ICollection<ProductDetails> GetAllProductDetails();
         int UpdateProductPriceVatDiscount(ProductDetails newProduct,ProductDetails oldProductDetails, int userId);
-      
+
+        ICollection<ViewTransferModel> GetTransferListByBranchId(int branchId); 
     }
 }

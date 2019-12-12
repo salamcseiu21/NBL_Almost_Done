@@ -17,6 +17,7 @@
                     <th>  Product Name</th>
                     <th>  Barcode</th>
                     <th>  Client</th>
+                    <th class="text-center">  Action</th>
               
                 </tr>
                 </thead>
@@ -30,6 +31,9 @@
 
                         <td>@item.Barcode</td>
                         <td>@item.ClientInfo</td>
+                        <td class="text-center">
+                            @Html.ActionLink(" Print Challan", "ReturnChallan", "WarrantyBattery", new { id = item.ReceiveId, area = "services" }, new { target = "_blank", @class = "btn btn-info fa fa-print" })
+                        </td>
                
                     </tr>
                 }
@@ -41,7 +45,7 @@
                     <th>  Product Name</th>
                     <th>  Barcode</th>
                     <th>  Client</th>
-                
+                    <th class="text-center">  Action</th>
                 </tr>
                 </tfoot>
             </table>

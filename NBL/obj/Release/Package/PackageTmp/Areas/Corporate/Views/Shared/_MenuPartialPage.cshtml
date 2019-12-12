@@ -90,7 +90,7 @@
 
         <li class="treeview">
             <a href="#">
-                <i class="fa fa-circle-o"></i> Daily Reports
+                <i class="fa fa-circle-o"></i> Ledgers
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
@@ -103,25 +103,14 @@
         </li>
         <li class="treeview">
             <a href="#">
-                <i class="fa fa-circle-o"></i> Monthly Reports
+                <i class="fa fa-circle-o"></i> Product Summary
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-circle-o"></i> Level Two
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                    </ul>
-                </li>
+                <li>@Html.ActionLink(" Production,Sale & Replace", "ProductSummary", "Reports", new { area = "Corporate" }, new { @class = "fa fa-circle-o", style = "font-weight: bolder" })</li>
+                
             </ul>
         </li>
         <li class="treeview">
@@ -138,29 +127,7 @@
             </ul>
 
         </li>
-        <li class="treeview">
-            <a href="#">
-                <i class="fa fa-circle-o"></i> Stocks
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-            </a>
-            <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-circle-o"></i> Level Two
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
+     
     </ul>
 </li>
 <li class="treeview">

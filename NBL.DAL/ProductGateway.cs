@@ -1191,6 +1191,46 @@ namespace NBL.DAL
             }
         }
 
+        public ICollection<ViewTransferModel> GetTransferListByBranchId(int branchId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetTransferListByBranchId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                List<ViewTransferModel> products = new List<ViewTransferModel>();
+                while (reader.Read())
+                {
+                    products.Add(new ViewTransferModel
+                    {
+                       
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        FromBranch = reader["FromBranchName"].ToString(),
+                        ToBranch = reader["ToBranchName"].ToString(),
+                        TransferId = Convert.ToInt64(reader["TransferId"]),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        TransferDate=Convert.ToDateTime(reader["SystemDateTime"]),
+                        TransactionRef = reader["TransactionRef"].ToString() 
+                    });
+                }
+
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Colud not collect product list", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         private int SaveDiscountDetails(ProductDetails newProduct, ProductDetails oldProductDetails, int userId)
         {
             int i = 0;

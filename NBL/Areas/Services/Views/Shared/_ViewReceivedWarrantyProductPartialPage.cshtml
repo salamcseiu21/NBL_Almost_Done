@@ -1,0 +1,89 @@
+﻿@using NBL.Models.Enums
+@model NBL.Models.ViewModels.Services.ViewReceivedServiceProduct
+@{
+    var productHistory = Model.ProductHistory;
+}
+<table class="table table-bordered" style="width: 100%">
+    <tbody>
+        <tr>
+            <td>
+                <strong>Receive Ref : </strong> @Model.ReceiveRef
+            </td>
+            <td>
+                <strong>Received By : </strong> @Model.EntryByUser
+            </td>
+            <td>
+                <strong>Reported By : </strong> @Model.ReportByEmployee
+            </td>
+            <td colspan="2">
+                <strong>Comments : </strong> @Model.ReceiveReport
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Product Name : </strong><i><label id="ProductName">@Model.ProductName</label></i>
+            </td>
+
+
+            <td>
+                <strong>Barcode : </strong><i><label>@productHistory.ProductBarCode</label></i>
+
+            </td>
+            <td>
+                <strong>Segment : </strong> <i><label>@productHistory.ProductCategoryName</label></i>
+            </td>
+            <td>
+                <strong> Production Date : </strong> <i><label id="ProductionDate">@productHistory.ProductionDate.ToString("dd-MMM-yyyy")</label></i>
+            </td>
+            <td>
+                <strong>Store Duration :</strong><i><label id="StoreDuration">@productHistory.StoreDuration Days</label></i>
+
+
+            </td>
+        </tr>
+    <tr>
+
+        <td>
+            <strong>Delivery Date : </strong><i><label id="DeliveryDate">@productHistory.DeliveryDate.ToString("dd-MMM-yyyy")</label></i>
+
+        </td>
+        <td>
+            <strong>Sale Date : </strong> <i><label id="SaleDate">@Convert.ToDateTime(productHistory.SaleDate).ToString("dd-MMM-yyyy")</label></i>
+        </td>
+        <td>
+            <strong>Sales Duration :</strong> <i><label id="SalesDuration">@productHistory.SalesDuration Days</label></i>
+        </td>
+        <td>
+            <strong>Service Duration : </strong><i><label>@Model.ServiceDuration Days</label></i>
+        </td>
+
+        <td>
+            <strong>Remaining Life Time : </strong><i><label>@productHistory.RemainingLifeTime Days</label></i>
+
+        </td>
+
+
+    </tr>
+    <tr>
+        <td>
+            <strong>Grace Period: </strong><i><label>@productHistory.AgeLimitInDealerStock Days</label></i>
+
+        </td>
+        <td>
+            <strong>Is Sold in Grace Period: </strong><i><label>@Enum.GetName(typeof(FlagEnum), Model.IsSoldInGracePeriod)</label></i>
+
+        </td>
+        <td>
+            <strong>Warranty Period : </strong><i><label id="LifeTime">@productHistory.LifeTime Days</label></i>
+
+        </td>
+        <td colspan="2">
+            <strong>Is  in Warranty Period: </strong> <i><label>@Enum.GetName(typeof(FlagEnum), Model.IsInWarrantyPeriod) </label></i>
+        </td>
+
+                                
+    </tr>
+
+    </tbody>
+</table>
+

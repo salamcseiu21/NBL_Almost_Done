@@ -28,7 +28,7 @@
                     <label for="SaleDate" class="control-label col-md-3">Sale Date</label>
                     <div class="col-md-9">
 
-                        <input type="text" id="SaleDate" name="SaleDate" value="@date" class="form-control"/>
+                        <input type="text" id="SaleDate" name="SaleDate" placeholder="Enter sale date---" class="form-control" required/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -82,7 +82,10 @@
             var saleDate = $("#SaleDate").val();
             if (code === "") {
                 alert("Please Enter barcode..");
-            } else {
+            } else if (saleDate==="") {
+                alert("Please Enter sale date..");
+            }
+            else {
                 $.ajax({
                     type: "POST",
                     url: RootUrl + 'commonarea/order/SaveScannedBarcodeToXmlFile',

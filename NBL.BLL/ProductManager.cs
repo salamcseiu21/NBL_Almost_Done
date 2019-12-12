@@ -511,6 +511,11 @@ namespace NBL.BLL
             return rowAffected > 0;
         }
 
+        public ICollection<ViewTransferModel> GetTransferListByBranchId(int branchId)
+        {
+            return _iProductGateway.GetTransferListByBranchId(branchId);
+        }
+
         private string GenerateTransferRequisitionRef(int maxTrNo)
         {
 

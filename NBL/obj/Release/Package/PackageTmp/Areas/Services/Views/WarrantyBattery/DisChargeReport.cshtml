@@ -25,69 +25,7 @@
                         <span>Product Information</span>
                     </div>
                     <div class="panel panel-body">
-                        <table class="table table-bordered" style="width: 100%">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <strong>Receive Ref : </strong> @Model.ReceiveRef
-                                    </td>
-                                    <td>
-                                        <strong>Received By : </strong> @Model.EntryByUser
-                                    </td>
-                                    <td>
-                                        <strong>Reported By : </strong> @Model.ReportByEmployee
-                                    </td>
-                                    <td colspan="2">
-                                        <strong>Comments : </strong> @Model.ReceiveReport
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>Product Name : </strong><i><label id="ProductName">@Model.ProductName</label></i>
-                                    </td>
-
-
-                                    <td>
-                                        <strong>Barcode : </strong><i><label>@productHistory.ProductBarCode</label></i>
-
-                                    </td>
-                                    <td>
-                                        <strong>Segment : </strong> <i><label>@productHistory.ProductCategoryName</label></i>
-                                    </td>
-                                    <td>
-                                        <strong> Production Date : </strong> <i><label id="ProductionDate">@productHistory.ProductionDate.ToString("dd-MMM-yyyy")</label></i>
-                                    </td>
-                                    <td>
-                                        <strong>Product LifeTime : </strong><i><label id="LifeTime">@productHistory.LifeTime</label></i>
-
-                                    </td>
-                                </tr>
-                                <tr style="">
-
-                                    <td>
-                                        <strong>Delivery Date : </strong><i><label id="DeliveryDate">@productHistory.DeliveryDate.ToString("dd-MMM-yyyy")</label></i>
-
-                                    </td>
-                                    <td>
-                                        <strong>Sale Date : </strong> <i><label id="SaleDate">@Convert.ToDateTime(productHistory.SaleDate).ToString("dd-MMM-yyyy")</label></i>
-                                    </td>
-
-                                    <td>
-
-                                        <strong>Product Age : </strong><i><label id="ProductAge">@productHistory.ProductAge</label></i>
-                                    </td>
-                                    <td>
-                                        <strong>Store Duration :</strong><i><label id="StoreDuration">@productHistory.StoreDuration</label></i>
-                                    </td>
-                                    <td>
-                                        <strong>Sales Duration :</strong> <i><label id="SalesDuration">@productHistory.SalesDuration</label></i>
-                                    </td>
-
-                                </tr>
-
-                            </tbody>
-                        </table>
-
+                     @Html.Partial("_ViewReceivedWarrantyProductPartialPage",Model)
                     </div>
                 </div>
                 <div class="panel panel-success">
@@ -259,11 +197,11 @@
                                     <tr>
 
                                         <td>
-                                            <strong>T.V.</strong><input type="number" name="Tv" class="form-control" placeholder="T.V." required />
+                                            <strong>Open Voltage</strong><input type="number" name="Tv" class="form-control" placeholder="Open Voltage"/>
 
                                         </td>
                                         <td>
-                                            <strong>L.V.</strong><input type="number" name="Lv" class="form-control" placeholder="L.V....." required />
+                                            <strong>Load Voltage</strong><input type="number" name="Lv" class="form-control" placeholder="Load Voltage" required />
 
                                         </td>
                                         <td>
@@ -284,7 +222,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="5">
-                                            <strong>Remarks</strong><input type="text" name="DischargeRemarks" placeholder="Remarks..." style="width: 100%" required class="form-control" />
+                                            <strong>Remarks</strong><input type="text" name="DischargeRemarks" placeholder="Remarks..." style="width: 100%" class="form-control" />
 
                                         </td>
                                     </tr>
@@ -328,13 +266,6 @@
                                     </td>
                                     <td colspan="2"> <strong>Remarks</strong><input type="text" name="ForwardRemarks" style="width: 100%" class="form-control" placeholder="Forward remarks.." /> </td>
                                     <td>
-                                        @*<strong>Distribution Point :</strong><select name="DistributionPointId" required style="width: 100%" class="form-control">
-                                            <option value="">---Select--</option>
-                                            @foreach (var item in Model.DistributionPoints)
-                                            {
-                                                <option value="@item.BranchId">@item.BranchName</option>
-                                            }
-                                        </select>*@
                                         <br />
 
                                         @Html.ActionLink("Back", "ProductInDisChargeSection", "WarrantyBattery", null, new { @class = "btn btn-danger" })

@@ -8,7 +8,7 @@ namespace NBL.Models.ViewModels
     public class ViewProduct
     {
         public int BranchId { get; set; }
-
+        public string BranchName { get; set; }
         public string ProductTypeName { get; set; }
         public string ProductBarCode { get; set; }
         public DateTime ProductionDate { get; set; }    

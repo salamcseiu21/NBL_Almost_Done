@@ -1,0 +1,56 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.TransferProducts.ViewTransferModel>
+@{
+    ViewBag.Title = "Delivered Transfer List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <div class="panel panel-info">
+        <div class="panel panel-heading">Delivered Transfer List</div>
+        <div class="panel panel-body">
+            <table class="display table-responsive table-bordered" style="border: 1px solid" id="table_transfer_list">
+                <thead>
+                <tr>
+                    <th>Refference</th>
+                    <th>To Branch</th>
+                    <th class="text-right">Quantity</th>
+                    <th class="text-center">Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.TransactionRef</td>
+                        <td>@item.ToBranch</td>
+                        <td class="text-right">@item.Quantity</td>
+                        <td class="text-center">@item.TransferDate.ToString("dd-MMMM-yyyy")</td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th class="text-right" colspan="2">Total</th>
+                    <th class="text-right">@Model.Sum(n=>n.Quantity)</th>
+                    <th class="text-center">-</th>
+                </tr>
+                <tr>
+                    <th>Refference</th>
+                    <th>To Branch</th>
+                    <th class="text-right">Quantity</th>
+                    <th class="text-center">Date</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#table_transfer_list").DataTable({
+            "order":[[0,"desc"]]
+        });
+    </script>
+}

@@ -1,0 +1,81 @@
+﻿@model ICollection<NBL.Models.ViewModels.Summaries.ViewProductionSalesRepalce>
+@{
+
+    var i = 0;
+}
+<table class="display table-bordered table-responsive" id="tbl_Sales_summary" style="border: 1px solid">
+    <thead>
+    <tr>
+        <th>S.N</th>
+        <th>Product Name</th>
+        <th class="text-right">Production</th>
+        <th class="text-right">Sales</th>
+        <th class="text-right">Replace</th>
+    </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        i++;
+        <tr>
+            <td>@i</td>
+            <td>@item.ProductName</td>
+            <td class="text-right">@item.ProductionQuantity</td>
+            <td class="text-right">@item.SalesQuantity</td>
+            <td class="text-right">@item.ReplaceQuantity</td>
+        </tr>
+    }
+    <tfoot>
+    <tr>
+                       
+        <th class="text-right" colspan="2">Total:</th>
+        <th class="text-right">@Model.Sum(n=>n.ProductionQuantity)</th>
+        <th class="text-right">@Model.Sum(n=>n.SalesQuantity)</th>
+        <th class="text-right">@Model.Sum(n=>n.ReplaceQuantity)</th>
+    </tr>
+    <tr>
+        <th>S.N</th>
+        <th>Product Name</th>
+        <th class="text-right">Production</th>
+        <th class="text-right">Sales</th>
+        <th class="text-right">Replace</th>
+    </tr>
+    </tfoot>
+</table>
+
+<script>
+    $('#tbl_Sales_summary').DataTable({
+        "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+        "order" :[[2,'desc']],
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excel',
+                text: 'Download As Excel',
+                title: 'Proudction,Sales & Replace',
+                footer: true
+
+            },
+
+            {
+                extend: 'pdf',
+                text: 'Download As Pdf',
+                title: 'Proudction,Sales & Replace',
+                footer: true
+
+            },
+            {
+                extend: 'print',
+                title: 'Proudction,Sales & Replace',
+                footer: true,
+                customize: function (win) {
+                    $(win.document.body)
+                        .css('font-size', '10pt');
+
+                    $(win.document.body).find('table')
+                        .addClass('compact')
+                        .css('font-size', 'inherit');
+                }
+            }
+        ]
+    });
+</script>

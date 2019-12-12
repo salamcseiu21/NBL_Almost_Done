@@ -61,7 +61,8 @@
                             </td>
                             <td>
 
-                                <strong>Product Age : </strong><i><label id="ProductAge"></label></i>
+                                @*<strong>Product Age : </strong><i><label id="ProductAge"></label></i>,*@
+                                <strong>Remaining  Life : </strong><i><label id="RemainingLife"></label></i>
                             </td>
                             <td>
                                 <strong>Store Duration :</strong><i><label id="StoreDuration"></label></i>
@@ -169,34 +170,34 @@
                         <tr>
 
                             <td>
-                                <strong>Cell 1 :</strong><input id="SpGrCellOne" name="SpGrCellOne" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 1 Sp Gr" />
-                                <input type="text" id="CellOneCondition" name="CellOneCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 1 condition" class="form-control" />
+                                <strong>Cell 1 :</strong><input id="SpGrCellOne" name="SpGrCellOne" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 1 Sp Gr " required/>
+                                <input type="text" id="CellOneCondition" name="CellOneCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 1 condition" class="form-control" required/>
                                 @Html.HiddenFor(n => n.CellOneConditionId)
                             </td>
                             <td>
-                                <strong>Cell 2 :</strong><input id="SpGrCellTwo" name="SpGrCellTwo" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 2 Sp Gr" />
-                                <input type="text" id="CellTwoCondition" name="CellTwoCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 2 condition" class="form-control" />
+                                <strong>Cell 2 :</strong><input id="SpGrCellTwo" name="SpGrCellTwo" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 2 Sp Gr" required/>
+                                <input type="text" id="CellTwoCondition" name="CellTwoCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 2 condition" class="form-control" required/>
                                 @Html.HiddenFor(n => n.CellTwoConditionId)
                             </td>
                             <td>
-                                <strong>Cell 3 :</strong><input id="SpGrCellThree" name="SpGrCellThree" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 3 Sp Gr" />
-                                <input type="text" id="CellThreeCondition" name="CellThreeCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 3 condition" class="form-control" />
+                                <strong>Cell 3 :</strong><input id="SpGrCellThree" name="SpGrCellThree" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 3 Sp Gr" required/>
+                                <input type="text" id="CellThreeCondition" name="CellThreeCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 3 condition" class="form-control" required />
                                 @Html.HiddenFor(n => n.CellThreeConditionId)
                             </td>
 
                             <td>
-                                <strong>Cell 4 :</strong><input id="SpGrCellFour" name="SpGrCellFour" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 4 Sp Gr" />
-                                <input type="text" id="CellFourCondition" onkeypress="CellConditionAutoComplete(this)" name="CellFourCondition" placeholder="Cell 4 condition" class="form-control" />
+                                <strong>Cell 4 :</strong><input id="SpGrCellFour" name="SpGrCellFour" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 4 Sp Gr" required />
+                                <input type="text" id="CellFourCondition" onkeypress="CellConditionAutoComplete(this)" name="CellFourCondition" placeholder="Cell 4 condition" class="form-control" required />
                                 @Html.HiddenFor(n => n.CellFourConditionId)
                             </td>
                             <td>
-                                <strong>Cell 5 :</strong><input id="SpGrCellFive" name="SpGrCellFive" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 5 Sp Gr" />
-                                <input type="text" id="CellFiveCondition" name="CellFiveCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 5 condition" class="form-control" />
+                                <strong>Cell 5 :</strong><input id="SpGrCellFive" name="SpGrCellFive" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 5 Sp Gr" required />
+                                <input type="text" id="CellFiveCondition" name="CellFiveCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 5 condition" class="form-control" required />
                                 @Html.HiddenFor(n => n.CellFiveConditionId)
                             </td>
                             <td>
-                                <strong>Cell 6 :</strong><input id="SpGrCellSix" name="SpGrCellSix" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 6 Sp Gr" />
-                                <input type="text" id="CellSixCondition" name="CellSixCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 6 condition" class="form-control" />
+                                <strong>Cell 6 :</strong><input id="SpGrCellSix" name="SpGrCellSix" type="number" onchange="CalculateSpGrCellValueDifference(this)" onkeyup="CalculateSpGrCellValueDifference(this)" class="form-control" placeholder="Cell 6 Sp Gr" required/>
+                                <input type="text" id="CellSixCondition" name="CellSixCondition" onkeypress="CellConditionAutoComplete(this)" placeholder="Cell 6 condition" class="form-control" required />
                                 @Html.HiddenFor(n => n.CellSixConditionId)
                             </td>
                             <td>
@@ -207,9 +208,6 @@
                         </tr>
                         <tr>
 
-                           
-
-
                         </tr>
                         <tr>
                             
@@ -217,7 +215,7 @@
                                 <strong>SpGr Remarks : </strong> <input id="SpGrCellRemarks" name="SpGrCellRemarks" type="text" style="width: 100%" class="form-control" placeholder="SpGr Cell Remarks..."/>
                             </td>
                             
-                            <td> <strong>Open Voltage :</strong><input id="OpenVoltage" name="OpenVoltage" type="number"  style="width: 100%" class="form-control" placeholder="Open Voltage.."/></td>
+                            <td> <strong>Open Voltage :</strong><input id="OpenVoltage" name="OpenVoltage" type="number"  style="width: 100%" class="form-control" placeholder="Open Voltage.." required/></td>
                             <td> <strong>Load Voltage :</strong><input id="LoadVoltage" name="LoadVoltage" type="number"  style="width: 100%" class="form-control" placeholder="Load Voltage.." /></td>
                             <td colspan="2">
                                 <strong>Voltage Remarks : </strong> <input id="VoltageRemarks" name="VoltageRemarks" type="text" style="width: 100%"  class="form-control" placeholder="Voltage Remarks..."/>
@@ -228,11 +226,9 @@
                     </table>
                 </div>
             </div>
-        </div>
-        <div id="menu4" class="tab-pane fade">
-
+            
             <div class="panel panel-success">
-                <div class="panel panel-heading"><span>Other Information</span></div>
+                <div class="panel panel-heading"><span>Physical & Other Information</span></div>
                 <div class="panel panel-body">
                     <table class="table table-bordered" style="width: 100%">
                         <tbody>
@@ -240,74 +236,81 @@
                             <tr>
 
                                 <td>
-                                    <strong>Cover :</strong><select name="CoverStatusId" class="form-control">
+                                    <strong>Cover :</strong><select name="CoverStatusId" class="form-control" required>
                                         <option value="">---Select--</option>
                                         @foreach (var item in Model.PhysicalConditions)
                                         {
                                             <option value="@item.Id">@item.Condition</option>
                                         }
-                                    </select>
+                                    </select><span style="color: red">*</span>
                                 </td>
                                 <td>
-                                    <strong>Container :</strong><select name="ContainerStatusId" class="form-control">
+                                    <strong>Container :</strong><select name="ContainerStatusId" class="form-control" required>
                                         <option value="">---Select--</option>
                                         @foreach (var item in Model.PhysicalConditions)
                                         {
                                             <option value="@item.Id">@item.Condition</option>
                                         }
-                                    </select>
+                                    </select><span style="color: red">*</span>
                                 </td>
                                 <td>
-                                    <strong>Post :</strong><select name="PostStatusId" class="form-control">
+                                    <strong>Post :</strong><select name="PostStatusId" class="form-control" required>
                                         <option value="">---Select--</option>
                                         @foreach (var item in Model.PhysicalConditions)
                                         {
                                             <option value="@item.Id">@item.Condition</option>
                                         }
-                                    </select>
+                                    </select><span style="color: red">*</span>
                                 </td>
                                 <td>
-                                    <strong>Servicing :</strong><select name="ServicingStatusId" class="form-control">
+
+
+
+                                    <strong>Servicing :</strong><select name="ServicingStatusId" class="form-control" required>
                                         <option value="">---Select--</option>
                                         @foreach (var item in Model.ServicingModels)
                                         {
                                             <option value="@item.Id">@item.ServicingStatus</option>
                                         }
-                                    </select>
+                                    </select><span style="color: red">*</span>
+
                                 </td>
 
 
 
                             </tr>
-                            <tr>
+                        <tr>
 
-                                <td> <strong>Used For :</strong><input type="text" name="AppUsedFor" style="width: 100%" class="form-control" placeholder="Used For.." /> </td>
-                                <td> <strong>Capacity :</strong><input type="text" name="AppCapacity" style="width: 100%" class="form-control" placeholder="Capacity..." /></td>
-                                <td>
-                                    <strong>Charging System :</strong><select name="ChargingSystemId" required style="width: 100%" class="form-control">
-                                        <option value="">---Select--</option>
-                                        @foreach (var item in Model.ChargingStatus)
-                                        {
-                                            <option value="@item.Id">@item.ChargingStatus</option>
-                                        }
-                                    </select>
-                                </td>
-                                <td> <strong>Others :</strong><input type="text" name="OtherInformationRemarks" style="width: 100%" class="form-control" placeholder="Others..." /> </td>
+                            <td> <strong>Used For :</strong><input type="text" name="AppUsedFor" style="width: 100%" class="form-control" placeholder="Used For.." /> </td>
+                            <td> <strong>Capacity :</strong><input type="text" name="AppCapacity" style="width: 100%" class="form-control" placeholder="Capacity..." /></td>
+                            <td>
+                                <strong>Charging System :</strong><select name="ChargingSystemId" required style="width: 100%" class="form-control">
+                                    <option value="">---Select--</option>
+                                    @foreach (var item in Model.ChargingStatus)
+                                    {
+                                        <option value="@item.Id">@item.ChargingStatus</option>
+                                    }
+                                </select><span style="color: red">*</span>
 
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <strong>Report By:</strong><input type="text" id="EmployeeName" style="width: 100%" required class="form-control" placeholder="type report by employee name.."/>
-                                    @Html.HiddenFor(n => n.ReportByEmployeeId)
-                                </td>
-                                <td colspan="2"><strong>Comments :</strong><input type="text" style="width: 100%" name="ReceiveReport" required class="form-control"  placeholder="Write comments..."/></td>
+                            </td>
+                            <td> <strong>Others :</strong><input type="text" name="OtherInformationRemarks" style="width: 100%" class="form-control" placeholder="Others..." /> </td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <strong>Report By:</strong><input type="text" id="EmployeeName" style="width: 100%" required class="form-control" placeholder="type report by employee name.."/><span style="color: red">*</span>
+                                @Html.HiddenFor(n => n.ReportByEmployeeId)
+                            </td>
+                            <td colspan="2"><strong>Comments :</strong><input type="text" style="width: 100%" name="ReceiveReport" class="form-control"  placeholder="Write comments..."/></td>
 
 
-                            </tr>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+        </div>
+        <div id="menu4" class="tab-pane fade">
 
             <div class="panel panel-success">
                 <div class="panel panel-heading"><span>Service Information</span></div>
@@ -357,50 +360,42 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
+            <div class="panel panel-success">
+                <div class="panel panel-heading"><span>Forward Informaiton</span></div>
+                <div class="panel panel-body">
+                    <table class="table table-bordered" style="width: 100%">
+                        <tr>
 
 
-
-    <div class="panel panel-success">
-    <div class="panel panel-heading"><span>Forward Informaiton</span></div>
-        <div class="panel panel-body">
-            <table class="table table-bordered" style="width: 100%">
-                <tr>
-
-
-                    <td>
-                        <strong>Forward To :</strong><select name="ForwardToId" required style="width: 100%" class="form-control">
+                            <td>
+                                <strong>Forward To :</strong><select name="ForwardToId" required style="width: 100%" class="form-control">
                            
-                            @foreach (var item in Model.ForwardToModels)
-                            {
-                                <option value="@item.Id">@item.ForwardType</option>
-                            }
-                        </select>
-                    </td>
-                    <td> <strong>Remarks :</strong><input type="text" name="ForwardRemarks" style="width: 100%" class="form-control" placeholder="Forward remarks.." /> </td>
-                    <td>
+                                    @foreach (var item in Model.ForwardToModels)
+                                    {
+                                        <option value="@item.Id">@item.ForwardType</option>
+                                    }
+                                </select><span style="color: red">*</span>
+                            </td>
+                            <td> <strong>Remarks :</strong><input type="text" name="ForwardRemarks" style="width: 100%" class="form-control" placeholder="Forward remarks.." /> <span style="color: red">*</span> </td>
+                            <td>
                         
-                        <strong>Distribution Point  :</strong><input type="text" name="DistributionPoint" style="width: 100%" class="form-control" placeholder="Distribution Point .." />
+                                <strong>Distribution Point  :</strong><input type="text" name="DistributionPoint" style="width: 100%" class="form-control" placeholder="Distribution Point .." />
                        
-                    </td>
-                </tr>
-                <tr>
+                            </td>
+                        </tr>
+                        <tr>
 
-                    <td>
-                        <button class="btn btn-danger">Cancel</button>
-                        <input type="submit" value="Save" class="btn btn-info" id="btnSubmitOff"/>
-                    </td>
-                    <td colspan="3"></td>
-                </tr>
-            </table>
+                            <td>
+                                <button class="btn btn-danger">Cancel</button>
+                                <input type="submit" value="Save" class="btn btn-info" id="btnSubmitOff"/>
+                            </td>
+                            <td colspan="3"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-
-
-  
-
-
 
 
 
@@ -462,9 +457,9 @@
                     $('#ProductName').html(response.ProductName);
                     $('#DelivaryRef').html(response.DeliveryRef);
                     $('#ProductionDate').html(parseJsonDate(response.ProductionDate));
-                    $('#LifeTime').html(response.LifeTime);
-                    $('#GraceLifeTime').html(response.AgeLimitInDealerStock);
-                    $('#ProductAge').html(response.ProductAge);
+                    $('#LifeTime').html(response.LifeTime + ' Days');
+                    $('#GraceLifeTime').html(response.AgeLimitInDealerStock + ' Days');
+                    $('#ProductAge').html(response.ProductAge + ' Days');
                     $('#DeliveryDate').html(parseJsonDate(response.DeliveryDate));
                     $('#SaleDate').html(parseJsonDate(response.SaleDate));
 
@@ -479,10 +474,11 @@
                     $('#OrderByBranch').html(response.OrderFromBranch);
                     $('#DistributionPoint').html(response.DeliveryFromBranch);
 
-                    $('#StoreDuration').html(response.StoreDuration);
-                    $('#SalesDuration').html(response.SalesDuration);
+                    $('#StoreDuration').html(response.StoreDuration+' Days');
+                    $('#SalesDuration').html(response.SalesDuration + ' Days');
+                    $('#RemainingLife').html(response.RemainingLifeTime + ' Days');
 
-                    if (response.ProductAge >= response.LifeTime) {
+                    if (response.ProductAge >= response.LifeTime + response.AgeLimitInDealerStock) {
 
                         $("#WarrantyPeriod")
                             .html(
@@ -509,8 +505,8 @@
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(json),
                 success: function(response) {
-                    $('#ServiceDuration').html(response.ServiceDuration);
-                    $('#CollectionDuration').html(response.CollectionDuration);
+                    $('#ServiceDuration').html(response.ServiceDuration + ' Days');
+                    $('#CollectionDuration').html(response.CollectionDuration + ' Days');
                 }
             });
         }
@@ -621,6 +617,17 @@
             
         }
     </script>
+    <script>
+        $(document).ready(function () {
+            $(window).keydown(function (event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+   
 }
 @section Styles
 {

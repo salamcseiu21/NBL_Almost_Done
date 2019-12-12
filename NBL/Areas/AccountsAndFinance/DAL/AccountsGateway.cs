@@ -1327,7 +1327,53 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                 ConnectionObj.Close();
             }
         }
-
+        public IEnumerable<Voucher> GetVoucherListByBranchIdAndStatus(int branchId,int status)
+        {
+            try
+            {
+                List<Voucher> vouchers = new List<Voucher>();
+                CommandObj.CommandText = "UDSP_GetVoucherListByBranchIdAndStatus";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                CommandObj.Parameters.AddWithValue("@Status", status);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    var voucher = new Voucher
+                    {
+                        VoucherId = Convert.ToInt32(reader["VoucherId"]),
+                        Amounts = Convert.ToDecimal(reader["Amounts"]),
+                        VoucherByUserId = Convert.ToInt32(reader["UserId"]),
+                        VoucherDate = Convert.ToDateTime(reader["VoucherDate"]),
+                        SysDateTime = Convert.ToDateTime(reader["SysDateTime"]),
+                        VoucherRef = reader["VoucherRef"].ToString(),
+                        VoucherType = Convert.ToInt32(reader["VoucherType"]),
+                        VoucherName = reader["VoucherName"].ToString(),
+                        VoucherNo = Convert.ToInt32(reader["VoucherNo"]),
+                        TransactionTypeId = Convert.ToInt32(reader["TransactionTypeId"]),
+                        CompanyId = Convert.ToInt32(reader["CompanyId"]),
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        Status = Convert.ToInt32(reader["Status"]),
+                        Cancel = reader["Cancel"].ToString()
+                    };
+                    vouchers.Add(voucher);
+                }
+                reader.Close();
+                return vouchers;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect voucher list by status", exception);
+            }
+            finally
+            {
+                CommandObj.Parameters.Clear();
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+            }
+        }
         public IEnumerable<Voucher> GetVoucherList()
         {
             try
@@ -2380,6 +2426,8 @@ namespace NBL.Areas.AccountsAndFinance.DAL
                 ConnectionObj.Close();
             }
         }
+
+       
 
         public int AddSubSubSubAccount(SubSubSubAccount account)
         {

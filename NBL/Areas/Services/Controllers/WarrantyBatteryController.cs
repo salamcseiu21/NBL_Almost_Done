@@ -9,8 +9,8 @@ using NBL.Models.EntityModels.Services;
 using NBL.Models.Enums;
 using NBL.Models.Logs;
 using NBL.Models.ViewModels;
-using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Products;
+using NBL.Models.ViewModels.Replaces;
 using NBL.Models.ViewModels.Services;
 
 namespace NBL.Areas.Services.Controllers
@@ -25,7 +25,8 @@ namespace NBL.Areas.Services.Controllers
         private readonly IPolicyManager _iPolicyManager;
         private readonly IClientManager _iClientManager;
         private readonly IReportManager _iReportManager;
-        public WarrantyBatteryController(IInventoryManager iInventoryManager,ICommonManager iCommonManager,IServiceManager iServiceManager,IBranchManager iBranchManager,IPolicyManager iPolicyManager,IClientManager iClientManager,IReportManager iReportManager)
+        private readonly IProductReplaceManager _iProductReplaceManager;
+        public WarrantyBatteryController(IInventoryManager iInventoryManager,ICommonManager iCommonManager,IServiceManager iServiceManager,IBranchManager iBranchManager,IPolicyManager iPolicyManager,IClientManager iClientManager,IReportManager iReportManager,IProductReplaceManager iProductReplaceManager)
         {
             _iInventoryManager = iInventoryManager;
             _iCommonManager = iCommonManager;
@@ -34,6 +35,7 @@ namespace NBL.Areas.Services.Controllers
             _iPolicyManager = iPolicyManager;
             _iClientManager = iClientManager;
             _iReportManager = iReportManager;
+            _iProductReplaceManager = iProductReplaceManager;
         }
 
         public ActionResult All()
@@ -57,11 +59,12 @@ namespace NBL.Areas.Services.Controllers
         {
 
             var product = _iServiceManager.GetReceivedServiceProductById(id);
-           var client= _iClientManager.GetClientDeailsById(product.ClientId);
+            var client= _iClientManager.GetClientDeailsById(product.ClientId);
             product.ProductHistory = _iInventoryManager.GetProductHistoryByBarcode(product.Barcode) ?? new ViewProductHistory();
             product.Client = client;
             return View(product);
         }
+       
         public ActionResult ReplaceList()
         {
             try
@@ -119,11 +122,20 @@ namespace NBL.Areas.Services.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+        public ActionResult ReturnChallan(long id)
+        {
+
+            ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(id);
+            List<ViewReplaceDetailsModel> products = _iProductReplaceManager.GetReplaceProductListById(id).ToList();
+            model.Products = products;
+            return View(model);
+        }
         public ActionResult ProductInChargeSection()
         {
             try
             {
-                var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.Charge));
+                var branchId = Convert.ToInt32(Session["BranchId"]);
+                var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.Charge)).ToList().FindAll(n=>n.ReceiveByBranchId==branchId);
                 return View(products);
             }
             catch (Exception exception)
@@ -208,7 +220,8 @@ namespace NBL.Areas.Services.Controllers
         {
             try
             {
-                var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.DischargeTest));
+                var branchId = Convert.ToInt32(Session["BranchId"]);
+                var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.DischargeTest)).ToList().FindAll(n=>n.ReceiveByBranchId==branchId);
                 return View(products);
             }
             catch (Exception exception)
@@ -366,6 +379,7 @@ namespace NBL.Areas.Services.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+
         // GET: Services/WarrantyBattery
         public ActionResult Receive()
         {
@@ -426,13 +440,13 @@ namespace NBL.Areas.Services.Controllers
                 }
 
                 var product = _iInventoryManager.GetProductHistoryByBarcode(model.Barcode) ?? new ViewProductHistory();
-                 var age= (DateTime.Now - Convert.ToDateTime(product.DeliveryDate)).TotalDays; 
-                 var warrantyPeriod=  product.AgeLimitInDealerStock + product.LifeTime;
+                 var age= (DateTime.Now.Date - Convert.ToDateTime(product.DeliveryDate).Date).TotalDays; 
+                 var warrantyPeriod= product.LifeTime;
                 //--------------02-Dec-2019 Begin---------
 
 
                 
-                var serviceDuration= Convert.ToInt32((model.DelearReceiveDate - Convert.ToDateTime(product.SaleDate)).TotalDays - 1);
+                var serviceDuration= Convert.ToInt32((model.DelearReceiveDate.Date - Convert.ToDateTime(product.SaleDate).Date).TotalDays);
 
                 product.ServiceDuration = serviceDuration;
                 model.IsSoldInGracePeriod = product.AgeLimitInDealerStock < product.SalesDuration ? 0 : 1;
@@ -449,6 +463,7 @@ namespace NBL.Areas.Services.Controllers
                 model.Barcode = product.ProductBarCode;
                 model.ClientId = product.ClientId;
                 model.ProductId = product.ProductId;
+                model.ServiceDuration = serviceDuration;
                 model.SaleDate = Convert.ToDateTime(product.SaleDate);
                 model.Status = 0;
                 var result = _iServiceManager.ReceiveServiceProduct(model);
@@ -473,18 +488,8 @@ namespace NBL.Areas.Services.Controllers
         [HttpPost]
         public JsonResult GetProductHistoryByBarcode(string barcode)
         {
-            //ViewDeliveryDetails aDeliveryDetails = _iReportManager.GetDeliveryInfoByBarcode(barcode);
+            
             var product = _iInventoryManager.GetProductHistoryByBarcode(barcode) ?? new ViewProductHistory();
-            //var refCode = aDeliveryDetails.TransactionRef.Substring(2, 3);
-            //if (refCode.Equals("202"))
-            //{
-            //    var a = "Sales Delivery";
-            //}
-            //if (refCode.Equals("502"))
-            //{
-            //    var saleDate = aDeliveryDetails.SaleDate;
-            //}
-            //product.SaleDate = aDeliveryDetails.SaleDate;
             return Json(product, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
@@ -493,28 +498,10 @@ namespace NBL.Areas.Services.Controllers
 
 
             var product = _iInventoryManager.GetProductHistoryByBarcode(barcode) ?? new ViewProductHistory();
-            product.ServiceDuration = Convert.ToInt32((dealerReceiveDate - Convert.ToDateTime(product.SaleDate)).TotalDays-1);
-            product.CollectionDuration = Convert.ToInt32((Convert.ToDateTime(DateTime.Now)-dealerReceiveDate).TotalDays-1);
+            product.ServiceDuration = Convert.ToInt32((dealerReceiveDate.Date - Convert.ToDateTime(product.SaleDate).Date).TotalDays);
+            product.CollectionDuration = Convert.ToInt32((Convert.ToDateTime(DateTime.Now).Date-dealerReceiveDate.Date).TotalDays);
             return Json(product, JsonRequestBehavior.AllowGet);
         }
-
-        //--------------Return partial View----------------
-        //[HttpPost]
-        //public PartialViewResult GetProductHistoryByBarcode(string barcode)
-        //{
-        //    var product = _iInventoryManager.GetProductHistoryByBarcode(barcode);
-        //    return PartialView("_ViewProductHistoryPartialPage",product);
-
-        //}
-
-        //--------------Set data to Temp----------------
-        //[HttpPost]
-        //public void GetProductHistoryByBarcode(string barcode)
-        //{
-        //    var product = _iInventoryManager.GetProductHistoryByBarcode(barcode);
-        //    //return PartialView("_ViewProductHistoryPartialPage", product);
-        //    TempData["ProductHistory"] = product;
-        //}
 
         //----------------Cell Condition Auto Complete------------------
         [HttpPost]

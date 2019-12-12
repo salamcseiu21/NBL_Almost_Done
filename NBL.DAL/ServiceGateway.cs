@@ -76,6 +76,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@DistributionPoint", product.DistributionPoint ?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@ProductId", product.ProductId);
                 CommandObj.Parameters.AddWithValue("@ClientId", product.ClientId);
+                CommandObj.Parameters.AddWithValue("@ServiceDuration", product.ServiceDuration);
                 CommandObj.Parameters.Add("@ReceiveId", SqlDbType.Int);
                 CommandObj.Parameters["@ReceiveId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
@@ -305,7 +306,10 @@ namespace NBL.DAL
                         RbdBarcode = reader["RbdBarcode"].ToString(),
                         ServiceBatteryBarcode = reader["ServiceBatteryBarcode"].ToString(),
                         ServiceBatteryDeliveryDate = DBNull.Value.Equals(reader["ServiceBatteryDeliveryDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ServiceBatteryDeliveryDate"]),
-                        ServiceBatteryReturnDate = DBNull.Value.Equals(reader["ServiceBatteryReturnDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ServiceBatteryReturnDate"])
+                        ServiceBatteryReturnDate = DBNull.Value.Equals(reader["ServiceBatteryReturnDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ServiceBatteryReturnDate"]),
+                        IsInWarrantyPeriod = Convert.ToInt32(reader["IsInWarrantyPeriod"]),
+                        IsSoldInGracePeriod = Convert.ToInt32(reader["IsSoldInGracePeriod"]),
+                        ServiceDuration = DBNull.Value.Equals(reader["ServiceDuration"]) ? 0 : Convert.ToInt32(reader["ServiceDuration"])
 
                     };
                 }
@@ -683,12 +687,12 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@CellSixConditionId", product.CellSixConditionId);
                 CommandObj.Parameters.AddWithValue("@OpenVoltage", product.OpenVoltage);
                 CommandObj.Parameters.AddWithValue("@LoadVoltage", product.LoadVoltage);
-                CommandObj.Parameters.AddWithValue("@VoltageRemarks", product.VoltageRemarks);
+                CommandObj.Parameters.AddWithValue("@VoltageRemarks", product.VoltageRemarks ?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@ReportByEmployeeId", product.ReportByEmployeeId);
                 CommandObj.Parameters.AddWithValue("@EntryByUserId", product.EntryByUserId);
                 CommandObj.Parameters.AddWithValue("@ForwardToId", product.ForwardToId);
                 CommandObj.Parameters.AddWithValue("@ForwardRemarks", product.ForwardRemarks);
-                CommandObj.Parameters.AddWithValue("@SpGrCellRemarks", product.SpGrCellRemarks);
+                CommandObj.Parameters.AddWithValue("@SpGrCellRemarks", product.SpGrCellRemarks?? (object)DBNull.Value);
                 CommandObj.Parameters.AddWithValue("@IsPassChargeTest", product.IsPassChargeTest);
                 CommandObj.Parameters.AddWithValue("@Report", product.Report);
                 CommandObj.Parameters.Add("@ReportId", SqlDbType.Int);

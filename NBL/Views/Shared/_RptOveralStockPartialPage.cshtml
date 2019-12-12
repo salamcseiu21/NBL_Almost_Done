@@ -19,6 +19,7 @@
                         <th class="text-center">Category </th>
                         <th class="text-center">Account Code  </th>
                         <th class="text-center" style="width: 60px">Stock Qty</th>
+                        <th class="text-center" style="width: 60px">View</th>
                     </tr>
                     </thead>
 
@@ -31,6 +32,7 @@
                             <td class="text-center">@item.ProductCategoryName</td>
                             <td class="text-center">@item.SubSubSubAccountCode</td>
                             <td class="text-center">@item.Quantity</td>
+                            <td class="text-center">@Html.ActionLink("View","ProductWiseTotalStock","Home",new {area="Corporate",id=item.ProductId},null)</td>
                         </tr>
                     }
 
@@ -42,6 +44,7 @@
                         <th class="text-center">Category </th>
                         <th class="text-center">Account Code  </th>
                         <th class="text-center">Stock Qty</th>
+                        <th class="text-center" style="width: 60px">View</th>
                     </tr>
                     </tfoot>
                 </table>

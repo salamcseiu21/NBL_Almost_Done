@@ -421,7 +421,9 @@ CommandObj.Parameters.Clear();
                         SubSubSubAccountId = Convert.ToInt32(reader["SubSubSubAccountListId"]),
                         SubSubSubAccountName = reader["SubSubSubAccountName"].ToString(),
                         SubSubSubAccountCode = reader["SubSubSubAccountCode"].ToString(),
-                        SubSubSubAccountType = Convert.ToString(reader["SubSubSubAccountType"])
+                        SubSubSubAccountType = Convert.ToString(reader["SubSubSubAccountType"]),
+                        SubSubAccountCode = reader["SubSubAccountCode"].ToString(),
+                        SubSubAccountName = reader["SubSubAccountName"].ToString()
                     });
                 }
                 reader.Close();
@@ -429,6 +431,7 @@ CommandObj.Parameters.Clear();
             }
             catch (Exception e)
             {
+                Log.WriteErrorLog(e);
                 throw new Exception("Could not Collect sub sub sub Account List", e);
             }
             finally
@@ -1594,6 +1597,85 @@ CommandObj.Parameters.Clear();
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Colud not collect action list ", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<object> GetAllSubSubSubAccountNameBySearchTerm(string prefix)
+        {
+            try
+            {
+                List<object> clients = new List<object>();
+                CommandObj.Parameters.Clear();
+                //CommandObj.CommandText = "spGetAllClientDetailsByBranchId";
+                CommandObj.CommandText = "UDSP_GetAllSubSubSubAccountNameBySearchTerm";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@SearchTerm", prefix);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    clients.Add(new
+                    {
+                        label = reader["AccountName"].ToString(),
+                        val = Convert.ToInt32(reader["SubSubSubAccountListId"])
+                    });
+
+                }
+                reader.Close();
+                return clients;
+
+            }
+            catch (Exception e)
+            {
+                Log.WriteErrorLog(e);
+                throw new Exception("Unable to collect account name for auto complete by  Serach term", e);
+
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+        public ICollection<object> GetAllSubSubSubAccountNameBySearchTermAndAccountPrefix(string searchTerm, string accountPrefix)
+        {
+            try
+            {
+                List<object> clients = new List<object>();
+                CommandObj.Parameters.Clear();
+                //CommandObj.CommandText = "spGetAllClientDetailsByBranchId";
+                CommandObj.CommandText = "UDSP_GetAllSubSubSubAccountNameBySearchTermAndAccountPrefix";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                CommandObj.Parameters.AddWithValue("@AccountPrefix", accountPrefix);
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    clients.Add(new
+                    {
+                        label = reader["AccountName"].ToString(),
+                        val = Convert.ToInt32(reader["SubSubSubAccountListId"])
+                    });
+
+                }
+                reader.Close();
+                return clients;
+
+            }
+            catch (Exception e)
+            {
+                Log.WriteErrorLog(e);
+                throw new Exception("Unable to collect account name for auto complete by  Serach term and account prefix", e);
+
             }
             finally
             {

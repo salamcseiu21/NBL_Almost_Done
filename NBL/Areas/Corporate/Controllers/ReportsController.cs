@@ -160,5 +160,26 @@ namespace NBL.Areas.Corporate.Controllers
 
             }
         }
+
+        public ActionResult ProductSummary()
+        {
+            try
+            {
+               
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+
+            }
+        }
+
+        public PartialViewResult GetProductionSaleReplaceByMonthYear(int year, int monthId)
+        {
+            var products = _iReportManager.GetProductionSalesRepalcesByMonthYear(monthId, year).ToList();
+            return PartialView("_ViewProductionSalesReplacePartialPage", products);
+        }
     }
 }

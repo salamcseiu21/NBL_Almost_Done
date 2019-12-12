@@ -28,68 +28,7 @@
                         <span>Product Information</span>
                     </div>
                     <div class="panel panel-body">
-                        <table class="table table-bordered" style="width: 100%">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <strong>Receive Ref : </strong> @Model.ReceiveRef
-                                    </td>
-                                    <td>
-                                        <strong>Received By : </strong> @Model.EntryByUser
-                                    </td>
-                                    <td>
-                                        <strong>Reported By : </strong> @Model.ReportByEmployee
-                                    </td>
-                                    <td colspan="2">
-                                        <strong>Comments : </strong> @Model.ReceiveReport
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>Product Name : </strong><i><label id="ProductName">@Model.ProductName</label></i>
-                                    </td>
-
-
-                                    <td>
-                                        <strong>Barcode : </strong><i><label>@productHistory.ProductBarCode</label></i>
-
-                                    </td>
-                                    <td>
-                                        <strong>Segment : </strong> <i><label>@productHistory.ProductCategoryName</label></i>
-                                    </td>
-                                    <td>
-                                        <strong> Production Date : </strong> <i><label id="ProductionDate">@productHistory.ProductionDate.ToString("dd-MMM-yyyy")</label></i>
-                                    </td>
-                                    <td>
-                                        <strong>Product LifeTime : </strong><i><label id="LifeTime">@productHistory.LifeTime</label></i>
-
-                                    </td>
-                                </tr>
-                                <tr style="">
-
-                                    <td>
-                                        <strong>Delivery Date : </strong><i><label id="DeliveryDate">@productHistory.DeliveryDate.ToString("dd-MMM-yyyy")</label></i>
-
-                                    </td>
-                                    <td>
-                                        <strong>Sale Date : </strong> <i><label id="SaleDate">@Convert.ToDateTime(productHistory.SaleDate).ToString("dd-MMM-yyyy")</label></i>
-                                    </td>
-
-                                    <td>
-
-                                        <strong>Product Age : </strong><i><label id="ProductAge">@productHistory.ProductAge</label></i>
-                                    </td>
-                                    <td>
-                                        <strong>Store Duration :</strong><i><label id="StoreDuration">@productHistory.StoreDuration</label></i>
-                                    </td>
-                                    <td>
-                                        <strong>Sales Duration :</strong> <i><label id="SalesDuration">@productHistory.SalesDuration</label></i>
-                                    </td>
-
-                                </tr>
-
-                            </tbody>
-                        </table>
+                        @Html.Partial("_ViewReceivedWarrantyProductPartialPage", Model)
 
                     </div>
                 </div>
@@ -101,31 +40,31 @@
                         <table class="table table-bordered" style="width: 100%">
                             <tr>
                                 <td>
-                                    <strong>Client Name :</strong> <i><label id="ClientName">@productHistory.ClientName</label></i>
+                                    <strong>Client Name :</strong> <i><label>@productHistory.ClientName</label></i>
                                 </td>
                                 <td>
-                                    <strong>Client Code :</strong> <i><label id="ClientCode">@productHistory.ClientCode</label></i>
+                                    <strong>Client Code :</strong> <i><label>@productHistory.ClientCode</label></i>
                                 </td>
                                 <td>
-                                    <strong>Client Type :</strong> <i><label id="ClientType">@productHistory.ClientType</label></i>
+                                    <strong>Client Type :</strong> <i><label>@productHistory.ClientType</label></i>
 
                                 </td>
                                 <td>
-                                    <strong>Contact No :</strong> <i><label id="ClientPhone">@productHistory.ClientPhone</label></i>
+                                    <strong>Contact No :</strong> <i><label>@productHistory.ClientPhone</label></i>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <strong>Client Address :</strong><i><label id="ClientAddress">@productHistory.ClientAddress</label></i>
+                                    <strong>Client Address :</strong><i><label>@productHistory.ClientAddress</label></i>
                                 </td>
                                 <td>
-                                    <strong>Territory :</strong> <i><label id="Territory"></label>@productHistory.TerritoryName</i>
+                                    <strong>Territory :</strong> <i><label></label>@productHistory.TerritoryName</i>
                                 </td>
                                 <td>
-                                    <strong>Order By : </strong> <i><label id="OrderByBranch"></label>@productHistory.OrderFromBranch</i>
+                                    <strong>Order By : </strong> <i><label></label>@productHistory.OrderFromBranch</i>
                                 </td>
                                 <td>
-                                    <Strong> Distribution Point :</Strong> <i><label id="DistributionPoint">@productHistory.DeliveryFromBranch</label></i>
+                                    <Strong> Distribution Point :</Strong> <i><label>@productHistory.DeliveryFromBranch</label></i>
 
                                 </td>
 
@@ -337,11 +276,11 @@
                                         <tr>
 
                                             <td>
-                                                <strong>T.V.</strong><input type="number" value="@dischargeReportModel.Tv" class="form-control" placeholder="T.V." readonly="readonly" />
+                                                <strong>Open Voltage</strong><input type="number" value="@dischargeReportModel.Tv" class="form-control" placeholder="T.V." readonly="readonly" />
 
                                             </td>
                                             <td>
-                                                <strong>L.V.</strong><input type="number" value="@dischargeReportModel.Lv" class="form-control" placeholder="L.V....." readonly="readonly" />
+                                                <strong>Load Voltage</strong><input type="number" value="@dischargeReportModel.Lv" class="form-control" placeholder="L.V....." readonly="readonly" />
 
                                             </td>
                                             <td>
@@ -418,13 +357,6 @@
                                     </td>
                                     <td colspan="3"> <strong>Remarks</strong><input type="text" name="ForwardRemarks" required style="width: 100%" class="form-control" placeholder="Forward remarks.." /> </td>
                                     <td>
-                                        @*<strong>Distribution Point :</strong><select name="DistributionPointId" required style="width: 100%" class="form-control">
-                                            <option value="">---Select--</option>
-                                            @foreach (var item in Model.DistributionPoints)
-                                            {
-                                                <option value="@item.BranchId">@item.BranchName</option>
-                                            }
-                                        </select>*@
                                         <br />
 
 

@@ -53,7 +53,8 @@
                         </td>
 
                         <td class="text-center">
-                            @Html.ActionLink(" Delivery", "Delivery", "Delivery", new { area = "Sales", id = item.InvoiceId }, new { @class = "fa fa-eye" })
+                            @Html.ActionLink(" Delivery", "Delivery", "Delivery", new { area = "Sales", id = item.InvoiceId }, new { @class = "btn btn-info btn-sm" })|
+                            <input type="button" id="@item.OrderId" class="btn btn-danger btn-sm" value="Hide" onclick="HideOrder(@item.InvoiceId)" />
                         </td>
                     </tr>
                 }
@@ -83,5 +84,33 @@
             }
         });
 
+    </script>
+    
+    <script>
+
+
+        function HideOrder(invoiceId) {
+            // alert(btnClick);
+            var message = "Are you sure to hide this order ??";
+            //var orderId = parseInt(value.id);
+            //if (status === 1) {
+            //    message = "Are you sure to set credit limit consideration for  this client ??";
+            //} else {
+            //    message = "Are you sure to remove credit limit consideration for  this client ??";
+            //}
+            if (confirm(message)) {
+                var id = invoiceId;
+                var json = { id: id};
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("HideOrder", "Delivery",new {area="Sales"})',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (response) {
+                        location.reload();
+                    }
+                });
+            }
+        }
     </script>
 }

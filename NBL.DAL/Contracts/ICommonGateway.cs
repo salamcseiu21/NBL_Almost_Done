@@ -64,5 +64,7 @@ namespace NBL.DAL.Contracts
        int UpdateReplaceTransactionRef(string receiveref, string replaceref);
        SubSubSubAccount GetSubSubSubAccountById(int subSubSubAccountId);
        ICollection<TestCategory> GetAllTestCategories();
+       ICollection<object> GetAllSubSubSubAccountNameBySearchTerm(string prefix);
+       ICollection<object> GetAllSubSubSubAccountNameBySearchTermAndAccountPrefix(string searchTerm, string accountPrefix);
    }
 }
