@@ -9,6 +9,7 @@ using NBL.Models;
 using NBL.Models.EntityModels.Deliveries;
 using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Invoices;
+using NBL.Models.EntityModels.Others;
 using NBL.Models.EntityModels.TransferProducts;
 using NBL.Models.Enums;
 using NBL.Models.Logs;
@@ -241,9 +242,11 @@ namespace NBL.Areas.Sales.Controllers
                         GrossDiscountCode = "2102018",
 
                         //--------Cr -------------------
-                        SalesRevenueCode = "1001021",
+                        //SalesRevenueCode = "1001021" old,
+                        SalesRevenueCode = "1001011",
                         SalesRevenueAmount = grossAmount-vat,
-                        VatCode = "2102013",
+                        //VatCode = "2102013 test",
+                        VatCode = "3108011",
                         VatAmount = vat,
 
                         TradeDiscountCode = "2102012",
@@ -275,6 +278,17 @@ namespace NBL.Areas.Sales.Controllers
                     FinancialTransactionModel = financialModel,
                     SpecialDiscount = invoiceDiscount
                 };
+                //----------SMS Buildder Model-----------
+                var aModel = new MessageModel
+                {
+                    PhoneNumber = client.Phone,
+                    CustomerName = client.ClientName,
+                    TotalQuantity = deliveredProductList.Sum(n => n.Quantity),
+                    Amount = financialModel.ClientDrAmount,
+                    TransactionDate = DateTime.Now,
+                };
+              
+                aDelivery.MessageModel = aModel;
               
                 if (client.IsConsiderCreditLimit==1)
                 {
@@ -282,8 +296,14 @@ namespace NBL.Areas.Sales.Controllers
                     if (netAmount+client.Outstanding <= client.CreditLimit)
                     {
                         string result = _iInventoryManager.SaveDeliveredOrder(barcodeList, aDelivery, invoiceStatus, orderStatus);
+                        aModel.MessageBody = aModel.GetMessageForDistribution();
+
                         if (result.StartsWith("S"))
                         {
+                            // var res = _iCommonManager.SendSms("01737854060", "Here is the first sms from our NBL online system");
+                           //-----------Send SMS after successfull delivery inf save------------
+                            var res = _iCommonManager.SendSms(aModel);
+
                             System.IO.File.Create(filePath).Close();
                             return RedirectToAction("LatestOrderList");
                         }
@@ -298,8 +318,13 @@ namespace NBL.Areas.Sales.Controllers
                 {
 
                     string result = _iInventoryManager.SaveDeliveredOrder(barcodeList, aDelivery, invoiceStatus, orderStatus);
+                    aModel.MessageBody = aModel.GetMessageForDistribution();
                     if (result.StartsWith("S"))
                     {
+                        //-----------Send SMS after successfull delivery inf save------------
+
+                        var res = _iCommonManager.SendSms(aModel);
+
                         System.IO.File.Create(filePath).Close();
                         return RedirectToAction("LatestOrderList");
                     }

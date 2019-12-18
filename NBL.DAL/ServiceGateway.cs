@@ -309,7 +309,8 @@ namespace NBL.DAL
                         ServiceBatteryReturnDate = DBNull.Value.Equals(reader["ServiceBatteryReturnDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ServiceBatteryReturnDate"]),
                         IsInWarrantyPeriod = Convert.ToInt32(reader["IsInWarrantyPeriod"]),
                         IsSoldInGracePeriod = Convert.ToInt32(reader["IsSoldInGracePeriod"]),
-                        ServiceDuration = DBNull.Value.Equals(reader["ServiceDuration"]) ? 0 : Convert.ToInt32(reader["ServiceDuration"])
+                        ServiceDuration = DBNull.Value.Equals(reader["ServiceDuration"]) ? 0 : Convert.ToInt32(reader["ServiceDuration"]),
+                        DistributionPoint = DBNull.Value.Equals(reader["DistributionPoint"]) ? null : reader["DistributionPoint"].ToString(),
 
                     };
                 }

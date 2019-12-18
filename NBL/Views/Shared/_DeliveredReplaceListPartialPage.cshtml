@@ -12,6 +12,7 @@
         <th>Client Name</th>
         <th>Product Name</th>
         <th>Barcode</th>
+        <th class="text-center">Print Challan</th>
     </tr>
     </thead>
     <tbody>
@@ -27,6 +28,7 @@
             <td>@item.ClientName</td>
             <td>@item.ProductName</td>
             <td>@item.Barcode</td>
+            <td class="text-center">@Html.ActionLink(" Print Challan", "PrintChallan", "Replace", new { id = item.ReceiveId, area = "Sales" }, new { target = "_blank", @class = "btn btn-info fa fa-print" })</td>
         </tr>
     }
     </tbody>
@@ -39,6 +41,7 @@
         <th>Client Name</th>
         <th>Product Name</th>
         <th>Barcode</th>
+        <th class="text-center">Print Challan</th>
     </tr>
     </tfoot>
 </table>

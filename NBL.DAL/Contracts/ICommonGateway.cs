@@ -9,6 +9,7 @@ using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.MobileBankings;
+using NBL.Models.EntityModels.Others;
 using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.Requisitions;
 using NBL.Models.EntityModels.Services;
@@ -66,5 +67,6 @@ namespace NBL.DAL.Contracts
        ICollection<TestCategory> GetAllTestCategories();
        ICollection<object> GetAllSubSubSubAccountNameBySearchTerm(string prefix);
        ICollection<object> GetAllSubSubSubAccountNameBySearchTermAndAccountPrefix(string searchTerm, string accountPrefix);
+       string SendSms(MessageModel aMessageModel);
    }
 }

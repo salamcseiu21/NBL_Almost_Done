@@ -110,7 +110,9 @@ namespace NBL.BLL
             string refCode = _iCommonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(ReferenceType.Distribution)).Code;
             aDelivery.VoucherNo = GetMaxVoucherNoByTransactionInfix(refCode);
             int maxRefNo = _iInventoryGateway.GetMaxDeliveryRefNoOfCurrentYear();
-            aDelivery.DeliveryRef = GenerateDeliveryReference(maxRefNo);
+            var deliveryRef= GenerateDeliveryReference(maxRefNo);
+            aDelivery.DeliveryRef = deliveryRef;
+            aDelivery.MessageModel.TransactionRef = deliveryRef;
             int rowAffected = _iInventoryGateway.SaveDeliveredOrder(scannedProducts, aDelivery, invoiceStatus, orderStatus);
 
             return rowAffected > 0 ? "Saved Successfully!" : "Failed to Save";
@@ -312,7 +314,9 @@ namespace NBL.BLL
             string refCode = _iCommonGateway.GetAllSubReferenceAccounts().ToList().Find(n => n.Id == Convert.ToInt32(ReferenceType.Distribution)).Code;
             aDelivery.VoucherNo = GetMaxVoucherNoByTransactionInfix(refCode);
             int maxRefNo = _iInventoryGateway.GetMaxDeliveryRefNoOfCurrentYear();
-            aDelivery.DeliveryRef = GenerateDeliveryReference(maxRefNo);
+            var deliveryRef= GenerateDeliveryReference(maxRefNo);
+            aDelivery.DeliveryRef = deliveryRef;
+            aDelivery.MessageModel.TransactionRef = deliveryRef;
             int rowAffected = _iInventoryGateway.SaveDeliveredOrderFromFactory(scannedProducts, aDelivery, invoiceStatus, orderStatus);
             return rowAffected > 0 ? "Saved Successfully!" : "Failed to Save";
         }

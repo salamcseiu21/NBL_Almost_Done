@@ -13,7 +13,8 @@ namespace NBL.Models.ViewModels.Replaces
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public string CategoryName { get; set; }
-        public string ReplaceForBarcode { get; set; }  
+        public string ReplaceForBarcode { get; set; }
+        public string DeliveredBarcode { get; set; }
         public int Quantity { get; set; }
         public DateTime? ExpiryDate { get; set; }    
         public DateTime? SaleDate { get; set; }     

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NBL.Models.EntityModels.Others;
 using NBL.Models.EntityModels.Payments;
 
 namespace NBL.Areas.AccountsAndFinance.Models
@@ -27,7 +28,13 @@ namespace NBL.Areas.AccountsAndFinance.Models
         public List<Payment> Payments { get; set; }
         public char Paymode { get; set; }
         public string InvoiceRef { get; set; }
-        public int? CollectionByEmpId { get; set; }  
+        public int? CollectionByEmpId { get; set; }
+        public MessageModel MessageModel { get; set; }
+
+        public Receivable()
+        {
+            MessageModel=new MessageModel();
+        }
 
     }
 }

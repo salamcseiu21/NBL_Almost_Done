@@ -516,6 +516,12 @@ namespace NBL.BLL
             return _iProductGateway.GetTransferListByBranchId(branchId);
         }
 
+        public bool ReceiveReturnRejectedProduct(string barcode, int userId)
+        {
+            int rowAffected = _iProductGateway.ReceiveReturnRejectedProduct(barcode, userId);
+            return rowAffected > 0;
+        }
+
         private string GenerateTransferRequisitionRef(int maxTrNo)
         {
 

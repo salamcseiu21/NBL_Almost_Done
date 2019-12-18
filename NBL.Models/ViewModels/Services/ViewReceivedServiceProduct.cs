@@ -49,9 +49,8 @@ namespace NBL.Models.ViewModels.Services
         public DateTime? ServiceBatteryDeliveryDate { get; set; }
         public string ServiceBatteryBarcode { get; set; }
         public DateTime? ServiceBatteryReturnDate { get; set; }
-        public decimal RecBackupTime { get; set; } 
-
-
+        public decimal RecBackupTime { get; set; }
+        public string DistributionPoint { get; set; }   
         public int CoverStatusId { get; set; }
         public int ContainerStatusId { get; set; }
         public int PostStatusId { get; set; }

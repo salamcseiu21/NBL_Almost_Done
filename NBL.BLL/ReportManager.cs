@@ -344,6 +344,11 @@ namespace NBL.BLL
             return _iReportGateway.ProductWiseTotalStock(productId);
         }
 
+        public ICollection<ViewLedgerModel> GetGeneralLedgerReportBySearchCriteria(SearchCriteria searchCriteria)
+        {
+            return _iReportGateway.GetGeneralLedgerReportBySearchCriteria(searchCriteria);
+        }
+
         public bool IsValiedBarcode(string barcode)
         {
             var model = _iBarCodeManager.GetAll().ToList().Select(n=>n.Barcode).ToList().Contains(barcode);

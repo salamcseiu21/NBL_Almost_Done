@@ -10,6 +10,7 @@ using NBL.Models.Logs;
 using NBL.Models.Searchs;
 using NBL.Models.ViewModels;
 using NBL.Models.ViewModels.Deliveries;
+using NBL.Models.ViewModels.FinanceModels;
 using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Replaces;
@@ -931,6 +932,8 @@ namespace NBL.DAL
                 ConnectionObj.Close();
             }
         }
+
+
         public ICollection<ViewLoginInfo> GetLoginHistoryByDate(DateTime date)
         {
             try
@@ -1843,6 +1846,49 @@ namespace NBL.DAL
             }
         }
 
+        public ICollection<ViewLedgerModel> GetGeneralLedgerReportBySearchCriteria(SearchCriteria searchCriteria)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetGeneralLedgerBySearchCriteria";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@BranchId", searchCriteria.BranchId);
+                CommandObj.Parameters.AddWithValue("@CompanyId", searchCriteria.CompanyId);
+                CommandObj.Parameters.AddWithValue("@FromDate", searchCriteria.StartDate);
+                CommandObj.Parameters.AddWithValue("@ToDate", searchCriteria.EndDate);
+                CommandObj.Parameters.AddWithValue("@SubSubSubAccountCode", searchCriteria.SubSubSubAccountCode);
+                ConnectionObj.Open();
+                List<ViewLedgerModel> ledgerModels = new List<ViewLedgerModel>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    ledgerModels.Add(new ViewLedgerModel
+                    {
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        TransactionDate = Convert.ToDateTime(reader["TransactionDate"]),
+                        TransactionType = reader["TransactionType"].ToString(),
+                        Amount = Convert.ToDecimal(reader["Amount"]),
+                        Explanation = DBNull.Value.Equals(reader["Explanation"])? null: reader["Explanation"].ToString(),
+                        AccountCode=searchCriteria.SubSubSubAccountCode
+
+                    });
+                }
+                reader.Close();
+                return ledgerModels;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect  ledger by Search criteria", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+            }
+        }
         public ICollection<ProductDetails> GetAllProductDetails()
         {
             try

@@ -12,6 +12,7 @@ namespace NBL.Models.Searchs
         public int UserId { get; set; }
         public int ClientId { get; set; }
         public string SubSubSubAccountCode { get; set; }
+        public int SubSubSubAccountListId { get; set; }
         public int MonthNo { get; set; }
         public int Year { get; set; }   
     }

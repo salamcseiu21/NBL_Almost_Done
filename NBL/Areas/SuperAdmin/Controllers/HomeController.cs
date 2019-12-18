@@ -15,6 +15,7 @@ using NBL.Models;
 using NBL.Models.EntityModels.FinanceModels;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Orders;
+using NBL.Models.EntityModels.Others;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.EntityModels.Securities;
 using NBL.Models.EntityModels.VatDiscounts;
@@ -91,6 +92,17 @@ namespace NBL.Areas.SuperAdmin.Controllers
                 AccountSummary = accountSummary
 
             };
+            var aModel = new MessageModel
+            {
+                PhoneNumber = "01737854060",
+                CustomerName = "Abdus Salam",
+                TotalQuantity = 1,
+                Amount = 38000,
+                TransactionDate = DateTime.Now,
+                TransactionRef = "192022500"
+
+            };
+            var res = _iCommonManager.SendSms(aModel);
             return View(summary); 
 
         }

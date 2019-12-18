@@ -77,7 +77,7 @@
                     </td>
                 </tr>
             </table>
-            <p class="text-center text-green headingStyle">Battery Receive Invoice</p>
+            <p class="text-center text-green headingStyle" style="font-weight: bolder">Battery Receive Invoice</p>
             
             <!-- Table row -->
             <div class="row" style="margin: 0 auto;padding: 0" >
@@ -101,17 +101,21 @@
                         </tr>
                         <tr>
                             <td>Sales Duration: @Model.ProductHistory.SalesDuration <span>Days</span></td>
-                            <td>Service Duration:@Model.ProductHistory.ServiceDuration </td>
-                            <td>Verificaiton: @if (Model.HasWarranty == "Y")
-                                                          {
-                                                              <span>Warranty Available.</span>
-                                                          }
-                                                          else
-                                                          {
-                                                              <span>Warranty Void.</span>
-                                                          }
+                            <td colspan="3">Service Duration:@Model.ServiceDuration  Days</td>
+                            
+                        </tr>
+                        <tr>
+                            
+                            <td colspan="2">Verificaiton: @if (Model.HasWarranty == "Y")
+                                              {
+                                                  <span>Warranty Available.</span>
+                                              }
+                                              else
+                                              {
+                                                  <span>Warranty Void.</span>
+                                              }
                             </td>
-                            <td>Remarks:@(Model.ReceiveRemarks?? "N/A") </td>
+                            <td colspan="2">Remarks:@(Model.ReceiveRemarks?? "N/A") </td>
                         </tr>
                        
                     </table>
@@ -186,6 +190,9 @@
                             <td>User For: @Model.AppUsedFor</td>
                             <td>Charging System: @Model.ChargingSystem</td>
                         </tr>
+                        <tr>
+                            <td colspan="6" style="font-weight: bolder">Distribution Point :@(Model.ReceiveRemarks ?? "N/A")</td>
+                        </tr>
                     </table>
                 </div>
                 <!-- /.col -->
@@ -196,11 +203,19 @@
           
             <div class="row" style="margin-top: 50px">
                 <!-- accepted payments column -->
-                <div class="col-xs-12 text-center">
-                    @Model.EntryByUser
-                    <p style="margin: 0; padding: 0;"> ----------------</p>
-                    BSR By
+                <div class="row">
+                    <div class="col-xs-6 text-center">
+                        @Model.EntryByUser
+                        <p style="margin: 0; padding: 0;"> ----------------</p>
+                        BSR By
+                    </div>
+                    <div class="col-xs-6 text-center">
+                      
+                        <p style="margin: 0; padding: 0;"> ----------------</p>
+                        Dealer Receiving Signature
+                    </div>
                 </div>
+               
             </div>
         </section>
         <!-- /.content -->

@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using NBL.DAL.Contracts;
 using NBL.Models;
 using NBL.Models.EntityModels.Approval;
@@ -12,6 +15,7 @@ using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.MobileBankings;
+using NBL.Models.EntityModels.Others;
 using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.Requisitions;
 using NBL.Models.EntityModels.Services;
@@ -1683,6 +1687,30 @@ CommandObj.Parameters.Clear();
                 CommandObj.Dispose();
                 CommandObj.Parameters.Clear();
             }
+        }
+
+        public string SendSms(MessageModel aMessageModel) 
+        {
+            String sid = "NAVANABATTERY"; 
+            String user = "navanabattery";
+            String pass = "Navana@123";
+            string URI = "http://sms.sslwireless.com/pushapi/dynamic/server.php";
+            string myParameters = "user=" + user + "&pass=" + pass +
+                                  "&sms[0][0]=88"+aMessageModel.PhoneNumber+"&sms[0][1]=" + System.Web.HttpUtility.UrlEncode(aMessageModel.MessageBody) +
+                                  "&sms[0][2]=123456789&sid=" + sid;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URI);
+            byte[] data = Encoding.ASCII.GetBytes(myParameters);
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = data.Length;
+            using (Stream stream = request.GetRequestStream())
+            {
+                stream.Write(data, 0, data.Length);
+            }
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            String responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            //Response.Write(responseString);
+            return responseString;
         }
     }
 }

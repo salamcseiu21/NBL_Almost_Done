@@ -1231,6 +1231,34 @@ namespace NBL.DAL
             }
         }
 
+        public int ReceiveReturnRejectedProduct(string barcode, int userId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_ReceiveReturnRejectedProduct";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Barcode", barcode);
+                CommandObj.Parameters.AddWithValue("@UserId", userId);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowCount = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowCount;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Colud not save Receive Return reject product.", exception);
+            }
+            finally
+            {
+                ConnectionObj.Close();
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         private int SaveDiscountDetails(ProductDetails newProduct, ProductDetails oldProductDetails, int userId)
         {
             int i = 0;

@@ -23,6 +23,8 @@ namespace NBL.Models.ViewModels.FinanceModels
         public long? VoucherNo { get; set; }
         public int Quantity { get; set; }
         public string TransactionRef { get; set; }  
+        public string TransactionType { get; set; }   
+        public string AccountCode { get; set; }    
         public long DeliveryId { get; set; }  
 
     }

@@ -99,21 +99,15 @@ namespace NBL.Areas.Services.Controllers
         {
             SuccessErrorModel model=new SuccessErrorModel();
             bool result = _iServiceManager.ForwardServiceBatteryToDeistributionPoint(receiveId);
-            if(result)
-            {
-                model.Message= "<p class='text-green'>Successfully! Forward to Disribution Point</p>";
-            }
-            else
-            {
-                model.Message = "<p class='text-danger'>Failed to Forward to Disribution Point</p>";
-            }
+            model.Message = result ? "<p class='text-green'>Successfully! Forward to Disribution Point</p>" : "<p class='text-danger'>Failed to Forward to Disribution Point</p>";
             return Json(model, JsonRequestBehavior.AllowGet);
         }
         public ActionResult ReturnList()
         {
             try
             {
-                var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.Return));
+                var branchId = Convert.ToInt32(Session["BranchId"]);
+                var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.Return)).ToList().FindAll(n=>n.ReceiveByBranchId== branchId);
                 return View(products);
             }
             catch (Exception exception)
@@ -288,15 +282,8 @@ namespace NBL.Areas.Services.Controllers
                 }
                 model.EntryByUserId = user.UserId;
                 model.ForwardDetails = forward;
-                if(model.BackUpTime>=model.RecommendedBackUpTime)
-                {
-                    model.DischargeReport = "The battery was passed the Discharge test or backup test";
-                }
-                else
-                {
-                    model.DischargeReport = "The battery was failed the Discharge test or backup test";
-                }
-                bool result = _iServiceManager.SaveDischargeReport(model);
+                model.DischargeReport = model.BackUpTime>=model.RecommendedBackUpTime ? "The battery was passed the Discharge test or backup test" : "The battery was failed the Discharge test or backup test";
+                var result = _iServiceManager.SaveDischargeReport(model);
                 if (result)
                 {
                     return RedirectToAction("ProductInDisChargeSection");

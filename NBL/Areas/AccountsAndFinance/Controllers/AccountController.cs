@@ -113,6 +113,8 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             SuccessErrorModel aModel = new SuccessErrorModel();
             try
             {
+                var clientId = Convert.ToInt32(collection["ClientId"]);
+                var client = _iClientManager.GetClientById(clientId);
                 var anUser = (ViewUser)Session["user"];
                 var payments= GetPaymentsFromXmlFile();
                 var employeeId = collection["EmployeeId"];
@@ -122,7 +124,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                     Payments = payments,
                     ReceivableDateTime = DateTime.Now,
                     UserId = anUser.UserId,
-                    ClientId = Convert.ToInt32(collection["ClientId"]),
+                    ClientId = clientId,
                     BranchId = Convert.ToInt32(Session["BranchId"]),
                     CompanyId = Convert.ToInt32(Session["CompanyId"]),
                     TransactionTypeId = Convert.ToInt32(collection["TransactionTypeId"]),
@@ -140,11 +142,21 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 }
                 
                 receivable.Remarks = collection["Remarks"];
-
+                var messageModel = receivable.MessageModel;
+                messageModel.PhoneNumber = client.Phone.Replace("-", "").Trim();
+                messageModel.CustomerName = client.ClientName;
+                messageModel.Amount = payments.ToList().Sum(n => n.ChequeAmount);
+                messageModel.TransactionDate = DateTime.Now;
                 int rowAffected = _iAccountsManager.SaveReceivable(receivable);
+
+                receivable.MessageModel = messageModel;
+                messageModel.MessageBody = messageModel.GetMessageForAccountReceivable();
                 if (rowAffected > 0)
                 {
+                    //-------------Send SMS---------------
+                    _iCommonManager.SendSms(messageModel);
                     Session["Payments"] = null;
+                  
                     ////---------Send Mail ----------------
                     //var aClient = _iClientManager.GetById(Convert.ToInt32(collection["ClientId"]));
                     //var body = $"Dear {aClient.ClientName}, a receivable is create to your account! thanks and regards Accounts Departments NBL.";
@@ -285,10 +297,6 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
-
-
-
-
 
         private string GetTempReceivableXmlFilePath()
         {

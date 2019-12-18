@@ -20,12 +20,14 @@ namespace NBL.Areas.Corporate.Controllers
         private readonly IBranchManager _iBranchManager;
         private readonly IReportManager _iReportManager;
         private readonly IClientManager _iClientManager;
-        public ReportsController(IAccountsManager iAccountsManager,IBranchManager iBranchManager,IReportManager iReportManager,IClientManager iClientManager)
+        private readonly ICommonManager _iCommonManager;
+        public ReportsController(IAccountsManager iAccountsManager,IBranchManager iBranchManager,IReportManager iReportManager,IClientManager iClientManager,ICommonManager iCommonManager)
         {
             _iAccountsManager = iAccountsManager;
             _iBranchManager = iBranchManager;
             _iReportManager = iReportManager;
             _iClientManager = iClientManager;
+            _iCommonManager = iCommonManager;
         }
         // GET: Corporate/Reports
         public PartialViewResult GetCollectionByYear(int year)
@@ -144,6 +146,31 @@ namespace NBL.Areas.Corporate.Controllers
             IEnumerable<ViewLedgerModel> ledgers = _iAccountsManager.GetClientLedgerBySearchCriteria(searchCriteria);
             client.LedgerModels = ledgers.ToList();
             return PartialView("_ClientLedgerPartialPage", client);
+        }
+
+        public ActionResult GeneralLedger()
+        {
+            try
+            {
+
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public PartialViewResult GetGeneralLedgerReportBySearchCriteria(SearchCriteria searchCriteria)
+        {
+         
+            var account = _iCommonManager.GetSubSubSubAccountById(searchCriteria.SubSubSubAccountListId);
+            searchCriteria.SubSubSubAccountCode = account.SubSubSubAccountCode;
+            searchCriteria.BranchId = 0;
+            searchCriteria.CompanyId = 0;
+            IEnumerable<ViewLedgerModel> ledgers = _iReportManager.GetGeneralLedgerReportBySearchCriteria(searchCriteria);
+            return PartialView("_ViewGeneralLedgerPartialPage", ledgers);
         }
 
         public ActionResult ReplaceSummary()

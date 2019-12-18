@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using Microsoft.Ajax.Utilities;
@@ -19,7 +18,6 @@ using NBL.Models.ViewModels.Deliveries;
 using NBL.Models.ViewModels.Logs;
 using NBL.Models.ViewModels.Productions;
 using NBL.Models.ViewModels.Products;
-using NBL.Models.ViewModels.Summaries;
 using NBL.Models.ViewModels.TransferProducts;
 
 namespace NBL.Areas.Sales.Controllers
@@ -1072,6 +1070,50 @@ namespace NBL.Areas.Sales.Controllers
             }
         }
 
+        //------------Receive Return Rejected product from dealer-----------------
+
+        public ActionResult ReceiveReturnRejectedProduct()
+        {
+
+            try
+            {
+                return View();
+
+            }
+            catch (Exception exception)
+            {
+               Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public ActionResult ReceiveReturnRejectedProduct(FormCollection collection)
+        {
+
+            try
+            {
+                var barcode = collection["Barcode"];
+                var model=_iBarCodeManager.GetBarcodeByBatchCode(barcode);
+                var user = (ViewUser) Session["user"];
+                bool result = _iProductManager.ReceiveReturnRejectedProduct(model.Barcode,user.UserId);
+                if (result)
+                {
+                    TempData["RejectResult"] = "Save Successffully!";
+                }
+                else
+                {
+                    TempData["RejectResult"] = "Failed to Save";
+                }
+                
+                return View();
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         public ActionResult ProductHistory()
         {
             ViewProductHistory product=new ViewProductHistory();
@@ -1080,12 +1122,6 @@ namespace NBL.Areas.Sales.Controllers
         [HttpPost]
         public ActionResult ProductHistory(ViewProductHistory model)
         {
-            //ViewProductHistory product = _iReportManager.GetProductHistoryByBarCode(model.ProductBarCode) ?? new ViewProductHistory {Remarks = "Not Receive by branch..."};
-            //if (model.ProductBarCode.Length == 8)
-            //{
-            //    var barcodeModel = _iBarCodeManager.GetBarcodeByBatchCode(model.ProductBarCode);
-            //    model.ProductBarCode = barcodeModel.Barcode;
-            //}
             ViewProductHistory product=new ViewProductHistory();
            
             var fromBranch=_iReportManager.GetDistributedProductFromBranch(model.ProductBarCode);

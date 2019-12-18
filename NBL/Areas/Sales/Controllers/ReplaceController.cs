@@ -315,6 +315,13 @@ namespace NBL.Areas.Sales.Controllers
             ICollection<ReplaceReport> mReplaceReports = _iProductReplaceManager.GetAllReplaceListByBranchId(branchId);
             return View(mReplaceReports);
         }
+        public ActionResult PrintChallan(long id)
+        {
+            ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(id);
+            List<ViewReplaceDetailsModel> products = _iProductReplaceManager.GetReplaceProductListById(id).ToList();
+            model.Products = products;
+            return View(model);
+        }
         public ActionResult ViewAll()
         {
             try
@@ -364,5 +371,6 @@ namespace NBL.Areas.Sales.Controllers
 
         }
 
+        
     }
 }

@@ -43,7 +43,8 @@
             <div class="row">
                 <div class="col-xs-12">
                     <h2 class="page-header">
-                        Dealer Name: @Model.ClientName
+                        Dealer Name: @Model.ClientName<br/>
+                        Address :@Model.ClientAddress
                     </h2>
                     <h2 class="page-header">
                        Reference : @Model.ReceiveRef
@@ -58,34 +59,49 @@
                 <div class="col-xs-12 table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>
-                            <tr>
-                                <th>Product Name</th>
-                                <th class="text-center" style="width:5%">Segment</th>
-                                <th class="text-right" style="width:20%">Return Batttery</th>
-                            </tr>
+                        <tr>
+                            <th>Product Name</th>
+                            <th class="text-center" style="width:5%">Segment</th>
+                            <th class="text-right" style="width:20%">Return Batttery</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.Products)
-                            {
+                        @foreach (var item in Model.Products)
+                        {
 
-                                <tr>
-                                    <td>@item.ProductName</td>
-                                    <td class="text-center">@item.CategoryName</td>
-                                    <td class="text-right">@item.ReplaceForBarcode</td>
-                                </tr>
-                            }
+                            <tr>
+                                <td>@item.ProductName</td>
+                                <td class="text-center">@item.CategoryName</td>
+                                <td class="text-right">@item.ReplaceForBarcode</td>
+                            </tr>
+                        }
                         </tbody>
                     </table>
                 </div>
                 <!-- /.col -->
             </div>
+            <table>
+                <tbody>
+                <tr>
+                    <td>Delivery Point :@(Model.DistributionPoint?? "N/A")</td>
+                </tr>
+                </tbody>
+            </table>
             <div class="row" style="margin-top: 50px">
                 <!-- accepted payments column -->
-                <div class="col-xs-12 text-center">
-                    @challanBy.EmployeeName
-                    <p style="margin: 0; padding: 0;"> ----------------</p>
-                    Challan By
+                <div class="row">
+                    <div class="col-xs-6 text-center">
+                        @challanBy.EmployeeName
+                        <p style="margin: 0; padding: 0;"> ----------------</p>
+                        Challan By
+                    </div>
+                    <div class="col-xs-6 text-center">
+                       
+                        <p style="margin: 0; padding: 0;"> ----------------</p>
+                       Customer/Dealer Receiving Sign & Date
+                    </div>
                 </div>
+                
             </div>
         </section>
         <!-- /.content -->

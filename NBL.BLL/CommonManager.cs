@@ -11,6 +11,7 @@ using NBL.Models.EntityModels.Branches;
 using NBL.Models.EntityModels.Identities;
 using NBL.Models.EntityModels.Masters;
 using NBL.Models.EntityModels.MobileBankings;
+using NBL.Models.EntityModels.Others;
 using NBL.Models.EntityModels.Productions;
 using NBL.Models.EntityModels.Requisitions;
 using NBL.Models.EntityModels.Services;
@@ -267,6 +268,12 @@ namespace NBL.BLL
        public ICollection<object> GetAllSubSubSubAccountNameBySearchTermAndAccountPrefix(string searchTerm, string accountPrefix)
        {
            return _iCommonGateway.GetAllSubSubSubAccountNameBySearchTermAndAccountPrefix(searchTerm,accountPrefix);
+       }
+
+       public string SendSms(MessageModel aMessageModel) 
+       {
+           var response= _iCommonGateway.SendSms(aMessageModel); 
+           return response;
        }
    }
 }

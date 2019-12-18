@@ -36,7 +36,9 @@ namespace NBL.Areas.AccountsAndFinance.BLL
         public int SaveReceivable(Receivable receivable)
         {
             int maxSl = GetMaxReceivableSerialNoOfCurrentYear();
-            receivable.ReceivableRef = GenerateReceivableRef(maxSl);
+            var receiveRef= GenerateReceivableRef(maxSl);
+            receivable.ReceivableRef = receiveRef;
+            receivable.MessageModel.TransactionRef = receiveRef;
             receivable.ReceivableNo = GenerateReceivableNo(maxSl);
             return _iAccountGateway.SaveReceivable(receivable);
         }

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using NBL.Models.EntityModels.Clients;
 using NBL.Models.EntityModels.FinanceModels;
+using NBL.Models.EntityModels.Others;
 using NBL.Models.EntityModels.Transports;
 using NBL.Models.ViewModels.TransferProducts;
 
@@ -45,12 +46,14 @@ namespace NBL.Models.EntityModels.Deliveries
         public int ClientId { get; set; }   
         public Client Client { get; set; }
         public ViewTripModel TripModel { get; set; }
-        public FinancialTransactionModel FinancialTransactionModel { get; set; }    
+        public FinancialTransactionModel FinancialTransactionModel { get; set; }
+        public MessageModel MessageModel { get; set; } 
         
         public Delivery()
         {
             Transport=new Transport();
             Client=new Client();
+            MessageModel=new MessageModel();
         }
 
     }

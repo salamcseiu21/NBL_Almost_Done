@@ -249,7 +249,8 @@ namespace NBL.DAL
                         ProductName = reader["ProductName"].ToString(),
                         SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
                         ReplaceForBarcode = reader["ReplaceFor"].ToString(),
-                        EntryDateTime = Convert.ToDateTime(reader["ReceiveDatetime"])
+                        EntryDateTime = Convert.ToDateTime(reader["ReceiveDatetime"]),
+                        ReceiveId = Convert.ToInt64(reader["ReceiveId"])
                     });
                 }
                 reader.Close();
@@ -290,7 +291,8 @@ namespace NBL.DAL
                         ProductName = reader["ProductName"].ToString(),
                         SystemDateTime = Convert.ToDateTime(reader["SysDateTime"]),
                         ReplaceForBarcode = reader["ReplaceFor"].ToString(),
-                        EntryDateTime = Convert.ToDateTime(reader["ReceiveDatetime"])
+                        EntryDateTime = Convert.ToDateTime(reader["ReceiveDatetime"]),
+                        ReceiveId = Convert.ToInt64(reader["ReceiveId"])
                         
                     });
                 }
@@ -452,8 +454,9 @@ namespace NBL.DAL
                         ExpiryDate = DBNull.Value.Equals(reader["ExpiryDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["ExpiryDate"]),
                         RbdDate = DBNull.Value.Equals(reader["RbdDate"]) ? (DateTime?)null:Convert.ToDateTime(reader["RbdDate"]),
                         RbdBarcode = DBNull.Value.Equals(reader["RbdBarcode"]) ? null:reader["RbdBarcode"].ToString(),
-                        RbdRemarks = DBNull.Value.Equals(reader["RbdRemarks"]) ?null:reader["RbdRemarks"].ToString()
-                        
+                        RbdRemarks = DBNull.Value.Equals(reader["RbdRemarks"]) ?null:reader["RbdRemarks"].ToString(),
+                        DistributionPoint = DBNull.Value.Equals(reader["DistributionPoint"]) ? null : reader["DistributionPoint"].ToString(),
+
                     };
                 }
                 reader.Close();
@@ -492,8 +495,9 @@ namespace NBL.DAL
                         ExpiryDate = DBNull.Value.Equals(reader["ExpiryDate"]) ? (DateTime?)null:Convert.ToDateTime(reader["ExpiryDate"]),
                         SaleDate = DBNull.Value.Equals(reader["SaleDate"]) ? (DateTime?)null : Convert.ToDateTime(reader["SaleDate"]),
                         CategoryName = reader["ProductCategoryName"].ToString(),
-                        ReplaceForBarcode = reader["BarcodeNo"].ToString()
-                        
+                        ReplaceForBarcode = reader["BarcodeNo"].ToString(),
+                        DeliveredBarcode=reader["DeliveredBarcode"].ToString()
+
                     });
                 }
                 reader.Close();

@@ -8,6 +8,7 @@ namespace NBL.Models.ViewModels.Replaces
 {
    public class ReplaceReport
     {
+        public long ReceiveId { get; set; }  
         public string Barcode { get; set; }
         public string ReplaceForBarcode { get; set; } 
         public string ProductName { get; set; }

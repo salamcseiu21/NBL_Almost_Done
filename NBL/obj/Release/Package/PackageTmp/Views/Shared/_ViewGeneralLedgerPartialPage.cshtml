@@ -1,0 +1,89 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.FinanceModels.ViewLedgerModel>
+@{
+    var e = 0;
+
+}
+
+<table id="tbl_General_Ledger" class="display table-bordered" style="border: 1px solid">
+    <thead>
+        <tr>
+            <th>S.N</th>
+            <th>Transaction Ref</th>
+            <th>Date</th>
+            <th>Explanation</th>
+            <th class="text-right">Transaction Type</th>
+            <th class="text-right">Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            e++;
+            <tr>
+                <td>@e</td>
+                <td>@item.TransactionRef</td>
+                <td>@Convert.ToDateTime(item.TransactionDate).ToString("dd-MMMM-yyyy")</td>
+                <td>@item.Explanation</td>
+                <td>@item.TransactionType</td>
+                <td class="text-right">@item.Amount</td>
+            </tr>
+        }
+
+    </tbody>
+    <tfoot>
+    <tr>
+           
+        <th class="text-right" colspan="5">Total</th>
+        <th class="text-right">@Model.ToList().Sum(n => n.Amount)</th>
+           
+
+    </tr>
+    <tr>
+            <th>S.N</th>
+            <th>Transaction Ref</th>
+            <th>Date</th>
+            <th>Explanation</th>
+            <th class="text-right">Transaction Type</th>
+            <th class="text-right">Amount</th>
+
+    </tr>
+    </tfoot>
+</table>
+
+<script>
+    $(document).ready(function () {
+
+        $('#tbl_General_Ledger').DataTable({
+            "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+            "ordering": false,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    text: 'Download As Excel',
+                    footer: true
+
+                },
+
+                {
+                    extend: 'pdf',
+                    text: 'Download As Pdf',
+                    footer: true
+
+                },
+                {
+                    extend: 'print',
+                    footer: true,
+                    customize: function (win) {
+                        $(win.document.body)
+                            .css('font-size', '10pt');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ]
+        });
+    });
+</script>

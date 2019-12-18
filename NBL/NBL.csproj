@@ -8341,6 +8341,10 @@
     <Content Include="Areas\AccountsAndFinance\Views\AccountManager\ActivatedVouchers.cshtml" />
     <Content Include="Areas\Sales\Views\Delivery\DeliveredTransferList.cshtml" />
     <Content Include="Areas\Services\Views\Shared\_ViewReceivedWarrantyProductPartialPage.cshtml" />
+    <Content Include="Areas\Sales\Views\Product\ReceiveReturnRejectedProduct.cshtml" />
+    <Content Include="Areas\AccountsAndFinance\Views\Reports\GeneralLedger.cshtml" />
+    <Content Include="Areas\Corporate\Views\Reports\GeneralLedger.cshtml" />
+    <Content Include="Areas\Sales\Views\Replace\PrintChallan.cshtml" />
     <None Include="DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -8353,6 +8357,7 @@
     <Content Include="Files\Stock_Bogura.xlsx" />
     <Content Include="Files\Stock_Dhaka.xlsx" />
     <Content Include="Files\Stock_Ctg.xlsx" />
+    <Content Include="Files\Scanned_Ordered_Product_List_For_7586" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\NBL_Publish.pubxml" />
@@ -8518,6 +8523,7 @@
     <Content Include="Views\Shared\_DeliveredReplaceListPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewReplaceListPartialPage.cshtml" />
     <Content Include="Views\Shared\_ViewProductionSalesReplacePartialPage.cshtml" />
+    <Content Include="Views\Shared\_ViewGeneralLedgerPartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

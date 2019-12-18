@@ -94,6 +94,7 @@ namespace NBL.DAL.Contracts
         ICollection<ProductDetails> GetAllProductDetails();
         int UpdateProductPriceVatDiscount(ProductDetails newProduct,ProductDetails oldProductDetails, int userId);
 
-        ICollection<ViewTransferModel> GetTransferListByBranchId(int branchId); 
+        ICollection<ViewTransferModel> GetTransferListByBranchId(int branchId);
+        int ReceiveReturnRejectedProduct(string barcode, int userId);
     }
 }

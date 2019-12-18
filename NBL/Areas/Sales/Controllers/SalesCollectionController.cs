@@ -7,6 +7,7 @@ using NBL.Areas.AccountsAndFinance.BLL.Contracts;
 using NBL.Areas.AccountsAndFinance.Models;
 using NBL.BLL.Contracts;
 using NBL.Models;
+using NBL.Models.EntityModels.Others;
 using NBL.Models.EntityModels.Payments;
 using NBL.Models.Logs;
 using NBL.Models.Searchs;
@@ -116,18 +117,21 @@ namespace NBL.Areas.Sales.Controllers
             SuccessErrorModel aModel = new SuccessErrorModel();
             try
             {
+              var clientId= Convert.ToInt32(collection["ClientId"]);
+              var client=_iClientManager.GetClientById(clientId);
                 var anUser = (ViewUser)Session["user"];
                 var payments = GetPaymentsFromXmlFile();
-                Receivable receivable = new Receivable
+                var receivable = new Receivable
                 {
                     Payments = payments,
                     ReceivableDateTime = DateTime.Now,
                     UserId = anUser.UserId,
-                    ClientId = Convert.ToInt32(collection["ClientId"]),
+                    ClientId = clientId,
                     BranchId = Convert.ToInt32(Session["BranchId"]),
                     CompanyId = Convert.ToInt32(Session["CompanyId"]),
                     TransactionTypeId = Convert.ToInt32(collection["TransactionTypeId"])
                 };
+
                 string inRef = collection["InvoiceRef"];
 
                 if (inRef.StartsWith("IN00"))
@@ -142,9 +146,20 @@ namespace NBL.Areas.Sales.Controllers
 
                 receivable.Remarks = collection["Remarks"];
 
+                var messageModel = receivable.MessageModel;
+                messageModel.PhoneNumber = client.Phone.Replace("-","").Trim();
+                messageModel.CustomerName = client.ClientName;
+                messageModel.Amount = payments.ToList().Sum(n => n.ChequeAmount);
+                messageModel.TransactionDate = DateTime.Now;
                 int rowAffected = _iAccountsManager.SaveReceivable(receivable);
+               
+                receivable.MessageModel = messageModel;
+                messageModel.MessageBody = messageModel.GetMessageForAccountReceivable();
+
                 if (rowAffected > 0)
                 {
+                    //-------------Send SMS---------------
+                    _iCommonManager.SendSms(messageModel);
                     Session["Payments"] = null;
                     ////---------Send Mail ----------------
                     //var aClient = _iClientManager.GetById(Convert.ToInt32(collection["ClientId"]));

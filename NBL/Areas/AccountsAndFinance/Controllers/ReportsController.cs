@@ -20,12 +20,14 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
         private readonly IReportManager _iReportManager;
         private readonly IAccountsManager _iAccountsManager;
         private readonly IClientManager _iClientManager;
+        private readonly ICommonManager _iCommonManager;
 
-        public ReportsController(IReportManager iReportManager,IAccountsManager iAccountsManager,IClientManager iClientManager)
+        public ReportsController(IReportManager iReportManager,IAccountsManager iAccountsManager,IClientManager iClientManager,ICommonManager iCommonManager)
         {
             _iReportManager = iReportManager;
             _iAccountsManager = iAccountsManager;
             _iClientManager = iClientManager;
+            _iCommonManager = iCommonManager;
 
         }
         // GET: AccountsAndFinance/Reports
@@ -77,6 +79,34 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
             IEnumerable<ViewLedgerModel> ledgers = _iAccountsManager.GetClientLedgerBySearchCriteria(searchCriteria);
             client.LedgerModels = ledgers.ToList();
             return PartialView("_ClientLedgerPartialPage", client);
+        }
+
+
+        public ActionResult GeneralLedger()
+        {
+            try
+            {
+
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public PartialViewResult GetGeneralLedgerReportBySearchCriteria(SearchCriteria searchCriteria)
+        {
+            var branchId = Convert.ToInt32(Session["BranchId"]);
+            var companyId = Convert.ToInt32(Session["CompanyId"]);
+
+          var account=_iCommonManager.GetSubSubSubAccountById(searchCriteria.SubSubSubAccountListId);
+            searchCriteria.SubSubSubAccountCode = account.SubSubSubAccountCode;
+            searchCriteria.BranchId = branchId;
+            searchCriteria.CompanyId = companyId;
+            IEnumerable<ViewLedgerModel> ledgers = _iReportManager.GetGeneralLedgerReportBySearchCriteria(searchCriteria);
+            return PartialView("_ViewGeneralLedgerPartialPage", ledgers);
         }
         public ActionResult DailyReport()
         {

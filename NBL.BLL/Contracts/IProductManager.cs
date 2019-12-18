@@ -85,6 +85,7 @@ namespace NBL.BLL.Contracts
         ICollection<ProductDetails> GetAllProductDetails();
         bool UpdateProductPriceVatDiscount(ProductDetails newProductDetails,ProductDetails oldProductDetails, int userId);
         bool CancelRequisition(long requisitionId, ViewUser user);
-        ICollection<ViewTransferModel> GetTransferListByBranchId(int branchId); 
+        ICollection<ViewTransferModel> GetTransferListByBranchId(int branchId);
+        bool ReceiveReturnRejectedProduct(string barcode, int userId); 
     }
 }

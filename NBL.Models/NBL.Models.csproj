@@ -127,6 +127,7 @@
     <Compile Include="EntityModels\Departments\Department.cs" />
     <Compile Include="EntityModels\Designations\Designation.cs" />
     <Compile Include="EntityModels\Orders\RetailSale.cs" />
+    <Compile Include="EntityModels\Others\MessageModel.cs" />
     <Compile Include="EntityModels\Productions\ProductionModel.cs" />
     <Compile Include="EntityModels\Productions\ProductVerificationModel.cs" />
     <Compile Include="EntityModels\Productions\RejectedProduct.cs" />
