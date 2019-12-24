@@ -1,0 +1,124 @@
+﻿@using NBL.Models.Enums
+@model IEnumerable<NBL.Models.ViewModels.Services.ViewReceivedServiceProduct>
+@{
+    ViewBag.Title = "Claimed Battery List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+
+
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">All Claimed Battery List</div>
+        <div class="panel panel-body">
+            <table id="tbl_Service_Products" class="display table-bordered" style="border: 1px solid">
+                <thead>
+                    <tr>
+                        <th> Receive Ref</th>
+                        <th> Received At</th>
+                        <th> Receive Date</th>
+                        <th> Product Name</th>
+                        <th> Barcode</th>
+                        <th> Client Name</th>
+                        <th> Has Warranty</th>
+                        <th class="text-center">Forward Status</th>
+                        <th class="text-center">Delivery Status</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ReceiveRef</td>
+                        <td>@item.ReceiveByBranch</td>
+                        <td>@item.ReceiveDatetime</td>
+                        <td>@item.ProductName (@item.ProductCategoryName)</td>
+                        <td>@item.Barcode</td>
+                        <td>@item.ClientInfo</td>
+                        <td class="text-center">@item.HasWarranty</td>
+                        <td class="text-center">
+                            @{
+                                switch (item.ForwardedToId)
+                                {
+                                    case 1:
+                                        <span>Just Receive</span>
+                                        break;
+                                    case 2:
+                                        <span>Recovered</span>
+                                        break;
+                                    case 3:
+                                        <span>In Discharge Test</span>
+                                        break;
+                                    case 4:
+                                        <span>Repear</span>
+                                        break;
+                                    case 5:
+                                        <span>Return</span>
+                                        break;
+                                    case 6:
+                                        <span>Replace</span>
+                                        break;
+                                    case 7:
+                                        <span>Service Management</span>
+                                        break;
+                                    case 8:
+                                        <span>Charge</span>
+                                        break;
+                                    case 9:
+                                        <span>General Service Management</span>
+                                        break;
+                                    case 10:
+                                        <span>Charge Return</span>
+                                        break;
+                                }
+                            }
+
+
+                        </td>
+                        <td class="text-center">
+                            @{
+                                switch (item.Status)
+                                {
+                                    case 0:
+                                        <span>Pending</span>
+                                        break;
+                                    case 1:
+                                        <span>Pending For Delivery</span>
+                                        break;
+                                    case 2:
+                                        <span>Delivered</span>
+                                        break;
+                                    case 3:
+                                        <span>Pending for Type Change</span>
+                                        break;
+                                   
+                                }
+                            }
+
+
+                        </td>
+
+                    </tr>
+                }
+                <tfoot>
+                    <tr>
+                        <th> Receive Ref</th>
+                        <th> Received At</th>
+                        <th> Receive Date</th>
+                        <th> Product Name</th>
+                        <th> Barcode</th>
+                        <th> Client Name</th>
+                        <th> Has Warranty</th>
+                        <th class="text-center">Forward Status</th>
+                        <th class="text-center">Delivery Status</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</section>
+@section Scripts
+                                {
+    <script>
+        $("#tbl_Service_Products").DataTable();
+    </script>
+}

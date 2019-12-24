@@ -52,6 +52,11 @@ namespace NBL.BLL
                "The Battery was Failed primary test please send the battery to R&D for further Analysis or proceed to charging step";
        }
 
+       public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByStatus(int status)
+       {
+           return _iServiceGateway.GetReceivedServiceProductsByStatus(status);
+       }
+
        public bool ReceiveServiceProductTemp(WarrantyBatteryModel product)
        {
            var maxSl = _iServiceGateway.GetMaxWarrantyProductReceiveSlNoByYear(DateTime.Now.Year);
@@ -84,8 +89,11 @@ namespace NBL.BLL
        {
            return _iServiceGateway.GetReceivedServiceProducts();
        }
-
-       public ViewReceivedServiceProduct GetReceivedServiceProductById(long receiveId)
+       public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByBranchId(int branchId)
+       {
+           return _iServiceGateway.GetReceivedServiceProductsByBranchId(branchId);
+        }
+        public ViewReceivedServiceProduct GetReceivedServiceProductById(long receiveId)
        {
            return _iServiceGateway.GetReceivedServiceProductById(receiveId);
        }
@@ -98,6 +106,15 @@ namespace NBL.BLL
        {
            return _iServiceGateway.GetReceivedServiceProductsByForwarIdAndBranchId(forwardId,branchId);
         }
+
+    
+
+       public ICollection<ViewSoldProduct> GetFolioListByBranchAndUserId(int branchId, int userId)
+       {
+           return _iServiceGateway.GetFolioListByBranchAndUserId(branchId,userId);
+       }
+
+      
 
        public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarId(int forwardId)
        {
@@ -113,8 +130,12 @@ namespace NBL.BLL
            int rowAffected = _iServiceGateway.ForwardServiceBatteryToDeistributionPoint(receiveId);
            return rowAffected > 0;
        }
-
-       public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByStatusAndBranchId(int status, int branchId)
+       public bool UpdateCliaimedBatteryDeliveryStatus(long receiveId, DateTime deliveryDate)
+       {
+           int rowAffected = _iServiceGateway.UpdateCliaimedBatteryDeliveryStatus(receiveId,deliveryDate);
+           return rowAffected > 0;
+        }
+        public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByStatusAndBranchId(int status, int branchId)
        {
            return _iServiceGateway.GetReceivedServiceProductsByStatusAndBranchId(status,branchId);
         }

@@ -159,7 +159,7 @@ namespace NBL.Areas.Sales.Controllers
                 if (rowAffected > 0)
                 {
                     //-------------Send SMS---------------
-                    _iCommonManager.SendSms(messageModel);
+                   // _iCommonManager.SendSms(messageModel);
                     Session["Payments"] = null;
                     ////---------Send Mail ----------------
                     //var aClient = _iClientManager.GetById(Convert.ToInt32(collection["ClientId"]));

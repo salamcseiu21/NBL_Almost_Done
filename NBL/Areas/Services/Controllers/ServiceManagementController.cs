@@ -19,12 +19,14 @@ namespace NBL.Areas.Services.Controllers
         private readonly ICommonManager _iCommonManager;
         private readonly IServiceManager _iServiceManager;
         private readonly IBranchManager _iBranchManager;
-        public ServiceManagementController(IInventoryManager iInventoryManager, ICommonManager iCommonManager, IServiceManager iServiceManager, IBranchManager iBranchManager)
+        private readonly IReportManager _iReportManager;
+        public ServiceManagementController(IInventoryManager iInventoryManager, ICommonManager iCommonManager, IServiceManager iServiceManager, IBranchManager iBranchManager,IReportManager iReportManager)
         {
             _iInventoryManager = iInventoryManager;
             _iCommonManager = iCommonManager;
             _iServiceManager = iServiceManager;
-            _iBranchManager = iBranchManager; 
+            _iBranchManager = iBranchManager;
+            _iReportManager = iReportManager;
         }
 
         // GET: Services/ServiceManagement
@@ -32,16 +34,18 @@ namespace NBL.Areas.Services.Controllers
         public ActionResult PendingList()
         {
             try
+
             {
+                var branchId = Convert.ToInt32(Session["BranchId"]);
                 var user = (ViewUser) Session["user"];
                 if (user.Roles.Equals("ServiceManagement"))
                 {
-                    var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.ServiceManagement));
+                    var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.ServiceManagement)).ToList().FindAll(n=>n.ReceiveByBranchId==branchId);
                     return View(products);
                 }
                 else
                 {
-                    var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.GeneralServiceManagement));
+                    var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.GeneralServiceManagement)).ToList().FindAll(n => n.ReceiveByBranchId == branchId);
                     return View(products);
                 }
             }
@@ -119,6 +123,35 @@ namespace NBL.Areas.Services.Controllers
                 Log.WriteErrorLog(exception);
                 return PartialView("_ErrorPartial", exception);
             }
+        }
+
+
+        //----------------Warranty battery replace list------------------
+        public ActionResult TypeChangedReplaceList() 
+        {
+            var branchId = Convert.ToInt32(Session["BranchId"]);
+            //--------------Status=3 in management approval for alternate type delivery-------------
+            var products = _iServiceManager.GetReceivedServiceProductsByStatus(3).ToList().FindAll(n=>n.ReceiveByBranchId==branchId);
+            return View(products);
+        }
+        public ActionResult ProductSummary()
+        {
+            try
+            {
+
+                return View();
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+
+            }
+        }
+        public PartialViewResult GetProductionSaleReplaceByMonthYear(int year, int monthId)
+        {
+            var products = _iReportManager.GetProductionSalesRepalcesByMonthYear(monthId, year).ToList();
+            return PartialView("_ViewProductionSalesReplacePartialPage", products);
         }
 
     }

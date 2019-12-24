@@ -77,6 +77,7 @@ namespace NBL.DAL
                 CommandObj.Parameters.AddWithValue("@ProductId", product.ProductId);
                 CommandObj.Parameters.AddWithValue("@ClientId", product.ClientId);
                 CommandObj.Parameters.AddWithValue("@ServiceDuration", product.ServiceDuration);
+                CommandObj.Parameters.AddWithValue("@VerificationRemarks", product.VerificationRemarks);
                 CommandObj.Parameters.Add("@ReceiveId", SqlDbType.Int);
                 CommandObj.Parameters["@ReceiveId"].Direction = ParameterDirection.Output;
                 CommandObj.ExecuteNonQuery();
@@ -120,6 +121,9 @@ namespace NBL.DAL
             var i = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
             return i;
         }
+
+       
+
         public int ReceiveServiceProductTemp(WarrantyBatteryModel product)
         {
             try
@@ -196,7 +200,10 @@ namespace NBL.DAL
                         ForwardedTo = reader["ForwardedTo"].ToString(),
                         ReceiveRef =DBNull.Value.Equals(reader["ReceiveRef"])? null:reader["ReceiveRef"].ToString(),
                         ReceiveByBranch = reader["ReceiveByBranch"].ToString(),
-                        PrimaryTestResult = reader["PrimaryTestResult"].ToString()
+                        PrimaryTestResult = reader["PrimaryTestResult"].ToString(),
+                        ForwardedToId = Convert.ToInt32(reader["ForwardToId"]),
+                        ClientInfo = reader["ClientInfo"].ToString(),
+                        HasWarranty = reader["HasWarranty"].ToString()
                     });
                 }
                 reader.Close();
@@ -214,7 +221,55 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
-
+        public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByBranchId(int branchId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_GetReceivedServiceProductsByBranchId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                ConnectionObj.Open();
+                List<ViewReceivedServiceProduct> products = new List<ViewReceivedServiceProduct>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    products.Add(new ViewReceivedServiceProduct
+                    {
+                        ReceiveId = Convert.ToInt64(reader["ReceiveId"]),
+                        ReceiveDatetime = Convert.ToDateTime(reader["ReceiveDatetime"]),
+                        AppCapacity = reader["AppCapacity"].ToString(),
+                        AppUsedFor = reader["AppUsedFor"].ToString(),
+                        Barcode = reader["BarcodeNo"].ToString(),
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductCategoryName = reader["ProductCategoryName"].ToString(),
+                        DelivaryRef = reader["DelivaryRef"].ToString(),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        ForwardedTo = reader["ForwardedTo"].ToString(),
+                        ReceiveRef = DBNull.Value.Equals(reader["ReceiveRef"]) ? null : reader["ReceiveRef"].ToString(),
+                        ReceiveByBranch = reader["ReceiveByBranch"].ToString(),
+                        PrimaryTestResult = reader["PrimaryTestResult"].ToString(),
+                        ForwardedToId = Convert.ToInt32(reader["ForwardToId"]),
+                        ClientInfo = reader["ClientInfo"].ToString(),
+                        HasWarranty = reader["HasWarranty"].ToString(),
+                        Status = Convert.ToInt32(reader["Status"])
+                    });
+                }
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect Receive service products by Branch Id", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
         public long GetMaxWarrantyProductReceiveSlNoByYear(int year)
         {
             try
@@ -311,6 +366,7 @@ namespace NBL.DAL
                         IsSoldInGracePeriod = Convert.ToInt32(reader["IsSoldInGracePeriod"]),
                         ServiceDuration = DBNull.Value.Equals(reader["ServiceDuration"]) ? 0 : Convert.ToInt32(reader["ServiceDuration"]),
                         DistributionPoint = DBNull.Value.Equals(reader["DistributionPoint"]) ? null : reader["DistributionPoint"].ToString(),
+                        VerificationRemarks = DBNull.Value.Equals(reader["VerificationRemarks"]) ? null : reader["VerificationRemarks"].ToString(),
 
                     };
                 }
@@ -466,6 +522,57 @@ namespace NBL.DAL
             }
         }
 
+        public ICollection<ViewSoldProduct> GetFolioListByBranchAndUserId(int branchId, int userId)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetSoldProductInfoByBranchAndUserId";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@BranchId", branchId);
+                CommandObj.Parameters.AddWithValue("@UserId", userId);
+                ConnectionObj.Open();
+                List<ViewSoldProduct> products = new List<ViewSoldProduct>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    products.Add(new ViewSoldProduct
+                    {
+
+                        BarCode = reader["Barcode"].ToString(),
+                        ProductName = reader["ProductName"].ToString(),
+                        CategoryName = reader["CategoryName"].ToString(),
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        OrderRef = reader["OrderRef"].ToString(),
+                        ClientName = reader["ClientInfo"].ToString(),
+                        SaleDate = Convert.ToDateTime(reader["SaleDate"]),
+                        BranchName = reader["BranchName"].ToString(),
+                        BranchId = Convert.ToInt32(reader["BranchId"]),
+                        InvoiceRef = reader["InvoiceRef"].ToString(),
+                        DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
+                        FolioEntryDate = Convert.ToDateTime(reader["UpdateDate"]),
+                        FolioEntryBy = reader["SaleDateUpdaeBY"].ToString()
+
+                    });
+                }
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not get sold folio entried products", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+      
+
         public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarId(int forwardId)
         {
             try
@@ -581,6 +688,37 @@ namespace NBL.DAL
                 CommandObj.Parameters.Clear();
             }
         }
+        public int UpdateCliaimedBatteryDeliveryStatus(long receiveId, DateTime deliveryDate)
+        {
+            try
+            {
+               // CommandObj.CommandText = "UDSP_ForwardServiceBatteryToDeistributionPoint";
+                CommandObj.CommandText = "UDSP_UpdateCliaimedBatteryDeliveryStatus";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.Clear();
+                CommandObj.Parameters.AddWithValue("@ReceiveId", receiveId);
+                CommandObj.Parameters.AddWithValue("@DeliveryDate", deliveryDate);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var i = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return i;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not Update Cliaimed Battery Delivery Status ", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
+       
 
         public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByStatusAndBranchId(int status, int branchId)
         {
@@ -608,7 +746,7 @@ namespace NBL.DAL
                         ClientInfo = reader["ClientInfo"].ToString(),
                         ClientId = Convert.ToInt32(reader["ClientId"]),
                         ExpiryDate = DBNull.Value.Equals(reader["ExpiryDate"]) ? default(DateTime?) :Convert.ToDateTime(reader["ExpiryDate"]),
-                        ProductId = Convert.ToInt32(reader["ProductId"])
+                        ProductId = Convert.ToInt32(reader["DeliverableProductId"])
                         
                     });
                 }
@@ -628,7 +766,54 @@ namespace NBL.DAL
             }
         }
 
-      
+        public ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByStatus(int status)
+        {
+            try
+            {
+               
+                CommandObj.CommandText = "UDSP_GetReceivedServiceProductsByStatus";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@Status", status);
+                ConnectionObj.Open();
+                List<ViewReceivedServiceProduct> products = new List<ViewReceivedServiceProduct>();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    products.Add(new ViewReceivedServiceProduct
+                    {
+                        ReceiveId = Convert.ToInt64(reader["ReceiveId"]),
+                        ReceiveDatetime = Convert.ToDateTime(reader["ReceiveDatetime"]),
+                        Barcode = reader["BarcodeNo"].ToString(),
+                        ProductName = reader["ProductName"].ToString(),
+                        DelivaryRef = reader["DelivaryRef"].ToString(),
+                        TransactionRef = reader["TransactionRef"].ToString(),
+                        ReceiveRef = DBNull.Value.Equals(reader["ReceiveRef"]) ? null : reader["ReceiveRef"].ToString(),
+                        ReceiveRemarks = reader["ReceiveReport"].ToString(),
+                        ClientInfo = reader["ClientInfo"].ToString(),
+                        ClientId = Convert.ToInt32(reader["ClientId"]),
+                        ExpiryDate = DBNull.Value.Equals(reader["ExpiryDate"]) ? default(DateTime?) : Convert.ToDateTime(reader["ExpiryDate"]),
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        NewProductId = Convert.ToInt32(reader["DeliverableProductId"]),
+                        NewProductName = reader["NewProductName"].ToString(),
+                        ReceiveByBranch = reader["ReceiveByBranch"].ToString()
+
+                    });
+                }
+                reader.Close();
+                return products;
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not collect Receive service product by status", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
         public int ForwardServiceBattery(ForwardDetails model)
         {
             try
@@ -801,7 +986,8 @@ namespace NBL.DAL
                         ForwardRemarks = DBNull.Value.Equals(reader["ForwardRemarks"]) ? null : reader["ForwardRemarks"].ToString(),
                         SpGrCellRemarks = DBNull.Value.Equals(reader["SpGrCellRemarks"]) ? null : reader["SpGrCellRemarks"].ToString(),
                         ReportByEmp=reader["ReportBy"].ToString(),
-                        SpGrCellValueDifference = Convert.ToDecimal(reader["SpGrCellDiff"])
+                        SpGrCellValueDifference = Convert.ToDecimal(reader["SpGrCellDiff"]),
+                        ReportDatetime = Convert.ToDateTime(reader["ReportDateTime"])
 
                     };
                 }
@@ -844,7 +1030,8 @@ namespace NBL.DAL
                         DischargeReport = DBNull.Value.Equals(reader["DischargeReport"]) ? null : reader["DischargeReport"].ToString(),
                         DischargeRemarks = DBNull.Value.Equals(reader["DischargeRemarks"]) ? null : reader["DischargeRemarks"].ToString(),
                         ForwardRemarks = DBNull.Value.Equals(reader["ForwardRemarks"]) ? null : reader["ForwardRemarks"].ToString(),
-                        ReportByEmp = reader["ReportBy"].ToString()
+                        ReportByEmp = reader["ReportBy"].ToString(),
+                        ReportDatetime = Convert.ToDateTime(reader["ReportDatetime"])
 
                     };
                 }
@@ -881,10 +1068,10 @@ namespace NBL.DAL
                         BarCode = reader["Barcode"].ToString(),
                         ProductName = reader["ProductName"].ToString(),
                         CategoryName = reader["CategoryName"].ToString(),
-                       DeliveryRef = reader["DeliveryRef"].ToString(),
-                       OrderRef = reader["OrderRef"].ToString(),
-                       ClientName = reader["ClientInfo"].ToString(),
-                       SaleDate = Convert.ToDateTime(reader["SaleDate"]),
+                        DeliveryRef = reader["DeliveryRef"].ToString(),
+                        OrderRef = reader["OrderRef"].ToString(),
+                        ClientName = reader["ClientInfo"].ToString(),
+                        SaleDate = Convert.ToDateTime(reader["SaleDate"]),
                         BranchName=reader["BranchName"].ToString(),
                         BranchId = Convert.ToInt32(reader["BranchId"]),
                         InvoiceRef = reader["InvoiceRef"].ToString(),

@@ -75,7 +75,10 @@
                             <td>
                                 <img class="img-responsive" src="~/@(item.ClientImage?? "Images/User.jpg")" alt="Client Image" title="@item.ClientName" width="100" height="110">
                             </td>
-                            <td>@(item.Phone?? "N/A")</td>
+                            <td>
+                                @(item.Phone ?? "N/A")<br/>
+                                @item.AlternatePhone
+                            </td>
                             <td>@(item.Email?? "N/A")</td>
                            
                             <td class="text-center">

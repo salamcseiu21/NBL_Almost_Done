@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NBL.BLL.Contracts;
 using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.BarCodes;
+using NBL.Models.Searchs;
 
 namespace NBL.BLL
 {
@@ -84,6 +85,11 @@ namespace NBL.BLL
         public BarCodeModel GetBarcodeByBatchCode(string batchCode)
         {
             return _iBarCodeGateway.GetBarcodeByBatchCode(batchCode);
+        }
+
+        public IEnumerable<BarCodeModel> GetBarcodeReportBySearchCriteria(SearchCriteria searchCriteria)
+        {
+            return _iBarCodeGateway.GetBarcodeReportBySearchCriteria(searchCriteria);
         }
     }
 }

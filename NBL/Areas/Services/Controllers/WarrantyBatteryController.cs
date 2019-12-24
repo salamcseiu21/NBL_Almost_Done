@@ -15,7 +15,7 @@ using NBL.Models.ViewModels.Services;
 
 namespace NBL.Areas.Services.Controllers
 {
-    [Authorize(Roles = "ServiceExecutive")]
+    [Authorize(Roles = "ServiceExecutive,ServiceManagement,GeneralServiceManagement")]
     public class WarrantyBatteryController : Controller
     {
         private readonly IInventoryManager _iInventoryManager;
@@ -45,7 +45,6 @@ namespace NBL.Areas.Services.Controllers
             {
                 var branchId = Convert.ToInt32(Session["BranchId"]);
                 var products = _iServiceManager.GetReceivedServiceProductsByForwarIdAndBranchId(Convert.ToInt32(ForwardTo.Received),branchId).ToList();
-
                 return View(products);
             }
             catch (Exception exception)
@@ -54,6 +53,22 @@ namespace NBL.Areas.Services.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
            
+        }
+
+        public ActionResult ClaimedBatteryList()
+        {
+          
+            try
+            {
+                var branchId = Convert.ToInt32(Session["BranchId"]);
+                var products = _iServiceManager.GetReceivedServiceProductsByBranchId(branchId);
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
         }
         public ActionResult PrintChallan(long id)
         {
@@ -99,9 +114,61 @@ namespace NBL.Areas.Services.Controllers
         {
             SuccessErrorModel model=new SuccessErrorModel();
             bool result = _iServiceManager.ForwardServiceBatteryToDeistributionPoint(receiveId);
-            model.Message = result ? "<p class='text-green'>Successfully! Forward to Disribution Point</p>" : "<p class='text-danger'>Failed to Forward to Disribution Point</p>";
+            model.Message = result ? "<p class='text-green'>Successfully! Forward to Distribution Point</p>" : "<p class='text-danger'>Failed to Forward to Distribution Point</p>";
             return Json(model, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult UpdateCliaimedBatteryDeliveryStatus(long id)
+        {
+            try
+            {
+                ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(id);
+                List<ViewReplaceDetailsModel> products = _iProductReplaceManager.GetReplaceProductListById(id).ToList();
+                model.Products = products;
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+        [HttpPost]
+        public ActionResult UpdateCliaimedBatteryDeliveryStatus(long id,FormCollection collection)
+        {
+            try
+            {
+                var product = _iServiceManager.GetReceivedServiceProductById(id);
+                var deliveryDate= Convert.ToDateTime(collection["DeliveryDate"]);
+                bool result = _iServiceManager.UpdateCliaimedBatteryDeliveryStatus(id,deliveryDate);
+                if (result)
+                {
+                    if(product.ForwardedToId == 5)
+                    {
+                        return RedirectToAction("ReturnList");
+                    }
+                    return RedirectToAction("CharegReturnList");
+                }
+                ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(id);
+                List<ViewReplaceDetailsModel> products = _iProductReplaceManager.GetReplaceProductListById(id).ToList();
+                model.Products = products;
+                return View(model);
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        //public JsonResult UpdateCliaimedBatteryDeliveryStatus(long receiveId) 
+        //{
+        //    SuccessErrorModel model = new SuccessErrorModel();
+        //    bool result = _iServiceManager.UpdateCliaimedBatteryDeliveryStatus(receiveId);
+        //    model.Message = result ? "<p class='text-green'>Successful</p>" : "<p class='text-danger'>Failed to Remove</p>";
+        //    return Json(model, JsonRequestBehavior.AllowGet);
+        //}
         public ActionResult ReturnList()
         {
             try
@@ -116,7 +183,30 @@ namespace NBL.Areas.Services.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
+
+        public ActionResult CharegReturnList()
+        {
+            try
+            {
+                var branchId = Convert.ToInt32(Session["BranchId"]);
+                var products = _iServiceManager.GetReceivedServiceProductsByForwarId(Convert.ToInt32(ForwardTo.ChargeReturn)).ToList().FindAll(n => n.ReceiveByBranchId == branchId);
+                return View(products);
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
         public ActionResult ReturnChallan(long id)
+        {
+
+            ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(id);
+            List<ViewReplaceDetailsModel> products = _iProductReplaceManager.GetReplaceProductListById(id).ToList();
+            model.Products = products;
+            return View(model);
+        }
+        public ActionResult ChargeReturnChallan(long id) 
         {
 
             ViewReplaceModel model = _iProductReplaceManager.GetReplaceById(id);
@@ -475,8 +565,9 @@ namespace NBL.Areas.Services.Controllers
         [HttpPost]
         public JsonResult GetProductHistoryByBarcode(string barcode)
         {
-            
-            var product = _iInventoryManager.GetProductHistoryByBarcode(barcode) ?? new ViewProductHistory();
+
+            var productBarcode = barcode.Replace(" ", "").Trim();
+            var product = _iInventoryManager.GetProductHistoryByBarcode(productBarcode) ?? new ViewProductHistory();
             return Json(product, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]

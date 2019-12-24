@@ -1,0 +1,90 @@
+﻿@model ICollection<NBL.Models.ViewModels.Summaries.ViewProductionSalesRepalce>
+@{
+    ViewBag.Title = "Product Summary";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <div class="panel panel-info">
+        <div class="panel panel-heading"> Production,Sales & Repalce</div>
+        <div class="panel panel-body">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="YearId" class="control-label col-md-3"> Select Year</label>
+                            <div class="col-md-9">
+
+                                <select name="YearId" id="YearId" class="form-control">
+                                    <option value="">--Select--</option>
+                                    @for (int i = 2019; i <= DateTime.Now.Year; i++)
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="YearId" class="control-label col-md-3"> Select Month</label>
+                            <div class="col-md-9">
+
+                                <select name="MonthId" id="MonthId" class="form-control" onchange="GetProductionSaleReplaceByMonthYear(this)">
+                                    <option value="">--Select--</option>
+                                    <option value="1">January</option>
+                                    <option value="2">February</option>
+                                    <option value="3">March</option>
+                                    <option value="4">April</option>
+                                    <option value="5">May</option>
+                                    <option value="6">June</option>
+                                    <option value="7">July</option>
+                                    <option value="8">August</option>
+                                    <option value="9">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="divProductSummaryReport"></div>
+            <div id="Loading" class="text-center" style="font-size:25px"><i class="fa fa-spinner"></i> I'm loading,whatever you want!</div>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+        $(function () {
+
+            $("#Loading").hide();
+        });
+
+    </script>
+    <script>
+        function GetProductionSaleReplaceByMonthYear(event) {
+            $("#divProductSummaryReport").html("");
+            $("#Loading").show();
+
+            var monthId = event.value;
+            var year = $("#YearId").val();
+            var json = { year: year, monthId:monthId };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetProductionSaleReplaceByMonthYear", "ServiceManagement", new { area = "Services" })',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("#Loading").hide();
+                    $("#divProductSummaryReport").html(data);
+                }
+            });
+        }
+
+    </script>
+
+}

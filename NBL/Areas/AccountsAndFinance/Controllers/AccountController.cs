@@ -154,7 +154,7 @@ namespace NBL.Areas.AccountsAndFinance.Controllers
                 if (rowAffected > 0)
                 {
                     //-------------Send SMS---------------
-                    _iCommonManager.SendSms(messageModel);
+                   // _iCommonManager.SendSms(messageModel);
                     Session["Payments"] = null;
                   
                     ////---------Send Mail ----------------

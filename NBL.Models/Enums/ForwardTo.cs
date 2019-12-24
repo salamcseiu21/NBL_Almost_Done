@@ -16,7 +16,8 @@ namespace NBL.Models.Enums
         Replace=6,
         ServiceManagement=7, 
         Charge=8,
-        GeneralServiceManagement=9
+        GeneralServiceManagement=9,
+        ChargeReturn=10
 
     }
 }

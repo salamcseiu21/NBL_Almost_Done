@@ -2,8 +2,11 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 using NBL.Areas.SuperAdmin.BLL;
 using System.Web.Helpers;
 using ExcelDataReader;
@@ -27,6 +30,7 @@ using NBL.Models.ViewModels.Orders;
 using NBL.Models.ViewModels.Products;
 using NBL.Models.ViewModels.Summaries;
 using NBL.Models.ViewModels.VatDiscounts;
+using ZXing;
 
 namespace NBL.Areas.SuperAdmin.Controllers
 {
@@ -94,7 +98,7 @@ namespace NBL.Areas.SuperAdmin.Controllers
             };
             var aModel = new MessageModel
             {
-                PhoneNumber = "01737854060",
+                PhoneNumber = "01841000307",
                 CustomerName = "Abdus Salam",
                 TotalQuantity = 1,
                 Amount = 38000,
@@ -102,7 +106,8 @@ namespace NBL.Areas.SuperAdmin.Controllers
                 TransactionRef = "192022500"
 
             };
-            var res = _iCommonManager.SendSms(aModel);
+            aModel.MessageBody = aModel.GetMessageForDistribution();
+          //var res = _iCommonManager.SendSms(aModel);
             return View(summary); 
 
         }
@@ -789,6 +794,74 @@ namespace NBL.Areas.SuperAdmin.Controllers
                 }
             }
             return RedirectToAction("Home");
+        }
+        //-------------Manually Generate Barcode --------------
+        public ActionResult ManualGenerateBarcode()
+        {
+            try
+            {
+                var barcodeList = _iCommonManager.GetAllTestBarcode();
+                foreach (string s in barcodeList)
+                {
+                    GenerateBarCodeFromaGivenString(Regex.Replace(s, @"\t|\n|\r", ""));
+                }
+
+                return View();
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+                return PartialView("_ErrorPartial", exception);
+            }
+        }
+
+        private void GenerateBarCodeFromaGivenString(string barcode)
+        {
+
+
+            try
+            {
+                Image img = null;
+                using (var ms = new MemoryStream())
+                {
+                    var writer = new ZXing.BarcodeWriter
+                    {
+                        Format = BarcodeFormat.CODE_128,
+                        Options =
+                        {
+                            Height = 280,
+                            Width = 400,
+                            PureBarcode = true
+                        }
+                    };
+
+                    img = writer.Write(barcode);
+
+                    //var test = Server.MapPath("~/Areas/Production/Images/BarCodes/0107208AE0005"+".jpg");
+
+                    //using (Bitmap bitmap = (Bitmap)Image.FromFile(test))
+                    //{
+                    //    using (Bitmap newBitmap = new Bitmap(bitmap))
+                    //    {
+                    //        newBitmap.SetResolution(300, 300);
+                    //        newBitmap.Save(test, ImageFormat.Jpeg);
+                    //    }
+                    //}
+
+                    var filePath = Server.MapPath("~/Areas/Production/Images/BarCodes/" + barcode + ".Png");
+                    img.Save(filePath, ImageFormat.Png);
+
+
+                }
+            }
+            catch (Exception exception)
+            {
+
+                Log.WriteErrorLog(exception);
+
+            }
+
         }
         //------------------ Change password------------------------
         public ActionResult ChangePassword()

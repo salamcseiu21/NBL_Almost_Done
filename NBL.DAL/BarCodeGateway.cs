@@ -9,6 +9,7 @@ using NBL.DAL.Contracts;
 using NBL.Models.EntityModels.BarCodes;
 using NBL.Models.EntityModels.Products;
 using NBL.Models.Logs;
+using NBL.Models.Searchs;
 
 namespace NBL.DAL
 {
@@ -364,6 +365,47 @@ namespace NBL.DAL
             {
                 Log.WriteErrorLog(exception);
                 throw new Exception("Could not get barcode by batchcode", exception.InnerException);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                CommandObj.Parameters.Clear();
+                ConnectionObj.Close();
+
+            }
+        }
+
+        public IEnumerable<BarCodeModel> GetBarcodeReportBySearchCriteria(SearchCriteria searchCriteria)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_RptGetBarcodeReportBySearchCriteria";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@FromDate", searchCriteria.StartDate);
+                CommandObj.Parameters.AddWithValue("@ToDate", searchCriteria.EndDate);
+                CommandObj.Parameters.AddWithValue("@ProductId", searchCriteria.ProductId);
+                List<BarCodeModel> barcodeList = new List<BarCodeModel>();
+                ConnectionObj.Open();
+                SqlDataReader reader = CommandObj.ExecuteReader();
+                while (reader.Read())
+                {
+                    barcodeList.Add(new BarCodeModel
+                    {
+                        BatchCode = reader["BatchCode"].ToString(),
+                        LineNumber = reader["LineNumber"].ToString(),
+                        Barcode = reader["Barcode"].ToString(),
+                        ProductName = reader["ProductName"].ToString(),
+                        ProductionDateTime = Convert.ToDateTime(reader["ProductionDate"])
+                        
+                    });
+                }
+                reader.Close();
+                return barcodeList;
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Could not collect barcodes", exception.InnerException);
             }
             finally
             {

@@ -8,7 +8,7 @@
     
 
     <div class="panel panel-info">
-        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">All Received Service Battery</div>
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">All Received Claimed Battery</div>
         <div class="panel panel-body">
             <table id="tbl_Service_Products" class="display table-bordered" style="border: 1px solid">
                 <thead>
@@ -18,6 +18,7 @@
                     <th> Receive Date</th>
                     <th> Product Name</th>
                     <th> Barcode</th>
+                    <th> Client Name</th>
                     <th> Has Warranty</th>
                     <th> Primary Test</th>
                     <th class="text-center">Action</th>
@@ -31,6 +32,7 @@
                         <td>@item.ReceiveDatetime</td>
                         <td>@item.ProductName (@item.ProductCategoryName)</td>
                         <td>@item.Barcode</td>
+                        <td>@item.ClientInfo</td>
                         <td class="text-center">@item.HasWarranty</td>
                         <td>@item.PrimaryTestResult</td>
                         <td class="text-center">
@@ -50,6 +52,7 @@
                     <th> Receive Date</th>
                     <th> Product Name</th>
                     <th> Barcode</th>
+                    <th> Client Name</th>
                     <th> Has Warranty</th>
                     <th> Primary Test</th>
                     <th class="text-center">Action</th>

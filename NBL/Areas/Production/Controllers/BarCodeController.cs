@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using NBL.BLL.Contracts;
 using NBL.Models.EntityModels.BarCodes;
 using NBL.Models.Logs;
@@ -304,25 +302,6 @@ namespace NBL.Areas.Production.Controllers
                 return PartialView("_ErrorPartial", exception);
             }
         }
-        //-------------Manually Generate Barcode --------------
-        public ActionResult ManualGenerateBarcode()
-        {
-            try
-            {
-                var barcodeList = _iCommonManager.GetAllTestBarcode();
-                foreach (string s in barcodeList)
-                {
-                    GenerateBarCodeFromaGivenString(Regex.Replace(s, @"\t|\n|\r", ""));
-                }
-
-                return View();
-            }
-            catch (Exception exception)
-            {
-
-                Log.WriteErrorLog(exception);
-                return PartialView("_ErrorPartial", exception);
-            }
-        }
+        
     }
 }

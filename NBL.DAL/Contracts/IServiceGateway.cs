@@ -27,9 +27,14 @@ namespace NBL.DAL.Contracts
         ICollection<Client> GetClientListByServiceForwardId(int forwardId);
         int ForwardServiceBatteryToDeistributionPoint(long receiveId);
         ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByStatusAndBranchId(int status, int branchId);
+        ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByStatus(int status);
         int ReceiveServiceProductTemp(WarrantyBatteryModel product);
         ViewReceivedServiceProduct GetDeliverableServiceProductById(long receivedId);
         ViewTestPolicy GetTestPolicyByCategoryAndProductId(int testCategory, int productId);
         ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarIdAndBranchId(int forwardId, int branchId);
+        ICollection<ViewSoldProduct> GetFolioListByBranchAndUserId(int branchId, int userId);
+
+        int UpdateCliaimedBatteryDeliveryStatus(long receiveId, DateTime deliveryDate);
+        ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByBranchId(int branchId);
     }
 }

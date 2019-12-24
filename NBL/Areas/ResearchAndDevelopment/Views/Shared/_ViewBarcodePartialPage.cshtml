@@ -1,0 +1,68 @@
+﻿@model ICollection<NBL.Models.EntityModels.BarCodes.BarCodeModel>
+    @{
+        var i = 0;
+    }
+<table id="tbl_Barcode_list" class="display table-responsive table-bordered" style="border: 1px solid">
+    <thead>
+    <tr>
+        <th>S.N</th>
+        <th>Product Name</th>
+        <th class="text-center">Barcode</th>
+        <th class="text-center">Batch Code</th>
+        <th class="text-center">Production Date</th>
+    </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        i++;
+        <tr>
+            <td>@i</td>
+            <td>@item.ProductName</td>
+            <td class="text-center">@item.Barcode</td>
+            <td class="text-center">@item.BatchCode</td>
+            <td class="text-center">@item.ProductionDateTime.ToString("dd-MMMM-yyyy")</td>
+        </tr>
+    }
+    <tfoot>
+    <tr>
+        <th>S.N</th>
+        <th>Product Name</th>
+        <th class="text-center">Barcode</th>
+        <th class="text-center">Batch Code</th>
+        <th class="text-center">Production Date</th>
+    </tr>
+    </tfoot>
+</table>
+<script>
+    $("#tbl_Barcode_list").DataTable({
+        "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excel',
+                text: 'Download As Excel',
+                footer: true
+
+            },
+
+            {
+                extend: 'pdf',
+                text: 'Download As Pdf',
+                footer: true
+
+            },
+            {
+                extend: 'print',
+                footer: true,
+                customize: function (win) {
+                    $(win.document.body)
+                        .css('font-size', '10pt');
+
+                    $(win.document.body).find('table')
+                        .addClass('compact')
+                        .css('font-size', 'inherit');
+                }
+            }
+        ]
+    });
+</script>

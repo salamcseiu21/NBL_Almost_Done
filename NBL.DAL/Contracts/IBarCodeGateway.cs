@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NBL.Models.EntityModels.BarCodes;
 using NBL.Models.EntityModels.Products;
+using NBL.Models.Searchs;
 
 namespace NBL.DAL.Contracts
 {
@@ -18,5 +19,6 @@ namespace NBL.DAL.Contracts
         List<PrintBarCodeModel> GetTodaysProductionProductList(DateTime date);
         ICollection<BarCodeModel> GetAllBarCodeByInfix(string infix);
         BarCodeModel GetBarcodeByBatchCode(string batchCode);
+        IEnumerable<BarCodeModel> GetBarcodeReportBySearchCriteria(SearchCriteria searchCriteria); 
     }
 }

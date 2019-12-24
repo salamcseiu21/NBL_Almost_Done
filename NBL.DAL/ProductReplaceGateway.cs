@@ -386,6 +386,37 @@ namespace NBL.DAL
             }
         }
 
+        public int ChangeReplaceProuctType(ViewReplaceModel model)
+        {
+            try
+            {
+                CommandObj.CommandText = "UDSP_ChangeReplaceProuctType";
+                CommandObj.CommandType = CommandType.StoredProcedure;
+                CommandObj.Parameters.AddWithValue("@ReceiveId", model.ReceiveId);
+                CommandObj.Parameters.AddWithValue("@ProductId", model.ProductId);
+                CommandObj.Parameters.AddWithValue("@NewProductId", model.NewProductId);
+                CommandObj.Parameters.AddWithValue("@Remarks", model.Remarks);
+                CommandObj.Parameters.Add("@RowAffected", SqlDbType.Int);
+                CommandObj.Parameters["@RowAffected"].Direction = ParameterDirection.Output;
+                ConnectionObj.Open();
+                CommandObj.ExecuteNonQuery();
+                var rowAffected = Convert.ToInt32(CommandObj.Parameters["@RowAffected"].Value);
+                return rowAffected;
+
+            }
+            catch (Exception exception)
+            {
+                Log.WriteErrorLog(exception);
+                throw new Exception("Could not update replace product..", exception);
+            }
+            finally
+            {
+                CommandObj.Dispose();
+                ConnectionObj.Close();
+                CommandObj.Parameters.Clear();
+            }
+        }
+
         public ICollection<ViewReplaceModel> GetAllReplaceList(int status)
         {
             try

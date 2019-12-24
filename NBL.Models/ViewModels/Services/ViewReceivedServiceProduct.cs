@@ -82,6 +82,8 @@ namespace NBL.Models.ViewModels.Services
         public DateTime? ExpiryDate { get; set; }
         public DateTime? SaleDate { get; set; } 
         public int ProductId { get; set; }
+        public int NewProductId { get; set; }
+        public string NewProductName { get; set; } 
         public int ServiceDuration { set; get; }
         public int IsSoldInGracePeriod { get; set; }
         public int IsInWarrantyPeriod { get; set; }

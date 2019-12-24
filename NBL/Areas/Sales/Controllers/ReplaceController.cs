@@ -14,7 +14,7 @@ using NBL.Models.ViewModels.Sales;
 
 namespace NBL.Areas.Sales.Controllers
 {
-    [Authorize(Roles = "DistributionManager")]
+    [Authorize(Roles = "DistributionManager,ServiceExecutive")]
     public class ReplaceController : Controller
     {
 

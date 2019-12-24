@@ -10,7 +10,7 @@
 <section class="content">
  
 <div class="panel panel-info">
-    <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Charge Report Entry for Service Battery</div>
+    <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Charge Report Entry for Claimed Battery</div>
     <div class="panel panel-body">
         <div style="padding: 0 5px">
             <ul class="nav nav-pills">
@@ -118,7 +118,7 @@
                                 <tr>
 
                                     <td colspan="2">
-                                        <strong>SpGr Remarks : </strong> <input value="@Model.SpGrRemarks" type="text" style="width: 100%" required class="form-control" readonly="readonly" />
+                                        <strong>SpGr Remarks : </strong> <input value="@Model.SpGrRemarks" type="text" style="width: 100%"  class="form-control" readonly="readonly" />
                                     </td>
                                     <td> <strong>Open Voltage :</strong><input type="number" readonly="readonly" style="width: 100%" class="form-control" value="@Model.OpenVoltage" /></td>
                                     <td> <strong>Load Voltage :</strong><input type="number" readonly="readonly" style="width: 100%" class="form-control" value="@Model.LoadVoltage" /></td>
@@ -239,7 +239,7 @@
                                         <td colspan="3">
                                             <strong>SpGr Remarks </strong> <input id="SpGrCellRemarks" name="SpGrCellRemarks" type="text" style="width: 100%" class="form-control" placeholder="SpGr Cell Remarks..." />
                                         </td>
-                                        <td> <strong>Open Voltage </strong><input id="OpenVoltage" name="OpenVoltage" type="number"  style="width: 100%" class="form-control" placeholder="Open Voltage.." /></td>
+                                        <td> <strong>Open Voltage </strong><input id="OpenVoltage" name="OpenVoltage" type="number"  required style="width: 100%" class="form-control" placeholder="Open Voltage.." /></td>
                                         <td> <strong>Load Voltage </strong><input id="LoadVoltage" name="LoadVoltage" type="number" required style="width: 100%" class="form-control" placeholder="Load Voltage.." /></td>
                                         <td colspan="2">
                                             <strong>Voltage Remarks </strong> <input id="VoltageRemarks" name="VoltageRemarks" type="text" style="width: 100%" class="form-control" placeholder="Cell Remarks..." />

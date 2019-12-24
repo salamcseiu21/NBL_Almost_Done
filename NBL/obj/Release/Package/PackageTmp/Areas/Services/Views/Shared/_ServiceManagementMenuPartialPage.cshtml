@@ -35,7 +35,8 @@
             <ul class="treeview-menu">
                
                 <li>@Html.ActionLink("  Pending List", "PendingList", "ServiceManagement", new { area = "Services" }, new { @class = "fa fa-eye" })</li>
-                
+                <li>@Html.ActionLink("  Type Change List", "TypeChangedReplaceList", "ServiceManagement", new { area = "Services" }, new { @class = "fa fa-eye" })</li>
+                <li>@Html.ActionLink("  Claim Battery List", "ClaimedBatteryList", "WarrantyBattery", new { area = "Services" }, new { @class = "fa fa-eye" })</li>
             </ul>
         </li>
        
@@ -62,25 +63,14 @@
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-circle-o"></i> Clients
+                        <i class="fa fa-circle-o"></i> Products
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li>@Html.ActionLink(" All", "ViewAllClient", "Reoprt", new { area = "Services" }, new { @class = "fa fa-file", style = "font-weight: bolder" })</li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-circle-o"></i> Level Two
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                            </ul>
-                        </li>
+                        <li>@Html.ActionLink(" Product Summary", "ProductSummary", "ServiceManagement", new { area = "Services" }, new { @class = "fa fa-eye", style = "font-weight: bolder" })</li>
+                       
                     </ul>
                 </li>
                 <li class="treeview">

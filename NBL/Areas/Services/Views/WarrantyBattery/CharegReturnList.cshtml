@@ -1,0 +1,85 @@
+﻿@model IEnumerable<NBL.Models.ViewModels.Services.ViewReceivedServiceProduct>
+@{
+    ViewBag.Title = "Charge Return List";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<section class="content">
+    <div class="panel panel-info">
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Claimed Battery List For Charge Return</div>
+        <div class="panel panel-body">
+            <table id="tbl_Service_Products" class="display table-bordered" style="border: 1px solid">
+                <thead>
+                    <tr>
+                        <th>  Receive Ref</th>
+                        <th>  Receive At</th>
+                        <th>  Receive Date</th>
+                        <th>  Product Name</th>
+                        <th>  Barcode</th>
+                        <th>  Client</th>
+                        <th class="text-center">  Action</th>
+
+                    </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ReceiveRef</td>
+                        <td>@item.ReceiveByBranch</td>
+                        <td>@item.ReceiveDatetime.ToString("dd-MMM-yyyy")</td>
+                        <td>@item.ProductName - (@item.ProductCategoryName)</td>
+
+                        <td>@item.Barcode</td>
+                        <td>@item.ClientInfo</td>
+                        <td class="text-center">
+                            @Html.ActionLink(" Challan", "ChargeReturnChallan", "WarrantyBattery", new { id = item.ReceiveId, area = "services" }, new { target = "_blank", @class = "btn btn-info fa fa-print" }) |
+                            @Html.ActionLink(" Remove", "UpdateCliaimedBatteryDeliveryStatus", "WarrantyBattery", new { id = item.ReceiveId, area = "services" }, new { @class = "btn btn-primary fa fa-trash" })
+                        </td>
+
+                    </tr>
+                }
+                <tfoot>
+                    <tr>
+                        <th>  Receive Ref</th>
+                        <th>  Receive At</th>
+                        <th>  Receive Date</th>
+                        <th>  Product Name</th>
+                        <th>  Barcode</th>
+                        <th>  Client</th>
+                        <th class="text-center">  Action</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+</section>
+@section Scripts
+{
+    <script>
+        $("#tbl_Service_Products").DataTable();
+    </script>
+    <script>
+        $("#tbl_Service_Products").DataTable();
+        function UpdateCliaimedBatteryDeliveryStatus(receiveId) {
+            if (confirm("Is this Battery Returned to Client??")) {
+                // alert("Success!");
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("UpdateCliaimedBatteryDeliveryStatus", "WarrantyBattery", new { area = "Services" })",
+                    data: { receiveId: receiveId },
+                    success: function (response) {
+                        var result = response.Message;
+                        $('#message').html(response).fadeIn('slow');
+                        $('#message').html(result).fadeIn('slow'); //also show a success message
+                        $('#message').delay(1000).fadeOut('slow');
+                        setTimeout(function () { location.reload(); }, 2000);
+                    }
+                });
+            } else {
+              
+            }
+           
+        }
+    </script>
+}

@@ -6,7 +6,7 @@
 
 <section class="content">
     <div class="panel panel-info">
-        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Service Battery List For Return</div>
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Claimed Battery List For Return</div>
         <div class="panel panel-body">
             <table id="tbl_Service_Products" class="display table-bordered" style="border: 1px solid">
                 <thead>
@@ -32,7 +32,8 @@
                         <td>@item.Barcode</td>
                         <td>@item.ClientInfo</td>
                         <td class="text-center">
-                            @Html.ActionLink(" Print Challan", "ReturnChallan", "WarrantyBattery", new { id = item.ReceiveId, area = "services" }, new { target = "_blank", @class = "btn btn-info fa fa-print" })
+                            @Html.ActionLink(" Challan", "ReturnChallan", "WarrantyBattery", new { id = item.ReceiveId, area = "services" }, new { target = "_blank", @class = "btn btn-info fa fa-print" }) |
+                            @Html.ActionLink(" Remove", "UpdateCliaimedBatteryDeliveryStatus", "WarrantyBattery", new { id = item.ReceiveId, area = "services" }, new { @class = "btn btn-primary fa fa-trash" })
                         </td>
                
                     </tr>
@@ -58,4 +59,6 @@
     <script>
         $("#tbl_Service_Products").DataTable();
     </script>
+
 }
+

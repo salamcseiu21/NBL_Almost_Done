@@ -14,6 +14,7 @@ namespace NBL.Models.ViewModels.Replaces
         public string ClientAddress { set; get; }
         public int Quantity { get; set; }
         public int ProductId { get; set; }
+        public int NewProductId { get; set; }
         public string ProductName { get; set; }
         public int BranchId { get; set; }
         public int CompanyId { get; set; }

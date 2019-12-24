@@ -518,7 +518,7 @@ namespace NBL.Areas.Production.Controllers
                 //----------SMS Buildder Model-----------
                 var aModel = new MessageModel
                 {
-                    PhoneNumber = client.Phone,
+                    PhoneNumber = client.Phone.Replace("-", "").Trim(),
                     CustomerName = client.ClientName,
                     TotalQuantity = deliveredProductList.Sum(n => n.Quantity),
                     Amount = financialModel.ClientDrAmount,
@@ -536,11 +536,13 @@ namespace NBL.Areas.Production.Controllers
                         aModel.MessageBody = aModel.GetMessageForDistribution();
                         if (result.StartsWith("S"))
                         {
-                            // var res = _iCommonManager.SendSms("01737854060", "Here is the first sms from our NBL online system");
-                            //-----------Send SMS after successfull delivery inf save------------
-                            var res = _iCommonManager.SendSms(aModel);
+                          
 
                             System.IO.File.Create(filePath).Close();
+
+                            //-----------Send SMS after successfull delivery info save------------
+
+                             var res = _iCommonManager.SendSms(aModel);
                             return RedirectToAction("DeliverableOrderList");
                         }
                     }
@@ -558,11 +560,13 @@ namespace NBL.Areas.Production.Controllers
 
                     if (result.StartsWith("S"))
                     {
-                        // var res = _iCommonManager.SendSms("01737854060", "Here is the first sms from our NBL online system");
-                        //-----------Send SMS after successfull delivery inf save------------
-                        var res = _iCommonManager.SendSms(aModel);
+                       
+                       
 
                         System.IO.File.Create(filePath).Close();
+                        //-----------Send SMS after successfull delivery info save------------
+                        var res = _iCommonManager.SendSms(aModel); 
+
                         return RedirectToAction("DeliverableOrderList");
                     }
                     return View();

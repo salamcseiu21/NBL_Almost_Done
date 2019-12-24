@@ -1,18 +1,11 @@
 ﻿
-@using NBL.BLL
 @model NBL.Models.ViewModels.Replaces.ViewReplaceModel
-@{
-
-
-    UserManager userManager = new UserManager();
-    var challanBy = userManager.GetUserInformationByUserId(Model.UserId);
-}
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Replace Challan</title>
+    <title>Return Challan</title>
     <link rel='icon' href='~/Images/logo.png' type='image/x-icon' />
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -39,12 +32,12 @@
         <section class="invoice">
             <!-- title row -->
             @Html.Partial("_PrintHeaderPartialPage")
-            <h3 class="text-center text-green headingStyle">Return Challan</h3>
+            <h3 class="text-center text-green headingStyle"><strong>Return Challan</strong></h3>
             <div class="row">
                 <div class="col-xs-12">
                     <h2 class="page-header">
-                        Dealer Name: @Model.ClientName<br/>
-                        Address :@Model.ClientAddress
+                        Client Name: @Model.ClientName<br/>
+                        <span style="font-size: 16px"> Address :@Model.ClientAddress</span>
                     </h2>
                     <h2 class="page-header">
                        Reference : @Model.ReceiveRef
@@ -87,18 +80,17 @@
                 </tr>
                 </tbody>
             </table>
-            <div class="row" style="margin-top: 50px">
+            <div class="row" style="margin-top: 180px">
                 <!-- accepted payments column -->
                 <div class="row">
                     <div class="col-xs-6 text-center">
-                        @challanBy.EmployeeName
                         <p style="margin: 0; padding: 0;"> ----------------</p>
                         Challan By
                     </div>
                     <div class="col-xs-6 text-center">
                        
                         <p style="margin: 0; padding: 0;"> ----------------</p>
-                       Customer/Dealer Receiving Sign & Date
+                       Client Receiving Sign & Date
                     </div>
                 </div>
                 

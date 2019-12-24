@@ -26,8 +26,13 @@ namespace NBL.BLL.Contracts
         ICollection<Client> GetClientListByServiceForwardId(int forwardId);
         bool ForwardServiceBatteryToDeistributionPoint(long receiveId);
         ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByStatusAndBranchId(int status, int branchId);
+        ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByStatus(int status);
         bool ReceiveServiceProductTemp(WarrantyBatteryModel warrantyBatteryModel);
         ViewReceivedServiceProduct GetDeliverableServiceProductById(long receivedId);
         ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByForwarIdAndBranchId(int forwardId, int branchId);
+        ICollection<ViewReceivedServiceProduct> GetReceivedServiceProductsByBranchId(int branchId);
+        ICollection<ViewSoldProduct> GetFolioListByBranchAndUserId(int branchId, int userId);
+        bool UpdateCliaimedBatteryDeliveryStatus(long receiveId,DateTime deliveryDate);
+       
     }
 }

@@ -149,7 +149,7 @@
                         <tr>
 
                             <td colspan="3">
-                                <strong>Remarks : </strong> <textarea id="VerificationRemarks" name="VerificationRemarks" placeholder="verificaiton remarks.." style="resize: none" class="form-control"></textarea>
+                                <strong>Verification Remarks : </strong> <textarea id="VerificationRemarks" name="VerificationRemarks" placeholder="verificaiton remarks.." style="resize: none" class="form-control"></textarea>
                             </td>
 
                         </tr>
@@ -367,30 +367,24 @@
                         <tr>
 
 
+                          
                             <td>
-                                <strong>Forward To :</strong><select name="ForwardToId" required style="width: 100%" class="form-control">
-                           
-                                    @foreach (var item in Model.ForwardToModels)
-                                    {
-                                        <option value="@item.Id">@item.ForwardType</option>
-                                    }
-                                </select><span style="color: red">*</span>
+                                <input type="hidden" name="ForwardToId" value="1"/>
+                                <strong>Remarks :</strong><input type="text" name="ForwardRemarks" style="width: 100%" class="form-control" placeholder="Forward remarks.."/> <span style="color: red">*</span>
                             </td>
-                            <td> <strong>Remarks :</strong><input type="text" name="ForwardRemarks" style="width: 100%" class="form-control" placeholder="Forward remarks.." /> <span style="color: red">*</span> </td>
                             <td>
                         
                                 <strong>Distribution Point  :</strong><input type="text" name="DistributionPoint" style="width: 100%" class="form-control" placeholder="Distribution Point .." />
                        
                             </td>
-                        </tr>
-                        <tr>
-
                             <td>
+                                
+                                <br/>
                                 <button class="btn btn-danger">Cancel</button>
-                                <input type="submit" value="Save" class="btn btn-info" id="btnSubmitOff"/>
+                                <input type="submit" value="Save" class="btn btn-info" id="btnSubmitOff" />
                             </td>
-                            <td colspan="3"></td>
                         </tr>
+                       
                     </table>
                 </div>
             </div>

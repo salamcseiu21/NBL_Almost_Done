@@ -12,7 +12,7 @@
 
      
 <div class="panel panel-info">
-    <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Service Battery's Report</div>
+    <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Claimed Battery's Report</div>
     <div class="panel panel-body">
         <div style="padding: 0 5px">
             <ul class="nav nav-pills">
@@ -252,9 +252,13 @@
                                                 <strong>Report By </strong>
                                                 <input type="text" style="width: 100%" value="@chargeReportModel.ReportByEmp" readonly="readonly" class="form-control" />
                                             </td>
-                                            <td colspan="5">
+                                            <td colspan="3">
                                                 <strong>Remarks </strong>
                                                 <input type="text" style="width: 100%" readonly="readonly" value="@(chargeReportModel.ForwardRemarks ?? "N/A")" class="form-control" />
+                                            </td>
+                                            <td colspan="2">
+                                                <strong>Reoprt Date </strong>
+                                                <input type="text" style="width: 100%" readonly="readonly" value="@(chargeReportModel.ReportDatetime.ToString("F"))" class="form-control" />
                                             </td>
                                         </tr>
                                     </tbody>
@@ -309,15 +313,20 @@
                                                 <strong>Remarks</strong><input type="text" value="@dischargeReportModel.DischargeRemarks" placeholder="Remarks..." style="width: 100%" readonly="readonly" class="form-control" />
 
                                             </td>
+
                                         </tr>
                                         <tr>
                                             <td colspan="2">
                                                 <strong>Report By </strong>
                                                 <input type="text" style="width: 100%" value="@dischargeReportModel.ReportByEmp" readonly="readonly" class="form-control" />
                                             </td>
-                                            <td colspan="5">
+                                            <td colspan="2">
                                                 <strong>Remarks </strong>
                                                 <input type="text" style="width: 100%" readonly="readonly" value="@(dischargeReportModel.ForwardRemarks ?? "N/A")" class="form-control" />
+                                            </td>
+                                            <td>
+                                                <strong>Reoprt Date </strong>
+                                                <input type="text" style="width: 100%" readonly="readonly" value="@(dischargeReportModel.ReportDatetime.ToString("F"))" class="form-control" />
                                             </td>
                                         </tr>
                                     </tbody>

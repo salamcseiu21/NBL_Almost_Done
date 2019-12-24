@@ -5,7 +5,7 @@
 }
 <section class="content">
     <div class="panel panel-info">
-        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Service Battery List For Replace</div>
+        <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Claimed Battery List For Replace</div>
         <div class="panel panel-body">
             <div id="message" style="display: none; font-weight: bold; font-size: 20px" class="text-center">
             </div>
@@ -32,8 +32,9 @@
                         <td>@item.ClientInfo</td>
                         <td class="text-center">
 
-                            @Html.ActionLink(" Print Challan", "PrintChallan", "Replace", new {id = item.ReceiveId, area = "services"}, new { target = "_blank", @class = "btn btn-info fa fa-print"}) |
-                            <button type="button" onclick="ForwardToDistributionCenter(@item.ReceiveId)" class="btn btn-primary btn-sm"><i class="fa fa-share"></i> Send To Distribution</button>
+                            @Html.ActionLink(" Challan", "PrintChallan", "Replace", new {id = item.ReceiveId, area = "services"}, new { target = "_blank", @class = "btn btn-info fa fa-print"}) |
+                            @Html.ActionLink(" Change Type", "ChangeProuctType", "Replace", new {id = item.ReceiveId, area = "services"}, new { @class = "btn btn-success fa fa-edit"}) |
+                            <button type="button" onclick="ForwardToDistributionCenter(@item.ReceiveId)" class="btn btn-primary btn-sm"><i class="fa fa-send"></i> Send To Distribution</button>
                         </td>
 
                     </tr>

@@ -9,7 +9,7 @@
 <section class="content">
  
 <div class="panel panel-info">
-    <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Discharge Report Entry for Service Battery</div>
+    <div class="panel panel-heading" style="font-size: 22px;font-weight: bolder">Discharge Report Entry for Claimed Battery</div>
     <div class="panel panel-body">
         <div style="padding: 0 5px">
             <ul class="nav nav-pills">
@@ -201,7 +201,7 @@
 
                                         </td>
                                         <td>
-                                            <strong>Load Voltage</strong><input type="number" name="Lv" class="form-control" placeholder="Load Voltage" required />
+                                            <strong>Load Voltage</strong><input type="number" name="Lv" class="form-control" placeholder="Load Voltage" />
 
                                         </td>
                                         <td>
@@ -222,7 +222,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="5">
-                                            <strong>Remarks</strong><input type="text" name="DischargeRemarks" placeholder="Remarks..." style="width: 100%" class="form-control" />
+                                            <strong>Discharge Remarks</strong><input type="text" name="DischargeRemarks" placeholder="Remarks..." required style="width: 100%" class="form-control" />
 
                                         </td>
                                     </tr>
@@ -264,7 +264,7 @@
                                         <strong>Report By</strong><input type="text" id="EmployeeName" style="width: 100%" required class="form-control" placeholder="type report by employee name.." />
                                         @Html.HiddenFor(n => n.ReportByEmployeeId)
                                     </td>
-                                    <td colspan="2"> <strong>Remarks</strong><input type="text" name="ForwardRemarks" style="width: 100%" class="form-control" placeholder="Forward remarks.." /> </td>
+                                    <td colspan="2"> <strong>Remarks</strong><input type="text" name="ForwardRemarks" style="width: 100%" class="form-control" required placeholder="Forward remarks.." /> </td>
                                     <td>
                                         <br />
 

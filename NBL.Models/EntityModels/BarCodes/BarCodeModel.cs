@@ -11,6 +11,7 @@ namespace NBL.Models.EntityModels.BarCodes
         public int PrintByUserId { get; set; }  
         public int PrintStatus { get; set; }
         public DateTime SystemDateTime { get; set; }   
+        public DateTime ProductionDateTime { get; set; }   
          
     }
 }

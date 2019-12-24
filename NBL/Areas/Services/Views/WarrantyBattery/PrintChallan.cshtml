@@ -77,23 +77,26 @@
                     </td>
                 </tr>
             </table>
-            <p class="text-center text-green headingStyle" style="font-weight: bolder">Battery Receive Invoice</p>
+            <p class="text-center text-green headingStyle" style="font-weight: bolder"><strong>Battery Receive Invoice</strong></p>
             
             <!-- Table row -->
-            <div class="row" style="margin: 0 auto;padding: 0" >
+            <div class="row">
                 <div class="col-xs-12 table-responsive">
                     <table class="table">
                         <tr>
                             <td>Receive Ref : @Model.ReceiveRef</td>
                             <td>Receive Date:@Model.ReceiveDatetime.ToString("dd-MMM-yyyy") </td>
                             <td>Sale Date:@Convert.ToDateTime(Model.ProductHistory.SaleDate).ToString("dd-MMM-yyyy") </td>
-                            <td>Product Name: @Model.ProductName</td>
+                           
                         </tr>
                         <tr>
-                            <td>Client Name: @aClient.ClientName</td>
-                            <td>Client Type:@aClient.ClientTypeName </td>
+                            <td>Product Name: @Model.ProductName</td>
                             <td>BarCode:@Model.Barcode </td>
                             <td>BatchCode:@Model.Barcode.Substring(5,8) </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Client Name: @aClient.ClientName</td>
+                            <td>Client Type:@aClient.ClientTypeName </td>
                         </tr>
                         <tr>
                             <td colspan="3">Client Address: @aClient.Address</td>
@@ -107,37 +110,32 @@
                         <tr>
                             
                             <td colspan="2">Verificaiton: @if (Model.HasWarranty == "Y")
-                                              {
-                                                  <span>Warranty Available.</span>
-                                              }
-                                              else
-                                              {
-                                                  <span>Warranty Void.</span>
-                                              }
+                                                          {
+                                                              <span>Warranty Available.</span>
+                                                          }
+                                                          else
+                                                          {
+                                                              <span>Warranty Void.</span>
+                                                          }
                             </td>
-                            <td colspan="2">Remarks:@(Model.ReceiveRemarks?? "N/A") </td>
+                            <td colspan="3">Remarks:@(Model.VerificationRemarks?? "N/A") </td>
                         </tr>
                        
                     </table>
-                </div>
-                <!-- /.col -->
-            </div>
-            <div class="row" style="margin: 0 auto; padding: 0;">
-                <div class="col-xs-12 table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
                                 <td colspan="4" style="font-weight: bolder">Battery Status at Receive Time</td>
                             </tr>
-                        <tr>
-                            <th>Cell No</th>
-                            <th>Cell 1</th>
-                            <th>Cell 2</th>
-                            <th>Cell 3</th>
-                            <th>Cell 4</th>
-                            <th>Cell 5</th>
-                            <th>Cell 6</th>
-                        </tr>
+                            <tr>
+                                <th>Cell No</th>
+                                <th>Cell 1</th>
+                                <th>Cell 2</th>
+                                <th>Cell 3</th>
+                                <th>Cell 4</th>
+                                <th>Cell 5</th>
+                                <th>Cell 6</th>
+                            </tr>
                         </thead>
                         <tr>
                             <td>Sp.Gr</td>
@@ -147,8 +145,8 @@
                             <td>@Model.SpGrCellFour</td>
                             <td>@Model.SpGrCellFive</td>
                             <td>@Model.SpGrCellSix</td>
-                          
-                            
+
+
                         </tr>
                         <tr>
                             <td>Condition</td>
@@ -158,9 +156,9 @@
                             <td>@Enum.GetName(typeof(CellConditionEnum), Model.CellFourConditionId)</td>
                             <td>@Enum.GetName(typeof(CellConditionEnum), Model.CellFiveConditionId)</td>
                             <td>@Enum.GetName(typeof(CellConditionEnum), Model.CellSixConditionId)</td>
-                          
+
                         </tr>
-                        
+
                         <tr>
                             <td>Open Voltage:</td>
                             <td>@Model.OpenVoltage</td>
@@ -168,30 +166,43 @@
                             <td>@Model.LoadVoltage</td>
                             <td>Remarks:</td>
                             <td colspan="2">@Model.VoltageRemarks</td>
-                            
+
 
                         </tr>
                     </table>
                 </div>
                 <!-- /.col -->
             </div>
-
+           
             <div class="row">
                 <div class="col-xs-12 table-responsive">
                     <table class="table">
                         <tr>
-                            <td colspan="6" style="font-weight: bolder">Physical & Application Status</td>
+                            <td><b>Service Status:</b> @Model.ServicingStatus</td>
+                            <td><b>Service Battery:</b> @Model.ServiceBatteryBarcode</td>
+                            <td><b>Issue Date:</b> @Model.ServiceBatteryDeliveryDate</td>
+                            <td><b>Return Date:</b> @Model.ServiceBatteryReturnDate</td>
+
+                        </tr>
+                        @*<tr>
+                            <td colspan="5"><b>Remarks:</b> @Model.ServicingStatus</td>
+                        </tr>*@
+                        <tr>
+                            <td colspan="5" style="font-weight: bolder">Physical & Application Status</td>
                         </tr>
                         <tr>
                             <td>Cover: @Enum.GetName(typeof(PhysicalConditionEnum), Model.CoverStatusId)</td>
                             <td>Post: @Enum.GetName(typeof(PhysicalConditionEnum), Model.PostStatusId)</td>
                             <td>Container: @Enum.GetName(typeof(PhysicalConditionEnum), Model.ContainerStatusId)</td>
-                            <td>Servicing: @Model.ServicingStatus</td>
                             <td>User For: @Model.AppUsedFor</td>
                             <td>Charging System: @Model.ChargingSystem</td>
+                           
                         </tr>
                         <tr>
-                            <td colspan="6" style="font-weight: bolder">Distribution Point :@(Model.ReceiveRemarks ?? "N/A")</td>
+                            <td colspan="5" style="font-weight: bolder">Report By:@(Model.ReportByEmployee ?? "N/A")</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" style="font-weight: bolder">Distribution Point :@(Model.DistributionPoint ?? "N/A")</td>
                         </tr>
                     </table>
                 </div>
@@ -205,14 +216,14 @@
                 <!-- accepted payments column -->
                 <div class="row">
                     <div class="col-xs-6 text-center">
-                        @Model.EntryByUser
+                       
                         <p style="margin: 0; padding: 0;"> ----------------</p>
                         BSR By
                     </div>
                     <div class="col-xs-6 text-center">
                       
                         <p style="margin: 0; padding: 0;"> ----------------</p>
-                        Dealer Receiving Signature
+                        Client Receiving Sign & Date
                     </div>
                 </div>
                

@@ -139,17 +139,21 @@ namespace NBL.Areas.CommonArea.Controllers
                     product.SaleDate = saleDate;
                     _iProductManager.AddBarCodeToTempSoldProductXmlFile(product, scannedBarCode, filePath);
                 }
+                else
+                {
+                    model.Message = "<p style='color:red'>Failed to add list!</p>";
+                }
             }
             catch (FormatException exception)
             {
                 Log.WriteErrorLog(exception);
-                model.Message = "<p style='color:red'>" + exception.GetType() + "</p>";
+                model.Message = "<p style='color:red'>Failed to add list!</p>";
 
             }
             catch (Exception exception)
             {
                 Log.WriteErrorLog(exception);
-                model.Message = "<p style='color:red'>" + exception.Message + "</p>";
+                model.Message = "<p style='color:red'>Failed to add list!</p>";
 
             }
             return Json(model, JsonRequestBehavior.AllowGet);

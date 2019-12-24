@@ -380,6 +380,7 @@
     <Compile Include="Areas\QC\QCAreaRegistration.cs" />
     <Compile Include="Areas\ResearchAndDevelopment\Controllers\HomeController.cs" />
     <Compile Include="Areas\ResearchAndDevelopment\Controllers\ProductController.cs" />
+    <Compile Include="Areas\ResearchAndDevelopment\Controllers\ReportsController.cs" />
     <Compile Include="Areas\ResearchAndDevelopment\Controllers\RndExecutiveController.cs" />
     <Compile Include="Areas\ResearchAndDevelopment\Controllers\RndManagerController.cs" />
     <Compile Include="Areas\ResearchAndDevelopment\ResearchAndDevelopmentAreaRegistration.cs" />
@@ -8072,7 +8073,7 @@
     <Content Include="Areas\Sales\Views\Product\TotalDelivery.cshtml" />
     <Content Include="Areas\Sales\Views\Product\Stock.cshtml" />
     <Content Include="Areas\Corporate\Views\Summaries\Home.cshtml" />
-    <Content Include="Areas\Production\Views\BarCode\ManualGenerateBarcode.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Home\ManualGenerateBarcode.cshtml" />
     <Content Include="Areas\Corporate\Views\Home\Stock.cshtml" />
     <Content Include="Areas\Production\Views\Shared\_ViewProductionChartPartialPage.cshtml" />
     <Content Include="Areas\Production\Views\Home\Stock.cshtml" />
@@ -8345,6 +8346,15 @@
     <Content Include="Areas\AccountsAndFinance\Views\Reports\GeneralLedger.cshtml" />
     <Content Include="Areas\Corporate\Views\Reports\GeneralLedger.cshtml" />
     <Content Include="Areas\Sales\Views\Replace\PrintChallan.cshtml" />
+    <Content Include="Areas\Services\Views\ServiceManagement\ProductSummary.cshtml" />
+    <Content Include="Areas\Services\Views\Replace\ChangeProuctType.cshtml" />
+    <Content Include="Areas\Services\Views\ServiceManagement\TypeChangedReplaceList.cshtml" />
+    <Content Include="Areas\Services\Views\WarrantyBattery\CharegReturnList.cshtml" />
+    <Content Include="Areas\Services\Views\WarrantyBattery\ChargeReturnChallan.cshtml" />
+    <Content Include="Areas\Services\Views\WarrantyBattery\ClaimedBatteryList.cshtml" />
+    <Content Include="Areas\Services\Views\WarrantyBattery\UpdateCliaimedBatteryDeliveryStatus.cshtml" />
+    <Content Include="Areas\ResearchAndDevelopment\Views\Reports\ViewBarcode.cshtml" />
+    <Content Include="Areas\ResearchAndDevelopment\Views\Shared\_ViewBarcodePartialPage.cshtml" />
     <None Include="DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>

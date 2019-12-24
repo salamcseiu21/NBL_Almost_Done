@@ -70,6 +70,12 @@ namespace NBL.BLL
             return rowAffected > 0;
         }
 
+        public bool ChangeReplaceProuctType(ViewReplaceModel model)
+        {
+            int rowAffected = _iProductReplaceGateway.ChangeReplaceProuctType(model);
+            return rowAffected > 0;
+        }
+
         public ViewReplaceModel GetReplaceById(long id)
         {
             return _iProductReplaceGateway.GetReplaceById(id);

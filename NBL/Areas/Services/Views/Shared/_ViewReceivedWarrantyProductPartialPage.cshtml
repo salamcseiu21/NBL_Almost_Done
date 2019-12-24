@@ -15,8 +15,11 @@
             <td>
                 <strong>Reported By : </strong> @Model.ReportByEmployee
             </td>
-            <td colspan="2">
+            <td>
                 <strong>Comments : </strong> @Model.ReceiveReport
+            </td>
+            <td>
+                <strong>Receive Date : </strong> @Model.ReceiveDatetime.ToString("dd-MMM-yyyy")
             </td>
         </tr>
         <tr>

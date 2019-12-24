@@ -32,6 +32,7 @@ namespace NBL.Models.EntityModels.Services
         public string ReportByEmp { get; set; }
         public ForwardDetails ForwardDetails { get; set; }
         public DateTime ForwardDatetime { get; set; }
+        public DateTime ReportDatetime { get; set; }
         public ChargeReportModel()
         {
             ForwardDetails=new ForwardDetails();

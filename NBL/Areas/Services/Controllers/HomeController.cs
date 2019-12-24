@@ -41,8 +41,9 @@ namespace NBL.Areas.Services.Controllers
         {
             try
             {
+                var user = (ViewUser) Session["user"];
                 int branchId = Convert.ToInt32(Session["BranchId"]);
-                var products = _iServiceManager.GetAllSoldProducts().ToList().FindAll(n=>n.BranchId==branchId);
+                var products = _iServiceManager.GetFolioListByBranchAndUserId(branchId,user.UserId);
                 return View(products);
             }
             catch (Exception exception)

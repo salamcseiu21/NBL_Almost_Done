@@ -61,15 +61,13 @@
 
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-circle-o"></i> Sales
+                        <i class="fa fa-circle-o"></i> Barcodes
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-file"></i> Daily Reports</a></li>
-                        <li><a href="#"><i class="fa fa-file"></i>Monthly Reports</a></li>
-                        <li><a href="#"><i class="fa fa-file"></i> Yearly Reports</a></li>
+                        <li>@Html.ActionLink(" By Date", "ViewBarcode", "Reports", new {area = "ResearchAndDevelopment"}, new {@class = "fa fa-eye"})</li>
                     </ul>
                 </li>
                 <li class="treeview">
